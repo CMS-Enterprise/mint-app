@@ -1,16 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader
 } from '@trussworks/react-uswds';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
+import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
 import '../cards.scss';
@@ -29,8 +32,14 @@ const DataExchangeApproachCard = ({
 }: DataExchangeApproachCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
+  const history = useHistory();
+
   const { modifiedDts, modifiedByUserAccount, status } =
     dataExhangeApproachData;
+
+  const { SectionLock, isLocked } = useSectionLock({
+    section: LockableSection.DATA_EXCHANGE_APPROACH
+  });
 
   return (
     <>
@@ -49,33 +58,40 @@ const DataExchangeApproachCard = ({
 
         <CardBody>
           <p>{collaborationAreaT('dataExchangeApproachCard.body')}</p>
+
+          {modifiedDts && modifiedByUserAccount && !isLocked && (
+            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
+              <span className="text-base margin-right-1">
+                {collaborationAreaT('dataExchangeApproachCard.lastModified', {
+                  date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                })}
+              </span>
+              <Avatar
+                className="text-base-darkest"
+                user={modifiedByUserAccount.commonName}
+              />
+            </div>
+          )}
+
+          <SectionLock />
         </CardBody>
 
-        {modifiedDts && modifiedByUserAccount && (
-          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
-            <span className="text-base margin-right-1">
-              {collaborationAreaT('dataExchangeApproachCard.lastModified', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-              })}
-            </span>
-            <Avatar
-              className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
-            />
-          </div>
-        )}
-
         <CardFooter>
-          <UswdsReactLink
-            to={`/models/${modelID}/data-exchange-approach/about-completing-data-exchange-approach`}
-            className="usa-button margin-right-2"
-            variant="unstyled"
+          <Button
+            type="button"
+            className="margin-right-2"
+            disabled={isLocked}
+            onClick={() =>
+              history.push(
+                `/models/${modelID}/collaboration-area/data-exchange-approach`
+              )
+            }
             data-testid="to-data-exchange-approach"
           >
             {modifiedDts
               ? collaborationAreaT('dataExchangeApproachCard.editApproach')
               : collaborationAreaT('dataExchangeApproachCard.startApproach')}
-          </UswdsReactLink>
+          </Button>
 
           <UswdsReactLink
             variant="external"

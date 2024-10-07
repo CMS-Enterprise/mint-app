@@ -682,6 +682,32 @@ export type LaunchDarklySettings = {
 /** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
 export type LinkedExistingModel = ExistingModel | ModelPlan;
 
+export enum LockableSection {
+  BASICS = 'BASICS',
+  BENEFICIARIES = 'BENEFICIARIES',
+  DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
+  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
+  OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
+  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
+  PAYMENT = 'PAYMENT',
+  PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE'
+}
+
+export type LockableSectionLockStatus = {
+  __typename: 'LockableSectionLockStatus';
+  isAssessment: Scalars['Boolean']['output'];
+  lockedByUserAccount: UserAccount;
+  modelPlanID: Scalars['UUID']['output'];
+  section: LockableSection;
+};
+
+export type LockableSectionLockStatusChanged = {
+  __typename: 'LockableSectionLockStatusChanged';
+  actionType: ActionType;
+  changeType: ChangeType;
+  lockStatus: LockableSectionLockStatus;
+};
+
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
   EDIT_MODEL = 'EDIT_MODEL',
@@ -899,7 +925,7 @@ export type Mutation = {
   deletePlanFavorite: PlanFavorite;
   deletePlanTDL: PlanTdl;
   linkNewPlanDocument: PlanDocument;
-  lockTaskListSection: Scalars['Boolean']['output'];
+  lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
@@ -909,8 +935,8 @@ export type Mutation = {
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
   shareModelPlan: Scalars['Boolean']['output'];
-  unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
-  unlockTaskListSection: Scalars['Boolean']['output'];
+  unlockAllLockableSections: Array<LockableSectionLockStatus>;
+  unlockLockableSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
@@ -1058,9 +1084,9 @@ export type MutationLinkNewPlanDocumentArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationLockTaskListSectionArgs = {
+export type MutationLockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
+  section: LockableSection;
 };
 
 
@@ -1099,15 +1125,15 @@ export type MutationShareModelPlanArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationUnlockAllTaskListSectionsArgs = {
+export type MutationUnlockAllLockableSectionsArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
-export type MutationUnlockTaskListSectionArgs = {
+export type MutationUnlockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
+  section: LockableSection;
 };
 
 
@@ -3304,6 +3330,7 @@ export type Query = {
   echimpTDLs: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
+  lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
@@ -3320,7 +3347,6 @@ export type Query = {
   possibleOperationalNeeds: Array<PossibleOperationalNeed>;
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
-  taskListSectionLocks: Array<TaskListSectionLockStatus>;
   /**
    * TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
    * if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
@@ -3362,6 +3388,12 @@ export type QueryEchimpTdlArgs = {
 /** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryLockableSectionLocksArgs = {
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -3435,12 +3467,6 @@ export type QueryPlanTdlArgs = {
 /** Query definition for the schema */
 export type QuerySearchOktaUsersArgs = {
   searchTerm: Scalars['String']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryTaskListSectionLocksArgs = {
-  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -3609,17 +3635,17 @@ export enum StatesAndTerritories {
 
 export type Subscription = {
   __typename: 'Subscription';
-  onLockTaskListSectionContext: TaskListSectionLockStatusChanged;
-  onTaskListSectionLocksChanged: TaskListSectionLockStatusChanged;
+  onLockLockableSectionContext: LockableSectionLockStatusChanged;
+  onLockableSectionLocksChanged: LockableSectionLockStatusChanged;
 };
 
 
-export type SubscriptionOnLockTaskListSectionContextArgs = {
+export type SubscriptionOnLockLockableSectionContextArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
 
-export type SubscriptionOnTaskListSectionLocksChangedArgs = {
+export type SubscriptionOnLockableSectionLocksChangedArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -3730,21 +3756,6 @@ export enum TaskListSection {
   PAYMENT = 'PAYMENT',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE'
 }
-
-export type TaskListSectionLockStatus = {
-  __typename: 'TaskListSectionLockStatus';
-  isAssessment: Scalars['Boolean']['output'];
-  lockedByUserAccount: UserAccount;
-  modelPlanID: Scalars['UUID']['output'];
-  section: TaskListSection;
-};
-
-export type TaskListSectionLockStatusChanged = {
-  __typename: 'TaskListSectionLockStatusChanged';
-  actionType: ActionType;
-  changeType: ChangeType;
-  lockStatus: TaskListSectionLockStatus;
-};
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -4920,6 +4931,36 @@ export type UpdateModelPlanMutationVariables = Exact<{
 
 export type UpdateModelPlanMutation = { __typename: 'Mutation', updateModelPlan: { __typename: 'ModelPlan', id: UUID } };
 
+export type GetLockedModelPlanSectionsQueryVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type GetLockedModelPlanSectionsQuery = { __typename: 'Query', lockableSectionLocks: Array<{ __typename: 'LockableSectionLockStatus', modelPlanID: UUID, section: LockableSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } }> };
+
+export type LockModelPlanSectionMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  section: LockableSection;
+}>;
+
+
+export type LockModelPlanSectionMutation = { __typename: 'Mutation', lockLockableSection: boolean };
+
+export type ModelPlanSubscriptionSubscriptionVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type ModelPlanSubscriptionSubscription = { __typename: 'Subscription', onLockLockableSectionContext: { __typename: 'LockableSectionLockStatusChanged', changeType: ChangeType, actionType: ActionType, lockStatus: { __typename: 'LockableSectionLockStatus', modelPlanID: UUID, section: LockableSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } } } };
+
+export type UnlockModelPlanSectionMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  section: LockableSection;
+}>;
+
+
+export type UnlockModelPlanSectionMutation = { __typename: 'Mutation', unlockLockableSection: boolean };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5246,36 +5287,6 @@ export type GetPossibleSolutionsQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type GetPossibleSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, key: OperationalSolutionKey, pointsOfContact: Array<{ __typename: 'PossibleOperationalSolutionContact', id: UUID, name: string, email: string, isTeam: boolean, isPrimary: boolean, role?: string | null }> }> };
-
-export type GetTaskListSubscriptionsQueryVariables = Exact<{
-  modelPlanID: Scalars['UUID']['input'];
-}>;
-
-
-export type GetTaskListSubscriptionsQuery = { __typename: 'Query', taskListSectionLocks: Array<{ __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: TaskListSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } }> };
-
-export type LockTaskListSectionMutationVariables = Exact<{
-  modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
-}>;
-
-
-export type LockTaskListSectionMutation = { __typename: 'Mutation', lockTaskListSection: boolean };
-
-export type TaskListSubscriptionSubscriptionVariables = Exact<{
-  modelPlanID: Scalars['UUID']['input'];
-}>;
-
-
-export type TaskListSubscriptionSubscription = { __typename: 'Subscription', onLockTaskListSectionContext: { __typename: 'TaskListSectionLockStatusChanged', changeType: ChangeType, actionType: ActionType, lockStatus: { __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: TaskListSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } } } };
-
-export type UnlockTaskListSectionMutationVariables = Exact<{
-  modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
-}>;
-
-
-export type UnlockTaskListSectionMutation = { __typename: 'Mutation', unlockTaskListSection: boolean };
 
 export const ReadyForReviewUserFragmentFragmentDoc = gql`
     fragment ReadyForReviewUserFragment on UserAccount {
@@ -10291,6 +10302,158 @@ export function useUpdateModelPlanMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateModelPlanMutationHookResult = ReturnType<typeof useUpdateModelPlanMutation>;
 export type UpdateModelPlanMutationResult = Apollo.MutationResult<UpdateModelPlanMutation>;
 export type UpdateModelPlanMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;
+export const GetLockedModelPlanSectionsDocument = gql`
+    query GetLockedModelPlanSections($modelPlanID: UUID!) {
+  lockableSectionLocks(modelPlanID: $modelPlanID) {
+    modelPlanID
+    section
+    lockedByUserAccount {
+      id
+      username
+      commonName
+    }
+    isAssessment
+  }
+}
+    `;
+
+/**
+ * __useGetLockedModelPlanSectionsQuery__
+ *
+ * To run a query within a React component, call `useGetLockedModelPlanSectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLockedModelPlanSectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLockedModelPlanSectionsQuery({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useGetLockedModelPlanSectionsQuery(baseOptions: Apollo.QueryHookOptions<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables> & ({ variables: GetLockedModelPlanSectionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>(GetLockedModelPlanSectionsDocument, options);
+      }
+export function useGetLockedModelPlanSectionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>(GetLockedModelPlanSectionsDocument, options);
+        }
+export function useGetLockedModelPlanSectionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>(GetLockedModelPlanSectionsDocument, options);
+        }
+export type GetLockedModelPlanSectionsQueryHookResult = ReturnType<typeof useGetLockedModelPlanSectionsQuery>;
+export type GetLockedModelPlanSectionsLazyQueryHookResult = ReturnType<typeof useGetLockedModelPlanSectionsLazyQuery>;
+export type GetLockedModelPlanSectionsSuspenseQueryHookResult = ReturnType<typeof useGetLockedModelPlanSectionsSuspenseQuery>;
+export type GetLockedModelPlanSectionsQueryResult = Apollo.QueryResult<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>;
+export const LockModelPlanSectionDocument = gql`
+    mutation LockModelPlanSection($modelPlanID: UUID!, $section: LockableSection!) {
+  lockLockableSection(modelPlanID: $modelPlanID, section: $section)
+}
+    `;
+export type LockModelPlanSectionMutationFn = Apollo.MutationFunction<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
+
+/**
+ * __useLockModelPlanSectionMutation__
+ *
+ * To run a mutation, you first call `useLockModelPlanSectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLockModelPlanSectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [lockModelPlanSectionMutation, { data, loading, error }] = useLockModelPlanSectionMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      section: // value for 'section'
+ *   },
+ * });
+ */
+export function useLockModelPlanSectionMutation(baseOptions?: Apollo.MutationHookOptions<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>(LockModelPlanSectionDocument, options);
+      }
+export type LockModelPlanSectionMutationHookResult = ReturnType<typeof useLockModelPlanSectionMutation>;
+export type LockModelPlanSectionMutationResult = Apollo.MutationResult<LockModelPlanSectionMutation>;
+export type LockModelPlanSectionMutationOptions = Apollo.BaseMutationOptions<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
+export const ModelPlanSubscriptionDocument = gql`
+    subscription ModelPlanSubscription($modelPlanID: UUID!) {
+  onLockLockableSectionContext(modelPlanID: $modelPlanID) {
+    changeType
+    lockStatus {
+      modelPlanID
+      section
+      lockedByUserAccount {
+        id
+        username
+        commonName
+      }
+      isAssessment
+    }
+    actionType
+  }
+}
+    `;
+
+/**
+ * __useModelPlanSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useModelPlanSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useModelPlanSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useModelPlanSubscriptionSubscription({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useModelPlanSubscriptionSubscription(baseOptions: Apollo.SubscriptionHookOptions<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables> & ({ variables: ModelPlanSubscriptionSubscriptionVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables>(ModelPlanSubscriptionDocument, options);
+      }
+export type ModelPlanSubscriptionSubscriptionHookResult = ReturnType<typeof useModelPlanSubscriptionSubscription>;
+export type ModelPlanSubscriptionSubscriptionResult = Apollo.SubscriptionResult<ModelPlanSubscriptionSubscription>;
+export const UnlockModelPlanSectionDocument = gql`
+    mutation UnlockModelPlanSection($modelPlanID: UUID!, $section: LockableSection!) {
+  unlockLockableSection(modelPlanID: $modelPlanID, section: $section)
+}
+    `;
+export type UnlockModelPlanSectionMutationFn = Apollo.MutationFunction<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+
+/**
+ * __useUnlockModelPlanSectionMutation__
+ *
+ * To run a mutation, you first call `useUnlockModelPlanSectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnlockModelPlanSectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unlockModelPlanSectionMutation, { data, loading, error }] = useUnlockModelPlanSectionMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      section: // value for 'section'
+ *   },
+ * });
+ */
+export function useUnlockModelPlanSectionMutation(baseOptions?: Apollo.MutationHookOptions<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>(UnlockModelPlanSectionDocument, options);
+      }
+export type UnlockModelPlanSectionMutationHookResult = ReturnType<typeof useUnlockModelPlanSectionMutation>;
+export type UnlockModelPlanSectionMutationResult = Apollo.MutationResult<UnlockModelPlanSectionMutation>;
+export type UnlockModelPlanSectionMutationOptions = Apollo.BaseMutationOptions<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
@@ -13033,158 +13196,6 @@ export type GetPossibleSolutionsQueryHookResult = ReturnType<typeof useGetPossib
 export type GetPossibleSolutionsLazyQueryHookResult = ReturnType<typeof useGetPossibleSolutionsLazyQuery>;
 export type GetPossibleSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetPossibleSolutionsSuspenseQuery>;
 export type GetPossibleSolutionsQueryResult = Apollo.QueryResult<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;
-export const GetTaskListSubscriptionsDocument = gql`
-    query GetTaskListSubscriptions($modelPlanID: UUID!) {
-  taskListSectionLocks(modelPlanID: $modelPlanID) {
-    modelPlanID
-    section
-    lockedByUserAccount {
-      id
-      username
-      commonName
-    }
-    isAssessment
-  }
-}
-    `;
-
-/**
- * __useGetTaskListSubscriptionsQuery__
- *
- * To run a query within a React component, call `useGetTaskListSubscriptionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetTaskListSubscriptionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetTaskListSubscriptionsQuery({
- *   variables: {
- *      modelPlanID: // value for 'modelPlanID'
- *   },
- * });
- */
-export function useGetTaskListSubscriptionsQuery(baseOptions: Apollo.QueryHookOptions<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables> & ({ variables: GetTaskListSubscriptionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>(GetTaskListSubscriptionsDocument, options);
-      }
-export function useGetTaskListSubscriptionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>(GetTaskListSubscriptionsDocument, options);
-        }
-export function useGetTaskListSubscriptionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>(GetTaskListSubscriptionsDocument, options);
-        }
-export type GetTaskListSubscriptionsQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsQuery>;
-export type GetTaskListSubscriptionsLazyQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsLazyQuery>;
-export type GetTaskListSubscriptionsSuspenseQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsSuspenseQuery>;
-export type GetTaskListSubscriptionsQueryResult = Apollo.QueryResult<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>;
-export const LockTaskListSectionDocument = gql`
-    mutation LockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
-  lockTaskListSection(modelPlanID: $modelPlanID, section: $section)
-}
-    `;
-export type LockTaskListSectionMutationFn = Apollo.MutationFunction<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
-
-/**
- * __useLockTaskListSectionMutation__
- *
- * To run a mutation, you first call `useLockTaskListSectionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLockTaskListSectionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [lockTaskListSectionMutation, { data, loading, error }] = useLockTaskListSectionMutation({
- *   variables: {
- *      modelPlanID: // value for 'modelPlanID'
- *      section: // value for 'section'
- *   },
- * });
- */
-export function useLockTaskListSectionMutation(baseOptions?: Apollo.MutationHookOptions<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>(LockTaskListSectionDocument, options);
-      }
-export type LockTaskListSectionMutationHookResult = ReturnType<typeof useLockTaskListSectionMutation>;
-export type LockTaskListSectionMutationResult = Apollo.MutationResult<LockTaskListSectionMutation>;
-export type LockTaskListSectionMutationOptions = Apollo.BaseMutationOptions<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
-export const TaskListSubscriptionDocument = gql`
-    subscription TaskListSubscription($modelPlanID: UUID!) {
-  onLockTaskListSectionContext(modelPlanID: $modelPlanID) {
-    changeType
-    lockStatus {
-      modelPlanID
-      section
-      lockedByUserAccount {
-        id
-        username
-        commonName
-      }
-      isAssessment
-    }
-    actionType
-  }
-}
-    `;
-
-/**
- * __useTaskListSubscriptionSubscription__
- *
- * To run a query within a React component, call `useTaskListSubscriptionSubscription` and pass it any options that fit your needs.
- * When your component renders, `useTaskListSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useTaskListSubscriptionSubscription({
- *   variables: {
- *      modelPlanID: // value for 'modelPlanID'
- *   },
- * });
- */
-export function useTaskListSubscriptionSubscription(baseOptions: Apollo.SubscriptionHookOptions<TaskListSubscriptionSubscription, TaskListSubscriptionSubscriptionVariables> & ({ variables: TaskListSubscriptionSubscriptionVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<TaskListSubscriptionSubscription, TaskListSubscriptionSubscriptionVariables>(TaskListSubscriptionDocument, options);
-      }
-export type TaskListSubscriptionSubscriptionHookResult = ReturnType<typeof useTaskListSubscriptionSubscription>;
-export type TaskListSubscriptionSubscriptionResult = Apollo.SubscriptionResult<TaskListSubscriptionSubscription>;
-export const UnlockTaskListSectionDocument = gql`
-    mutation UnlockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
-  unlockTaskListSection(modelPlanID: $modelPlanID, section: $section)
-}
-    `;
-export type UnlockTaskListSectionMutationFn = Apollo.MutationFunction<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;
-
-/**
- * __useUnlockTaskListSectionMutation__
- *
- * To run a mutation, you first call `useUnlockTaskListSectionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUnlockTaskListSectionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [unlockTaskListSectionMutation, { data, loading, error }] = useUnlockTaskListSectionMutation({
- *   variables: {
- *      modelPlanID: // value for 'modelPlanID'
- *      section: // value for 'section'
- *   },
- * });
- */
-export function useUnlockTaskListSectionMutation(baseOptions?: Apollo.MutationHookOptions<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>(UnlockTaskListSectionDocument, options);
-      }
-export type UnlockTaskListSectionMutationHookResult = ReturnType<typeof useUnlockTaskListSectionMutation>;
-export type UnlockTaskListSectionMutationResult = Apollo.MutationResult<UnlockTaskListSectionMutation>;
-export type UnlockTaskListSectionMutationOptions = Apollo.BaseMutationOptions<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;
 export const TypedReadyForReviewUserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<ReadyForReviewUserFragmentFragment, unknown>;
 export const TypedGetAllBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllBasicsQuery, GetAllBasicsQueryVariables>;
 export const TypedGetBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}}]}}]}}]}}]} as unknown as DocumentNode<GetBasicsQuery, GetBasicsQueryVariables>;
@@ -13267,6 +13278,10 @@ export const TypedGetModelPlansDocument = {"kind":"Document","definitions":[{"ki
 export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]} as unknown as DocumentNode<GetUserInfoQuery, GetUserInfoQueryVariables>;
 export const TypedSearchOktaUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchOktaUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchOktaUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
 export const TypedUpdateModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;
+export const TypedGetLockedModelPlanSectionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLockedModelPlanSections"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockableSectionLocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}}]}}]} as unknown as DocumentNode<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>;
+export const TypedLockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
+export const TypedModelPlanSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ModelPlanSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockLockableSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables>;
+export const TypedUnlockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
 export const TypedUpdateNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreeToNDA"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"agree"},"value":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
 export const TypedGetNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUnreadNotifications"}},{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}},{"kind":"Field","name":{"kind":"Name","value":"inAppSent"}},{"kind":"Field","name":{"kind":"Name","value":"emailSent"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"activity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activityType"}},{"kind":"Field","name":{"kind":"Name","value":"entityID"}},{"kind":"Field","name":{"kind":"Name","value":"actorID"}},{"kind":"Field","name":{"kind":"Name","value":"actorUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewDiscussionRepliedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DatesChangedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"dateChanges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isChanged"}},{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"isRange"}},{"kind":"Field","name":{"kind":"Name","value":"oldDate"}},{"kind":"Field","name":{"kind":"Name","value":"newDate"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeEnd"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeEnd"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInPlanDiscussionActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddedAsCollaboratorMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInDiscussionReplyActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanSharedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"optionalMessage"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewModelPlanActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DailyDigestCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanIDs"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"analyzedAudits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"changes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oldName"}},{"kind":"Field","name":{"kind":"Name","value":"statusChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crTdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planSections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReview"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearance"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelLeads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"added"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"planDiscussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationsQuery, GetNotificationsQueryVariables>;
@@ -13312,7 +13327,3 @@ export const TypedUpdatePrepareForClearanceDocument = {"kind":"Document","defini
 export const TypedGetModelSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelSummaryQuery, GetModelSummaryQueryVariables>;
 export const TypedCreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"usernames"},"value":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
 export const TypedGetPossibleSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPossibleSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"pointsOfContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isTeam"}},{"kind":"Field","name":{"kind":"Name","value":"isPrimary"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;
-export const TypedGetTaskListSubscriptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTaskListSubscriptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"taskListSectionLocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}}]}}]} as unknown as DocumentNode<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>;
-export const TypedLockTaskListSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockTaskListSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TaskListSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockTaskListSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
-export const TypedTaskListSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"TaskListSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockTaskListSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<TaskListSubscriptionSubscription, TaskListSubscriptionSubscriptionVariables>;
-export const TypedUnlockTaskListSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockTaskListSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TaskListSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockTaskListSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;

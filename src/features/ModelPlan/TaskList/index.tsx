@@ -23,9 +23,9 @@ import {
 import classNames from 'classnames';
 import {
   GetCrtdLsQuery,
+  GetLockedModelPlanSectionsQuery,
   GetModelPlanQuery,
-  GetTaskListSubscriptionsQuery,
-  TaskListSection,
+  LockableSection,
   TaskStatus,
   useGetModelPlanQuery
 } from 'gql/generated/graphql';
@@ -45,18 +45,18 @@ import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
+import SectionLock from '../../../components/SectionLock';
 import Discussions from '../Discussions';
 import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 
 import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
-import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
 
 import './index.scss';
 
 type TaskListSectionLockStatus =
-  GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
@@ -95,18 +95,14 @@ type TaskListSectionsType = {
     | PrepareForClearanceType;
 };
 
-type TaskListSectionMapType = {
-  [key: string]: string;
-};
-
-const taskListSectionMap: TaskListSectionMapType = {
-  basics: TaskListSection.BASICS,
-  beneficiaries: TaskListSection.BENEFICIARIES,
-  generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
-  participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
-  payments: TaskListSection.PAYMENT,
-  prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
+const taskListSectionMap: Partial<Record<string, LockableSection>> = {
+  basics: LockableSection.BASICS,
+  generalCharacteristics: LockableSection.GENERAL_CHARACTERISTICS,
+  participantsAndProviders: LockableSection.PARTICIPANTS_AND_PROVIDERS,
+  beneficiaries: LockableSection.BENEFICIARIES,
+  opsEvalAndLearning: LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  payments: LockableSection.PAYMENT,
+  prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
 };
 
 export const getLatestModifiedDate = (
@@ -165,7 +161,7 @@ const TaskList = () => {
   // Used to conditonally render role specific text in task list
   const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
 
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
+  const { lockableSectionLocks } = useContext(SubscriptionContext);
 
   const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
@@ -245,7 +241,7 @@ const TaskList = () => {
   const getTaskListLockedStatus = (
     section: string
   ): TaskListSectionLockStatus | undefined => {
-    return taskListSectionLocks.find(
+    return lockableSectionLocks.find(
       sectionLock => sectionLock.section === taskListSectionMap[section]
     );
   };
@@ -412,18 +408,9 @@ const TaskList = () => {
                           status={taskListSections[key].status}
                         />
 
-                        <TaskListLock
-                          isAssessment={
-                            !!getTaskListLockedStatus(key)?.isAssessment
-                          }
-                          selfLocked={
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                              .username === euaId
-                          }
-                          lockedByUserAccount={
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                          }
-                        />
+                        {taskListSectionMap[key] && (
+                          <SectionLock section={taskListSectionMap[key]} />
+                        )}
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (
                         <Divider className="margin-bottom-4" />

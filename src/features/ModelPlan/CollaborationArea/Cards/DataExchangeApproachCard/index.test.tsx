@@ -1,10 +1,23 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { DataExchangeApproachStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
+import configureMockStore from 'redux-mock-store';
+
+import { ASSESSMENT } from 'constants/jobCodes';
 
 import DataExchangeApproachCard, { DataExchangeApproachType } from './index';
+
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
 
 const dataExchangeApproachMock: DataExchangeApproachType = {
   __typename: 'PlanDataExchangeApproach',
@@ -18,10 +31,12 @@ describe('DataExchangeApproachCard', () => {
   it('renders without errors', () => {
     render(
       <MemoryRouter>
-        <DataExchangeApproachCard
-          modelID="123"
-          dataExhangeApproachData={dataExchangeApproachMock}
-        />
+        <Provider store={store}>
+          <DataExchangeApproachCard
+            modelID="123"
+            dataExhangeApproachData={dataExchangeApproachMock}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -43,10 +58,12 @@ describe('DataExchangeApproachCard', () => {
 
     render(
       <MemoryRouter>
-        <DataExchangeApproachCard
-          modelID="123"
-          dataExhangeApproachData={modifiedMock}
-        />
+        <Provider store={store}>
+          <DataExchangeApproachCard
+            modelID="123"
+            dataExhangeApproachData={modifiedMock}
+          />{' '}
+        </Provider>
       </MemoryRouter>
     );
 
@@ -68,10 +85,12 @@ describe('DataExchangeApproachCard', () => {
 
     render(
       <MemoryRouter>
-        <DataExchangeApproachCard
-          modelID="123"
-          dataExhangeApproachData={modifiedMock}
-        />
+        <Provider store={store}>
+          <DataExchangeApproachCard
+            modelID="123"
+            dataExhangeApproachData={modifiedMock}
+          />{' '}
+        </Provider>
       </MemoryRouter>
     );
 
@@ -84,17 +103,15 @@ describe('DataExchangeApproachCard', () => {
   it('renders the correct links', () => {
     render(
       <MemoryRouter>
-        <DataExchangeApproachCard
-          modelID="123"
-          dataExhangeApproachData={dataExchangeApproachMock}
-        />
+        <Provider store={store}>
+          <DataExchangeApproachCard
+            modelID="123"
+            dataExhangeApproachData={dataExchangeApproachMock}
+          />{' '}
+        </Provider>
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('to-data-exchange-approach')).toHaveAttribute(
-      'href',
-      '/models/123/data-exchange-approach/about-completing-data-exchange-approach'
-    );
     expect(
       screen.getByTestId('view-data-exchange-help-article')
     ).toHaveAttribute(

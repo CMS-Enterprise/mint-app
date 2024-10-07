@@ -110,21 +110,22 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
 
         <CardBody>
           <p>{collaborationAreaT('modelPlanCard.body')}</p>
+
+          {modifiedDts && modifiedByUserAccount && (
+            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
+              <span className="text-base margin-right-1">
+                {collaborationAreaT('modelPlanCard.mostRecentEdit', {
+                  date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                })}
+              </span>
+              <Avatar
+                className="text-base-darkest"
+                user={modifiedByUserAccount.commonName}
+              />
+            </div>
+          )}
         </CardBody>
 
-        {modifiedDts && modifiedByUserAccount && (
-          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
-            <span className="text-base margin-right-1">
-              {collaborationAreaT('modelPlanCard.mostRecentEdit', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-              })}
-            </span>
-            <Avatar
-              className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
-            />
-          </div>
-        )}
         <CardFooter>
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}

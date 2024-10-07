@@ -156,7 +156,7 @@ const modelPlanTaskList = {
   assessmentLocked:
     'The MINT Team | {{-assessmentUser}} is editing this section. You may access it when they’re done.',
   lockedHeading:
-    'Someone is currently editing the Model Plan section you’re trying to access.',
+    'Someone is currently editing the section you’re trying to access.',
   lockedSubheading: 'Please try again later.',
   returnToTaskList: 'Return to the task list',
   breadCrumbState: {
