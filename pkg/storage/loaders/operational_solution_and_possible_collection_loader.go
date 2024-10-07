@@ -36,8 +36,13 @@ func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx con
 	getResFunc := func(key storage.SolutionAndPossibleKey, resMap map[uuid.UUID][]*models.OperationalSolution) ([]*models.OperationalSolution, bool) {
 		res, ok := resMap[key.OperationalNeedID]
 		// NOTE: we don't filter out the not needed for this loader, as it isn't possible to request it from the resolver
-		// if key.IncludeNotNeeded {
-		// 	lo.Filter[]()
+		// if !key.IncludeNotNeeded {
+		// 	lo.Filter(res, func(sol *models.OperationalSolution, _ int) bool {
+		// 		if sol.Needed == nil{
+		// 			return false
+		// 		}
+		// 		return *sol.Needed
+		// 	})
 		// }
 		return res, ok
 	}
