@@ -30,22 +30,17 @@ func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx con
 	// }
 	// We recreate the key, first, check if the data is needed (has a set value, and has an id)
 	// Then we map the operational need id
-	getKeyFunc := func(data *models.OperationalSolution) storage.SolutionAndPossibleKey {
-		needed := false
-
-		if data.Needed != nil && data.ID != uuid.Nil {
-			needed = *data.Needed
-		}
-
-		include := false
-		if needed {
-			include = true
-		}
-		return storage.SolutionAndPossibleKey{
-			OperationalNeedID: data.OperationalNeedID,
-			IncludeNotNeeded:  include,
-		}
+	getKeyFunc := func(data *models.OperationalSolution) uuid.UUID {
+		return data.OperationalNeedID
 	}
-	return oneToManyDataLoaderFunc(keys, sols, getKeyFunc)
+	getResFunc := func(key storage.SolutionAndPossibleKey, resMap map[uuid.UUID][]*models.OperationalSolution) ([]*models.OperationalSolution, bool) {
+		res, ok := resMap[key.OperationalNeedID]
+		// NOTE: we don't filter out the not needed for this loader, as it isn't possible to request it from the resolver
+		// if key.IncludeNotNeeded {
+		// 	lo.Filter[]()
+		// }
+		return res, ok
+	}
+	return oneToManyDataLoaderFunc(keys, sols, getKeyFunc, getResFunc)
 
 }

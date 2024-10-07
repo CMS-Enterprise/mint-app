@@ -77,10 +77,10 @@ func OneToOneFunc[K comparable, V any, Output any](keys []K, vals []V, getKey fu
 
 // OneToManyFunc takes a list of keys and a list of values which map one-to-many (key-to-value)
 // ex: vals could be a list of collaborators where more than one collaborator exists for the same model plan id
-func OneToManyFunc[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func([]V, bool) Output) []Output {
+func OneToManyFunc[K comparable, V any, mapKey comparable, Output any](keys []K, vals []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
 	// create a map to store values grouped by key (of type K)
 	// each key will map to a slice of values (of type V)
-	store := map[K][]V{}
+	store := map[mapKey][]V{}
 
 	for _, val := range vals {
 		id := getKey(val)
@@ -91,7 +91,7 @@ func OneToManyFunc[K comparable, V any, Output any](keys []K, vals []V, getKey f
 	}
 	output := make([]Output, len(keys))
 	for index, key := range keys {
-		data, ok := store[key]
+		data, ok := getRes(key, store)
 		output[index] = transformOutput(data, ok)
 	}
 
