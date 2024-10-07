@@ -77,14 +77,17 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	// Create 3 plans without additional collaborators (TEST is the only one, by default)
 	_ = suite.createModelPlan("Test Plan")
 	_ = suite.createModelPlan("Test Plan 2")
-	planWithCRTDLs := suite.createModelPlan("Test Plan with CRTDL")
+
+	// create model plans with the expected IDS from the test data
+	_ = suite.createModelPlanWithID("Test Plan with CRTDL", &eChimp1relatedMPID)
+	_ = suite.createModelPlanWithID("Test Plan with CRTDL", &eChimp2relatedMPID)
 
 	// Create a plan that has CLAB as a collaborator (along with TEST)
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
 	suite.createPlanCollaborator(planWithCollab, "CLAB", []models.TeamRole{models.TeamRoleEvaluation})
 
-	suite.createPlanCR(planWithCRTDLs, "Happy Happy Test", time.Now(), time.Now().Add(time.Hour*48), "Good CR", "This is a test")
-	suite.createPlanTDL(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good TDL", "This is a test")
+	// suite.createPlanCR(planWithCRTDLs, "Happy Happy Test", time.Now(), time.Now().Add(time.Hour*48), "Good CR", "This is a test")
+	// suite.createPlanTDL(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good TDL", "This is a test")
 
 	// Get plan collection as CLAB
 	clabPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CLAB")
@@ -96,25 +99,25 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.NotNil(result)
 	suite.Len(result, 1)
 
-	// Assert that CLAB sees all 4 model plans with include all filter
+	// Assert that CLAB sees all 5 model plans with include all filter
 	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 4)
+	suite.Len(result, 5)
 
-	// Assert that TEST only sees all 4 model plans with collab only filter (as they're a collaborator on all of them)
+	// Assert that TEST only sees all 5 model plans with collab only filter (as they're a collaborator on all of them)
 	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 4)
+	suite.Len(result, 5)
 
-	// Assert that TEST sees all 4 model plans with include all filter
+	// Assert that TEST sees all 5 model plans with include all filter
 	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 4)
+	suite.Len(result, 5)
 
-	// Assert that TEST sees all model plans
+	// Assert that TEST sees all model plans with CR / TDLS
 	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls)
 	suite.NoError(err)
 	suite.NotNil(result)
