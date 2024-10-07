@@ -7,8 +7,12 @@ import (
 	"time"
 
 	"github.com/samber/lo"
+	"github.com/spf13/viper"
+	"golang.org/x/exp/maps"
 
+	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -338,8 +342,21 @@ func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.
 	return plan, nil
 }
 
+// ModelPlansWithEchimpCRAndTDLS returns all model plans that have an echimp cr or tdl associated with it
+func ModelPlansWithEchimpCRAndTDLS(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, store *storage.Store) ([]*models.ModelPlan, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
+	if err != nil {
+		return nil, err
+	}
+
+	modelPlanIDs := maps.Keys(data.CrsAndTDLsByModelPlanID)
+
+	return storage.ModelPlansGetByModePlanIDsLOADER(store, logger, modelPlanIDs)
+
+}
+
 // ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
+func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 	var err error
 	switch filter {
@@ -348,7 +365,7 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 	case model.ModelPlanFilterCollabOnly:
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
-		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+		modelPlans, err = ModelPlansWithEchimpCRAndTDLS(echimpS3Client, viperConfig, logger, store)
 	case model.ModelPlanFilterFavorited:
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterApproachingClearance:
