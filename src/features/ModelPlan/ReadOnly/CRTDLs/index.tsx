@@ -29,7 +29,7 @@ const ReadOnlyCRTDLs = ({
             el: (
               <ExternalLink
                 className="margin-right-0"
-                href="https://echimp.cmsnet/"
+                href={import.meta.env.VITE_ECHIMP_URL}
                 toEchimp
               >
                 {' '}

@@ -101,7 +101,7 @@ const EChimpCard = ({
           {crtdlsT('echimpCard.viewMore')}
         </Button>
         <ExternalLink
-          href="https://echimp.cmsnet/"
+          href={import.meta.env.VITE_ECHIMP_URL}
           className="margin-right-0"
           toEchimp
         >
