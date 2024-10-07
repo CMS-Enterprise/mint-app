@@ -60,7 +60,7 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
 
       <CardFooter>
         <ExternalLink
-          href="https://echimp.cmsnet/"
+          href={import.meta.env.VITE_ECHIMP_URL}
           className="usa-button"
           variant="unstyled"
           asButton
