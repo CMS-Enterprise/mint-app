@@ -35,7 +35,10 @@ export const CRTDLs = () => {
             {crtdlsT('heading')}
           </PageHeading>
 
-          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+          <p
+            className="margin-top-1 margin-bottom-0 font-body-lg"
+            data-testid="model-plan-name"
+          >
             {crtdlsT('subheading', { modelName })}
           </p>
 

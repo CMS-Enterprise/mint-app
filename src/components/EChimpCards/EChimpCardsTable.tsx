@@ -102,11 +102,13 @@ const EChimpCardsTable = ({
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
-      setFilteredEchimpItems(searchSolutions(query, echimpItems));
+      setFilteredEchimpItems(
+        handleSort(searchSolutions(query, echimpItems), sort)
+      );
     } else {
-      setFilteredEchimpItems(echimpItems);
+      setFilteredEchimpItems(handleSort(echimpItems, sort));
     }
-  }, [query, echimpItems]);
+  }, [query, echimpItems, sort]);
 
   useEffect(() => {
     setFilteredEchimpItems(handleSort(filteredEchimpItems, sort));
