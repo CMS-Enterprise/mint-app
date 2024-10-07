@@ -16,39 +16,52 @@ enum ActionType {
   ADMIN
 }
 
-type TaskListSectionLockStatusChanged {
+# LockableSection represents any section of the application that a user can uniquely hold a lock on.
+# It _largely_ (currently) maps to the sections of the Task List, but also includes Data Exchange, which notably isn't part of the Task List.
+enum LockableSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  PREPARE_FOR_CLEARANCE,
+  DATA_EXCHANGE_APPROACH
+}
+
+type LockableSectionLockStatusChanged {
   changeType: ChangeType!
-  lockStatus: TaskListSectionLockStatus!
+  lockStatus: LockableSectionLockStatus!
   actionType: ActionType!
 }
 
-type TaskListSectionLockStatus {
+type LockableSectionLockStatus {
   modelPlanID: UUID!
-  section: TaskListSection!
+  section: LockableSection!
   lockedByUserAccount: UserAccount!
   isAssessment: Boolean!
 }
 
 extend type Query {
-  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  lockableSectionLocks(modelPlanID: UUID!): [LockableSectionLockStatus!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+  lockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
   @hasRole(role: MINT_USER)
 
-  unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+  unlockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
   @hasRole(role: MINT_USER)
 
-  unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  unlockAllLockableSections(modelPlanID: UUID!): [LockableSectionLockStatus!]!
   @hasRole(role: MINT_ASSESSMENT)
 }
 
 type Subscription {
-  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  onLockableSectionLocksChanged(modelPlanID: UUID!): LockableSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
 
-  onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  onLockLockableSectionContext(modelPlanID: UUID!): LockableSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
 }

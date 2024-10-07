@@ -10,6 +10,7 @@ enum ActivityType {
   MODEL_PLAN_SHARED
   NEW_MODEL_PLAN
   DATES_CHANGED
+  DATA_EXCHANGE_APPROACH_COMPLETED
 }
 
 enum DateChangeFieldType {
@@ -24,7 +25,7 @@ enum DateChangeFieldType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta | DatesChangedActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta | DatesChangedActivityMeta | PlanDataExchangeApproachCompletedActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -111,6 +112,16 @@ type DatesChangedActivityMeta {
   modelPlanID: UUID!
   modelPlan: ModelPlan!
   dateChanges: [DateChange!]!
+}
+
+type PlanDataExchangeApproachCompletedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  dataExchangeApproachID: UUID!
+  dataExchangeApproach: PlanDataExchangeApproach!
+  modelPlan: ModelPlan!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
 }
 
 """

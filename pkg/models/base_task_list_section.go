@@ -24,8 +24,7 @@ type IBaseTaskListSection interface {
 
 // baseTaskListSection represents all the shared fields in common to a task list section
 type baseTaskListSection struct {
-	baseStruct
-	modelPlanRelation
+	coreTaskListSection
 	ReadyForReviewBy     *uuid.UUID `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts    *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	ReadyForClearanceBy  *uuid.UUID `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
@@ -35,12 +34,9 @@ type baseTaskListSection struct {
 
 // NewBaseTaskListSection makes a task list section by a modelPlanID and user id of the user creating it
 func NewBaseTaskListSection(createdBy uuid.UUID, modelPlanID uuid.UUID) baseTaskListSection {
-
 	return baseTaskListSection{
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-
-		Status:     TaskReady,
-		baseStruct: NewBaseStruct(createdBy),
+		coreTaskListSection: NewCoreTaskListSection(createdBy, modelPlanID),
+		Status:              TaskReady,
 	}
 
 }

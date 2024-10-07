@@ -15,7 +15,7 @@ interface LocationState {
   error: boolean;
   route: string;
 }
-const LockedTaskListSection = () => {
+const LockedModelPlanSection = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const location = useLocation<LocationState>();
   const { error, route } = location?.state;
@@ -27,8 +27,7 @@ const LockedTaskListSection = () => {
         <Breadcrumbs
           items={[
             BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST
+            BreadcrumbItemOptions.COLLABORATION_AREA
           ]}
           customItem={t(`breadCrumbState.${route}`)}
         />
@@ -61,7 +60,7 @@ const LockedTaskListSection = () => {
             variant="unstyled"
             to={`/models/${modelID}/collaboration-area/task-list`}
           >
-            {t('returnToTaskList')}
+            {t('returnToCollaboration')}
           </UswdsReactLink>
         </div>
       )}
@@ -69,4 +68,4 @@ const LockedTaskListSection = () => {
   );
 };
 
-export default LockedTaskListSection;
+export default LockedModelPlanSection;

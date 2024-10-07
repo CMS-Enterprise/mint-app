@@ -60,7 +60,6 @@ func ModelPlanCreate(
 		userAccount := principal.Account()
 
 		createdPlan, err := store.ModelPlanCreate(tx, logger, plan)
-
 		if err != nil {
 			return nil, err
 		}
@@ -68,8 +67,8 @@ func ModelPlanCreate(
 		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 		// Create a default plan basics object
-
 		basics := models.NewPlanBasics(baseTaskListUser)
+
 		_, err = store.PlanBasicsCreate(tx, logger, basics)
 		if err != nil {
 			return nil, err
@@ -82,7 +81,8 @@ func ModelPlanCreate(
 		if err != nil {
 			return nil, err
 		}
-		// Create a default Plan Beneficiares object
+
+		// Create a default Plan Beneficiaries object
 		beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
 		_, err = store.PlanBeneficiariesCreate(tx, logger, beneficiaries)
@@ -110,6 +110,14 @@ func ModelPlanCreate(
 		planPayments := models.NewPlanPayments(baseTaskListUser)
 
 		_, err = store.PlanPaymentsCreate(tx, logger, planPayments)
+		if err != nil {
+			return nil, err
+		}
+
+		// Create default Plan Data Exchange Approach object
+		dataExchangeApproach := models.NewPlanDataExchangeApproachFromBaseTaskListSection(baseTaskListUser)
+
+		_, err = store.PlanDataExchangeApproachCreate(tx, logger, dataExchangeApproach)
 		if err != nil {
 			return nil, err
 		}

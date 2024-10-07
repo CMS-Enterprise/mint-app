@@ -9,6 +9,7 @@ SET
     new_model_plan = :new_model_plan,
     dates_changed = :dates_changed,
     dates_changed_notification_type = :dates_changed_notification_type,
+    data_exchange_approach_completed = :data_exchange_approach_completed,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -25,6 +26,7 @@ model_plan_shared,
 new_model_plan,
 dates_changed,
 dates_changed_notification_type,
+data_exchange_approach_completed,
 created_by,
 created_dts,
 modified_by,

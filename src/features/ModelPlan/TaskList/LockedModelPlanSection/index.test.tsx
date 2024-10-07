@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
-import LockedTaskListSection from '.';
+import LockedModelPlanSection from '.';
 
 const modelID = '53e06174-83b9-462a-86d0-3a936f3c2670';
 
@@ -18,14 +18,14 @@ describe('Locked Task List Section Page', () => {
         ]}
       >
         <Route path="/models/:modelID/locked-task-list-section">
-          <LockedTaskListSection />
+          <LockedModelPlanSection />
         </Route>
       </MemoryRouter>
     );
 
     await waitFor(() => {
       expect(getByTestId('page-locked')).toHaveTextContent(
-        'Someone is currently editing the Model Plan section you’re trying to access'
+        'Someone is currently editing the section you’re trying to access.'
       );
     });
   });
@@ -41,7 +41,7 @@ describe('Locked Task List Section Page', () => {
         ]}
       >
         <Route path="/models/:modelID/locked-task-list-section">
-          <LockedTaskListSection />
+          <LockedModelPlanSection />
         </Route>
       </MemoryRouter>
     );
@@ -64,7 +64,7 @@ describe('Locked Task List Section Page', () => {
         ]}
       >
         <Route path="/models/:modelID/locked-task-list-section">
-          <LockedTaskListSection />
+          <LockedModelPlanSection />
         </Route>
       </MemoryRouter>
     );

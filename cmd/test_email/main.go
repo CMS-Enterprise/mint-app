@@ -30,9 +30,11 @@ func main() {
 	//DiscussionReply email
 	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
 
+	// Model plan emails
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, templateService, addressBook)
+	sendDataExchangeApproachCompletedEmailNotificationTest(emailService, templateService, addressBook)
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
 
@@ -392,6 +394,30 @@ func sendCollaboratorAddedEmailTest(
 	noErr(err)
 
 	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	noErr(err)
+}
+
+func sendDataExchangeApproachCompletedEmailNotificationTest(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+
+	modelPlan := models.NewModelPlan(
+		uuid.Nil,
+		"Retcon Plan",
+	)
+
+	err := resolvers.SendDataExchangeApproachCompletedEmailNotification(
+		emailService,
+		templateService,
+		addressBook,
+		modelPlan,
+		"marty.mcfly@delorean.88",
+		"Doc Brown",
+		true,
+	)
+
 	noErr(err)
 }
 
