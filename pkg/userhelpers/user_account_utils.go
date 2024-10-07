@@ -205,7 +205,10 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 
 // UserAccountGetByIDLOADER uses a data loader to return a user account from the database
 func UserAccountGetByIDLOADER(ctx context.Context, id uuid.UUID) (*authentication.UserAccount, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	userAccountLoader := allLoaders.UserAccountLoader
 
 	key := loaders.NewKeyArgs()

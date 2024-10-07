@@ -2,59 +2,54 @@ package loaders
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/graph-gophers/dataloader"
-	"go.uber.org/zap"
+	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+
+	"github.com/graph-gophers/dataloader/v7"
 )
 
-// GetOperationalSolutionAndPossibleCollectionByOperationalNeedID uses a data loader to return operational solutions by operational need id
-func (loaders *DataLoaders) GetOperationalSolutionAndPossibleCollectionByOperationalNeedID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, keys []storage.SolutionAndPossibleKey) []*dataloader.Result[[]*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := ConvertToKeyArgsArray(keys)
+	output := make([]*dataloader.Result[[]*models.OperationalSolution], len(keys))
+	loaders, err := Loaders(ctx)
 	if err != nil {
-		logger.Error("issue converting keys for data loader in Operational Solutions", zap.Error(*err))
-	}
-	marshaledParams, err := arrayCK.ToJSONArray()
-	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Operational Solutions", zap.Error(*err))
+		for index := range keys {
+			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: err}
+		}
+		return output
 	}
 
-	dr := loaders.DataReader
+	sols, loadErr := storage.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(loaders.DataReader.Store, logger, keys)
 
-	sols, loadErr := dr.Store.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(logger, marshaledParams)
 	if loadErr != nil {
-		return []*dataloader.Result{{Data: nil, Error: loadErr}}
+		for index := range keys {
+			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: loadErr}
+		}
+		return output
 
 	}
-	solsByID := map[string][]*models.OperationalSolution{}
+	solsByID := map[uuid.UUID][]*models.OperationalSolution{}
 	for _, sol := range sols {
-		slice, ok := solsByID[string(sol.OperationalNeedID.String())]
+		slice, ok := solsByID[sol.OperationalNeedID]
 		if ok {
 			slice = append(slice, sol) //Add to existing slice
-			solsByID[string(sol.OperationalNeedID.String())] = slice
+			solsByID[sol.OperationalNeedID] = slice
 			continue
 		}
-		solsByID[string(sol.OperationalNeedID.String())] = []*models.OperationalSolution{sol}
+		solsByID[sol.OperationalNeedID] = []*models.OperationalSolution{sol}
 	}
 
-	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
-		ck, ok := key.Raw().(KeyArgs)
-		if ok {
+		//Note we aren't verifying the not needed when we return the result.... We should be including needed / not needed programmatically.
+		//  This is an edge case when a need is queried twice, once with needed once without. In practice, this doesn't happen. As this is getting refactored, we will leave it as is.
 
-			resKey := fmt.Sprint(ck.Args["operational_need_id"])
-			sols := solsByID[resKey] //Any Solutions not found will return a zero state result eg empty array
+		sols := solsByID[key.OperationalNeedID] //Any Solutions not found will return a zero state result eg empty array
 
-			output[index] = &dataloader.Result{Data: sols, Error: nil}
-
-		} else {
-			err := fmt.Errorf("could not retrive key from %s", key.String())
-			output[index] = &dataloader.Result{Data: nil, Error: err}
-		}
+		output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: sols, Error: nil}
 
 	}
 	return output

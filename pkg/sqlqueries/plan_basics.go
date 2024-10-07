@@ -31,5 +31,6 @@ var PlanBasics = planBasicsScripts{
 	Update:                 planBasicsUpdateSQL,
 	GetByID:                planBasicsGetByIDSQL,
 	GetByModelPlanIDLoader: planBasicsGetByModelPlanIDLoaderSQL,
-	GetByModelPlanID:       planBasicsGetByModelPlanIDSQL,
+
+	GetByModelPlanID: planBasicsGetByModelPlanIDSQL,
 }

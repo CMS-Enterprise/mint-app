@@ -4,49 +4,60 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/graph-gophers/dataloader"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+
+	"github.com/graph-gophers/dataloader/v7"
 )
 
-// GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
-	dr := loaders.DataReader
+// planBasicsLoaders is a struct that holds LoaderWrappers related to Plan Basics
+type planBasicsLoaders struct {
+	// ByModelPlanID Gets a plan basics record associated with a model plan by the supplied model plan id
+	ByModelPlanID LoaderWrapper[uuid.UUID, *models.PlanBasics]
+}
 
+// PlanBasics is the singleton instance of all LoaderWrappers related to Plan Basics
+var PlanBasics = &planBasicsLoaders{
+	ByModelPlanID: NewLoaderWrapper(batchPlanBasicsGetByModelPlanID),
+}
+
+func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.PlanBasics] {
 	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := ConvertToKeyArgsArray(keys)
+	output := make([]*dataloader.Result[*models.PlanBasics], len(modelPlanIDs))
+	loaders, err := Loaders(ctx)
 	if err != nil {
-		logger.Error("issue converting keys for data loader in Plan Basics", zap.Error(*err))
-	}
-	marshaledParams, err := arrayCK.ToJSONArray()
-	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Plan Basics", zap.Error(*err))
+		for index := range modelPlanIDs {
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err}
+		}
+		return output
 	}
 
-	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, marshaledParams)
-	basicsByID := lo.Associate(basics, func(b *models.PlanBasics) (string, *models.PlanBasics) {
-		return b.ModelPlanID.String(), b
+	data, err := storage.PlanBasicsGetByModelPlanIDLoader(loaders.DataReader.Store, logger, modelPlanIDs)
+	if err != nil {
+
+		for index := range modelPlanIDs {
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err}
+		}
+		return output
+	}
+	basicsByModelPlanID := lo.Associate(data, func(basics *models.PlanBasics) (uuid.UUID, *models.PlanBasics) {
+		return basics.ModelPlanID, basics
 	})
 
 	// RETURN IN THE SAME ORDER REQUESTED
-	output := make([]*dataloader.Result, len(keys))
-	for index, key := range keys {
-		ck, ok := key.Raw().(KeyArgs)
+
+	for index, id := range modelPlanIDs {
+
+		basics, ok := basicsByModelPlanID[id]
 		if ok {
-			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			basic, ok := basicsByID[resKey]
-			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
-			} else {
-				err := fmt.Errorf("plan basic not found for model plan %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
-			}
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: basics, Error: nil}
 		} else {
-			err := fmt.Errorf("could not retrive key from %s", key.String())
-			output[index] = &dataloader.Result{Data: nil, Error: err}
+			err2 := fmt.Errorf("plan basics not found for modelPlanID id %s", id)
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err2}
 		}
 	}
 	return output

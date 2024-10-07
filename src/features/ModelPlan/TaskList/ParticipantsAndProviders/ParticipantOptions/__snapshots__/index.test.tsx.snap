@@ -254,7 +254,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-confidence-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -390,7 +390,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-recruitment-method-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -513,7 +513,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-selection-note-add-note-toggle"
             type="button"
           >
             <svg
