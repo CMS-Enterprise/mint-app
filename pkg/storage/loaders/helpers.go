@@ -16,9 +16,17 @@ func transformToDataLoaderResult[V any](val V, valueFound bool) *dataloader.Resu
 	return &dataloader.Result[V]{Data: val, Error: fmt.Errorf("issue getting result for type %T, err: %w", val, ErrRecordNotFoundForKey)}
 }
 
+// transformToDataLoaderResultAllowNils transforms an output to a dataloader result. It doesn't error if there is not a value for the given key.
+func transformToDataLoaderResultAllowNils[V any](val V, valueFound bool) *dataloader.Result[V] {
+	return &dataloader.Result[V]{Data: val, Error: nil}
+}
+
 func oneToOneDataLoaderFunc[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[V] {
 
 	return helpers.OneToOneFunc(keys, values, getKey, transformToDataLoaderResult)
+}
+func oneToManyDataLoaderFunc[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[[]V] {
+	return helpers.OneToManyFunc(keys, values, getKey, transformToDataLoaderResultAllowNils)
 }
 
 func errorPerEachKey[K comparable, V any](keys []K, err error) []*dataloader.Result[V] {

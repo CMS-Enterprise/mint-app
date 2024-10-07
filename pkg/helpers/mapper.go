@@ -1,11 +1,5 @@
 package helpers
 
-import (
-	"fmt"
-
-	"github.com/graph-gophers/dataloader/v7"
-)
-
 // Mapper can be implemented so that it can use OneToMany below to map a flat list of values
 // to a flat list of their relative keys
 type Mapper[keyT comparable, valT any] interface {
@@ -81,26 +75,24 @@ func OneToOneFunc[K comparable, V any, Output any](keys []K, vals []V, getKey fu
 	return output
 }
 
-// OneToManyDataLoaderFunc takes a list of keys and a list of values which map one-to-one (key-to-value)
-func OneToManyDataLoaderFunc[K comparable, V any](keys []K, vals []V, getKey func(V) K) []*dataloader.Result[V] {
-	store := map[K]V{}
+// OneToManyFunc takes a list of keys and a list of values which map one-to-many (key-to-value)
+// ex: vals could be a list of collaborators where more than one collaborator exists for the same model plan id
+func OneToManyFunc[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func([]V, bool) Output) []Output {
+	// create a map to store values grouped by key (of type K)
+	// each key will map to a slice of values (of type V)
+	store := map[K][]V{}
 
 	for _, val := range vals {
 		id := getKey(val)
-		store[id] = val
+		if _, ok := store[id]; !ok {
+			store[id] = []V{}
+		}
+		store[id] = append(store[id], val)
 	}
-	output := make([]*dataloader.Result[V], len(keys))
-
+	output := make([]Output, len(keys))
 	for index, key := range keys {
 		data, ok := store[key]
-		if ok {
-			output[index] = &dataloader.Result[V]{Data: data, Error: nil}
-		} else {
-			// data is the zero state of the type
-			err := fmt.Errorf("result not found for given key %v", key)
-			output[index] = &dataloader.Result[V]{Data: data, Error: err}
-		}
-
+		output[index] = transformOutput(data, ok)
 	}
 
 	return output
