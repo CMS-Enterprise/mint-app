@@ -26,9 +26,18 @@ func NewDataLoaderMiddleware(loaders *DataLoaders) func(http.Handler) http.Handl
 	}
 }
 
-// Loaders returns the dataLoaders for a given context
-func Loaders(ctx context.Context) *DataLoaders {
-	return ctx.Value(loadersKey).(*DataLoaders)
+// Loaders returns the dataLoaders for a given context, along with an error to say if it is not on the context, or is of the wrong type.
+func Loaders(ctx context.Context) (*DataLoaders, error) {
+	loaders := ctx.Value(loadersKey)
+	if loaders == nil {
+		return nil, ErrNoLoaderOnContext
+	}
+
+	dl, ok := loaders.(*DataLoaders)
+	if !ok {
+		return nil, ErrLoaderOfWrongType
+	}
+	return dl, nil
 }
 
 // CTXWithLoaders decorates the context with a dataloader
