@@ -1,0 +1,136 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ExternalResourceCard > matches the snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-4 article"
+    data-testid="article-card"
+  >
+    <div
+      class="usa-card__container radius-md shadow-2 minh-mobile padding-0"
+    >
+      <div
+        class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
+      >
+        <svg
+          class="usa-icon margin-right-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+          />
+        </svg>
+         External resource
+      </div>
+      <div
+        class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
+      >
+        <header
+          class="usa-card__header padding-0"
+          data-testid="CardHeader"
+        >
+          <h3
+            class="line-height-body-4 margin-bottom-1 margin-top-3"
+          >
+            Quality Vertical health equity resources on SharePoint 
+          </h3>
+        </header>
+        <a
+          class="usa-link width-fit-content display-block "
+          href="/help-and-knowledge/articles?category=getting-started"
+        >
+          <span
+            aria-label="Articles under the Getting started category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            Getting started
+          </span>
+        </a>
+        <div
+          class="usa-card__body padding-x-0 article__body padding-top-2"
+          data-testid="CardBody"
+        >
+          <div>
+            <span
+              class="display-block"
+              id="QUALITY_VERTICAL_HEALTH_EQUITY"
+            >
+              <div
+                class="tiptap__readonly"
+                id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
+              >
+                <div
+                  class="tiptap ProseMirror"
+                  contenteditable="false"
+                  id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
+                  translate="no"
+                >
+                  <p>
+                    Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...
+                  </p>
+                </div>
+              </div>
+            </span>
+            <button
+              aria-controls="QUALITY_VERTICAL_HEALTH_EQUITY"
+              aria-expanded="true"
+              class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
+              data-testid="button"
+              type="button"
+            >
+              Read more
+              <svg
+                class="usa-icon"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+          data-testid="CardFooter"
+        >
+          <button
+            class="usa-button usa-button usa-button--outline margin-right-2"
+            data-testid="button"
+            type="button"
+          >
+            <span>
+              View on SharePoint
+              <svg
+                class="usa-icon margin-left-05 top-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </li>
+   
+</DocumentFragment>
+`;
