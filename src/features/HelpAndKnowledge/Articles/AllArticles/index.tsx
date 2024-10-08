@@ -51,7 +51,10 @@ const AllArticles = () => {
           />
         </Grid>
 
-        <ResourcesByCategory currentCategory={category as ArticleCategories} />
+        <ResourcesByCategory
+          currentCategory={category as ArticleCategories}
+          className="margin-bottom-2"
+        />
       </GridContainer>
     </MainContent>
   );

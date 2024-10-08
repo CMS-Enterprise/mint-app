@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
@@ -30,7 +31,12 @@ const ResourcesByCategory = ({
   );
 
   return (
-    <div className="padding-y-105 border-top-2px border-gray-10 margin-top-2">
+    <div
+      className={classNames(
+        'padding-y-105 border-top-2px border-gray-10 margin-top-2',
+        className
+      )}
+    >
       <h4>{!currentCategory ? t('browseByCategory') : t('otherCategories')}</h4>
       <Grid row>
         {currentCategory && (
