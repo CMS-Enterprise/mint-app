@@ -1,9 +1,6 @@
 WITH QUERIED_IDS AS (
     /*Translate the input to a table */
-    SELECT id
-    FROM
-        JSON_TO_RECORDSET(:paramTableJSON)
-        AS x("id" UUID) --noqa
+    SELECT UNNEST(CAST(:model_plan_ids AS UUID[]))  AS id
 )
 
 SELECT
@@ -18,5 +15,5 @@ SELECT
     plan.modified_by,
     plan.modified_dts
 
-FROM QUERIED_IDS AS qIDs
-INNER JOIN model_plan AS plan ON plan.id = qIDs.id;
+FROM model_plan AS plan
+INNER JOIN QUERIED_IDS AS qIDs ON plan.id = qIDs.id;

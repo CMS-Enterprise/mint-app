@@ -1,15 +1,17 @@
 package loaders
 
-import "github.com/graph-gophers/dataloader"
+import (
+	oldDataloader "github.com/graph-gophers/dataloader"
+)
 
 // WrappedDataLoader wraps a DataLoader so it has access to an optional Map
 type WrappedDataLoader struct {
-	Loader *dataloader.Loader
+	Loader *oldDataloader.Loader
 }
 
-func newWrappedDataLoader(batchFn dataloader.BatchFunc) *WrappedDataLoader {
+func newWrappedDataLoader(batchFn oldDataloader.BatchFunc) *WrappedDataLoader {
 
 	return &WrappedDataLoader{
-		Loader: dataloader.NewBatchedLoader(batchFn, dataloader.WithClearCacheOnBatch()),
+		Loader: oldDataloader.NewBatchedLoader(batchFn, oldDataloader.WithClearCacheOnBatch()),
 	}
 }

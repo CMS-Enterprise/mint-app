@@ -307,25 +307,16 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 
 // ModelPlanGetByIDLOADER implements resolver logic to get Model Plan by a model plan ID using a data loader
 func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
-	allLoaders := loaders.Loaders(ctx)
-	planLoader := allLoaders.ModelPlanLoader
-	key := loaders.NewKeyArgs()
-	key.Args["id"] = id
-
-	thunk := planLoader.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
-
-	return result.(*models.ModelPlan), nil
+	return loaders.ModelPlan.GetByID.Load(ctx, id)
 }
 
 // ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER implements resolver logic to get Model Plan
 // Operational Solution Last Modified Dts by a model plan ID using a data loader
 func ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	planTrackingDateLoader := allLoaders.ModelPlanOpSolutionLastModifiedDtsLoader
 	key := loaders.NewKeyArgs()
 	key.Args["id"] = id

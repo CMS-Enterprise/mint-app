@@ -14,7 +14,10 @@ import (
 
 // PlanBeneficiariesGetByModelPlanIDLOADER implements resolver logic to get Plan Beneficiaries by a model plan ID using a data loader
 func PlanBeneficiariesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBeneficiaries, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	benesLoader := allLoaders.BeneficiariesLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID
