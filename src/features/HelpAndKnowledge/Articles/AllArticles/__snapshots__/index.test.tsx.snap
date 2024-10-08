@@ -33,7 +33,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link usa-breadcrumb__link"
-                  href="/"
+                  href="/help-and-knowledge"
                 >
                   <span>
                     Help and Knowledge Center
@@ -44,7 +44,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 aria-current="page"
                 class="usa-breadcrumb__list-item usa-current"
               >
-                All help resources
+                <span>
+                  All help resources
+                </span>
               </li>
             </ol>
           </nav>

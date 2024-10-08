@@ -339,7 +339,9 @@ const TwoPagerMeeting = () => {
                           <ExternalLink
                             className="margin-right-0"
                             href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
-                          />
+                          >
+                            {' '}
+                          </ExternalLink>
                         )
                       }}
                     />
