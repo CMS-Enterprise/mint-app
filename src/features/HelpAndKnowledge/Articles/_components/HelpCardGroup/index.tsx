@@ -10,10 +10,11 @@ import {
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import ArticleCard from 'features/HelpAndKnowledge/Articles/_components/ArticleCard';
-import Search from 'features/ModelPlan/ChangeHistory/components/Search';
 import i18next from 'i18next';
 
+import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
+import TableResults from 'components/TableResults';
 import { tObject } from 'utils/translation';
 
 import { ArticleProps, HelpArticle } from '../..';
@@ -84,7 +85,6 @@ const HelpCardGroup = ({
 
   // Search/query configuration
   const [query, setQuery] = useState<string>('');
-  const [resultsNum, setResultsNum] = useState<number>(0);
 
   // Pagination Configuration
   const [itemsPerPage, setItemsPerPage] = useState<number>(9);
@@ -112,7 +112,6 @@ const HelpCardGroup = ({
 
       // Sets audit changes based on the filtered audits
       setHelpResources(filteredAudits);
-      setResultsNum(filteredAudits.length);
     } else {
       // Sets the default audits if no query present
       setHelpResources(sortedResources);
@@ -210,14 +209,12 @@ const HelpCardGroup = ({
           <Grid row>
             <Grid tablet={{ col: 6 }}>
               {/* Search bar and results info */}
-              <Search
-                query={query}
-                resultsNum={resultsNum}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage - 1}
-                setQuery={setQuery}
-                results={helpResources as any}
-                currentResults={currentItems as any}
+              <GlobalClientFilter
+                globalFilter={query}
+                setGlobalFilter={setQuery}
+                tableID="help-articles"
+                tableName=""
+                className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
               />
             </Grid>
 
@@ -254,6 +251,16 @@ const HelpCardGroup = ({
                   })}
                 </Select>
               </div>
+            </Grid>
+
+            <Grid desktop={{ col: 12 }}>
+              <TableResults
+                globalFilter={query}
+                pageIndex={currentPage - 1}
+                pageSize={itemsPerPage}
+                filteredRowLength={currentItems.length}
+                rowLength={helpResources.length}
+              />
             </Grid>
           </Grid>
         </div>

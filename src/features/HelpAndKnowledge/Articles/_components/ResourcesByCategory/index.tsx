@@ -37,7 +37,10 @@ const ResourcesByCategory = ({
         className
       )}
     >
-      <h4>{!currentCategory ? t('browseByCategory') : t('otherCategories')}</h4>
+      <h3 className="margin-bottom-4">
+        {!currentCategory ? t('browseByCategory') : t('otherCategories')}
+      </h3>
+
       <Grid row>
         {currentCategory && (
           <Grid desktop={{ col: 4 }}>
