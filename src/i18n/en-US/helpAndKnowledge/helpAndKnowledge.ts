@@ -2016,12 +2016,12 @@ type ExternalResourcesType = {
 
 const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
-    heading: 'IT Lead training materials on SharePoint',
+    heading: 'Announcement materials on SharePoint',
     description:
       'Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The available materials include guides, FAQs, and SOPs.'
   },
   [HelpArticle.IT_LEAD_TRAINING_MATERIALS]: {
-    heading: 'Announcement materials on SharePoint',
+    heading: 'IT Lead training materials on SharePoint',
     description:
       'IT leads are BSG team members who work with model teams. Access training slides and recordings to understand IT Lead roles and responsibilities, helpful background information about various systems and processes, and more.'
   },

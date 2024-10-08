@@ -12,6 +12,8 @@ import classnames from 'classnames';
 import { ArticleCategories } from 'features/HelpAndKnowledge/Articles';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 
+import TruncatedText from 'components/TruncatedText';
+
 type ExternalResourceCardProps = {
   className?: string;
   route: string;
@@ -43,7 +45,7 @@ const ExternalResourceCard = ({
         <Icon.Launch className="margin-right-05" /> {t('externalResource')}
       </div>
 
-      <div className="padding-x-3 padding-bottom-3">
+      <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full">
         <CardHeader className="padding-0">
           <h3 className="line-height-body-4 margin-bottom-1 margin-top-3">
             {t(`externalResources.${translation}.heading`)}
@@ -53,7 +55,11 @@ const ExternalResourceCard = ({
         {tag && <HelpCategoryTag type={type} />}
 
         <CardBody className="padding-x-0 article__body padding-top-2">
-          <p>{t(`externalResources.${translation}.description`)}</p>
+          <TruncatedText
+            charLimit={110}
+            id={translation}
+            text={t(`externalResources.${translation}.description`)}
+          />
         </CardBody>
 
         <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
