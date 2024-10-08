@@ -13,13 +13,19 @@ import {
   StatusMessageType
 } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { TaskStatus, useGetModelPlanQuery } from 'gql/generated/graphql';
+import {
+  GetModelPlanQuery,
+  TaskStatus,
+  useGetModelPlanQuery,
+  UserAccount
+} from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
+import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
 
 // importing global card styles from Cards/cards.scss
@@ -31,6 +37,27 @@ type ModelPlanCardType = {
   setStatusMessage: (message: StatusMessageType) => void;
 };
 
+export const getLastModifiedSection = (
+  modelPlan: GetModelPlanQuery['modelPlan'] | undefined
+) => {
+  if (!modelPlan) return null;
+  let latestSection: any;
+  getKeys(modelPlan).forEach(section => {
+    if (
+      modelPlan[section] &&
+      (
+        modelPlan[section] as unknown as {
+          modifiedDts: string;
+          modifiedByUserAccount: UserAccount;
+        }
+      ).modifiedDts > (latestSection?.modifiedDts || '')
+    ) {
+      latestSection = modelPlan[section];
+    }
+  });
+  return latestSection;
+};
+
 const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
@@ -39,6 +66,8 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       id: modelID
     }
   });
+
+  const lastModifiedSection = getLastModifiedSection(data?.modelPlan);
 
   const modelPlan = data?.modelPlan;
 
@@ -71,8 +100,6 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
 
   if (!modelPlan) return null;
 
-  const { modifiedDts, modifiedByUserAccount, taskListStatus } = modelPlan;
-
   return (
     <>
       <Modal
@@ -99,7 +126,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
         </CardHeader>
         <div className="card__section-status flex-align-center">
           <TaskListStatusTag
-            status={taskListStatus}
+            status={modelPlan.taskListStatus}
             classname="width-fit-content"
           />
           <span className="text-base">
@@ -113,16 +140,19 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           <p>{collaborationAreaT('modelPlanCard.body')}</p>
         </CardBody>
 
-        {modifiedDts && modifiedByUserAccount && (
+        {lastModifiedSection && lastModifiedSection.modifiedDts && (
           <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
             <span className="text-base margin-right-1">
               {collaborationAreaT('modelPlanCard.mostRecentEdit', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                date: formatDateLocal(
+                  lastModifiedSection.modifiedDts,
+                  'MM/dd/yyyy'
+                )
               })}
             </span>
             <Avatar
               className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
+              user={lastModifiedSection.modifiedByUserAccount.commonName}
             />
           </div>
         )}
