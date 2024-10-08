@@ -57,7 +57,6 @@ const HelpCardGroup = ({
             {article.external ? (
               <ExternalResourceCard
                 {...article}
-                isLink
                 tag={tag}
                 type={article.type}
                 key={article.key}

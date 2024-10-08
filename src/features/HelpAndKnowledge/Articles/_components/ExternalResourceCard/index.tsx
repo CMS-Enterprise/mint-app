@@ -18,7 +18,6 @@ type ExternalResourceCardProps = {
   className?: string;
   route: string;
   translation: string;
-  isLink?: boolean;
   tag?: boolean;
   type: ArticleCategories;
 };
@@ -28,7 +27,6 @@ const ExternalResourceCard = ({
   type,
   route,
   translation,
-  isLink = false,
   tag = true
 }: ExternalResourceCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
