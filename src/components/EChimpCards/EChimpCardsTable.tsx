@@ -41,14 +41,12 @@ export const searchSolutions = (
       (isEChimpCR(solution) &&
         (solution.id?.toLowerCase().includes(query.toLowerCase()) ||
           solution.title?.toLowerCase().includes(query.toLowerCase()) ||
-          solution.emergencyCrFlag
-            ?.toString()
-            .toLowerCase()
-            .includes(query.toLowerCase()) ||
-          solution.sensitiveFlag
-            ?.toString()
-            .toLowerCase()
-            .includes(query.toLowerCase()) ||
+          (solution.emergencyCrFlag &&
+            'Emergency'.toLowerCase().includes(query.toLowerCase())) ||
+          (solution.sensitiveFlag &&
+            'Sensitive/controversial'
+              .toLowerCase()
+              .includes(query.toLowerCase())) ||
           solution.crStatus?.toLowerCase().includes(query.toLowerCase()) ||
           solution.implementationDate
             ?.toLowerCase()
