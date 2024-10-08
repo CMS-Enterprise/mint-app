@@ -1996,7 +1996,17 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Phases involved in creating IT and operational support for models',
   [HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH]:
     'Evaluating your data exchange approach',
-  [HelpArticle.ANNOUNCEMENT_MATERIALS]: 'Announcement materials on SharePoint'
+  [HelpArticle.ANNOUNCEMENT_MATERIALS]: 'Announcement materials on SharePoint',
+  [HelpArticle.IT_LEAD_TRAINING_MATERIALS]:
+    'IT Lead training materials on SharePoint',
+  [HelpArticle.CMMI_CLEARANCE_SITE]: 'CMMI Clearance site on SharePoint',
+  [HelpArticle.STRATEGY_REFRESH_RESOURCES]:
+    'Strategy Refresh resources on SharePoint',
+  [HelpArticle.ICIP_REPOSITORY]: 'ICIP Repository on SharePoint',
+  [HelpArticle.FRAUD_AND_ABUSE_WAIVER]:
+    'Fraud and abuse waiver templates on SharePoint',
+  [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
+    'Quality Vertical health equity resources on SharePoint'
 };
 
 type ExternalResourcesType = {
@@ -2006,9 +2016,39 @@ type ExternalResourcesType = {
 
 const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
+    heading: 'IT Lead training materials on SharePoint',
+    description:
+      'Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The available materials include guides, FAQs, and SOPs.'
+  },
+  [HelpArticle.IT_LEAD_TRAINING_MATERIALS]: {
     heading: 'Announcement materials on SharePoint',
     description:
-      'Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The available materials include guides, FAQs, and SOPs. '
+      'IT leads are BSG team members who work with model teams. Access training slides and recordings to understand IT Lead roles and responsibilities, helpful background information about various systems and processes, and more.'
+  },
+  [HelpArticle.CMMI_CLEARANCE_SITE]: {
+    heading: 'CMMI Clearance site on SharePoint',
+    description:
+      'This site includes clearance document and process overviews, timeline estimates, and writing resources for the different types of documents that go through CMMI Internal Clearance and the greater clearance process (i.e., CMS/HHS/OMB clearances).'
+  },
+  [HelpArticle.STRATEGY_REFRESH_RESOURCES]: {
+    heading: 'Strategy Refresh resources on SharePoint',
+    description:
+      'Browse resources for model development (including the 2 and 6-pager templates), driver description and milestone slides, communications materials, quarterly strategy updates, and health equity (SOGI, HRSN, and more).'
+  },
+  [HelpArticle.ICIP_REPOSITORY]: {
+    heading: 'ICIP Repository on SharePoint',
+    description:
+      'The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is intended to provide CMMI staff with the final documents for referencing, ICIP drafting, research projects, and information sharing and is not for public disclosure.'
+  },
+  [HelpArticle.FRAUD_AND_ABUSE_WAIVER]: {
+    heading: 'Fraud and abuse waiver templates on SharePoint',
+    description:
+      'Fraud and Abuse waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. PPG has gathered a library of resources to support teams in this process, including primers, how-to guides, overviews, and more. '
+  },
+  [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]: {
+    heading: 'Quality Vertical health equity resources on SharePoint ',
+    description:
+      'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
   }
 };
 
