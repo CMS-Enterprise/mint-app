@@ -150,7 +150,7 @@ describe('EChimpCardsTable', () => {
         id: 'z123',
         title: 'ZeeChimp CR',
         emergencyCrFlag: true,
-        sensitiveFlag: false,
+        sensitiveFlag: true,
         crStatus: 'Open',
         implementationDate: '2022-07-30T05:00:00Z'
       },
@@ -167,6 +167,13 @@ describe('EChimpCardsTable', () => {
     ]);
     expect(searchSolutions('a456', echimpItems)).toStrictEqual([
       echimpItems[1]
+    ]);
+    expect(searchSolutions('2022', echimpItems)).toStrictEqual([
+      echimpItems[0],
+      echimpItems[1]
+    ]);
+    expect(searchSolutions('contro', echimpItems)).toStrictEqual([
+      echimpItems[0]
     ]);
   });
 });
