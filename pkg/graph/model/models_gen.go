@@ -48,6 +48,19 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
+type LockableSectionLockStatus struct {
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Section             models.LockableSection     `json:"section"`
+	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
+	IsAssessment        bool                       `json:"isAssessment"`
+}
+
+type LockableSectionLockStatusChanged struct {
+	ChangeType ChangeType                `json:"changeType"`
+	LockStatus LockableSectionLockStatus `json:"lockStatus"`
+	ActionType ActionType                `json:"actionType"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`
@@ -647,19 +660,6 @@ type SendFeedbackEmailInput struct {
 	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
 	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
-}
-
-type TaskListSectionLockStatus struct {
-	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
-	Section             models.TaskListSection     `json:"section"`
-	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
-	IsAssessment        bool                       `json:"isAssessment"`
-}
-
-type TaskListSectionLockStatusChanged struct {
-	ChangeType ChangeType                `json:"changeType"`
-	LockStatus TaskListSectionLockStatus `json:"lockStatus"`
-	ActionType ActionType                `json:"actionType"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

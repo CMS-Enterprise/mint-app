@@ -24,7 +24,6 @@ import { formatDateLocal } from 'utils/date';
 
 // importing global card styles from Cards/cards.scss
 import '../cards.scss';
-import './index.scss';
 
 type ModelPlanCardType = {
   modelID: string;
@@ -90,14 +89,14 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       </Modal>
       <Card
         gridLayout={{ desktop: { col: 6 } }}
-        className="collaboration-area__card card--model-plan"
+        className="collaboration-area__card collaboration-area__main-card"
       >
         <CardHeader>
           <h3 className="usa-card__heading">
             {collaborationAreaT('modelPlanCard.heading')}
           </h3>
         </CardHeader>
-        <div className="card__section-status flex-align-center">
+        <div className="collaboration-area__status flex-align-center">
           <TaskListStatusTag
             status={taskListStatus}
             classname="width-fit-content"
@@ -111,21 +110,22 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
 
         <CardBody>
           <p>{collaborationAreaT('modelPlanCard.body')}</p>
+
+          {modifiedDts && modifiedByUserAccount && (
+            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
+              <span className="text-base margin-right-1">
+                {collaborationAreaT('modelPlanCard.mostRecentEdit', {
+                  date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                })}
+              </span>
+              <Avatar
+                className="text-base-darkest"
+                user={modifiedByUserAccount.commonName}
+              />
+            </div>
+          )}
         </CardBody>
 
-        {modifiedDts && modifiedByUserAccount && (
-          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
-            <span className="text-base margin-right-1">
-              {collaborationAreaT('modelPlanCard.mostRecentEdit', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-              })}
-            </span>
-            <Avatar
-              className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
-            />
-          </div>
-        )}
         <CardFooter>
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}

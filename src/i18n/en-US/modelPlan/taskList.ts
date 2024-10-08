@@ -1,4 +1,5 @@
 import {
+  DataExchangeApproachStatus,
   ModelPhase,
   PrepareForClearanceStatus,
   TaskStatus
@@ -19,11 +20,15 @@ const statusText: Record<ModelPhase, string> = {
     'Your model’s anticipated timeline suggests that it is now ended. Would you like to update the status of your model to reflect that? If your model has not yet ended, please adjust your model’s anticipated timeline.'
 };
 
-const taskListStatus: Record<TaskStatus | PrepareForClearanceStatus, string> = {
+const taskListStatus: Record<
+  TaskStatus | DataExchangeApproachStatus | PrepareForClearanceStatus,
+  string
+> = {
   [TaskStatus.READY]: 'Ready to start',
   [TaskStatus.IN_PROGRESS]: 'In progress',
   [TaskStatus.READY_FOR_REVIEW]: 'Ready for review',
   [TaskStatus.READY_FOR_CLEARANCE]: 'Ready for clearance',
+  [DataExchangeApproachStatus.COMPLETE]: 'Complete',
   [PrepareForClearanceStatus.CANNOT_START]: 'Cannot start yet'
 };
 
@@ -151,7 +156,7 @@ const modelPlanTaskList = {
   assessmentLocked:
     'The MINT Team | {{-assessmentUser}} is editing this section. You may access it when they’re done.',
   lockedHeading:
-    'Someone is currently editing the Model Plan section you’re trying to access.',
+    'Someone is currently editing the section you’re trying to access.',
   lockedSubheading: 'Please try again later.',
   returnToTaskList: 'Return to the task list',
   breadCrumbState: {
