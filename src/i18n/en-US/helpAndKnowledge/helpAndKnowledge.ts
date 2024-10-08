@@ -2010,43 +2010,43 @@ const helpArticleNames: Record<HelpArticle, string> = {
 };
 
 type ExternalResourcesType = {
-  heading: string;
+  title: string;
   description: string;
 };
 
 const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
-    heading: 'Announcement materials on SharePoint',
+    title: 'Announcement materials on SharePoint',
     description:
       'Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The available materials include guides, FAQs, and SOPs.'
   },
   [HelpArticle.IT_LEAD_TRAINING_MATERIALS]: {
-    heading: 'IT Lead training materials on SharePoint',
+    title: 'IT Lead training materials on SharePoint',
     description:
       'IT leads are BSG team members who work with model teams. Access training slides and recordings to understand IT Lead roles and responsibilities, helpful background information about various systems and processes, and more.'
   },
   [HelpArticle.CMMI_CLEARANCE_SITE]: {
-    heading: 'CMMI Clearance site on SharePoint',
+    title: 'CMMI Clearance site on SharePoint',
     description:
       'This site includes clearance document and process overviews, timeline estimates, and writing resources for the different types of documents that go through CMMI Internal Clearance and the greater clearance process (i.e., CMS/HHS/OMB clearances).'
   },
   [HelpArticle.STRATEGY_REFRESH_RESOURCES]: {
-    heading: 'Strategy Refresh resources on SharePoint',
+    title: 'Strategy Refresh resources on SharePoint',
     description:
       'Browse resources for model development (including the 2 and 6-pager templates), driver description and milestone slides, communications materials, quarterly strategy updates, and health equity (SOGI, HRSN, and more).'
   },
   [HelpArticle.ICIP_REPOSITORY]: {
-    heading: 'ICIP Repository on SharePoint',
+    title: 'ICIP Repository on SharePoint',
     description:
       'The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is intended to provide CMMI staff with the final documents for referencing, ICIP drafting, research projects, and information sharing and is not for public disclosure.'
   },
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]: {
-    heading: 'Fraud and abuse waiver templates on SharePoint',
+    title: 'Fraud and abuse waiver templates on SharePoint',
     description:
       'Fraud and Abuse waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. PPG has gathered a library of resources to support teams in this process, including primers, how-to guides, overviews, and more. '
   },
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]: {
-    heading: 'Quality Vertical health equity resources on SharePoint ',
+    title: 'Quality Vertical health equity resources on SharePoint ',
     description:
       'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
   }
@@ -2058,7 +2058,7 @@ const helpAndKnowledge = {
   description:
     'Get help with the creation of your Model Plan and the implementation of operational solutions.',
   read: 'Read',
-  all: 'All help articles',
+  all: 'All help resources',
   helpCategories,
   helpArticleNames,
   externalResources,
@@ -2073,7 +2073,7 @@ const helpAndKnowledge = {
   relatedDescription:
     'Below are some additional help articles that you may find useful.',
   addtionalResources: 'Additional resources',
-  viewAllRelated: 'View all help articles',
+  viewAllRelated: 'View all help resources',
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
     'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.',
@@ -2088,10 +2088,7 @@ const helpAndKnowledge = {
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
   queryResultsInfo:
     'Showing {{-resultsNum}} operational solution{{-plural}} for ',
-  browseAll: 'Browse all help articles',
-  viewGettingStarted: 'View getting started articles',
-  viewITImplementation: 'View IT implementation articles',
-  viewModelConcept: 'View model concept and design articles',
+  browseAll: 'Browse all help resources',
   noResults: {
     header: 'There are no operational solutions that match your search.',
     content:

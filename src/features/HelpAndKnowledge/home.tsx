@@ -9,7 +9,7 @@ import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
-import { ArticleCategories } from './Articles';
+import helpAndKnowledgeArticles, { ArticleCategories } from './Articles';
 
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -39,6 +39,7 @@ export const HelpAndKnowledgeHome = () => {
 
         <HelpCardGroup
           className="margin-top-2 margin-bottom-1"
+          resources={helpAndKnowledgeArticles}
           showFirstThree
         />
         <ArticlePageInfo />

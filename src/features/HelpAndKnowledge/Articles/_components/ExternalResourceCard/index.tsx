@@ -46,7 +46,7 @@ const ExternalResourceCard = ({
       <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full">
         <CardHeader className="padding-0">
           <h3 className="line-height-body-4 margin-bottom-1 margin-top-3">
-            {t(`externalResources.${translation}.heading`)}
+            {t(`externalResources.${translation}.title`)}
           </h3>
         </CardHeader>
 
