@@ -1,12 +1,14 @@
 package models
 
 import (
+	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 // PlanDataExchangeApproach represents the data exchange approach of a model plan
 type PlanDataExchangeApproach struct {
-	coreTaskListSection
+	baseStruct
+	modelPlanRelation
 	markedCompleteByRelation
 
 	// Page 2
@@ -44,18 +46,10 @@ func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {
 }
 
 // NewPlanDataExchangeApproach creates a new PlanDataExchangeApproach with the required fields
-func NewPlanDataExchangeApproach(tls coreTaskListSection) *PlanDataExchangeApproach {
+func NewPlanDataExchangeApproach(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanDataExchangeApproach {
 	return &PlanDataExchangeApproach{
-		coreTaskListSection:                    tls,
-		DataWillNotBeCollectedFromParticipants: false,
-	}
-}
-
-// NewPlanDataExchangeApproachFromBaseTaskListSection creates a new PlanDataExchangeApproach from a base task list section
-func NewPlanDataExchangeApproachFromBaseTaskListSection(tls baseTaskListSection) *PlanDataExchangeApproach {
-	return &PlanDataExchangeApproach{
-		coreTaskListSection:                    tls.coreTaskListSection,
-		DataWillNotBeCollectedFromParticipants: false,
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }
 

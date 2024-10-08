@@ -59,7 +59,7 @@ func PlanDataExchangeApproachUpdate(
 	}
 
 	// Update the base task list section
-	err = CoreTaskListSectionPreUpdate(logger, existing, changes, principal, store)
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
