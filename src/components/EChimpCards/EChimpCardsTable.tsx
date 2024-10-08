@@ -3,6 +3,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, Label, Select } from '@trussworks/react-uswds';
 import {
+  EChimpCr,
+  EChimpTdl,
   GetEchimpCrandTdlQuery,
   useGetEchimpCrandTdlQuery
 } from 'gql/generated/graphql';
@@ -20,14 +22,41 @@ import EChimpCard from './EChimpCard';
 export type EchimpCrAndTdlsType =
   GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
+// Typeguard to determine if the solution is a CR or TDL
+const isEChimpCR = (solution: EchimpCrAndTdlsType): solution is EChimpCr => {
+  /* eslint no-underscore-dangle: 0 */
+  return solution.__typename === 'EChimpCR';
+};
+const isEChimpTDL = (solution: EchimpCrAndTdlsType): solution is EChimpTdl => {
+  /* eslint no-underscore-dangle: 0 */
+  return solution.__typename === 'EChimpTDL';
+};
+
 export const searchSolutions = (
   query: string,
   solutions: EchimpCrAndTdlsType[]
 ): EchimpCrAndTdlsType[] => {
-  return solutions.filter(
+  return [...solutions].filter(
     solution =>
-      solution.title?.toLowerCase().includes(query.toLowerCase()) ||
-      solution.id?.toLowerCase().includes(query.toLowerCase())
+      (isEChimpCR(solution) &&
+        (solution.id?.toLowerCase().includes(query.toLowerCase()) ||
+          solution.title?.toLowerCase().includes(query.toLowerCase()) ||
+          solution.emergencyCrFlag
+            ?.toString()
+            .toLowerCase()
+            .includes(query.toLowerCase()) ||
+          solution.sensitiveFlag
+            ?.toString()
+            .toLowerCase()
+            .includes(query.toLowerCase()) ||
+          solution.crStatus?.toLowerCase().includes(query.toLowerCase()) ||
+          solution.implementationDate
+            ?.toLowerCase()
+            .includes(query.toLowerCase()))) ||
+      (isEChimpTDL(solution) &&
+        (solution.id?.toLowerCase().includes(query.toLowerCase()) ||
+          solution.title?.toLowerCase().includes(query.toLowerCase()) ||
+          solution.issuedDate?.includes(query.toLowerCase())))
   );
 };
 
@@ -54,7 +83,7 @@ type SortProps = {
   value: 'id' | 'title';
   label: string;
 };
-// Sort options for the select dropdown
+// Sort options for the select drop__wn
 const sortOptions: SortProps[] = [
   {
     value: 'id',
