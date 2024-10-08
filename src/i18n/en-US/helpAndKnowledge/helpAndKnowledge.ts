@@ -2123,7 +2123,10 @@ const helpAndKnowledge = {
   externalResource: 'External resource',
   numResources: '{{count}} resource',
   numResources_other: '{{count}} resources',
-  viewOnSharePoint: 'View on SharePoint'
+  viewOnSharePoint: 'View on SharePoint',
+  sort: 'Sort',
+  sortAsc: 'By title (A-Z)',
+  sortDesc: 'By title (Z-A)'
 };
 
 export default helpAndKnowledge;

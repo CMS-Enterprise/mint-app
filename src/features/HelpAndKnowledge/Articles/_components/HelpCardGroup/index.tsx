@@ -1,11 +1,25 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { CardGroup, Pagination } from '@trussworks/react-uswds';
+import {
+  CardGroup,
+  Grid,
+  Label,
+  Pagination,
+  Select
+} from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import ArticleCard from 'features/HelpAndKnowledge/Articles/_components/ArticleCard';
 import Search from 'features/ModelPlan/ChangeHistory/components/Search';
 import i18next from 'i18next';
 
+import TablePageSize from 'components/TablePageSize';
 import { tObject } from 'utils/translation';
 
 import { ArticleProps, HelpArticle } from '../..';
@@ -23,19 +37,19 @@ type HelpCardGroupType = {
 
 // Sort options type for the select dropdown
 type SortProps = {
-  value: 'newest' | 'oldest';
+  value: 'by-title-a-z' | 'by-title-z-a';
   label: string;
 };
 
 // Sort options for the select dropdown
 const sortOptions: SortProps[] = [
   {
-    value: 'newest',
-    label: i18n.t('changeHistory:sort.newest')
+    value: 'by-title-a-z',
+    label: i18n.t('helpAndKnowledge:sortAsc')
   },
   {
-    value: 'oldest',
-    label: i18n.t('changeHistory:sort.oldest')
+    value: 'by-title-z-a',
+    label: i18n.t('helpAndKnowledge:sortDesc')
   }
 ];
 
@@ -46,6 +60,8 @@ const HelpCardGroup = ({
   tag,
   pagination = false
 }: HelpCardGroupType) => {
+  const { t } = useTranslation('helpAndKnowledge');
+
   const articleNames = tObject<HelpArticle>(
     'helpAndKnowledge:helpArticleNames'
   );
@@ -56,6 +72,7 @@ const HelpCardGroup = ({
   const params = new URLSearchParams(history.location.search);
   const pageParam = params.get('page') || '1';
   const queryParam = params.get('query');
+  const category = params.get('category');
   const sortParam = params.get('sort') as SortProps['value'];
 
   resources.sort((a, b) =>
@@ -76,7 +93,7 @@ const HelpCardGroup = ({
   const [resultsNum, setResultsNum] = useState<number>(0);
 
   // Pagination Configuration
-  const itemsPerPage = 9;
+  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageCount, setPageCount] = useState<number>(
@@ -148,12 +165,21 @@ const HelpCardGroup = ({
       )
     );
     setPageCount(Math.ceil(helpResources.length / itemsPerPage));
-  }, [helpResources, currentPage, setPageCount]);
+  }, [helpResources, currentPage, setPageCount, itemsPerPage]);
+
+  // Reset pagination if itemsPerPage changes and the current page is greater than the new page count
+  useEffect(() => {
+    if (currentItems.length === 0) {
+      params.set('page', '1');
+      history.push({ search: params.toString() });
+      setCurrentPage(1);
+    }
+  }, [currentItems]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sort the changes when the sort option changes.
   useEffect(() => {
-    // setHelpResources(handleSortOptions(helpResources, sort));
-    // setSortedResources(handleSortOptions(articles, sort));
+    setHelpResources(handleSortOptions(helpResources, sort));
+    setSortedResources(handleSortOptions(sortedResources, sort));
   }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNext = () => {
@@ -185,21 +211,63 @@ const HelpCardGroup = ({
 
   return (
     <div className="help-card-group">
-      {resources.length > itemsPerPage && (
-        <Search
-          query={query}
-          resultsNum={resultsNum}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage - 1}
-          setQuery={setQuery}
-          results={helpResources as any}
-          currentResults={currentItems as any}
-        />
+      {!showFirstThree && !category && (
+        <div className="margin-top-2 margin-bottom-4">
+          <Grid row>
+            <Grid tablet={{ col: 6 }}>
+              {/* Search bar and results info */}
+              <Search
+                query={query}
+                resultsNum={resultsNum}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage - 1}
+                setQuery={setQuery}
+                results={helpResources as any}
+                currentResults={currentItems as any}
+              />
+            </Grid>
+
+            {/* Select sort display */}
+            <Grid tablet={{ col: 6 }}>
+              <div
+                className="margin-left-auto display-flex"
+                style={{ maxWidth: '13rem' }}
+              >
+                <Label
+                  htmlFor="sort"
+                  className="text-normal margin-top-1 margin-right-1"
+                >
+                  {t('sort')}
+                </Label>
+
+                <Select
+                  id="sort"
+                  className="margin-bottom-2 margin-top-0"
+                  name="sort"
+                  value={sort}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                    setSort(e.target.value as SortProps['value']);
+                    params.set('sort', e.target.value);
+                    history.push({ search: params.toString() });
+                  }}
+                >
+                  {sortOptions.map(option => {
+                    return (
+                      <option key={`sort-${option.value}`} value={option.value}>
+                        {option.label}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </div>
+            </Grid>
+          </Grid>
+        </div>
       )}
 
       <CardGroup className={className}>
         {firstThreeArticles.map(article => (
-          <>
+          <React.Fragment key={article.key}>
             {article.external ? (
               <ExternalResourceCard
                 {...article}
@@ -216,22 +284,35 @@ const HelpCardGroup = ({
                 key={article.key}
               />
             )}
-          </>
+          </React.Fragment>
         ))}
       </CardGroup>
 
       {/* Pagination */}
-      {resources.length > itemsPerPage && pageCount > 1 && (
-        <Pagination
-          pathname={history.location.pathname}
-          currentPage={currentPage}
-          maxSlots={7}
-          onClickNext={handleNext}
-          onClickPageNumber={handlePageNumber}
-          onClickPrevious={handlePrevious}
-          totalPages={pageCount}
-        />
-      )}
+
+      <div className="display-flex">
+        {!showFirstThree &&
+          resources.length > itemsPerPage &&
+          pageCount > 1 && (
+            <Pagination
+              pathname={history.location.pathname}
+              currentPage={currentPage}
+              maxSlots={7}
+              onClickNext={handleNext}
+              onClickPageNumber={handlePageNumber}
+              onClickPrevious={handlePrevious}
+              totalPages={pageCount}
+            />
+          )}
+        {!showFirstThree && !category && (
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={itemsPerPage}
+            setPageSize={setItemsPerPage}
+            valueArray={[6, 9, 'all']}
+          />
+        )}
+      </div>
     </div>
   );
 };
@@ -261,6 +342,34 @@ const filterResourceArticles = (
       resourceDescription.toLowerCase().includes(queryString.toLowerCase())
     );
   });
+};
+
+// Sorts the changes based on the sort option
+export const handleSortOptions = (
+  resources: ArticleProps[],
+  sort: 'by-title-a-z' | 'by-title-z-a'
+) => {
+  const articleNames = tObject<HelpArticle>(
+    'helpAndKnowledge:helpArticleNames'
+  );
+
+  let sortedResources: ArticleProps[] = [];
+
+  if (sort === 'by-title-a-z') {
+    sortedResources = [...resources].sort((a, b) =>
+      articleNames[a.key]
+        .toLowerCase()
+        .localeCompare(articleNames[b.key].toLowerCase())
+    );
+  } else if (sort === 'by-title-z-a') {
+    sortedResources = [...resources].sort((a, b) =>
+      articleNames[b.key]
+        .toLowerCase()
+        .localeCompare(articleNames[a.key].toLowerCase())
+    );
+  }
+
+  return sortedResources;
 };
 
 export default HelpCardGroup;
