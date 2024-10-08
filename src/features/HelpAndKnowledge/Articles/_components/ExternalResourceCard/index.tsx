@@ -5,13 +5,13 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Icon,
-  Link
+  Icon
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { ArticleCategories } from 'features/HelpAndKnowledge/Articles';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 
+import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
 
 type ExternalResourceCardProps = {
@@ -61,16 +61,15 @@ const ExternalResourceCard = ({
         </CardBody>
 
         <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
-          <Link
+          <ExternalLink
             className="usa-button usa-button--outline"
+            asButton
             aria-label={t('viewOnSharePoint')}
             variant="unstyled"
-            target="_blank"
             href={route}
           >
             {t('viewOnSharePoint')}
-            <Icon.Launch className="margin-left-05" />
-          </Link>
+          </ExternalLink>
         </CardFooter>
       </div>
     </Card>
