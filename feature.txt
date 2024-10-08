@@ -1,0 +1,1 @@
+This is a change made on feature/MINT-0000_test_merging_styles
