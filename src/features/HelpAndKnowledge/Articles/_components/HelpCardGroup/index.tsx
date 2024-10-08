@@ -27,7 +27,6 @@ type HelpCardGroupType = {
   resources: ArticleProps[];
   showFirstThree?: boolean;
   tag?: boolean;
-  pagination?: boolean;
 };
 
 // Sort options type for the select dropdown
@@ -52,8 +51,7 @@ const HelpCardGroup = ({
   className,
   resources,
   showFirstThree,
-  tag,
-  pagination = false
+  tag
 }: HelpCardGroupType) => {
   const { t } = useTranslation('helpAndKnowledge');
 

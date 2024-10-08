@@ -46,7 +46,6 @@ const AllArticles = () => {
           <HelpCardGroup
             className="margin-y-2"
             tag={!category}
-            pagination
             resources={resources}
           />
         </Grid>
