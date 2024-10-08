@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/lib/pq"
+
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
@@ -90,4 +92,19 @@ func (s *Store) PlanDataExchangeApproachGetByModelPlanID(_ *zap.Logger, modelPla
 	}
 
 	return &approach, nil
+}
+
+// PlanDataExchangeApproachGetByModelPlanIDLoader returns the plan basics for a slice of model plan ids
+func PlanDataExchangeApproachGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanDataExchangeApproach, error) {
+
+	args := map[string]interface{}{
+		"model_plan_ids": pq.Array(modelPlanIDs),
+	}
+
+	res, err := sqlutils.SelectProcedure[models.PlanDataExchangeApproach](np, sqlqueries.PlanDataExchangeApproach.GetByModelPlanIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+
 }
