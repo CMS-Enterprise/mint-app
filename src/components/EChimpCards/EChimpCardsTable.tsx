@@ -11,7 +11,9 @@ import {
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
+import CRAndTDLSidePanel from 'components/CRAndTDLSidePanel';
 import ExternalLink from 'components/ExternalLink';
+import Sidepanel from 'components/Sidepanel';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
@@ -114,6 +116,7 @@ const EChimpCardsTable = ({
 
   const [query, setQuery] = useState('');
   const [pageSize, setPageSize] = useState<'all' | number>(6);
+  const [isSidepanelOpen, setIsSidepanelOpen] = useState(true);
 
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
@@ -175,6 +178,15 @@ const EChimpCardsTable = ({
 
   return (
     <div data-testid="echimp-cr-and-tdls-table">
+      <Sidepanel
+        isOpen={isSidepanelOpen}
+        closeModal={() => setIsSidepanelOpen(false)}
+        ariaLabel={crtdlsT('echimpSidepanel.ariaLabel')}
+        testid="cr-and-tdl-sidepanel"
+        modalHeading="CR or TDL ID NUMBER"
+      >
+        <CRAndTDLSidePanel />
+      </Sidepanel>
       <Grid row>
         <Grid desktop={{ col: 6 }}>
           <GlobalClientFilter

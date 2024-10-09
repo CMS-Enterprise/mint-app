@@ -115,6 +115,9 @@ const crtdlsMisc = {
   sortBy: {
     id: 'By ID number',
     title: 'By title'
+  },
+  echimpSidepanel: {
+    ariaLabel: 'CR and TDL Sidepanel'
   }
 };
 
