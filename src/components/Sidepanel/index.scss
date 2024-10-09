@@ -14,7 +14,7 @@
 
   &__content {
     position: absolute;
-    width: 70%;
+    width: 100%;
     height: auto;
     min-height: 100%;
     background-color: #fff;
@@ -22,8 +22,8 @@
     z-index: 1;
     line-height: 1.6em;
 
-    @media screen and (max-width: $desktop) {
-      width: 100%;
+    @media screen and (min-width: $desktop) {
+      width: 70%;
     }
   }
 
