@@ -8,6 +8,7 @@ import './index.scss';
 type SidepanelProps = {
   ariaLabel: string;
   children: React.ReactNode | React.ReactNodeArray;
+  classname?: string;
   closeModal: () => void;
   isOpen: boolean;
   modalHeading: string;
@@ -18,6 +19,7 @@ type SidepanelProps = {
 const Sidepanel = ({
   ariaLabel,
   children,
+  classname,
   closeModal,
   isOpen,
   modalHeading,
@@ -35,7 +37,7 @@ const Sidepanel = ({
     <ReactModal
       isOpen={isOpen}
       overlayClassName="mint-sidepanel__overlay overflow-y-scroll"
-      className="mint-sidepanel__content"
+      className={`mint-sidepanel__content ${classname}`}
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
