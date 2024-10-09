@@ -13,7 +13,7 @@ import {
 import VerboseMockedProvider from 'tests/MockedProvider';
 import setup from 'tests/util';
 
-import ModelPlanCard from './index';
+import ModelPlanCard, { getLastModifiedSection } from './index';
 
 const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
@@ -177,7 +177,7 @@ const modelPlanMocks = [
 
 describe('ModelPlanCard', () => {
   it('renders without issues', async () => {
-    const { getByText, queryByText } = setup(
+    const { getByText } = setup(
       <MemoryRouter initialEntries={[`/models/${modelID}/collaboration-area`]}>
         <VerboseMockedProvider mocks={modelPlanMocks} addTypename={false}>
           <ModelPlanCard modelID={modelID} setStatusMessage={() => null} />
@@ -187,10 +187,32 @@ describe('ModelPlanCard', () => {
 
     await waitFor(() => {
       expect(getByText('Model Plan')).toBeInTheDocument();
-      expect(
-        queryByText('Most recent edit on 05/12/2022 by')
-      ).toBeInTheDocument();
     });
+  });
+
+  it('returns null if no section of task list is started', () => {
+    const result = getLastModifiedSection(modelPlan);
+    expect(result).toBeUndefined();
+  });
+
+  it('returns most recent task list section', () => {
+    const startedModelPlan = { ...modelPlan };
+
+    startedModelPlan.beneficiaries.modifiedDts = '2021-05-12T15:01:39.190679Z';
+    startedModelPlan.beneficiaries.modifiedByUserAccount = {
+      __typename: 'UserAccount',
+      commonName: 'Jane Doe'
+    };
+
+    startedModelPlan.generalCharacteristics.modifiedDts =
+      '2022-05-12T15:01:39.190679Z';
+    startedModelPlan.generalCharacteristics.modifiedByUserAccount = {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    };
+
+    const result = getLastModifiedSection(startedModelPlan);
+    expect(result).toEqual(startedModelPlan.generalCharacteristics);
   });
 
   it('matches the snapshot', async () => {
