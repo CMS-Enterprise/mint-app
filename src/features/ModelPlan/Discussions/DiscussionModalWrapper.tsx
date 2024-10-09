@@ -22,7 +22,7 @@ const DiscussionModalWrapper = ({
   return (
     <Sidepanel
       ariaLabel={discussionsMiscT('ariaLabel')}
-      classname="width-50"
+      classname="desktop:width-50"
       closeModal={closeModal}
       isOpen={isOpen}
       modalHeading={discussionsMiscT('modalHeading')}
