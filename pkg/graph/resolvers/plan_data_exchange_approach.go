@@ -88,7 +88,7 @@ func PlanDataExchangeApproachUpdate(
 	if deaIsChangedMarkedCompleted {
 		go func() {
 			// Send email notifications
-			modelPlan, notifErr := store.ModelPlanGetByID(store, logger, existing.ModelPlanID)
+			modelPlan, notifErr := ModelPlanGetByIDLOADER(ctx, existing.ModelPlanID)
 			if notifErr != nil {
 				logger.Error("failed to send email notifications", zap.Error(notifErr))
 				return
