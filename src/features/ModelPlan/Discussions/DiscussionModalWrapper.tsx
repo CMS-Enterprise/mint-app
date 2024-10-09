@@ -29,7 +29,6 @@ const DiscussionModalWrapper = ({
       <GridContainer className="padding-y-6">
         <Grid desktop={{ col: 12 }}>{children}</Grid>
       </GridContainer>
-      {/* </div> */}
     </Sidepanel>
   );
 };
