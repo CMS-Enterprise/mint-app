@@ -6,6 +6,7 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedMultiPayerDataAvailabilityUseCase,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -16,10 +17,13 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  DataExchangeApproachStatus,
   DataForMonitoringType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
+  DataToCollectFromParticipants,
   DataToSendParticipantsType,
+  DataToSendToParticipants,
   DiscussionReplyTranslation,
   DiscussionUserRole,
   DocumentType,
@@ -39,6 +43,7 @@ import {
   ModelType,
   ModelViewFilter,
   MonitoringFileType,
+  MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
   OperationalNeedTranslation,
@@ -60,6 +65,7 @@ import {
   PlanBeneficiariesTranslation,
   PlanCollaboratorTranslation,
   PlanCrTranslation,
+  PlanDataExchangeApproachTranslation,
   PlanDiscussionTranslation,
   PlanDocumentSolutionLinkTranslation,
   PlanDocumentTranslation,
@@ -921,6 +927,52 @@ type TranslationPaymentsGQL = Omit<
 */
 export type TranslationPayments = {
   [K in keyof TranslationPaymentsGQL]: TranslationPaymentsForm[K]; // FE form type
+};
+
+// Beneficiaries
+export type TranslationDataExchangeApproachForm = {
+  // Page 2
+  dataToCollectFromParticipants: TranslationFieldPropertiesWithOptions<DataToCollectFromParticipants>;
+  dataToCollectFromParticipantsReportsDetails: TranslationFieldPropertiesWithParent<DataToCollectFromParticipants>;
+  dataToCollectFromParticipantsOther: TranslationFieldProperties;
+  dataWillNotBeCollectedFromParticipants: TranslationFieldPropertiesWithOptions<Bool>;
+  dataToCollectFromParticipantsNote: TranslationFieldProperties;
+  dataToSendToParticipants: TranslationFieldPropertiesWithOptions<DataToSendToParticipants>;
+  dataToSendToParticipantsNote: TranslationFieldProperties;
+  // Page 3
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldPropertiesWithOptions<YesNoType>;
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldPropertiesWithOptionsAndChildren<
+    AnticipatedMultiPayerDataAvailabilityUseCase,
+    YesNoType
+  >;
+  doesNeedToMakeMultiPayerDataAvailableNote: TranslationFieldProperties;
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldPropertiesWithOptions<YesNoType>;
+  multiSourceDataToCollect: TranslationFieldPropertiesWithOptionsAndChildren<MultiSourceDataToCollect>;
+  multiSourceDataToCollectOther: TranslationFieldProperties;
+  doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationFieldProperties;
+  // Page 4
+  willImplementNewDataExchangeMethods: TranslationFieldPropertiesWithOptions<YesNoType>;
+  newDataExchangeMethodsDescription: TranslationFieldProperties;
+  newDataExchangeMethodsNote: TranslationFieldProperties;
+  additionalDataExchangeConsiderationsDescription: TranslationFieldProperties;
+  // Metadata
+  markedCompleteBy: TranslationFieldProperties;
+  markedCompleteDts: TranslationFieldProperties;
+  isDataExchangeApproachComplete: TranslationFieldPropertiesWithOptions<Bool>;
+  status: TranslationFieldPropertiesWithOptions<DataExchangeApproachStatus>;
+};
+
+type TranslationDataExchangeApproachGQL = Omit<
+  PlanDataExchangeApproachTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationDataExchangeApproach = {
+  [K in keyof TranslationDataExchangeApproachGQL]: TranslationDataExchangeApproachForm[K]; // FE form type
 };
 
 // Collaborators

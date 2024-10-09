@@ -83,7 +83,7 @@ const DataExchangeApproachCard = ({
             disabled={isLocked}
             onClick={() =>
               history.push(
-                `/models/${modelID}/collaboration-area/data-exchange-approach`
+                `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
               )
             }
             data-testid="to-data-exchange-approach"

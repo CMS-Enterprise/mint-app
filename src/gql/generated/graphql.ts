@@ -1970,6 +1970,33 @@ export type PlanDataExchangeApproachCompletedActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
+/** Represents plan data exchange approach translation data */
+export type PlanDataExchangeApproachTranslation = {
+  __typename: 'PlanDataExchangeApproachTranslation';
+  additionalDataExchangeConsiderationsDescription: TranslationField;
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndChildren;
+  dataToCollectFromParticipants: TranslationFieldWithOptions;
+  dataToCollectFromParticipantsNote: TranslationField;
+  dataToCollectFromParticipantsOther: TranslationFieldWithParent;
+  dataToCollectFromParticipantsReportsDetails: TranslationFieldWithParent;
+  dataToSendToParticipants: TranslationFieldWithOptions;
+  dataToSendToParticipantsNote: TranslationField;
+  dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions;
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptions;
+  doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationField;
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptions;
+  doesNeedToMakeMultiPayerDataAvailableNote: TranslationField;
+  isDataExchangeApproachComplete: TranslationFieldWithOptions;
+  markedCompleteBy: TranslationField;
+  markedCompleteDts: TranslationField;
+  multiSourceDataToCollect: TranslationFieldWithOptionsAndChildren;
+  multiSourceDataToCollectOther: TranslationField;
+  newDataExchangeMethodsDescription: TranslationField;
+  newDataExchangeMethodsNote: TranslationField;
+  status: TranslationFieldWithOptions;
+  willImplementNewDataExchangeMethods: TranslationFieldWithOptions;
+};
+
 /** PlanDiscussion represents plan discussion */
 export type PlanDiscussion = {
   __typename: 'PlanDiscussion';
