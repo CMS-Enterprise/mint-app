@@ -101,7 +101,7 @@ func PlanDataExchangeApproachUpdate(
 				modelPlan,
 				emailAddressBook.MINTTeamEmail,
 				principal.Account().CommonName,
-				true,
+				false,
 			)
 			if notifErr != nil {
 				logger.Error("failed to send email notifications", zap.Error(notifErr))
@@ -137,7 +137,7 @@ func PlanDataExchangeApproachUpdate(
 				emailUANs,
 				modelPlan,
 				principal.Account().CommonName,
-				false,
+				true,
 			)
 			if notifErr != nil {
 				logger.Error("failed to send email notifications", zap.Error(err))
