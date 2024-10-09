@@ -16,7 +16,7 @@ import (
 )
 
 // PlanDataExchangeApproachCreate creates a new plan data exchange approach
-func (s *Store) PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, logger *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
+func PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, _ *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
 
 	approach.ID = utilityuuid.ValueOrNewUUID(approach.ID)
 
