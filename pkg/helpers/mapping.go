@@ -2,6 +2,32 @@ package helpers
 
 // OneToOneFunc takes a list of keys and a list of values which map one-to-one (key-to-value).
 // it relies on the transformOutput func to return the result in expected format
+// Example:
+//
+//	type User struct {
+//	    ID   string
+//	    Name string
+//	}
+//
+//	keys := []string{"1", "2"}
+//	users := []User{
+//	    {ID: "1", Name: "Alice"},
+//	    {ID: "2", Name: "Bob"},
+//	}
+//
+//	getKeyFunc := func(user User) string {
+//	    return user.ID
+//	}
+//
+//	transformOutputFunc := func(user User, exists bool) string {
+//	    if !exists {
+//	        return "Unknown"
+//	    }
+//	    return user.Name
+//	}
+//
+//	result := OneToOneFunc(keys, users, getKeyFunc, transformOutputFunc)
+//	// result: []string{"Alice", "Bob"}
 func OneToOneFunc[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func(V, bool) Output) []Output {
 	store := map[K]V{}
 
