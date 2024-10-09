@@ -15,7 +15,7 @@ type PlanDataExchangeApproach struct {
 	DataToCollectFromParticipants               pq.StringArray `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsReportsDetails *string        `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
 	DataToCollectFromParticipantsOther          *string        `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
-	DataWillNotBeCollectedFromParticipants      bool           `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
+	DataWillNotBeCollectedFromParticipants      *bool          `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsNote           *string        `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
 
 	DataToSendToParticipants     pq.StringArray `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
