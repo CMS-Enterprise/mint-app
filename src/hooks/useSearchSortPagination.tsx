@@ -32,8 +32,10 @@ const useSearchSortPagination = <T, K extends string>({
 
   // Contains the sorted changes based on select/sort option
   const [sortedItems, setSortedItems] = useState([...items]);
+
   // Contains the current set of changes to display, including search and sort
   const [searchAndSortedItems, setSearchAndSortedItems] = useState([...items]);
+
   // Contains sort state of select option dropdown
   const [sort, setSort] = useState<K>(sortOptions[0].value);
 
@@ -44,6 +46,7 @@ const useSearchSortPagination = <T, K extends string>({
   const [itemsPerPage, setItemsPerPage] = useState<number>(9);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
+
   const [pageCount, setPageCount] = useState<number>(
     Math.floor(searchAndSortedItems.length / itemsPerPage)
   );
