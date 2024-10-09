@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 import noScroll from 'no-scroll';
 
 import './index.scss';
@@ -22,7 +22,7 @@ const Sidepanel = ({
   isOpen,
   modalHeading,
   openModal,
-  testid,
+  testid
 }: SidepanelProps) => {
   const handleOpenModal = () => {
     noScroll.on();
@@ -56,9 +56,8 @@ const Sidepanel = ({
           </button>
           <h4 className="margin-0">{modalHeading}</h4>
         </div>
-        <GridContainer className="padding-y-6">
-          <Grid desktop={{ col: 12 }}>{children}</Grid>
-        </GridContainer>
+
+        {children}
       </div>
     </ReactModal>
   );
