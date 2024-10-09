@@ -231,3 +231,24 @@
 .fixed-table {
   table-layout: fixed;
 }
+
+.width-50 {
+  width: 50%;
+}
+
+@media screen and (min-width: $mobile) {
+  .mobile\:width-50 {
+    width: 50%;
+  }
+}
+@media screen and (min-width: $tablet) {
+  .tablet\:width-50 {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .desktop\:width-50 {
+    width: 50%;
+  }
+}
