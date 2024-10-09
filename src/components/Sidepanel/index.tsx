@@ -10,19 +10,19 @@ type SidepanelProps = {
   children: React.ReactNode | React.ReactNodeArray;
   closeModal: () => void;
   isOpen: boolean;
+  modalHeading: string;
   openModal?: () => void;
   testid: string;
-  modalHeading: string;
 };
 
 const Sidepanel = ({
   ariaLabel,
   children,
-  modalHeading,
   closeModal,
   isOpen,
+  modalHeading,
   openModal,
-  testid
+  testid,
 }: SidepanelProps) => {
   const handleOpenModal = () => {
     noScroll.on();
