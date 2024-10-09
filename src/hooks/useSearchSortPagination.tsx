@@ -15,7 +15,29 @@ type SearchSortPaginationProps<T, K> = {
   sortFunction: (items: T[], sort: K) => T[];
 } & JSX.IntrinsicElements['div'];
 
-// useSearchSortPagination is a hook that handles search, sort, and pagination for a list of items
+/**
+ * useSearchSortPagination is a hook that handles search, sort, and pagination for a list of items.
+ *
+ * @param {T[]} props.items - The list of items to be managed.
+ * @param {SortProps<K>[]} props.sortOptions - The available sort options.
+ * @param {(query: string, items: T[]) => T[]} props.filterFunction - The function to filter items based on a query.
+ * @param {(items: T[], sort: K) => T[]} props.sortFunction - The function to sort items based on a sort option.
+ *
+ * @returns {Object} The state and handlers for managing search, sort, and pagination.
+ * @returns {T[]} return.sortedItems - The sorted list of items.
+ * @returns {T[]} return.searchAndSortedItems - The list of items after applying search and sort.
+ * @returns {K} return.sort - The current sort option.
+ * @returns {string} return.query - The current search query.
+ * @returns {number} return.itemsPerPage - The number of items per page.
+ * @returns {number} return.currentPage - The current page number.
+ * @returns {number} return.pageCount - The total number of pages.
+ * @returns {T[]} return.currentItems - The list of items to be displayed on the current page.
+ * @returns {(query: string) => void} return.setQuery - The function to set the search query.
+ * @returns {(sort: K) => void} return.setSort - The function to set the sort option.
+ * @returns {(page: number) => void} return.setCurrentPage - The function to set the current page number.
+ * @returns {(itemsPerPage: number) => void} return.setItemsPerPage - The function to set the number of items per page.
+ */
+
 const useSearchSortPagination = <T, K extends string>({
   items,
   sortOptions,
