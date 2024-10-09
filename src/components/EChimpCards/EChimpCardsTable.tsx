@@ -116,7 +116,7 @@ const EChimpCardsTable = ({
 
   const [query, setQuery] = useState('');
   const [pageSize, setPageSize] = useState<'all' | number>(6);
-  const [isSidepanelOpen, setIsSidepanelOpen] = useState(true);
+  const [isSidepanelOpen, setIsSidepanelOpen] = useState(false);
   const [showCRorTDLWithId, setShowCRorTDLWithId] = useState('');
 
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);

@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/ExternalLink';
+
 import './index.scss';
 
 export type CRAndTDLSidePanelProps = {
@@ -26,6 +28,7 @@ const CRAndTDLSidePanel = ({
   sensitiveFlag
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
+
   return (
     <GridContainer className="padding-y-5 padding-x-4 side-panel--cr-and-tdl">
       <Grid row>
@@ -77,6 +80,13 @@ const CRAndTDLSidePanel = ({
               )}
             </div>
           </div>
+          <ExternalLink
+            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+            className="margin-right-0"
+            toEchimp
+          >
+            {crtdlsT('echimpCard.viewThisInECHIMP')}
+          </ExternalLink>
         </Grid>
       </Grid>
     </GridContainer>
