@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -15,6 +15,7 @@ import i18next from 'i18next';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
 import TableResults from 'components/TableResults';
+import useSearchSortPagination from 'hooks/useSearchSortPagination';
 import { tObject } from 'utils/translation';
 
 import { ArticleProps, HelpArticle } from '../..';
@@ -29,9 +30,11 @@ type HelpCardGroupType = {
   tag?: boolean;
 };
 
+type SortOptionsType = 'by-title-a-z' | 'by-title-z-a';
+
 // Sort options type for the select dropdown
 type SortProps = {
-  value: 'by-title-a-z' | 'by-title-z-a';
+  value: SortOptionsType;
   label: string;
 };
 
@@ -59,142 +62,39 @@ const HelpCardGroup = ({
     'helpAndKnowledge:helpArticleNames'
   );
 
-  const history = useHistory();
-
-  // Query parameters
-  const params = new URLSearchParams(history.location.search);
-  const pageParam = params.get('page') || '1';
-  const queryParam = params.get('query');
-  const category = params.get('category');
-  const sortParam = params.get('sort') as SortProps['value'];
-
   resources.sort((a, b) =>
     articleNames[a.key]
       .toLowerCase()
       .localeCompare(articleNames[b.key].toLowerCase())
   );
 
-  // Contains the sorted changes based on select/sort option
-  const [sortedResources, setSortedResources] = useState([...resources]);
-  // Contains the current set of changes to display, including search and sort
-  const [helpResources, setHelpResources] = useState([...resources]);
-  // Contains sort state of select option dropdown
-  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
+  const { currentItems, pagination, search, pageSize, sort } =
+    useSearchSortPagination<ArticleProps, SortOptionsType>({
+      items: resources,
+      sortOptions,
+      filterFunction: filterResourceArticles,
+      sortFunction: handleSortOptions
+    });
 
-  // Search/query configuration
-  const [query, setQuery] = useState<string>('');
+  const { query, setQuery, rowLength } = search;
 
-  // Pagination Configuration
-  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
+  const { sorted, setSorted } = sort;
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageCount, setPageCount] = useState<number>(
-    Math.floor(helpResources.length / itemsPerPage)
-  );
+  const { itemsPerPage, setItemsPerPage } = pageSize;
 
-  // Current items to dsiplay on the current page - contains search and sort data
-  const [currentItems, setCurrentItems] = useState(
-    helpResources.slice(
-      currentPage * itemsPerPage,
-      currentPage * itemsPerPage + itemsPerPage
-    )
-  );
+  const {
+    currentPage,
+    handleNext,
+    handlePageNumber,
+    handlePrevious,
+    pageCount
+  } = pagination;
 
-  // searchChanges is a function to filter audits based on query
-  const searchChanges = useCallback(filterResourceArticles, []);
+  const history = useHistory();
 
-  //  If no query, return all solutions, otherwise, matching query solutions
-  useEffect(() => {
-    if (query.trim()) {
-      const filteredAudits = searchChanges(query, sortedResources);
-
-      // Sets audit changes based on the filtered audits
-      setHelpResources(filteredAudits);
-    } else {
-      // Sets the default audits if no query present
-      setHelpResources(sortedResources);
-    }
-
-    // Update the URL's query parameters
-    if (query) {
-      params.set('query', query);
-    } else {
-      // Delete the 'query' parameter
-      params.delete('query');
-    }
-    params.delete('page');
-    history.push({ search: params.toString() });
-
-    // Return the page to the first page when the query changes
-    setCurrentPage(1);
-  }, [query, searchChanges, setCurrentPage]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Update the audit changes when the data is loaded.
-  useEffect(() => {
-    setHelpResources([...resources]);
-    setSortedResources([...resources]);
-
-    // Set the sort based on the sort query parameter or default value
-    setSort(sortParam || sortOptions[0].value);
-
-    setTimeout(() => {
-      // Set the query based on the query parameter
-      setQuery(queryParam || '');
-    }, 0);
-
-    // Set the page offset based on the page parameter
-    setCurrentPage(pageParam ? Number(pageParam) : 1);
-    setPageCount(Math.ceil(helpResources.length / itemsPerPage));
-  }, [resources]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Update the current items when the page offset changes.
-  useEffect(() => {
-    setCurrentItems(
-      helpResources.slice(
-        (currentPage - 1) * itemsPerPage,
-        (currentPage - 1) * itemsPerPage + itemsPerPage
-      )
-    );
-    setPageCount(Math.ceil(helpResources.length / itemsPerPage));
-  }, [helpResources, currentPage, setPageCount, itemsPerPage]);
-
-  // Reset pagination if itemsPerPage changes and the current page is greater than the new page count
-  useEffect(() => {
-    if (currentItems.length === 0) {
-      params.set('page', '1');
-      history.push({ search: params.toString() });
-      setCurrentPage(1);
-    }
-  }, [currentItems]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Sort the changes when the sort option changes.
-  useEffect(() => {
-    setHelpResources(handleSortOptions(helpResources, sort));
-    setSortedResources(handleSortOptions(sortedResources, sort));
-  }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleNext = () => {
-    const nextPage = currentPage + 1;
-    params.set('page', nextPage.toString());
-    history.push({ search: params.toString() });
-    setCurrentPage(nextPage);
-  };
-
-  const handlePrevious = () => {
-    const prevPage = currentPage - 1;
-    params.set('page', prevPage.toString());
-    history.push({ search: params.toString() });
-    setCurrentPage(prevPage);
-  };
-
-  const handlePageNumber = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    pageNum: number
-  ) => {
-    params.set('page', pageNum.toString());
-    history.push({ search: params.toString() });
-    setCurrentPage(pageNum);
-  };
+  // Query parameters
+  const params = new URLSearchParams(history.location.search);
+  const category = params.get('category');
 
   const firstThreeArticles = showFirstThree
     ? currentItems.slice(0, 3)
@@ -233,9 +133,9 @@ const HelpCardGroup = ({
                   id="sort"
                   className="margin-bottom-2 margin-top-0"
                   name="sort"
-                  value={sort}
+                  value={sorted}
                   onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                    setSort(e.target.value as SortProps['value']);
+                    setSorted(e.target.value as SortProps['value']);
                     params.set('sort', e.target.value);
                     history.push({ search: params.toString() });
                   }}
@@ -257,7 +157,7 @@ const HelpCardGroup = ({
                 pageIndex={currentPage - 1}
                 pageSize={itemsPerPage}
                 filteredRowLength={currentItems.length}
-                rowLength={helpResources.length}
+                rowLength={rowLength}
               />
             </Grid>
           </Grid>
