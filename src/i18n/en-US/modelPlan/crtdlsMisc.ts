@@ -108,7 +108,7 @@ const crtdlsMisc = {
       sensitive: 'Sensitive/controversial'
     },
     implementationDate: 'Implementation Date',
-    initiatedDate: 'Initiated date',
+    initiatedDate: 'Issued date',
     viewMore: 'View more',
     viewThisInECHIMP: 'View this in ECHIMP'
   },

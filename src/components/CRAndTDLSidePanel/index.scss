@@ -1,0 +1,37 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.side-panel--cr-and-tdl {
+  .sidepanel {
+    &__header {
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid color("base-light");
+
+      h1, h4 {
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 50px;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .echimp-card__cr-status {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0;
+      }
+    }
+
+    &__content {
+      padding: 2rem 0rem;
+    }
+  }
+}

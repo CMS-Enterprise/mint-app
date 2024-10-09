@@ -10,7 +10,9 @@ describe('EChimpCard', () => {
     crStatus: 'Open',
     emergencyCrFlag: true,
     sensitiveFlag: false,
-    implementationDate: '2022-07-30T05:00:00Z'
+    implementationDate: '2022-07-30T05:00:00Z',
+    setShowCRorTDLWithId: (id: string) => {},
+    setIsSidepanelOpen: (isOpen: boolean) => {}
   };
 
   it('renders without errors', async () => {

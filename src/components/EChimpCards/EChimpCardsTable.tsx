@@ -117,6 +117,7 @@ const EChimpCardsTable = ({
   const [query, setQuery] = useState('');
   const [pageSize, setPageSize] = useState<'all' | number>(6);
   const [isSidepanelOpen, setIsSidepanelOpen] = useState(true);
+  const [showCRorTDLWithId, setShowCRorTDLWithId] = useState('');
 
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
@@ -183,9 +184,11 @@ const EChimpCardsTable = ({
         closeModal={() => setIsSidepanelOpen(false)}
         ariaLabel={crtdlsT('echimpSidepanel.ariaLabel')}
         testid="cr-and-tdl-sidepanel"
-        modalHeading="CR or TDL ID NUMBER"
+        modalHeading={showCRorTDLWithId}
       >
-        <CRAndTDLSidePanel />
+        <CRAndTDLSidePanel
+          {...echimpItems.filter(item => item.id === showCRorTDLWithId)[0]}
+        />
       </Sidepanel>
       <Grid row>
         <Grid desktop={{ col: 6 }}>
@@ -234,7 +237,13 @@ const EChimpCardsTable = ({
       </Grid>
       <CardGroup>
         {currentItems.map(card => (
-          <EChimpCard key={card.id} {...card} isInReadView={isInReadView} />
+          <EChimpCard
+            key={card.id}
+            {...card}
+            isInReadView={isInReadView}
+            setShowCRorTDLWithId={setShowCRorTDLWithId}
+            setIsSidepanelOpen={setIsSidepanelOpen}
+          />
         ))}
       </CardGroup>
       <Grid row>
