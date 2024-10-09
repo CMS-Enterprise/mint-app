@@ -441,7 +441,7 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
-			"clearanceStarts": time.Now().AddDate(0, 3, 0),
+			"clearanceStarts": now.AddDate(0, 3, 0),
 			"highLevelNote":   "Some high level note",
 		},
 	)
