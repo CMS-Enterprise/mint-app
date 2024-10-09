@@ -316,7 +316,7 @@ const HelpCardGroup = ({
   );
 };
 
-const filterResourceArticles = (
+export const filterResourceArticles = (
   queryString: string,
   helpResources: ArticleProps[]
 ): ArticleProps[] => {
