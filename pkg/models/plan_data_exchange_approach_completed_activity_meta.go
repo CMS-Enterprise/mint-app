@@ -36,7 +36,7 @@ func NewPlanDataExchangeApproachMarkedCompleteActivity(
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
-		EntityID:     markedCompleteBy,
+		EntityID:     dataExchangeApproachID,
 		ActivityType: ActivityDataExchangeApproachMarkedComplete,
 		MetaData: newPlanDataExchangeApproachMarkedCompleteActivityMeta(
 			dataExchangeApproachID,
