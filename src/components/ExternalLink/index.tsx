@@ -93,21 +93,21 @@ const ExternalLink = ({
         >
           <span>
             {children}
-            <Icon.Launch className="margin-left-05 top-05" />
+            <Icon.Launch className="margin-left-05 top-2px" />
           </span>
         </span>
       ) : (
         <Button
           type="button"
           unstyled={!asButton}
-          className={classNames(className, 'margin-right-2')}
+          className={classNames(className, 'margin-right-2 padding-right-5')}
           onClick={() => {
             setIsModalOpen(true);
           }}
         >
-          <span>
+          <span className="position-relative">
             {children}
-            <Icon.Launch className="margin-left-05 top-05" />
+            <Icon.Launch className="margin-left-05 position-absolute" />
           </span>
         </Button>
       )}

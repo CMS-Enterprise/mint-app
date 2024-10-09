@@ -106,14 +106,16 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           data-testid="CardFooter"
         >
           <button
-            class="usa-button usa-button usa-button--outline margin-right-2"
+            class="usa-button usa-button usa-button--outline margin-right-2 padding-right-5"
             data-testid="button"
             type="button"
           >
-            <span>
+            <span
+              class="position-relative"
+            >
               View on SharePoint
               <svg
-                class="usa-icon margin-left-05 top-05"
+                class="usa-icon margin-left-05 position-absolute"
                 focusable="false"
                 height="1em"
                 role="img"
