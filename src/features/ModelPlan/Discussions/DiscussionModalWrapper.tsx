@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactModal from 'react-modal';
-import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-import noScroll from 'no-scroll';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
+
+import Sidepanel from 'components/Sidepanel';
 
 type DiscussionModalWrapperProps = {
   isOpen: boolean;
@@ -19,43 +19,20 @@ const DiscussionModalWrapper = ({
 }: DiscussionModalWrapperProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
-  const handleOpenModal = () => {
-    noScroll.on();
-    if (openModal) {
-      openModal();
-    }
-  };
-
   return (
-    <ReactModal
+    <Sidepanel
+      ariaLabel={discussionsMiscT('ariaLabel')}
+      classname="width-50"
+      closeModal={closeModal}
       isOpen={isOpen}
-      overlayClassName="mint-discussions__overlay overflow-y-scroll"
-      className="mint-discussions__content"
-      onAfterOpen={handleOpenModal}
-      onAfterClose={noScroll.off}
-      onRequestClose={closeModal}
-      shouldCloseOnOverlayClick
-      contentLabel={discussionsMiscT('ariaLabel')}
-      appElement={document.getElementById('root')! as HTMLElement}
+      modalHeading={discussionsMiscT('modalHeading')}
+      testid="discussion-modal"
     >
-      <div data-testid="discussion-modal">
-        <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
-          <button
-            type="button"
-            data-testid="close-discussions"
-            className="mint-discussions__x-button margin-right-2"
-            aria-label="Close Modal"
-            onClick={closeModal}
-          >
-            <Icon.Close size={4} className="text-base" />
-          </button>
-          <h4 className="margin-0">{discussionsMiscT('modalHeading')}</h4>
-        </div>
-        <GridContainer className="padding-y-6">
-          <Grid desktop={{ col: 12 }}>{children}</Grid>
-        </GridContainer>
-      </div>
-    </ReactModal>
+      <GridContainer className="padding-y-6">
+        <Grid desktop={{ col: 12 }}>{children}</Grid>
+      </GridContainer>
+      {/* </div> */}
+    </Sidepanel>
   );
 };
 
