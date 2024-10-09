@@ -3,6 +3,8 @@ import ReactModal from 'react-modal';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import noScroll from 'no-scroll';
 
+import './index.scss';
+
 type SidepanelProps = {
   ariaLabel: string;
   children: React.ReactNode | React.ReactNodeArray;
@@ -32,8 +34,8 @@ const Sidepanel = ({
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-discussions__overlay overflow-y-scroll"
-      className="mint-discussions__content"
+      overlayClassName="mint-sidepanel__overlay overflow-y-scroll"
+      className="mint-sidepanel__content"
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
@@ -42,11 +44,11 @@ const Sidepanel = ({
       appElement={document.getElementById('root')! as HTMLElement}
     >
       <div data-testid={testid}>
-        <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
+        <div className="mint-sidepanel__x-button-container display-flex text-base flex-align-center">
           <button
             type="button"
             data-testid="close-discussions"
-            className="mint-discussions__x-button margin-right-2"
+            className="mint-sidepanel__x-button margin-right-2"
             aria-label="Close Modal"
             onClick={closeModal}
           >
