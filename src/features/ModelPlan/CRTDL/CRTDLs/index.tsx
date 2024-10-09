@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import CRAndTDLSidePanel from 'components/CRAndTDLSidePanel';
 import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -19,8 +21,16 @@ export const CRTDLs = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { modelName } = useContext(ModelInfoContext);
 
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState(true);
+
   return (
     <MainContent data-testid="model-crtdls">
+      <DiscussionModalWrapper
+        isOpen={isDiscussionOpen}
+        closeModal={() => setIsDiscussionOpen(false)}
+      >
+        <CRAndTDLSidePanel />
+      </DiscussionModalWrapper>
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
