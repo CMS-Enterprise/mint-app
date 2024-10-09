@@ -7,18 +7,22 @@ case "$APP_ENV" in
   "dev")
     MINT_URL="https://dev.mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://test.idp.idm.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp.fake/eeChimpWeb/sso" # We don't integrate with ECHIMP in our dev account, so we can use a fake URL
     ;;
   "test")
     MINT_URL="https://test.mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://test.idp.idm.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp.cmsdev.local/eeChimpWeb/sso"
     ;;
   "impl")
     MINT_URL="https://impl.mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://impl.idp.idm.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp.cms.cmsval/eeChimpWeb/sso"
     ;;
   "prod")
     MINT_URL="https://mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://idm.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp.cmsnet/eeChimpWeb/sso"
     ;;
   *)
     echo "APP_ENV value not recognized: ${APP_ENV:-unset}"

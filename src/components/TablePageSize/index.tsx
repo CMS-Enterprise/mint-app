@@ -5,11 +5,12 @@ import classnames from 'classnames';
 
 type TablePageSizeProps = {
   className?: string;
-  pageSize: number;
+  pageSize: number | 'all';
   setPageSize: (pageSize: number) => void;
+  valueArray?: (number | 'all')[];
 };
 
-const Option = ({ value }: { value: number }) => {
+const Option = ({ value }: { value: number | 'all' }) => {
   const { t } = useTranslation('systemProfile');
   return (
     <option value={value}>
@@ -21,7 +22,8 @@ const Option = ({ value }: { value: number }) => {
 const TablePageSize = ({
   className,
   pageSize,
-  setPageSize
+  setPageSize,
+  valueArray = [5, 10, 25, 50, 100]
 }: TablePageSizeProps) => {
   const classNames = classnames('desktop:margin-top-2', className);
   return (
@@ -31,14 +33,14 @@ const TablePageSize = ({
         id="table-page-size"
         data-testid="table-page-size"
         name="tablePageSize"
-        onChange={(e: any) => setPageSize(Number(e.target.value))}
+        onChange={(e: any) => {
+          setPageSize(e.target.value);
+        }}
         value={pageSize}
       >
-        <Option value={5} />
-        <Option value={10} />
-        <Option value={25} />
-        <Option value={50} />
-        <Option value={100} />
+        {valueArray.map(value => (
+          <Option key={`table-page-size--${value}`} value={value} />
+        ))}
       </Select>
     </div>
   );
