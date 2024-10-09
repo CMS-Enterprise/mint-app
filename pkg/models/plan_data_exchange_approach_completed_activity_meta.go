@@ -10,18 +10,21 @@ import (
 // is relevant to completing a Data Exchange Approach
 type PlanDataExchangeApproachMarkedCompleteActivityMeta struct {
 	ActivityMetaBaseStruct
+	modelPlanRelation
 	DataExchangeApproachID uuid.UUID `json:"dataExchangeApproachID"`
 	MarkedCompleteBy       uuid.UUID `json:"markedCompleteBy"`
 }
 
 // newPlanDataExchangeApproachMarkedCompleteActivityMeta creates a new PlanDataExchangeApproachMarkedCompleteActivityMeta
 func newPlanDataExchangeApproachMarkedCompleteActivityMeta(
+	modelPlanID uuid.UUID,
 	dataExchangeApproachID uuid.UUID,
 	markedCompleteBy uuid.UUID,
 ) *PlanDataExchangeApproachMarkedCompleteActivityMeta {
 	version := 0 // iterate this if this type ever updates
 	return &PlanDataExchangeApproachMarkedCompleteActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityDataExchangeApproachMarkedComplete, version),
+		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
 		DataExchangeApproachID: dataExchangeApproachID,
 		MarkedCompleteBy:       markedCompleteBy,
 	}
@@ -30,6 +33,7 @@ func newPlanDataExchangeApproachMarkedCompleteActivityMeta(
 // NewPlanDataExchangeApproachMarkedCompleteActivity creates a new ActivityDataExchangeApproachMarkedComplete type of Activity
 func NewPlanDataExchangeApproachMarkedCompleteActivity(
 	actorID uuid.UUID,
+	modelPlanID uuid.UUID,
 	dataExchangeApproachID uuid.UUID,
 	markedCompleteBy uuid.UUID,
 ) *Activity {
@@ -39,6 +43,7 @@ func NewPlanDataExchangeApproachMarkedCompleteActivity(
 		EntityID:     dataExchangeApproachID,
 		ActivityType: ActivityDataExchangeApproachMarkedComplete,
 		MetaData: newPlanDataExchangeApproachMarkedCompleteActivityMeta(
+			modelPlanID,
 			dataExchangeApproachID,
 			markedCompleteBy,
 		),

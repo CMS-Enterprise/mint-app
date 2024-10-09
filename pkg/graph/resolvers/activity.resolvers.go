@@ -75,14 +75,7 @@ func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) DataExchang
 
 // ModelPlan is the resolver for the modelPlan field.
 func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.ModelPlan, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	dataExchangeApproach, err := PlanDataExchangeApproachGetByID(logger, r.store, obj.DataExchangeApproachID)
-	if err != nil {
-		return nil, err
-	}
-
-	return ModelPlanGetByIDLOADER(ctx, dataExchangeApproach.ModelPlanID)
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.

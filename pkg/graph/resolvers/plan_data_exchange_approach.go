@@ -121,6 +121,7 @@ func PlanDataExchangeApproachUpdate(
 				principal.Account().ID,
 				store,
 				inAppUANs,
+				existing.ModelPlanID,
 				existing.ID,
 				principal.Account().ID,
 			)

@@ -109,6 +109,7 @@ func SendDataExchangeApproachMarkedCompleteNotification(
 		actorID,
 		np,
 		inAppPreferences,
+		approach.ModelPlanID,
 		approach.ID,
 		markedCompletedBy,
 	)
