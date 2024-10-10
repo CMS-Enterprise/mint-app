@@ -164,7 +164,6 @@ const AppRoutes = () => {
           {/* Data Echange Approach Routes */}
           <ProtectedRoute
             path="/models/:modelID/collaboration-area/data-exchange-approach"
-            exact
             component={DataEchangeApproach}
           />
 
