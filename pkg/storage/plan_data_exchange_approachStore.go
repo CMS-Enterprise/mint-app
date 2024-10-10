@@ -38,20 +38,10 @@ func (s *Store) PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, logger
 }
 
 // PlanDataExchangeApproachUpdate updates the plan data exchange approach for a given id
-func (s *Store) PlanDataExchangeApproachUpdate(logger *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
+func PlanDataExchangeApproachUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.Update)
-	if err != nil {
-		return nil, fmt.Errorf("error preparing named statement: %w", err)
-	}
-	defer stmt.Close()
+	return sqlutils.GetProcedure[models.PlanDataExchangeApproach](np, sqlqueries.PlanDataExchangeApproach.Update, approach)
 
-	err = stmt.Get(approach, approach)
-	if err != nil {
-		return nil, fmt.Errorf("error getting plan data exchange approach: %w", err)
-	}
-
-	return approach, nil
 }
 
 // PlanDataExchangeApproachGetByID returns the plan data exchange approach for a given id

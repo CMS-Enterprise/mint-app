@@ -74,6 +74,6 @@ func PlanDataExchangeApproachUpdate(
 	}
 
 	// Update the plan data exchange approach
-	retDataExchangeApproach, err := store.PlanDataExchangeApproachUpdate(logger, existing)
+	retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(store, logger, existing)
 	return retDataExchangeApproach, err
 }
