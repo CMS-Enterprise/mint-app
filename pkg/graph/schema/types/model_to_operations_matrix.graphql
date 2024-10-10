@@ -3,20 +3,25 @@ type ModelsToOperationMatrix {
 }
 
 type Milestone {
-  id: UUID! # TODO Other Metadata we use everywhere else
-  name: String!
+  id: UUID!
   category: Category
+  isCustom: Boolean! # Or maybe just a nullable "CommonMilestoneKey" to represent the same?
+  name: String!
+  description: String!
 }
 
 type Category {
-  id: UUID! # TODO Other Metadata we use everywhere else
+  id: UUID!
   name: String!
   subCategory: Category
 }
 
-type CategoryWithMilestones {
-
+type CommonMilestone {
+  id: UUID!
+  key: CommonMilestoneKey! # Similar to OperationalSolutionKey, enum of possible common milestones
+  name: String!
 }
+
 
 # input ModelPlanChanges @goModel(model: "map[string]interface{}") {
 #   modelName: String
