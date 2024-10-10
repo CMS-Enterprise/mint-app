@@ -65,17 +65,17 @@ CREATE TABLE plan_data_exchange_approach (
     data_to_send_to_participants_note ZERO_STRING,
 
     -- page 3
-    does_need_to_make_multi_payer_data_available YES_NO_TYPE DEFAULT NULL,
+    does_need_to_make_multi_payer_data_available BOOLEAN DEFAULT NULL,
     anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
     does_need_to_make_multi_payer_data_available_note ZERO_STRING,
 
-    does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
+    does_need_to_collect_and_aggregate_multi_source_data BOOLEAN DEFAULT NULL,
     multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT[],
     multi_source_data_to_collect_other ZERO_STRING,
     does_need_to_collect_and_aggregate_multi_source_data_note ZERO_STRING,
 
     -- page 4
-    will_implement_new_data_exchange_methods YES_NO_TYPE DEFAULT NULL,
+    will_implement_new_data_exchange_methods BOOLEAN DEFAULT NULL,
     new_data_exchange_methods_description ZERO_STRING,
     new_data_exchange_methods_note ZERO_STRING,
 
