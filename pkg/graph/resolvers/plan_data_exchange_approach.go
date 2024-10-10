@@ -15,7 +15,7 @@ import (
 
 // PlanDataExchangeApproachGetByID retrieves a plan data exchange approach by its ID
 func PlanDataExchangeApproachGetByID(logger *zap.Logger, store *storage.Store, id uuid.UUID) (*models.PlanDataExchangeApproach, error) {
-	return store.PlanDataExchangeApproachGetByID(logger, id)
+	return storage.PlanDataExchangeApproachGetByID(store, logger, id)
 }
 
 // PlanDataExchangeApproachGetByModelPlanID retrieves a plan data exchange approach by its model plan ID
@@ -34,7 +34,7 @@ func PlanDataExchangeApproachUpdate(
 	store *storage.Store,
 ) (*models.PlanDataExchangeApproach, error) {
 	// Get existing plan data exchange approach
-	existing, err := store.PlanDataExchangeApproachGetByID(logger, id)
+	existing, err := storage.PlanDataExchangeApproachGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
