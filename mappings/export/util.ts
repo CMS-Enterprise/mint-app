@@ -7,6 +7,7 @@ import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborator from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
+import dataExchangeApproach from '../../src/i18n/en-US/modelPlan/dataExchangeApproach';
 import discussion from '../../src/i18n/en-US/modelPlan/discussions';
 import document from '../../src/i18n/en-US/modelPlan/documents';
 import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutionLink';
@@ -45,7 +46,8 @@ export const translationSections = {
   operational_solution: operationalSolution,
   operational_solution_subtask: subtask,
   existing_model_link: existingModelLink,
-  plan_document_solution_link: documentSolutionLink
+  plan_document_solution_link: documentSolutionLink,
+  data_exchange_approach: dataExchangeApproach
 };
 
 // Fields that are not needed by BE
