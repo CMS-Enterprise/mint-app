@@ -86,8 +86,8 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	}
 	suite.NotNil(retApproach.ModifiedBy)
 	suite.NotNil(retApproach.ModifiedDts)
-	if suite.NotNil(approach.Status) {
-		suite.EqualValues(models.DataExchangeApproachStatusInProgress, approach.Status)
+	if suite.NotNil(retApproach.Status) {
+		suite.EqualValues(models.DataExchangeApproachStatusInProgress, retApproach.Status)
 	}
 
 	//Verify that the other fields aren't changed
@@ -112,25 +112,42 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 		"isDataExchangeApproachComplete": true,
 	}
 	// Update and verify that it gets set to completed
-	retApproach, err = PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changesComplete, suite.testConfigs.Principal, suite.testConfigs.Store)
+	completeApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changesComplete, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.NotNil(retApproach)
-	if suite.NotNil(approach.Status) {
-		suite.EqualValues(models.DataExchangeApproachStatusCompleted, approach.Status)
+	suite.NotNil(completeApproach)
+	if suite.NotNil(completeApproach.Status) {
+		suite.EqualValues(models.DataExchangeApproachStatusCompleted, completeApproach.Status)
 
-		if suite.NotNil(retApproach.MarkedCompleteBy) {
-			suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *retApproach.MarkedCompleteBy)
+		if suite.NotNil(completeApproach.MarkedCompleteBy) {
+			suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *completeApproach.MarkedCompleteBy)
 		}
-		suite.NotNil(retApproach.MarkedCompleteDts)
+		suite.NotNil(completeApproach.MarkedCompleteDts)
 	}
 
-	// Clear the status with the original change set
-	retApproach, err = PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	// Update, but don't specify the status with the original change set
+	neutralApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.NotNil(retApproach)
-	if suite.NotNil(approach.Status) {
-		suite.EqualValues(models.DataExchangeApproachStatusInProgress, approach.Status)
+	suite.NotNil(neutralApproach)
+	if suite.NotNil(neutralApproach.Status) {
+		//Status should remain completed
+		suite.EqualValues(models.DataExchangeApproachStatusCompleted, neutralApproach.Status)
 	}
-	suite.Nil(retApproach.MarkedCompleteDts)
-	suite.Nil(retApproach.MarkedCompleteBy)
+	if suite.NotNil(completeApproach.MarkedCompleteBy) {
+		suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *completeApproach.MarkedCompleteBy)
+	}
+	suite.NotNil(completeApproach.MarkedCompleteDts)
+
+	changesUnComplete := map[string]interface{}{
+		"isDataExchangeApproachComplete": false,
+	}
+
+	uncompletedApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changesUnComplete, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(uncompletedApproach)
+	if suite.NotNil(uncompletedApproach.Status) {
+		//Status should remain completed
+		suite.EqualValues(models.DataExchangeApproachStatusInProgress, uncompletedApproach.Status)
+	}
+	suite.Nil(uncompletedApproach.MarkedCompleteDts)
+	suite.Nil(uncompletedApproach.MarkedCompleteBy)
 }
