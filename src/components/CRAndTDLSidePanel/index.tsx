@@ -4,6 +4,7 @@ import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 
 import ExternalLink from 'components/ExternalLink';
+import MentionTextArea from 'components/MentionTextArea';
 
 import './index.scss';
 
@@ -108,7 +109,10 @@ const CRAndTDLSidePanel = ({
                 )}
                 <div className="sidepanel--full-width">
                   <p className="text-bold">{crtdlsT('echimpCard.crSummary')}</p>
-                  <p>{crSummary?.rawContent}</p>
+                  <MentionTextArea
+                    id={id}
+                    initialContent={crSummary?.rawContent}
+                  />
                 </div>
 
                 <div>
