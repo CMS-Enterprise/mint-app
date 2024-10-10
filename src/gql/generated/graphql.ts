@@ -639,6 +639,17 @@ export type LaunchDarklySettings = {
 /** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
 export type LinkedExistingModel = ExistingModel | ModelPlan;
 
+export type Milestone = {
+  __typename: 'Milestone';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
   EDIT_MODEL = 'EDIT_MODEL',
@@ -710,6 +721,7 @@ export type ModelPlan = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoMatrix: ModelsToOperationMatrix;
   nameHistory: Array<Scalars['String']['output']>;
   opSolutionLastModifiedDts: Scalars['Time']['output'];
   operationalNeeds: Array<OperationalNeed>;
@@ -814,6 +826,11 @@ export enum ModelViewFilter {
   OACT = 'OACT',
   PBG = 'PBG'
 }
+
+export type ModelsToOperationMatrix = {
+  __typename: 'ModelsToOperationMatrix';
+  milestones: Array<Milestone>;
+};
 
 export enum MonitoringFileType {
   BENEFICIARY = 'BENEFICIARY',

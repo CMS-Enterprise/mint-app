@@ -48,6 +48,16 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
+type Milestone struct {
+	ID                    uuid.UUID                   `json:"id"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`
@@ -56,6 +66,10 @@ type ModelPlanTranslation struct {
 	Abbreviation models.TranslationField            `json:"abbreviation" db:"abbreviation"`
 	Archived     models.TranslationFieldWithOptions `json:"archived" db:"archived"`
 	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
+type ModelsToOperationMatrix struct {
+	Milestones []*Milestone `json:"milestones"`
 }
 
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible

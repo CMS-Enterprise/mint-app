@@ -1,0 +1,40 @@
+type ModelsToOperationMatrix {
+  milestones: [Milestone!]!
+}
+
+type Milestone {
+  id: UUID!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+# input ModelPlanChanges @goModel(model: "map[string]interface{}") {
+#   modelName: String
+#   abbreviation: String
+#   someNumbers: [Int!]
+#   archived: Boolean
+#   status: ModelStatus
+# }
+
+# extend type Query {
+#   modelPlan(id: UUID!): ModelPlan!
+#   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+#   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
+#   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+# }
+
+# extend type Mutation {
+#   createModelPlan(modelName: String!): ModelPlan!
+#   @hasRole(role: MINT_USER)
+
+#   updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
+#   @hasRole(role: MINT_USER)
+
+#   shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
+#   @hasRole(role: MINT_USER)
+# }

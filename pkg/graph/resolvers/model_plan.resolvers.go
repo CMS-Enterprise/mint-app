@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -149,6 +150,11 @@ func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.Mo
 // OpSolutionLastModifiedDts is the resolver for the opSolutionLastModifiedDts field.
 func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error) {
 	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
+}
+
+// MtoMatrix is the resolver for the mtoMatrix field.
+func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan) (*model.ModelsToOperationMatrix, error) {
+	panic(fmt.Errorf("not implemented: MtoMatrix - mtoMatrix"))
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
