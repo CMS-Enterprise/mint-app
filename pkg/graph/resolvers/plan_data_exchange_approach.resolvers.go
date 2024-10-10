@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -32,9 +33,24 @@ func (r *planDataExchangeApproachResolver) DataToSendToParticipants(ctx context.
 	return models.ConvertEnums[models.DataToSendToParticipants](obj.DataToSendToParticipants), nil
 }
 
+// DoesNeedToMakeMultiPayerDataAvailable is the resolver for the doesNeedToMakeMultiPayerDataAvailable field.
+func (r *planDataExchangeApproachResolver) DoesNeedToMakeMultiPayerDataAvailable(ctx context.Context, obj *models.PlanDataExchangeApproach) (*bool, error) {
+	panic(fmt.Errorf("not implemented: DoesNeedToMakeMultiPayerDataAvailable - doesNeedToMakeMultiPayerDataAvailable"))
+}
+
+// DoesNeedToCollectAndAggregateMultiSourceData is the resolver for the doesNeedToCollectAndAggregateMultiSourceData field.
+func (r *planDataExchangeApproachResolver) DoesNeedToCollectAndAggregateMultiSourceData(ctx context.Context, obj *models.PlanDataExchangeApproach) (*bool, error) {
+	panic(fmt.Errorf("not implemented: DoesNeedToCollectAndAggregateMultiSourceData - doesNeedToCollectAndAggregateMultiSourceData"))
+}
+
 // MultiSourceDataToCollect is the resolver for the multiSourceDataToCollect field.
 func (r *planDataExchangeApproachResolver) MultiSourceDataToCollect(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.MultiSourceDataToCollect, error) {
 	return models.ConvertEnums[models.MultiSourceDataToCollect](obj.MultiSourceDataToCollect), nil
+}
+
+// WillImplementNewDataExchangeMethods is the resolver for the willImplementNewDataExchangeMethods field.
+func (r *planDataExchangeApproachResolver) WillImplementNewDataExchangeMethods(ctx context.Context, obj *models.PlanDataExchangeApproach) (*bool, error) {
+	panic(fmt.Errorf("not implemented: WillImplementNewDataExchangeMethods - willImplementNewDataExchangeMethods"))
 }
 
 // PlanDataExchangeApproach returns generated.PlanDataExchangeApproachResolver implementation.

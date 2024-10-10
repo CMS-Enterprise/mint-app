@@ -63,16 +63,16 @@ type PlanDataExchangeApproach {
   dataToSendToParticipants: [DataToSendToParticipants!]!
   dataToSendToParticipantsNote: String
 
-  doesNeedToMakeMultiPayerDataAvailable: YesNoType
+  doesNeedToMakeMultiPayerDataAvailable: Boolean
   anticipatedMultiPayerDataAvailabilityUseCase: AnticipatedMultiPayerDataAvailabilityUseCase
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
-  doesNeedToCollectAndAggregateMultiSourceData: YesNoType
+  doesNeedToCollectAndAggregateMultiSourceData: Boolean
   multiSourceDataToCollect: [MultiSourceDataToCollect!]!
   multiSourceDataToCollectOther: String
   doesNeedToCollectAndAggregateMultiSourceDataNote: String
 
-  willImplementNewDataExchangeMethods: YesNoType
+  willImplementNewDataExchangeMethods: Boolean
   newDataExchangeMethodsDescription: String
   newDataExchangeMethodsNote: String
 
@@ -103,16 +103,16 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   dataToSendToParticipants: [DataToSendToParticipants!]!
   dataToSendToParticipantsNote: String
 
-  doesNeedToMakeMultiPayerDataAvailable: YesNoType
+  doesNeedToMakeMultiPayerDataAvailable: Boolean
   anticipatedMultiPayerDataAvailabilityUseCase: AnticipatedMultiPayerDataAvailabilityUseCase
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
-  doesNeedToCollectAndAggregateMultiSourceData: YesNoType
+  doesNeedToCollectAndAggregateMultiSourceData: Boolean
   multiSourceDataToCollect: [MultiSourceDataToCollect!]
   multiSourceDataToCollectOther: String
   doesNeedToCollectAndAggregateMultiSourceDataNote: String
 
-  willImplementNewDataExchangeMethods: YesNoType
+  willImplementNewDataExchangeMethods: Boolean
   newDataExchangeMethodsDescription: String
   newDataExchangeMethodsNote: String
 

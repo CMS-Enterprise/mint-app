@@ -1916,9 +1916,9 @@ export type PlanDataExchangeApproach = {
   dataToSendToParticipants: Array<DataToSendToParticipants>;
   dataToSendToParticipantsNote?: Maybe<Scalars['String']['output']>;
   dataWillNotBeCollectedFromParticipants?: Maybe<Scalars['Boolean']['output']>;
-  doesNeedToCollectAndAggregateMultiSourceData?: Maybe<YesNoType>;
+  doesNeedToCollectAndAggregateMultiSourceData?: Maybe<Scalars['Boolean']['output']>;
   doesNeedToCollectAndAggregateMultiSourceDataNote?: Maybe<Scalars['String']['output']>;
-  doesNeedToMakeMultiPayerDataAvailable?: Maybe<YesNoType>;
+  doesNeedToMakeMultiPayerDataAvailable?: Maybe<Scalars['Boolean']['output']>;
   doesNeedToMakeMultiPayerDataAvailableNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   isDataExchangeApproachComplete: Scalars['Boolean']['output'];
@@ -1934,7 +1934,7 @@ export type PlanDataExchangeApproach = {
   newDataExchangeMethodsDescription?: Maybe<Scalars['String']['output']>;
   newDataExchangeMethodsNote?: Maybe<Scalars['String']['output']>;
   status: DataExchangeApproachStatus;
-  willImplementNewDataExchangeMethods?: Maybe<YesNoType>;
+  willImplementNewDataExchangeMethods?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type PlanDataExchangeApproachChanges = {
@@ -1947,16 +1947,16 @@ export type PlanDataExchangeApproachChanges = {
   dataToSendToParticipants: Array<DataToSendToParticipants>;
   dataToSendToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
   dataWillNotBeCollectedFromParticipants?: InputMaybe<Scalars['Boolean']['input']>;
-  doesNeedToCollectAndAggregateMultiSourceData?: InputMaybe<YesNoType>;
+  doesNeedToCollectAndAggregateMultiSourceData?: InputMaybe<Scalars['Boolean']['input']>;
   doesNeedToCollectAndAggregateMultiSourceDataNote?: InputMaybe<Scalars['String']['input']>;
-  doesNeedToMakeMultiPayerDataAvailable?: InputMaybe<YesNoType>;
+  doesNeedToMakeMultiPayerDataAvailable?: InputMaybe<Scalars['Boolean']['input']>;
   doesNeedToMakeMultiPayerDataAvailableNote?: InputMaybe<Scalars['String']['input']>;
   isDataExchangeApproachComplete?: InputMaybe<Scalars['Boolean']['input']>;
   multiSourceDataToCollect?: InputMaybe<Array<MultiSourceDataToCollect>>;
   multiSourceDataToCollectOther?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsDescription?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsNote?: InputMaybe<Scalars['String']['input']>;
-  willImplementNewDataExchangeMethods?: InputMaybe<YesNoType>;
+  willImplementNewDataExchangeMethods?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type PlanDataExchangeApproachCompletedActivityMeta = {
