@@ -64,10 +64,7 @@ func PlanDataExchangeApproachUpdate(
 		return nil, err
 	}
 
-	targetStatus, err := EvaluateStatus(len(changes) > 0, isSettingToComplete)
-	if err != nil {
-		return nil, err
-	}
+	targetStatus := EvaluateStatus(len(changes) > 0, isSettingToComplete)
 
 	existing.Status = &targetStatus
 
@@ -77,13 +74,13 @@ func PlanDataExchangeApproachUpdate(
 }
 
 // EvaluateStatus derives the status of the data exchange approach based on the current state of the model
-func EvaluateStatus(hasChanges bool, isSettingToComplete bool) (models.DataExchangeApproachStatus, error) {
+func EvaluateStatus(hasChanges bool, isSettingToComplete bool) models.DataExchangeApproachStatus {
 
 	if isSettingToComplete {
-		return models.DataExchangeApproachStatusCompleted, nil
+		return models.DataExchangeApproachStatusCompleted
 	} else if hasChanges {
-		return models.DataExchangeApproachStatusInProgress, nil
+		return models.DataExchangeApproachStatusInProgress
 	}
 
-	return models.DataExchangeApproachStatusReady, nil
+	return models.DataExchangeApproachStatusReady
 }
