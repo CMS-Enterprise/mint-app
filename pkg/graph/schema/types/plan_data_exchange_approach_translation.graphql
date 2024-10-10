@@ -4,19 +4,19 @@ Represents plan data exchange approach translation data
 type PlanDataExchangeApproachTranslation {
   #Page 2
   dataToCollectFromParticipants: TranslationFieldWithOptions! @goTag(key: "db", value: "data_to_collect_from_participants")
-  dataToCollectFromParticipantsReportsDetails: TranslationFieldWithParent! @goTag(key: "db", value: "data_to_collect_from_participants_reports_details")
-  dataToCollectFromParticipantsOther: TranslationFieldWithParent! @goTag(key: "db", value: "data_to_collect_from_participants_other")
+  dataToCollectFromParticipantsReportsDetails: TranslationField! @goTag(key: "db", value: "data_to_collect_from_participants_reports_details")
+  dataToCollectFromParticipantsOther: TranslationField! @goTag(key: "db", value: "data_to_collect_from_participants_other")
   dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions! @goTag(key: "db", value: "data_will_not_be_collected_from_participants")
   dataToCollectFromParticipantsNote: TranslationField! @goTag(key: "db", value: "data_to_collect_from_participants_note")
   dataToSendToParticipants: TranslationFieldWithOptions! @goTag(key: "db", value: "data_to_send_to_participants")
   dataToSendToParticipantsNote: TranslationField! @goTag(key: "db", value: "data_to_send_to_participants_note")
 
   #Page 3
-  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptions! @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available")
-  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "anticipated_multi_payer_data_availability_use_case")
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available")
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "anticipated_multi_payer_data_availability_use_case")
   doesNeedToMakeMultiPayerDataAvailableNote: TranslationField! @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available_note")
-  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptions! @goTag(key: "db", value: "does_need_to_collect_and_aggregate_multi_source_data")
-  multiSourceDataToCollect: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "multi_source_data_to_collect")
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "does_need_to_collect_and_aggregate_multi_source_data")
+  multiSourceDataToCollect: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "multi_source_data_to_collect")
   multiSourceDataToCollectOther: TranslationField! @goTag(key: "db", value: "multi_source_data_to_collect_other")
   doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationField! @goTag(key: "db", value: "does_need_to_collect_and_aggregate_multi_source_data_note")
 

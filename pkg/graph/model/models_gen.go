@@ -224,8 +224,8 @@ type PlanCollaboratorTranslation struct {
 // Represents plan data exchange approach translation data
 type PlanDataExchangeApproachTranslation struct {
 	DataToCollectFromParticipants                    models.TranslationFieldWithOptions            `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants"`
-	DataToCollectFromParticipantsReportsDetails      models.TranslationFieldWithParent             `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
-	DataToCollectFromParticipantsOther               models.TranslationFieldWithParent             `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
+	DataToCollectFromParticipantsReportsDetails      models.TranslationField                       `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
+	DataToCollectFromParticipantsOther               models.TranslationField                       `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
 	DataWillNotBeCollectedFromParticipants           models.TranslationFieldWithOptions            `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants"`
 	DataToCollectFromParticipantsNote                models.TranslationField                       `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
 	DataToSendToParticipants                         models.TranslationFieldWithOptions            `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`

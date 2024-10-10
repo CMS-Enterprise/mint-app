@@ -933,25 +933,28 @@ export type TranslationPayments = {
 export type TranslationDataExchangeApproachForm = {
   // Page 2
   dataToCollectFromParticipants: TranslationFieldPropertiesWithOptions<DataToCollectFromParticipants>;
-  dataToCollectFromParticipantsReportsDetails: TranslationFieldPropertiesWithParent<DataToCollectFromParticipants>;
+  dataToCollectFromParticipantsReportsDetails: TranslationFieldProperties;
   dataToCollectFromParticipantsOther: TranslationFieldProperties;
   dataWillNotBeCollectedFromParticipants: TranslationFieldPropertiesWithOptions<Bool>;
   dataToCollectFromParticipantsNote: TranslationFieldProperties;
   dataToSendToParticipants: TranslationFieldPropertiesWithOptions<DataToSendToParticipants>;
   dataToSendToParticipantsNote: TranslationFieldProperties;
   // Page 3
-  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldPropertiesWithOptions<YesNoType>;
-  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldPropertiesWithOptionsAndChildren<
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldPropertiesWithOptionsAndParent<
     AnticipatedMultiPayerDataAvailabilityUseCase,
-    YesNoType
+    Bool
   >;
   doesNeedToMakeMultiPayerDataAvailableNote: TranslationFieldProperties;
-  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldPropertiesWithOptions<YesNoType>;
-  multiSourceDataToCollect: TranslationFieldPropertiesWithOptionsAndChildren<MultiSourceDataToCollect>;
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  multiSourceDataToCollect: TranslationFieldPropertiesWithOptionsAndParent<
+    MultiSourceDataToCollect,
+    Bool
+  >;
   multiSourceDataToCollectOther: TranslationFieldProperties;
   doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationFieldProperties;
   // Page 4
-  willImplementNewDataExchangeMethods: TranslationFieldPropertiesWithOptions<YesNoType>;
+  willImplementNewDataExchangeMethods: TranslationFieldPropertiesWithOptions<Bool>;
   newDataExchangeMethodsDescription: TranslationFieldProperties;
   newDataExchangeMethodsNote: TranslationFieldProperties;
   additionalDataExchangeConsiderationsDescription: TranslationFieldProperties;

@@ -1977,8 +1977,8 @@ export type PlanDataExchangeApproachTranslation = {
   anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndChildren;
   dataToCollectFromParticipants: TranslationFieldWithOptions;
   dataToCollectFromParticipantsNote: TranslationField;
-  dataToCollectFromParticipantsOther: TranslationFieldWithParent;
-  dataToCollectFromParticipantsReportsDetails: TranslationFieldWithParent;
+  dataToCollectFromParticipantsOther: TranslationField;
+  dataToCollectFromParticipantsReportsDetails: TranslationField;
   dataToSendToParticipants: TranslationFieldWithOptions;
   dataToSendToParticipantsNote: TranslationField;
   dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions;
