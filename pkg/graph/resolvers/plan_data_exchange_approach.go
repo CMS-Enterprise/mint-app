@@ -4,6 +4,10 @@ import (
 	"context"
 	"time"
 
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -40,113 +44,147 @@ func PlanDataExchangeApproachUpdate(
 	emailTemplateService email.TemplateService,
 	emailAddressBook email.AddressBook,
 ) (*models.PlanDataExchangeApproach, error) {
-	// Get existing plan data exchange approach
-	existing, err := store.PlanDataExchangeApproachGetByID(logger, id)
+
+	updatedDataExchangeApproach, err := sqlutils.WithTransaction[models.PlanDataExchangeApproach](
+		store,
+		func(tx *sqlx.Tx) (*models.PlanDataExchangeApproach, error) {
+			// Get existing plan data exchange approach
+			existing, err := store.PlanDataExchangeApproachGetByID(logger, id)
+			if err != nil {
+				return nil, err
+			}
+
+			isSettingToComplete := false
+
+			// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
+			// 'isDataExchangeApproachComplete' is different from the existing value
+			if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
+				isSettingToComplete = isDataExchangeApproachComplete.(bool)
+
+				// Check if time has been set or is the default value
+				if existing.MarkedCompleteDts == nil && isSettingToComplete {
+					// We do not actually store the isDataExchangeApproachComplete field in the database
+					// so we need to remove it from the changes map
+
+					existing.MarkedCompleteBy = &principal.Account().ID
+					existing.MarkedCompleteDts = models.TimePointer(time.Now().UTC())
+				} else if !isSettingToComplete {
+					existing.MarkedCompleteBy = nil
+					existing.MarkedCompleteDts = nil
+				}
+
+				delete(changes, "isDataExchangeApproachComplete")
+			}
+
+			// Update the base task list section
+			err = CoreTaskListSectionPreUpdate(logger, existing, changes, principal, store)
+			if err != nil {
+				return nil, err
+			}
+
+			targetStatus, err := EvaluateStatus(len(changes) > 0, isSettingToComplete)
+			if err != nil {
+				return nil, err
+			}
+
+			deaIsChangedMarkedCompleted := (existing.Status == nil || targetStatus != *existing.Status) && targetStatus == models.DataExchangeApproachStatusCompleted
+			existing.Status = &targetStatus
+
+			// Update the plan data exchange approach
+			retDataExchangeApproach, err := store.PlanDataExchangeApproachUpdate(logger, existing)
+
+			if deaIsChangedMarkedCompleted {
+				go func() {
+					TrySendDataExchangeApproachNotifications(
+						ctx,
+						existing,
+						logger,
+						emailService,
+						emailTemplateService,
+						emailAddressBook,
+						principal,
+						store,
+					)
+				}()
+			}
+
+			return retDataExchangeApproach, err
+		},
+	)
+
 	if err != nil {
 		return nil, err
 	}
 
-	isSettingToComplete := false
+	return updatedDataExchangeApproach, nil
+}
 
-	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
-	// 'isDataExchangeApproachComplete' is different from the existing value
-	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
-		isSettingToComplete = isDataExchangeApproachComplete.(bool)
-
-		// Check if time has been set or is the default value
-		if existing.MarkedCompleteDts == nil && isSettingToComplete {
-			// We do not actually store the isDataExchangeApproachComplete field in the database
-			// so we need to remove it from the changes map
-
-			existing.MarkedCompleteBy = &principal.Account().ID
-			existing.MarkedCompleteDts = models.TimePointer(time.Now().UTC())
-		} else if !isSettingToComplete {
-			existing.MarkedCompleteBy = nil
-			existing.MarkedCompleteDts = nil
-		}
-
-		delete(changes, "isDataExchangeApproachComplete")
+func TrySendDataExchangeApproachNotifications(
+	ctx context.Context,
+	existing *models.PlanDataExchangeApproach,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	emailAddressBook email.AddressBook,
+	principal authentication.Principal,
+	store *storage.Store,
+) {
+	// Send email notifications
+	modelPlan, notifErr := ModelPlanGetByIDLOADER(ctx, existing.ModelPlanID)
+	if notifErr != nil {
+		logger.Error("failed to send email notifications", zap.Error(notifErr))
+		return
 	}
 
-	// Update the base task list section
-	err = CoreTaskListSectionPreUpdate(logger, existing, changes, principal, store)
-	if err != nil {
-		return nil, err
+	notifErr = SendDataExchangeApproachMarkedCompleteEmailNotification(
+		emailService,
+		emailTemplateService,
+		emailAddressBook,
+		modelPlan,
+		emailAddressBook.MINTTeamEmail,
+		principal.Account().CommonName,
+		false,
+	)
+	if notifErr != nil {
+		logger.Error("failed to send email notifications", zap.Error(notifErr))
+		return
 	}
 
-	targetStatus, err := EvaluateStatus(len(changes) > 0, isSettingToComplete)
-	if err != nil {
-		return nil, err
+	dataExchangeApproachUANs, uacErr := storage.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(store, existing.ModelPlanID)
+	if uacErr != nil {
+		logger.Error("failed to get user account notification preferences", zap.Error(uacErr))
+		return
 	}
 
-	deaIsChangedMarkedCompleted := (existing.Status == nil || targetStatus != *existing.Status) && targetStatus == models.DataExchangeApproachStatusCompleted
-	existing.Status = &targetStatus
+	emailUANs, inAppUANs := models.FilterNotificationPreferences(dataExchangeApproachUANs)
 
-	// Update the plan data exchange approach
-	retDataExchangeApproach, err := store.PlanDataExchangeApproachUpdate(logger, existing)
-
-	if deaIsChangedMarkedCompleted {
-		go func() {
-			// Send email notifications
-			modelPlan, notifErr := ModelPlanGetByIDLOADER(ctx, existing.ModelPlanID)
-			if notifErr != nil {
-				logger.Error("failed to send email notifications", zap.Error(notifErr))
-				return
-			}
-
-			notifErr = SendDataExchangeApproachMarkedCompleteEmailNotification(
-				emailService,
-				emailTemplateService,
-				emailAddressBook,
-				modelPlan,
-				emailAddressBook.MINTTeamEmail,
-				principal.Account().CommonName,
-				false,
-			)
-			if notifErr != nil {
-				logger.Error("failed to send email notifications", zap.Error(notifErr))
-				return
-			}
-
-			dataExchangeApproachUANs, uacErr := store.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(existing.ModelPlanID)
-			if uacErr != nil {
-				logger.Error("failed to get user account notification preferences", zap.Error(uacErr))
-				return
-			}
-
-			emailUANs, inAppUANs := models.FilterNotificationPreferences(dataExchangeApproachUANs)
-
-			_, notifErr = notifications.ActivityDataExchangeApproachMarkedCompleteCreate(
-				ctx,
-				principal.Account().ID,
-				store,
-				inAppUANs,
-				existing.ModelPlanID,
-				existing.ID,
-				principal.Account().ID,
-			)
-			if notifErr != nil {
-				logger.Error("failed to create activity", zap.Error(notifErr))
-				return
-			}
-
-			// Send email notifications
-			notifErr = SendDataExchangeApproachMarkedCompleteEmailNotifications(
-				emailService,
-				emailTemplateService,
-				emailAddressBook,
-				emailUANs,
-				modelPlan,
-				principal.Account().CommonName,
-				true,
-			)
-			if notifErr != nil {
-				logger.Error("failed to send email notifications", zap.Error(err))
-			}
-		}()
+	_, notifErr = notifications.ActivityDataExchangeApproachMarkedCompleteCreate(
+		ctx,
+		principal.Account().ID,
+		store,
+		inAppUANs,
+		existing.ModelPlanID,
+		existing.ID,
+		principal.Account().ID,
+	)
+	if notifErr != nil {
+		logger.Error("failed to create activity", zap.Error(notifErr))
+		return
 	}
 
-	return retDataExchangeApproach, err
+	// Send email notifications
+	notifErr = SendDataExchangeApproachMarkedCompleteEmailNotifications(
+		emailService,
+		emailTemplateService,
+		emailAddressBook,
+		emailUANs,
+		modelPlan,
+		principal.Account().CommonName,
+		true,
+	)
+	if notifErr != nil {
+		logger.Error("failed to send email notifications", zap.Error(notifErr))
+	}
 }
 
 // EvaluateStatus derives the status of the data exchange approach based on the current state of the model

@@ -19,6 +19,7 @@ SELECT
     UNP.dates_changed,
     UNP.dates_changed_notification_type,
     UNP.data_exchange_approach_marked_complete,
+    UNP.data_exchange_approach_marked_complete_notification_type,
     UNP.created_by,
     UNP.created_dts,
     UNP.modified_by,

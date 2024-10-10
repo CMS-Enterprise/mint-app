@@ -311,6 +311,12 @@ export type DailyDigestCompleteActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
+export enum DataExchangeApproachMarkedCompleteNotificationType {
+  ALL_MODELS = 'ALL_MODELS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MY_MODELS = 'MY_MODELS'
+}
+
 export enum DataExchangeApproachStatus {
   COMPLETE = 'COMPLETE',
   IN_PROGRESS = 'IN_PROGRESS',
@@ -4233,6 +4239,7 @@ export type UserNotificationPreferences = {
   createdDts: Scalars['Time']['output'];
   dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
   dataExchangeApproachMarkedComplete: Array<UserNotificationPreferenceFlag>;
+  dataExchangeApproachMarkedCompleteNotificationType?: Maybe<DataExchangeApproachMarkedCompleteNotificationType>;
   datesChanged: Array<UserNotificationPreferenceFlag>;
   datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
@@ -4252,6 +4259,7 @@ export type UserNotificationPreferencesChanges = {
   addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   dataExchangeApproachMarkedComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  dataExchangeApproachMarkedCompleteNotificationType?: InputMaybe<DataExchangeApproachMarkedCompleteNotificationType>;
   datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
