@@ -38,7 +38,7 @@ type PlanDataExchangeApproach struct {
 
 	AdditionalDataExchangeConsiderationsDescription *string `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
 
-	Status *DataExchangeApproachStatus `json:"status" db:"status"`
+	Status DataExchangeApproachStatus `json:"status" db:"status"`
 }
 
 func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {

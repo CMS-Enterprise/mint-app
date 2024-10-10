@@ -38,8 +38,7 @@ func PlanDataExchangeApproachUpdate(
 
 	isSettingToComplete := false
 	// Default to status of inProgress. We set it to completed if it is set by the user
-	inProgress := models.DataExchangeApproachStatusInProgress
-	existing.Status = &inProgress
+	existing.Status = models.DataExchangeApproachStatusInProgress
 
 	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
 	// 'isDataExchangeApproachComplete' is different from the existing value
@@ -53,8 +52,7 @@ func PlanDataExchangeApproachUpdate(
 
 			existing.MarkedCompleteBy = &principal.Account().ID
 			existing.MarkedCompleteDts = models.TimePointer(time.Now().UTC())
-			completedStatus := models.DataExchangeApproachStatusCompleted
-			existing.Status = &completedStatus
+			existing.Status = models.DataExchangeApproachStatusCompleted
 		} else if !isSettingToComplete {
 			existing.MarkedCompleteBy = nil
 			existing.MarkedCompleteDts = nil

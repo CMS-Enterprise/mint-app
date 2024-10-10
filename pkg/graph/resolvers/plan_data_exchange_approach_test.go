@@ -58,7 +58,9 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.Nil(approach.ModifiedBy)
 	suite.Nil(approach.ModifiedDts)
 
-	suite.NotNil(approach.Status)
+	if suite.NotNil(approach.Status) {
+		suite.EqualValues(models.DataExchangeApproachStatusReady, approach.Status)
+	}
 	suite.NotNil(approach.CreatedBy)
 	suite.NotNil(approach.CreatedDts)
 
@@ -84,6 +86,9 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	}
 	suite.NotNil(retApproach.ModifiedBy)
 	suite.NotNil(retApproach.ModifiedDts)
+	if suite.NotNil(approach.Status) {
+		suite.EqualValues(models.DataExchangeApproachStatusInProgress, approach.Status)
+	}
 
 	//Verify that the other fields aren't changed
 	suite.Nil(retApproach.DataToCollectFromParticipants)
