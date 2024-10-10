@@ -25,11 +25,10 @@ type PlanDataExchangeApproachTranslation {
   newDataExchangeMethodsDescription: TranslationField! @goTag(key: "db", value: "new_data_exchange_methods_description")
   newDataExchangeMethodsNote: TranslationField! @goTag(key: "db", value: "new_data_exchange_methods_note")
   additionalDataExchangeConsiderationsDescription: TranslationField! @goTag(key: "db", value: "additional_data_exchange_considerations_description")
+  isDataExchangeApproachComplete: TranslationFieldWithOptions! @goTag(key: "db", value: "is_data_exchange_approach_complete")
 
   # Metadata fields
   markedCompleteBy: TranslationField! @goTag(key: "db", value: "marked_complete_by")
   markedCompleteDts: TranslationField! @goTag(key: "db", value: "marked_complete_dts")
-  isDataExchangeApproachComplete: TranslationFieldWithOptions! @goTag(key: "db", value: "is_data_exchange_approach_complete")
-
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }

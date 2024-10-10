@@ -1974,7 +1974,7 @@ export type PlanDataExchangeApproachCompletedActivityMeta = {
 export type PlanDataExchangeApproachTranslation = {
   __typename: 'PlanDataExchangeApproachTranslation';
   additionalDataExchangeConsiderationsDescription: TranslationField;
-  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndChildren;
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndParent;
   dataToCollectFromParticipants: TranslationFieldWithOptions;
   dataToCollectFromParticipantsNote: TranslationField;
   dataToCollectFromParticipantsOther: TranslationField;
@@ -1982,14 +1982,14 @@ export type PlanDataExchangeApproachTranslation = {
   dataToSendToParticipants: TranslationFieldWithOptions;
   dataToSendToParticipantsNote: TranslationField;
   dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions;
-  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptions;
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptionsAndChildren;
   doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationField;
-  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptions;
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptionsAndChildren;
   doesNeedToMakeMultiPayerDataAvailableNote: TranslationField;
   isDataExchangeApproachComplete: TranslationFieldWithOptions;
   markedCompleteBy: TranslationField;
   markedCompleteDts: TranslationField;
-  multiSourceDataToCollect: TranslationFieldWithOptionsAndChildren;
+  multiSourceDataToCollect: TranslationFieldWithOptionsAndParent;
   multiSourceDataToCollectOther: TranslationField;
   newDataExchangeMethodsDescription: TranslationField;
   newDataExchangeMethodsNote: TranslationField;

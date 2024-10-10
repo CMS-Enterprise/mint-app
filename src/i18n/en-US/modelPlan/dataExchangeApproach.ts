@@ -1,6 +1,7 @@
 import { TranslationDataExchangeApproach } from 'types/translation';
 
 import {
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -236,6 +237,103 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 2.07
+  },
+  // Page 4
+  willImplementNewDataExchangeMethods: {
+    gqlField: 'willImplementNewDataExchangeMethods',
+    goField: 'WillImplementNewDataExchangeMethods',
+    dbField: 'will_implement_new_data_exchange_methods',
+    label:
+      'Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?',
+    sublabel:
+      'If so, please describe. If you aren’t sure, it is OK to leave blank.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 3.01,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  newDataExchangeMethodsDescription: {
+    gqlField: 'newDataExchangeMethodsDescription',
+    goField: 'NewDataExchangeMethodsDescription',
+    dbField: 'new_data_exchange_methods_description',
+    label: 'Please describe',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.02,
+    isOtherType: true,
+    otherParentField: 'willImplementNewDataExchangeMethods'
+  },
+  newDataExchangeMethodsNote: {
+    gqlField: 'newDataExchangeMethodsNote',
+    goField: 'NewDataExchangeMethodsNote',
+    dbField: 'new_data_exchange_methods_note',
+    label: 'Notes',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.03
+  },
+  additionalDataExchangeConsiderationsDescription: {
+    gqlField: 'additionalDataExchangeConsiderationsDescription',
+    goField: 'AdditionalDataExchangeConsiderationsDescription',
+    dbField: 'additional_data_exchange_considerations_description',
+    label: 'Please describe any additional data exchange considerations.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.04
+  },
+  isDataExchangeApproachComplete: {
+    gqlField: 'isDataExchangeApproachComplete',
+    goField: 'IsDataExchangeApproachComplete',
+    dbField: 'is_data_exchange_approach_complete',
+    label: 'This data exchange approach is complete.',
+    sublabel:
+      'This will alert interested parties about your data exchange approach. You can still edit this after it’s marked complete.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 3.07,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
+  markedCompleteBy: {
+    gqlField: 'markedCompleteBy',
+    goField: 'MarkedCompleteBy',
+    dbField: 'marked_complete_by',
+    label: 'Completed by',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.05,
+    tableReference: TableName.USER_ACCOUNT,
+    hideFromReadonly: true
+  },
+  markedCompleteDts: {
+    gqlField: 'markedCompleteDts',
+    goField: 'MarkedCompleteDts',
+    dbField: 'marked_complete_dts',
+    label: 'Completed at',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 3.06,
+    hideFromReadonly: true
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Model Plan status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 5.22,
+    options: {
+      READY: 'Ready',
+      IN_PROGRESS: 'In progress',
+      COMPLETE: 'Complete'
+    },
+    hideFromReadonly: true
   }
 };
 

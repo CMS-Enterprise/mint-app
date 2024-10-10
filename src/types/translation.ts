@@ -958,10 +958,10 @@ export type TranslationDataExchangeApproachForm = {
   newDataExchangeMethodsDescription: TranslationFieldProperties;
   newDataExchangeMethodsNote: TranslationFieldProperties;
   additionalDataExchangeConsiderationsDescription: TranslationFieldProperties;
+  isDataExchangeApproachComplete: TranslationFieldPropertiesWithOptions<Bool>;
   // Metadata
   markedCompleteBy: TranslationFieldProperties;
   markedCompleteDts: TranslationFieldProperties;
-  isDataExchangeApproachComplete: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<DataExchangeApproachStatus>;
 };
 

@@ -230,20 +230,20 @@ type PlanDataExchangeApproachTranslation struct {
 	DataToCollectFromParticipantsNote                models.TranslationField                       `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
 	DataToSendToParticipants                         models.TranslationFieldWithOptions            `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
 	DataToSendToParticipantsNote                     models.TranslationField                       `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
-	DoesNeedToMakeMultiPayerDataAvailable            models.TranslationFieldWithOptions            `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available"`
-	AnticipatedMultiPayerDataAvailabilityUseCase     models.TranslationFieldWithOptionsAndChildren `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
+	DoesNeedToMakeMultiPayerDataAvailable            models.TranslationFieldWithOptionsAndChildren `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available"`
+	AnticipatedMultiPayerDataAvailabilityUseCase     models.TranslationFieldWithOptionsAndParent   `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
 	DoesNeedToMakeMultiPayerDataAvailableNote        models.TranslationField                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
-	DoesNeedToCollectAndAggregateMultiSourceData     models.TranslationFieldWithOptions            `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data"`
-	MultiSourceDataToCollect                         models.TranslationFieldWithOptionsAndChildren `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
+	DoesNeedToCollectAndAggregateMultiSourceData     models.TranslationFieldWithOptionsAndChildren `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data"`
+	MultiSourceDataToCollect                         models.TranslationFieldWithOptionsAndParent   `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
 	MultiSourceDataToCollectOther                    models.TranslationField                       `json:"multiSourceDataToCollectOther" db:"multi_source_data_to_collect_other"`
 	DoesNeedToCollectAndAggregateMultiSourceDataNote models.TranslationField                       `json:"doesNeedToCollectAndAggregateMultiSourceDataNote" db:"does_need_to_collect_and_aggregate_multi_source_data_note"`
 	WillImplementNewDataExchangeMethods              models.TranslationFieldWithOptions            `json:"willImplementNewDataExchangeMethods" db:"will_implement_new_data_exchange_methods"`
 	NewDataExchangeMethodsDescription                models.TranslationField                       `json:"newDataExchangeMethodsDescription" db:"new_data_exchange_methods_description"`
 	NewDataExchangeMethodsNote                       models.TranslationField                       `json:"newDataExchangeMethodsNote" db:"new_data_exchange_methods_note"`
 	AdditionalDataExchangeConsiderationsDescription  models.TranslationField                       `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
+	IsDataExchangeApproachComplete                   models.TranslationFieldWithOptions            `json:"isDataExchangeApproachComplete" db:"is_data_exchange_approach_complete"`
 	MarkedCompleteBy                                 models.TranslationField                       `json:"markedCompleteBy" db:"marked_complete_by"`
 	MarkedCompleteDts                                models.TranslationField                       `json:"markedCompleteDts" db:"marked_complete_dts"`
-	IsDataExchangeApproachComplete                   models.TranslationFieldWithOptions            `json:"isDataExchangeApproachComplete" db:"is_data_exchange_approach_complete"`
 	Status                                           models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
