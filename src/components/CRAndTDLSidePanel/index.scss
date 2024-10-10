@@ -32,6 +32,10 @@
 
     &__content {
       padding: 2rem 0rem;
+
+      & > div {
+        margin-bottom: 1.5rem;
+      }
     }
   }
 }

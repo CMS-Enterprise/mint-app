@@ -102,6 +102,7 @@ const crtdlsMisc = {
     }
   },
   echimpCard: {
+    sidepanelAriaLabel: 'CR and TDL Sidepanel',
     crStatus: 'CR Status',
     crTag: {
       emergency: 'Emergency',
@@ -110,14 +111,14 @@ const crtdlsMisc = {
     implementationDate: 'Implementation Date',
     issuedDate: 'Issued date',
     viewMore: 'View more',
-    viewThisInECHIMP: 'View this in ECHIMP'
+    viewThisInECHIMP: 'View this in ECHIMP',
+    initiator: 'Initiator',
+    crSummary: 'CR Summary',
+    relatedCrTdl: 'Related CR/TDL number(s)'
   },
   sortBy: {
     id: 'By ID number',
     title: 'By title'
-  },
-  echimpSidepanel: {
-    ariaLabel: 'CR and TDL Sidepanel'
   }
 };
 

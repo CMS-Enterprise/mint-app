@@ -69,6 +69,14 @@ const CRAndTDLSidePanel = ({
           </div>
           <div className="sidepanel__content">
             <div className="echimp-card__date">
+              {implementationDate && (
+                <>
+                  <p className="text-bold">
+                    {crtdlsT('echimpCard.implementationDate')}
+                  </p>
+                  <p>{implementationDate}</p>
+                </>
+              )}
               {issuedDate && (
                 <>
                   <p className="text-bold">
@@ -79,14 +87,15 @@ const CRAndTDLSidePanel = ({
                 </>
               )}
             </div>
+            <div className="echimp-card__initiator">hello</div>
+            <ExternalLink
+              href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+              className="margin-right-0"
+              toEchimp
+            >
+              {crtdlsT('echimpCard.viewThisInECHIMP')}
+            </ExternalLink>
           </div>
-          <ExternalLink
-            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
-            className="margin-right-0"
-            toEchimp
-          >
-            {crtdlsT('echimpCard.viewThisInECHIMP')}
-          </ExternalLink>
         </Grid>
       </Grid>
     </GridContainer>

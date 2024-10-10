@@ -182,7 +182,7 @@ const EChimpCardsTable = ({
       <Sidepanel
         isOpen={isSidepanelOpen}
         closeModal={() => setIsSidepanelOpen(false)}
-        ariaLabel={crtdlsT('echimpSidepanel.ariaLabel')}
+        ariaLabel={crtdlsT('echimpCard.sidepanelAriaLabel')}
         testid="cr-and-tdl-sidepanel"
         modalHeading={showCRorTDLWithId}
       >
