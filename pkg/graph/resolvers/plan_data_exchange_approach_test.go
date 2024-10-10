@@ -107,4 +107,30 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.Nil(retApproach.NewDataExchangeMethodsDescription)
 	suite.Nil(retApproach.NewDataExchangeMethodsNote)
 	suite.Nil(retApproach.AdditionalDataExchangeConsiderationsDescription)
+
+	changesComplete := map[string]interface{}{
+		"isDataExchangeApproachComplete": true,
+	}
+	// Update and verify that it gets set to completed
+	retApproach, err = PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changesComplete, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(retApproach)
+	if suite.NotNil(approach.Status) {
+		suite.EqualValues(models.DataExchangeApproachStatusCompleted, approach.Status)
+
+		if suite.NotNil(retApproach.MarkedCompleteBy) {
+			suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *retApproach.MarkedCompleteBy)
+		}
+		suite.NotNil(retApproach.MarkedCompleteDts)
+	}
+
+	// Clear the status with the original change set
+	retApproach, err = PlanDataExchangeApproachUpdate(suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(retApproach)
+	if suite.NotNil(approach.Status) {
+		suite.EqualValues(models.DataExchangeApproachStatusInProgress, approach.Status)
+	}
+	suite.Nil(retApproach.MarkedCompleteDts)
+	suite.Nil(retApproach.MarkedCompleteBy)
 }
