@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -23,6 +24,8 @@ func PlanDataExchangeApproachGetByModelPlanID(logger *zap.Logger, store *storage
 }
 
 // PlanDataExchangeApproachUpdate updates a plan data exchange approach
+// It looks to see if a user marked the section as complete, and if so it will update the status and mark the user and the date.
+// If a user sets the section as not complete, it will clear that data, and set the status to in progress.
 func PlanDataExchangeApproachUpdate(
 	logger *zap.Logger,
 	id uuid.UUID,
@@ -35,15 +38,17 @@ func PlanDataExchangeApproachUpdate(
 	if err != nil {
 		return nil, err
 	}
-
-	isSettingToComplete := false
-	// Default to status of inProgress. We set it to completed if it is set by the user
-	existing.Status = models.DataExchangeApproachStatusInProgress
+	if existing.Status == models.DataExchangeApproachStatusReady {
+		existing.Status = models.DataExchangeApproachStatusInProgress
+	}
 
 	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
 	// 'isDataExchangeApproachComplete' is different from the existing value
 	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
-		isSettingToComplete = isDataExchangeApproachComplete.(bool)
+		isSettingToComplete, ok := isDataExchangeApproachComplete.(bool)
+		if !ok {
+			return nil, fmt.Errorf(" unable to update plan data exchange approach, isDataExchangeApproachComplete is not a bool")
+		}
 
 		// Check if time has been set or is the default value
 		if existing.MarkedCompleteDts == nil && isSettingToComplete {
@@ -56,6 +61,7 @@ func PlanDataExchangeApproachUpdate(
 		} else if !isSettingToComplete {
 			existing.MarkedCompleteBy = nil
 			existing.MarkedCompleteDts = nil
+			existing.Status = models.DataExchangeApproachStatusInProgress
 		}
 
 		delete(changes, "isDataExchangeApproachComplete")
