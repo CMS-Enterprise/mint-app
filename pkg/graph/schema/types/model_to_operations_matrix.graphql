@@ -3,13 +3,19 @@ type ModelsToOperationMatrix {
 }
 
 type Milestone {
-  id: UUID!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
+  id: UUID! # TODO Other Metadata we use everywhere else
+  name: String!
+  category: Category
+}
+
+type Category {
+  id: UUID! # TODO Other Metadata we use everywhere else
+  name: String!
+  subCategory: Category
+}
+
+type CategoryWithMilestones {
+
 }
 
 # input ModelPlanChanges @goModel(model: "map[string]interface{}") {
