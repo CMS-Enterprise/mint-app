@@ -106,7 +106,8 @@ const crtdlsMisc = {
     crStatus: 'CR Status',
     crTag: {
       emergency: 'Emergency',
-      sensitive: 'Sensitive/controversial'
+      sensitive: 'Sensitive/controversial',
+      crQuestion: ' CR?'
     },
     implementationDate: 'Implementation Date',
     issuedDate: 'Issued date',

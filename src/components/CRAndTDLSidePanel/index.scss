@@ -32,9 +32,21 @@
 
     &__content {
       padding: 2rem 0rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+
+      .sidepanel--full-width {
+        grid-column: 1 / 3;
+      }
 
       & > div {
-        margin-bottom: 1.5rem;
+        margin-bottom: 0;
+
+        p {
+          margin: 0;
+          line-height: 25px;
+        }
       }
     }
   }

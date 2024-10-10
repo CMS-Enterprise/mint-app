@@ -188,6 +188,12 @@ const EChimpCardsTable = ({
       >
         <CRAndTDLSidePanel
           {...echimpItems.filter(item => item.id === showCRorTDLWithId)[0]}
+          isCR={
+            showCRorTDLWithId !== '' &&
+            isEChimpCR(
+              echimpItems.filter(item => item.id === showCRorTDLWithId)[0]
+            )
+          }
         />
       </Sidepanel>
       <Grid row>
