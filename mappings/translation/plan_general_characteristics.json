@@ -1671,6 +1671,7 @@
     "formType": "CHECKBOX",
     "order": 5.08,
     "isOtherType": true,
+    "otherParentField": "waivers_required",
     "options": {
       "FRAUD_ABUSE": "Fraud and Abuse",
       "MEDICAID": "Medicaid",
