@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 
 import ExternalLink from 'components/ExternalLink';
@@ -38,6 +38,8 @@ const CRAndTDLSidePanel = ({
   crSummary
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
+
+  const [isTruncated, setIsTruncated] = useState(true);
 
   const properlyCapitalizeInitiator = (fullName: string) => {
     const [namePart, parenthesisPart] = fullName.split(' (');
@@ -107,13 +109,32 @@ const CRAndTDLSidePanel = ({
                     <p>{properlyCapitalizeInitiator(initiator)}</p>
                   </div>
                 )}
-                <div className="sidepanel--full-width">
-                  <p className="text-bold">{crtdlsT('echimpCard.crSummary')}</p>
-                  <MentionTextArea
-                    id={id}
-                    initialContent={crSummary?.rawContent}
-                  />
-                </div>
+                {crSummary && (
+                  <div className="sidepanel--full-width">
+                    <p className="text-bold">
+                      {crtdlsT('echimpCard.crSummary')}
+                    </p>
+                    <MentionTextArea
+                      className={isTruncated ? 'line-clamped' : ''}
+                      id={id}
+                      initialContent={crSummary?.rawContent}
+                    />
+                    <Button
+                      type="button"
+                      onClick={() => setIsTruncated(!isTruncated)}
+                      aria-expanded={isTruncated}
+                      aria-controls={id}
+                      unstyled
+                      className="display-flex flex-align-center margin-top-1"
+                    >
+                      {isTruncated
+                        ? i18n.t('general:readMore')
+                        : i18n.t('general:readLess')}
+
+                      {isTruncated ? <Icon.ExpandMore /> : <Icon.ExpandLess />}
+                    </Button>
+                  </div>
+                )}
 
                 <div>
                   <p className="text-bold">
