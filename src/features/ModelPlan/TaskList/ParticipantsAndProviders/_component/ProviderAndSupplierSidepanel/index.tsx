@@ -21,15 +21,15 @@ import ProviderAndSupplierTable from '../ProviderAndSupplierTable';
 
 import './index.scss';
 
-type ProviderAndSupplierModalProps = {
+type ProviderAndSupplierSidepanelProps = {
   isOpen: boolean;
   closeModal: () => void;
 };
 
-const ProviderAndSupplierModal = ({
+const ProviderAndSupplierSidepanel = ({
   isOpen,
   closeModal
-}: ProviderAndSupplierModalProps) => {
+}: ProviderAndSupplierSidepanelProps) => {
   const { t: modalT } = useTranslation('participantsAndProvidersMisc');
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -126,4 +126,4 @@ const ProviderAndSupplierModal = ({
   return <>{renderModal()}</>;
 };
 
-export default ProviderAndSupplierModal;
+export default ProviderAndSupplierSidepanel;
