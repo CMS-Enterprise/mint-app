@@ -15,6 +15,11 @@ export type CRAndTDLSidePanelProps = {
   isInReadView?: boolean;
   issuedDate?: string | null;
   sensitiveFlag?: boolean | null;
+  initiator?: string | null;
+  relatedCrTdlNumbers?: string | null;
+  crSummary?: {
+    rawContent: string;
+  } | null;
 };
 
 const CRAndTDLSidePanel = ({
@@ -25,7 +30,10 @@ const CRAndTDLSidePanel = ({
   implementationDate,
   isInReadView,
   issuedDate,
-  sensitiveFlag
+  sensitiveFlag,
+  initiator,
+  relatedCrTdlNumbers,
+  crSummary
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
