@@ -67,9 +67,8 @@ export const Contact = ({
         href={`mailto:${contact?.email}`}
         target="_blank"
       >
+        <Icon.Mail className="margin-right-1 top-1px text-tbottom" />
         {h('contactInfo.sendAnEmail')}
-
-        <Icon.Launch className="margin-left-05 margin-bottom-2px text-tbottom" />
       </Link>
 
       {!isOnPointsOfContact && (

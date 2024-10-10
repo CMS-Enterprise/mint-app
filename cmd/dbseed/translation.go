@@ -18,10 +18,9 @@ var translationExportCmd = &cobra.Command{
 }
 
 func exportTranslation() {
-	// yarn ts-node ./mappings/export/exportTranslation.ts
-
+	// yarn mappings:export
 	command := "yarn"
-	comArgs := []string{"ts-node", "./mappings/export/exportTranslation.ts"}
+	comArgs := []string{"mappings:export"}
 
 	// #nosec G204 // We have sanitized the command, so we can ignore this warning
 	cmd := exec.Command(command, comArgs[0:]...)
