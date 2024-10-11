@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ResourcesByCategory > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-y-105 border-top-2px border-gray-10 margin-top-2 custom-class"
+  >
+    <h3
+      class="margin-bottom-4"
+    >
+      Other categories
+    </h3>
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <div
+          class="display-block"
+        >
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/articles"
+          >
+            All help resources
+          </a>
+          <p
+            class="margin-y-1"
+          >
+            17 resources
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <div
+          class="display-block"
+        >
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/articles?category=it-implementation"
+          >
+            IT implementation
+          </a>
+           
+          <p
+            class="margin-y-1"
+          >
+            5 resources
+          </p>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-4"
+        data-testid="grid"
+      >
+        <div
+          class="display-block"
+        >
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/articles?category=model-concept-and-design"
+          >
+            Model concept and design
+          </a>
+           
+          <p
+            class="margin-top-1 margin-bottom-0"
+          >
+            6 resources
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

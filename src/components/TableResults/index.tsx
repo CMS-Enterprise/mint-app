@@ -56,7 +56,7 @@ const TableResults = ({
         {rows === 0 ? (
           showNoResults && (
             <>
-              <div role="status" aria-live="polite">
+              <div role="status" aria-live="polite" className="margin-bottom-4">
                 {t('tableAndPagination:results.noResults')}{' '}
                 {/* Displays the search input even if there are no results */}
                 {displayResult(globalFilter)}
