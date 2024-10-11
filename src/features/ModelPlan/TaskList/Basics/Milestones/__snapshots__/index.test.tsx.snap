@@ -141,7 +141,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                     <span>
                       MINTTeam@cms.hhs.gov
                       <svg
-                        class="usa-icon margin-left-05 top-05"
+                        class="usa-icon margin-left-05 top-2px"
                         focusable="false"
                         height="1em"
                         role="img"

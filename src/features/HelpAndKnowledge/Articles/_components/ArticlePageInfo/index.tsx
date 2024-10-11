@@ -26,29 +26,6 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
       >
         {t('browseAll')}
       </UswdsReactLink>
-
-      <div className="border-right margin-bottom-2 text-base-lighter margin-right-3" />
-
-      <UswdsReactLink
-        to="/help-and-knowledge/articles?category=getting-started"
-        className="margin-right-3"
-      >
-        {t('viewGettingStarted')}
-      </UswdsReactLink>
-
-      <UswdsReactLink
-        to="/help-and-knowledge/articles?category=model-concept-and-design"
-        className="margin-right-3"
-      >
-        {t('viewModelConcept')}
-      </UswdsReactLink>
-
-      <UswdsReactLink
-        to="/help-and-knowledge/articles?category=it-implementation"
-        className="margin-right-3"
-      >
-        {t('viewITImplementation')}
-      </UswdsReactLink>
     </div>
   );
 };
