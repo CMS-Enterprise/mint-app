@@ -3,12 +3,13 @@
 
 .mint-sidepanel {
   &__content {
+    width: 100%;
     height: auto;
     min-height: 100%;
     right: 0;
 
     @media screen and (min-width: $desktop) {
-      width: 70% !important;
+      width: 70%;
     }
   }
 
