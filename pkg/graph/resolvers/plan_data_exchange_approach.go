@@ -94,18 +94,16 @@ func PlanDataExchangeApproachUpdate(
 			retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(tx, logger, existing)
 
 			if deaIsChangedMarkedCompleted {
-				go func() {
-					TrySendDataExchangeApproachNotifications(
-						ctx,
-						existing,
-						logger,
-						emailService,
-						emailTemplateService,
-						emailAddressBook,
-						principal,
-						store,
-					)
-				}()
+				TrySendDataExchangeApproachNotifications(
+					ctx,
+					existing,
+					logger,
+					emailService,
+					emailTemplateService,
+					emailAddressBook,
+					principal,
+					tx,
+				)
 			}
 
 			return retDataExchangeApproach, err
@@ -127,7 +125,7 @@ func TrySendDataExchangeApproachNotifications(
 	emailTemplateService email.TemplateService,
 	emailAddressBook email.AddressBook,
 	principal authentication.Principal,
-	store *storage.Store,
+	np sqlutils.NamedPreparer,
 ) {
 	// Send email notifications
 	modelPlan, notifErr := ModelPlanGetByIDLOADER(ctx, existing.ModelPlanID)
@@ -150,7 +148,7 @@ func TrySendDataExchangeApproachNotifications(
 		return
 	}
 
-	dataExchangeApproachUANs, uacErr := storage.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(store, existing.ModelPlanID)
+	dataExchangeApproachUANs, uacErr := storage.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(np, existing.ModelPlanID)
 	if uacErr != nil {
 		logger.Error("failed to get user account notification preferences", zap.Error(uacErr))
 		return
@@ -161,7 +159,7 @@ func TrySendDataExchangeApproachNotifications(
 	_, notifErr = notifications.ActivityDataExchangeApproachMarkedCompleteCreate(
 		ctx,
 		principal.Account().ID,
-		store,
+		np,
 		inAppUANs,
 		existing.ModelPlanID,
 		existing.ID,
@@ -172,19 +170,21 @@ func TrySendDataExchangeApproachNotifications(
 		return
 	}
 
-	// Send email notifications
-	notifErr = SendDataExchangeApproachMarkedCompleteEmailNotifications(
-		emailService,
-		emailTemplateService,
-		emailAddressBook,
-		emailUANs,
-		modelPlan,
-		principal.Account().CommonName,
-		true,
-	)
-	if notifErr != nil {
-		logger.Error("failed to send email notifications", zap.Error(notifErr))
-	}
+	go func() {
+		// Send email notifications
+		notifErr = SendDataExchangeApproachMarkedCompleteEmailNotifications(
+			emailService,
+			emailTemplateService,
+			emailAddressBook,
+			emailUANs,
+			modelPlan,
+			principal.Account().CommonName,
+			true,
+		)
+		if notifErr != nil {
+			logger.Error("failed to send email notifications", zap.Error(notifErr))
+		}
+	}()
 }
 
 // EvaluateStatus derives the status of the data exchange approach based on the current state of the model
