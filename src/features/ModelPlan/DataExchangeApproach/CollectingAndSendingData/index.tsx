@@ -1,16 +1,13 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, Icon, Link } from '@trussworks/react-uswds';
-import { TeamRole, useGetModelCollaboratorsQuery } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
-import { Avatar } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
 import PageNumber from 'components/PageNumber';
 import { tArray } from 'utils/translation';
 
-const AboutCompletingDataExchange = () => {
+const CollectingAndSendingData = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -20,18 +17,6 @@ const AboutCompletingDataExchange = () => {
 
   const expandItems = tArray(
     'dataExchangeApproachMisc:aboutCompletingDataExchange.whyDoINeedThisFormItems'
-  );
-
-  const { data, loading } = useGetModelCollaboratorsQuery({
-    variables: {
-      id: modelID
-    }
-  });
-
-  const itLeadsAndArchitects = data?.modelPlan?.collaborators?.filter(
-    collaborator =>
-      collaborator.teamRoles.includes(TeamRole.IT_LEAD) ||
-      collaborator.teamRoles.includes(TeamRole.SOLUTION_ARCHITECT)
   );
 
   return (
@@ -88,31 +73,9 @@ const AboutCompletingDataExchange = () => {
             {t('aboutCompletingDataExchange.itLead')}
           </h4>
 
-          <div>
-            {itLeadsAndArchitects && itLeadsAndArchitects.length > 0 ? (
-              itLeadsAndArchitects?.map(collaborator => (
-                <Avatar
-                  user={collaborator.userAccount.commonName}
-                  teamRoles={collaborator.teamRoles.filter(
-                    role =>
-                      role === TeamRole.IT_LEAD ||
-                      role === TeamRole.SOLUTION_ARCHITECT
-                  )}
-                  conciseRoles
-                  className="margin-y-05"
-                />
-              ))
-            ) : (
-              <div>
-                <p className="text-italic text-base margin-top-0">
-                  {t('aboutCompletingDataExchange.noLeadAssigned')}
-                </p>
-                <Alert type="info" slim className="margin-top-1 text-normal">
-                  {t('aboutCompletingDataExchange.pleaseContactBSG')}
-                </Alert>
-              </div>
-            )}
-          </div>
+          <p className="margin-top-0">
+            {t('aboutCompletingDataExchange.modelTeamDescription')}
+          </p>
         </Grid>
       </Grid>
 
@@ -144,4 +107,4 @@ const AboutCompletingDataExchange = () => {
   );
 };
 
-export default AboutCompletingDataExchange;
+export default CollectingAndSendingData;

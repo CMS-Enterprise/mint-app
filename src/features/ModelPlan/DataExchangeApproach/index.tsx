@@ -10,6 +10,7 @@ import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import AboutCompletingDataExchange from './AboutCompletingDataExchange';
+import CollectingAndSendingData from './CollectingAndSendingData';
 
 const DataEchangeApproach = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
@@ -31,7 +32,7 @@ const DataEchangeApproach = () => {
         ]}
       />
 
-      <h1 className="margin-bottom-0">{t('heading')}</h1>
+      <h1 className="margin-bottom-0 margin-top-5">{t('heading')}</h1>
 
       <p className="mint-body-large margin-bottom-0 margin-top-05">
         {t('forModel', {
@@ -52,6 +53,12 @@ const DataEchangeApproach = () => {
         <ProtectedRoute
           path="/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange"
           component={AboutCompletingDataExchange}
+          exact
+        />
+
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
+          component={CollectingAndSendingData}
           exact
         />
 

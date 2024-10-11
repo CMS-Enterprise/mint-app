@@ -1,5 +1,3 @@
-import AboutCompletingDataExchange from 'features/ModelPlan/DataExchangeApproach/AboutCompletingDataExchange';
-
 import { TranslationDataExchangeApproach } from 'types/translation';
 
 import {
@@ -363,7 +361,10 @@ export const dataExchangeApproachMisc = {
     modelTeamDescription:
       'Model leads or model team members responsible for data-centric activities should work with the IT Lead or Solution Architect to complete the questions in this approach.',
     itLead: 'IT Lead/Solution Architect',
-    email: 'Email the MINT Team'
+    email: 'Email the MINT Team',
+    noLeadAssigned: 'No IT Lead or Solution Architect assigned',
+    pleaseContactBSG:
+      'Please contact BSG to work with a Solution Architect or assign an IT Lead.'
   }
 };
 
