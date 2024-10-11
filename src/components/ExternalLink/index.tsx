@@ -8,10 +8,10 @@ import PageHeading from 'components/PageHeading';
 
 type ExternalLinkModalTypes = {
   children: React.ReactNode;
+  className?: string;
   href: string;
   variant?: 'external' | 'unstyled' | 'nav';
   asButton?: boolean;
-  className?: string;
   toEchimp?: boolean;
   inlineText?: boolean;
 };
