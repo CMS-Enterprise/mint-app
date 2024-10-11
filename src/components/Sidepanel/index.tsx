@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import noScroll from 'no-scroll';
 
 import './index.scss';
@@ -37,7 +38,7 @@ const Sidepanel = ({
     <ReactModal
       isOpen={isOpen}
       overlayClassName="mint-sidepanel__overlay overflow-y-scroll"
-      className={`mint-sidepanel__content ${classname}`}
+      className={classNames('mint-sidepanel__content', classname)}
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
