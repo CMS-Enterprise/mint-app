@@ -114,6 +114,7 @@ const SolutionDetailsModal = ({
         closeModal={closeModal}
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
+        classname="desktop:width-50"
       >
         <Header solution={solution} />
 
