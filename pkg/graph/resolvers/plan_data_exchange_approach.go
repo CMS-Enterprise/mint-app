@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -8,6 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -76,4 +78,9 @@ func PlanDataExchangeApproachUpdate(
 	// Update the plan data exchange approach
 	retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(store, logger, existing)
 	return retDataExchangeApproach, err
+}
+
+// PlanDataExchangeApproachGetByModelPlanIDLoader calls a data loader to batch fetching a a plan data exchange object that corresponds to a model plan
+func PlanDataExchangeApproachGetByModelPlanIDLoader(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanDataExchangeApproach, error) {
+	return loaders.PlanDataExchangeApproach.ByModelPlanID.Load(ctx, modelPlanID)
 }
