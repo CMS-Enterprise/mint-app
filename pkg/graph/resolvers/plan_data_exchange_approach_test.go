@@ -67,7 +67,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	// Assert that the correct approach was returned
 	suite.EqualValues(plan1.ID, approach.ModelPlanID)
 
-	multipayerAvailableExpected := models.YesNoTypeYes
+	multipayerAvailableExpected := true
 	doesNeedToMakeMultiPayerDataAvailableNoteExpected := "yes yes yes, make available"
 
 	changes := map[string]interface{}{
