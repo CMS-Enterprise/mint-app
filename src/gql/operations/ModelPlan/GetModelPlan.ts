@@ -22,6 +22,9 @@ export default gql(/* GraphQL */ `
         id
         clearanceStarts
         modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
         readyForClearanceDts
         status
       }
@@ -83,6 +86,9 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedBy
         modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
         readyForClearanceDts
         status
       }
@@ -92,6 +98,9 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedBy
         modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
         readyForClearanceDts
         status
       }
@@ -101,6 +110,9 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedBy
         modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
         readyForClearanceDts
         status
       }
@@ -110,6 +122,9 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedBy
         modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
         readyForClearanceDts
         status
       }
@@ -119,6 +134,9 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedBy
         modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
         readyForClearanceDts
         status
       }
