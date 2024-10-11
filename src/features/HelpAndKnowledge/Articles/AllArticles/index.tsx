@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
@@ -9,7 +9,11 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import HelpCardGroup from '../_components/HelpCardGroup';
-import { ArticleCategories, articleCategories } from '..';
+import ResourcesByCategory from '../_components/ResourcesByCategory';
+import helpAndKnowledgeArticles, {
+  ArticleCategories,
+  articleCategories
+} from '..';
 
 const AllArticles = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -17,6 +21,12 @@ const AllArticles = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const category = params.get('category');
+
+  const resources = useMemo(() => {
+    return category
+      ? helpAndKnowledgeArticles.filter(article => article.type === category)
+      : helpAndKnowledgeArticles;
+  }, [category]);
 
   if (category && !articleCategories.includes(category as ArticleCategories)) {
     return <NotFound />;
@@ -36,10 +46,14 @@ const AllArticles = () => {
           <HelpCardGroup
             className="margin-y-2"
             tag={!category}
-            pagination
-            filter={category}
+            resources={resources}
           />
         </Grid>
+
+        <ResourcesByCategory
+          currentCategory={category as ArticleCategories}
+          className="margin-bottom-2"
+        />
       </GridContainer>
     </MainContent>
   );

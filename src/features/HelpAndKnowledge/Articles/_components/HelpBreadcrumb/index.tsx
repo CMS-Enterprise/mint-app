@@ -1,16 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Icon
-} from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 
 type HelpBreadcrumbProps = {
   className?: string;
@@ -35,6 +29,7 @@ export default function HelpBreadcrumb({
       history.replace(home ? '/' : '/help-and-knowledge');
     }
   };
+
   return (
     <Button
       type="button"
@@ -50,14 +45,10 @@ export default function HelpBreadcrumb({
           {t('close')}
         </>
       ) : (
-        <BreadcrumbBar variant="wrap">
-          <Breadcrumb>
-            <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-              <span>{home ? t('home') : t('heading')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb current>{text}</Breadcrumb>
-        </BreadcrumbBar>
+        <Breadcrumbs
+          items={[BreadcrumbItemOptions.HELP_CENTER]}
+          customItem={text}
+        />
       )}
     </Button>
   );
