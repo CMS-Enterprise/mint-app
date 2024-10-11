@@ -120,7 +120,7 @@ const SixPagerMeeting = () => {
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
-          closeRoute="/help-and-knowledge/about-six-page-concept-papers-and-review-meeting"
+          closeRoute="/help-and-knowledge/about-6-page-concept-papers-and-review-meeting"
         />
       )}
 
