@@ -265,7 +265,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               <p
                 class="text-bold"
               >
-                Initiated date
+                Issued date
               </p>
               <p>
                 2022-07-30T05:00:00Z
