@@ -82,12 +82,8 @@ func batchPlanDiscussionGetByModelPlanID(ctx context.Context, modelPlanIDs []uui
 	getKeyFunc := func(data *models.PlanDiscussion) uuid.UUID {
 		return data.ModelPlanID
 	}
-	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.PlanDiscussion) ([]*models.PlanDiscussion, bool) {
-		res, ok := resMap[key]
-		return res, ok
-	}
 
 	// implement one to many
-	return oneToManyDataLoaderFunc(modelPlanIDs, data, getKeyFunc, getResFunc)
+	return oneToManyDataLoaderFuncSimplified(modelPlanIDs, data, getKeyFunc)
 
 }
