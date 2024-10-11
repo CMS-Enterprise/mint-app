@@ -47,10 +47,10 @@ CREATE TYPE DEA_MULTI_SOURCE_DATA_TO_COLLECT AS ENUM (
 );
 
 CREATE TYPE DEA_TASK_LIST_STATUS AS ENUM (
-  'READY',
-  'IN_PROGRESS',
-  'COMPLETED'
-  );
+    'READY',
+    'IN_PROGRESS',
+    'COMPLETED'
+);
 
 CREATE TABLE plan_data_exchange_approach (
     id UUID PRIMARY KEY NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE plan_data_exchange_approach (
     data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
     data_to_collect_from_participants_reports_details ZERO_STRING,
     data_to_collect_from_participants_other ZERO_STRING,
-    data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,
+    data_will_not_be_collected_from_participants BOOLEAN,
     data_to_collect_from_participants_note ZERO_STRING,
 
     data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
