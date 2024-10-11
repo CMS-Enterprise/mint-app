@@ -91,7 +91,7 @@ func PlanDataExchangeApproachUpdate(
 			existing.Status = &targetStatus
 
 			// Update the plan data exchange approach
-			retDataExchangeApproach, err := store.PlanDataExchangeApproachUpdate(logger, existing)
+			retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(tx, logger, existing)
 
 			if deaIsChangedMarkedCompleted {
 				go func() {
