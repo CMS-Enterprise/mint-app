@@ -143,20 +143,6 @@ func TrySendDataExchangeApproachNotifications(
 		return
 	}
 
-	notifErr = SendDataExchangeApproachMarkedCompleteEmailNotification(
-		emailService,
-		emailTemplateService,
-		emailAddressBook,
-		modelPlan,
-		emailAddressBook.MINTTeamEmail,
-		principal.Account().CommonName,
-		false,
-	)
-	if notifErr != nil {
-		logger.Error("failed to send email notifications", zap.Error(notifErr))
-		return
-	}
-
 	dataExchangeApproachUANs, uacErr := storage.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(np, existing.ModelPlanID)
 	if uacErr != nil {
 		logger.Error("failed to get user account notification preferences", zap.Error(uacErr))
@@ -180,7 +166,27 @@ func TrySendDataExchangeApproachNotifications(
 	}
 
 	go func() {
-		// Send email notifications
+		// Return nil if there is no email service, this follows similar
+		if emailService == nil || emailTemplateService == nil {
+			return
+		}
+
+		// Send email to MINT Team Email (no footer)
+		notifErr = SendDataExchangeApproachMarkedCompleteEmailNotification(
+			emailService,
+			emailTemplateService,
+			emailAddressBook,
+			modelPlan,
+			emailAddressBook.MINTTeamEmail,
+			principal.Account().CommonName,
+			false,
+		)
+		if notifErr != nil {
+			logger.Error("failed to send email notifications to MINT team", zap.Error(notifErr))
+			return
+		}
+
+		// Send email notifications (footer)
 		notifErr = SendDataExchangeApproachMarkedCompleteEmailNotifications(
 			emailService,
 			emailTemplateService,
