@@ -18,7 +18,7 @@ describe('FFS CRs and TDLs', () => {
     cy.contains('button', 'View more').click();
     cy.get('[data-testid="cr-and-tdl-sidepanel"]').contains(
       'Billing Requirements for Physician Services Rendered in Method II Critical Access Hospitals'
-    )
+    );
     cy.get('[data-testid="cr-and-tdl-sidepanel"]').within(() => {
       cy.contains('button', 'View this in ECHIMP').click();
     });
