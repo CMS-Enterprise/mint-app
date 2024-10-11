@@ -54,7 +54,6 @@
     "dbField": "medicare_provider_type",
     "label": "Which type of Medicare providers/suppliers?",
     "sublabel": "Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.",
-    "modalLink": "View existing provider/supplier types",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 1.02,
