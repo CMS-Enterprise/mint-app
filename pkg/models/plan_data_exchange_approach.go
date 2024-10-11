@@ -1,42 +1,44 @@
 package models
 
 import (
+	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 // PlanDataExchangeApproach represents the data exchange approach of a model plan
 type PlanDataExchangeApproach struct {
-	coreTaskListSection
+	baseStruct
+	modelPlanRelation
 	markedCompleteByRelation
 
 	// Page 2
 	DataToCollectFromParticipants               pq.StringArray `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsReportsDetails *string        `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
 	DataToCollectFromParticipantsOther          *string        `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
-	DataWillNotBeCollectedFromParticipants      bool           `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
+	DataWillNotBeCollectedFromParticipants      *bool          `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsNote           *string        `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
 
 	DataToSendToParticipants     pq.StringArray `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
 	DataToSendToParticipantsNote *string        `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
 
 	// Page 3
-	DoesNeedToMakeMultiPayerDataAvailable        *YesNoType                                    `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available" statusWeight:"1"`
+	DoesNeedToMakeMultiPayerDataAvailable        *bool                                         `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available" statusWeight:"1"`
 	AnticipatedMultiPayerDataAvailabilityUseCase *AnticipatedMultiPayerDataAvailabilityUseCase `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
 	DoesNeedToMakeMultiPayerDataAvailableNote    *string                                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
 
-	DoesNeedToCollectAndAggregateMultiSourceData     *YesNoType     `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data" statusWeight:"1"`
+	DoesNeedToCollectAndAggregateMultiSourceData     *bool          `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data" statusWeight:"1"`
 	MultiSourceDataToCollect                         pq.StringArray `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
 	MultiSourceDataToCollectOther                    *string        `json:"multiSourceDataToCollectOther" db:"multi_source_data_to_collect_other"`
 	DoesNeedToCollectAndAggregateMultiSourceDataNote *string        `json:"doesNeedToCollectAndAggregateMultiSourceDataNote" db:"does_need_to_collect_and_aggregate_multi_source_data_note"`
 
 	// Page 4
-	WillImplementNewDataExchangeMethods *YesNoType `json:"willImplementNewDataExchangeMethods" db:"will_implement_new_data_exchange_methods" statusWeight:"1"`
-	NewDataExchangeMethodsDescription   *string    `json:"newDataExchangeMethodsDescription" db:"new_data_exchange_methods_description"`
-	NewDataExchangeMethodsNote          *string    `json:"newDataExchangeMethodsNote" db:"new_data_exchange_methods_note"`
+	WillImplementNewDataExchangeMethods *bool   `json:"willImplementNewDataExchangeMethods" db:"will_implement_new_data_exchange_methods" statusWeight:"1"`
+	NewDataExchangeMethodsDescription   *string `json:"newDataExchangeMethodsDescription" db:"new_data_exchange_methods_description"`
+	NewDataExchangeMethodsNote          *string `json:"newDataExchangeMethodsNote" db:"new_data_exchange_methods_note"`
 
 	AdditionalDataExchangeConsiderationsDescription *string `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
 
-	Status *DataExchangeApproachStatus `json:"status" db:"status"`
+	Status DataExchangeApproachStatus `json:"status" db:"status"`
 }
 
 func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {
@@ -44,18 +46,10 @@ func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {
 }
 
 // NewPlanDataExchangeApproach creates a new PlanDataExchangeApproach with the required fields
-func NewPlanDataExchangeApproach(tls coreTaskListSection) *PlanDataExchangeApproach {
+func NewPlanDataExchangeApproach(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanDataExchangeApproach {
 	return &PlanDataExchangeApproach{
-		coreTaskListSection:                    tls,
-		DataWillNotBeCollectedFromParticipants: false,
-	}
-}
-
-// NewPlanDataExchangeApproachFromBaseTaskListSection creates a new PlanDataExchangeApproach from a base task list section
-func NewPlanDataExchangeApproachFromBaseTaskListSection(tls baseTaskListSection) *PlanDataExchangeApproach {
-	return &PlanDataExchangeApproach{
-		coreTaskListSection:                    tls.coreTaskListSection,
-		DataWillNotBeCollectedFromParticipants: false,
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }
 

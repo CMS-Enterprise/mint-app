@@ -26,10 +26,8 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachMarkedCompleteC
 	}
 
 	approach := models.NewPlanDataExchangeApproach(
-		models.NewCoreTaskListSection(
-			actorID,
-			modelPlanID,
-		),
+		actorID,
+		modelPlanID,
 	)
 
 	testActivity, err := ActivityDataExchangeApproachMarkedCompleteCreate(

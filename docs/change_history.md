@@ -51,7 +51,7 @@ Change history is a MINT feature that aims to give full transparency into model 
     - Including options that correspond to any enum/generic values
     - If the new property belongs to a filter group, that configuration belongs here
     - Refer to the in-code documentation for all the configuration options
-  - Export the edits typescript translation file with the command `yarn ts-node ./mappings/export/exportTranslation.ts`
+  - Export the edits typescript translation file with the command `yarn ts-node mappings:export`
   - Verify the new property and its configuration is exported as JSON to [/pkg/mappings/export/translation/](../pkg/mappings/export/translation/)
 - ##### New Table
 
