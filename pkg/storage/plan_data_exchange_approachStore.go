@@ -38,56 +38,21 @@ func (s *Store) PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, logger
 }
 
 // PlanDataExchangeApproachUpdate updates the plan data exchange approach for a given id
-func (s *Store) PlanDataExchangeApproachUpdate(logger *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
+func PlanDataExchangeApproachUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.Update)
-	if err != nil {
-		return nil, fmt.Errorf("error preparing named statement: %w", err)
-	}
-	defer stmt.Close()
+	return sqlutils.GetProcedure[models.PlanDataExchangeApproach](np, sqlqueries.PlanDataExchangeApproach.Update, approach)
 
-	err = stmt.Get(approach, approach)
-	if err != nil {
-		return nil, fmt.Errorf("error getting plan data exchange approach: %w", err)
-	}
-
-	return approach, nil
 }
 
 // PlanDataExchangeApproachGetByID returns the plan data exchange approach for a given id
-func (s *Store) PlanDataExchangeApproachGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDataExchangeApproach, error) {
+func PlanDataExchangeApproachGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanDataExchangeApproach, error) {
 
-	approach := models.PlanDataExchangeApproach{}
+	return sqlutils.GetProcedure[models.PlanDataExchangeApproach](np, sqlqueries.PlanDataExchangeApproach.GetByID, utilitysql.CreateIDQueryMap(id))
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.GetByID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(&approach, utilitysql.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-	return &approach, nil
 }
 
 // PlanDataExchangeApproachGetByModelPlanID returns the plan data exchange approach for a given model plan id
-func (s *Store) PlanDataExchangeApproachGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) (*models.PlanDataExchangeApproach, error) {
+func PlanDataExchangeApproachGetByModelPlanID(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanID uuid.UUID) (*models.PlanDataExchangeApproach, error) {
+	return sqlutils.GetProcedure[models.PlanDataExchangeApproach](np, sqlqueries.PlanDataExchangeApproach.GetByModelPlanID, utilitysql.CreateModelPlanIDQueryMap(modelPlanID))
 
-	approach := models.PlanDataExchangeApproach{}
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.GetByModelPlanID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(&approach, utilitysql.CreateModelPlanIDQueryMap(modelPlanID))
-	if err != nil {
-		return nil, err
-	}
-
-	return &approach, nil
 }

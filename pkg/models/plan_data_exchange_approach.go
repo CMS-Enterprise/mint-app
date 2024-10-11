@@ -1,19 +1,21 @@
 package models
 
 import (
+	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 // PlanDataExchangeApproach represents the data exchange approach of a model plan
 type PlanDataExchangeApproach struct {
-	coreTaskListSection
+	baseStruct
+	modelPlanRelation
 	markedCompleteByRelation
 
 	// Page 2
 	DataToCollectFromParticipants               pq.StringArray `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsReportsDetails *string        `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
 	DataToCollectFromParticipantsOther          *string        `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
-	DataWillNotBeCollectedFromParticipants      bool           `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
+	DataWillNotBeCollectedFromParticipants      *bool          `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsNote           *string        `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
 
 	DataToSendToParticipants     pq.StringArray `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
@@ -36,7 +38,7 @@ type PlanDataExchangeApproach struct {
 
 	AdditionalDataExchangeConsiderationsDescription *string `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
 
-	Status *DataExchangeApproachStatus `json:"status" db:"status"`
+	Status DataExchangeApproachStatus `json:"status" db:"status"`
 }
 
 func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {
@@ -44,18 +46,10 @@ func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {
 }
 
 // NewPlanDataExchangeApproach creates a new PlanDataExchangeApproach with the required fields
-func NewPlanDataExchangeApproach(tls coreTaskListSection) *PlanDataExchangeApproach {
+func NewPlanDataExchangeApproach(createdBy uuid.UUID, modelPlanID uuid.UUID) *PlanDataExchangeApproach {
 	return &PlanDataExchangeApproach{
-		coreTaskListSection:                    tls,
-		DataWillNotBeCollectedFromParticipants: false,
-	}
-}
-
-// NewPlanDataExchangeApproachFromBaseTaskListSection creates a new PlanDataExchangeApproach from a base task list section
-func NewPlanDataExchangeApproachFromBaseTaskListSection(tls baseTaskListSection) *PlanDataExchangeApproach {
-	return &PlanDataExchangeApproach{
-		coreTaskListSection:                    tls.coreTaskListSection,
-		DataWillNotBeCollectedFromParticipants: false,
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
 }
 
