@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"github.com/samber/lo"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -15,25 +16,23 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
-func SendDataExchangeApproachMarkedCompleteEmailNotification(
+func getExecutedDataExchangeMarkedCompleteEmail(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
-	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
-	userEmail string,
 	markedCompletedByUserCommonName string,
 	showFooter bool,
-) error {
+) (string, string, error) {
 	emailTemplate, err := templateService.GetEmailTemplate(email.DataExchangeApproachMarkedCompleteTemplateName)
 	if err != nil {
-		return err
+		return "", "", err
 	}
 
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.DataExchangeApproachMarkedCompleteSubjectContent{
 		ModelName: modelPlan.ModelName,
 	})
 	if err != nil {
-		return err
+		return "", "", err
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.DataExchangeApproachMarkedCompleteBodyContent{
@@ -43,6 +42,28 @@ func SendDataExchangeApproachMarkedCompleteEmailNotification(
 		MarkedCompletedByUserCommonName: markedCompletedByUserCommonName,
 		ShowFooter:                      showFooter,
 	})
+	if err != nil {
+		return "", "", err
+	}
+	return emailSubject, emailBody, nil
+}
+
+func SendDataExchangeApproachMarkedCompleteEmailNotification(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+	modelPlan *models.ModelPlan,
+	userEmail string,
+	markedCompletedByUserCommonName string,
+	showFooter bool,
+) error {
+	emailSubject, emailBody, err := getExecutedDataExchangeMarkedCompleteEmail(
+		emailService,
+		templateService,
+		modelPlan,
+		markedCompletedByUserCommonName,
+		showFooter,
+	)
 	if err != nil {
 		return err
 	}
@@ -70,19 +91,35 @@ func SendDataExchangeApproachMarkedCompleteEmailNotifications(
 	markedCompletedByUserCommonName string,
 	showFooter bool,
 ) error {
-	for _, user := range receivers {
-		err := SendDataExchangeApproachMarkedCompleteEmailNotification(
-			emailService,
-			templateService,
-			addressBook,
-			modelPlan,
-			user.Email,
-			markedCompletedByUserCommonName,
-			showFooter,
-		)
-		if err != nil {
-			return err
-		}
+	emailSubject, emailBody, err := getExecutedDataExchangeMarkedCompleteEmail(
+		emailService,
+		templateService,
+		modelPlan,
+		markedCompletedByUserCommonName,
+		showFooter,
+	)
+	if err != nil {
+		return err
+	}
+
+	receiverEmails := lo.Map(
+		receivers,
+		func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
+			return pref.Email
+		},
+	)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
+	if err != nil {
+		return err
 	}
 	return nil
 }
