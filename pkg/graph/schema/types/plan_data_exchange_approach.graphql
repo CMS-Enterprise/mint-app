@@ -100,7 +100,7 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   dataWillNotBeCollectedFromParticipants: Boolean
   dataToCollectFromParticipantsNote: String
 
-  dataToSendToParticipants: [DataToSendToParticipants!]!
+  dataToSendToParticipants: [DataToSendToParticipants!]
   dataToSendToParticipantsNote: String
 
   doesNeedToMakeMultiPayerDataAvailable: Boolean
@@ -123,4 +123,5 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
 
 extend type Mutation {
   updatePlanDataExchangeApproach(id: UUID!, changes: PlanDataExchangeApproachChanges!): PlanDataExchangeApproach!
+  @hasRole(role: MINT_USER)
 }
