@@ -203,6 +203,7 @@ export const customStyles: {
  */
 const MultiSelect = ({
   id,
+  children,
   inputId,
   name,
   selectedLabel,
@@ -216,6 +217,7 @@ const MultiSelect = ({
   disabledLabel
 }: {
   id?: string;
+  children?: React.ReactNode;
   inputId?: string;
   name: string;
   selectedLabel?: string;
@@ -296,6 +298,9 @@ const MultiSelect = ({
         styles={customStyles}
         aria-labelledby={ariaLabel}
       />
+
+      {children}
+
       {selected.length > 0 && (
         <div className="easi-multiselect--selected">
           <h4 className="text-normal margin-bottom-1">

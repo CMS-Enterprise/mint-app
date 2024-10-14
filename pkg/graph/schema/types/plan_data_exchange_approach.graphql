@@ -100,7 +100,7 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   dataWillNotBeCollectedFromParticipants: Boolean
   dataToCollectFromParticipantsNote: String
 
-  dataToSendToParticipants: [DataToSendToParticipants!]!
+  dataToSendToParticipants: [DataToSendToParticipants!]
   dataToSendToParticipantsNote: String
 
   doesNeedToMakeMultiPayerDataAvailable: Boolean

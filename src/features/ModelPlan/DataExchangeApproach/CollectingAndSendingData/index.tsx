@@ -1,36 +1,26 @@
 import React from 'react';
-import {
-  Controller,
-  FormFieldProps,
-  FormProvider,
-  useForm
-} from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { getKey } from '@okta/okta-auth-js';
 import {
   Button,
+  Fieldset,
   Form,
   FormGroup,
   Grid,
   Icon,
   Label
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import NotFound from 'features/NotFound';
 import {
   GetCollectingAndSendingDataQuery,
   TypedUpdateDataExchangeApproachDocument,
-  useGetCollectingAndSendingDataQuery,
-  useUpdateDataExchangeApproachMutation
+  useGetCollectingAndSendingDataQuery
 } from 'gql/generated/graphql';
-import { map } from 'lodash';
 
 import AddNoteRHF from 'components/AddNote/AddNoteRHF';
-import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
-import ConfirmLeave from 'components/ConfirmLeave';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
-import { ErrorAlertMessage } from 'components/ErrorAlert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -63,7 +53,8 @@ const CollectingAndSendingData = () => {
   const {
     dataToCollectFromParticipants: dataToCollectFromParticipantsConfig,
     dataWillNotBeCollectedFromParticipants:
-      dataWillNotBeCollectedFromParticipantsConfig
+      dataWillNotBeCollectedFromParticipantsConfig,
+    dataToSendToParticipants: dataToSendToParticipantsConfig
   } = usePlanTranslation('dataExchangeApproach');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -74,23 +65,21 @@ const CollectingAndSendingData = () => {
     variables: { id: modelID }
   });
 
-  const queryData = data?.modelPlan?.dataExchangeApproach
-    ? mapDefaultFormValues<CollectingAndSendingDataType>(
-        data?.modelPlan?.dataExchangeApproach,
-        defaulFormValues
-      )
-    : defaulFormValues;
+  const formData = mapDefaultFormValues<CollectingAndSendingDataType>(
+    data?.modelPlan?.dataExchangeApproach,
+    defaulFormValues
+  );
 
-  const { __typename, id, ...defaultValues } = queryData;
+  const { __typename, id, ...defaultValues } = formData;
 
-  const methods = useForm<FormFieldProps<CollectingAndSendingDataType>>({
+  const methods = useForm<CollectingAndSendingDataType>({
     defaultValues
   });
 
   const {
     control,
     watch,
-    formState: { isSubmitting, touchedFields }
+    formState: { touchedFields }
   } = methods;
 
   const { mutationError } = useHandleMutation<CollectingAndSendingDataType>(
@@ -101,6 +90,10 @@ const CollectingAndSendingData = () => {
       values: watch()
     }
   );
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <>
@@ -124,86 +117,123 @@ const CollectingAndSendingData = () => {
           }}
           className="maxw-none"
         >
-          <ConfirmLeaveRHF />
+          <Fieldset disabled={loading}>
+            <ConfirmLeaveRHF />
 
-          <Grid row gap>
-            <Grid desktop={{ col: 6 }}>
-              <Controller
-                name="dataToCollectFromParticipants"
-                control={control}
-                render={({ field }) => (
-                  <FormGroup error={!!error}>
-                    <Label htmlFor="dataToCollectFromParticipants">
-                      {dataToCollectFromParticipantsConfig.label}
-                    </Label>
+            <Grid row gap>
+              <Grid desktop={{ col: 6 }}>
+                <Controller
+                  name="dataToCollectFromParticipants"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup error={!!error}>
+                      <Label htmlFor="dataToCollectFromParticipants">
+                        {dataToCollectFromParticipantsConfig.label}
+                      </Label>
 
-                    <HelpText className="margin-top-1">
-                      {dataToCollectFromParticipantsConfig.sublabel}
-                    </HelpText>
+                      <HelpText className="margin-top-1">
+                        {dataToCollectFromParticipantsConfig.sublabel}
+                      </HelpText>
 
-                    <MultiSelect
-                      {...field}
-                      id="dataToCollectFromParticipants"
-                      name="dataToCollectFromParticipants"
-                      ariaLabel=""
-                      options={composeMultiSelectOptions(
-                        dataToCollectFromParticipantsConfig.options
+                      <MultiSelect
+                        {...field}
+                        id={dataToCollectFromParticipantsConfig.gqlField}
+                        name={dataToCollectFromParticipantsConfig.gqlField}
+                        ariaLabel=""
+                        options={composeMultiSelectOptions(
+                          dataToCollectFromParticipantsConfig.options
+                        )}
+                        selectedLabel={
+                          dataToCollectFromParticipantsConfig.multiSelectLabel ||
+                          ''
+                        }
+                        onChange={values => {
+                          field.onChange(values);
+                        }}
+                        initialValues={
+                          defaultValues.dataToCollectFromParticipants
+                        }
+                      >
+                        {' '}
+                        <Controller
+                          name="dataWillNotBeCollectedFromParticipants"
+                          control={control}
+                          render={({ field: field2 }) => (
+                            <FormGroup className="margin-bottom-3">
+                              <CheckboxField
+                                {...field2}
+                                id={field2.name}
+                                value={field2.name}
+                                label={
+                                  dataWillNotBeCollectedFromParticipantsConfig.label
+                                }
+                              />
+                            </FormGroup>
+                          )}
+                        />
+                      </MultiSelect>
+                    </FormGroup>
+                  )}
+                />
+
+                <AddNoteRHF
+                  field="dataToCollectFromParticipantsNote"
+                  control={control}
+                  touched={!!touchedFields?.dataToCollectFromParticipantsNote}
+                />
+
+                <Controller
+                  name="dataToSendToParticipants"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup>
+                      <Label htmlFor="dataToSendToParticipants">
+                        {dataToSendToParticipantsConfig.label}
+                      </Label>
+
+                      {getKeys(dataToSendToParticipantsConfig.options).map(
+                        type => {
+                          return (
+                            <CheckboxField
+                              {...field}
+                              id={type}
+                              value={field.name}
+                              key={type}
+                              label={
+                                dataToSendToParticipantsConfig.options[type]
+                              }
+                            />
+                          );
+                        }
                       )}
-                      selectedLabel={
-                        dataToCollectFromParticipantsConfig.multiSelectLabel ||
-                        ''
-                      }
-                      onChange={values => {
-                        field.onChange(values);
-                      }}
-                      initialValues={
-                        defaultValues.dataToCollectFromParticipants
-                      }
-                    />
-                  </FormGroup>
-                )}
-              />
+                    </FormGroup>
+                  )}
+                />
 
-              <Controller
-                name="dataWillNotBeCollectedFromParticipants"
-                control={control}
-                render={({ field }) => (
-                  <FormGroup error={!!error}>
-                    <CheckboxField
-                      {...field}
-                      id={field.name}
-                      value={field.name}
-                      label={dataWillNotBeCollectedFromParticipantsConfig.label}
-                    />
-                  </FormGroup>
-                )}
-              />
+                <AddNoteRHF
+                  field="dataToSendToParticipantsNote"
+                  control={control}
+                  touched={!!touchedFields?.dataToSendToParticipantsNote}
+                />
 
-              <AddNoteRHF
-                field="dataWillNotBeCollectedFromParticipants"
-                control={control}
-                touched={
-                  !!touchedFields?.dataWillNotBeCollectedFromParticipants
-                }
-              />
+                <div className="margin-top-6 margin-bottom-3">
+                  <Button type="submit">{miscellaneousT('next')}</Button>
+                </div>
 
-              <div className="margin-top-6 margin-bottom-3">
-                <Button type="submit">{miscellaneousT('next')}</Button>
-              </div>
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={() =>
+                    history.push(`/models/${modelID}/collaboration-area`)
+                  }
+                >
+                  <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
-              <Button
-                type="button"
-                className="usa-button usa-button--unstyled"
-                onClick={() =>
-                  history.push(`/models/${modelID}/collaboration-area`)
-                }
-              >
-                <Icon.ArrowBack className="margin-right-1" aria-hidden />
-
-                {miscellaneousT('saveAndReturnToCollaborationArea')}
-              </Button>
+                  {miscellaneousT('saveAndReturnToCollaborationArea')}
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </Fieldset>
         </Form>
       </FormProvider>
 

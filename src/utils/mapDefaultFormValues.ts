@@ -1,9 +1,13 @@
 import { getKeys } from 'types/translation';
 
 function mapDefaultFormValues<T extends {}>(
-  values: T,
+  values: T | undefined,
   defaultFormValues: T
 ): T {
+  if (!values) {
+    return defaultFormValues;
+  }
+
   const mappedValues = { ...values };
 
   getKeys(values).forEach(key => {
