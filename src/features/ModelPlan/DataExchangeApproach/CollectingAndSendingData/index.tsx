@@ -1,10 +1,5 @@
-import React from 'react';
-import {
-  Controller,
-  FormProvider,
-  useFieldArray,
-  useForm
-} from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -34,6 +29,7 @@ import PageNumber from 'components/PageNumber';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
+import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
@@ -85,29 +81,31 @@ const CollectingAndSendingData = () => {
   const {
     control,
     watch,
-    register,
+    reset,
     formState: { touchedFields }
   } = methods;
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'dataToSendToParticipants'
-  });
 
   const { mutationError } = useHandleMutation<CollectingAndSendingDataType>(
     TypedUpdateDataExchangeApproachDocument,
     {
-      id: modelID,
+      id,
       initialValues: defaultValues,
       values: watch()
     }
   );
 
+  useEffect(() => {
+    reset(
+      mapDefaultFormValues<CollectingAndSendingDataType>(
+        data?.modelPlan?.dataExchangeApproach,
+        defaulFormValues
+      )
+    );
+  }, [data, reset]);
+
   if (error) {
     return <NotFound />;
   }
-
-  console.log(watch('dataToSendToParticipants'));
 
   return (
     <>
@@ -168,7 +166,6 @@ const CollectingAndSendingData = () => {
                           defaultValues.dataToCollectFromParticipants
                         }
                       >
-                        {' '}
                         <Controller
                           name="dataWillNotBeCollectedFromParticipants"
                           control={control}
@@ -177,7 +174,8 @@ const CollectingAndSendingData = () => {
                               <CheckboxField
                                 {...field2}
                                 id={field2.name}
-                                value={field2.name}
+                                checked={field2.value === true}
+                                value="true"
                                 label={
                                   dataWillNotBeCollectedFromParticipantsConfig.label
                                 }
@@ -196,44 +194,42 @@ const CollectingAndSendingData = () => {
                   touched={!!touchedFields?.dataToCollectFromParticipantsNote}
                 />
 
-                {/* <Controller
-                  name="dataToSendToParticipants"
-                  control={control}
-                  render={({ field }) => (
-                    <FormGroup>
-                      <Label htmlFor="dataToSendToParticipants">
-                        {dataToSendToParticipantsConfig.label}
-                      </Label>
+                <FormGroup>
+                  <Label htmlFor="dataToSendToParticipants">
+                    {dataToSendToParticipantsConfig.label}
+                  </Label>
 
-                      {getKeys(dataToSendToParticipantsConfig.options).map(
-                        (type, index) => {
-                          // const { onChange } = register(
-                          //   'dataToSendToParticipants'
-                          // );
-
-                          return (
-                            <Checkbox
-                              // {...field}
-                              {...register(`dataToSendToParticipants.${index}`)}
-                              ref={null}
-                              onBlur={() => {}}
-                              // onChange={() => {
-                              //   onChange(field.value.push(type));
-                              // }}
-                              id={type}
-                              value={type}
-                              key={type}
-                              name={field.name}
-                              label={
-                                dataToSendToParticipantsConfig.options[type]
-                              }
-                            />
-                          );
-                        }
-                      )}
-                    </FormGroup>
+                  {getKeys(dataToSendToParticipantsConfig.options).map(
+                    value => (
+                      <Controller
+                        key={value}
+                        name="dataToSendToParticipants"
+                        control={control}
+                        render={({ field }) => (
+                          <CheckboxField
+                            id={`checkbox-${value}`}
+                            name={field.name}
+                            value={value}
+                            checked={field.value.includes(value)}
+                            onBlur={field.onBlur}
+                            onChange={e =>
+                              onChangeCheckboxHandler<
+                                keyof typeof dataToSendToParticipantsConfig.options
+                              >(
+                                e.target
+                                  .value as keyof typeof dataToSendToParticipantsConfig.options,
+                                field
+                              )
+                            }
+                            label={
+                              dataToSendToParticipantsConfig.options[value]
+                            }
+                          />
+                        )}
+                      />
+                    )
                   )}
-                /> */}
+                </FormGroup>
 
                 <AddNoteRHF
                   field="dataToSendToParticipantsNote"

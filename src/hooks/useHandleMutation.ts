@@ -8,7 +8,7 @@ import {
 import { FormikProps } from 'formik';
 import { DocumentNode } from 'graphql';
 
-import dirtyInput from 'utils/formDiff';
+import dirtyInput from 'utils/formUtil';
 import sanitizeStatus from 'utils/status';
 
 type HandleFormikMutationConfigType = {
@@ -130,7 +130,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           .then(response => {
             if (!response?.errors) {
               unblock();
-              history.push(destination.pathname);
+              // history.push(destination.pathname);
             }
           })
           .catch(errors => {
