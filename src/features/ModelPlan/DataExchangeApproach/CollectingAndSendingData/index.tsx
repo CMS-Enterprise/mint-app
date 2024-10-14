@@ -25,7 +25,9 @@ import {
 } from 'gql/generated/graphql';
 import { map } from 'lodash';
 
+import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import Alert from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import { ErrorAlertMessage } from 'components/ErrorAlert';
@@ -36,14 +38,14 @@ import PageNumber from 'components/PageNumber';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
+import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type CollectingAndSendingDataType = Omit<
-  GetCollectingAndSendingDataQuery['modelPlan']['dataExchangeApproach'],
-  '__typename'
->;
+type CollectingAndSendingDataType =
+  GetCollectingAndSendingDataQuery['modelPlan']['dataExchangeApproach'];
 
 const defaulFormValues: CollectingAndSendingDataType = {
+  __typename: 'PlanDataExchangeApproach',
   id: '',
   dataToCollectFromParticipants: [],
   dataToCollectFromParticipantsReportsDetails: '',
@@ -54,28 +56,15 @@ const defaulFormValues: CollectingAndSendingDataType = {
   dataToSendToParticipantsNote: ''
 };
 
-function mapDefaultFormValues<T extends {}>(
-  values: T,
-  defaultFormValues: T
-): T {
-  const mappedValues = { ...values };
-
-  getKeys(values).forEach(key => {
-    const value = values[key];
-    if (value === null || value === undefined) {
-      mappedValues[key] = defaultFormValues[key];
-    }
-  });
-
-  return mappedValues;
-}
-
 const CollectingAndSendingData = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { dataToCollectFromParticipants: dataToCollectFromParticipantsConfig } =
-    usePlanTranslation('dataExchangeApproach');
+  const {
+    dataToCollectFromParticipants: dataToCollectFromParticipantsConfig,
+    dataWillNotBeCollectedFromParticipants:
+      dataWillNotBeCollectedFromParticipantsConfig
+  } = usePlanTranslation('dataExchangeApproach');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -100,12 +89,11 @@ const CollectingAndSendingData = () => {
 
   const {
     control,
-    handleSubmit,
     watch,
-    formState: { errors, isSubmitting }
+    formState: { isSubmitting, touchedFields }
   } = methods;
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<CollectingAndSendingDataType>(
     TypedUpdateDataExchangeApproachDocument,
     {
       id: modelID,
@@ -137,36 +125,12 @@ const CollectingAndSendingData = () => {
           className="maxw-none"
         >
           <ConfirmLeaveRHF />
-          {/* <Grid row>
-          <Grid col>
-            {(error || mutationError) && (
-              <Alert
-                heading={t('errors.checkFix')}
-                type="error"
-                slim={false}
-                className="trb-basic-fields-error"
-              >
-                {Object.keys(errors).map(fieldName => {
-                  const msg: string = t(`notes.labels.${fieldName}`);
-                  return (
-                    <ErrorAlertMessage
-                      key={fieldName}
-                      errorKey={fieldName}
-                      message={msg}
-                    />
-                  );
-                })}
-              </Alert>
-            )}
-          </Grid>
-        </Grid> */}
 
           <Grid row gap>
             <Grid desktop={{ col: 6 }}>
               <Controller
                 name="dataToCollectFromParticipants"
                 control={control}
-                rules={{ required: true }}
                 render={({ field }) => (
                   <FormGroup error={!!error}>
                     <Label htmlFor="dataToCollectFromParticipants">
@@ -198,6 +162,29 @@ const CollectingAndSendingData = () => {
                     />
                   </FormGroup>
                 )}
+              />
+
+              <Controller
+                name="dataWillNotBeCollectedFromParticipants"
+                control={control}
+                render={({ field }) => (
+                  <FormGroup error={!!error}>
+                    <CheckboxField
+                      {...field}
+                      id={field.name}
+                      value={field.name}
+                      label={dataWillNotBeCollectedFromParticipantsConfig.label}
+                    />
+                  </FormGroup>
+                )}
+              />
+
+              <AddNoteRHF
+                field="dataWillNotBeCollectedFromParticipants"
+                control={control}
+                touched={
+                  !!touchedFields?.dataWillNotBeCollectedFromParticipants
+                }
               />
 
               <div className="margin-top-6 margin-bottom-3">

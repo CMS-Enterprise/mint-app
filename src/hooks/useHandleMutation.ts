@@ -63,6 +63,20 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   const { id } = config;
 
+  let formikRef: React.RefObject<FormikProps<TData>> | undefined;
+
+  if ('formikRef' in config) {
+    formikRef = config.formikRef;
+  }
+
+  let initialValues: TData | undefined;
+  let values: TData | undefined;
+
+  if ('initialValues' in config) {
+    initialValues = config.initialValues;
+    values = config.values;
+  }
+
   useEffect(() => {
     if (!isModalOpen) {
       // Blocks the route transition until unblock() is called
@@ -82,13 +96,13 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
         }
 
         const dirtyChanges = () => {
-          if ('formikRef' in config) {
+          if (formikRef) {
             return dirtyInput(
-              config.formikRef?.current?.initialValues,
-              config.formikRef?.current?.values
+              formikRef.current?.initialValues,
+              formikRef.current?.values
             );
           }
-          return dirtyInput(config.initialValues, config.values);
+          return dirtyInput(initialValues, values);
         };
 
         const changes = dirtyChanges();
@@ -124,8 +138,8 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
             setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
-            if ('formikRef' in config) {
-              config.formikRef?.current?.setErrors(errors);
+            if (formikRef) {
+              formikRef.current?.setErrors(errors);
             }
           });
         return false;
@@ -136,7 +150,17 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
       };
     }
     return () => {};
-  }, [history, id, update, isModalOpen, setIsModalOpen, pathname, config]);
+  }, [
+    history,
+    id,
+    update,
+    isModalOpen,
+    setIsModalOpen,
+    pathname,
+    formikRef,
+    initialValues,
+    values
+  ]);
 
   return {
     mutationError: { isModalOpen, setIsModalOpen, destinationURL }
