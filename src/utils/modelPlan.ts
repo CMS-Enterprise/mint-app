@@ -52,7 +52,7 @@ export const composeMultiSelectOptions = (
   getKeys(translationObject).map(key => ({
     value: key,
     label: translationObject[key],
-    subLabel: sublabels ? sublabels[key] : null,
+    subLabel: sublabels ? sublabels[key] : undefined,
     isDisabled: key === disabledValue
   }));
 

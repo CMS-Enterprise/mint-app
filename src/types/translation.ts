@@ -1232,6 +1232,7 @@ export type TranslationPlan = {
   operationalNeeds: TranslationOperationalNeeds;
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
+  dataExchangeApproach: TranslationDataExchangeApproach;
 };
 
 export type TranslationPlanSection =
@@ -1258,5 +1259,6 @@ export enum PlanSection {
   DOCUMENTS = 'documents',
   OPERATIONAL_NEEDS = 'operationalNeeds',
   OPERATIONAL_SOLUTIONS = 'solutions',
-  OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks'
+  OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
+  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
 }

@@ -4542,6 +4542,21 @@ export type UpdateModelPlanCollaboratorMutationVariables = Exact<{
 
 export type UpdateModelPlanCollaboratorMutation = { __typename: 'Mutation', updatePlanCollaborator: { __typename: 'PlanCollaborator', teamRoles: Array<TeamRole>, userID: UUID, modelPlanID: UUID, userAccount: { __typename: 'UserAccount', commonName: string, email: string, username: string } } };
 
+export type GetCollectingAndSendingDataQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCollectingAndSendingDataQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, dataToCollectFromParticipants: Array<DataToCollectFromParticipants>, dataToCollectFromParticipantsReportsDetails?: string | null, dataToCollectFromParticipantsOther?: string | null, dataWillNotBeCollectedFromParticipants?: boolean | null, dataToCollectFromParticipantsNote?: string | null, dataToSendToParticipants: Array<DataToSendToParticipants>, dataToSendToParticipantsNote?: string | null } } };
+
+export type UpdateDataExchangeApproachMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: PlanDataExchangeApproachChanges;
+}>;
+
+
+export type UpdateDataExchangeApproachMutation = { __typename: 'Mutation', updatePlanDataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID } };
+
 export type CreateModelPlanDiscussionMutationVariables = Exact<{
   input: PlanDiscussionCreateInput;
 }>;
@@ -6681,6 +6696,90 @@ export function useUpdateModelPlanCollaboratorMutation(baseOptions?: Apollo.Muta
 export type UpdateModelPlanCollaboratorMutationHookResult = ReturnType<typeof useUpdateModelPlanCollaboratorMutation>;
 export type UpdateModelPlanCollaboratorMutationResult = Apollo.MutationResult<UpdateModelPlanCollaboratorMutation>;
 export type UpdateModelPlanCollaboratorMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>;
+export const GetCollectingAndSendingDataDocument = gql`
+    query GetCollectingAndSendingData($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    dataExchangeApproach {
+      id
+      dataToCollectFromParticipants
+      dataToCollectFromParticipantsReportsDetails
+      dataToCollectFromParticipantsOther
+      dataWillNotBeCollectedFromParticipants
+      dataToCollectFromParticipantsNote
+      dataToSendToParticipants
+      dataToSendToParticipantsNote
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCollectingAndSendingDataQuery__
+ *
+ * To run a query within a React component, call `useGetCollectingAndSendingDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCollectingAndSendingDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCollectingAndSendingDataQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCollectingAndSendingDataQuery(baseOptions: Apollo.QueryHookOptions<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables> & ({ variables: GetCollectingAndSendingDataQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>(GetCollectingAndSendingDataDocument, options);
+      }
+export function useGetCollectingAndSendingDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>(GetCollectingAndSendingDataDocument, options);
+        }
+export function useGetCollectingAndSendingDataSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>(GetCollectingAndSendingDataDocument, options);
+        }
+export type GetCollectingAndSendingDataQueryHookResult = ReturnType<typeof useGetCollectingAndSendingDataQuery>;
+export type GetCollectingAndSendingDataLazyQueryHookResult = ReturnType<typeof useGetCollectingAndSendingDataLazyQuery>;
+export type GetCollectingAndSendingDataSuspenseQueryHookResult = ReturnType<typeof useGetCollectingAndSendingDataSuspenseQuery>;
+export type GetCollectingAndSendingDataQueryResult = Apollo.QueryResult<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>;
+export const UpdateDataExchangeApproachDocument = gql`
+    mutation UpdateDataExchangeApproach($id: UUID!, $changes: PlanDataExchangeApproachChanges!) {
+  updatePlanDataExchangeApproach(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdateDataExchangeApproachMutationFn = Apollo.MutationFunction<UpdateDataExchangeApproachMutation, UpdateDataExchangeApproachMutationVariables>;
+
+/**
+ * __useUpdateDataExchangeApproachMutation__
+ *
+ * To run a mutation, you first call `useUpdateDataExchangeApproachMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDataExchangeApproachMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDataExchangeApproachMutation, { data, loading, error }] = useUpdateDataExchangeApproachMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateDataExchangeApproachMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDataExchangeApproachMutation, UpdateDataExchangeApproachMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDataExchangeApproachMutation, UpdateDataExchangeApproachMutationVariables>(UpdateDataExchangeApproachDocument, options);
+      }
+export type UpdateDataExchangeApproachMutationHookResult = ReturnType<typeof useUpdateDataExchangeApproachMutation>;
+export type UpdateDataExchangeApproachMutationResult = Apollo.MutationResult<UpdateDataExchangeApproachMutation>;
+export type UpdateDataExchangeApproachMutationOptions = Apollo.BaseMutationOptions<UpdateDataExchangeApproachMutation, UpdateDataExchangeApproachMutationVariables>;
 export const CreateModelPlanDiscussionDocument = gql`
     mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
   createPlanDiscussion(input: $input) {
@@ -13269,6 +13368,8 @@ export const TypedGetIndividualModelPlanCollaboratorDocument = {"kind":"Document
 export const TypedGetIsCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIsCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}}]}}]}}]} as unknown as DocumentNode<GetIsCollaboratorQuery, GetIsCollaboratorQueryVariables>;
 export const TypedGetModelCollaboratorsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelCollaborators"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelCollaboratorsQuery, GetModelCollaboratorsQueryVariables>;
 export const TypedUpdateModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newRole"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TeamRole"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"newRoles"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newRole"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanCollaboratorMutation, UpdateModelPlanCollaboratorMutationVariables>;
+export const TypedGetCollectingAndSendingDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCollectingAndSendingData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsReportsDetails"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataWillNotBeCollectedFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipantsNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetCollectingAndSendingDataQuery, GetCollectingAndSendingDataQueryVariables>;
+export const TypedUpdateDataExchangeApproachDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDataExchangeApproach"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDataExchangeApproachChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanDataExchangeApproach"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateDataExchangeApproachMutation, UpdateDataExchangeApproachMutationVariables>;
 export const TypedCreateModelPlanDiscussionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanDiscussion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDiscussionCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanDiscussion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanDiscussionMutation, CreateModelPlanDiscussionMutationVariables>;
 export const TypedGetModelPlanDiscussionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanDiscussions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanDiscussionsQuery, GetModelPlanDiscussionsQueryVariables>;
 export const TypedGetMostRecentRoleSelectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMostRecentRoleSelection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mostRecentDiscussionRoleSelection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}}]}}]}}]} as unknown as DocumentNode<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>;

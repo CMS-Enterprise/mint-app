@@ -8,6 +8,7 @@ import Alert from 'components/Alert';
 import { Avatar } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
 import PageNumber from 'components/PageNumber';
+import Spinner from 'components/Spinner';
 import { tArray } from 'utils/translation';
 
 const AboutCompletingDataExchange = () => {
@@ -36,7 +37,7 @@ const AboutCompletingDataExchange = () => {
 
   return (
     <>
-      <h2 className="margin-bottom-2">
+      <h2 className="margin-bottom-2 margin-top-7">
         {t('aboutCompletingDataExchange.heading')}
       </h2>
 
@@ -88,31 +89,35 @@ const AboutCompletingDataExchange = () => {
             {t('aboutCompletingDataExchange.itLead')}
           </h4>
 
-          <div>
-            {itLeadsAndArchitects && itLeadsAndArchitects.length > 0 ? (
-              itLeadsAndArchitects?.map(collaborator => (
-                <Avatar
-                  user={collaborator.userAccount.commonName}
-                  teamRoles={collaborator.teamRoles.filter(
-                    role =>
-                      role === TeamRole.IT_LEAD ||
-                      role === TeamRole.SOLUTION_ARCHITECT
-                  )}
-                  conciseRoles
-                  className="margin-y-05"
-                />
-              ))
-            ) : (
-              <div>
-                <p className="text-italic text-base margin-top-0">
-                  {t('aboutCompletingDataExchange.noLeadAssigned')}
-                </p>
-                <Alert type="info" slim className="margin-top-1 text-normal">
-                  {t('aboutCompletingDataExchange.pleaseContactBSG')}
-                </Alert>
-              </div>
-            )}
-          </div>
+          {loading && <Spinner />}
+
+          {!loading && (
+            <div>
+              {itLeadsAndArchitects && itLeadsAndArchitects.length > 0 ? (
+                itLeadsAndArchitects?.map(collaborator => (
+                  <Avatar
+                    user={collaborator.userAccount.commonName}
+                    teamRoles={collaborator.teamRoles.filter(
+                      role =>
+                        role === TeamRole.IT_LEAD ||
+                        role === TeamRole.SOLUTION_ARCHITECT
+                    )}
+                    conciseRoles
+                    className="margin-y-05"
+                  />
+                ))
+              ) : (
+                <div>
+                  <p className="text-italic text-base margin-top-0">
+                    {t('aboutCompletingDataExchange.noLeadAssigned')}
+                  </p>
+                  <Alert type="info" slim className="margin-top-1 text-normal">
+                    {t('aboutCompletingDataExchange.pleaseContactBSG')}
+                  </Alert>
+                </div>
+              )}
+            </div>
+          )}
         </Grid>
       </Grid>
 
