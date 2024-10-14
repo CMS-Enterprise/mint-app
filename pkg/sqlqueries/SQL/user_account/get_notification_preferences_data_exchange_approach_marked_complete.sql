@@ -37,7 +37,7 @@ combined_users AS (
 )
 
 -- Join with user_account and user_notification_preferences to fetch user details and preferences
-SELECT DISTINCT
+SELECT
     ua.id,
     ua.username,
     ua.is_euaid,
