@@ -14,44 +14,35 @@ import (
 
 func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, keys []storage.SolutionAndPossibleKey) []*dataloader.Result[[]*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
-	output := make([]*dataloader.Result[[]*models.OperationalSolution], len(keys))
+
 	loaders, err := Loaders(ctx)
 	if err != nil {
-		for index := range keys {
-			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: err}
-		}
-		return output
+		return errorPerEachKey[storage.SolutionAndPossibleKey, []*models.OperationalSolution](keys, err)
+
 	}
 
 	sols, loadErr := storage.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(loaders.DataReader.Store, logger, keys)
-
 	if loadErr != nil {
-		for index := range keys {
-			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: loadErr}
-		}
-		return output
-
-	}
-	solsByID := map[uuid.UUID][]*models.OperationalSolution{}
-	for _, sol := range sols {
-		slice, ok := solsByID[sol.OperationalNeedID]
-		if ok {
-			slice = append(slice, sol) //Add to existing slice
-			solsByID[sol.OperationalNeedID] = slice
-			continue
-		}
-		solsByID[sol.OperationalNeedID] = []*models.OperationalSolution{sol}
+		return errorPerEachKey[storage.SolutionAndPossibleKey, []*models.OperationalSolution](keys, loadErr)
 	}
 
-	for index, key := range keys {
-		//Note we aren't verifying the not needed when we return the result.... We should be including needed / not needed programmatically.
-		//  This is an edge case when a need is queried twice, once with needed once without. In practice, this doesn't happen. As this is getting refactored, we will leave it as is.
-
-		sols := solsByID[key.OperationalNeedID] //Any Solutions not found will return a zero state result eg empty array
-
-		output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: sols, Error: nil}
-
+	// We use just operational need ID for the intermediate map
+	getKeyFunc := func(data *models.OperationalSolution) uuid.UUID {
+		return data.OperationalNeedID
 	}
-	return output
+	getResFunc := func(key storage.SolutionAndPossibleKey, resMap map[uuid.UUID][]*models.OperationalSolution) ([]*models.OperationalSolution, bool) {
+		res, ok := resMap[key.OperationalNeedID]
+		// NOTE: we don't filter out the not needed for this loader, as it isn't possible to request it from the resolver
+		// if !key.IncludeNotNeeded {
+		// 	lo.Filter(res, func(sol *models.OperationalSolution, _ int) bool {
+		// 		if sol.Needed == nil{
+		// 			return false
+		// 		}
+		// 		return *sol.Needed
+		// 	})
+		// }
+		return res, ok
+	}
+	return oneToManyDataLoaderFunc(keys, sols, getKeyFunc, getResFunc)
 
 }
