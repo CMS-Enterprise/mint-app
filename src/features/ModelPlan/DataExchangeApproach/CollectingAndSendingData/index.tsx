@@ -27,6 +27,7 @@ import { map } from 'lodash';
 
 import Alert from 'components/Alert';
 import ConfirmLeave from 'components/ConfirmLeave';
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import { ErrorAlertMessage } from 'components/ErrorAlert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
@@ -135,7 +136,7 @@ const CollectingAndSendingData = () => {
           }}
           className="maxw-none"
         >
-          <ConfirmLeave type="react-hook-form" />
+          <ConfirmLeaveRHF />
           {/* <Grid row>
           <Grid col>
             {(error || mutationError) && (

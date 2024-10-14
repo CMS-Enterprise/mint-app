@@ -93,8 +93,6 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
         const changes = dirtyChanges();
 
-        console.log(changes);
-
         // If no changes, don't call mutation
         if (Object.keys(changes).length === 0) {
           unblock();
