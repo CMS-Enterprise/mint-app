@@ -233,31 +233,31 @@ func (s *Seeder) SeedData() {
 	s.updatePlanDataExchangeApproach(
 		planWithDataExchange,
 		map[string]interface{}{
-			"dataToCollectFromParticipants":               []models.DataToCollectFromParticipants{models.DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, models.DataToCollectFromParticipantsOther}, //: [DataToCollectFromParticipants!]
-			"dataToCollectFromParticipantsReportsDetails": "collecting data from participants is hard",                                                                                                                           //: String
-			"dataToCollectFromParticipantsOther":          "some other way of collecting participant data",                                                                                                                       //: String
-			"dataWillNotBeCollectedFromParticipants":      false,                                                                                                                                                                 //: Boolean
-			"dataToCollectFromParticipantsNote":           "we are going to collect so much data",                                                                                                                                //: String
+			"dataToCollectFromParticipants":               []models.DataToCollectFromParticipants{models.DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, models.DataToCollectFromParticipantsOther},
+			"dataToCollectFromParticipantsReportsDetails": "collecting data from participants is hard",
+			"dataToCollectFromParticipantsOther":          "some other way of collecting participant data",
+			"dataWillNotBeCollectedFromParticipants":      false,
+			"dataToCollectFromParticipantsNote":           "we are going to collect so much data",
 
-			"dataToSendToParticipants":     []models.DataToSendToParticipants{models.DataToSendToParticipantsDataFeedbackDashboard}, //: [DataToSendToParticipants!]!
-			"dataToSendToParticipantsNote": "we will send a ton of data with a feedback dashboard",                                  //: String
+			"dataToSendToParticipants":     []models.DataToSendToParticipants{models.DataToSendToParticipantsDataFeedbackDashboard},
+			"dataToSendToParticipantsNote": "we will send a ton of data with a feedback dashboard",
 
-			"doesNeedToMakeMultiPayerDataAvailable":        true,                                                                                           //: Boolean
-			"anticipatedMultiPayerDataAvailabilityUseCase": models.AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports,            //: AnticipatedMultiPayerDataAvailabilityUseCase
-			"doesNeedToMakeMultiPayerDataAvailableNote":    "we will fill gaps in care alerting and reports with such vigor that you've never seen before", //: String
+			"doesNeedToMakeMultiPayerDataAvailable":        true,
+			"anticipatedMultiPayerDataAvailabilityUseCase": models.AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports,
+			"doesNeedToMakeMultiPayerDataAvailableNote":    "we will fill gaps in care alerting and reports with such vigor that you've never seen before",
 
-			"doesNeedToCollectAndAggregateMultiSourceData":     true,                                                                                                                                                             //: Boolean
-			"multiSourceDataToCollect":                         []models.MultiSourceDataToCollect{models.MultiSourceDataToCollectCommercialClaims, models.MultiSourceDataToCollectLabData, models.MultiSourceDataToCollectOther}, //: [MultiSourceDataToCollect!]
-			"multiSourceDataToCollectOther":                    "we will also collect data about their favorite video games",                                                                                                     //: String
-			"doesNeedToCollectAndAggregateMultiSourceDataNote": "we have lots of multi-data sources, FYI",                                                                                                                        //: String
+			"doesNeedToCollectAndAggregateMultiSourceData":     true,
+			"multiSourceDataToCollect":                         []models.MultiSourceDataToCollect{models.MultiSourceDataToCollectCommercialClaims, models.MultiSourceDataToCollectLabData, models.MultiSourceDataToCollectOther},
+			"multiSourceDataToCollectOther":                    "we will also collect data about their favorite video games",
+			"doesNeedToCollectAndAggregateMultiSourceDataNote": "we have lots of multi-data sources, FYI",
 
-			"willImplementNewDataExchangeMethods": true,                                                   //: Boolean
-			"newDataExchangeMethodsDescription":   "use google forms",                                     //: String
-			"newDataExchangeMethodsNote":          "my boss hates google forms but I will use it anyways", //: String
+			"willImplementNewDataExchangeMethods": true,
+			"newDataExchangeMethodsDescription":   "use google forms",
+			"newDataExchangeMethodsNote":          "my boss hates google forms but I will use it anyways",
 
-			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits", //: String
+			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits",
 
-			"isDataExchangeApproachComplete": true, //: Boolean
+			"isDataExchangeApproachComplete": true,
 		},
 	)
 
