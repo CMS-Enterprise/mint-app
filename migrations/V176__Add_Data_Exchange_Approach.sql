@@ -60,7 +60,7 @@ CREATE TABLE plan_data_exchange_approach (
     data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
     data_to_collect_from_participants_reports_details ZERO_STRING,
     data_to_collect_from_participants_other ZERO_STRING,
-    data_will_not_be_collected_from_participants BOOLEAN,
+    data_will_not_be_collected_from_participants BOOLEAN DEFAULT NULL,
     data_to_collect_from_participants_note ZERO_STRING,
 
     data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
