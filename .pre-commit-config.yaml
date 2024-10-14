@@ -118,3 +118,12 @@ repos:
         entry: scripts/edit_postman_json.sh
         always_run: true
         pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: run-translation-mappings
+        name: Run translation/mapping exports
+        language: script
+        entry: scripts/translation_mappings.sh
+        files: "src/i18n/.*|mappings/.*"
+        pass_filenames: false

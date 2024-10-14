@@ -115,7 +115,7 @@ func ModelPlanCreate(
 		}
 
 		// Create default Plan Data Exchange Approach object
-		dataExchangeApproach := models.NewPlanDataExchangeApproachFromBaseTaskListSection(baseTaskListUser)
+		dataExchangeApproach := models.NewPlanDataExchangeApproach(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
 
 		_, err = storage.PlanDataExchangeApproachCreate(tx, logger, dataExchangeApproach)
 		if err != nil {
