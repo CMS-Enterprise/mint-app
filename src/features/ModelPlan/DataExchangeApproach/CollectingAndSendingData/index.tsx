@@ -1,9 +1,15 @@
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FormProvider,
+  useFieldArray,
+  useForm
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
+  Checkbox,
   Fieldset,
   Form,
   FormGroup,
@@ -79,8 +85,14 @@ const CollectingAndSendingData = () => {
   const {
     control,
     watch,
+    register,
     formState: { touchedFields }
   } = methods;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'dataToSendToParticipants'
+  });
 
   const { mutationError } = useHandleMutation<CollectingAndSendingDataType>(
     TypedUpdateDataExchangeApproachDocument,
@@ -94,6 +106,8 @@ const CollectingAndSendingData = () => {
   if (error) {
     return <NotFound />;
   }
+
+  console.log(watch('dataToSendToParticipants'));
 
   return (
     <>
@@ -182,7 +196,7 @@ const CollectingAndSendingData = () => {
                   touched={!!touchedFields?.dataToCollectFromParticipantsNote}
                 />
 
-                <Controller
+                {/* <Controller
                   name="dataToSendToParticipants"
                   control={control}
                   render={({ field }) => (
@@ -192,13 +206,24 @@ const CollectingAndSendingData = () => {
                       </Label>
 
                       {getKeys(dataToSendToParticipantsConfig.options).map(
-                        type => {
+                        (type, index) => {
+                          // const { onChange } = register(
+                          //   'dataToSendToParticipants'
+                          // );
+
                           return (
-                            <CheckboxField
-                              {...field}
+                            <Checkbox
+                              // {...field}
+                              {...register(`dataToSendToParticipants.${index}`)}
+                              ref={null}
+                              onBlur={() => {}}
+                              // onChange={() => {
+                              //   onChange(field.value.push(type));
+                              // }}
                               id={type}
-                              value={field.name}
+                              value={type}
                               key={type}
+                              name={field.name}
                               label={
                                 dataToSendToParticipantsConfig.options[type]
                               }
@@ -208,7 +233,7 @@ const CollectingAndSendingData = () => {
                       )}
                     </FormGroup>
                   )}
-                />
+                /> */}
 
                 <AddNoteRHF
                   field="dataToSendToParticipantsNote"
