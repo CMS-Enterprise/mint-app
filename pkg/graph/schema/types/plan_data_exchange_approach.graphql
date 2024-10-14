@@ -123,4 +123,5 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
 
 extend type Mutation {
   updatePlanDataExchangeApproach(id: UUID!, changes: PlanDataExchangeApproachChanges!): PlanDataExchangeApproach!
+  @hasRole(role: MINT_USER)
 }
