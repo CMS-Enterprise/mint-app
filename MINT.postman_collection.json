@@ -435,6 +435,27 @@
 					"response": []
 				},
 				{
+					"name": "Get Data Exchange Approach",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getDataExchangeApproach {\n  modelPlan(id: \"8507d079-8496-4c63-b54f-219b1b176a03\") {\n    id\n    dataExchangeApproach {\n        id\n        modelPlanID\n        dataToCollectFromParticipants\n        dataToCollectFromParticipantsReportsDetails\n        dataToCollectFromParticipantsOther\n        dataWillNotBeCollectedFromParticipants\n        dataToCollectFromParticipantsNote\n        dataToSendToParticipants\n        dataToSendToParticipantsNote\n        doesNeedToMakeMultiPayerDataAvailable\n        anticipatedMultiPayerDataAvailabilityUseCase\n        doesNeedToMakeMultiPayerDataAvailableNote\n        doesNeedToCollectAndAggregateMultiSourceData\n        multiSourceDataToCollect\n        multiSourceDataToCollectOther\n        doesNeedToCollectAndAggregateMultiSourceDataNote\n        willImplementNewDataExchangeMethods\n        newDataExchangeMethodsDescription\n        newDataExchangeMethodsNote\n        additionalDataExchangeConsiderationsDescription\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n        isDataExchangeApproachComplete\n        markedCompleteBy\n        markedCompleteByUserAccount {\n            username\n        }\n        markedCompleteDts\n        status\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Plan Payments (Deprecated)",
 					"request": {
 						"method": "POST",

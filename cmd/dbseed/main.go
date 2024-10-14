@@ -228,6 +228,39 @@ func (s *Seeder) SeedData() {
 		},
 	)
 
+	// Seed a plan with Data Exchange filled out
+	planWithDataExchange := s.createModelPlan("Plan with Data Exchange", "MINT", nil)
+	s.updatePlanDataExchangeApproach(
+		planWithDataExchange,
+		map[string]interface{}{
+			"dataToCollectFromParticipants":               []models.DataToCollectFromParticipants{models.DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, models.DataToCollectFromParticipantsOther}, //: [DataToCollectFromParticipants!]
+			"dataToCollectFromParticipantsReportsDetails": "collecting data from participants is hard",                                                                                                                           //: String
+			"dataToCollectFromParticipantsOther":          "some other way of collecting participant data",                                                                                                                       //: String
+			"dataWillNotBeCollectedFromParticipants":      false,                                                                                                                                                                 //: Boolean
+			"dataToCollectFromParticipantsNote":           "we are going to collect so much data",                                                                                                                                //: String
+
+			"dataToSendToParticipants":     []models.DataToSendToParticipants{models.DataToSendToParticipantsDataFeedbackDashboard}, //: [DataToSendToParticipants!]!
+			"dataToSendToParticipantsNote": "we will send a ton of data with a feedback dashboard",                                  //: String
+
+			"doesNeedToMakeMultiPayerDataAvailable":        true,                                                                                           //: Boolean
+			"anticipatedMultiPayerDataAvailabilityUseCase": models.AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports,            //: AnticipatedMultiPayerDataAvailabilityUseCase
+			"doesNeedToMakeMultiPayerDataAvailableNote":    "we will fill gaps in care alerting and reports with such vigor that you've never seen before", //: String
+
+			"doesNeedToCollectAndAggregateMultiSourceData":     true,                                                                                                                                                             //: Boolean
+			"multiSourceDataToCollect":                         []models.MultiSourceDataToCollect{models.MultiSourceDataToCollectCommercialClaims, models.MultiSourceDataToCollectLabData, models.MultiSourceDataToCollectOther}, //: [MultiSourceDataToCollect!]
+			"multiSourceDataToCollectOther":                    "we will also collect data about their favorite video games",                                                                                                     //: String
+			"doesNeedToCollectAndAggregateMultiSourceDataNote": "we have lots of multi-data sources, FYI",                                                                                                                        //: String
+
+			"willImplementNewDataExchangeMethods": true,                                                   //: Boolean
+			"newDataExchangeMethodsDescription":   "use google forms",                                     //: String
+			"newDataExchangeMethodsNote":          "my boss hates google forms but I will use it anyways", //: String
+
+			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits", //: String
+
+			"isDataExchangeApproachComplete": true, //: Boolean
+		},
+	)
+
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT", nil)
 	s.addPlanCollaborator(

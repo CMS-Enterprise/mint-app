@@ -93,6 +93,37 @@ func (s *Seeder) updatePlanBasics(
 	return updated
 }
 
+// updateDataExchangeApproach is a wrapper for resolvers.UpdatePlanDataExchangeApproach
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always update the Data Exchange object with the principal value of the Model Plan's "createdBy"
+func (s *Seeder) updatePlanDataExchangeApproach(
+	// ctx context.Context,
+	// emailService oddmail.EmailService, //TODO Add these once notification is set up
+	// emailTemplateService email.TemplateService,
+	// addressBook email.AddressBook,
+	mp *models.ModelPlan,
+	changes map[string]interface{},
+) *models.PlanDataExchangeApproach {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	dea, err := resolvers.PlanDataExchangeApproachGetByModelPlanIDLoader(s.Config.Context, mp.ID)
+	if err != nil {
+		panic(err)
+	}
+
+	updated, err := resolvers.PlanDataExchangeApproachUpdate(
+		s.Config.Logger,
+		dea.ID,
+		changes,
+		princ,
+		s.Config.Store,
+	)
+	if err != nil {
+		panic(err)
+	}
+	return updated
+}
+
 // addPlanCollaborator is a wrapper for resolvers.CreatePlanCollaborator
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
