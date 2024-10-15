@@ -16,9 +16,9 @@ import NotFound from 'features/NotFound';
 import {
   DataToCollectFromParticipants,
   DataToSendToParticipants,
-  GetCollectingAndSendingDataQuery,
+  GetCollectionAndAggregationQuery,
   TypedUpdateDataExchangeApproachDocument,
-  useGetCollectingAndSendingDataQuery
+  useGetCollectionAndAggregationQuery
 } from 'gql/generated/graphql';
 
 import AddNoteRHF from 'components/AddNote/AddNoteRHF';
@@ -36,19 +36,21 @@ import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type CollectingAndSendingDataType =
-  GetCollectingAndSendingDataQuery['modelPlan']['dataExchangeApproach'];
+import SubmittionFooter from '../../../../components/SubmittionFooter';
 
-const defaulFormValues: CollectingAndSendingDataType = {
+type CollectionAndAggregationType =
+  GetCollectionAndAggregationQuery['modelPlan']['dataExchangeApproach'];
+
+const defaulFormValues: CollectionAndAggregationType = {
   __typename: 'PlanDataExchangeApproach',
   id: '',
-  dataToCollectFromParticipants: [],
-  dataToCollectFromParticipantsReportsDetails: '',
-  dataToCollectFromParticipantsOther: '',
-  dataWillNotBeCollectedFromParticipants: null,
-  dataToCollectFromParticipantsNote: '',
-  dataToSendToParticipants: [],
-  dataToSendToParticipantsNote: ''
+  doesNeedToMakeMultiPayerDataAvailable: null,
+  anticipatedMultiPayerDataAvailabilityUseCase: [],
+  doesNeedToMakeMultiPayerDataAvailableNote: '',
+  doesNeedToCollectAndAggregateMultiSourceData: null,
+  multiSourceDataToCollect: [],
+  multiSourceDataToCollectOther: '',
+  doesNeedToCollectAndAggregateMultiSourceDataNote: ''
 };
 
 const CollectionAndAggregation = () => {
@@ -59,28 +61,31 @@ const CollectionAndAggregation = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    dataToCollectFromParticipants: dataToCollectFromParticipantsConfig,
-    dataWillNotBeCollectedFromParticipants:
-      dataWillNotBeCollectedFromParticipantsConfig,
-    dataToSendToParticipants: dataToSendToParticipantsConfig
+    doesNeedToMakeMultiPayerDataAvailable:
+      doesNeedToMakeMultiPayerDataAvailableConfig,
+    anticipatedMultiPayerDataAvailabilityUseCase:
+      anticipatedMultiPayerDataAvailabilityUseCaseConfig,
+    doesNeedToCollectAndAggregateMultiSourceData:
+      doesNeedToCollectAndAggregateMultiSourceDataConfig,
+    multiSourceDataToCollect: multiSourceDataToCollectConfig
   } = usePlanTranslation('dataExchangeApproach');
 
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
 
-  const { data, loading, error } = useGetCollectingAndSendingDataQuery({
+  const { data, loading, error } = useGetCollectionAndAggregationQuery({
     variables: { id: modelID }
   });
 
-  const formData = mapDefaultFormValues<CollectingAndSendingDataType>(
+  const formData = mapDefaultFormValues<CollectionAndAggregationType>(
     data?.modelPlan?.dataExchangeApproach,
     defaulFormValues
   );
 
   const { __typename, id, ...defaultValues } = formData;
 
-  const methods = useForm<CollectingAndSendingDataType>({
+  const methods = useForm<CollectionAndAggregationType>({
     defaultValues
   });
 
@@ -93,7 +98,7 @@ const CollectionAndAggregation = () => {
     formState: { touchedFields }
   } = methods;
 
-  const { mutationError } = useHandleMutation<CollectingAndSendingDataType>(
+  const { mutationError } = useHandleMutation<CollectionAndAggregationType>(
     TypedUpdateDataExchangeApproachDocument,
     {
       id,
@@ -106,7 +111,7 @@ const CollectionAndAggregation = () => {
 
   useEffect(() => {
     reset(
-      mapDefaultFormValues<CollectingAndSendingDataType>(
+      mapDefaultFormValues<CollectionAndAggregationType>(
         data?.modelPlan?.dataExchangeApproach,
         defaulFormValues
       )
@@ -126,17 +131,17 @@ const CollectionAndAggregation = () => {
       />
 
       <FormPageHeader
-        header={dataExchangeApproachMiscT('collectingAndSendingData.heading')}
-        currentPage={2}
+        header={dataExchangeApproachMiscT('collectionAndAggregation.heading')}
+        currentPage={3}
         totalPages={4}
       />
 
       <FormProvider {...methods}>
         <Form
-          id="collect-and-send-data-form"
-          onSubmit={handleSubmit(submitData => {
+          id="new-methodologies-and-additional-considerations-form"
+          onSubmit={handleSubmit(() => {
             history.push(
-              `/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
+              `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
             );
           })}
           className="maxw-none"
@@ -146,227 +151,19 @@ const CollectionAndAggregation = () => {
 
             <Grid row gap>
               <Grid desktop={{ col: 6 }}>
-                <Controller
-                  name="dataToCollectFromParticipants"
-                  control={control}
-                  render={({ field }) => (
-                    <FormGroup error={!!error}>
-                      <Label htmlFor="dataToCollectFromParticipants">
-                        {dataToCollectFromParticipantsConfig.label}
-                      </Label>
-
-                      <HelpText className="margin-top-1">
-                        {dataToCollectFromParticipantsConfig.sublabel}
-                      </HelpText>
-
-                      <MultiSelect
-                        {...field}
-                        id={dataToCollectFromParticipantsConfig.gqlField}
-                        ariaLabel={dataToCollectFromParticipantsConfig.label}
-                        options={composeMultiSelectOptions(
-                          dataToCollectFromParticipantsConfig.options,
-                          dataToCollectFromParticipantsConfig.readonlyOptions
-                        )}
-                        selectedLabel={
-                          dataToCollectFromParticipantsConfig.multiSelectLabel ||
-                          ''
-                        }
-                        initialValues={watch('dataToCollectFromParticipants')}
-                        disabled={
-                          !!watch('dataWillNotBeCollectedFromParticipants')
-                        }
-                      >
-                        <Controller
-                          name="dataWillNotBeCollectedFromParticipants"
-                          control={control}
-                          render={({ field: field2 }) => (
-                            <FormGroup className="margin-bottom-3">
-                              <CheckboxField
-                                {...field2}
-                                id={field2.name}
-                                checked={field2.value === true}
-                                value="true"
-                                onChange={e => {
-                                  const isChecked = e.target.checked;
-                                  if (isChecked) {
-                                    setValue(
-                                      'dataToCollectFromParticipants',
-                                      []
-                                    );
-                                  }
-                                  field2.onChange(isChecked);
-                                }}
-                                label={
-                                  dataWillNotBeCollectedFromParticipantsConfig.label
-                                }
-                              />
-                            </FormGroup>
-                          )}
-                        />
-                      </MultiSelect>
-                    </FormGroup>
-                  )}
+                <SubmittionFooter
+                  homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
+                  homeRoute={`/models/${modelID}/collaboration-area`}
+                  backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`}
+                  nextPage
                 />
-
-                {(watch('dataToCollectFromParticipants').includes(
-                  DataToCollectFromParticipants.REPORTS_FROM_PARTICIPANTS
-                ) ||
-                  watch('dataToCollectFromParticipants').includes(
-                    DataToCollectFromParticipants.OTHER
-                  )) && (
-                  <>
-                    <p className="text-bold margin-y-3">
-                      {dataExchangeApproachMiscT(
-                        'collectingAndSendingData.dataSpecific'
-                      )}
-                    </p>
-
-                    {watch('dataToCollectFromParticipants').includes(
-                      DataToCollectFromParticipants.REPORTS_FROM_PARTICIPANTS
-                    ) && (
-                      <Controller
-                        name="dataToCollectFromParticipantsReportsDetails"
-                        control={control}
-                        render={({ field }) => (
-                          <FormGroup className="margin-bottom-3">
-                            <Label
-                              htmlFor="dataToCollectFromParticipantsReportsDetails"
-                              className="text-normal"
-                            >
-                              {dataExchangeApproachT(
-                                'dataToCollectFromParticipantsReportsDetails.label'
-                              )}
-                            </Label>
-
-                            <TextInput
-                              {...field}
-                              id={field.name}
-                              type="text"
-                              value={field.value || ''}
-                            />
-                          </FormGroup>
-                        )}
-                      />
-                    )}
-
-                    {watch('dataToCollectFromParticipants').includes(
-                      DataToCollectFromParticipants.OTHER
-                    ) && (
-                      <Controller
-                        name="dataToCollectFromParticipantsOther"
-                        control={control}
-                        render={({ field }) => (
-                          <FormGroup>
-                            <Label
-                              htmlFor="dataToCollectFromParticipantsOther"
-                              className="text-normal"
-                            >
-                              {dataExchangeApproachT(
-                                'dataToCollectFromParticipantsOther.label'
-                              )}
-                            </Label>
-
-                            <TextInput
-                              {...field}
-                              id={field.name}
-                              type="text"
-                              value={field.value || ''}
-                            />
-                          </FormGroup>
-                        )}
-                      />
-                    )}
-                  </>
-                )}
-
-                <AddNoteRHF
-                  field="dataToCollectFromParticipantsNote"
-                  control={control}
-                  touched={!!touchedFields?.dataToCollectFromParticipantsNote}
-                />
-
-                <FormGroup>
-                  <Label htmlFor="dataToSendToParticipants">
-                    {dataToSendToParticipantsConfig.label}
-                  </Label>
-
-                  {getKeys(dataToSendToParticipantsConfig.options).map(
-                    value => (
-                      <Controller
-                        key={value}
-                        name="dataToSendToParticipants"
-                        control={control}
-                        render={({ field }) => (
-                          <CheckboxField
-                            id={`checkbox-${value}`}
-                            name={field.name}
-                            value={value}
-                            checked={field.value.includes(value)}
-                            onBlur={field.onBlur}
-                            onChange={e => {
-                              onChangeCheckboxHandler<DataToSendToParticipants>(
-                                e.target.value as DataToSendToParticipants,
-                                field,
-                                e.target.value ===
-                                  DataToSendToParticipants.DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
-                              );
-                            }}
-                            label={
-                              dataToSendToParticipantsConfig.options[value]
-                            }
-                            disabled={
-                              watch('dataToSendToParticipants').includes(
-                                DataToSendToParticipants.DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
-                              ) &&
-                              value !== 'DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS'
-                            }
-                          />
-                        )}
-                      />
-                    )
-                  )}
-                </FormGroup>
-
-                <AddNoteRHF
-                  field="dataToSendToParticipantsNote"
-                  control={control}
-                  touched={!!touchedFields?.dataToSendToParticipantsNote}
-                />
-
-                <div className="margin-top-6 margin-bottom-2 display-flex">
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--outline"
-                    onClick={() => {
-                      history.push(
-                        `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
-                      );
-                    }}
-                  >
-                    {miscellaneousT('back')}
-                  </Button>
-
-                  <Button type="submit">{miscellaneousT('next')}</Button>
-                </div>
-
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() =>
-                    history.push(`/models/${modelID}/collaboration-area`)
-                  }
-                >
-                  <Icon.ArrowBack className="margin-right-1" aria-hidden />
-
-                  {miscellaneousT('saveAndReturnToCollaborationArea')}
-                </Button>
               </Grid>
             </Grid>
           </Fieldset>
         </Form>
       </FormProvider>
 
-      <PageNumber currentPage={2} totalPages={4} className="margin-y-6" />
+      <PageNumber currentPage={3} totalPages={4} className="margin-y-6" />
     </>
   );
 };

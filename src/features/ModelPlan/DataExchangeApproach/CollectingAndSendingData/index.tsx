@@ -29,6 +29,7 @@ import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
+import SubmittionFooter from 'components/SubmittionFooter';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -134,7 +135,7 @@ const CollectingAndSendingData = () => {
       <FormProvider {...methods}>
         <Form
           id="collect-and-send-data-form"
-          onSubmit={handleSubmit(submitData => {
+          onSubmit={handleSubmit(() => {
             history.push(
               `/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
             );
@@ -333,33 +334,12 @@ const CollectingAndSendingData = () => {
                   touched={!!touchedFields?.dataToSendToParticipantsNote}
                 />
 
-                <div className="margin-top-6 margin-bottom-2 display-flex">
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--outline"
-                    onClick={() => {
-                      history.push(
-                        `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
-                      );
-                    }}
-                  >
-                    {miscellaneousT('back')}
-                  </Button>
-
-                  <Button type="submit">{miscellaneousT('next')}</Button>
-                </div>
-
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() =>
-                    history.push(`/models/${modelID}/collaboration-area`)
-                  }
-                >
-                  <Icon.ArrowBack className="margin-right-1" aria-hidden />
-
-                  {miscellaneousT('saveAndReturnToCollaborationArea')}
-                </Button>
+                <SubmittionFooter
+                  homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
+                  homeRoute={`/models/${modelID}/collaboration-area`}
+                  backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`}
+                  nextPage
+                />
               </Grid>
             </Grid>
           </Fieldset>

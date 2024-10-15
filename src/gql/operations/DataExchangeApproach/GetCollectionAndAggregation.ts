@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetCollectingAndSendingData($id: UUID!) {
+  query GetCollectionAndAggregation($id: UUID!) {
     modelPlan(id: $id) {
       id
       dataExchangeApproach {
