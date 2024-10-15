@@ -14,6 +14,21 @@ import (
 	"github.com/google/uuid"
 )
 
+type Category struct {
+	ID            uuid.UUID    `json:"id"`
+	Name          string       `json:"name"`
+	Milestones    []*Milestone `json:"milestones"`
+	SubCategories []*Category  `json:"subCategories"`
+}
+
+type CommonMilestone struct {
+	ID          uuid.UUID          `json:"id"`
+	Key         CommonMilestoneKey `json:"key"`
+	Name        string             `json:"name"`
+	IsAdded     bool               `json:"isAdded"`
+	IsSuggested bool               `json:"isSuggested"`
+}
+
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -49,13 +64,11 @@ type LaunchDarklySettings struct {
 }
 
 type Milestone struct {
-	ID                    uuid.UUID                   `json:"id"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+	ID                                 uuid.UUID `json:"id"`
+	CategoryName                       *string   `json:"categoryName,omitempty"`
+	WasAddedFromCommonMilestoneLibrary bool      `json:"wasAddedFromCommonMilestoneLibrary"`
+	Name                               string    `json:"name"`
+	Description                        string    `json:"description"`
 }
 
 // Represents model plan base translation data
@@ -66,10 +79,6 @@ type ModelPlanTranslation struct {
 	Abbreviation models.TranslationField            `json:"abbreviation" db:"abbreviation"`
 	Archived     models.TranslationFieldWithOptions `json:"archived" db:"archived"`
 	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
-}
-
-type ModelsToOperationMatrix struct {
-	Milestones []*Milestone `json:"milestones"`
 }
 
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
@@ -1140,6 +1149,47 @@ func (e *ChangeType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ChangeType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type CommonMilestoneKey string
+
+const (
+	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
+	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
+)
+
+var AllCommonMilestoneKey = []CommonMilestoneKey{
+	CommonMilestoneKeyMilestoneA,
+	CommonMilestoneKeyMilestoneB,
+}
+
+func (e CommonMilestoneKey) IsValid() bool {
+	switch e {
+	case CommonMilestoneKeyMilestoneA, CommonMilestoneKeyMilestoneB:
+		return true
+	}
+	return false
+}
+
+func (e CommonMilestoneKey) String() string {
+	return string(e)
+}
+
+func (e *CommonMilestoneKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CommonMilestoneKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CommonMilestoneKey", str)
+	}
+	return nil
+}
+
+func (e CommonMilestoneKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

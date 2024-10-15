@@ -236,6 +236,14 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
+export type Category = {
+  __typename: 'Category';
+  id: Scalars['UUID']['output'];
+  milestones: Array<Milestone>;
+  name: Scalars['String']['output'];
+  subCategories: Array<Category>;
+};
+
 export enum CcmInvolvmentType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -258,6 +266,20 @@ export enum ClaimsBasedPayType {
   SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE = 'SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE',
   SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS = 'SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS',
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
+}
+
+export type CommonMilestone = {
+  __typename: 'CommonMilestone';
+  id: Scalars['UUID']['output'];
+  isAdded: Scalars['Boolean']['output'];
+  isSuggested: Scalars['Boolean']['output'];
+  key: CommonMilestoneKey;
+  name: Scalars['String']['output'];
+};
+
+export enum CommonMilestoneKey {
+  MILESTONE_A = 'MILESTONE_A',
+  MILESTONE_B = 'MILESTONE_B'
 }
 
 export enum ComplexityCalculationLevelType {
@@ -641,13 +663,11 @@ export type LinkedExistingModel = ExistingModel | ModelPlan;
 
 export type Milestone = {
   __typename: 'Milestone';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
+  categoryName?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  wasAddedFromCommonMilestoneLibrary: Scalars['Boolean']['output'];
 };
 
 export enum MintUses {
@@ -829,7 +849,8 @@ export enum ModelViewFilter {
 
 export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
-  milestones: Array<Milestone>;
+  categories: Array<Category>;
+  commonMilestones: Array<CommonMilestone>;
 };
 
 export enum MonitoringFileType {

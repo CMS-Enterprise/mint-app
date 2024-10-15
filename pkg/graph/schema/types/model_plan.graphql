@@ -93,8 +93,11 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
   opSolutionLastModifiedDts: Time!
-  mtoMatrix: ModelsToOperationMatrix!
   previousSuggestedPhase: ModelPhase
+
+  # MTO Fields (START)
+  mtoMatrix: ModelsToOperationMatrix!
+  # MTO Fields (END)
 }
 
 """

@@ -24,6 +24,11 @@ type CommonMilestone {
   isSuggested: Boolean!
 }
 
+enum CommonMilestoneKey {
+  MILESTONE_A
+  MILESTONE_B
+}
+
 type Category {
   id: UUID!
   name: String!
