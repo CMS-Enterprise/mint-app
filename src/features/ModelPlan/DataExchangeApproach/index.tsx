@@ -11,6 +11,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import AboutCompletingDataExchange from './AboutCompletingDataExchange';
 import CollectingAndSendingData from './CollectingAndSendingData';
+import CollectionAndAggregation from './CollectionAndAggregation';
 
 const DataEchangeApproach = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
@@ -44,7 +45,7 @@ const DataEchangeApproach = () => {
 
       <AskAQuestion
         modelID={modelID}
-        className="margin-top-2 margin-bottom-6"
+        className="margin-top-2 margin-bottom-7"
         renderTextFor="dataExchangeApproach"
         inlineText
       />
@@ -59,6 +60,12 @@ const DataEchangeApproach = () => {
         <ProtectedRoute
           path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
           component={CollectingAndSendingData}
+          exact
+        />
+
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
+          component={CollectionAndAggregation}
           exact
         />
 

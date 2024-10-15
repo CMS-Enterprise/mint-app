@@ -24,6 +24,7 @@ import {
 import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import FormPageHeader from 'components/FormPageHeader';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -124,9 +125,11 @@ const CollectingAndSendingData = () => {
         url={mutationError.destinationURL}
       />
 
-      <h2 className="margin-bottom-2 margin-top-7">
-        {dataExchangeApproachMiscT('aboutCompletingDataExchange.heading')}
-      </h2>
+      <FormPageHeader
+        header={dataExchangeApproachMiscT('collectingAndSendingData.heading')}
+        currentPage={2}
+        totalPages={4}
+      />
 
       <FormProvider {...methods}>
         <Form
@@ -214,7 +217,7 @@ const CollectingAndSendingData = () => {
                   <>
                     <p className="text-bold margin-y-3">
                       {dataExchangeApproachMiscT(
-                        'aboutCompletingDataExchange.dataSpecific'
+                        'collectingAndSendingData.dataSpecific'
                       )}
                     </p>
 
@@ -330,7 +333,19 @@ const CollectingAndSendingData = () => {
                   touched={!!touchedFields?.dataToSendToParticipantsNote}
                 />
 
-                <div className="margin-top-6 margin-bottom-3">
+                <div className="margin-top-6 margin-bottom-2 display-flex">
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--outline"
+                    onClick={() => {
+                      history.push(
+                        `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
+                      );
+                    }}
+                  >
+                    {miscellaneousT('back')}
+                  </Button>
+
                   <Button type="submit">{miscellaneousT('next')}</Button>
                 </div>
 
