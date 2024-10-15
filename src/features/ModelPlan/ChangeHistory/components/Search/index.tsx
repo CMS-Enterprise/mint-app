@@ -3,12 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import GlobalClientFilter from 'components/TableFilter';
 
-import { ChangeRecordType } from '../../util';
-
 type SearchProps = {
   query: string | null;
-  results: ChangeRecordType[][];
-  currentResults: ChangeRecordType[][];
+  results: any[];
+  currentResults: any[];
   resultsNum: number;
   itemsPerPage: number;
   currentPage: number;
