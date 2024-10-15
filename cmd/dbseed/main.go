@@ -244,7 +244,7 @@ func (s *Seeder) SeedData() {
 			"dataToSendToParticipantsNote": "we will send a ton of data with a feedback dashboard",
 
 			"doesNeedToMakeMultiPayerDataAvailable":        true,
-			"anticipatedMultiPayerDataAvailabilityUseCase": models.AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports,
+			"anticipatedMultiPayerDataAvailabilityUseCase": []models.AnticipatedMultiPayerDataAvailabilityUseCase{models.AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports},
 			"doesNeedToMakeMultiPayerDataAvailableNote":    "we will fill gaps in care alerting and reports with such vigor that you've never seen before",
 
 			"doesNeedToCollectAndAggregateMultiSourceData":     true,

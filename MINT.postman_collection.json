@@ -421,28 +421,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanDataExchangeApproach {\n  updatePlanDataExchangeApproach(id: \"{{dataExchangeApproachID}}\", changes: {\n    # Page 1\n    dataToCollectFromParticipants: [CLINICAL_DATA, OTHER]\n    dataToCollectFromParticipantsReportsDetails: \"Detailed reports information\"\n    dataToCollectFromParticipantsOther: \"Additional data to collect from participants\"\n    dataWillNotBeCollectedFromParticipants: false\n    dataToCollectFromParticipantsNote: \"Notes regarding data collection from participants\"\n\n    # Page 2\n    dataToSendToParticipants: [DATA_FEEDBACK_DASHBOARD]\n    dataToSendToParticipantsNote: \"Notes about data being sent to participants\"\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable: true\n    anticipatedMultiPayerDataAvailabilityUseCase: MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION\n    doesNeedToMakeMultiPayerDataAvailableNote: \"Notes on multi-payer data availability\"\n\n    doesNeedToCollectAndAggregateMultiSourceData: true\n    multiSourceDataToCollect: [COMMERCIAL_CLAIMS]\n    multiSourceDataToCollectOther: \"Additional multi-source data to collect\"\n    doesNeedToCollectAndAggregateMultiSourceDataNote: \"Notes on multi-source data collection\"\n\n    # Page 4\n    willImplementNewDataExchangeMethods: true\n    newDataExchangeMethodsDescription: \"Description of new data exchange methods\"\n    newDataExchangeMethodsNote: \"Notes on new data exchange methods\"\n\n    # Meta\n    isDataExchangeApproachComplete: true\n  }) {\n    # Meta Fields\n    id\n    modelPlanID\n    isDataExchangeApproachComplete\n\n    # Page 1\n    dataToCollectFromParticipants\n    dataToCollectFromParticipantsReportsDetails\n    dataToCollectFromParticipantsOther\n    dataWillNotBeCollectedFromParticipants\n    dataToCollectFromParticipantsNote\n\n    # Page 2\n    dataToSendToParticipants\n    dataToSendToParticipantsNote\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable\n    anticipatedMultiPayerDataAvailabilityUseCase\n    doesNeedToMakeMultiPayerDataAvailableNote\n    doesNeedToCollectAndAggregateMultiSourceData\n    multiSourceDataToCollect\n    multiSourceDataToCollectOther\n    doesNeedToCollectAndAggregateMultiSourceDataNote\n\n    # Page 4\n    willImplementNewDataExchangeMethods\n    newDataExchangeMethodsDescription\n    newDataExchangeMethodsNote\n    additionalDataExchangeConsiderationsDescription\n    isDataExchangeApproachComplete\n\n    # User Accounts\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    markedCompleteDts\n    markedCompleteBy\n    markedCompleteByUserAccount {\n        id\n        email\n    }\n\n    createdByUserAccount {\n      commonName\n    }\n    modifiedByUserAccount {\n      commonName\n    }\n    \n    status\n  }\n}\n",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Data Exchange Approach",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query getDataExchangeApproach {\n  modelPlan(id: \"8507d079-8496-4c63-b54f-219b1b176a03\") {\n    id\n    dataExchangeApproach {\n        id\n        modelPlanID\n        dataToCollectFromParticipants\n        dataToCollectFromParticipantsReportsDetails\n        dataToCollectFromParticipantsOther\n        dataWillNotBeCollectedFromParticipants\n        dataToCollectFromParticipantsNote\n        dataToSendToParticipants\n        dataToSendToParticipantsNote\n        doesNeedToMakeMultiPayerDataAvailable\n        anticipatedMultiPayerDataAvailabilityUseCase\n        doesNeedToMakeMultiPayerDataAvailableNote\n        doesNeedToCollectAndAggregateMultiSourceData\n        multiSourceDataToCollect\n        multiSourceDataToCollectOther\n        doesNeedToCollectAndAggregateMultiSourceDataNote\n        willImplementNewDataExchangeMethods\n        newDataExchangeMethodsDescription\n        newDataExchangeMethodsNote\n        additionalDataExchangeConsiderationsDescription\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n        isDataExchangeApproachComplete\n        markedCompleteBy\n        markedCompleteByUserAccount {\n            username\n        }\n        markedCompleteDts\n        status\n    }\n  }\n}\n",
+								"query": "mutation updatePlanDataExchangeApproach {\n  updatePlanDataExchangeApproach(id: \"{{dataExchangeApproachID}}\", changes: {\n    # Page 1\n    dataToCollectFromParticipants: [CLINICAL_DATA, OTHER]\n    dataToCollectFromParticipantsReportsDetails: \"Detailed reports information\"\n    dataToCollectFromParticipantsOther: \"Additional data to collect from participants\"\n    dataWillNotBeCollectedFromParticipants: false\n    dataToCollectFromParticipantsNote: \"Notes regarding data collection from participants\"\n\n    # Page 2\n    dataToSendToParticipants: [DATA_FEEDBACK_DASHBOARD]\n    dataToSendToParticipantsNote: \"Notes about data being sent to participants\"\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable: true\n    anticipatedMultiPayerDataAvailabilityUseCase: [MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION]\n    doesNeedToMakeMultiPayerDataAvailableNote: \"Notes on multi-payer data availability\"\n\n    doesNeedToCollectAndAggregateMultiSourceData: true\n    multiSourceDataToCollect: [COMMERCIAL_CLAIMS]\n    multiSourceDataToCollectOther: \"Additional multi-source data to collect\"\n    doesNeedToCollectAndAggregateMultiSourceDataNote: \"Notes on multi-source data collection\"\n\n    # Page 4\n    willImplementNewDataExchangeMethods: true\n    newDataExchangeMethodsDescription: \"Description of new data exchange methods\"\n    newDataExchangeMethodsNote: \"Notes on new data exchange methods\"\n\n    # Meta\n    isDataExchangeApproachComplete: true\n  }) {\n    # Meta Fields\n    id\n    modelPlanID\n    isDataExchangeApproachComplete\n\n    # Page 1\n    dataToCollectFromParticipants\n    dataToCollectFromParticipantsReportsDetails\n    dataToCollectFromParticipantsOther\n    dataWillNotBeCollectedFromParticipants\n    dataToCollectFromParticipantsNote\n\n    # Page 2\n    dataToSendToParticipants\n    dataToSendToParticipantsNote\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable\n    anticipatedMultiPayerDataAvailabilityUseCase\n    doesNeedToMakeMultiPayerDataAvailableNote\n    doesNeedToCollectAndAggregateMultiSourceData\n    multiSourceDataToCollect\n    multiSourceDataToCollectOther\n    doesNeedToCollectAndAggregateMultiSourceDataNote\n\n    # Page 4\n    willImplementNewDataExchangeMethods\n    newDataExchangeMethodsDescription\n    newDataExchangeMethodsNote\n    additionalDataExchangeConsiderationsDescription\n    isDataExchangeApproachComplete\n\n    # User Accounts\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    markedCompleteDts\n    markedCompleteBy\n    markedCompleteByUserAccount {\n        id\n        email\n    }\n\n    createdByUserAccount {\n      commonName\n    }\n    modifiedByUserAccount {\n      commonName\n    }\n    \n    status\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2405,8 +2384,7 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript",
-								"packages": {}
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2416,7 +2394,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    newModelPlan: [EMAIL, IN_APP]\n\n    dataExchangeApproachMarkedComplete: [EMAIL, IN_APP]\n    dataExchangeApproachMarkedCompleteNotificationType: ALL_MODELS\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n\n        dataExchangeApproachMarkedComplete\n        dataExchangeApproachMarkedCompleteNotificationType\n    }\n}\n",
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    newModelPlan: [EMAIL, IN_APP]\n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n    }\n}\n",
 								"variables": ""
 							}
 						},

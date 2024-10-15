@@ -42,6 +42,11 @@ func (r *planDataExchangeApproachResolver) DataToSendToParticipants(ctx context.
 	return models.ConvertEnums[models.DataToSendToParticipants](obj.DataToSendToParticipants), nil
 }
 
+// AnticipatedMultiPayerDataAvailabilityUseCase is the resolver for the anticipatedMultiPayerDataAvailabilityUseCase field.
+func (r *planDataExchangeApproachResolver) AnticipatedMultiPayerDataAvailabilityUseCase(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.AnticipatedMultiPayerDataAvailabilityUseCase, error) {
+	return models.ConvertEnums[models.AnticipatedMultiPayerDataAvailabilityUseCase](obj.AnticipatedMultiPayerDataAvailabilityUseCase), nil
+}
+
 // MultiSourceDataToCollect is the resolver for the multiSourceDataToCollect field.
 func (r *planDataExchangeApproachResolver) MultiSourceDataToCollect(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.MultiSourceDataToCollect, error) {
 	return models.ConvertEnums[models.MultiSourceDataToCollect](obj.MultiSourceDataToCollect), nil
