@@ -19,7 +19,17 @@ func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, i
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return PlanDataExchangeApproachUpdate(logger, id, changes, principal, r.store)
+	return PlanDataExchangeApproachUpdate(
+		ctx,
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+	)
 }
 
 // DataToCollectFromParticipants is the resolver for the dataToCollectFromParticipants field.

@@ -9,6 +9,12 @@ enum DatesChangedNotificationType {
   MY_MODELS,
 }
 
+enum DataExchangeApproachMarkedCompleteNotificationType {
+  ALL_MODELS,
+  FOLLOWED_MODELS,
+  MY_MODELS,
+}
+
 
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
@@ -34,7 +40,8 @@ type UserNotificationPreferences {
   datesChanged: [UserNotificationPreferenceFlag!]!
   datesChangedNotificationType: DatesChangedNotificationType
 
-  dataExchangeApproachCompleted: [UserNotificationPreferenceFlag!]!
+  dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]!
+  dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -67,7 +74,8 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
   datesChanged: [UserNotificationPreferenceFlag!]
   datesChangedNotificationType: DatesChangedNotificationType
 
-  dataExchangeApproachCompleted: [UserNotificationPreferenceFlag!]
+  dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]
+  dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 }
 
 extend type Mutation {

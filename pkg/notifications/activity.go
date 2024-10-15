@@ -145,9 +145,9 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
-	case models.ActivityDataExchangeApproachCompleted:
-		// Deserialize the raw JSON into DataExchangeApproachCompletedActivityMeta
-		meta := models.PlanDataExchangeApproachCompletedActivityMeta{}
+	case models.ActivityDataExchangeApproachMarkedComplete:
+		// Deserialize the raw JSON into DataExchangeApproachMarkedCompleteActivityMeta
+		meta := models.PlanDataExchangeApproachMarkedCompleteActivityMeta{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 			return nil, err
 		}
