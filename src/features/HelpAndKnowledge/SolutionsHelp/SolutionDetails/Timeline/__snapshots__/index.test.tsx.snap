@@ -28,28 +28,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > 4inn
           </h3>
           Send an email to 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            ACO-OIT@cms.hhs.gov
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              ACO-OIT@cms.hhs.gov
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
            if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.
         </li>
@@ -218,28 +214,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Acco
           </h3>
           Send an email to 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            ACO-OIT@cms.hhs.gov
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              ACO-OIT@cms.hhs.gov
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
            if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.
         </li>
@@ -525,28 +517,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
     >
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
         data-testid="button"
         type="button"
       >
-        <span
-          class="position-relative"
+        MINTTeam@cms.hhs.gov
+        <svg
+          class="usa-icon margin-left-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          MINTTeam@cms.hhs.gov
-          <svg
-            class="usa-icon margin-left-05 position-absolute"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-            />
-          </svg>
-        </span>
+          <path
+            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+          />
+        </svg>
       </button>
       .
       <ol
@@ -564,28 +552,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           G​o to CMS Box and click Continue to confirm you are a part of the Centers for Medicare & M​edicaid services. You will be automatically signed in.
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              Go to CMS Box
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Go to CMS Box
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
           </p>
         </li>
@@ -601,28 +585,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           If using CMS Box to share files with participants, additional permissions will need to be set up.
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              View resources on CMS Intranet
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                View resources on CMS Intranet
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
           </p>
         </li>
@@ -645,28 +625,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
     >
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
         data-testid="button"
         type="button"
       >
-        <span
-          class="position-relative"
+        MINTTeam@cms.hhs.gov
+        <svg
+          class="usa-icon margin-left-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          MINTTeam@cms.hhs.gov
-          <svg
-            class="usa-icon margin-left-05 position-absolute"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-            />
-          </svg>
-        </span>
+          <path
+            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+          />
+        </svg>
       </button>
       .
       <ol
@@ -684,28 +660,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           Log in to CMS Qualtrics using your CMS user name and password.
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              Go to CMS Qualtrics
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Go to CMS Qualtrics
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
           </p>
         </li>
@@ -763,28 +735,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                MINTTeam@cms.hhs.gov
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
             .
           </span>
@@ -821,28 +789,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
           </h3>
           If you’re interested in using CDX for your model or would like to learn more about the system, please contact 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            MINTTeam@cms.hhs.gov
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              MINTTeam@cms.hhs.gov
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
            to learn more.
         </li>
@@ -862,28 +826,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
             <li>
               Register as New User in the 
               <button
-                class="usa-button usa-button--unstyled margin-right-2"
+                class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                 data-testid="button"
                 type="button"
               >
-                <span
-                  class="position-relative"
+                CMS Enterprise Portal
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  CMS Enterprise Portal
-                  <svg
-                    class="usa-icon margin-left-05 position-absolute"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                    />
-                  </svg>
-                </span>
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
               </button>
             </li>
             <li>
@@ -947,28 +907,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           Anyone wanting to access CCW data will need a valid CMS DUA (Data User Agreement).
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              Data Disclosures and Data Use Agreements
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Data Disclosures and Data Use Agreements
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
           </p>
         </li>
@@ -983,28 +939,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           </h3>
           Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            CCWAccess@cms.hhs.gov
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              CCWAccess@cms.hhs.gov
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
           ) and Velda.
         </li>
@@ -1054,28 +1006,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           </h3>
           Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            CCWAccess@cms.hhs.gov
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              CCWAccess@cms.hhs.gov
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
           ) and Velda.
         </li>
@@ -1237,28 +1185,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                MINTTeam@cms.hhs.gov
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
             .
           </span>
@@ -1554,28 +1498,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                MINTTeam@cms.hhs.gov
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
             .
           </span>
@@ -1599,28 +1539,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
     >
       Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
         data-testid="button"
         type="button"
       >
-        <span
-          class="position-relative"
+        donna.schmidt@cms.hhs.gov
+        <svg
+          class="usa-icon margin-left-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          donna.schmidt@cms.hhs.gov
-          <svg
-            class="usa-icon margin-left-05 position-absolute"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-            />
-          </svg>
-        </span>
+          <path
+            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+          />
+        </svg>
       </button>
        if you have questions.
     </div>
@@ -1886,28 +1822,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                MINTTeam@cms.hhs.gov
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
             .
           </span>
@@ -2079,28 +2011,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Onboarding Request Form for MDM-POR
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Onboarding Request Form for MDM-POR
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -2127,28 +2055,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to ICD and Onboarding Mapping for MDM-POR
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to ICD and Onboarding Mapping for MDM-POR
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
       </ol>
@@ -2209,28 +2133,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Onboarding Request Form for MDM-NCBP
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Onboarding Request Form for MDM-NCBP
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -2257,28 +2177,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to ICD and Onboarding Mapping for MDM-NCBP
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to ICD and Onboarding Mapping for MDM-NCBP
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
       </ol>
@@ -2402,28 +2318,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                MINTTeam@cms.hhs.gov
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
             .
           </span>
@@ -2541,28 +2453,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
           </ul>
           If you’d rather submit a request by email, please send the above information to 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            cms_it_service_desk@cms.hhs.gov
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              cms_it_service_desk@cms.hhs.gov
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -2653,28 +2561,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Rese
     >
       Model teams should follow the 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
         data-testid="button"
         type="button"
       >
-        <span
-          class="position-relative"
+        Procurement Administrative Lead Time (PALT)
+        <svg
+          class="usa-icon margin-left-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Procurement Administrative Lead Time (PALT)
-          <svg
-            class="usa-icon margin-left-05 position-absolute"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-            />
-          </svg>
-        </span>
+          <path
+            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+          />
+        </svg>
       </button>
        standards to determine when to being working with RMADA.
     </div>
@@ -2749,28 +2653,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Salesforce CMT
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Salesforce CMT
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -2896,28 +2796,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Salesforce CMT
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Salesforce CMT
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -3043,28 +2939,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Salesforce CMT
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Salesforce CMT
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -3190,28 +3082,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Salesforce CMT
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Salesforce CMT
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -3337,28 +3225,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span
-              class="position-relative"
+            Go to Salesforce CMT
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Go to Salesforce CMT
-              <svg
-                class="usa-icon margin-left-05 position-absolute"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
         </li>
         <li
@@ -3459,28 +3343,24 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Shar
 
 
             <button
-              class="usa-button usa-button--unstyled display-block margin-top-105 margin-bottom-3 margin-right-2"
+              class="usa-button usa-button--unstyled display-block margin-top-105 margin-bottom-3 margin-right-2 display-flex flex-align-center"
               data-testid="button"
               type="button"
             >
-              <span
-                class="position-relative"
+              Go to Fee For Service Change Request Resource Center
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Go to Fee For Service Change Request Resource Center
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
             </button>
             
 
