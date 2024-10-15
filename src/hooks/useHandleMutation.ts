@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   OperationVariables,
@@ -18,8 +18,10 @@ type HandleFormikMutationConfigType = {
 
 type HandleRHFMutationConfigType = {
   id: string;
-  initialValues: any;
-  values: any;
+  rhfRef: {
+    initialValues: any;
+    values: any;
+  };
 };
 
 type HandleMutationConfigType =
@@ -59,23 +61,11 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [update] = useMutation<TData, OperationVariables>(mutation);
+  const [mutationUpdate] = useMutation<TData, OperationVariables>(mutation);
+
+  const update = useMemo(() => mutationUpdate, [mutationUpdate]);
 
   const { id } = config;
-
-  let formikRef: React.RefObject<FormikProps<TData>> | undefined;
-
-  if ('formikRef' in config) {
-    formikRef = config.formikRef;
-  }
-
-  let initialValues: TData | undefined;
-  let values: TData | undefined;
-
-  if ('initialValues' in config) {
-    initialValues = config.initialValues;
-    values = config.values;
-  }
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -96,13 +86,13 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
         }
 
         const dirtyChanges = () => {
-          if (formikRef) {
+          if ('formikRef' in config) {
             return dirtyInput(
-              formikRef.current?.initialValues,
-              formikRef.current?.values
+              config.formikRef.current?.initialValues,
+              config.formikRef.current?.values
             );
           }
-          return dirtyInput(initialValues, values);
+          return dirtyInput(config.rhfRef.initialValues, config.rhfRef.values);
         };
 
         const changes = dirtyChanges();
@@ -121,6 +111,9 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           changes.status = sanitizeStatus(changes.status);
         }
 
+        unblock();
+        history.push(destination.pathname);
+
         update({
           variables: {
             id,
@@ -130,7 +123,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           .then(response => {
             if (!response?.errors) {
               unblock();
-              // history.push(destination.pathname);
+              history.push(destination.pathname);
             }
           })
           .catch(errors => {
@@ -138,8 +131,8 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
             setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
-            if (formikRef) {
-              formikRef.current?.setErrors(errors);
+            if ('formikRef' in config) {
+              config.formikRef.current?.setErrors(errors);
             }
           });
         return false;
@@ -150,17 +143,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
       };
     }
     return () => {};
-  }, [
-    history,
-    id,
-    update,
-    isModalOpen,
-    setIsModalOpen,
-    pathname,
-    formikRef,
-    initialValues,
-    values
-  ]);
+  }, [history, id, update, isModalOpen, setIsModalOpen, pathname, config]);
 
   return {
     mutationError: { isModalOpen, setIsModalOpen, destinationURL }

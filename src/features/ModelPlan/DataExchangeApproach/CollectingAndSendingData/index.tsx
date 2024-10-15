@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
   Fieldset,
   Form,
   FormGroup,
@@ -80,8 +79,9 @@ const CollectingAndSendingData = () => {
 
   const {
     control,
-    watch,
     reset,
+    watch,
+    handleSubmit,
     formState: { touchedFields }
   } = methods;
 
@@ -89,8 +89,10 @@ const CollectingAndSendingData = () => {
     TypedUpdateDataExchangeApproachDocument,
     {
       id,
-      initialValues: defaultValues,
-      values: watch()
+      rhfRef: {
+        initialValues: defaultValues,
+        values: watch()
+      }
     }
   );
 
@@ -118,15 +120,15 @@ const CollectingAndSendingData = () => {
       <h2 className="margin-bottom-2 margin-top-7">
         {t('aboutCompletingDataExchange.heading')}
       </h2>
+
       <FormProvider {...methods}>
         <Form
           id="collect-and-send-data-form"
-          onSubmit={e => {
-            e.preventDefault();
+          onSubmit={handleSubmit(submitData => {
             history.push(
               `/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
             );
-          }}
+          })}
           className="maxw-none"
         >
           <Fieldset disabled={loading}>

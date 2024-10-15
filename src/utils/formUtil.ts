@@ -24,6 +24,8 @@ type DirtyInputType = {
 };
 
 export const dirtyInput = (initialValues: any, values: any) => {
+  console.log('initialValues', initialValues);
+  console.log('values', values);
   if (!initialValues || !values) return {};
 
   const onlyDirtyInput: DirtyInputType = {};
