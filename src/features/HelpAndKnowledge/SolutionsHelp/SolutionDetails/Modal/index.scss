@@ -1,9 +1,0 @@
-@use 'viewports' as *;
-
-.solution-details-modal {
-    width: 70%;
-
-    @media screen and (max-width: $desktop) {
-        width: 100%;
-      }
-}

@@ -18,8 +18,6 @@ import About from '../About';
 import PointsOfContact from '../PointsOfContact';
 import Timeline from '../Timeline';
 
-import './index.scss';
-
 // Formats the query params on modal route change
 export const formatQueryParam = (
   paramValues: string[],
@@ -114,7 +112,6 @@ const SolutionDetailsModal = ({
         closeModal={closeModal}
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
-        classname="desktop:width-50"
       >
         <Header solution={solution} />
 
