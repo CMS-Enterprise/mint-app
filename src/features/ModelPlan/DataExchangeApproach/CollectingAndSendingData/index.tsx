@@ -9,10 +9,12 @@ import {
   FormGroup,
   Grid,
   Icon,
-  Label
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
+  DataToCollectFromParticipants,
   GetCollectingAndSendingDataQuery,
   TypedUpdateDataExchangeApproachDocument,
   useGetCollectingAndSendingDataQuery
@@ -48,7 +50,10 @@ const defaulFormValues: CollectingAndSendingDataType = {
 };
 
 const CollectingAndSendingData = () => {
-  const { t } = useTranslation('dataExchangeApproachMisc');
+  const { t: dataExchangeApproachT } = useTranslation('dataExchangeApproach');
+  const { t: dataExchangeApproachMiscT } = useTranslation(
+    'dataExchangeApproachMisc'
+  );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
@@ -118,7 +123,7 @@ const CollectingAndSendingData = () => {
       />
 
       <h2 className="margin-bottom-2 margin-top-7">
-        {t('aboutCompletingDataExchange.heading')}
+        {dataExchangeApproachMiscT('aboutCompletingDataExchange.heading')}
       </h2>
 
       <FormProvider {...methods}>
@@ -155,7 +160,8 @@ const CollectingAndSendingData = () => {
                         name={dataToCollectFromParticipantsConfig.gqlField}
                         ariaLabel=""
                         options={composeMultiSelectOptions(
-                          dataToCollectFromParticipantsConfig.options
+                          dataToCollectFromParticipantsConfig.options,
+                          dataToCollectFromParticipantsConfig.readonlyOptions
                         )}
                         selectedLabel={
                           dataToCollectFromParticipantsConfig.multiSelectLabel ||
@@ -189,6 +195,77 @@ const CollectingAndSendingData = () => {
                     </FormGroup>
                   )}
                 />
+
+                {(watch('dataToCollectFromParticipants').includes(
+                  DataToCollectFromParticipants.REPORTS_FROM_PARTICIPANTS
+                ) ||
+                  watch('dataToCollectFromParticipants').includes(
+                    DataToCollectFromParticipants.OTHER
+                  )) && (
+                  <>
+                    <p className="text-bold margin-y-3">
+                      {dataExchangeApproachMiscT(
+                        'aboutCompletingDataExchange.dataSpecific'
+                      )}
+                    </p>
+
+                    {watch('dataToCollectFromParticipants').includes(
+                      DataToCollectFromParticipants.REPORTS_FROM_PARTICIPANTS
+                    ) && (
+                      <Controller
+                        name="dataToCollectFromParticipantsReportsDetails"
+                        control={control}
+                        render={({ field }) => (
+                          <FormGroup className="margin-bottom-3">
+                            <Label
+                              htmlFor="dataToCollectFromParticipantsReportsDetails"
+                              className="text-normal"
+                            >
+                              {dataExchangeApproachT(
+                                'dataToCollectFromParticipantsReportsDetails.label'
+                              )}
+                            </Label>
+
+                            <TextInput
+                              {...field}
+                              id={field.name}
+                              type="text"
+                              value={field.value || ''}
+                            />
+                          </FormGroup>
+                        )}
+                      />
+                    )}
+
+                    {watch('dataToCollectFromParticipants').includes(
+                      DataToCollectFromParticipants.OTHER
+                    ) && (
+                      <Controller
+                        name="dataToCollectFromParticipantsOther"
+                        control={control}
+                        render={({ field }) => (
+                          <FormGroup>
+                            <Label
+                              htmlFor="dataToCollectFromParticipantsOther"
+                              className="text-normal"
+                            >
+                              {dataExchangeApproachT(
+                                'dataToCollectFromParticipantsOther.label'
+                              )}
+                            </Label>
+
+                            <TextInput
+                              {...field}
+                              id={field.name}
+                              type="text"
+                              value={field.value || ''}
+                            />
+                          </FormGroup>
+                        )}
+                      />
+                    )}
+                  </>
+                )}
 
                 <AddNoteRHF
                   field="dataToCollectFromParticipantsNote"

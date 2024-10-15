@@ -18,6 +18,7 @@ import './index.scss';
 export type MultiSelectOptionProps = {
   value: string;
   label: string;
+  readonlyLabel?: string;
   subLabel?: string;
   isDisabled?: boolean;
   email?: string;
@@ -87,6 +88,7 @@ export const MultiSelectTag = ({
   id,
   parentId,
   label,
+  readonlyLabel,
   className,
   handleRemove,
   disabledOption,
@@ -95,6 +97,7 @@ export const MultiSelectTag = ({
   id: string;
   parentId?: string;
   label: string;
+  readonlyLabel?: string;
   className?: string;
   handleRemove?: (value: string) => void;
   disabledOption?: boolean;
@@ -109,7 +112,7 @@ export const MultiSelectTag = ({
         className
       )}
     >
-      {label}{' '}
+      {readonlyLabel || label}{' '}
       {!(disabledOption && label === disabledLabel) && handleRemove && (
         <Icon.Close
           onClick={() => handleRemove(label)}
@@ -307,7 +310,7 @@ const MultiSelect = ({
             {selectedLabel || 'Selected options'}
           </h4>
           <ul className="usa-list--unstyled" id={`${id}-tags`}>
-            {renderSelectedTags.map(({ value, label }) => (
+            {renderSelectedTags.map(({ value, label, readonlyLabel }) => (
               <li
                 className="margin-bottom-05 margin-right-05 display-inline-block"
                 key={value}
@@ -317,6 +320,7 @@ const MultiSelect = ({
                   parentId={`${id}-tags`}
                   key={value}
                   label={label}
+                  readonlyLabel={readonlyLabel}
                   disabledOption={disabledOption}
                   disabledLabel={disabledLabel}
                   handleRemove={() => {

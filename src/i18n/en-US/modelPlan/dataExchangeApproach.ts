@@ -364,7 +364,8 @@ export const dataExchangeApproachMisc = {
     email: 'Email the MINT Team',
     noLeadAssigned: 'No IT Lead or Solution Architect assigned',
     pleaseContactBSG:
-      'Please contact BSG to work with a Solution Architect or assign an IT Lead.'
+      'Please contact BSG to work with a Solution Architect or assign an IT Lead.',
+    dataSpecific: 'Data-specific questions'
   }
 };
 

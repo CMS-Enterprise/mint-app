@@ -46,12 +46,14 @@ export const mapMultiSelectOptions = (
 // Used to map MultiSelect options from Enums
 export const composeMultiSelectOptions = (
   translationObject: Record<string, string>,
+  readonlyLabels?: Record<string, string>,
   sublabels?: Record<string, string>,
   disabledValue?: string
 ) =>
   getKeys(translationObject).map(key => ({
     value: key,
     label: translationObject[key],
+    readonlyLabel: readonlyLabels ? readonlyLabels[key] : undefined,
     subLabel: sublabels ? sublabels[key] : undefined,
     isDisabled: key === disabledValue
   }));
