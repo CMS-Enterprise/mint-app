@@ -216,6 +216,7 @@ const MultiSelect = ({
   className,
   ariaLabel,
   tagOrder,
+  disabled,
   disabledOption,
   disabledLabel
 }: {
@@ -230,6 +231,7 @@ const MultiSelect = ({
   className?: string;
   ariaLabel: string;
   tagOrder?: 'asc' | 'desc' | string;
+  disabled?: boolean;
   disabledOption?: boolean;
   disabledLabel?: string;
 }) => {
@@ -300,6 +302,7 @@ const MultiSelect = ({
         placeholder={`${selected.length} selected`}
         styles={customStyles}
         aria-labelledby={ariaLabel}
+        isDisabled={disabled}
       />
 
       {children}

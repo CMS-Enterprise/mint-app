@@ -15,6 +15,7 @@ import {
 import NotFound from 'features/NotFound';
 import {
   DataToCollectFromParticipants,
+  DataToSendToParticipants,
   GetCollectingAndSendingDataQuery,
   TypedUpdateDataExchangeApproachDocument,
   useGetCollectingAndSendingDataQuery
@@ -87,6 +88,7 @@ const CollectingAndSendingData = () => {
     reset,
     watch,
     handleSubmit,
+    setValue,
     formState: { touchedFields }
   } = methods;
 
@@ -157,8 +159,7 @@ const CollectingAndSendingData = () => {
                       <MultiSelect
                         {...field}
                         id={dataToCollectFromParticipantsConfig.gqlField}
-                        name={dataToCollectFromParticipantsConfig.gqlField}
-                        ariaLabel=""
+                        ariaLabel={dataToCollectFromParticipantsConfig.label}
                         options={composeMultiSelectOptions(
                           dataToCollectFromParticipantsConfig.options,
                           dataToCollectFromParticipantsConfig.readonlyOptions
@@ -167,11 +168,9 @@ const CollectingAndSendingData = () => {
                           dataToCollectFromParticipantsConfig.multiSelectLabel ||
                           ''
                         }
-                        onChange={values => {
-                          field.onChange(values);
-                        }}
-                        initialValues={
-                          defaultValues.dataToCollectFromParticipants
+                        initialValues={watch('dataToCollectFromParticipants')}
+                        disabled={
+                          !!watch('dataWillNotBeCollectedFromParticipants')
                         }
                       >
                         <Controller
@@ -184,6 +183,16 @@ const CollectingAndSendingData = () => {
                                 id={field2.name}
                                 checked={field2.value === true}
                                 value="true"
+                                onChange={e => {
+                                  const isChecked = e.target.checked;
+                                  if (isChecked) {
+                                    setValue(
+                                      'dataToCollectFromParticipants',
+                                      []
+                                    );
+                                  }
+                                  field2.onChange(isChecked);
+                                }}
                                 label={
                                   dataWillNotBeCollectedFromParticipantsConfig.label
                                 }
@@ -291,17 +300,22 @@ const CollectingAndSendingData = () => {
                             value={value}
                             checked={field.value.includes(value)}
                             onBlur={field.onBlur}
-                            onChange={e =>
-                              onChangeCheckboxHandler<
-                                keyof typeof dataToSendToParticipantsConfig.options
-                              >(
-                                e.target
-                                  .value as keyof typeof dataToSendToParticipantsConfig.options,
-                                field
-                              )
-                            }
+                            onChange={e => {
+                              onChangeCheckboxHandler<DataToSendToParticipants>(
+                                e.target.value as DataToSendToParticipants,
+                                field,
+                                e.target.value ===
+                                  DataToSendToParticipants.DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
+                              );
+                            }}
                             label={
                               dataToSendToParticipantsConfig.options[value]
+                            }
+                            disabled={
+                              watch('dataToSendToParticipants').includes(
+                                DataToSendToParticipants.DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
+                              ) &&
+                              value !== 'DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS'
                             }
                           />
                         )}

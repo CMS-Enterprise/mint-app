@@ -8,10 +8,13 @@ import { isEqual } from 'lodash';
 
 export function onChangeCheckboxHandler<T>(
   newValue: T,
-  field: { value: T[]; onChange: (value: T[]) => void }
+  field: { value: T[]; onChange: (value: T[]) => void },
+  deselectOthers?: boolean
 ) {
   if (field.value.includes(newValue)) {
     field.onChange(field.value.filter((v: T) => v !== newValue));
+  } else if (deselectOthers) {
+    field.onChange([newValue]);
   } else {
     field.onChange(
       Array.isArray(field.value) ? [...field.value, newValue] : [newValue]
@@ -24,8 +27,6 @@ type DirtyInputType = {
 };
 
 export const dirtyInput = (initialValues: any, values: any) => {
-  console.log('initialValues', initialValues);
-  console.log('values', values);
   if (!initialValues || !values) return {};
 
   const onlyDirtyInput: DirtyInputType = {};
