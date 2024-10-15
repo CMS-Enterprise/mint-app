@@ -67,26 +67,19 @@ func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *m
 }
 
 // DataExchangeApproach is the resolver for the dataExchangeApproach field.
-func (r *planDataExchangeApproachCompletedActivityMetaResolver) DataExchangeApproach(ctx context.Context, obj *models.PlanDataExchangeApproachCompletedActivityMeta) (*models.PlanDataExchangeApproach, error) {
+func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) DataExchangeApproach(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.PlanDataExchangeApproach, error) {
 	logger := appcontext.ZLogger(ctx)
 	//TODO: this can be replaced with a a call to // PlanDataExchangeApproachGetByModelPlanIDLoader() when model plan relation is added to the meta type
 	return PlanDataExchangeApproachGetByID(logger, r.store, obj.DataExchangeApproachID)
 }
 
 // ModelPlan is the resolver for the modelPlan field.
-func (r *planDataExchangeApproachCompletedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproachCompletedActivityMeta) (*models.ModelPlan, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	dataExchangeApproach, err := PlanDataExchangeApproachGetByID(logger, r.store, obj.DataExchangeApproachID)
-	if err != nil {
-		return nil, err
-	}
-
-	return ModelPlanGetByIDLOADER(ctx, dataExchangeApproach.ModelPlanID)
+func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
-func (r *planDataExchangeApproachCompletedActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.PlanDataExchangeApproachCompletedActivityMeta) (*authentication.UserAccount, error) {
+func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*authentication.UserAccount, error) {
 	return UserAccountGetByIDLOADER(ctx, obj.MarkedCompleteBy)
 }
 
@@ -151,9 +144,9 @@ func (r *Resolver) NewModelPlanActivityMeta() generated.NewModelPlanActivityMeta
 	return &newModelPlanActivityMetaResolver{r}
 }
 
-// PlanDataExchangeApproachCompletedActivityMeta returns generated.PlanDataExchangeApproachCompletedActivityMetaResolver implementation.
-func (r *Resolver) PlanDataExchangeApproachCompletedActivityMeta() generated.PlanDataExchangeApproachCompletedActivityMetaResolver {
-	return &planDataExchangeApproachCompletedActivityMetaResolver{r}
+// PlanDataExchangeApproachMarkedCompleteActivityMeta returns generated.PlanDataExchangeApproachMarkedCompleteActivityMetaResolver implementation.
+func (r *Resolver) PlanDataExchangeApproachMarkedCompleteActivityMeta() generated.PlanDataExchangeApproachMarkedCompleteActivityMetaResolver {
+	return &planDataExchangeApproachMarkedCompleteActivityMetaResolver{r}
 }
 
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
@@ -173,6 +166,6 @@ type datesChangedActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
 type newModelPlanActivityMetaResolver struct{ *Resolver }
-type planDataExchangeApproachCompletedActivityMetaResolver struct{ *Resolver }
+type planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }

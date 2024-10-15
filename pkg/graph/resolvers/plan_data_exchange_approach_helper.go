@@ -3,6 +3,8 @@ package resolvers
 import (
 	"context"
 
+	"github.com/samber/lo"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -12,11 +14,42 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
-func SendDataExchangeApproachCompletedEmailNotification(
+func getExecutedDataExchangeMarkedCompleteEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	modelPlan *models.ModelPlan,
+	markedCompletedByUserCommonName string,
+	showFooter bool,
+) (string, string, error) {
+	emailTemplate, err := templateService.GetEmailTemplate(email.DataExchangeApproachMarkedCompleteTemplateName)
+	if err != nil {
+		return "", "", err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.DataExchangeApproachMarkedCompleteSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	if err != nil {
+		return "", "", err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.DataExchangeApproachMarkedCompleteBodyContent{
+		ClientAddress:                   emailService.GetConfig().GetClientAddress(),
+		ModelName:                       modelPlan.ModelName,
+		ModelID:                         modelPlan.GetModelPlanID().String(),
+		MarkedCompletedByUserCommonName: markedCompletedByUserCommonName,
+		ShowFooter:                      showFooter,
+	})
+	if err != nil {
+		return "", "", err
+	}
+	return emailSubject, emailBody, nil
+}
+
+func SendDataExchangeApproachMarkedCompleteEmailNotification(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -25,25 +58,13 @@ func SendDataExchangeApproachCompletedEmailNotification(
 	markedCompletedByUserCommonName string,
 	showFooter bool,
 ) error {
-	emailTemplate, err := templateService.GetEmailTemplate(email.DataExchangeApproachCompletedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.DataExchangeApproachCompletedSubjectContent{
-		ModelName: modelPlan.ModelName,
-	})
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.DataExchangeApproachCompletedBodyContent{
-		ClientAddress:                   emailService.GetConfig().GetClientAddress(),
-		ModelName:                       modelPlan.ModelName,
-		ModelID:                         modelPlan.GetModelPlanID().String(),
-		MarkedCompletedByUserCommonName: markedCompletedByUserCommonName,
-		ShowFooter:                      showFooter,
-	})
+	emailSubject, emailBody, err := getExecutedDataExchangeMarkedCompleteEmail(
+		emailService,
+		templateService,
+		modelPlan,
+		markedCompletedByUserCommonName,
+		showFooter,
+	)
 	if err != nil {
 		return err
 	}
@@ -62,8 +83,7 @@ func SendDataExchangeApproachCompletedEmailNotification(
 	return nil
 }
 
-func SendDataExchangeApproachCompletedEmailNotifications(
-	ctx context.Context,
+func SendDataExchangeApproachMarkedCompleteEmailNotifications(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -72,24 +92,40 @@ func SendDataExchangeApproachCompletedEmailNotifications(
 	markedCompletedByUserCommonName string,
 	showFooter bool,
 ) error {
-	for _, user := range receivers {
-		err := SendDataExchangeApproachCompletedEmailNotification(
-			emailService,
-			templateService,
-			addressBook,
-			modelPlan,
-			user.Email,
-			markedCompletedByUserCommonName,
-			showFooter,
-		)
-		if err != nil {
-			return err
-		}
+	emailSubject, emailBody, err := getExecutedDataExchangeMarkedCompleteEmail(
+		emailService,
+		templateService,
+		modelPlan,
+		markedCompletedByUserCommonName,
+		showFooter,
+	)
+	if err != nil {
+		return err
+	}
+
+	receiverEmails := lo.Map(
+		receivers,
+		func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
+			return pref.Email
+		},
+	)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
-func SendDataExchangeApproachCompletedNotification(
+func SendDataExchangeApproachMarkedCompleteNotification(
 	ctx context.Context,
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
@@ -106,14 +142,14 @@ func SendDataExchangeApproachCompletedNotification(
 	emailPreferences, inAppPreferences := models.FilterNotificationPreferences(receivers)
 
 	// Create and send in-app notifications
-	_, err := notifications.ActivityDataExchangeApproachCompletedCreate(
+	_, err := notifications.ActivityDataExchangeApproachMarkedCompleteCreate(
 		ctx,
 		actorID,
 		np,
 		inAppPreferences,
+		approach.ModelPlanID,
 		approach.ID,
 		markedCompletedBy,
-		loaders.UserNotificationPreferencesGetByUserID,
 	)
 	if err != nil {
 		logger.Error("failed to create and send in-app notifications", zap.Error(err))
@@ -127,7 +163,7 @@ func SendDataExchangeApproachCompletedNotification(
 	}
 
 	// Send email to the MINTTeam email address from the address book
-	err = SendDataExchangeApproachCompletedEmailNotification(
+	err = SendDataExchangeApproachMarkedCompleteEmailNotification(
 		emailService,
 		templateService,
 		addressBook,
@@ -142,8 +178,7 @@ func SendDataExchangeApproachCompletedNotification(
 	}
 
 	// Create and send email notifications
-	err = SendDataExchangeApproachCompletedEmailNotifications(
-		ctx,
+	err = SendDataExchangeApproachMarkedCompleteEmailNotifications(
 		emailService,
 		templateService,
 		addressBook,

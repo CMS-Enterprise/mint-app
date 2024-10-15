@@ -1,12 +1,12 @@
 package email
 
-// DataExchangeApproachCompletedSubjectContent defines the parameters necessary for the corresponding email subject
-type DataExchangeApproachCompletedSubjectContent struct {
+// DataExchangeApproachMarkedCompleteSubjectContent defines the parameters necessary for the corresponding email subject
+type DataExchangeApproachMarkedCompleteSubjectContent struct {
 	ModelName string
 }
 
-// DataExchangeApproachCompletedBodyContent defines the parameters necessary for the corresponding email body
-type DataExchangeApproachCompletedBodyContent struct {
+// DataExchangeApproachMarkedCompleteBodyContent defines the parameters necessary for the corresponding email body
+type DataExchangeApproachMarkedCompleteBodyContent struct {
 	ClientAddress                   string
 	ModelName                       string
 	ModelID                         string

@@ -148,14 +148,14 @@ var modelPlanSuggestedPhaseSubjectTemplate string
 //go:embed templates/model_plan_suggested_phase_body.html
 var modelPlanSuggestedPhaseBodyTemplate string
 
-// DataExchangeApproachCompletedTemplateName is the template name for the data exchange approach completed email
-const DataExchangeApproachCompletedTemplateName string = "data_exchange_approach_completed"
+// DataExchangeApproachMarkedCompleteTemplateName is the template name for the data exchange approach completed email
+const DataExchangeApproachMarkedCompleteTemplateName string = "data_exchange_approach_marked_complete"
 
-//go:embed templates/data_exchange_approach_completed_body.html
-var dataExchangeApproachCompletedBodyTemplate string
+//go:embed templates/data_exchange_approach_marked_complete_body.html
+var dataExchangeApproachMarkedCompleteBodyTemplate string
 
-//go:embed templates/data_exchange_approach_completed_subject.html
-var dataExchangeApproachCompletedSubjectTemplate string
+//go:embed templates/data_exchange_approach_marked_complete_subject.html
+var dataExchangeApproachMarkedCompleteSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -249,7 +249,7 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(DataExchangeApproachCompletedTemplateName, dataExchangeApproachCompletedSubjectTemplate, dataExchangeApproachCompletedBodyTemplate)
+	err = t.loadEmailTemplate(DataExchangeApproachMarkedCompleteTemplateName, dataExchangeApproachMarkedCompleteSubjectTemplate, dataExchangeApproachMarkedCompleteBodyTemplate)
 	if err != nil {
 		return err
 	}
