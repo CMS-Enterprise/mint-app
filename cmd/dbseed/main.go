@@ -231,6 +231,7 @@ func (s *Seeder) SeedData() {
 	// Seed a plan with Data Exchange filled out
 	planWithDataExchange := s.createModelPlan("Plan with Data Exchange", "MINT", nil)
 	s.updatePlanDataExchangeApproach(
+		s.Config.Context,
 		planWithDataExchange,
 		map[string]interface{}{
 			"dataToCollectFromParticipants":               []models.DataToCollectFromParticipants{models.DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, models.DataToCollectFromParticipantsOther},

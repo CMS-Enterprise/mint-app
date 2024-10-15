@@ -97,10 +97,7 @@ func (s *Seeder) updatePlanBasics(
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Data Exchange object with the principal value of the Model Plan's "createdBy"
 func (s *Seeder) updatePlanDataExchangeApproach(
-	// ctx context.Context,
-	// emailService oddmail.EmailService, //TODO Add these once notification is set up
-	// emailTemplateService email.TemplateService,
-	// addressBook email.AddressBook,
+	ctx context.Context,
 	mp *models.ModelPlan,
 	changes map[string]interface{},
 ) *models.PlanDataExchangeApproach {
@@ -112,11 +109,16 @@ func (s *Seeder) updatePlanDataExchangeApproach(
 	}
 
 	updated, err := resolvers.PlanDataExchangeApproachUpdate(
+		ctx,
 		s.Config.Logger,
 		dea.ID,
 		changes,
 		princ,
 		s.Config.Store,
+		// Currently hard-coding email-related args to not send emails
+		nil,
+		nil,
+		email.AddressBook{},
 	)
 	if err != nil {
 		panic(err)
