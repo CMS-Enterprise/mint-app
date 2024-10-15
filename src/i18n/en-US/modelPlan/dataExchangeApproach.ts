@@ -213,6 +213,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
       MEDICAID_CLAIMS: 'Medicaid claims',
       MEDICARE_CLAIMS: 'Medicare claims',
       PATIENT_REGISTRY: 'Patient registry',
+      OTHER: 'Other (please specify)'
+    },
+    readonlyOptions: {
       OTHER: 'Other'
     },
     parentRelation: () =>

@@ -13,12 +13,14 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   AnticipatedMultiPayerDataAvailabilityUseCase,
   DataToCollectFromParticipants,
   DataToSendToParticipants,
   GetCollectionAndAggregationQuery,
+  MultiSourceDataToCollect,
   TypedUpdateDataExchangeApproachDocument,
   useGetCollectionAndAggregationQuery
 } from 'gql/generated/graphql';
@@ -203,7 +205,11 @@ const CollectionAndAggregation = () => {
                         htmlFor={convertCamelCaseToHyphenated(
                           'anticipatedMultiPayerDataAvailabilityUseCase'
                         )}
-                        className="text-normal margin-top-4"
+                        className={classNames('text-normal margin-top-4', {
+                          'text-base': !watch(
+                            'doesNeedToMakeMultiPayerDataAvailable'
+                          )
+                        })}
                       >
                         {
                           anticipatedMultiPayerDataAvailabilityUseCaseConfig.label
@@ -215,7 +221,7 @@ const CollectionAndAggregation = () => {
                       ).map(value => (
                         <CheckboxField
                           id={`${convertCamelCaseToHyphenated(
-                            'dataToSendToParticipants'
+                            'anticipatedMultiPayerDataAvailabilityUseCase'
                           )}-${value}`}
                           name={field.name}
                           value={value}
@@ -232,10 +238,142 @@ const CollectionAndAggregation = () => {
                             anticipatedMultiPayerDataAvailabilityUseCaseConfig
                               .options[value]
                           }
+                          disabled={
+                            !watch('doesNeedToMakeMultiPayerDataAvailable')
+                          }
                         />
                       ))}
                     </FormGroup>
                   )}
+                />
+
+                <AddNoteRHF
+                  field="doesNeedToMakeMultiPayerDataAvailableNote"
+                  control={control}
+                  touched={
+                    !!touchedFields?.doesNeedToMakeMultiPayerDataAvailableNote
+                  }
+                />
+
+                <Controller
+                  name="doesNeedToCollectAndAggregateMultiSourceData"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup error={!!error}>
+                      <Label
+                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        className="maxw-none"
+                      >
+                        {
+                          doesNeedToCollectAndAggregateMultiSourceDataConfig.label
+                        }
+                      </Label>
+
+                      {getKeys(
+                        doesNeedToCollectAndAggregateMultiSourceDataConfig.options
+                      ).map(value => (
+                        <Radio
+                          {...field}
+                          key={value}
+                          id={`${convertCamelCaseToHyphenated(field.name)}-${value}`}
+                          value={value}
+                          label={
+                            doesNeedToCollectAndAggregateMultiSourceDataConfig
+                              .options[value]
+                          }
+                          checked={
+                            (field.value === true && value === 'true') ||
+                            (field.value === false && value === 'false')
+                          }
+                          onChange={() => field.onChange(value === 'true')}
+                        />
+                      ))}
+                    </FormGroup>
+                  )}
+                />
+
+                <Controller
+                  name="multiSourceDataToCollect"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup error={!!error}>
+                      <Label
+                        htmlFor={convertCamelCaseToHyphenated(
+                          'multiSourceDataToCollect'
+                        )}
+                        className={classNames('text-normal margin-top-4', {
+                          'text-base': !watch(
+                            'doesNeedToCollectAndAggregateMultiSourceData'
+                          )
+                        })}
+                      >
+                        {multiSourceDataToCollectConfig.label}
+                      </Label>
+
+                      <HelpText className="margin-top-1">
+                        {multiSourceDataToCollectConfig.sublabel}
+                      </HelpText>
+
+                      <MultiSelect
+                        {...field}
+                        id={convertCamelCaseToHyphenated(
+                          'multiSourceDataToCollect'
+                        )}
+                        ariaLabel={multiSourceDataToCollectConfig.label}
+                        options={composeMultiSelectOptions(
+                          multiSourceDataToCollectConfig.options,
+                          multiSourceDataToCollectConfig.readonlyOptions
+                        )}
+                        selectedLabel={
+                          multiSourceDataToCollectConfig.multiSelectLabel || ''
+                        }
+                        initialValues={watch('multiSourceDataToCollect')}
+                        disabled={
+                          !watch('doesNeedToCollectAndAggregateMultiSourceData')
+                        }
+                      />
+                    </FormGroup>
+                  )}
+                />
+
+                {watch('multiSourceDataToCollect').includes(
+                  MultiSourceDataToCollect.OTHER
+                ) && (
+                  <Controller
+                    name="multiSourceDataToCollectOther"
+                    control={control}
+                    render={({ field }) => (
+                      <FormGroup className="margin-bottom-3">
+                        <Label
+                          htmlFor={convertCamelCaseToHyphenated(
+                            'multiSourceDataToCollectOther'
+                          )}
+                          className="text-normal"
+                        >
+                          {dataExchangeApproachT(
+                            'multiSourceDataToCollectOther.label'
+                          )}
+                        </Label>
+
+                        <TextInput
+                          {...field}
+                          id={convertCamelCaseToHyphenated(
+                            'multiSourceDataToCollectOther'
+                          )}
+                          type="text"
+                          value={field.value || ''}
+                        />
+                      </FormGroup>
+                    )}
+                  />
+                )}
+
+                <AddNoteRHF
+                  field="doesNeedToCollectAndAggregateMultiSourceDataNote"
+                  control={control}
+                  touched={
+                    !!touchedFields?.doesNeedToCollectAndAggregateMultiSourceDataNote
+                  }
                 />
 
                 <SubmittionFooter
