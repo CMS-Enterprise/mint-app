@@ -38,7 +38,7 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-import ProviderAndSupplierModal from './_component/ProviderAndSupplierModal';
+import ProviderAndSupplierSidepanel from './_component/ProviderAndSupplierSidepanel';
 import Communication from './Communication';
 import Coordination from './Coordination';
 import ParticipantOptions from './ParticipantOptions';
@@ -127,7 +127,7 @@ export const ParticipantsAndProvidersContent = () => {
         closeModal={() => mutationError.setIsModalOpen(false)}
         url={mutationError.destinationURL}
       />
-      <ProviderAndSupplierModal
+      <ProviderAndSupplierSidepanel
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
       />

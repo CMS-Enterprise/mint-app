@@ -243,52 +243,44 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       data-testid="CardBody"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="position-relative"
+                        Go to the Strategy Refresh landing page
+                        <svg
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Go to the Strategy Refresh landing page
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
                       </button>
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="position-relative"
+                        Go to the Resources page
+                        <svg
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Go to the Resources page
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -325,28 +317,24 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       data-testid="CardBody"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="position-relative"
+                        Go to the template on SharePoint
+                        <svg
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Go to the template on SharePoint
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -703,28 +691,24 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     View the 
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                       data-testid="button"
                       type="button"
                     >
-                      <span
-                        class="position-relative"
+                      Health Equity Resources on the Quality Vertical SharePoint
+                      <svg
+                        class="usa-icon margin-left-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Health Equity Resources on the Quality Vertical SharePoint
-                        <svg
-                          class="usa-icon margin-left-05 position-absolute"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
                     </button>
                   </li>
                   <li
@@ -732,28 +716,24 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     View the 
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                       data-testid="button"
                       type="button"
                     >
-                      <span
-                        class="position-relative"
+                      CMS Framework for Health Equity
+                      <svg
+                        class="usa-icon margin-left-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        CMS Framework for Health Equity
-                        <svg
-                          class="usa-icon margin-left-05 position-absolute"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
                     </button>
                   </li>
                   <li
@@ -869,28 +849,24 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   You can view more resources by visiting the  
                   <button
-                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                    class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                     data-testid="button"
                     type="button"
                   >
-                    <span
-                      class="position-relative"
+                    Strategy Refresh Model Development Library
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      Strategy Refresh Model Development Library
-                      <svg
-                        class="usa-icon margin-left-05 position-absolute"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </span>
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
                   </button>
                   .
                 </p>
@@ -904,158 +880,134 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          2-pager repository
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            2-pager repository
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          6-pager repository
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            6-pager repository
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          ICIP repository
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            ICIP repository
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Waiver database
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Waiver database
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Model Interactions framework resource PPT
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Model Interactions framework resource PPT
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Guidance on Model Expansion and Other Opportunities for Scaling
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Guidance on Model Expansion and Other Opportunities for Scaling
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                     </ul>
@@ -1067,54 +1019,46 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Quality Design Process
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Quality Design Process
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Patient Reported Outcome Measure(PROM) strategy
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Patient Reported Outcome Measure(PROM) strategy
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                     </ul>
@@ -1126,132 +1070,112 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Quality Vertical Health Equity Resource Guide
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Quality Vertical Health Equity Resource Guide
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Implicit Bias Guide
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Implicit Bias Guide
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          HRSN Screening and Referral Implementation Guide
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            HRSN Screening and Referral Implementation Guide
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                     </ul>
@@ -1263,28 +1187,24 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                           data-testid="button"
                           type="button"
                         >
-                          <span
-                            class="position-relative"
+                          BSG Checklist
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            BSG Checklist
-                            <svg
-                              class="usa-icon margin-left-05 position-absolute"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
                         </button>
                       </li>
                       <li>
@@ -1379,84 +1299,72 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       class="padding-bottom-05"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="position-relative"
+                        AHEAD 6-page concept paper
+                        <svg
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          AHEAD 6-page concept paper
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
                       </button>
                     </li>
                     <li
                       class="padding-bottom-05"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="position-relative"
+                        Enhancing Oncology Model 6-page concept paper
+                        <svg
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Enhancing Oncology Model 6-page concept paper
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
                       </button>
                     </li>
                     <li
                       class="padding-bottom-05"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="position-relative"
+                        Making Care Primary 6-page concept paper
+                        <svg
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Making Care Primary 6-page concept paper
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
                       </button>
                     </li>
                   </ul>
@@ -1467,28 +1375,24 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   To view the links above, you will need access to the 
                   <button
-                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                    class="usa-button usa-button--unstyled margin-right-2 display-flex flex-align-center"
                     data-testid="button"
                     type="button"
                   >
-                    <span
-                      class="position-relative"
+                    Model Resources area of SharePoint
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      Model Resources area of SharePoint
-                      <svg
-                        class="usa-icon margin-left-05 position-absolute"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </span>
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>

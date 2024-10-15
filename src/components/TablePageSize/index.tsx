@@ -34,7 +34,7 @@ const TablePageSize = ({
         data-testid="table-page-size"
         name="tablePageSize"
         onChange={(e: any) => {
-          setPageSize(Number(e.target.value));
+          setPageSize(e.target.value);
         }}
         value={pageSize}
       >
