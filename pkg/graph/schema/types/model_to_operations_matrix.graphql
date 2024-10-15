@@ -1,27 +1,35 @@
-type ModelsToOperationMatrix {
-  milestones: [Milestone!]!
+type ModelsToOperationMatrix { # Added 1:1 on `type ModelPlan`
+  categories: [Category!]! # Categories is at the top level because you _can_ have empty categories
+  commonMilestones: [CommonMilestone!]!
 }
 
+# Milestone represents a Milestone that has been added to a Model Plan's MTO
 type Milestone {
   id: UUID!
-  category: Category
-  isCustom: Boolean! # Or maybe just a nullable "CommonMilestoneKey" to represent the same?
+  # category: Category
+  # subCategory: Category
+  categoryName: String
+  wasAddedFromCommonMilestoneLibrary: Boolean! # TODO: Or maybe just a nullable "CommonMilestoneKey" to represent the same?
   name: String!
   description: String!
+}
+
+# CommonMilestone represents a Milestone from the "Common Milestones" library
+# It should not be used in contexts where a milestone has been added to a Model Plan (at that point, it'll be a "Milestone", not a "CommonMilestone")
+type CommonMilestone {
+  id: UUID! # TODO Is this really needed? It might be kind of confusing to reference `id` like this
+  key: CommonMilestoneKey! # Similar to OperationalSolutionKey, enum of possible common milestones
+  name: String!
+  isAdded: Boolean! # To represent if this Common Milestone is _already_ part of the Model Plan's MTO
+  isSuggested: Boolean!
 }
 
 type Category {
   id: UUID!
   name: String!
-  subCategory: Category
+  milestones: [Milestone!]!
+  subCategories: [Category!]!
 }
-
-type CommonMilestone {
-  id: UUID!
-  key: CommonMilestoneKey! # Similar to OperationalSolutionKey, enum of possible common milestones
-  name: String!
-}
-
 
 # input ModelPlanChanges @goModel(model: "map[string]interface{}") {
 #   modelName: String
