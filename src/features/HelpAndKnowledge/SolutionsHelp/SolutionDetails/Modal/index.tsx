@@ -154,17 +154,19 @@ const SolutionDetailsModal = ({
           <GridContainer className="padding-y-6 operational-solution-modal__body">
             <Grid row>
               {!isMobile && (
-                <Grid desktop={{ col: 3 }}>
-                  <SideNav
-                    subComponents={subComponents(
-                      solution,
-                      location,
-                      closeRoute
-                    )}
-                    isHelpArticle
-                    solutionNavigation
-                    paramActive
-                  />
+                <Grid desktop={{ col: 4 }}>
+                  <div className="margin-bottom-6">
+                    <SideNav
+                      subComponents={subComponents(
+                        solution,
+                        location,
+                        closeRoute
+                      )}
+                      isHelpArticle
+                      solutionNavigation
+                      paramActive
+                    />
+                  </div>
 
                   <Contact contact={primaryContact} closeRoute={closeRoute} />
 
@@ -180,7 +182,7 @@ const SolutionDetailsModal = ({
               )}
 
               <Grid
-                desktop={{ col: 8 }}
+                desktop={{ col: 7 }}
                 className="padding-bottom-4 border-bottom-1px border-base-light desktop:border-bottom-0"
               >
                 {
