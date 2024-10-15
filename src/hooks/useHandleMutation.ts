@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
   OperationVariables,
@@ -61,11 +61,15 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [mutationUpdate] = useMutation<TData, OperationVariables>(mutation);
-
-  const update = useMemo(() => mutationUpdate, [mutationUpdate]);
+  const [update] = useMutation<TData, OperationVariables>(mutation);
 
   const { id } = config;
+
+  useEffect(() => {
+    if (destinationURL && !isModalOpen) {
+      history.push(destinationURL);
+    }
+  }, [destinationURL, history, isModalOpen]);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -111,9 +115,6 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           changes.status = sanitizeStatus(changes.status);
         }
 
-        unblock();
-        history.push(destination.pathname);
-
         update({
           variables: {
             id,
@@ -123,7 +124,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           .then(response => {
             if (!response?.errors) {
               unblock();
-              history.push(destination.pathname);
+              setDestinationURL(destination.pathname);
             }
           })
           .catch(errors => {
