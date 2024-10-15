@@ -85,7 +85,7 @@ const SolutionDetailsModal = ({
       : openedFrom
   );
 
-  const isMobile = useCheckResponsiveScreen('tablet');
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
@@ -181,7 +181,7 @@ const SolutionDetailsModal = ({
 
               <Grid
                 desktop={{ col: 8 }}
-                className="padding-bottom-4 border-bottom-1px border-base-light margin-bottom-4"
+                className="padding-bottom-4 border-bottom-1px border-base-light desktop:border-bottom-0"
               >
                 {
                   subComponents(solution, location, closeRoute)[section]
@@ -190,9 +190,16 @@ const SolutionDetailsModal = ({
               </Grid>
 
               {isMobile && (
-                <Grid desktop={{ col: 3 }}>
-                  <Contact contact={primaryContact} />
-                </Grid>
+                <>
+                  <Grid col={12}>
+                    <Contact contact={primaryContact} />
+                  </Grid>
+                  <Grid col={12}>
+                    <Alert type="info" noIcon lessPadding>
+                      {t('itLeadInfo')}
+                    </Alert>
+                  </Grid>
+                </>
               )}
             </Grid>
           </GridContainer>

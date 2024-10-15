@@ -9,7 +9,8 @@
 }
 
 .operational-solution-modal__body > .grid-row {
-  @media screen and (max-width: $desktop) {
+  gap: 2rem;
+  @media screen and (min-width: $desktop) {
     gap: 1rem;
   }
 }
