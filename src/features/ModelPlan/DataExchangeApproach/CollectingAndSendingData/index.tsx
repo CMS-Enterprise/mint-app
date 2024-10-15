@@ -3,12 +3,10 @@ import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Button,
   Fieldset,
   Form,
   FormGroup,
   Grid,
-  Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -35,7 +33,10 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
-import { composeMultiSelectOptions } from 'utils/modelPlan';
+import {
+  composeMultiSelectOptions,
+  convertCamelCaseToHyphenated
+} from 'utils/modelPlan';
 
 type CollectingAndSendingDataType =
   GetCollectingAndSendingDataQuery['modelPlan']['dataExchangeApproach'];
@@ -152,7 +153,11 @@ const CollectingAndSendingData = () => {
                   control={control}
                   render={({ field }) => (
                     <FormGroup error={!!error}>
-                      <Label htmlFor="dataToCollectFromParticipants">
+                      <Label
+                        htmlFor={convertCamelCaseToHyphenated(
+                          'dataToCollectFromParticipants'
+                        )}
+                      >
                         {dataToCollectFromParticipantsConfig.label}
                       </Label>
 
@@ -162,7 +167,9 @@ const CollectingAndSendingData = () => {
 
                       <MultiSelect
                         {...field}
-                        id={dataToCollectFromParticipantsConfig.gqlField}
+                        id={convertCamelCaseToHyphenated(
+                          'dataToCollectFromParticipants'
+                        )}
                         ariaLabel={dataToCollectFromParticipantsConfig.label}
                         options={composeMultiSelectOptions(
                           dataToCollectFromParticipantsConfig.options,
@@ -184,7 +191,7 @@ const CollectingAndSendingData = () => {
                             <FormGroup className="margin-bottom-3">
                               <CheckboxField
                                 {...field2}
-                                id={field2.name}
+                                id={`${field2.name}-true`}
                                 checked={field2.value === true}
                                 value="true"
                                 onChange={e => {
@@ -231,7 +238,9 @@ const CollectingAndSendingData = () => {
                         render={({ field }) => (
                           <FormGroup className="margin-bottom-3">
                             <Label
-                              htmlFor="dataToCollectFromParticipantsReportsDetails"
+                              htmlFor={convertCamelCaseToHyphenated(
+                                'dataToCollectFromParticipantsReportsDetails'
+                              )}
                               className="text-normal"
                             >
                               {dataExchangeApproachT(
@@ -241,7 +250,9 @@ const CollectingAndSendingData = () => {
 
                             <TextInput
                               {...field}
-                              id={field.name}
+                              id={convertCamelCaseToHyphenated(
+                                'dataToCollectFromParticipantsReportsDetails'
+                              )}
                               type="text"
                               value={field.value || ''}
                             />
@@ -299,7 +310,9 @@ const CollectingAndSendingData = () => {
                         control={control}
                         render={({ field }) => (
                           <CheckboxField
-                            id={`checkbox-${value}`}
+                            id={`${convertCamelCaseToHyphenated(
+                              'dataToSendToParticipants'
+                            )}-${value}`}
                             name={field.name}
                             value={value}
                             checked={field.value.includes(value)}

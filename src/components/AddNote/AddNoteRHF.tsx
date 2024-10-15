@@ -3,11 +3,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, FormGroup, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, useField } from 'formik';
 
-import { ErrorAlertMessage } from 'components/ErrorAlert';
-import FieldGroup from 'components/FieldGroup';
 import TextAreaField from 'components/TextAreaField';
+import { convertCamelCaseToHyphenated } from 'utils/modelPlan';
 
 type AddNoteType = {
   field: string;
@@ -61,7 +59,7 @@ const AddNoteRHF = ({
               <TextAreaField
                 {...formField}
                 value={formField.value || ''}
-                id={formField.name}
+                id={convertCamelCaseToHyphenated(formField.name)}
               />
             </FormGroup>
           )}

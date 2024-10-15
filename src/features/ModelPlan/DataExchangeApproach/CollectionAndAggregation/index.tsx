@@ -10,6 +10,7 @@ import {
   Grid,
   Icon,
   Label,
+  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
@@ -34,7 +35,11 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
-import { composeMultiSelectOptions } from 'utils/modelPlan';
+import {
+  composeMultiSelectOptions,
+  convertCamelCaseToHyphenated,
+  convertToLowercaseAndDashes
+} from 'utils/modelPlan';
 
 import SubmittionFooter from '../../../../components/SubmittionFooter';
 
@@ -151,6 +156,37 @@ const CollectionAndAggregation = () => {
 
             <Grid row gap>
               <Grid desktop={{ col: 6 }}>
+                <Controller
+                  name="doesNeedToMakeMultiPayerDataAvailable"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup error={!!error}>
+                      <Label
+                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        className="maxw-none"
+                      >
+                        {doesNeedToMakeMultiPayerDataAvailableConfig.label}
+                      </Label>
+
+                      {getKeys(
+                        doesNeedToMakeMultiPayerDataAvailableConfig.options
+                      ).map(value => (
+                        <Radio
+                          {...field}
+                          key={value}
+                          id={`${convertCamelCaseToHyphenated(field.name)}-${value}`}
+                          value={value}
+                          label={
+                            doesNeedToMakeMultiPayerDataAvailableConfig.options[
+                              value
+                            ]
+                          }
+                        />
+                      ))}
+                    </FormGroup>
+                  )}
+                />
+
                 <SubmittionFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
