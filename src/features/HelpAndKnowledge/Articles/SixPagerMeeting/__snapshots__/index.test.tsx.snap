@@ -445,7 +445,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             </li>
           </ul>
           <div
-            class="usa-alert usa-alert--info icon-padding mint-alert-slim-right flex margin-y-3"
+            class="usa-alert usa-alert--info mint-alert-slim-right flex margin-y-3"
             data-testid="alert"
           >
             <div
