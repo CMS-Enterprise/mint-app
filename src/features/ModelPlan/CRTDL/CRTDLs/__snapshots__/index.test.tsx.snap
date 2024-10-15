@@ -96,26 +96,24 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
         >
           If your model makes changes to the Medicare Fee for Service (FFS) payment systems, you will do so through Change Requests (CRs) and Technical Direction Letters (TDLs) in the 
           <button
-            class="usa-button usa-button--unstyled margin-right-0 margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-0 margin-right-2 display-flex flex-align-center"
             data-testid="button"
             type="button"
           >
-            <span>
-              Enterprise Electronic Change Information Management Portal (ECHIMP)
-              <svg
-                class="usa-icon margin-left-05 top-05"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </span>
+            Enterprise Electronic Change Information Management Portal (ECHIMP)
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
           </button>
           . MINT will automatically display ECHIMP information about CRs and TDLs associated with each model. It would be best if you worked with the Center for Medicare's Provider Billing Group (PBG) to create these. Note that the CR and TDL numbers are associated with your model to support PBG, OIT, the Medicare Administrative Contractors (MACs), and Shared System Maintainers (SSMs) who implement these changes to the FFS payment systems.
         </p>
@@ -339,26 +337,24 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     View more
                   </button>
                   <button
-                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2"
+                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2 display-flex flex-align-center"
                     data-testid="button"
                     type="button"
                   >
-                    <span>
-                      View this in ECHIMP
-                      <svg
-                        class="usa-icon margin-left-05 top-05"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </span>
+                    View this in ECHIMP
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -414,26 +410,24 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     View more
                   </button>
                   <button
-                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2"
+                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2 display-flex flex-align-center"
                     data-testid="button"
                     type="button"
                   >
-                    <span>
-                      View this in ECHIMP
-                      <svg
-                        class="usa-icon margin-left-05 top-05"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </span>
+                    View this in ECHIMP
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -466,7 +460,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                   Show 9
                 </option>
                 <option
-                  value="all"
+                  value="100000"
                 >
                   Show all
                 </option>
