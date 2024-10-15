@@ -85,7 +85,7 @@ const SolutionDetailsModal = ({
       : openedFrom
   );
 
-  const isMobile = useCheckResponsiveScreen('tablet');
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
@@ -172,7 +172,7 @@ const SolutionDetailsModal = ({
                     type="info"
                     noIcon
                     lessPadding
-                    className="margin-top-5"
+                    className="margin-top-5 margin-bottom-8"
                   >
                     {t('itLeadInfo')}
                   </Alert>

@@ -45,23 +45,25 @@ const MobileNav = ({
     <div className="read-only-model-plan__subNav-accordion">
       <button
         type="button"
-        className={`usa-menu-btn mint-header__basic width-full ${
+        className={`usa-menu-btn mint-header__basic width-full height-auto ${
           !isAccordionOpen ? 'bg-primary-dark' : 'bg-primary'
         }`}
         onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         aria-expanded={isAccordionOpen}
         aria-controls="read-only-model-plan__subNav"
       >
-        <h3 className="padding-left-1">
-          {isFilteredView
-            ? translationKey(`navigation.model-basics`)
-            : translationKey(`navigation.${subinfo}`)}
-        </h3>
-        {!isAccordionOpen ? (
-          <Icon.ExpandMore size={3} />
-        ) : (
-          <Icon.ExpandLess size={3} />
-        )}
+        <div className="display-flex flex-align-center flex-justify-center ">
+          <h3 className="padding-left-1 margin-y-2   margin-right-1">
+            {isFilteredView
+              ? translationKey(`navigation.model-basics`)
+              : translationKey(`navigation.${subinfo}`)}
+          </h3>
+          {!isAccordionOpen ? (
+            <Icon.ExpandMore size={3} />
+          ) : (
+            <Icon.ExpandLess size={3} />
+          )}
+        </div>
       </button>
       {isAccordionOpen && (
         <div
