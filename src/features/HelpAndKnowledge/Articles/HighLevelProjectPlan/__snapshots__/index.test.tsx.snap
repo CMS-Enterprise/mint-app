@@ -354,7 +354,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="cmmi-internal-clearance-process"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -594,7 +594,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. 
             </p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -755,7 +755,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       class="display-flex flex-align-center"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2"
                         data-testid="button"
                         type="button"
                       >
@@ -848,7 +848,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       class="display-flex flex-align-center"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2"
                         data-testid="button"
                         type="button"
                       >

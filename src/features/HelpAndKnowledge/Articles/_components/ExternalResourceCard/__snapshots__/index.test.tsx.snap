@@ -106,7 +106,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           data-testid="CardFooter"
         >
           <button
-            class="usa-button usa-button usa-button--outline margin-right-2 padding-right-5"
+            class="usa-button usa-button usa-button--outline margin-right-2"
             data-testid="button"
             type="button"
           >

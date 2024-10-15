@@ -20,10 +20,12 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
         data-testid="button"
         type="button"
       >
-        <span>
+        <span
+          class="position-relative"
+        >
           Enterprise Electronic Change Information Management Portal (ECHIMP)
           <svg
-            class="usa-icon margin-left-05 top-05"
+            class="usa-icon margin-left-05 position-absolute"
             focusable="false"
             height="1em"
             role="img"
@@ -282,10 +284,12 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                 data-testid="button"
                 type="button"
               >
-                <span>
+                <span
+                  class="position-relative"
+                >
                   View this in ECHIMP
                   <svg
-                    class="usa-icon margin-left-05 top-05"
+                    class="usa-icon margin-left-05 position-absolute"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -357,10 +361,12 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                 data-testid="button"
                 type="button"
               >
-                <span>
+                <span
+                  class="position-relative"
+                >
                   View this in ECHIMP
                   <svg
-                    class="usa-icon margin-left-05 top-05"
+                    class="usa-icon margin-left-05 position-absolute"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -405,7 +411,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
               Show 9
             </option>
             <option
-              value="all"
+              value="100000"
             >
               Show all
             </option>

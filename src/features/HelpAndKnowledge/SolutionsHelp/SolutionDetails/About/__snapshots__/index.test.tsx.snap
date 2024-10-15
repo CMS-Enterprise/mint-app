@@ -174,7 +174,7 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
         </h4>
         <span>
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled margin-right-2"
             data-testid="button"
             type="button"
           >
@@ -378,7 +378,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
         </h4>
         <span>
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled margin-right-2"
             data-testid="button"
             type="button"
           >
@@ -1668,7 +1668,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
       </div>
       <span>
         <button
-          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+          class="usa-button usa-button--unstyled margin-right-2"
           data-testid="button"
           type="button"
         >
@@ -1849,7 +1849,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           >
             API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a 
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -1933,7 +1933,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           class="text-pre-wrap "
         >
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled margin-right-2"
             data-testid="button"
             type="button"
           >
@@ -1978,7 +1978,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
             <span>
               Participant feedback dashboards that supply curated reports to participants based on CMS data (
               <button
-                class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                class="usa-button usa-button--unstyled margin-right-2"
                 data-testid="button"
                 type="button"
               >
@@ -2700,7 +2700,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -2728,7 +2728,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -2756,7 +2756,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -2940,7 +2940,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class=""
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3039,7 +3039,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3067,7 +3067,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3195,7 +3195,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class=""
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3373,7 +3373,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3401,7 +3401,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3556,7 +3556,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class=""
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >
@@ -3599,7 +3599,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
         </h4>
         <span>
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled margin-right-2"
             data-testid="button"
             type="button"
           >
@@ -3667,7 +3667,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
             class="list-style-none"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled margin-right-2"
               data-testid="button"
               type="button"
             >

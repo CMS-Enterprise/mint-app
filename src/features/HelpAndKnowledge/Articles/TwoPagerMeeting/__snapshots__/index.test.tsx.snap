@@ -222,7 +222,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       data-testid="CardBody"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2"
                         data-testid="button"
                         type="button"
                       >
@@ -246,7 +246,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         </span>
                       </button>
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2"
                         data-testid="button"
                         type="button"
                       >
@@ -304,7 +304,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       data-testid="CardBody"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled margin-right-2"
                         data-testid="button"
                         type="button"
                       >
@@ -365,7 +365,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               >
                 Much of the content below is also accessible in the 6-page concept paper template. 
                 <button
-                  class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                  class="usa-button usa-button--unstyled margin-right-2"
                   data-testid="button"
                   type="button"
                 >
@@ -672,7 +672,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   Visit the 
                   <button
-                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2 padding-right-5"
+                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2"
                     data-testid="button"
                     type="button"
                   >
@@ -727,7 +727,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled margin-right-2"
                       data-testid="button"
                       type="button"
                     >
@@ -755,7 +755,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled margin-right-2"
                       data-testid="button"
                       type="button"
                     >
@@ -783,7 +783,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled margin-right-2"
                       data-testid="button"
                       type="button"
                     >
@@ -811,7 +811,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled margin-right-2"
                       data-testid="button"
                       type="button"
                     >
@@ -841,7 +841,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   To view the links above, you will need access to the 
                   <button
-                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                    class="usa-button usa-button--unstyled margin-right-2"
                     data-testid="button"
                     type="button"
                   >
