@@ -365,7 +365,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
           Do you plan to develop a new validated quality measure for your model?
         </label>
         <div
-          class="usa-alert usa-alert--warning icon-padding flex it-solutions-warning"
+          class="usa-alert usa-alert--warning flex it-solutions-warning"
           data-testid="alert"
         >
           <div
