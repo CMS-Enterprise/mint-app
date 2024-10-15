@@ -1950,7 +1950,7 @@ export type PlanDataExchangeApproachChanges = {
   dataToCollectFromParticipantsNote?: InputMaybe<Scalars['String']['input']>;
   dataToCollectFromParticipantsOther?: InputMaybe<Scalars['String']['input']>;
   dataToCollectFromParticipantsReportsDetails?: InputMaybe<Scalars['String']['input']>;
-  dataToSendToParticipants: Array<DataToSendToParticipants>;
+  dataToSendToParticipants?: InputMaybe<Array<DataToSendToParticipants>>;
   dataToSendToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
   dataWillNotBeCollectedFromParticipants?: InputMaybe<Scalars['Boolean']['input']>;
   doesNeedToCollectAndAggregateMultiSourceData?: InputMaybe<Scalars['Boolean']['input']>;
