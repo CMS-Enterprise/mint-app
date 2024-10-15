@@ -7,3 +7,9 @@
         width: 100%;
       }
 }
+
+.operational-solution-modal__body > .grid-row {
+  @media screen and (max-width: $desktop) {
+    gap: 1rem;
+  }
+}

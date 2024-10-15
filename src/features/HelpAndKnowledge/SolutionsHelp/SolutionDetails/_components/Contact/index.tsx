@@ -42,7 +42,7 @@ export const Contact = ({
   };
 
   return (
-    <div className="point-of-contact margin-top-6">
+    <div className="point-of-contact">
       <p className="font-body-xs margin-top-0 margin-bottom-3">
         {t('contact')}
       </p>

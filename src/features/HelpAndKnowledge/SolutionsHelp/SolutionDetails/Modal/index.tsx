@@ -151,8 +151,8 @@ const SolutionDetailsModal = ({
             />
           )}
 
-          <GridContainer className="padding-y-6 margin-left-0">
-            <Grid row gap>
+          <GridContainer className="padding-y-6 operational-solution-modal__body">
+            <Grid row>
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
                   <SideNav
@@ -179,14 +179,15 @@ const SolutionDetailsModal = ({
                 </Grid>
               )}
 
-              <Grid desktop={{ col: 8 }}>
+              <Grid
+                desktop={{ col: 8 }}
+                className="padding-bottom-4 border-bottom-1px border-base-light margin-bottom-4"
+              >
                 {
                   subComponents(solution, location, closeRoute)[section]
                     ?.component
                 }
               </Grid>
-
-              <Grid desktop={{ col: 1 }} />
 
               {isMobile && (
                 <Grid desktop={{ col: 3 }}>
