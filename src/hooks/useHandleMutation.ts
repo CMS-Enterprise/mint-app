@@ -36,6 +36,7 @@ type ModalConfigType = {
 
 type MutationReturnType = {
   mutationError: ModalConfigType;
+  loading: boolean;
 };
 
 /**
@@ -61,7 +62,9 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [update] = useMutation<TData, OperationVariables>(mutation);
+  const [update, { loading }] = useMutation<TData, OperationVariables>(
+    mutation
+  );
 
   const { id } = config;
 
@@ -147,7 +150,8 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   }, [history, id, update, isModalOpen, setIsModalOpen, pathname, config]);
 
   return {
-    mutationError: { isModalOpen, setIsModalOpen, destinationURL }
+    mutationError: { isModalOpen, setIsModalOpen, destinationURL },
+    loading
   };
 }
 

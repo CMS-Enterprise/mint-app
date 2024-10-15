@@ -15,6 +15,7 @@ import {
 } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
+  AnticipatedMultiPayerDataAvailabilityUseCase,
   DataToCollectFromParticipants,
   DataToSendToParticipants,
   GetCollectionAndAggregationQuery,
@@ -103,16 +104,17 @@ const CollectionAndAggregation = () => {
     formState: { touchedFields }
   } = methods;
 
-  const { mutationError } = useHandleMutation<CollectionAndAggregationType>(
-    TypedUpdateDataExchangeApproachDocument,
-    {
-      id,
-      rhfRef: {
-        initialValues: defaultValues,
-        values: watch()
+  const { mutationError, loading: isSubmitting } =
+    useHandleMutation<CollectionAndAggregationType>(
+      TypedUpdateDataExchangeApproachDocument,
+      {
+        id,
+        rhfRef: {
+          initialValues: defaultValues,
+          values: watch()
+        }
       }
-    }
-  );
+    );
 
   useEffect(() => {
     reset(
@@ -181,6 +183,55 @@ const CollectionAndAggregation = () => {
                               value
                             ]
                           }
+                          checked={
+                            (field.value === true && value === 'true') ||
+                            (field.value === false && value === 'false')
+                          }
+                          onChange={() => field.onChange(value === 'true')}
+                        />
+                      ))}
+                    </FormGroup>
+                  )}
+                />
+
+                <Controller
+                  name="anticipatedMultiPayerDataAvailabilityUseCase"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup>
+                      <Label
+                        htmlFor={convertCamelCaseToHyphenated(
+                          'anticipatedMultiPayerDataAvailabilityUseCase'
+                        )}
+                        className="text-normal margin-top-4"
+                      >
+                        {
+                          anticipatedMultiPayerDataAvailabilityUseCaseConfig.label
+                        }
+                      </Label>
+
+                      {getKeys(
+                        anticipatedMultiPayerDataAvailabilityUseCaseConfig.options
+                      ).map(value => (
+                        <CheckboxField
+                          id={`${convertCamelCaseToHyphenated(
+                            'dataToSendToParticipants'
+                          )}-${value}`}
+                          name={field.name}
+                          value={value}
+                          checked={field.value.includes(value)}
+                          onBlur={field.onBlur}
+                          onChange={e => {
+                            onChangeCheckboxHandler<AnticipatedMultiPayerDataAvailabilityUseCase>(
+                              e.target
+                                .value as AnticipatedMultiPayerDataAvailabilityUseCase,
+                              field
+                            );
+                          }}
+                          label={
+                            anticipatedMultiPayerDataAvailabilityUseCaseConfig
+                              .options[value]
+                          }
                         />
                       ))}
                     </FormGroup>
@@ -192,6 +243,7 @@ const CollectionAndAggregation = () => {
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`}
                   nextPage
+                  disabled={isSubmitting}
                 />
               </Grid>
             </Grid>

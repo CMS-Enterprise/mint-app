@@ -8,13 +8,15 @@ type SubmittionFooterProps = {
   homeRoute: string;
   backPage?: string;
   nextPage?: boolean;
+  disabled?: boolean;
 };
 
 const SubmittionFooter = ({
   homeArea,
   homeRoute,
   nextPage = true,
-  backPage
+  backPage,
+  disabled
 }: SubmittionFooterProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -27,6 +29,7 @@ const SubmittionFooter = ({
           <Button
             type="button"
             className="usa-button usa-button--outline"
+            disabled={disabled}
             onClick={() => {
               history.push(backPage);
             }}
@@ -35,12 +38,17 @@ const SubmittionFooter = ({
           </Button>
         )}
 
-        {nextPage && <Button type="submit">{miscellaneousT('next')}</Button>}
+        {nextPage && (
+          <Button type="submit" disabled={disabled}>
+            {miscellaneousT('next')}
+          </Button>
+        )}
       </div>
 
       <Button
         type="button"
         className="usa-button usa-button--unstyled"
+        disabled={disabled}
         onClick={() => history.push(homeRoute)}
       >
         <Icon.ArrowBack className="margin-right-1" aria-hidden />

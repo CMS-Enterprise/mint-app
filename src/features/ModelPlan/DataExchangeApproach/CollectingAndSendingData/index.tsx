@@ -95,16 +95,17 @@ const CollectingAndSendingData = () => {
     formState: { touchedFields }
   } = methods;
 
-  const { mutationError } = useHandleMutation<CollectingAndSendingDataType>(
-    TypedUpdateDataExchangeApproachDocument,
-    {
-      id,
-      rhfRef: {
-        initialValues: defaultValues,
-        values: watch()
+  const { mutationError, loading: isSubmitting } =
+    useHandleMutation<CollectingAndSendingDataType>(
+      TypedUpdateDataExchangeApproachDocument,
+      {
+        id,
+        rhfRef: {
+          initialValues: defaultValues,
+          values: watch()
+        }
       }
-    }
-  );
+    );
 
   useEffect(() => {
     reset(
@@ -297,18 +298,21 @@ const CollectingAndSendingData = () => {
                   touched={!!touchedFields?.dataToCollectFromParticipantsNote}
                 />
 
-                <FormGroup>
-                  <Label htmlFor="dataToSendToParticipants">
-                    {dataToSendToParticipantsConfig.label}
-                  </Label>
+                <Controller
+                  name="dataToSendToParticipants"
+                  control={control}
+                  render={({ field }) => (
+                    <FormGroup>
+                      <Label
+                        htmlFor={convertCamelCaseToHyphenated(
+                          'dataToSendToParticipants'
+                        )}
+                      >
+                        {dataToSendToParticipantsConfig.label}
+                      </Label>
 
-                  {getKeys(dataToSendToParticipantsConfig.options).map(
-                    value => (
-                      <Controller
-                        key={value}
-                        name="dataToSendToParticipants"
-                        control={control}
-                        render={({ field }) => (
+                      {getKeys(dataToSendToParticipantsConfig.options).map(
+                        value => (
                           <CheckboxField
                             id={`${convertCamelCaseToHyphenated(
                               'dataToSendToParticipants'
@@ -335,11 +339,11 @@ const CollectingAndSendingData = () => {
                               value !== 'DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS'
                             }
                           />
-                        )}
-                      />
-                    )
+                        )
+                      )}
+                    </FormGroup>
                   )}
-                </FormGroup>
+                />
 
                 <AddNoteRHF
                   field="dataToSendToParticipantsNote"
@@ -352,6 +356,7 @@ const CollectingAndSendingData = () => {
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`}
                   nextPage
+                  disabled={isSubmitting}
                 />
               </Grid>
             </Grid>
