@@ -22,9 +22,9 @@ type PlanDataExchangeApproach struct {
 	DataToSendToParticipantsNote *string        `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
 
 	// Page 3
-	DoesNeedToMakeMultiPayerDataAvailable        *bool                                         `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available" statusWeight:"1"`
-	AnticipatedMultiPayerDataAvailabilityUseCase *AnticipatedMultiPayerDataAvailabilityUseCase `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
-	DoesNeedToMakeMultiPayerDataAvailableNote    *string                                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
+	DoesNeedToMakeMultiPayerDataAvailable        *bool          `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available" statusWeight:"1"`
+	AnticipatedMultiPayerDataAvailabilityUseCase pq.StringArray `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
+	DoesNeedToMakeMultiPayerDataAvailableNote    *string        `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
 
 	DoesNeedToCollectAndAggregateMultiSourceData     *bool          `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data" statusWeight:"1"`
 	MultiSourceDataToCollect                         pq.StringArray `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`

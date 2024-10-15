@@ -34,7 +34,7 @@ func main() {
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, templateService, addressBook)
-	sendDataExchangeApproachCompletedEmailNotificationTest(emailService, templateService, addressBook)
+	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, templateService, addressBook)
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
 
@@ -397,7 +397,7 @@ func sendCollaboratorAddedEmailTest(
 	noErr(err)
 }
 
-func sendDataExchangeApproachCompletedEmailNotificationTest(
+func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -408,7 +408,7 @@ func sendDataExchangeApproachCompletedEmailNotificationTest(
 		"Retcon Plan",
 	)
 
-	err := resolvers.SendDataExchangeApproachCompletedEmailNotification(
+	err := resolvers.SendDataExchangeApproachMarkedCompleteEmailNotification(
 		emailService,
 		templateService,
 		addressBook,

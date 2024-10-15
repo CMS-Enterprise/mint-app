@@ -19,7 +19,17 @@ func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, i
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return PlanDataExchangeApproachUpdate(logger, id, changes, principal, r.store)
+	return PlanDataExchangeApproachUpdate(
+		ctx,
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+	)
 }
 
 // DataToCollectFromParticipants is the resolver for the dataToCollectFromParticipants field.
@@ -30,6 +40,11 @@ func (r *planDataExchangeApproachResolver) DataToCollectFromParticipants(ctx con
 // DataToSendToParticipants is the resolver for the dataToSendToParticipants field.
 func (r *planDataExchangeApproachResolver) DataToSendToParticipants(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.DataToSendToParticipants, error) {
 	return models.ConvertEnums[models.DataToSendToParticipants](obj.DataToSendToParticipants), nil
+}
+
+// AnticipatedMultiPayerDataAvailabilityUseCase is the resolver for the anticipatedMultiPayerDataAvailabilityUseCase field.
+func (r *planDataExchangeApproachResolver) AnticipatedMultiPayerDataAvailabilityUseCase(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.AnticipatedMultiPayerDataAvailabilityUseCase, error) {
+	return models.ConvertEnums[models.AnticipatedMultiPayerDataAvailabilityUseCase](obj.AnticipatedMultiPayerDataAvailabilityUseCase), nil
 }
 
 // MultiSourceDataToCollect is the resolver for the multiSourceDataToCollect field.

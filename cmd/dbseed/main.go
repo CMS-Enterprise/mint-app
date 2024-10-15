@@ -228,6 +228,40 @@ func (s *Seeder) SeedData() {
 		},
 	)
 
+	// Seed a plan with Data Exchange filled out
+	planWithDataExchange := s.createModelPlan("Plan with Data Exchange", "MINT", nil)
+	s.updatePlanDataExchangeApproach(
+		s.Config.Context,
+		planWithDataExchange,
+		map[string]interface{}{
+			"dataToCollectFromParticipants":               []models.DataToCollectFromParticipants{models.DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, models.DataToCollectFromParticipantsOther},
+			"dataToCollectFromParticipantsReportsDetails": "collecting data from participants is hard",
+			"dataToCollectFromParticipantsOther":          "some other way of collecting participant data",
+			"dataWillNotBeCollectedFromParticipants":      false,
+			"dataToCollectFromParticipantsNote":           "we are going to collect so much data",
+
+			"dataToSendToParticipants":     []models.DataToSendToParticipants{models.DataToSendToParticipantsDataFeedbackDashboard},
+			"dataToSendToParticipantsNote": "we will send a ton of data with a feedback dashboard",
+
+			"doesNeedToMakeMultiPayerDataAvailable":        true,
+			"anticipatedMultiPayerDataAvailabilityUseCase": []models.AnticipatedMultiPayerDataAvailabilityUseCase{models.AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports},
+			"doesNeedToMakeMultiPayerDataAvailableNote":    "we will fill gaps in care alerting and reports with such vigor that you've never seen before",
+
+			"doesNeedToCollectAndAggregateMultiSourceData":     true,
+			"multiSourceDataToCollect":                         []models.MultiSourceDataToCollect{models.MultiSourceDataToCollectCommercialClaims, models.MultiSourceDataToCollectLabData, models.MultiSourceDataToCollectOther},
+			"multiSourceDataToCollectOther":                    "we will also collect data about their favorite video games",
+			"doesNeedToCollectAndAggregateMultiSourceDataNote": "we have lots of multi-data sources, FYI",
+
+			"willImplementNewDataExchangeMethods": true,
+			"newDataExchangeMethodsDescription":   "use google forms",
+			"newDataExchangeMethodsNote":          "my boss hates google forms but I will use it anyways",
+
+			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits",
+
+			"isDataExchangeApproachComplete": true,
+		},
+	)
+
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT", nil)
 	s.addPlanCollaborator(
@@ -441,7 +475,7 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
-			"clearanceStarts": time.Now().AddDate(0, 3, 0),
+			"clearanceStarts": now.AddDate(0, 3, 0),
 			"highLevelNote":   "Some high level note",
 		},
 	)
@@ -461,7 +495,7 @@ func (s *Seeder) SeedData() {
 	// Use a test user to mark the data exchange approach as complete
 	testUser := s.getTestPrincipalByUsername("BTAL")
 
-	err = resolvers.SendDataExchangeApproachCompletedNotification(
+	err = resolvers.SendDataExchangeApproachMarkedCompleteNotification(
 		s.Config.Context,
 		s.Config.EmailService,
 		s.Config.EmailTemplateService,
