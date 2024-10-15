@@ -100,7 +100,8 @@
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
     "generate": "graphql-codegen --config ./src/config/codegen.ts",
     "storybook": "storybook dev -p 6006 -s public",
-    "build-storybook": "storybook build -s public"
+    "build-storybook": "storybook build -s public",
+    "mappings:export": "ts-node ./mappings/export/exportTranslation.ts"
   },
   "nyc": {
     "reporter": [

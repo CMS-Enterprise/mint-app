@@ -60,7 +60,8 @@ export const unneededFields: string[] = [
   'tooltips',
   'optionsRelatedInfo',
   'disconnectedChildren',
-  'disconnectedLabel'
+  'disconnectedLabel',
+  'modalLink'
 ];
 
 // Removes fields from export that are not needed by BE

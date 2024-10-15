@@ -222,14 +222,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       data-testid="CardBody"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2"
+                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                         data-testid="button"
                         type="button"
                       >
-                        <span>
+                        <span
+                          class="position-relative"
+                        >
                           Go to the Strategy Refresh landing page
                           <svg
-                            class="usa-icon margin-left-05 top-05"
+                            class="usa-icon margin-left-05 position-absolute"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -244,14 +246,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         </span>
                       </button>
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2"
+                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                         data-testid="button"
                         type="button"
                       >
-                        <span>
+                        <span
+                          class="position-relative"
+                        >
                           Go to the Resources page
                           <svg
-                            class="usa-icon margin-left-05 top-05"
+                            class="usa-icon margin-left-05 position-absolute"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -300,14 +304,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       data-testid="CardBody"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2"
+                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                         data-testid="button"
                         type="button"
                       >
-                        <span>
+                        <span
+                          class="position-relative"
+                        >
                           Go to the template on SharePoint
                           <svg
-                            class="usa-icon margin-left-05 top-05"
+                            class="usa-icon margin-left-05 position-absolute"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -359,14 +365,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               >
                 Much of the content below is also accessible in the 6-page concept paper template. 
                 <button
-                  class="usa-button usa-button--unstyled margin-right-2"
+                  class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                   data-testid="button"
                   type="button"
                 >
-                  <span>
+                  <span
+                    class="position-relative"
+                  >
                     Download it from the Strategy Refresh SharePoint site
                     <svg
-                      class="usa-icon margin-left-05 top-05"
+                      class="usa-icon margin-left-05 position-absolute"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -664,14 +672,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   Visit the 
                   <button
-                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2"
+                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2 padding-right-5"
                     data-testid="button"
                     type="button"
                   >
-                    <span>
+                    <span
+                      class="position-relative"
+                    >
                       Strategy Refresh SharePoint site
                       <svg
-                        class="usa-icon margin-left-05 top-05"
+                        class="usa-icon margin-left-05 position-absolute"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -717,14 +727,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2"
+                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                       data-testid="button"
                       type="button"
                     >
-                      <span>
+                      <span
+                        class="position-relative"
+                      >
                         AHEAD 2-page concept paper
                         <svg
-                          class="usa-icon margin-left-05 top-05"
+                          class="usa-icon margin-left-05 position-absolute"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -743,14 +755,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2"
+                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                       data-testid="button"
                       type="button"
                     >
-                      <span>
+                      <span
+                        class="position-relative"
+                      >
                         Enhancing Oncology Model 2-page concept paper
                         <svg
-                          class="usa-icon margin-left-05 top-05"
+                          class="usa-icon margin-left-05 position-absolute"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -769,14 +783,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2"
+                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                       data-testid="button"
                       type="button"
                     >
-                      <span>
+                      <span
+                        class="position-relative"
+                      >
                         Innovation in Behavioral Health 2-pager concept paper
                         <svg
-                          class="usa-icon margin-left-05 top-05"
+                          class="usa-icon margin-left-05 position-absolute"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -795,14 +811,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2"
+                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                       data-testid="button"
                       type="button"
                     >
-                      <span>
+                      <span
+                        class="position-relative"
+                      >
                         Making Care Primary 2-pager concept paper
                         <svg
-                          class="usa-icon margin-left-05 top-05"
+                          class="usa-icon margin-left-05 position-absolute"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -823,14 +841,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   To view the links above, you will need access to the 
                   <button
-                    class="usa-button usa-button--unstyled margin-right-2"
+                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
                     data-testid="button"
                     type="button"
                   >
-                    <span>
+                    <span
+                      class="position-relative"
+                    >
                       Model Resources area of SharePoint.
                       <svg
-                        class="usa-icon margin-left-05 top-05"
+                        class="usa-icon margin-left-05 position-absolute"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -1497,7 +1517,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           class="usa-link"
           href="/help-and-knowledge/articles"
         >
-          View all help articles
+          View all help resources
         </a>
       </div>
     </div>
