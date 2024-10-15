@@ -4562,7 +4562,7 @@ export type GetCollectionAndAggregationQueryVariables = Exact<{
 }>;
 
 
-export type GetCollectionAndAggregationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, doesNeedToMakeMultiPayerDataAvailable?: boolean | null, anticipatedMultiPayerDataAvailabilityUseCase?: AnticipatedMultiPayerDataAvailabilityUseCase | null, doesNeedToMakeMultiPayerDataAvailableNote?: string | null, doesNeedToCollectAndAggregateMultiSourceData?: boolean | null, multiSourceDataToCollect: Array<MultiSourceDataToCollect>, multiSourceDataToCollectOther?: string | null, doesNeedToCollectAndAggregateMultiSourceDataNote?: string | null } } };
+export type GetCollectionAndAggregationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, doesNeedToMakeMultiPayerDataAvailable?: boolean | null, anticipatedMultiPayerDataAvailabilityUseCase: Array<AnticipatedMultiPayerDataAvailabilityUseCase>, doesNeedToMakeMultiPayerDataAvailableNote?: string | null, doesNeedToCollectAndAggregateMultiSourceData?: boolean | null, multiSourceDataToCollect: Array<MultiSourceDataToCollect>, multiSourceDataToCollectOther?: string | null, doesNeedToCollectAndAggregateMultiSourceDataNote?: string | null } } };
 
 export type UpdateDataExchangeApproachMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
