@@ -13,7 +13,7 @@ type TablePageSizeProps = {
 const Option = ({ value }: { value: number | 'all' }) => {
   const { t } = useTranslation('systemProfile');
   return (
-    <option value={value}>
+    <option value={value === 'all' ? 100000 : value}>
       {t('tableAndPagination:pageSize:show', { value })}
     </option>
   );

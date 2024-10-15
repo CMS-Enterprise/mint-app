@@ -93,7 +93,7 @@ const ExternalLink = ({
         >
           <span>
             {children}
-            <Icon.Launch className="margin-left-05 top-05" />
+            <Icon.Launch className="margin-left-05 top-2px" />
           </span>
         </span>
       ) : (
@@ -105,9 +105,9 @@ const ExternalLink = ({
             setIsModalOpen(true);
           }}
         >
-          <span>
+          <span className="position-relative">
             {children}
-            <Icon.Launch className="margin-left-05 top-05" />
+            <Icon.Launch className="margin-left-05 position-absolute" />
           </span>
         </Button>
       )}

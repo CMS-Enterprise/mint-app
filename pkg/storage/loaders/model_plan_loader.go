@@ -2,10 +2,8 @@ package loaders
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -27,38 +25,18 @@ var ModelPlan = &modelPlanLoaders{
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
 	logger := appcontext.ZLogger(ctx)
-	output := make([]*dataloader.Result[*models.ModelPlan], len(modelPlanIDs))
 	loaders, err := Loaders(ctx)
 	if err != nil {
-		//TODO: (loaders) make this a helper function to return an error per result
-		for index := range modelPlanIDs {
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err}
-		}
-		return output
+		return errorPerEachKey[uuid.UUID, *models.ModelPlan](modelPlanIDs, err)
 	}
 
 	data, err := storage.ModelPlansGetByModePlanIDsLOADER(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
-		//TODO: (loaders) make this a helper function to return an error per result
-		for index := range modelPlanIDs {
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err}
-		}
-		return output
+		return errorPerEachKey[uuid.UUID, *models.ModelPlan](modelPlanIDs, err)
 	}
-	planByID := lo.Associate(data, func(plan *models.ModelPlan) (uuid.UUID, *models.ModelPlan) {
-		return plan.ID, plan
-	})
-
-	// RETURN IN THE SAME ORDER REQUESTED
-	for index, id := range modelPlanIDs {
-
-		plan, ok := planByID[id]
-		if ok {
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: plan, Error: nil}
-		} else {
-			err2 := fmt.Errorf("model plan not found for modelPlanID id %s", id)
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err2}
-		}
+	getKeyFunc := func(modelPlan *models.ModelPlan) uuid.UUID {
+		return modelPlan.ID
 	}
-	return output
+
+	return oneToOneDataLoaderFunc(modelPlanIDs, data, getKeyFunc)
 }
