@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -10,16 +11,16 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
-import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
-import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { getKeys } from 'types/translation';
 import { tArray, tObject } from 'utils/translation';
@@ -47,6 +48,17 @@ type StepThreeListType = {
 
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
+
+  const location = useLocation();
+
+  const [initLocation] = useState<string>(location.pathname);
+
+  const { prevPathname, selectedSolution, renderModal, loading } =
+    useModalSolutionState(OperationalSolutionKey.LDG);
+
+  const ldgRoute = `${initLocation}${location.search}${
+    location.search ? '&' : '?'
+  }solution=learning-and-diffusion-group&section=about`;
 
   const summaryboxListItems: string[] = tArray(
     'twoPageMeeting:summaryBox.list'
@@ -92,25 +104,20 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:about.stepThree.list'
   );
 
-  const { helpSolutions } = useHelpSolution();
-  const { prevPathname, selectedSolution: solution } =
-    useModalSolutionState(null);
-
-  // Solution to render in modal
-  const selectedSolution = findSolutionByRouteParam(
-    solution?.route || null,
-    helpSolutions
-  );
+  if (loading) {
+    return <PageLoading />;
+  }
 
   return (
     <>
-      {selectedSolution && (
+      {renderModal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
-          closeRoute="help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
+          closeRoute="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
         />
       )}
+
       <MainContent>
         <GridContainer>
           <Grid>
@@ -462,7 +469,7 @@ const TwoPagerMeeting = () => {
                         ml: (
                           <UswdsReactLink
                             className="usa-button usa-button--unstyled"
-                            to="?solution=learning-and-diffusion-group&section=about"
+                            to={ldgRoute}
                           >
                             {k}
                           </UswdsReactLink>
