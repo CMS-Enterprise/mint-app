@@ -1,0 +1,52 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The TruncatedText component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="truncated-text"
+  >
+    <span
+      class="display-block"
+      id="test"
+    >
+      <div
+        class="tiptap__readonly"
+        id="mention-test"
+      >
+        <div
+          class="tiptap ProseMirror"
+          contenteditable="false"
+          id="mention-test"
+          translate="no"
+        >
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing ...
+          </p>
+        </div>
+      </div>
+    </span>
+    <button
+      aria-controls="test"
+      aria-expanded="true"
+      class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
+      data-testid="button"
+      type="button"
+    >
+      Read more
+      <svg
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+        />
+      </svg>
+    </button>
+  </div>
+</DocumentFragment>
+`;
