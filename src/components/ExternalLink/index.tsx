@@ -79,7 +79,7 @@ const ExternalLink = ({
 
       {inlineText ? (
         <span
-          className={classNames(className, 'usa-link pointer margin-right-05')}
+          className={classNames(className, 'usa-link pointer')}
           role="button"
           tabIndex={0}
           onClick={() => {
@@ -100,16 +100,18 @@ const ExternalLink = ({
         <Button
           type="button"
           unstyled={!asButton}
-          className={classNames(
-            className,
-            'margin-right-2 display-flex flex-align-center'
-          )}
+          className={classNames(className)}
           onClick={() => {
             setIsModalOpen(true);
           }}
         >
-          {children}
-          <Icon.Launch className="margin-left-05" />
+          <span
+            className="display-flex flex-align-center"
+            style={{ columnGap: '0.25rem' }}
+          >
+            {children}
+            <Icon.Launch />
+          </span>
         </Button>
       )}
     </>

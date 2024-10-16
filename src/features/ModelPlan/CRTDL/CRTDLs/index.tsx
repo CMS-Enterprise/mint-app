@@ -57,7 +57,7 @@ export const CRTDLs = () => {
               components={{
                 el: (
                   <ExternalLink
-                    className="margin-right-0"
+                    inlineText
                     href={import.meta.env.VITE_ECHIMP_URL}
                     toEchimp
                   >
