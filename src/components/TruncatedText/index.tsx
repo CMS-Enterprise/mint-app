@@ -27,6 +27,7 @@ const TruncatedText = ({
   const [needsTruncation, setNeedsTruncation] = useState(false); // State for tracking truncation
 
   // Function to check if the text is clamped
+  // https://stackoverflow.com/questions/52169520/how-can-i-check-whether-line-clamp-is-enabled
   const isTextClamped = (elm: HTMLElement | null): boolean =>
     !!elm && elm.scrollHeight > elm.clientHeight;
 
@@ -43,7 +44,7 @@ const TruncatedText = ({
       (!!lineClamp && isTextClamped(elm));
 
     setNeedsTruncation(truncationNeeded);
-  }, [charLimit, lineClamp, text]); // Dependencies ensure the effect runs when these values change
+  }, [charLimit, lineClamp, text]);
 
   // If text is under character limit, return full text
   // Otherwise truncate text to character limit
