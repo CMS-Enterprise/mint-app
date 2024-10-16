@@ -153,7 +153,7 @@ const CollectingAndSendingData = () => {
                   name="dataToCollectFromParticipants"
                   control={control}
                   render={({ field }) => (
-                    <FormGroup error={!!error}>
+                    <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(
                           'dataToCollectFromParticipants'

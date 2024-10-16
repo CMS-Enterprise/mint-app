@@ -291,14 +291,14 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     gqlField: 'isDataExchangeApproachComplete',
     goField: 'IsDataExchangeApproachComplete',
     dbField: 'is_data_exchange_approach_complete',
-    label: 'This data exchange approach is complete.',
+    label: 'Data exchange approach status',
     sublabel:
       'This will alert interested parties about your data exchange approach. You can still edit this after it’s marked complete.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
     order: 3.07,
     options: {
-      true: 'Yes',
+      true: 'This data exchange approach is complete.',
       false: 'No'
     }
   },
@@ -374,8 +374,23 @@ export const dataExchangeApproachMisc = {
     dataSpecific: 'Data-specific questions'
   },
   collectionAndAggregation: {
-    heading: 'Multi-payer data and multi-source collection and aggregation ',
+    heading: 'Multi-payer data and multi-source collection and aggregation',
     dataSpecific: 'Data-specific questions'
+  },
+  newMethodologiesAndConsiderations: {
+    heading: 'New methodologies and additional considerations',
+    dataSpecific: 'Data-specific questions',
+    additionalDetails: {
+      heading: 'Additional details',
+      examplesInclude: 'Examples of novel data exchange methodologies include:',
+      examples: [
+        '<link1>Privacy-preserving record linkage (PPRL) [cdcfoundation.org]<link1>',
+        'Utilizing the <link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]<link1>',
+        'Enabling an additional data stream not previously used at CMMI'
+      ]
+    },
+    alert:
+      'Once you feel your data exchange approach is in a good place, update the status to "Complete" below, and someone from BSG will contact you to discuss it.'
   }
 };
 

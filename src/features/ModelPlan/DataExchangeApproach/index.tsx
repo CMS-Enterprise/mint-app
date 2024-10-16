@@ -12,6 +12,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import AboutCompletingDataExchange from './AboutCompletingDataExchange';
 import CollectingAndSendingData from './CollectingAndSendingData';
 import CollectionAndAggregation from './CollectionAndAggregation';
+import NewMethodologiesAndConsiderations from './NewMethologiesAndConsiderations';
 
 const DataEchangeApproach = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
@@ -66,6 +67,12 @@ const DataEchangeApproach = () => {
         <ProtectedRoute
           path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
           component={CollectionAndAggregation}
+          exact
+        />
+
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations"
+          component={NewMethodologiesAndConsiderations}
           exact
         />
 

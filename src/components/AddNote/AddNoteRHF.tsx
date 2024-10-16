@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Button, FormGroup, Icon } from '@trussworks/react-uswds';
+import { Button, FormGroup, Icon, Label } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import TextAreaField from 'components/TextAreaField';
@@ -56,6 +56,10 @@ const AddNoteRHF = ({
           control={control}
           render={({ field: { ref, ...formField }, fieldState: { error } }) => (
             <FormGroup error={!!error}>
+              <Label htmlFor={convertCamelCaseToHyphenated(formField.name)}>
+                {t('Notes')}
+              </Label>
+
               <TextAreaField
                 {...formField}
                 value={formField.value || ''}

@@ -147,7 +147,7 @@ const CollectionAndAggregation = () => {
 
       <FormProvider {...methods}>
         <Form
-          id="new-methodologies-and-additional-considerations-form"
+          id="collection-and-aggregation-form"
           onSubmit={handleSubmit(() => {
             history.push(
               `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
@@ -164,7 +164,7 @@ const CollectionAndAggregation = () => {
                   name="doesNeedToMakeMultiPayerDataAvailable"
                   control={control}
                   render={({ field }) => (
-                    <FormGroup error={!!error}>
+                    <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}
                         className="maxw-none"
@@ -259,7 +259,7 @@ const CollectionAndAggregation = () => {
                   name="doesNeedToCollectAndAggregateMultiSourceData"
                   control={control}
                   render={({ field }) => (
-                    <FormGroup error={!!error}>
+                    <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}
                         className="maxw-none"
@@ -296,7 +296,7 @@ const CollectionAndAggregation = () => {
                   name="multiSourceDataToCollect"
                   control={control}
                   render={({ field }) => (
-                    <FormGroup error={!!error}>
+                    <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(
                           'multiSourceDataToCollect'
@@ -362,6 +362,11 @@ const CollectionAndAggregation = () => {
                           )}
                           type="text"
                           value={field.value || ''}
+                          disabled={
+                            !watch(
+                              'doesNeedToCollectAndAggregateMultiSourceData'
+                            )
+                          }
                         />
                       </FormGroup>
                     )}
