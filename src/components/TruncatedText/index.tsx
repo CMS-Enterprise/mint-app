@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-// This component takes free form text and a character limit and
-// will return the whole text until it reaches the character limit, once
-// it is over the character limit the text will be truncated and a
-// button to expand / unexpand the text will be provided if the user
-// desires to see the entire text
 import MentionTextArea from 'components/MentionTextArea';
 
 import './index.scss';
@@ -28,20 +23,27 @@ const TruncatedText = ({
   lineClamp
 }: TruncatedTextProps) => {
   const { t: generalT } = useTranslation('general');
-
   const [isOpen, setOpen] = useState(true);
+  const [needsTruncation, setNeedsTruncation] = useState(false); // State for tracking truncation
 
-  const elm = document.querySelector('.line-clamped .tiptap');
-  const isTextClamped = elm => elm?.scrollHeight > elm?.clientHeight;
-
-  const needsTruncation: boolean =
-    (!!charLimit && text.length > charLimit) ||
-    (!!lineClamp && isTextClamped(elm));
-
-  console.log(isTextClamped(elm));
+  // Function to check if the text is clamped
+  const isTextClamped = (elm: HTMLElement | null): boolean =>
+    !!elm && elm.scrollHeight > elm.clientHeight;
 
   // Function to apply the --line-clamp CSS variable
-  const setLineClampVariable = (number: number) => ({ '--line-clamp': number });
+  const setLineClampVariable = (number: number) => ({
+    '--line-clamp': !isOpen ? 'none' : number
+  });
+
+  // Effect to check for truncation on load
+  useEffect(() => {
+    const elm = document.querySelector('.line-clamped .tiptap') as HTMLElement;
+    const truncationNeeded =
+      (!!charLimit && text.length > charLimit) ||
+      (!!lineClamp && isTextClamped(elm));
+
+    setNeedsTruncation(truncationNeeded);
+  }, [charLimit, lineClamp, text]); // Dependencies ensure the effect runs when these values change
 
   // If text is under character limit, return full text
   // Otherwise truncate text to character limit
@@ -63,7 +65,7 @@ const TruncatedText = ({
           id={`mention-${id}`}
           editable={false}
           initialContent={isOpen ? startOfText : text}
-          className="line-clamped"
+          className={lineClamp ? 'line-clamped' : ''}
         />
       </span>
       {needsTruncation && (
