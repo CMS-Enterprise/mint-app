@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const FormPageHeader = ({
+const FormHeader = ({
   header,
   currentPage,
   totalPages
@@ -25,4 +25,4 @@ const FormPageHeader = ({
   );
 };
 
-export default FormPageHeader;
+export default FormHeader;

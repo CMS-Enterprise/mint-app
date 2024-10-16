@@ -22,12 +22,12 @@ import {
 import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
-import FormPageHeader from 'components/FormPageHeader';
+import FormFooter from 'components/FormFooter';
+import FormHeader from 'components/FormHeader';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
-import SubmittionFooter from 'components/SubmittionFooter';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -128,7 +128,7 @@ const CollectingAndSendingData = () => {
         url={mutationError.destinationURL}
       />
 
-      <FormPageHeader
+      <FormHeader
         header={dataExchangeApproachMiscT('collectingAndSendingData.heading')}
         currentPage={2}
         totalPages={4}
@@ -169,6 +169,9 @@ const CollectingAndSendingData = () => {
                       <MultiSelect
                         {...field}
                         id={convertCamelCaseToHyphenated(
+                          'dataToCollectFromParticipants'
+                        )}
+                        inputId={convertCamelCaseToHyphenated(
                           'dataToCollectFromParticipants'
                         )}
                         ariaLabel={dataToCollectFromParticipantsConfig.label}
@@ -351,7 +354,7 @@ const CollectingAndSendingData = () => {
                   touched={!!touchedFields?.dataToSendToParticipantsNote}
                 />
 
-                <SubmittionFooter
+                <FormFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`}

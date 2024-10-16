@@ -24,7 +24,7 @@ import {
 import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
-import FormPageHeader from 'components/FormPageHeader';
+import FormHeader from 'components/FormHeader';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -39,7 +39,7 @@ import {
   convertCamelCaseToHyphenated
 } from 'utils/modelPlan';
 
-import SubmittionFooter from '../../../../components/SubmittionFooter';
+import FormFooter from '../../../../components/FormFooter';
 
 type CollectionAndAggregationType =
   GetCollectionAndAggregationQuery['modelPlan']['dataExchangeApproach'];
@@ -133,7 +133,7 @@ const CollectionAndAggregation = () => {
         url={mutationError.destinationURL}
       />
 
-      <FormPageHeader
+      <FormHeader
         header={dataExchangeApproachMiscT('collectionAndAggregation.heading')}
         currentPage={3}
         totalPages={4}
@@ -375,7 +375,7 @@ const CollectionAndAggregation = () => {
                   }
                 />
 
-                <SubmittionFooter
+                <FormFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`}

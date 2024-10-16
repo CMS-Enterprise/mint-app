@@ -1,0 +1,539 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TestComponent > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="margin-bottom-2 line-height-normal"
+  >
+    <h2
+      class="margin-0 margin-right-2 display-inline"
+    >
+      Collecting and sending data
+    </h2>
+    <div
+      class="mint-body-large text-base display-inline"
+    >
+      (Page 2 of 4)
+    </div>
+  </div>
+  <form
+    class="usa-form maxw-none"
+    data-testid="form"
+    id="collect-and-send-data-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="usa-form-group"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="data-to-collect-from-participants"
+            >
+              What data will you collect from participants?
+            </label>
+            <div
+              class="mint-help-text margin-top-1"
+            >
+              Please select all that apply. Depending on your selections, there may be follow-up questions.
+            </div>
+            <div>
+              <div
+                class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                id="data-to-collect-from-participants"
+              >
+                <span
+                  class="css-1f43avz-a11yText-A11yText"
+                  id="react-select-2-live-region"
+                />
+                <span
+                  aria-atomic="false"
+                  aria-live="polite"
+                  aria-relevant="additions text"
+                  class="css-1f43avz-a11yText-A11yText"
+                  role="log"
+                />
+                <div
+                  class=" css-1vl89cy-control"
+                >
+                  <div
+                    class=" css-1fdsijx-ValueContainer"
+                  >
+                    <div
+                      class=" css-1jqq78o-placeholder"
+                      id="react-select-2-placeholder"
+                    >
+                      2 selected
+                    </div>
+                    <div
+                      class=" css-qbdosj-Input"
+                      data-value=""
+                    >
+                      <input
+                        aria-activedescendant=""
+                        aria-autocomplete="list"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-label="What data will you collect from participants?"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        autocorrect="off"
+                        class=""
+                        id="data-to-collect-from-participants"
+                        role="combobox"
+                        spellcheck="false"
+                        style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        tabindex="0"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class=" css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <button
+                      aria-label="Clear selection"
+                      class="usa-button--unstyled"
+                      id="clear-selection"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <div
+                        aria-hidden="true"
+                        class=" css-1h8bgg-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                    <span
+                      class=" css-16b81-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class=" css-gjng1h-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-tj5bde-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <input
+                    name="dataToCollectFromParticipants"
+                    type="hidden"
+                    value="REPORTS_FROM_PARTICIPANTS"
+                  />
+                  <input
+                    name="dataToCollectFromParticipants"
+                    type="hidden"
+                    value="OTHER"
+                  />
+                </div>
+              </div>
+              <div
+                class="usa-form-group margin-bottom-3"
+                data-testid="formGroup"
+              >
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="dataWillNotBeCollectedFromParticipants-true"
+                    name="dataWillNotBeCollectedFromParticipants"
+                    type="checkbox"
+                    value="true"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="dataWillNotBeCollectedFromParticipants-true"
+                  >
+                    Data will not be collected from participants
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+              </div>
+              <div
+                class="easi-multiselect--selected"
+              >
+                <h4
+                  class="text-normal margin-bottom-1"
+                >
+                  Selected data types
+                </h4>
+                <ul
+                  class="usa-list--unstyled"
+                  id="data-to-collect-from-participants-tags"
+                >
+                  <li
+                    class="margin-bottom-05 margin-right-05 display-inline-block"
+                  >
+                    <span
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      data-testid="multiselect-tag--Reports from participants (please specify)"
+                      id="selected-REPORTS_FROM_PARTICIPANTS"
+                    >
+                      Reports from participants 
+                      <svg
+                        aria-label="Remove Reports from participants (please specify)"
+                        class="usa-icon margin-left-05"
+                        focusable="false"
+                        height="1em"
+                        role="button"
+                        tabindex="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                        />
+                      </svg>
+                    </span>
+                  </li>
+                  <li
+                    class="margin-bottom-05 margin-right-05 display-inline-block"
+                  >
+                    <span
+                      class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                      data-testid="multiselect-tag--Other (please specify)"
+                      id="selected-OTHER"
+                    >
+                      Other 
+                      <svg
+                        aria-label="Remove Other (please specify)"
+                        class="usa-icon margin-left-05"
+                        focusable="false"
+                        height="1em"
+                        role="button"
+                        tabindex="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                        />
+                      </svg>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <p
+            class="text-bold margin-y-3"
+          >
+            Data-specific questions
+          </p>
+          <div
+            class="usa-form-group margin-bottom-3"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label text-normal"
+              data-testid="label"
+              for="data-to-collect-from-participants-reports-details"
+            >
+              Please specify what reports you’ll collect from participants.
+            </label>
+            <input
+              class="usa-input"
+              data-testid="textInput"
+              id="data-to-collect-from-participants-reports-details"
+              name="dataToCollectFromParticipantsReportsDetails"
+              type="text"
+              value="report details"
+            />
+          </div>
+          <div
+            class="usa-form-group"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label text-normal"
+              data-testid="label"
+              for="dataToCollectFromParticipantsOther"
+            >
+              Please specify what other data you’ll collect from participants.
+            </label>
+            <input
+              class="usa-input"
+              data-testid="textInput"
+              id="dataToCollectFromParticipantsOther"
+              name="dataToCollectFromParticipantsOther"
+              type="text"
+              value="other note"
+            />
+          </div>
+          <div
+            class="margin-top-3 margin-bottom-6"
+          >
+            <div
+              class="usa-form-group"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="data-to-collect-from-participants-note"
+              >
+                Notes
+              </label>
+              <textarea
+                aria-labelledby="label-data-to-collect-from-participants-note hint-data-to-collect-from-participants-note"
+                class="usa-textarea"
+                id="data-to-collect-from-participants-note"
+                name="dataToCollectFromParticipantsNote"
+              >
+                collect note
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="data-to-send-to-participants"
+            >
+              What data will you send to participants?
+            </label>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="data-to-send-to-participants-DATA_FEEDBACK_DASHBOARD"
+                name="dataToSendToParticipants"
+                type="checkbox"
+                value="DATA_FEEDBACK_DASHBOARD"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="data-to-send-to-participants-DATA_FEEDBACK_DASHBOARD"
+              >
+                Data feedback dashboard
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="data-to-send-to-participants-NON_CLAIMS_BASED_PAYMENTS"
+                name="dataToSendToParticipants"
+                type="checkbox"
+                value="NON_CLAIMS_BASED_PAYMENTS"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="data-to-send-to-participants-NON_CLAIMS_BASED_PAYMENTS"
+              >
+                Non-claims based payments
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="data-to-send-to-participants-OPERATIONS_DATA"
+                name="dataToSendToParticipants"
+                type="checkbox"
+                value="OPERATIONS_DATA"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="data-to-send-to-participants-OPERATIONS_DATA"
+              >
+                Operations data
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="data-to-send-to-participants-PARTIALLY_ADJUSTED_CLAIMS_DATA"
+                name="dataToSendToParticipants"
+                type="checkbox"
+                value="PARTIALLY_ADJUSTED_CLAIMS_DATA"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="data-to-send-to-participants-PARTIALLY_ADJUSTED_CLAIMS_DATA"
+              >
+                Partially adjudicated claims data
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="data-to-send-to-participants-RAW_CLAIMS_DATA"
+                name="dataToSendToParticipants"
+                type="checkbox"
+                value="RAW_CLAIMS_DATA"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="data-to-send-to-participants-RAW_CLAIMS_DATA"
+              >
+                Raw claims data
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="data-to-send-to-participants-DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS"
+                name="dataToSendToParticipants"
+                type="checkbox"
+                value="DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="data-to-send-to-participants-DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS"
+              >
+                Data will not be sent to participants
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+          </div>
+          <div
+            class="margin-top-3 margin-bottom-6"
+          >
+            <div
+              class="usa-form-group"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="data-to-send-to-participants-note"
+              >
+                Notes
+              </label>
+              <textarea
+                aria-labelledby="label-data-to-send-to-participants-note hint-data-to-send-to-participants-note"
+                class="usa-textarea"
+                id="data-to-send-to-participants-note"
+                name="dataToSendToParticipantsNote"
+              >
+                send note
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-2 display-flex"
+          >
+            <button
+              class="usa-button usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Next
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to model collaboration area
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 2 of 4
+    </span>
+  </div>
+</DocumentFragment>
+`;

@@ -23,7 +23,7 @@ import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import ExternalLink from 'components/ExternalLink';
-import FormPageHeader from 'components/FormPageHeader';
+import FormHeader from 'components/FormHeader';
 import HelpText from 'components/HelpText';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
@@ -34,7 +34,7 @@ import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToHyphenated } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
-import SubmittionFooter from '../../../../components/SubmittionFooter';
+import FormFooter from '../../../../components/FormFooter';
 
 type NewMethodologiesAndConsiderationsType =
   GetNewMethodologiesAndConsiderationsQuery['modelPlan']['dataExchangeApproach'];
@@ -169,7 +169,7 @@ const NewMethodologiesAndConsiderations = () => {
         url={mutationError.destinationURL}
       />
 
-      <FormPageHeader
+      <FormHeader
         header={dataExchangeApproachMiscT(
           'newMethodologiesAndConsiderations.heading'
         )}
@@ -334,7 +334,7 @@ const NewMethodologiesAndConsiderations = () => {
                   )}
                 />
 
-                <SubmittionFooter
+                <FormFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`}

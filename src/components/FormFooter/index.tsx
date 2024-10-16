@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 
-type SubmittionFooterProps = {
+type FormFooterProps = {
   homeArea: string;
   homeRoute: string;
   backPage?: string;
@@ -11,7 +11,7 @@ type SubmittionFooterProps = {
   disabled?: boolean;
 };
 
-const SubmittionFooter = ({
+const FormFooter = ({
   homeArea,
   homeRoute,
   nextPage = true,
@@ -59,4 +59,4 @@ const SubmittionFooter = ({
   );
 };
 
-export default SubmittionFooter;
+export default FormFooter;

@@ -301,7 +301,7 @@ const MultiSelect = ({
         controlShouldRenderValue={false}
         placeholder={`${selected.length} selected`}
         styles={customStyles}
-        aria-labelledby={ariaLabel}
+        aria-label={ariaLabel}
         isDisabled={disabled}
       />
 
