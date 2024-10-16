@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 // This component takes free form text and a character limit and
 // will return the whole text until it reaches the character limit, once
@@ -9,24 +10,38 @@ import { Button, Icon } from '@trussworks/react-uswds';
 // desires to see the entire text
 import MentionTextArea from 'components/MentionTextArea';
 
+import './index.scss';
+
 type TruncatedTextProps = {
   id: string;
   text: string;
-  charLimit: number;
+  charLimit?: number;
   className?: string;
+  lineClamp?: number;
 };
 
 const TruncatedText = ({
   id,
   text,
   charLimit,
-  className
+  className,
+  lineClamp
 }: TruncatedTextProps) => {
   const { t: generalT } = useTranslation('general');
 
   const [isOpen, setOpen] = useState(true);
 
-  const needsTruncation: boolean = text.length > charLimit;
+  const elm = document.querySelector('.line-clamped .tiptap');
+  const isTextClamped = elm => elm?.scrollHeight > elm?.clientHeight;
+
+  const needsTruncation: boolean =
+    (!!charLimit && text.length > charLimit) ||
+    (!!lineClamp && isTextClamped(elm));
+
+  console.log(isTextClamped(elm));
+
+  // Function to apply the --line-clamp CSS variable
+  const setLineClampVariable = (number: number) => ({ '--line-clamp': number });
 
   // If text is under character limit, return full text
   // Otherwise truncate text to character limit
@@ -35,12 +50,20 @@ const TruncatedText = ({
     : text;
 
   return (
-    <div className={className}>
+    <div
+      className={classNames('truncated-text', className)}
+      style={
+        lineClamp
+          ? (setLineClampVariable(lineClamp) as React.CSSProperties)
+          : undefined
+      }
+    >
       <span className="display-block" id={id}>
         <MentionTextArea
           id={`mention-${id}`}
           editable={false}
           initialContent={isOpen ? startOfText : text}
+          className="line-clamped"
         />
       </span>
       {needsTruncation && (
