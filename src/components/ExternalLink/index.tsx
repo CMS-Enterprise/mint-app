@@ -100,16 +100,14 @@ const ExternalLink = ({
         <Button
           type="button"
           unstyled={!asButton}
-          className={classNames(
-            className,
-            'margin-right-2 display-flex flex-align-center'
-          )}
+          className={classNames(className, 'display-flex flex-align-center')}
           onClick={() => {
             setIsModalOpen(true);
           }}
+          style={{ columnGap: '0.25rem' }}
         >
           {children}
-          <Icon.Launch className="margin-left-05" />
+          <Icon.Launch />
         </Button>
       )}
     </>
