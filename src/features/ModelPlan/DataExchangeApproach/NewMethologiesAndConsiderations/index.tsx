@@ -27,6 +27,7 @@ import FormPageHeader from 'components/FormPageHeader';
 import HelpText from 'components/HelpText';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
@@ -74,6 +75,8 @@ const NewMethodologiesAndConsiderations = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
+
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const { data, loading, error } = useGetNewMethodologiesAndConsiderationsQuery(
     {
@@ -124,6 +127,39 @@ const NewMethodologiesAndConsiderations = () => {
   if (error) {
     return <NotFound />;
   }
+
+  const AdditionalDetails = () => (
+    <div className="bg-base-lightest padding-2 padding-right-0 margin-top-3">
+      <h4 className="margin-top-0 margin-bottom-1">
+        {dataExchangeApproachMiscT(
+          'newMethodologiesAndConsiderations.additionalDetails.heading'
+        )}
+      </h4>
+
+      <p className="margin-0">
+        {dataExchangeApproachMiscT(
+          'newMethodologiesAndConsiderations.additionalDetails.examplesInclude'
+        )}
+      </p>
+
+      <ul className="margin-1 padding-x-3 padding-right-0">
+        {examplesInclude.map((example, index) => (
+          <li key={example.text} className="padding-bottom-05">
+            <Trans
+              i18nKey={`dataExchangeApproachMisc:newMethodologiesAndConsiderations.additionalDetails.examples.${index}.text`}
+              components={{
+                link1: (
+                  <ExternalLink href={example.link} inlineText>
+                    {' '}
+                  </ExternalLink>
+                )
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 
   return (
     <>
@@ -232,6 +268,8 @@ const NewMethodologiesAndConsiderations = () => {
                   touched={!!touchedFields?.newDataExchangeMethodsNote}
                 />
 
+                {isMobile && <AdditionalDetails />}
+
                 <Controller
                   name="additionalDataExchangeConsiderationsDescription"
                   control={control}
@@ -300,43 +338,16 @@ const NewMethodologiesAndConsiderations = () => {
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`}
-                  nextPage
+                  nextPage={false}
                   disabled={isSubmitting}
                 />
               </Grid>
 
-              <Grid desktop={{ col: 6 }}>
-                <div className="bg-base-lightest padding-2 padding-right-0 margin-top-3">
-                  <h4 className="margin-top-0 margin-bottom-1">
-                    {dataExchangeApproachMiscT(
-                      'newMethodologiesAndConsiderations.additionalDetails.heading'
-                    )}
-                  </h4>
-
-                  <p className="margin-0">
-                    {dataExchangeApproachMiscT(
-                      'newMethodologiesAndConsiderations.additionalDetails.examplesInclude'
-                    )}
-                  </p>
-
-                  <ul className="margin-1 padding-x-3 padding-right-0">
-                    {examplesInclude.map((example, index) => (
-                      <li key={example.text} className="padding-bottom-05">
-                        <Trans
-                          i18nKey={`dataExchangeApproachMisc:newMethodologiesAndConsiderations.additionalDetails.examples.${index}.text`}
-                          components={{
-                            link1: (
-                              <ExternalLink href={example.link} inlineText>
-                                {' '}
-                              </ExternalLink>
-                            )
-                          }}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Grid>
+              {!isMobile && (
+                <Grid desktop={{ col: 6 }}>
+                  <AdditionalDetails />
+                </Grid>
+              )}
             </Grid>
           </Fieldset>
         </Form>

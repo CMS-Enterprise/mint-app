@@ -13,9 +13,9 @@ const FormPageHeader = ({
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <div className="display-flex flex-align-center margin-bottom-2">
-      <h2 className="margin-0 margin-right-2">{header}</h2>
-      <div className="mint-body-large text-base">
+    <div className="margin-bottom-2 line-height-normal">
+      <h2 className="margin-0 margin-right-2 display-inline">{header}</h2>
+      <div className="mint-body-large text-base display-inline">
         {miscellaneousT('pageOf', {
           currentPage,
           totalPages
