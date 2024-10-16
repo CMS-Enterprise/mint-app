@@ -3,12 +3,10 @@ import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Button,
   Fieldset,
   Form,
   FormGroup,
   Grid,
-  Icon,
   Label,
   Radio,
   TextInput
@@ -17,8 +15,6 @@ import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   AnticipatedMultiPayerDataAvailabilityUseCase,
-  DataToCollectFromParticipants,
-  DataToSendToParticipants,
   GetCollectionAndAggregationQuery,
   MultiSourceDataToCollect,
   TypedUpdateDataExchangeApproachDocument,
@@ -40,8 +36,7 @@ import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import {
   composeMultiSelectOptions,
-  convertCamelCaseToHyphenated,
-  convertToLowercaseAndDashes
+  convertCamelCaseToHyphenated
 } from 'utils/modelPlan';
 
 import SubmittionFooter from '../../../../components/SubmittionFooter';
@@ -102,7 +97,6 @@ const CollectionAndAggregation = () => {
     reset,
     watch,
     handleSubmit,
-    setValue,
     formState: { touchedFields }
   } = methods;
 

@@ -374,19 +374,26 @@ export const dataExchangeApproachMisc = {
     dataSpecific: 'Data-specific questions'
   },
   collectionAndAggregation: {
-    heading: 'Multi-payer data and multi-source collection and aggregation',
-    dataSpecific: 'Data-specific questions'
+    heading: 'Multi-payer data and multi-source collection and aggregation'
   },
   newMethodologiesAndConsiderations: {
     heading: 'New methodologies and additional considerations',
-    dataSpecific: 'Data-specific questions',
     additionalDetails: {
       heading: 'Additional details',
       examplesInclude: 'Examples of novel data exchange methodologies include:',
       examples: [
-        '<link1>Privacy-preserving record linkage (PPRL) [cdcfoundation.org]<link1>',
-        'Utilizing the <link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]<link1>',
-        'Enabling an additional data stream not previously used at CMMI'
+        {
+          text: '<link1>Privacy-preserving record linkage (PPRL) [cdcfoundation.org]</link1>',
+          link: 'https://www.cdcfoundation.org/CDCFoundationPPRLSummary.pdf?inline'
+        },
+        {
+          text: 'Utilizing the <link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]</link1>',
+          link: 'https://www.healthit.gov/topic/interoperability/policy/trusted-exchange-framework-and-common-agreement-tefca'
+        },
+        {
+          text: 'Enabling an additional data stream not previously used at CMMI',
+          link: ''
+        }
       ]
     },
     alert:

@@ -1,30 +1,20 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-  Button,
   Fieldset,
   Form,
   FormGroup,
   Grid,
-  Icon,
   Label,
   Radio,
-  Textarea,
-  TextInput
+  Textarea
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
-  AnticipatedMultiPayerDataAvailabilityUseCase,
-  DataToCollectFromParticipants,
-  DataToSendToParticipants,
-  GetCollectionAndAggregationQuery,
   GetNewMethodologiesAndConsiderationsQuery,
-  MultiSourceDataToCollect,
   TypedUpdateDataExchangeApproachDocument,
-  useGetCollectionAndAggregationQuery,
   useGetNewMethodologiesAndConsiderationsQuery
 } from 'gql/generated/graphql';
 
@@ -32,22 +22,16 @@ import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import ExternalLink from 'components/ExternalLink';
 import FormPageHeader from 'components/FormPageHeader';
 import HelpText from 'components/HelpText';
-import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
-import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { Bool, getKeys } from 'types/translation';
-import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
-import {
-  composeMultiSelectOptions,
-  convertCamelCaseToHyphenated,
-  convertToLowercaseAndDashes
-} from 'utils/modelPlan';
+import { convertCamelCaseToHyphenated } from 'utils/modelPlan';
+import { tArray } from 'utils/translation';
 
 import SubmittionFooter from '../../../../components/SubmittionFooter';
 
@@ -77,11 +61,14 @@ const NewMethodologiesAndConsiderations = () => {
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
+  const examplesInclude = tArray<Record<string, string>>(
+    'dataExchangeApproachMisc:newMethodologiesAndConsiderations.additionalDetails.examples'
+  );
+
   const {
     willImplementNewDataExchangeMethods:
       willImplementNewDataExchangeMethodsConfig,
-    isDataExchangeApproachComplete: isDataExchangeApproachCompleteConfig,
-    status: statusConfig
+    isDataExchangeApproachComplete: isDataExchangeApproachCompleteConfig
   } = usePlanTranslation('dataExchangeApproach');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -110,7 +97,6 @@ const NewMethodologiesAndConsiderations = () => {
     reset,
     watch,
     handleSubmit,
-    setValue,
     formState: { touchedFields }
   } = methods;
 
@@ -302,7 +288,7 @@ const NewMethodologiesAndConsiderations = () => {
                             isDataExchangeApproachCompleteConfig.options.true
                           }
                           subLabel={
-                            isDataExchangeApproachCompleteConfig.sublabel
+                            isDataExchangeApproachCompleteConfig.sublabel || ''
                           }
                         />
                       </FormGroup>
@@ -318,12 +304,45 @@ const NewMethodologiesAndConsiderations = () => {
                   disabled={isSubmitting}
                 />
               </Grid>
+
+              <Grid desktop={{ col: 6 }}>
+                <div className="bg-base-lightest padding-2 padding-right-0 margin-top-3">
+                  <h4 className="margin-top-0 margin-bottom-1">
+                    {dataExchangeApproachMiscT(
+                      'newMethodologiesAndConsiderations.additionalDetails.heading'
+                    )}
+                  </h4>
+
+                  <p className="margin-0">
+                    {dataExchangeApproachMiscT(
+                      'newMethodologiesAndConsiderations.additionalDetails.examplesInclude'
+                    )}
+                  </p>
+
+                  <ul className="margin-1 padding-x-3 padding-right-0">
+                    {examplesInclude.map((example, index) => (
+                      <li key={example.text} className="padding-bottom-05">
+                        <Trans
+                          i18nKey={`dataExchangeApproachMisc:newMethodologiesAndConsiderations.additionalDetails.examples.${index}.text`}
+                          components={{
+                            link1: (
+                              <ExternalLink href={example.link} inlineText>
+                                {' '}
+                              </ExternalLink>
+                            )
+                          }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Grid>
             </Grid>
           </Fieldset>
         </Form>
       </FormProvider>
 
-      <PageNumber currentPage={3} totalPages={4} className="margin-y-6" />
+      <PageNumber currentPage={4} totalPages={4} className="margin-y-6" />
     </>
   );
 };
