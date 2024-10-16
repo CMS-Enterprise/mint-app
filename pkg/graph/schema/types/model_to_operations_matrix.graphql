@@ -1,17 +1,26 @@
 type ModelsToOperationMatrix { # Added 1:1 on `type ModelPlan`
   categories: [Category!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [CommonMilestone!]!
+  solutions: [Solution!]!
 }
 
 # Milestone represents a Milestone that has been added to a Model Plan's MTO
 type Milestone {
   id: UUID!
-  # category: Category
-  # subCategory: Category
-  categoryName: String
-  wasAddedFromCommonMilestoneLibrary: Boolean! # TODO: Or maybe just a nullable "CommonMilestoneKey" to represent the same?
+  addedFromMilestoneLibrary: Boolean!
   name: String!
   description: String!
+  solutions: [Solution!]!
+}
+
+# Solution represents a Solution that has been added to a Model Plan's MTO
+type Solution {
+  id: UUID!
+  relatedMilestones: [Milestone!]!
+  addedFromMilestoneLibrary: Boolean!
+  name: String!
+  description: String!
+  solutions: [Solution!]!
 }
 
 # CommonMilestone represents a Milestone from the "Common Milestones" library
@@ -22,11 +31,25 @@ type CommonMilestone {
   name: String!
   isAdded: Boolean! # To represent if this Common Milestone is _already_ part of the Model Plan's MTO
   isSuggested: Boolean!
+  commonSolutions: [CommonSolution!]!
+}
+
+type CommonSolution {
+  id: UUID! # TODO Is this really needed? It might be kind of confusing to reference `id` like this
+  key: CommonSolutionKey! # Similar to OperationalSolutionKey, enum of possible common milestones
+  name: String!
+  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO
+  isSuggested: Boolean!
 }
 
 enum CommonMilestoneKey {
   MILESTONE_A
   MILESTONE_B
+}
+
+enum CommonSolutionKey {
+  SOLUTION_ONE
+  SOLUTION_TWO
 }
 
 type Category {
