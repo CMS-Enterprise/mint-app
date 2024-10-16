@@ -6,6 +6,8 @@ import i18n from 'config/i18n';
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
 
+import properlyCapitalizeInitiator from './_utils';
+
 import './index.scss';
 
 export type CRAndTDLSidePanelProps = {
@@ -38,18 +40,6 @@ const CRAndTDLSidePanel = ({
   crSummary
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
-
-  const properlyCapitalizeInitiator = (fullName: string) => {
-    const [namePart, parenthesisPart] = fullName.split(' (');
-
-    const capitalizedName = namePart
-      .toLowerCase()
-      .replace(/\b\w/g, char => char.toUpperCase());
-
-    return parenthesisPart
-      ? `${capitalizedName} (${parenthesisPart}`
-      : capitalizedName;
-  };
 
   return (
     <GridContainer className="padding-y-5 padding-x-4 side-panel--cr-and-tdl">
