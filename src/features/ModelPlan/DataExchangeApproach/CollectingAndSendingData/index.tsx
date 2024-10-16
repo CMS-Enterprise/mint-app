@@ -152,7 +152,7 @@ const CollectingAndSendingData = () => {
                 <Controller
                   name="dataToCollectFromParticipants"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(
@@ -191,7 +191,7 @@ const CollectingAndSendingData = () => {
                         <Controller
                           name="dataWillNotBeCollectedFromParticipants"
                           control={control}
-                          render={({ field: field2 }) => (
+                          render={({ field: { ref: ref2, ...field2 } }) => (
                             <FormGroup className="margin-bottom-3">
                               <CheckboxField
                                 {...field2}
@@ -239,7 +239,7 @@ const CollectingAndSendingData = () => {
                       <Controller
                         name="dataToCollectFromParticipantsReportsDetails"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                           <FormGroup className="margin-bottom-3">
                             <Label
                               htmlFor={convertCamelCaseToHyphenated(
@@ -271,7 +271,7 @@ const CollectingAndSendingData = () => {
                       <Controller
                         name="dataToCollectFromParticipantsOther"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { ref, ...field } }) => (
                           <FormGroup>
                             <Label
                               htmlFor="dataToCollectFromParticipantsOther"
@@ -304,7 +304,7 @@ const CollectingAndSendingData = () => {
                 <Controller
                   name="dataToSendToParticipants"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(
@@ -321,6 +321,7 @@ const CollectingAndSendingData = () => {
                               'dataToSendToParticipants'
                             )}-${value}`}
                             name={field.name}
+                            key={value}
                             value={value}
                             checked={field.value.includes(value)}
                             onBlur={field.onBlur}

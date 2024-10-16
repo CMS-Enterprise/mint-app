@@ -195,7 +195,7 @@ const NewMethodologiesAndConsiderations = () => {
                 <Controller
                   name="willImplementNewDataExchangeMethods"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}
@@ -223,7 +223,7 @@ const NewMethodologiesAndConsiderations = () => {
                         <Controller
                           name="newDataExchangeMethodsDescription"
                           control={control}
-                          render={({ field: field2 }) => (
+                          render={({ field: { ref: ref2, ...field2 } }) => (
                             <FormGroup className="margin-top-105 margin-left-4">
                               <Label
                                 htmlFor={convertCamelCaseToHyphenated(
@@ -273,7 +273,7 @@ const NewMethodologiesAndConsiderations = () => {
                 <Controller
                   name="additionalDataExchangeConsiderationsDescription"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}
@@ -303,7 +303,7 @@ const NewMethodologiesAndConsiderations = () => {
                 <Controller
                   name="isDataExchangeApproachComplete"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup className="border-2px border-base-light radius-md padding-2">
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}

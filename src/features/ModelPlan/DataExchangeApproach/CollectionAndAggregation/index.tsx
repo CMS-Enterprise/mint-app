@@ -157,7 +157,7 @@ const CollectionAndAggregation = () => {
                 <Controller
                   name="doesNeedToMakeMultiPayerDataAvailable"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}
@@ -193,7 +193,7 @@ const CollectionAndAggregation = () => {
                 <Controller
                   name="anticipatedMultiPayerDataAvailabilityUseCase"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(
@@ -219,6 +219,7 @@ const CollectionAndAggregation = () => {
                           )}-${value}`}
                           name={field.name}
                           value={value}
+                          key={value}
                           checked={field.value.includes(value)}
                           onBlur={field.onBlur}
                           onChange={e => {
@@ -252,7 +253,7 @@ const CollectionAndAggregation = () => {
                 <Controller
                   name="doesNeedToCollectAndAggregateMultiSourceData"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(field.name)}
@@ -289,7 +290,7 @@ const CollectionAndAggregation = () => {
                 <Controller
                   name="multiSourceDataToCollect"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
                         htmlFor={convertCamelCaseToHyphenated(
@@ -336,7 +337,7 @@ const CollectionAndAggregation = () => {
                   <Controller
                     name="multiSourceDataToCollectOther"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-bottom-3">
                         <Label
                           htmlFor={convertCamelCaseToHyphenated(
