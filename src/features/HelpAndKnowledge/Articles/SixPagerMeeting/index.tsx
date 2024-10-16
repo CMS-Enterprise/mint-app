@@ -535,7 +535,11 @@ const SixPagerMeeting = () => {
                       i18nKey="aboutConceptPapers.example6Pager.footer"
                       t={sixPageMeetingT}
                       components={{
-                        link1: <ExternalLink href=""> </ExternalLink>
+                        link1: (
+                          <ExternalLink inlineText href="">
+                            {' '}
+                          </ExternalLink>
+                        )
                       }}
                     />
                   </CardFooter>
