@@ -29,12 +29,16 @@ type TruncatedTextProps = CharLimitProps | LineClampProps;
  * TruncatedText Component: Displays text that can either be truncated by character limit or clamped by lines.
  * It shows a "Read more" or "Read less" button depending on the state of the text visibility.
  *
+ * **Note**: You must provide either `charLimit` or `lineClamp`, but not both.
+ * The component will throw an error if both or neither are provided.
+ *
  * @component
  * @param {string} id - Unique identifier for the text block.
  * @param {string} text - The content text to be displayed.
- * @param {number} [charLimit] - Optional character limit to truncate the text.
- * @param {number} [lineClamp] - Optional line clamp to limit the number of lines shown.
+ * @param {number} [charLimit] - Optional character limit to truncate the text. Cannot be used with `lineClamp`.
+ * @param {number} [lineClamp] - Optional line clamp to limit the number of lines shown. Cannot be used with `charLimit`.
  * @param {string} [className] - Additional class names for styling.
+ * @throws Will throw an error if both `charLimit` and `lineClamp` are provided, or if neither is provided.
  * @returns {JSX.Element} The truncated text component with optional "Read more" / "Read less" functionality.
  */
 const TruncatedText = ({
