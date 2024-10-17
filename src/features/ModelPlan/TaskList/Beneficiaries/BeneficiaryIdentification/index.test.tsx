@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   BeneficiariesType,
   GetBeneficiaryIdentificationDocument,
@@ -87,6 +92,10 @@ describe('Model Plan Beneficiaries', () => {
           </Route>
         </MockedProvider>
       </MemoryRouter>
+    );
+
+    await waitForElementToBeRemoved(() =>
+      screen.getByTestId('beneficiaries-exclude-note-add-note-toggle')
     );
 
     await waitFor(() => {
