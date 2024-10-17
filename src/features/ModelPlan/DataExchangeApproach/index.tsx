@@ -34,7 +34,9 @@ const DataEchangeApproach = () => {
         ]}
       />
 
-      <h1 className="margin-bottom-0 margin-top-5">{t('heading')}</h1>
+      <h1 className="margin-bottom-0 margin-top-5 line-height-large">
+        {t('heading')}
+      </h1>
 
       <p className="mint-body-large margin-bottom-0 margin-top-05">
         {t('forModel', {

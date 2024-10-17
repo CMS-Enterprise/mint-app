@@ -58,8 +58,8 @@ export const TaskListStatusTag = ({
       tagStyle = 'bg-white border-2px text-base';
       break;
     case 'COMPLETE':
-      tagCopy = t('taskListStatus.CANNOT_START');
-      tagStyle = 'bg-white border-2px text-base';
+      tagCopy = t('taskListStatus.COMPLETE');
+      tagStyle = 'bg-success-dark text-white';
       break;
     default:
       tagCopy = '';
