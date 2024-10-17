@@ -147,9 +147,7 @@ export const ReadOnlyComponents = (
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
       helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
-      component: (
-        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
-      )
+      component: <ReadOnlyCRTDLs />
     }
   };
 };
