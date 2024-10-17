@@ -22,6 +22,7 @@ import useMessage from 'hooks/useMessage';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
+import DataExchangeApproachCard from './Cards/DataExchangeApproachCard';
 import DiscussionsCard from './Cards/DiscussionsCard';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
@@ -59,6 +60,7 @@ const CollaborationArea = () => {
     modelName,
     discussions,
     documents,
+    dataExchangeApproach,
     status,
     collaborators,
     isFavorite,
@@ -203,6 +205,11 @@ const CollaborationArea = () => {
                   <ModelPlanCard
                     modelID={modelID}
                     setStatusMessage={setStatusMessage}
+                  />
+
+                  <DataExchangeApproachCard
+                    modelID={modelID}
+                    dataExhangeApproachData={dataExchangeApproach}
                   />
                 </CardGroup>
               </Grid>

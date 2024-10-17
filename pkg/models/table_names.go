@@ -40,4 +40,5 @@ const (
 	TNUserNotification                   TableName = "user_notification"
 	TNUserNotificationPreferences        TableName = "user_notification_preferences"
 	TNUserViewCustomization              TableName = "user_view_customization"
+	TNPlanDataExchangeApproach           TableName = "plan_data_exchange_approach"
 )

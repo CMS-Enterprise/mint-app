@@ -60,6 +60,11 @@ func (r *userNotificationPreferencesResolver) DatesChanged(ctx context.Context, 
 	return obj.DatesChanged, nil
 }
 
+// DataExchangeApproachMarkedComplete is the resolver for the dataExchangeApproachMarkedComplete field.
+func (r *userNotificationPreferencesResolver) DataExchangeApproachMarkedComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.DataExchangeApproachMarkedComplete, nil
+}
+
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
 func (r *Resolver) UserNotificationPreferences() generated.UserNotificationPreferencesResolver {
 	return &userNotificationPreferencesResolver{r}

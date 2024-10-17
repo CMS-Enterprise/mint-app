@@ -1,0 +1,34 @@
+"""
+Represents plan data exchange approach translation data
+"""
+type PlanDataExchangeApproachTranslation {
+  #Page 2
+  dataToCollectFromParticipants: TranslationFieldWithOptions! @goTag(key: "db", value: "data_to_collect_from_participants")
+  dataToCollectFromParticipantsReportsDetails: TranslationField! @goTag(key: "db", value: "data_to_collect_from_participants_reports_details")
+  dataToCollectFromParticipantsOther: TranslationField! @goTag(key: "db", value: "data_to_collect_from_participants_other")
+  dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions! @goTag(key: "db", value: "data_will_not_be_collected_from_participants")
+  dataToCollectFromParticipantsNote: TranslationField! @goTag(key: "db", value: "data_to_collect_from_participants_note")
+  dataToSendToParticipants: TranslationFieldWithOptions! @goTag(key: "db", value: "data_to_send_to_participants")
+  dataToSendToParticipantsNote: TranslationField! @goTag(key: "db", value: "data_to_send_to_participants_note")
+
+  #Page 3
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available")
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "anticipated_multi_payer_data_availability_use_case")
+  doesNeedToMakeMultiPayerDataAvailableNote: TranslationField! @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available_note")
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "does_need_to_collect_and_aggregate_multi_source_data")
+  multiSourceDataToCollect: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "multi_source_data_to_collect")
+  multiSourceDataToCollectOther: TranslationField! @goTag(key: "db", value: "multi_source_data_to_collect_other")
+  doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationField! @goTag(key: "db", value: "does_need_to_collect_and_aggregate_multi_source_data_note")
+
+  # Page 4
+  willImplementNewDataExchangeMethods: TranslationFieldWithOptions! @goTag(key: "db", value: "will_implement_new_data_exchange_methods")
+  newDataExchangeMethodsDescription: TranslationField! @goTag(key: "db", value: "new_data_exchange_methods_description")
+  newDataExchangeMethodsNote: TranslationField! @goTag(key: "db", value: "new_data_exchange_methods_note")
+  additionalDataExchangeConsiderationsDescription: TranslationField! @goTag(key: "db", value: "additional_data_exchange_considerations_description")
+  isDataExchangeApproachComplete: TranslationFieldWithOptions! @goTag(key: "db", value: "is_data_exchange_approach_complete")
+
+  # Metadata fields
+  markedCompleteBy: TranslationField! @goTag(key: "db", value: "marked_complete_by")
+  markedCompleteDts: TranslationField! @goTag(key: "db", value: "marked_complete_dts")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

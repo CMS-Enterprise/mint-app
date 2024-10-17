@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
 import {
+  DataExchangeApproachStatus,
   GetModelPlanDocument,
   GetModelPlanQuery,
   ModelPhase,
@@ -101,6 +102,17 @@ const modelPlan = {
   },
   crs: [],
   tdls: [],
+  dataExchangeApproach: {
+    __typename: 'PlanDataExchangeApproach',
+    id: '123',
+    status: DataExchangeApproachStatus.IN_PROGRESS,
+    modifiedDts: '2022-05-12T15:01:39.190679Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'John Doe'
+    }
+  },
   operationalNeeds: [] as any,
   documents: [
     {
