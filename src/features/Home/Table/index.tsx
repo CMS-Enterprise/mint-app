@@ -12,7 +12,7 @@ import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import {
-  GetCrtdLsQuery,
+  GetEchimpCrandTdlQuery,
   GetModelPlansQuery,
   KeyCharacteristic,
   ModelCategory,
@@ -44,16 +44,14 @@ import './index.scss';
 type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
 type CollaboratorsType =
   GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
+type EchimpCrAndTdlsType =
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 type HomeTableTypes =
   | ViewCustomizationType.ALL_MODEL_PLANS
   | ViewCustomizationType.MODELS_WITH_CR_TDL
   | ViewCustomizationType.MY_MODEL_PLANS
   | ViewCustomizationType.FOLLOWED_MODELS;
-
-type CRTDLType =
-  | GetCrtdLsQuery['modelPlan']['crs'][0]
-  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ModelPlansTableProps = {
   id: string;
@@ -96,14 +94,9 @@ const ModelPlansTable = ({
     }
   });
 
+  // const documents = data?.modelPlan?.documents || ([] as GetDocumentType[]);
   const data = useMemo(() => {
-    const queryData = (modelPlans?.modelPlanCollection ??
-      []) as AllModelPlansType[];
-    // Combine crs and tdls into single data point for table column
-    const mergedCRTDLS = queryData.map(plan => {
-      return { ...plan, crTdls: [...(plan.crs || []), ...(plan.tdls || [])] };
-    });
-    return mergedCRTDLS;
+    return (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
   }, [modelPlans?.modelPlanCollection]);
 
   const columns = useMemo<Column<any>[]>(() => {
@@ -361,18 +354,18 @@ const ModelPlansTable = ({
         accessor: 'basics.demoCode'
       },
       crTdls: {
-        id: 'crTdls',
+        id: 'echimpCRsAndTDLs',
         Header: homeT('requestsTable.headers.crTDLs'),
-        accessor: 'crTdls',
-        Cell: ({ value }: { value: CRTDLType[] }) => {
+        accessor: 'echimpCRsAndTDLs',
+        Cell: ({ value }: { value: EchimpCrAndTdlsType[] }) => {
           if (!value || value.length === 0) {
             return <div>{homeT('requestsTable.tbd')}</div>;
           }
 
           return (
             <ul className="margin-0">
-              {value.map((crtdl: CRTDLType) => (
-                <li key={crtdl.idNumber}>{crtdl.idNumber}</li>
+              {value.map((crtdl: EchimpCrAndTdlsType) => (
+                <li key={crtdl.id}>{crtdl.id}</li>
               ))}
             </ul>
           );

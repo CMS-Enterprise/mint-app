@@ -22,6 +22,14 @@ export default gql(/* GraphQL */ `
         }
         teamRoles
       }
+      echimpCRsAndTDLs {
+        ... on EChimpCR {
+          id
+        }
+        ... on EChimpTDL {
+          id
+        }
+      }
       crs @include(if: $isMAC) {
         idNumber
       }

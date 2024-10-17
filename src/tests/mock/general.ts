@@ -48,6 +48,16 @@ const modelPlanData: GetModelPlansType = [
     },
     collaborators: [],
     discussions: [],
+    echimpCRsAndTDLs: [
+      {
+        id: '123',
+        __typename: 'EChimpCR'
+      },
+      {
+        id: '456',
+        __typename: 'EChimpTDL'
+      }
+    ],
     crs: [
       {
         __typename: 'PlanCR',
@@ -99,6 +109,16 @@ const favoritesModelPlanData: GetFavoritesType = [
       __typename: 'PlanBasics'
     },
     collaborators: [],
+    echimpCRsAndTDLs: [
+      {
+        id: '123',
+        __typename: 'EChimpCR'
+      },
+      {
+        id: '456',
+        __typename: 'EChimpTDL'
+      }
+    ],
     crs: [
       {
         __typename: 'PlanCR',

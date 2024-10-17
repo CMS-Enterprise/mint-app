@@ -5,13 +5,7 @@ import Alert from 'components/Alert';
 import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
 import ExternalLink from 'components/ExternalLink';
 
-const ReadOnlyCRTDLs = ({
-  modelID,
-  isHelpArticle
-}: {
-  modelID: string;
-  isHelpArticle?: boolean;
-}) => {
+const ReadOnlyCRTDLs = () => {
   const { t } = useTranslation('crtdlsMisc');
 
   return (
