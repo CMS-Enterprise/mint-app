@@ -25,6 +25,18 @@ interface LineClampProps extends CommonProps {
 
 type TruncatedTextProps = CharLimitProps | LineClampProps;
 
+/**
+ * TruncatedText Component: Displays text that can either be truncated by character limit or clamped by lines.
+ * It shows a "Read more" or "Read less" button depending on the state of the text visibility.
+ *
+ * @component
+ * @param {string} id - Unique identifier for the text block.
+ * @param {string} text - The content text to be displayed.
+ * @param {number} [charLimit] - Optional character limit to truncate the text.
+ * @param {number} [lineClamp] - Optional line clamp to limit the number of lines shown.
+ * @param {string} [className] - Additional class names for styling.
+ * @returns {JSX.Element} The truncated text component with optional "Read more" / "Read less" functionality.
+ */
 const TruncatedText = ({
   id,
   text,
