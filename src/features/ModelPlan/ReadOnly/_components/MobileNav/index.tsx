@@ -45,7 +45,7 @@ const MobileNav = ({
     <div className="read-only-model-plan__subNav-accordion">
       <button
         type="button"
-        className={`usa-menu-btn mint-header__basic width-full ${
+        className={`usa-menu-btn mint-header__basic width-full display-flex flex-justify flex-align-center desktop:display-none ${
           !isAccordionOpen ? 'bg-primary-dark' : 'bg-primary'
         }`}
         onClick={() => setIsAccordionOpen(!isAccordionOpen)}

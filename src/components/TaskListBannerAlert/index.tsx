@@ -33,7 +33,7 @@ const TaskListBannerAlert = () => {
     if (isTaskList && taskListRoute) {
       setBanner(
         <div className="task-list-alert" data-testid="task-list-alert">
-          <GridContainer className="padding-left-0">
+          <GridContainer>
             <Alert type="info" slim className="margin-top-0 border-0">
               {t('taskListLockBanner')}
             </Alert>
