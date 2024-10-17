@@ -62,6 +62,7 @@ const TruncatedText = ({
 
   return (
     <div
+      data-testid="truncated-text"
       className={classNames('truncated-text', className)}
       style={
         lineClamp
