@@ -56,7 +56,10 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           class="usa-card__body padding-x-0 article__body padding-top-2"
           data-testid="CardBody"
         >
-          <div>
+          <div
+            class="truncated-text"
+            data-testid="truncated-text"
+          >
             <span
               class="display-block"
               id="QUALITY_VERTICAL_HEALTH_EQUITY"
