@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, Icon, Link } from '@trussworks/react-uswds';
@@ -104,6 +104,7 @@ const AboutCompletingDataExchange = () => {
                     )}
                     conciseRoles
                     className="margin-y-05"
+                    key={collaborator.userAccount.id}
                   />
                 ))
               ) : (

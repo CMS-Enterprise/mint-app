@@ -48,7 +48,7 @@ const mock = [
   }
 ];
 
-describe('TestComponent', () => {
+describe('CollectingAndSendingData', () => {
   it('renders correctly and matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter

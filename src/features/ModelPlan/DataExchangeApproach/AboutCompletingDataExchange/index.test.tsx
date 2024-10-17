@@ -10,7 +10,7 @@ import { collaboratorsMocks } from 'tests/mock/readonly';
 
 import AboutCompletingDataExchange from '.';
 
-describe('TestComponent', () => {
+describe('AboutCompletingDataExchange', () => {
   it('renders correctly and matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
