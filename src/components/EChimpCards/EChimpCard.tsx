@@ -22,6 +22,8 @@ export type EChimpCardProps = {
   isInReadView?: boolean;
   issuedDate?: string | null;
   sensitiveFlag?: boolean | null;
+  setShowCRorTDLWithId: (id: string) => void;
+  setIsSidepanelOpen: (isOpen: boolean) => void;
 };
 
 const EChimpCard = ({
@@ -32,7 +34,9 @@ const EChimpCard = ({
   implementationDate,
   isInReadView,
   issuedDate,
-  sensitiveFlag
+  sensitiveFlag,
+  setShowCRorTDLWithId,
+  setIsSidepanelOpen
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
@@ -88,7 +92,7 @@ const EChimpCard = ({
           )}
           {issuedDate && (
             <>
-              <p className="text-bold">{crtdlsT('echimpCard.initiatedDate')}</p>
+              <p className="text-bold">{crtdlsT('echimpCard.issuedDate')}</p>
               {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
               <p>{issuedDate?.split(' ')[0]}</p>
             </>
@@ -97,7 +101,14 @@ const EChimpCard = ({
       </CardBody>
 
       <CardFooter>
-        <Button type="button" className="usa-button">
+        <Button
+          type="button"
+          className="usa-button"
+          onClick={() => {
+            setShowCRorTDLWithId(id);
+            setIsSidepanelOpen(true);
+          }}
+        >
           {crtdlsT('echimpCard.viewMore')}
         </Button>
         <ExternalLink

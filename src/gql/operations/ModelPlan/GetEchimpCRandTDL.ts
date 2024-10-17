@@ -11,6 +11,11 @@ export default gql(/* GraphQL */ `
           sensitiveFlag
           crStatus
           implementationDate
+          initiator
+          crSummary {
+            rawContent
+          }
+          relatedCrTdlNumbers
         }
         ... on EChimpTDL {
           id

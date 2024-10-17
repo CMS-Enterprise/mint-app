@@ -11,7 +11,9 @@ import {
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
+import CRAndTDLSidePanel from 'components/CRAndTDLSidePanel';
 import ExternalLink from 'components/ExternalLink';
+import Sidepanel from 'components/Sidepanel';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
@@ -114,6 +116,8 @@ const EChimpCardsTable = ({
 
   const [query, setQuery] = useState('');
   const [pageSize, setPageSize] = useState<'all' | number>(6);
+  const [isSidepanelOpen, setIsSidepanelOpen] = useState(false);
+  const [showCRorTDLWithId, setShowCRorTDLWithId] = useState('');
 
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
@@ -175,6 +179,23 @@ const EChimpCardsTable = ({
 
   return (
     <div data-testid="echimp-cr-and-tdls-table">
+      <Sidepanel
+        isOpen={isSidepanelOpen}
+        closeModal={() => setIsSidepanelOpen(false)}
+        ariaLabel={crtdlsT('echimpCard.sidepanelAriaLabel')}
+        testid="cr-and-tdl-sidepanel"
+        modalHeading={showCRorTDLWithId}
+      >
+        <CRAndTDLSidePanel
+          {...echimpItems.filter(item => item.id === showCRorTDLWithId)[0]}
+          isCR={
+            showCRorTDLWithId !== '' &&
+            isEChimpCR(
+              echimpItems.filter(item => item.id === showCRorTDLWithId)[0]
+            )
+          }
+        />
+      </Sidepanel>
       <Grid row>
         <Grid desktop={{ col: 6 }}>
           <GlobalClientFilter
@@ -222,7 +243,13 @@ const EChimpCardsTable = ({
       </Grid>
       <CardGroup>
         {currentItems.map(card => (
-          <EChimpCard key={card.id} {...card} isInReadView={isInReadView} />
+          <EChimpCard
+            key={card.id}
+            {...card}
+            isInReadView={isInReadView}
+            setShowCRorTDLWithId={setShowCRorTDLWithId}
+            setIsSidepanelOpen={setIsSidepanelOpen}
+          />
         ))}
       </CardGroup>
       <Grid row>
