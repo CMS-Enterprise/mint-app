@@ -1,9 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`The TruncatedText component > matches snapshot 1`] = `
+exports[`The TruncatedText component > matches charLimit snapshot 1`] = `
 <DocumentFragment>
   <div
     class="truncated-text"
+    data-testid="truncated-text"
   >
     <span
       class="display-block"
@@ -47,6 +48,70 @@ exports[`The TruncatedText component > matches snapshot 1`] = `
         />
       </svg>
     </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`The TruncatedText component > matches lineClamp snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="truncated-text"
+    data-testid="truncated-text"
+    style="--line-clamp: 2;"
+  >
+    <span
+      class="display-block"
+      id="test"
+    >
+      <div
+        class="line-clamped tiptap__readonly"
+        id="mention-test"
+      >
+        <div
+          class="tiptap ProseMirror"
+          contenteditable="false"
+          id="mention-test"
+          translate="no"
+        >
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus sit minima dolor asperiores pariatur deleniti blanditiis sint dolorem, laboriosam corporis labore culpa tenetur est quaerat.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
+        </div>
+      </div>
+    </span>
   </div>
 </DocumentFragment>
 `;

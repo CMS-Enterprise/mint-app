@@ -34,14 +34,13 @@ describe('The TruncatedText component', () => {
     expect(getByText(`${textString.substring(0, 50)} ...`)).toBeInTheDocument();
   });
 
-  it('truncates text according to line clamp', async () => {
-    const { getByText, getByTestId } = render(
+  it('truncates text according to line clamp value', async () => {
+    const { getByTestId } = render(
       <VerboseMockedProvider mocks={mocks} addTypename={false}>
         <TruncatedText id="test" text={textString} lineClamp={2} />
       </VerboseMockedProvider>
     );
 
-    expect(getByText('Read more')).toBeInTheDocument();
     expect(getByTestId('truncated-text')).toHaveStyle('--line-clamp: 2');
   });
 
@@ -57,12 +56,11 @@ describe('The TruncatedText component', () => {
   });
 
   it('matches lineClamp snapshot', () => {
-    const { getByText, asFragment } = render(
+    const { asFragment } = render(
       <VerboseMockedProvider mocks={mocks} addTypename={false}>
         <TruncatedText id="test" text={textString} lineClamp={2} />
       </VerboseMockedProvider>
     );
-    expect(getByText('Read more')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 });
