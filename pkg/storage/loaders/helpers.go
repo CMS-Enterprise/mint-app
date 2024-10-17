@@ -28,6 +28,9 @@ func oneToOneDataLoaderFunc[K comparable, V any](keys []K, values []V, getKey fu
 func oneToManyDataLoaderFunc[K comparable, V any, mapKey comparable](keys []K, values []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool)) []*dataloader.Result[[]V] {
 	return helpers.OneToManyFunc(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
 }
+func oneToManyDataLoaderFuncSimplified[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[[]V] {
+	return helpers.OneToManyFuncSimplified(keys, values, getKey, transformToDataLoaderResultAllowNils)
+}
 
 func errorPerEachKey[K comparable, V any](keys []K, err error) []*dataloader.Result[V] {
 	var empty V

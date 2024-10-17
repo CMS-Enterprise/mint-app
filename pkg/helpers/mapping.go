@@ -108,3 +108,24 @@ func OneToManyFunc[K comparable, V any, mapKey comparable, Output any](keys []K,
 
 	return output
 }
+
+// // func getResSimplified
+// func getResultSimplified[K comparable, V any, mapKey comparable](key K, resultMap map[mapKey][]V) ([]V, bool) {
+// 	res, ok := resultMap[key]
+// 	return res, ok
+
+// }
+
+// getResultSimplified is a standard function to get the result of a one to many map assuming a simple map operation where the map key is the same as the dataloader key
+
+func getResultSimplified[K comparable, V any](key K, resultMap map[K][]V) ([]V, bool) {
+	res, ok := resultMap[key]
+	return res, ok
+}
+
+// OneToManyFuncSimplified uses the standard OneToManyFunc, but assumes that the mapKey is the same as the dataloaderkey K.
+func OneToManyFuncSimplified[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func([]V, bool) Output) []Output {
+
+	return OneToManyFunc(keys, vals, getKey, getResultSimplified[K, V], transformOutput)
+
+}
