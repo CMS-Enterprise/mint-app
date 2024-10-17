@@ -708,6 +708,16 @@ const summaryData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
+  echimpCRsAndTDLs: [
+    {
+      __typename: 'EChimpCR',
+      id: '123'
+    },
+    {
+      __typename: 'EChimpTDL',
+      id: '456'
+    }
+  ],
   collaborators: [
     {
       userAccount: {

@@ -10,6 +10,14 @@ export default gql(/* GraphQL */ `
       modifiedDts
       status
       isFavorite
+      echimpCRsAndTDLs {
+        ... on EChimpCR {
+          id
+        }
+        ... on EChimpTDL {
+          id
+        }
+      }
       basics {
         goal
         performancePeriodStarts
