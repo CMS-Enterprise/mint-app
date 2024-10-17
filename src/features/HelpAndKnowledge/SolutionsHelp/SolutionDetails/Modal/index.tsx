@@ -85,7 +85,7 @@ const SolutionDetailsModal = ({
       : openedFrom
   );
 
-  const isMobile = useCheckResponsiveScreen('tablet');
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
@@ -151,20 +151,22 @@ const SolutionDetailsModal = ({
             />
           )}
 
-          <GridContainer className="padding-y-6 margin-left-0">
-            <Grid row gap>
+          <GridContainer className="padding-y-6 operational-solution-modal__body">
+            <Grid row>
               {!isMobile && (
-                <Grid desktop={{ col: 3 }}>
-                  <SideNav
-                    subComponents={subComponents(
-                      solution,
-                      location,
-                      closeRoute
-                    )}
-                    isHelpArticle
-                    solutionNavigation
-                    paramActive
-                  />
+                <Grid desktop={{ col: 4 }}>
+                  <div className="margin-bottom-6">
+                    <SideNav
+                      subComponents={subComponents(
+                        solution,
+                        location,
+                        closeRoute
+                      )}
+                      isHelpArticle
+                      solutionNavigation
+                      paramActive
+                    />
+                  </div>
 
                   <Contact contact={primaryContact} closeRoute={closeRoute} />
 
@@ -179,19 +181,27 @@ const SolutionDetailsModal = ({
                 </Grid>
               )}
 
-              <Grid desktop={{ col: 8 }}>
+              <Grid
+                desktop={{ col: 7 }}
+                className="padding-bottom-4 border-bottom-1px border-base-light desktop:border-bottom-0"
+              >
                 {
                   subComponents(solution, location, closeRoute)[section]
                     ?.component
                 }
               </Grid>
 
-              <Grid desktop={{ col: 1 }} />
-
               {isMobile && (
-                <Grid desktop={{ col: 3 }}>
-                  <Contact contact={primaryContact} />
-                </Grid>
+                <>
+                  <Grid col={12}>
+                    <Contact contact={primaryContact} />
+                  </Grid>
+                  <Grid col={12}>
+                    <Alert type="info" noIcon lessPadding>
+                      {t('itLeadInfo')}
+                    </Alert>
+                  </Grid>
+                </>
               )}
             </Grid>
           </GridContainer>

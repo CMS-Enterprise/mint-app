@@ -158,7 +158,7 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
         </ul>
       </div>
       <div
-        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest"
+        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest mint-body-normal"
       >
         <h4
           class="margin-top-0 margin-bottom-1"
@@ -362,7 +362,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
         </ul>
       </div>
       <div
-        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest"
+        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest mint-body-normal"
       >
         <h4
           class="margin-top-0 margin-bottom-1"
@@ -3583,7 +3583,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
         </ul>
       </div>
       <div
-        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest"
+        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest mint-body-normal"
       >
         <h4
           class="margin-top-0 margin-bottom-1"
