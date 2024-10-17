@@ -48,6 +48,14 @@ export default gql(/* GraphQL */ `
           id
         }
       }
+      echimpCRsAndTDLs {
+        ... on EChimpCR {
+          id
+        }
+        ... on EChimpTDL {
+          id
+        }
+      }
       crs @include(if: $isMAC) {
         idNumber
       }
