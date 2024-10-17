@@ -328,7 +328,10 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     class="usa-card__body padding-x-0 article__body padding-top-2"
                     data-testid="CardBody"
                   >
-                    <div>
+                    <div
+                      class="truncated-text"
+                      data-testid="truncated-text"
+                    >
                       <span
                         class="display-block"
                         id="ANNOUNCEMENT_MATERIALS"
@@ -460,7 +463,10 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     class="usa-card__body padding-x-0 article__body padding-top-2"
                     data-testid="CardBody"
                   >
-                    <div>
+                    <div
+                      class="truncated-text"
+                      data-testid="truncated-text"
+                    >
                       <span
                         class="display-block"
                         id="CMMI_CLEARANCE_SITE"
@@ -643,7 +649,10 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     class="usa-card__body padding-x-0 article__body padding-top-2"
                     data-testid="CardBody"
                   >
-                    <div>
+                    <div
+                      class="truncated-text"
+                      data-testid="truncated-text"
+                    >
                       <span
                         class="display-block"
                         id="FRAUD_AND_ABUSE_WAIVER"
@@ -826,7 +835,10 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     class="usa-card__body padding-x-0 article__body padding-top-2"
                     data-testid="CardBody"
                   >
-                    <div>
+                    <div
+                      class="truncated-text"
+                      data-testid="truncated-text"
+                    >
                       <span
                         class="display-block"
                         id="ICIP_REPOSITORY"
@@ -958,7 +970,10 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     class="usa-card__body padding-x-0 article__body padding-top-2"
                     data-testid="CardBody"
                   >
-                    <div>
+                    <div
+                      class="truncated-text"
+                      data-testid="truncated-text"
+                    >
                       <span
                         class="display-block"
                         id="IT_LEAD_TRAINING_MATERIALS"
