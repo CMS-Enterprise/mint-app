@@ -1,0 +1,166 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TestComponent > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <h2
+    class="margin-bottom-2 margin-top-7"
+  >
+    About completing the data exchange approach
+  </h2>
+  <p>
+    This set of questions aims to introduce data exchange early into model design and serve as a starting point for conversations with CMMI operational teams, recognizing that data exchange needs will evolve throughout model design and implementation. You may not be able to answer all of these questions immediately, but continuing to add and update any content as you continue iterating on your model will help with data exchange approach considerations.
+  </p>
+  <div
+    class="margin-top-3"
+  >
+    <button
+      aria-controls="complete-data-form-why"
+      aria-expanded="false"
+      class="usa-button usa-button--unstyled mint-no-print"
+      data-testid="complete-data-form-why"
+      type="button"
+    >
+      <svg
+        class="usa-icon margin-right-05"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+        />
+      </svg>
+      Why do I need to complete this form?
+    </button>
+  </div>
+  <h3
+    class="margin-top-4 margin-bottom-0"
+  >
+    Who’s involved
+  </h3>
+  <p>
+    Work with your IT Lead or a Solution Architect from the Business Services Group (BSG) to determine how you’ll exchange data so that BSG and CMMI can help with new policy or technology opportunities. Reach out to the MINT Team or BSG if your model does not have an assigned IT Lead or Solution Architect. If you have questions about this form, please reach out to William Gordon or Todd Couts.
+  </p>
+  <a
+    aria-label="Email the MINT Team"
+    class="usa-link line-height-body-5"
+    href="mailto:MINTTeam@cms.hhs.gov"
+    target="_blank"
+  >
+    Email the MINT Team
+    <svg
+      class="usa-icon margin-left-1 text-tbottom"
+      focusable="false"
+      height="1em"
+      role="img"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+      />
+    </svg>
+  </a>
+  <div
+    class="grid-row grid-gap"
+    data-testid="grid"
+  >
+    <div
+      class="tablet:grid-col-6 desktop:grid-col-6"
+      data-testid="grid"
+    >
+      <h4
+        class="margin-bottom-1"
+      >
+        Model team
+      </h4>
+      <p
+        class="margin-top-0"
+      >
+        Model leads or model team members responsible for data-centric activities should work with the IT Lead or Solution Architect to complete the questions in this approach.
+      </p>
+    </div>
+    <div
+      class="tablet:grid-col-6 desktop:grid-col-6"
+      data-testid="grid"
+    >
+      <h4
+        class="margin-bottom-1"
+      >
+        IT Lead/Solution Architect
+      </h4>
+      <div>
+        <div>
+          <p
+            class="text-italic text-base margin-top-0"
+          >
+            No IT Lead or Solution Architect assigned
+          </p>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim flex margin-top-1 text-normal"
+            data-testid="alert"
+          >
+            <div
+              class="usa-alert__body"
+            >
+              <p
+                class="usa-alert__text"
+              >
+                <span>
+                  Please contact BSG to work with a Solution Architect or assign an IT Lead.
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="margin-top-6 margin-bottom-3"
+  >
+    <button
+      class="usa-button"
+      data-testid="button"
+      type="button"
+    >
+      Next
+    </button>
+  </div>
+  <button
+    class="usa-button usa-button usa-button--unstyled"
+    data-testid="button"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      class="usa-icon margin-right-1"
+      focusable="false"
+      height="1em"
+      role="img"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+      />
+    </svg>
+    Save and return to model collaboration area
+  </button>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 1 of 4
+    </span>
+  </div>
+</DocumentFragment>
+`;
