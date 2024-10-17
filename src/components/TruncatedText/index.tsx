@@ -7,13 +7,23 @@ import MentionTextArea from 'components/MentionTextArea';
 
 import './index.scss';
 
-type TruncatedTextProps = {
+interface CommonProps {
   id: string;
   text: string;
-  charLimit?: number;
   className?: string;
-  lineClamp?: number;
-};
+}
+
+interface CharLimitProps extends CommonProps {
+  charLimit: number;
+  lineClamp?: never;
+}
+
+interface LineClampProps extends CommonProps {
+  charLimit?: never;
+  lineClamp: number;
+}
+
+type TruncatedTextProps = CharLimitProps | LineClampProps;
 
 const TruncatedText = ({
   id,
@@ -24,10 +34,9 @@ const TruncatedText = ({
 }: TruncatedTextProps) => {
   const { t: generalT } = useTranslation('general');
   const [isOpen, setOpen] = useState(true);
-  const [needsTruncation, setNeedsTruncation] = useState(false); // State for tracking truncation
+  const [needsTruncation, setNeedsTruncation] = useState(false);
 
-  // Function to check if the text is clamped
-  // https://stackoverflow.com/questions/52169520/how-can-i-check-whether-line-clamp-is-enabled
+  // Function to check if the text is clamped based on https://stackoverflow.com/questions/52169520/how-can-i-check-whether-line-clamp-is-enabled
   const isTextClamped = (elm: HTMLElement | null): boolean =>
     !!elm && elm.scrollHeight > elm.clientHeight;
 
@@ -36,7 +45,6 @@ const TruncatedText = ({
     '--line-clamp': !isOpen ? 'none' : number
   });
 
-  // Effect to check for truncation on load
   useEffect(() => {
     const elm = document.querySelector('.line-clamped .tiptap') as HTMLElement;
     const truncationNeeded =
