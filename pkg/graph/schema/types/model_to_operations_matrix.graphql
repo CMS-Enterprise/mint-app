@@ -1,87 +1,95 @@
-type ModelsToOperationMatrix { # Added 1:1 on `type ModelPlan`
+# ModelsToOperationMatrix Notes:
+# - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones oustide the scope of a Category
+type ModelsToOperationMatrix {
   categories: [Category!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [CommonMilestone!]!
-  solutions: [Solution!]!
+  solutions: [Solution!]! # Need to support solutions that _don't_ have milestones
 }
 
 # Milestone represents a Milestone that has been added to a Model Plan's MTO
 type Milestone {
+  # DB Fields
   id: UUID!
-  addedFromMilestoneLibrary: Boolean!
   name: String!
-  description: String!
+  description: String! # Not sure if this is actually needed - I think there might only be descriptions on Milestones in the library? (CommonMilestone)
+  facilitatedBy: String # TODO: Make enum for `MilestoneFacilitator` (TBD if that's the same as `SolutionFacilitator`)
+  needBy: Time
+  status: String! # TODO: Make enum for `MilestoneStatus`
+  riskIndicator: String! # TODO: Make enum for `MTORiskIndicator`
+  isDraftMilestone: Boolean!
+
+  # Custom Resolvers
+  addedFromMilestoneLibrary: Boolean!
   solutions: [Solution!]!
+  category: Category # Can be NULL if not part of a category (TODO: Unless we handle "Uncategorized" as an actual category)
+  # TODO Is ^^ confusing for fetching subcategories too? Should we just have 2 resolvers, one for `category`, one for `subcategory`?
+
 }
 
 # Solution represents a Solution that has been added to a Model Plan's MTO
 type Solution {
+  # DB Fields
   id: UUID!
-  relatedMilestones: [Milestone!]!
-  addedFromMilestoneLibrary: Boolean!
   name: String!
   description: String!
+  facilitatedBy: String # TODO: Make enum for `SolutionFacilitator` (TBD if that's the same as `MilestoneFacilitator`)
+  status: String! # TODO: Make enum for `SolutionStatus`
+  riskIndicator: String! # TODO: Make enum for `MTORiskIndicator`
+
+  # Custom Resolvers
+  relatedMilestones: [Milestone!]! # Can be empty, since you can have a solution with no milestones
+  addedFromMilestoneLibrary: Boolean! # TRUE if this is linked to a common milestone
   solutions: [Solution!]!
 }
 
 # CommonMilestone represents a Milestone from the "Common Milestones" library
 # It should not be used in contexts where a milestone has been added to a Model Plan (at that point, it'll be a "Milestone", not a "CommonMilestone")
 type CommonMilestone {
+  # DB Fields
   id: UUID! # TODO Is this really needed? It might be kind of confusing to reference `id` like this
   key: CommonMilestoneKey! # Similar to OperationalSolutionKey, enum of possible common milestones
   name: String!
+  description: String!
+
+  # Custom Resolvers
   isAdded: Boolean! # To represent if this Common Milestone is _already_ part of the Model Plan's MTO
   isSuggested: Boolean!
   commonSolutions: [CommonSolution!]!
 }
 
 type CommonSolution {
+  # DB Fields
   id: UUID! # TODO Is this really needed? It might be kind of confusing to reference `id` like this
   key: CommonSolutionKey! # Similar to OperationalSolutionKey, enum of possible common milestones
   name: String!
-  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO
+  description: String!
+
+  # Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone)
   isSuggested: Boolean!
 }
 
+# TODO Update these with real values
+# Right now, this is just a placeholder type to represent the possible common milestones
 enum CommonMilestoneKey {
   MILESTONE_A
   MILESTONE_B
 }
 
+# TODO Update these with real values
+# Right now, this is just a placeholder type to represent the possible common solutions
 enum CommonSolutionKey {
   SOLUTION_ONE
   SOLUTION_TWO
 }
 
+# TODO: Add a way to determine order of Categories and subcategories
 type Category {
-  id: UUID!
+  # DB Fields
+  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
   name: String!
+
+  # Custom Resolvers
   milestones: [Milestone!]!
   subCategories: [Category!]!
 }
-
-# input ModelPlanChanges @goModel(model: "map[string]interface{}") {
-#   modelName: String
-#   abbreviation: String
-#   someNumbers: [Int!]
-#   archived: Boolean
-#   status: ModelStatus
-# }
-
-# extend type Query {
-#   modelPlan(id: UUID!): ModelPlan!
-#   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-#   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
-#   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-# }
-
-# extend type Mutation {
-#   createModelPlan(modelName: String!): ModelPlan!
-#   @hasRole(role: MINT_USER)
-
-#   updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-#   @hasRole(role: MINT_USER)
-
-#   shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
-#   @hasRole(role: MINT_USER)
-# }
