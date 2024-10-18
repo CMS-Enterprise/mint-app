@@ -94,7 +94,6 @@ const ModelPlansTable = ({
     }
   });
 
-  // const documents = data?.modelPlan?.documents || ([] as GetDocumentType[]);
   const data = useMemo(() => {
     return (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
   }, [modelPlans?.modelPlanCollection]);
