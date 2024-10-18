@@ -34,18 +34,6 @@ const mockModel: FavoritesType = {
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
-  crs: [
-    {
-      __typename: 'PlanCR',
-      idNumber: 'CR 123'
-    }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      idNumber: 'TDL 456'
-    }
-  ],
   collaborators: [
     {
       userAccount: {
