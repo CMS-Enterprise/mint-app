@@ -46,14 +46,6 @@ export default gql(/* GraphQL */ `
         fileName
         fileType
       }
-      crs {
-        id
-        idNumber
-      }
-      tdls {
-        id
-        idNumber
-      }
       echimpCRsAndTDLs {
         ... on EChimpCR {
           id
