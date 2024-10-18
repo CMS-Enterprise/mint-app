@@ -18,6 +18,9 @@ import changeHistory from './modelPlan/changeHistory';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import crs from './modelPlan/crs';
 import crtdlsMisc from './modelPlan/crtdlsMisc';
+import dataExchangeApproach, {
+  dataExchangeApproachMisc
+} from './modelPlan/dataExchangeApproach';
 import { discussions, discussionsMisc } from './modelPlan/discussions';
 import { documents, documentsMisc } from './modelPlan/documents';
 import {
@@ -90,6 +93,8 @@ const enUS = {
   modelPlanMisc,
   basics,
   basicsMisc,
+  dataExchangeApproach,
+  dataExchangeApproachMisc,
   generalCharacteristics,
   generalCharacteristicsMisc,
   participantsAndProviders,

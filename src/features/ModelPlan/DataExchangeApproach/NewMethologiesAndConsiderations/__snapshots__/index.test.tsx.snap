@@ -1,0 +1,316 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TestComponent > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="margin-bottom-2 line-height-normal"
+  >
+    <h2
+      class="margin-0 margin-right-2 display-inline"
+    >
+      New methodologies and additional considerations
+    </h2>
+    <div
+      class="mint-body-large text-base display-inline"
+    >
+      (Page 4 of 4)
+    </div>
+  </div>
+  <form
+    class="usa-form maxw-none"
+    data-testid="form"
+    id="new-methodologies-and-additional-considerations-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="usa-form-group"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="will-implement-new-data-exchange-methods"
+            >
+              Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?
+            </label>
+            <div
+              class="mint-help-text margin-top-1"
+            >
+              If so, please describe. If you aren’t sure, it is OK to leave blank.
+            </div>
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                id="will-implement-new-data-exchange-methods-true"
+                name="willImplementNewDataExchangeMethods"
+                type="radio"
+                value="true"
+              />
+              <label
+                class="usa-radio__label"
+                for="will-implement-new-data-exchange-methods-true"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                id="will-implement-new-data-exchange-methods-false"
+                name="willImplementNewDataExchangeMethods"
+                type="radio"
+                value="false"
+              />
+              <label
+                class="usa-radio__label"
+                for="will-implement-new-data-exchange-methods-false"
+              >
+                No
+              </label>
+            </div>
+          </div>
+          <div
+            class="margin-top-3 margin-bottom-6"
+          >
+            <div
+              class="usa-form-group"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="new-data-exchange-methods-note"
+              >
+                Notes
+              </label>
+              <textarea
+                aria-labelledby="label-new-data-exchange-methods-note hint-new-data-exchange-methods-note"
+                class="usa-textarea"
+                id="new-data-exchange-methods-note"
+                name="newDataExchangeMethodsNote"
+              >
+                new data note
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="additional-data-exchange-considerations-description"
+            >
+              Please describe any additional data exchange considerations.
+            </label>
+            <textarea
+              class="usa-textarea height-card"
+              data-testid="textarea"
+              id="additional-data-exchange-considerations-description"
+              name="additionalDataExchangeConsiderationsDescription"
+            >
+              consideration desc
+            </textarea>
+          </div>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim flex margin-top-6"
+            data-testid="alert"
+          >
+            <div
+              class="usa-alert__body"
+            >
+              <p
+                class="usa-alert__text"
+              >
+                <span>
+                  Once you feel your data exchange approach is in a good place, update the status to "Complete" below, and someone from BSG will contact you to discuss it.
+                </span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="usa-form-group border-2px border-base-light radius-md padding-2"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label maxw-none text-normal"
+              data-testid="label"
+              for="is-data-exchange-approach-complete"
+            >
+              Data exchange approach status
+            </label>
+            <div
+              class="usa-form-group margin-0"
+              data-testid="formGroup"
+            >
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="isDataExchangeApproachComplete-true"
+                  name="isDataExchangeApproachComplete"
+                  type="checkbox"
+                  value="true"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="isDataExchangeApproachComplete-true"
+                >
+                  This data exchange approach is complete.
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                >
+                  This will alert interested parties about your data exchange approach. You can still edit this after it’s marked complete.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-2 display-flex"
+          >
+            <button
+              class="usa-button usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to model collaboration area
+          </button>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="bg-base-lightest padding-2 padding-right-0 margin-top-3"
+          >
+            <h4
+              class="margin-top-0 margin-bottom-1"
+            >
+              Additional details
+            </h4>
+            <p
+              class="margin-0"
+            >
+              Examples of novel data exchange methodologies include:
+            </p>
+            <ul
+              class="margin-1 padding-x-3 padding-right-0"
+            >
+              <li
+                class="padding-bottom-05"
+              >
+                <span
+                  class="usa-link pointer margin-right-05"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span>
+                    Privacy-preserving record linkage (PPRL) [cdcfoundation.org]
+                    <svg
+                      class="usa-icon margin-left-05 top-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </li>
+              <li
+                class="padding-bottom-05"
+              >
+                Utilizing the 
+                <span
+                  class="usa-link pointer margin-right-05"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span>
+                    Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]
+                    <svg
+                      class="usa-icon margin-left-05 top-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </li>
+              <li
+                class="padding-bottom-05"
+              >
+                Enabling an additional data stream not previously used at CMMI
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 4 of 4
+    </span>
+  </div>
+</DocumentFragment>
+`;

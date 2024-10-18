@@ -58,7 +58,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       CMS confidential information—for official use only—not to be disseminated.
                     </h3>
                     <div
-                      class="mint-collapsable-link"
+                      class=""
                     >
                       <button
                         aria-controls="pre-decisional-collapse"
@@ -69,7 +69,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       >
                         Read more
                         <svg
-                          class="usa-icon top-05 margin-right-05"
+                          class="usa-icon margin-right-05"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -245,7 +245,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
             class="mint-no-print"
           >
             <div
-              class="mint-collapsable-link"
+              class=""
             >
               <button
                 aria-controls="testing-model-summary--description"
@@ -256,7 +256,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
               >
                 Show model summary
                 <svg
-                  class="usa-icon top-05 margin-right-05"
+                  class="usa-icon margin-right-05"
                   focusable="false"
                   height="1em"
                   role="img"

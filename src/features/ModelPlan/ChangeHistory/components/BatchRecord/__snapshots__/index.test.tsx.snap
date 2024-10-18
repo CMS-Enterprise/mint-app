@@ -43,7 +43,7 @@ exports[`ChangeRecord > matches snapshot 1`] = `
         </li>
       </ul>
       <div
-        class="margin-left-5 mint-collapsable-link"
+        class="margin-left-5"
       >
         <button
           aria-controls="batch-record-1"
@@ -53,7 +53,7 @@ exports[`ChangeRecord > matches snapshot 1`] = `
           type="button"
         >
           <svg
-            class="usa-icon top-05 margin-right-05"
+            class="usa-icon margin-right-05"
             focusable="false"
             height="1em"
             role="img"

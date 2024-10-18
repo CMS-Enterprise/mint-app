@@ -73,33 +73,35 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
   >
     If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
   </p>
-  <div
-    class="padding-2 bg-primary-lighter"
-  >
+  <div>
     <div
-      class="display-flex"
-      data-testid="ask-a-question"
+      class="padding-2 bg-primary-lighter"
     >
-      <svg
-        class="usa-icon text-primary margin-right-1"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="display-flex"
+        data-testid="ask-a-question"
       >
-        <path
-          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
-        />
-      </svg>
-      <button
-        class="usa-button usa-button--unstyled"
-        data-testid="ask-a-question-button"
-        type="button"
-      >
-        Start a discussion
-      </button>
+        <svg
+          class="usa-icon text-primary margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+          />
+        </svg>
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="ask-a-question-button"
+          type="button"
+        >
+          Start a discussion
+        </button>
+      </div>
     </div>
   </div>
   <form

@@ -156,7 +156,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.NoError(err)
 	suite.NotNil(completeApproach)
 	if suite.NotNil(completeApproach.Status) {
-		suite.EqualValues(models.DataExchangeApproachStatusCompleted, completeApproach.Status)
+		suite.EqualValues(models.DataExchangeApproachStatusComplete, completeApproach.Status)
 
 		if suite.NotNil(completeApproach.MarkedCompleteBy) {
 			suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *completeApproach.MarkedCompleteBy)
@@ -170,7 +170,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.NotNil(neutralApproach)
 	if suite.NotNil(neutralApproach.Status) {
 		//Status should remain completed
-		suite.EqualValues(models.DataExchangeApproachStatusCompleted, neutralApproach.Status)
+		suite.EqualValues(models.DataExchangeApproachStatusComplete, neutralApproach.Status)
 	}
 	if suite.NotNil(completeApproach.MarkedCompleteBy) {
 		suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *completeApproach.MarkedCompleteBy)

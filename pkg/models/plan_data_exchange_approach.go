@@ -122,5 +122,5 @@ type DataExchangeApproachStatus string
 const (
 	DataExchangeApproachStatusReady      DataExchangeApproachStatus = "READY"
 	DataExchangeApproachStatusInProgress DataExchangeApproachStatus = "IN_PROGRESS"
-	DataExchangeApproachStatusCompleted  DataExchangeApproachStatus = "COMPLETED"
+	DataExchangeApproachStatusComplete   DataExchangeApproachStatus = "COMPLETE"
 )

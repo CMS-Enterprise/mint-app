@@ -72,15 +72,15 @@ const CollapsableLink = ({
   };
 
   const OpenCaret = horizontalCaret ? (
-    <Icon.NavigateNext className="top-05 margin-right-05" />
+    <Icon.NavigateNext className="margin-right-05" />
   ) : (
-    <Icon.ExpandMore className="top-05 margin-right-05" />
+    <Icon.ExpandMore className="margin-right-05" />
   );
 
   const DownCaret = horizontalCaret ? (
-    <Icon.ExpandMore className="top-05 margin-right-05" />
+    <Icon.ExpandMore className="margin-right-05" />
   ) : (
-    <Icon.ExpandLess className="top-05 margin-right-05" />
+    <Icon.ExpandLess className="margin-right-05" />
   );
 
   const renderCaret = () => {
@@ -110,7 +110,7 @@ const CollapsableLink = ({
     </Button>
   );
   return (
-    <div className={classNames(className, 'mint-collapsable-link')}>
+    <div className={classNames(className)}>
       {labelPosition === 'top' && collapseButton}
       {isOpen && (
         <div

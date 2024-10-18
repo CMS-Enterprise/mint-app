@@ -52,7 +52,8 @@ describe('Read Only Model Plan Summary -- Participants And Providers', () => {
     );
     await waitFor(() => {
       expect(screen.getByText('Medicaid providers')).toBeInTheDocument();
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
