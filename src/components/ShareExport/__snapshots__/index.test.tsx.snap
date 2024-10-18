@@ -1873,7 +1873,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-what-are-the-model-key-characteristics"
@@ -1883,7 +1883,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -2571,7 +2571,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-what-is-the-agreement-type"
@@ -2581,7 +2581,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -3047,7 +3047,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-who-are-the-participants"
@@ -3057,7 +3057,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -4508,7 +4508,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-will-the-providers-overlap-with-other-models"
@@ -4518,7 +4518,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -7305,7 +7305,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-bottom-3 mint-collapsable-link"
+                class="margin-bottom-3"
               >
                 <button
                   aria-controls="data-needed-for-monitoring-questions"
@@ -7315,7 +7315,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05 margin-right-05"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -9001,7 +9001,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-bottom-3 mint-collapsable-link"
+                class="margin-bottom-3"
               >
                 <button
                   aria-controls="cost-sharing-questions"
@@ -9011,7 +9011,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05 margin-right-05"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -9091,7 +9091,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-bottom-3 mint-collapsable-link"
+                class="margin-bottom-3"
               >
                 <button
                   aria-controls="cost-sharing-questions"
@@ -9101,7 +9101,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05 margin-right-05"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"

@@ -1260,5 +1260,5 @@ export enum PlanSection {
   OPERATIONAL_NEEDS = 'operationalNeeds',
   OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
-  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
+  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach'
 }

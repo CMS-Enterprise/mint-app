@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TestComponent > renders correctly and matches snapshot 1`] = `
+exports[`AboutCompletingDataExchange > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <h2
     class="margin-bottom-2 margin-top-7"
