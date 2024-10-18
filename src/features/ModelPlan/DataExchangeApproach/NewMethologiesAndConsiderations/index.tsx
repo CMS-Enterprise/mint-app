@@ -31,7 +31,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
-import { convertCamelCaseToHyphenated } from 'utils/modelPlan';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import FormFooter from '../../../../components/FormFooter';
@@ -198,7 +198,7 @@ const NewMethodologiesAndConsiderations = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        htmlFor={convertCamelCaseToKebabCase(field.name)}
                         className="maxw-none"
                       >
                         {willImplementNewDataExchangeMethodsConfig.label}
@@ -210,7 +210,7 @@ const NewMethodologiesAndConsiderations = () => {
 
                       <Radio
                         {...field}
-                        id={`${convertCamelCaseToHyphenated(field.name)}-true`}
+                        id={`${convertCamelCaseToKebabCase(field.name)}-true`}
                         value="true"
                         label={
                           willImplementNewDataExchangeMethodsConfig.options.true
@@ -226,7 +226,7 @@ const NewMethodologiesAndConsiderations = () => {
                           render={({ field: { ref: ref2, ...field2 } }) => (
                             <FormGroup className="margin-top-105 margin-left-4">
                               <Label
-                                htmlFor={convertCamelCaseToHyphenated(
+                                htmlFor={convertCamelCaseToKebabCase(
                                   field2.name
                                 )}
                                 className="maxw-none text-normal"
@@ -238,7 +238,7 @@ const NewMethodologiesAndConsiderations = () => {
 
                               <Textarea
                                 {...field2}
-                                id={convertCamelCaseToHyphenated(field2.name)}
+                                id={convertCamelCaseToKebabCase(field2.name)}
                                 value={field2.value || ''}
                                 className="height-card"
                               />
@@ -249,7 +249,7 @@ const NewMethodologiesAndConsiderations = () => {
 
                       <Radio
                         {...field}
-                        id={`${convertCamelCaseToHyphenated(field.name)}-false`}
+                        id={`${convertCamelCaseToKebabCase(field.name)}-false`}
                         value="false"
                         label={
                           willImplementNewDataExchangeMethodsConfig.options
@@ -276,7 +276,7 @@ const NewMethodologiesAndConsiderations = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        htmlFor={convertCamelCaseToKebabCase(field.name)}
                         className="maxw-none"
                       >
                         {dataExchangeApproachT(
@@ -286,7 +286,7 @@ const NewMethodologiesAndConsiderations = () => {
 
                       <Textarea
                         {...field}
-                        id={convertCamelCaseToHyphenated(field.name)}
+                        id={convertCamelCaseToKebabCase(field.name)}
                         value={field.value || ''}
                         className="height-card"
                       />
@@ -306,7 +306,7 @@ const NewMethodologiesAndConsiderations = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup className="border-2px border-base-light radius-md padding-2">
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        htmlFor={convertCamelCaseToKebabCase(field.name)}
                         className="maxw-none text-normal"
                       >
                         {isDataExchangeApproachCompleteConfig.label}

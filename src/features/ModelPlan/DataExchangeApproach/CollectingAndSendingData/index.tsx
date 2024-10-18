@@ -35,7 +35,7 @@ import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import {
   composeMultiSelectOptions,
-  convertCamelCaseToHyphenated
+  convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
 type CollectingAndSendingDataType =
@@ -155,7 +155,7 @@ const CollectingAndSendingData = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(
+                        htmlFor={convertCamelCaseToKebabCase(
                           'dataToCollectFromParticipants'
                         )}
                       >
@@ -168,13 +168,13 @@ const CollectingAndSendingData = () => {
 
                       <MultiSelect
                         {...field}
-                        id={convertCamelCaseToHyphenated(
+                        id={convertCamelCaseToKebabCase(
                           'dataToCollectFromParticipants'
                         )}
-                        inputId={convertCamelCaseToHyphenated(
+                        inputId={convertCamelCaseToKebabCase(
                           'dataToCollectFromParticipants'
                         )}
-                        ariaLabel={convertCamelCaseToHyphenated(
+                        ariaLabel={convertCamelCaseToKebabCase(
                           'dataToCollectFromParticipants'
                         )}
                         ariaLabelText={
@@ -247,7 +247,7 @@ const CollectingAndSendingData = () => {
                         render={({ field: { ref, ...field } }) => (
                           <FormGroup className="margin-bottom-3">
                             <Label
-                              htmlFor={convertCamelCaseToHyphenated(
+                              htmlFor={convertCamelCaseToKebabCase(
                                 'dataToCollectFromParticipantsReportsDetails'
                               )}
                               className="text-normal"
@@ -259,7 +259,7 @@ const CollectingAndSendingData = () => {
 
                             <TextInput
                               {...field}
-                              id={convertCamelCaseToHyphenated(
+                              id={convertCamelCaseToKebabCase(
                                 'dataToCollectFromParticipantsReportsDetails'
                               )}
                               type="text"
@@ -312,7 +312,7 @@ const CollectingAndSendingData = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(
+                        htmlFor={convertCamelCaseToKebabCase(
                           'dataToSendToParticipants'
                         )}
                       >
@@ -322,7 +322,7 @@ const CollectingAndSendingData = () => {
                       {getKeys(dataToSendToParticipantsConfig.options).map(
                         value => (
                           <CheckboxField
-                            id={`${convertCamelCaseToHyphenated(
+                            id={`${convertCamelCaseToKebabCase(
                               'dataToSendToParticipants'
                             )}-${value}`}
                             name={field.name}

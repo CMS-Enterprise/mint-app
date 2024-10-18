@@ -36,7 +36,7 @@ import { onChangeCheckboxHandler } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import {
   composeMultiSelectOptions,
-  convertCamelCaseToHyphenated
+  convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
 import FormFooter from '../../../../components/FormFooter';
@@ -160,7 +160,7 @@ const CollectionAndAggregation = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        htmlFor={convertCamelCaseToKebabCase(field.name)}
                         className="maxw-none"
                       >
                         {doesNeedToMakeMultiPayerDataAvailableConfig.label}
@@ -172,7 +172,7 @@ const CollectionAndAggregation = () => {
                         <Radio
                           {...field}
                           key={value}
-                          id={`${convertCamelCaseToHyphenated(field.name)}-${value}`}
+                          id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
                           value={value}
                           label={
                             doesNeedToMakeMultiPayerDataAvailableConfig.options[
@@ -196,7 +196,7 @@ const CollectionAndAggregation = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(
+                        htmlFor={convertCamelCaseToKebabCase(
                           'anticipatedMultiPayerDataAvailabilityUseCase'
                         )}
                         className={classNames('text-normal margin-top-4', {
@@ -214,7 +214,7 @@ const CollectionAndAggregation = () => {
                         anticipatedMultiPayerDataAvailabilityUseCaseConfig.options
                       ).map(value => (
                         <CheckboxField
-                          id={`${convertCamelCaseToHyphenated(
+                          id={`${convertCamelCaseToKebabCase(
                             'anticipatedMultiPayerDataAvailabilityUseCase'
                           )}-${value}`}
                           name={field.name}
@@ -256,7 +256,7 @@ const CollectionAndAggregation = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(field.name)}
+                        htmlFor={convertCamelCaseToKebabCase(field.name)}
                         className="maxw-none"
                       >
                         {
@@ -270,7 +270,7 @@ const CollectionAndAggregation = () => {
                         <Radio
                           {...field}
                           key={value}
-                          id={`${convertCamelCaseToHyphenated(field.name)}-${value}`}
+                          id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
                           value={value}
                           label={
                             doesNeedToCollectAndAggregateMultiSourceDataConfig
@@ -293,7 +293,7 @@ const CollectionAndAggregation = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup>
                       <Label
-                        htmlFor={convertCamelCaseToHyphenated(
+                        htmlFor={convertCamelCaseToKebabCase(
                           'multiSourceDataToCollect'
                         )}
                         className={classNames('text-normal margin-top-4', {
@@ -311,13 +311,13 @@ const CollectionAndAggregation = () => {
 
                       <MultiSelect
                         {...field}
-                        id={convertCamelCaseToHyphenated(
+                        id={convertCamelCaseToKebabCase(
                           'multiSourceDataToCollect'
                         )}
-                        inputId={convertCamelCaseToHyphenated(
+                        inputId={convertCamelCaseToKebabCase(
                           'multiSourceDataToCollect'
                         )}
-                        ariaLabel={convertCamelCaseToHyphenated(
+                        ariaLabel={convertCamelCaseToKebabCase(
                           'multiSourceDataToCollect'
                         )}
                         ariaLabelText={multiSourceDataToCollectConfig.label}
@@ -346,7 +346,7 @@ const CollectionAndAggregation = () => {
                     render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-bottom-3">
                         <Label
-                          htmlFor={convertCamelCaseToHyphenated(
+                          htmlFor={convertCamelCaseToKebabCase(
                             'multiSourceDataToCollectOther'
                           )}
                           className="text-normal"
@@ -358,7 +358,7 @@ const CollectionAndAggregation = () => {
 
                         <TextInput
                           {...field}
-                          id={convertCamelCaseToHyphenated(
+                          id={convertCamelCaseToKebabCase(
                             'multiSourceDataToCollectOther'
                           )}
                           type="text"

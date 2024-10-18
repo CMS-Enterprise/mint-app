@@ -5,7 +5,7 @@ import { Button, FormGroup, Icon, Label } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import TextAreaField from 'components/TextAreaField';
-import { convertCamelCaseToHyphenated } from 'utils/modelPlan';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type AddNoteType = {
   field: string;
@@ -56,14 +56,14 @@ const AddNoteRHF = ({
           control={control}
           render={({ field: { ref, ...formField }, fieldState: { error } }) => (
             <FormGroup error={!!error}>
-              <Label htmlFor={convertCamelCaseToHyphenated(formField.name)}>
+              <Label htmlFor={convertCamelCaseToKebabCase(formField.name)}>
                 {t('Notes')}
               </Label>
 
               <TextAreaField
                 {...formField}
                 value={formField.value || ''}
-                id={convertCamelCaseToHyphenated(formField.name)}
+                id={convertCamelCaseToKebabCase(formField.name)}
               />
             </FormGroup>
           )}
