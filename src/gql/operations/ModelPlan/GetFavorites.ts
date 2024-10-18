@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetFavorites($filter: ModelPlanFilter!, $isMAC: Boolean!) {
+  query GetFavorites($filter: ModelPlanFilter!) {
     modelPlanCollection(filter: $filter) {
       id
       modelName
@@ -29,12 +29,6 @@ export default gql(/* GraphQL */ `
         ... on EChimpTDL {
           id
         }
-      }
-      crs @include(if: $isMAC) {
-        idNumber
-      }
-      tdls @include(if: $isMAC) {
-        idNumber
       }
     }
   }

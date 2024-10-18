@@ -15,6 +15,7 @@ export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const modelPlanData: GetModelPlansType = [
   {
+    __typename: 'ModelPlan',
     id: modelID,
     modelName: 'My plan',
     status: ModelStatus.PLAN_DRAFT,
@@ -57,20 +58,7 @@ const modelPlanData: GetModelPlansType = [
         id: '456',
         __typename: 'EChimpTDL'
       }
-    ],
-    crs: [
-      {
-        __typename: 'PlanCR',
-        idNumber: 'CR 123'
-      }
-    ],
-    tdls: [
-      {
-        __typename: 'PlanTDL',
-        idNumber: 'TDL 456'
-      }
-    ],
-    __typename: 'ModelPlan'
+    ]
   }
 ];
 
@@ -95,6 +83,7 @@ export const modelPlanCollectionMock = (
 
 const favoritesModelPlanData: GetFavoritesType = [
   {
+    __typename: 'ModelPlan',
     id: modelID,
     modelName: 'My plan',
     status: ModelStatus.PLAN_DRAFT,
@@ -118,32 +107,16 @@ const favoritesModelPlanData: GetFavoritesType = [
         id: '456',
         __typename: 'EChimpTDL'
       }
-    ],
-    crs: [
-      {
-        __typename: 'PlanCR',
-        idNumber: 'CR 123'
-      }
-    ],
-    tdls: [
-      {
-        __typename: 'PlanTDL',
-        idNumber: 'TDL 456'
-      }
-    ],
-    __typename: 'ModelPlan'
+    ]
   }
 ];
 
-export const favoritesPlanCollectionMock = (
-  filter: ModelPlanFilter,
-  isMAC: boolean = false
-) => {
+export const favoritesPlanCollectionMock = (filter: ModelPlanFilter) => {
   return [
     {
       request: {
         query: GetFavoritesDocument,
-        variables: { filter, isMAC }
+        variables: { filter }
       },
       result: {
         data: {

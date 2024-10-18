@@ -56,12 +56,6 @@ export default gql(/* GraphQL */ `
           id
         }
       }
-      crs @include(if: $isMAC) {
-        idNumber
-      }
-      tdls @include(if: $isMAC) {
-        idNumber
-      }
     }
   }
 `);
