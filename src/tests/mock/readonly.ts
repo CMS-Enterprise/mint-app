@@ -728,20 +728,6 @@ const summaryData: GetModelSummaryTypes = {
       teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
     }
-  ],
-  crs: [
-    {
-      __typename: 'PlanCR',
-      id: '123',
-      idNumber: 'CR 123'
-    }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      id: '456',
-      idNumber: 'TDL 456'
-    }
   ]
 };
 
