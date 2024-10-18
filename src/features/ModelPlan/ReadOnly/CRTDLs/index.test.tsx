@@ -65,7 +65,7 @@ describe('Read Only CR and TDLs page', () => {
           <MessageProvider>
             <Route path="/models/:modelID/read-only/crs-and-tdl">
               <Provider store={store}>
-                <ReadOnlyCRTDLs modelID={modelID} />
+                <ReadOnlyCRTDLs />
               </Provider>
             </Route>
           </MessageProvider>
@@ -91,7 +91,7 @@ describe('Read Only CR and TDLs page', () => {
           <MessageProvider>
             <Route path="/models/:modelID/read-only/crs-and-tdl">
               <Provider store={store}>
-                <ReadOnlyCRTDLs modelID={modelID} />
+                <ReadOnlyCRTDLs />
               </Provider>
             </Route>
           </MessageProvider>

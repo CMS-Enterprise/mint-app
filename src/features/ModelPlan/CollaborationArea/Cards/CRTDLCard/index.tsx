@@ -23,9 +23,9 @@ type CRTDLCardType = {
 const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const firstFirstFiveCRTDLs = crtdls.slice(0, 5);
+  const firstFiveCRTDLs = crtdls.slice(0, 5);
 
-  const remainingCRTDLs: number = crtdls.length - firstFirstFiveCRTDLs.length;
+  const remainingCRTDLs: number = crtdls.length - firstFiveCRTDLs.length;
 
   return (
     <Card
@@ -45,7 +45,7 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
           </p>
         ) : (
           <p className="text-base-dark">
-            {firstFirstFiveCRTDLs.map(crtdl => crtdl.id).join(', ')}
+            {firstFiveCRTDLs.map(crtdl => crtdl.id).join(', ')}
             {remainingCRTDLs > 0 && (
               <>
                 {' '}

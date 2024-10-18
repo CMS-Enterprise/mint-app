@@ -8,7 +8,7 @@ import React, {
   useState
 } from 'react';
 import ReactGA from 'react-ga4';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import {
@@ -17,12 +17,10 @@ import {
   GridContainer,
   Icon,
   SummaryBox,
-  SummaryBoxContent,
-  SummaryBoxHeading
+  SummaryBoxContent
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
-  GetCrtdLsQuery,
   GetModelPlanQuery,
   GetTaskListSubscriptionsQuery,
   TaskListSection,
@@ -73,10 +71,6 @@ type ParticipantsAndProvidersType =
 type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
 type PrepareForClearanceType =
   GetModelPlanQuery['modelPlan']['prepareForClearance'];
-
-type CRTDLType =
-  | GetCrtdLsQuery['modelPlan']['crs'][0]
-  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ITSolutionsType = {
   modifiedDts: string | null | undefined;
@@ -179,9 +173,6 @@ const TaskList = () => {
     modelName,
     basics,
     discussions,
-    documents,
-    crs,
-    tdls,
     status,
     generalCharacteristics,
     participantsAndProviders,
@@ -193,11 +184,6 @@ const TaskList = () => {
     collaborators,
     suggestedPhase
   } = modelPlan;
-
-  const planCRs = crs || [];
-  const planTDLs = tdls || [];
-
-  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const itSolutions: ITSolutionsType = {
     modifiedDts: getLatestModifiedDate(operationalNeeds),
@@ -352,17 +338,6 @@ const TaskList = () => {
                 discussions={discussions}
                 setIsDiscussionOpen={setIsDiscussionOpen}
               />
-
-              {/* Document and CR TDL Banners */}
-              <Grid row gap={2}>
-                <Grid desktop={{ col: 12 }} className="margin-top-2">
-                  <CRTDLBanner
-                    crTdls={crTdls}
-                    modelID={modelID}
-                    expand={!!documents.length || !!crTdls.length}
-                  />
-                </Grid>
-              </Grid>
 
               <ol
                 data-testid="task-list"
@@ -522,79 +497,6 @@ const DicussionBanner = ({
             >
               {d('viewDiscussions')}
             </Button>
-          </>
-        )}
-      </SummaryBoxContent>
-    </SummaryBox>
-  );
-};
-
-type CRTDLBannerType = {
-  crTdls: CRTDLType[];
-  modelID: string;
-  expand: boolean;
-};
-
-// CRTDL component for rendering CRTDL summary
-const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
-  const { t } = useTranslation('modelPlanTaskList');
-
-  return (
-    <SummaryBox
-      className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
-        'model-plan-task-list__min-card': expand
-      })}
-    >
-      <SummaryBoxHeading headingLevel="h3" className="margin-0">
-        {t('modelPlanTaskList:crTDLsSummaryBox.heading')}
-      </SummaryBoxHeading>
-
-      <SummaryBoxContent>
-        {crTdls?.length > 0 ? (
-          <>
-            <p
-              className="margin-0 padding-bottom-1 padding-top-05"
-              data-testid="cr-tdl-items"
-            >
-              {crTdls.map(
-                (crtdl, index) =>
-                  index < 3 &&
-                  `${crtdl.idNumber}${index !== crTdls.length - 1 ? ',' : ''} `
-              )}
-              {crTdls.length > 3 &&
-                `+${crTdls.length - 3} ${t('crTDLsSummaryBox.more')}`}{' '}
-            </p>
-
-            <UswdsReactLink
-              variant="unstyled"
-              className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/collaboration-area/cr-and-tdl`}
-            >
-              {t('crTDLsSummaryBox.viewAll')}
-            </UswdsReactLink>
-
-            <UswdsReactLink
-              variant="unstyled"
-              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
-            >
-              {t('crTDLsSummaryBox.uploadAnother')}
-            </UswdsReactLink>
-          </>
-        ) : (
-          <>
-            <p className="margin-0 margin-bottom-1">
-              <Trans i18nKey="modelPlanTaskList:crTDLsSummaryBox.copy">
-                indexZero
-              </Trans>
-            </p>
-
-            <UswdsReactLink
-              className="usa-button usa-button--outline"
-              variant="unstyled"
-              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
-            >
-              {t('crTDLsSummaryBox.add')}
-            </UswdsReactLink>
           </>
         )}
       </SummaryBoxContent>
