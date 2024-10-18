@@ -317,7 +317,10 @@ const CollectionAndAggregation = () => {
                         inputId={convertCamelCaseToHyphenated(
                           'multiSourceDataToCollect'
                         )}
-                        ariaLabel={multiSourceDataToCollectConfig.label}
+                        ariaLabel={convertCamelCaseToHyphenated(
+                          'multiSourceDataToCollect'
+                        )}
+                        ariaLabelText={multiSourceDataToCollectConfig.label}
                         options={composeMultiSelectOptions(
                           multiSourceDataToCollectConfig.options,
                           multiSourceDataToCollectConfig.readonlyOptions

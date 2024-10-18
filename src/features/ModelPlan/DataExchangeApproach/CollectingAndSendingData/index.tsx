@@ -174,7 +174,12 @@ const CollectingAndSendingData = () => {
                         inputId={convertCamelCaseToHyphenated(
                           'dataToCollectFromParticipants'
                         )}
-                        ariaLabel={dataToCollectFromParticipantsConfig.label}
+                        ariaLabel={convertCamelCaseToHyphenated(
+                          'dataToCollectFromParticipants'
+                        )}
+                        ariaLabelText={
+                          dataToCollectFromParticipantsConfig.label
+                        }
                         options={composeMultiSelectOptions(
                           dataToCollectFromParticipantsConfig.options,
                           dataToCollectFromParticipantsConfig.readonlyOptions

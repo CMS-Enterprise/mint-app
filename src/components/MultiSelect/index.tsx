@@ -215,6 +215,7 @@ const MultiSelect = ({
   initialValues,
   className,
   ariaLabel,
+  ariaLabelText,
   tagOrder,
   disabled,
   disabledOption,
@@ -230,6 +231,7 @@ const MultiSelect = ({
   initialValues?: string[];
   className?: string;
   ariaLabel: string;
+  ariaLabelText?: string;
   tagOrder?: 'asc' | 'desc' | string;
   disabled?: boolean;
   disabledOption?: boolean;
@@ -301,7 +303,8 @@ const MultiSelect = ({
         controlShouldRenderValue={false}
         placeholder={`${selected.length} selected`}
         styles={customStyles}
-        aria-label={ariaLabel}
+        aria-labelledby={ariaLabel}
+        aria-label={ariaLabelText}
         isDisabled={disabled}
       />
 

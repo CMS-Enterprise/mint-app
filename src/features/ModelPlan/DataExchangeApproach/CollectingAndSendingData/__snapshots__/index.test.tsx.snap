@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TestComponent > renders correctly and matches snapshot 1`] = `
+exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="margin-bottom-2 line-height-normal"
@@ -87,6 +87,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                         aria-expanded="false"
                         aria-haspopup="true"
                         aria-label="What data will you collect from participants?"
+                        aria-labelledby="data-to-collect-from-participants"
                         autocapitalize="none"
                         autocomplete="off"
                         autocorrect="off"
