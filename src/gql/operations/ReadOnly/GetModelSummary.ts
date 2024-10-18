@@ -35,14 +35,6 @@ export default gql(/* GraphQL */ `
         }
         teamRoles
       }
-      crs {
-        id
-        idNumber
-      }
-      tdls {
-        id
-        idNumber
-      }
     }
   }
 `);
