@@ -256,7 +256,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           What type of Alternative Payment Model (APM) do you think the model could be?
         </legend>
         <div
-          class="usa-alert usa-alert--info usa-alert--slim icon-padding flex"
+          class="usa-alert usa-alert--info usa-alert--slim flex"
           data-testid="mandatory-fields-alert"
         >
           <div
