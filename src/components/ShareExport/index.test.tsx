@@ -5,7 +5,6 @@ import { render, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 import allMocks, {
-  crtdlMocks,
   modelID,
   operationalNeedsMock,
   possibleOperationalSolutionDataMocks,
@@ -36,7 +35,6 @@ describe('ShareExportModal', () => {
               ...allMocks,
               ...summaryMock,
               ...operationalNeedsMock,
-              ...crtdlMocks,
               ...possibleOperationalSolutionDataMocks
             ]}
             addTypename={false}
@@ -93,7 +91,6 @@ describe('ShareExportModal', () => {
               ...allMocks,
               ...summaryMock,
               ...operationalNeedsMock,
-              ...crtdlMocks,
               ...possibleOperationalSolutionDataMocks
             ]}
             addTypename={false}
