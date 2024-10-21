@@ -1,7 +1,13 @@
 @use 'uswds-core' as *;
+@use 'viewports' as *;
 
 .point-of-contact {
+  padding-left: 1rem;
+  border-left: .25rem solid color($theme-color-primary-lighter);
+
+  @media screen and (min-width: $desktop) {
     padding-left: 0;
     border-top: .25rem solid color($theme-color-primary-lighter);
     border-left: 0;
+  }
 }
