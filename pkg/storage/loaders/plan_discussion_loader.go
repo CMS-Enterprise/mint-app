@@ -39,6 +39,6 @@ func batchPlanDiscussionGetByModelPlanID(ctx context.Context, modelPlanIDs []uui
 	}
 
 	// implement one to many
-	return oneToManyDataLoaderFuncSimplified(modelPlanIDs, data, getKeyFunc)
+	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 
 }
