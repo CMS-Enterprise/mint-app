@@ -224,25 +224,6 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                   </svg>
                   Emergency
                 </div>
-                <div
-                  class="echimp-card__cr-tag echimp-card__cr-tag--sensitive"
-                  data-testid="sensitive__cr-tag"
-                >
-                  <svg
-                    class="usa-icon"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6z"
-                    />
-                  </svg>
-                  Sensitive/controversial
-                </div>
               </div>
               <div
                 class="echimp-card__cr-status"
@@ -265,7 +246,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                   Implementation Date
                 </p>
                 <p>
-                  2022-05-12T15:01:39.190679Z
+                  2022-07-30T05:00:00Z
                 </p>
               </div>
             </div>
@@ -343,7 +324,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                   Issued date
                 </p>
                 <p>
-                  2022-05-12T15:01:39.190679Z
+                  2022-07-30T05:00:00Z
                 </p>
               </div>
             </div>
