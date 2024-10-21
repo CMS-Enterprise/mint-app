@@ -213,6 +213,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
       MEDICAID_CLAIMS: 'Medicaid claims',
       MEDICARE_CLAIMS: 'Medicare claims',
       PATIENT_REGISTRY: 'Patient registry',
+      OTHER: 'Other (please specify)'
+    },
+    readonlyOptions: {
       OTHER: 'Other'
     },
     parentRelation: () =>
@@ -288,14 +291,14 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     gqlField: 'isDataExchangeApproachComplete',
     goField: 'IsDataExchangeApproachComplete',
     dbField: 'is_data_exchange_approach_complete',
-    label: 'This data exchange approach is complete.',
+    label: 'Data exchange approach status',
     sublabel:
       'This will alert interested parties about your data exchange approach. You can still edit this after it’s marked complete.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
     order: 3.07,
     options: {
-      true: 'Yes',
+      true: 'This data exchange approach is complete.',
       false: 'No'
     }
   },
