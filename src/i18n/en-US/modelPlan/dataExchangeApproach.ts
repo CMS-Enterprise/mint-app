@@ -340,6 +340,65 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
   }
 };
 
-export const dataExchangeApproachMisc = {};
+export const dataExchangeApproachMisc = {
+  heading: 'Data exchange approach',
+  forModel: 'for {{ modelName }}',
+  description:
+    'Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome). We often collect health-related social needs data, such as socio-demographic data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange. ',
+  needHelpDiscussion: 'Need help with your data exchange approach?',
+  aboutCompletingDataExchange: {
+    heading: 'About completing the data exchange approach',
+    description:
+      'This set of questions aims to introduce data exchange early into model design and serve as a starting point for conversations with CMMI operational teams, recognizing that data exchange needs will evolve throughout model design and implementation. You may not be able to answer all of these questions immediately, but continuing to add and update any content as you continue iterating on your model will help with data exchange approach considerations.',
+    whyDoINeedThisForm: 'Why do I need to complete this form?',
+    whyDoINeedThisFormItems: [
+      'In the past, models have encountered difficulty with approaches for exchanging data with participants. Considering data approaches earlier in the process can help identify concerns, mitigate risks, and save costs.',
+      'Considering approaches for data exchange will help prepare for complicated data exchange scenarios once the model is active.',
+      'Completing these questions will help BSG and CMMI identify any novel data exchange approaches in order to have feasibility conversations and/or prepare for considerations during clearance.',
+      'Examining data exchange approaches will help determine IT and technology needs.'
+    ],
+    whosInvolved: 'Who’s involved',
+    whosInvolvedDescription:
+      'Work with your IT Lead or a Solution Architect from the Business Services Group (BSG) to determine how you’ll exchange data so that BSG and CMMI can help with new policy or technology opportunities. Reach out to the MINT Team or BSG if your model does not have an assigned IT Lead or Solution Architect. If you have questions about this form, please reach out to William Gordon or Todd Couts.',
+    modelTeam: 'Model team',
+    modelTeamDescription:
+      'Model leads or model team members responsible for data-centric activities should work with the IT Lead or Solution Architect to complete the questions in this approach.',
+    itLead: 'IT Lead/Solution Architect',
+    email: 'Email the MINT Team',
+    noLeadAssigned: 'No IT Lead or Solution Architect assigned',
+    pleaseContactBSG:
+      'Please contact BSG to work with a Solution Architect or assign an IT Lead.'
+  },
+  collectingAndSendingData: {
+    heading: 'Collecting and sending data',
+    dataSpecific: 'Data-specific questions'
+  },
+  collectionAndAggregation: {
+    heading: 'Multi-payer data and multi-source collection and aggregation'
+  },
+  newMethodologiesAndConsiderations: {
+    heading: 'New methodologies and additional considerations',
+    additionalDetails: {
+      heading: 'Additional details',
+      examplesInclude: 'Examples of novel data exchange methodologies include:',
+      examples: [
+        {
+          text: '<link1>Privacy-preserving record linkage (PPRL) [cdcfoundation.org]</link1>',
+          link: 'https://www.cdcfoundation.org/CDCFoundationPPRLSummary.pdf?inline'
+        },
+        {
+          text: 'Utilizing the <link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]</link1>',
+          link: 'https://www.healthit.gov/topic/interoperability/policy/trusted-exchange-framework-and-common-agreement-tefca'
+        },
+        {
+          text: 'Enabling an additional data stream not previously used at CMMI',
+          link: ''
+        }
+      ]
+    },
+    alert:
+      'Once you feel your data exchange approach is in a good place, update the status to "Complete" below, and someone from BSG will contact you to discuss it.'
+  }
+};
 
 export default dataExchangeApproach;
