@@ -55,8 +55,7 @@ const settingsMock = [
     request: {
       query: GetFavoritesDocument,
       variables: {
-        filter: 'INCLUDE_ALL',
-        isMAC: true
+        filter: ModelPlanFilter.INCLUDE_ALL
       }
     },
     result: {
@@ -97,8 +96,16 @@ const settingsMock = [
                 __typename: 'PlanCollaborator'
               }
             ],
-            crs: [],
-            tdls: [],
+            echimpCRsAndTDLs: [
+              {
+                id: '123',
+                __typename: 'EChimpCR'
+              },
+              {
+                id: '456',
+                __typename: 'EChimpTDL'
+              }
+            ],
             __typename: 'ModelPlan'
           }
         ]
