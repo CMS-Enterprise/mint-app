@@ -52,7 +52,7 @@ const ExternalResourceCard = ({
 
         {tag && <HelpCategoryTag type={type} />}
 
-        <CardBody className="padding-x-0 article__body padding-top-2">
+        <CardBody className="padding-x-0 padding-top-2">
           <TruncatedText
             charLimit={110}
             id={translation}

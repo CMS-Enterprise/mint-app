@@ -1911,7 +1911,7 @@ export type PlanCollaboratorTranslation = {
 export type PlanDataExchangeApproach = {
   __typename: 'PlanDataExchangeApproach';
   additionalDataExchangeConsiderationsDescription?: Maybe<Scalars['String']['output']>;
-  anticipatedMultiPayerDataAvailabilityUseCase?: Maybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
+  anticipatedMultiPayerDataAvailabilityUseCase: Array<AnticipatedMultiPayerDataAvailabilityUseCase>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -1945,7 +1945,7 @@ export type PlanDataExchangeApproach = {
 
 export type PlanDataExchangeApproachChanges = {
   additionalDataExchangeConsiderationsDescription?: InputMaybe<Scalars['String']['input']>;
-  anticipatedMultiPayerDataAvailabilityUseCase?: InputMaybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
+  anticipatedMultiPayerDataAvailabilityUseCase?: InputMaybe<Array<AnticipatedMultiPayerDataAvailabilityUseCase>>;
   dataToCollectFromParticipants?: InputMaybe<Array<DataToCollectFromParticipants>>;
   dataToCollectFromParticipantsNote?: InputMaybe<Scalars['String']['input']>;
   dataToCollectFromParticipantsOther?: InputMaybe<Scalars['String']['input']>;

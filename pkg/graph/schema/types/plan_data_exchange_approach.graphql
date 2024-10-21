@@ -64,7 +64,7 @@ type PlanDataExchangeApproach {
   dataToSendToParticipantsNote: String
 
   doesNeedToMakeMultiPayerDataAvailable: Boolean
-  anticipatedMultiPayerDataAvailabilityUseCase: AnticipatedMultiPayerDataAvailabilityUseCase
+  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]!
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
   doesNeedToCollectAndAggregateMultiSourceData: Boolean
@@ -104,7 +104,7 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   dataToSendToParticipantsNote: String
 
   doesNeedToMakeMultiPayerDataAvailable: Boolean
-  anticipatedMultiPayerDataAvailabilityUseCase: AnticipatedMultiPayerDataAvailabilityUseCase
+  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
   doesNeedToCollectAndAggregateMultiSourceData: Boolean

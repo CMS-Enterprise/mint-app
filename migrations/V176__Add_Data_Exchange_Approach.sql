@@ -68,7 +68,7 @@ CREATE TABLE plan_data_exchange_approach (
 
     -- page 3
     does_need_to_make_multi_payer_data_available BOOLEAN DEFAULT NULL,
-    anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
+    anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE[],
     does_need_to_make_multi_payer_data_available_note ZERO_STRING,
 
     does_need_to_collect_and_aggregate_multi_source_data BOOLEAN DEFAULT NULL,
