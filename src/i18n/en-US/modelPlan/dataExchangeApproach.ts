@@ -99,7 +99,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.05
+    order: 1.05,
+    isNote: true,
+    otherParentField: 'dataToCollectFromParticipants'
   },
   dataToSendToParticipants: {
     gqlField: 'dataToSendToParticipants',
@@ -129,7 +131,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.07
+    order: 1.07,
+    isNote: true,
+    otherParentField: 'dataToSendToParticipants'
   },
   //   Page 3
   doesNeedToMakeMultiPayerDataAvailable: {
@@ -176,7 +180,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 2.03
+    order: 2.03,
+    isNote: true,
+    otherParentField: 'doesNeedToMakeMultiPayerDataAvailable'
   },
   doesNeedToCollectAndAggregateMultiSourceData: {
     gqlField: 'doesNeedToCollectAndAggregateMultiSourceData',
@@ -239,7 +245,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 2.07
+    order: 2.07,
+    isNote: true,
+    otherParentField: 'multiSourceDataToCollect'
   },
   // Page 4
   willImplementNewDataExchangeMethods: {
@@ -276,7 +284,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 3.03
+    order: 3.03,
+    isNote: true,
+    otherParentField: 'willImplementNewDataExchangeMethods'
   },
   additionalDataExchangeConsiderationsDescription: {
     gqlField: 'additionalDataExchangeConsiderationsDescription',

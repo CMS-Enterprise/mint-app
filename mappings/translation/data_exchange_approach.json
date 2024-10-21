@@ -82,7 +82,9 @@
     "label": "Notes",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.05
+    "order": 1.05,
+    "isNote": true,
+    "otherParentField": "data_to_collect_from_participants"
   },
   "dataToSendToParticipants": {
     "gqlField": "dataToSendToParticipants",
@@ -111,7 +113,9 @@
     "label": "Notes",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.07
+    "order": 1.07,
+    "isNote": true,
+    "otherParentField": "data_to_send_to_participants"
   },
   "doesNeedToMakeMultiPayerDataAvailable": {
     "gqlField": "doesNeedToMakeMultiPayerDataAvailable",
@@ -178,7 +182,9 @@
     "label": "Notes",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 2.03
+    "order": 2.03,
+    "isNote": true,
+    "otherParentField": "does_need_to_make_multi_payer_data_available"
   },
   "doesNeedToCollectAndAggregateMultiSourceData": {
     "gqlField": "doesNeedToCollectAndAggregateMultiSourceData",
@@ -274,7 +280,9 @@
     "label": "Notes",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 2.07
+    "order": 2.07,
+    "isNote": true,
+    "otherParentField": "multi_source_data_to_collect"
   },
   "willImplementNewDataExchangeMethods": {
     "gqlField": "willImplementNewDataExchangeMethods",
@@ -308,7 +316,9 @@
     "label": "Notes",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 3.03
+    "order": 3.03,
+    "isNote": true,
+    "otherParentField": "will_implement_new_data_exchange_methods"
   },
   "additionalDataExchangeConsiderationsDescription": {
     "gqlField": "additionalDataExchangeConsiderationsDescription",

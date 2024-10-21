@@ -54,6 +54,7 @@ export type TranslationTables =
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
   | TableName.PLAN_PAYMENTS
   | TableName.PLAN_COLLABORATOR
+  | TableName.PLAN_DATA_EXCHANGE_APPROACH
   | TableName.PLAN_DISCUSSION
   | TableName.DISCUSSION_REPLY
   | TableName.PLAN_DOCUMENT
@@ -65,24 +66,26 @@ export type TranslationTables =
   | TableName.PLAN_DOCUMENT_SOLUTION_LINK
   | TableName.EXISTING_MODEL_LINK;
 
-export type TranslationTaskListTable =
+export type TableWithStatus =
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
   | TableName.PLAN_BENEFICIARIES
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
-  | TableName.PLAN_PAYMENTS;
+  | TableName.PLAN_PAYMENTS
+  | TableName.PLAN_DATA_EXCHANGE_APPROACH;
 
-export const isTranslationTaskListTable = (
+export const isTableWithStatus = (
   tableName: TableName
-): tableName is TranslationTaskListTable => {
+): tableName is TableWithStatus => {
   return [
     TableName.PLAN_BASICS,
     TableName.PLAN_GENERAL_CHARACTERISTICS,
     TableName.PLAN_PARTICIPANTS_AND_PROVIDERS,
     TableName.PLAN_BENEFICIARIES,
     TableName.PLAN_OPS_EVAL_AND_LEARNING,
-    TableName.PLAN_PAYMENTS
+    TableName.PLAN_PAYMENTS,
+    TableName.PLAN_DATA_EXCHANGE_APPROACH
   ].includes(tableName);
 };
 
@@ -158,6 +161,10 @@ const unneededFields: HiddenFieldTypes[] = [
   {
     table: TableName.PLAN_TDL,
     fields: ['model_plan_id']
+  },
+  {
+    table: TableName.PLAN_DATA_EXCHANGE_APPROACH,
+    fields: ['marked_complete_by', 'marked_complete_dts']
   }
 ];
 
@@ -605,7 +612,7 @@ export const separateStatusChanges = (
 
   changes.forEach(change => {
     if (
-      !isTranslationTaskListTable(change.tableName) &&
+      !isTableWithStatus(change.tableName) &&
       change.tableName !== TableName.MODEL_PLAN
     ) {
       filteredStatusChanges.push(change);
@@ -630,6 +637,10 @@ export const separateStatusChanges = (
       return;
     }
 
+    if (change.tableName === TableName.PLAN_DATA_EXCHANGE_APPROACH) {
+      console.log(change);
+    }
+
     // Create a new change record for the other changes without the status change
     const otherChanges = { ...change };
     const otherTranslatedFields = [...change.translatedFields];
@@ -646,6 +657,7 @@ export const separateStatusChanges = (
     statusChange.translatedFields = [translatedFields[statusIndex]];
     filteredStatusChanges.push(statusChange);
   });
+
   return filteredStatusChanges;
 };
 
@@ -672,7 +684,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
 
   // If the change is a task list status update, return 'Task list status update'
   if (
-    isTranslationTaskListTable(change.tableName) &&
+    isTableWithStatus(change.tableName) &&
     change.translatedFields.find(field => field.fieldName === 'status')
   ) {
     return 'taskListStatusUpdate';

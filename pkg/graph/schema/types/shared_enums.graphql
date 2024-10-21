@@ -178,6 +178,7 @@ enum TableName {
   plan_beneficiaries
   plan_collaborator
   plan_cr
+  plan_data_exchange_approach
   plan_discussion
   plan_document
   plan_document_solution_link
