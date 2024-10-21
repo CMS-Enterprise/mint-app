@@ -43,7 +43,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
       . To get access to the ECHIMP system, request the proper job code through EUA. Please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963 if you need assistance.
     </p>
     <div
-      class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-5"
+      class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-5"
       data-testid="alert"
     >
       <div

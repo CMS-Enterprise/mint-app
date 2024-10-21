@@ -461,7 +461,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           What is the agreement type?
         </label>
         <div
-          class="usa-alert usa-alert--warning icon-padding flex it-solutions-warning"
+          class="usa-alert usa-alert--warning flex it-solutions-warning"
           data-testid="alert"
         >
           <div

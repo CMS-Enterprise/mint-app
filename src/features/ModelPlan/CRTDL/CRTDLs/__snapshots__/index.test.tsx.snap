@@ -69,8 +69,38 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
           class="margin-top-1 margin-bottom-0 font-body-lg"
           data-testid="model-plan-name"
         >
-          for 
+          for
         </p>
+        <p
+          class="margin-bottom-2 font-body-md line-height-body-4"
+        >
+          Add, manage, and update any known Fee-for Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs) associated with the model. CRs and TDLs are created and stored in Enterprise Electronic Change Information Management Portal (ECHIMP).
+        </p>
+        <a
+          aria-label="Open EUA in a new tab"
+          class="usa-link usa-link--external"
+          href="https://echimp.cmsnet/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Visit ECHIMP
+        </a>
+        <div
+          class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-1"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                To get access to the ECHIMP system, please request the proper job code through EUA. If you need assistance, please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963.
+              </span>
+            </p>
+          </div>
+        </div>
         <a
           class="usa-link display-inline-flex flex-align-center margin-y-3"
           href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
@@ -94,7 +124,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
         <p
           class="margin-top-0 margin-bottom-3 font-body-md line-height-body-4"
         >
-          If your model makes changes to the Medicare Fee for Service (FFS) payment systems, you will do so through Change Requests (CRs) and Technical Direction Letters (TDLs) in the 
+          If your model makes changes to the Medicare Fee for Service (FFS) payment systems, you will do so through Change Requests (CRs) and Technical Direction Letters (TDLs) in the
           <span
             class="usa-link pointer"
             role="button"
@@ -240,7 +270,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     aria-live="polite"
                     role="status"
                   >
-                    Showing 1-2 of 2 results 
+                    Showing 1-2 of 2 results
                   </div>
                 </span>
               </div>

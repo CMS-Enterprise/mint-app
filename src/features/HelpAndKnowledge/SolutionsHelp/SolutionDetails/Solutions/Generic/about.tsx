@@ -247,7 +247,7 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
       )}
 
       {aboutConfig.ipcPortal && (
-        <div className="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest">
+        <div className="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest mint-body-normal">
           <h4 className="margin-top-0 margin-bottom-1">
             <Trans
               t={t}

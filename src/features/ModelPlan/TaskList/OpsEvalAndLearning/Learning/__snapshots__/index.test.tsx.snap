@@ -122,7 +122,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
           Will the model have a learning strategy?
         </label>
         <div
-          class="usa-alert usa-alert--warning icon-padding flex it-solutions-warning"
+          class="usa-alert usa-alert--warning flex it-solutions-warning"
           data-testid="alert"
         >
           <div
