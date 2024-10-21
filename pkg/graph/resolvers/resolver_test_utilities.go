@@ -135,14 +135,15 @@ func createTemplateCacheHelper(
 	planName string,
 	plan *models.ModelPlan) (*emailtemplates.EmailTemplate, string, string) {
 
-	return createTemplateCacheHelperWithInputTemplates(
+	return CreateTemplateCacheHelperWithInputTemplates(
 		planName,
 		plan,
 		"{{.ModelName}}'s Test",
 		"{{.ModelName}} {{.ModelID}}")
 }
 
-func createTemplateCacheHelperWithInputTemplates(
+// CreateTemplateCacheHelperWithInputTemplates creates a test template with the given subject and body
+func CreateTemplateCacheHelperWithInputTemplates(
 	planName string,
 	plan *models.ModelPlan,
 	subject string,

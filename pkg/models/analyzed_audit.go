@@ -41,12 +41,13 @@ func NewAnalyzedAudit(createdBy uuid.UUID, modelPlanID uuid.UUID, modelName stri
 
 // AnalyzedAuditChange represents Changes in an AnalyzedAudit
 type AnalyzedAuditChange struct {
-	ModelPlan       *AnalyzedModelPlan       `json:"modelPlan,omitempty"`
-	Documents       *AnalyzedDocuments       `json:"documents,omitempty"`
-	CrTdls          *AnalyzedCrTdls          `json:"crTdls,omitempty"`
-	PlanSections    *AnalyzedPlanSections    `json:"planSections,omitempty"`
-	ModelLeads      *AnalyzedModelLeads      `json:"modelLeads,omitempty"`
-	PlanDiscussions *AnalyzedPlanDiscussions `json:"planDiscussion,omitempty"`
+	ModelPlan                *AnalyzedModelPlan                `json:"modelPlan,omitempty"`
+	Documents                *AnalyzedDocuments                `json:"documents,omitempty"`
+	CrTdls                   *AnalyzedCrTdls                   `json:"crTdls,omitempty"`
+	PlanSections             *AnalyzedPlanSections             `json:"planSections,omitempty"`
+	ModelLeads               *AnalyzedModelLeads               `json:"modelLeads,omitempty"`
+	PlanDiscussions          *AnalyzedPlanDiscussions          `json:"planDiscussion,omitempty"`
+	PlanDataExchangeApproach *AnalyzedPlanDataExchangeApproach `json:"planDataExchangeApproach,omitempty"`
 }
 
 // IsEmpty returns if AnalyzedAuditChange struct is empty
@@ -107,6 +108,7 @@ func (a AnalyzedAuditChange) Humanize() []string {
 	humanizedAuditChanges = append(humanizedAuditChanges, a.Documents.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDataExchangeApproach.Humanize())
 
 	return lo.Compact(humanizedAuditChanges)
 }
@@ -209,11 +211,11 @@ type AnalyzedDocuments struct {
 const (
 	// AnalyzedDocumentsHumanizedCounts is human readable
 	// sentence template of multiple AnalyzedDocument.Count
-	AnalyzedDocumentsHumanizedCounts = "%d new documents have been uploaded"
+	AnalyzedDocumentsHumanizedCounts = "%d new documents have been added"
 
 	// AnalyzedDocumentsHumanizedCount is human readable
 	// sentence template of a singular AnalyzedDocument.Count
-	AnalyzedDocumentsHumanizedCount = "%d new document has been uploaded"
+	AnalyzedDocumentsHumanizedCount = "%d new document has been added"
 )
 
 // Humanize returns AnalyzedDocuments in a human readable sentence
@@ -254,9 +256,10 @@ func (a *AnalyzedCrTdls) Humanize() string {
 
 // AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
 type AnalyzedPlanSections struct {
-	Updated           []TableName `json:"updated,omitempty"`
-	ReadyForReview    []TableName `json:"readyForReview,omitempty"`
-	ReadyForClearance []TableName `json:"readyForClearance,omitempty"`
+	Updated                            []TableName `json:"updated,omitempty"`
+	ReadyForReview                     []TableName `json:"readyForReview,omitempty"`
+	ReadyForClearance                  []TableName `json:"readyForClearance,omitempty"`
+	DataExchangeApproachMarkedComplete bool        `json:"dataExchangeApproachMarkedComplete,omitempty"`
 }
 
 const (
@@ -404,6 +407,30 @@ func (a *AnalyzedPlanDiscussions) Humanize() string {
 
 	if a.Activity {
 		return AnalyzedPlanDiscussionsHumanizedActivity
+	}
+
+	return ""
+}
+
+// AnalyzedPlanDataExchangeApproach represents an AnalyzedPlanDataExchangeApproach in an AnalyzedAuditChange
+type AnalyzedPlanDataExchangeApproach struct {
+	Activity bool `json:"activity,omitempty"`
+}
+
+const (
+	// AnalyzedPlanDataExchangeApproachHumanizedActivity is human readable
+	// sentence template of AnalyzedPlanDataExchangeApproach.Activity
+	AnalyzedPlanDataExchangeApproachHumanizedActivity = "Updates to Data Exchange Approach"
+)
+
+// Humanize returns AnalyzedPlanDataExchangeApproach in a human readable sentence
+func (a *AnalyzedPlanDataExchangeApproach) Humanize() string {
+	if a == nil {
+		return ""
+	}
+
+	if a.Activity {
+		return AnalyzedPlanDataExchangeApproachHumanizedActivity
 	}
 
 	return ""

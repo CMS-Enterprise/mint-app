@@ -273,6 +273,7 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		models.TNPlanBeneficiaries,
 		models.TNPlanOpsEvalAndLearning,
 		models.TNPlanPayments,
+		models.TNPlanDataExchangeApproach,
 	}
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return lo.Contains(sections, m.TableName)
@@ -302,10 +303,29 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		return "", false
 	}))
 
+	dataExchangeApproachMarkedComplete := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			if m.Fields["status"].New.(string) == string(models.DataExchangeApproachStatusCompleted) {
+				return m.TableName, true
+			}
+		}
+		return "", false
+	})
+
+	/*dataExchangeApproachMarkedComplete := lo.SomeBy(filteredAudits, func(m *models.AuditChange, index int) bool {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			return m.Fields["status"].New.(string) == string(models.DataExchangeApproachStatusCompleted)
+		}
+		return false
+	})*/
+
 	analyzedPlanSections := models.AnalyzedPlanSections{
-		Updated:           updatedSections,
-		ReadyForReview:    readyForReview,
-		ReadyForClearance: readyForClearance,
+		Updated:                            updatedSections,
+		ReadyForReview:                     readyForReview,
+		ReadyForClearance:                  readyForClearance,
+		DataExchangeApproachMarkedComplete: len(dataExchangeApproachMarkedComplete) > 0,
 	}
 
 	if analyzedPlanSections.IsEmpty() {
@@ -327,5 +347,4 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 ) ([]*models.AnalyzedAudit, error) {
 
 	return storage.AnalyzedAuditGetByModelPlanIDsAndDate(store, logger, modelPlanIDs, date)
-
 }

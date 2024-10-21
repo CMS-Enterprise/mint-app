@@ -33,7 +33,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelperWithInputTemplates(
+	testTemplate, expectedSubject, expectedBody := CreateTemplateCacheHelperWithInputTemplates(
 		planName,
 		plan,
 		"{{.ModelName}}'s Test",

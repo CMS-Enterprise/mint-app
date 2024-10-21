@@ -3,6 +3,10 @@ package worker
 import (
 	"time"
 
+	"github.com/golang/mock/gomock"
+
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+
 	"github.com/cms-enterprise/mint-app/pkg/email"
 
 	faktory "github.com/contribsys/faktory/client"
@@ -16,6 +20,11 @@ import (
 )
 
 func (suite *WorkerSuite) TestAnalyzedAuditJob() {
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
+	addressBook := email.AddressBook{MINTTeamEmail: "mint.team@local.test"}
+
 	worker := &Worker{
 		Store:  suite.testConfigs.Store,
 		Logger: suite.testConfigs.Logger,
@@ -31,6 +40,12 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	}
 	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
+
+	testTemplate, expectedSubject, expectedBody := resolvers.CreateTemplateCacheHelperWithInputTemplates(
+		newPlan.ModelName,
+		newPlan,
+		"{{.ModelName}}'s Test",
+		"{{.ModelPlanName}} {{.ModelPlanID}}")
 
 	// Add Documents
 	suite.createPlanDocument(plan)
@@ -76,6 +91,8 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_payments
 	payment, _ := resolvers.PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	// plan_data_exchange_approach
+	dea, _ := resolvers.PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 
 	// Update sections for ReadyForClearance
 	clearanceChanges := map[string]interface{}{
@@ -108,6 +125,44 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(opsErr)
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
+
+	// Update Plan Data Exchange Approach
+	_, deaErr := resolvers.PlanDataExchangeApproachUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		dea.ID,
+		map[string]interface{}{"isDataExchangeApproachComplete": true},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		mockEmailService,
+		mockEmailTemplateService,
+		addressBook,
+	)
+
+	mockEmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).
+		Return(testTemplate, nil).
+		AnyTimes()
+	expectedEmail := addressBook.MINTTeamEmail
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Any(),
+			gomock.Eq([]string{expectedEmail}),
+			gomock.Any(),
+			gomock.Eq(expectedSubject),
+			gomock.Any(),
+			gomock.Eq(expectedBody),
+		).
+		Times(1)
+
+	// Check that the plan data exchange approach was updated and marked complete
+	suite.NoError(deaErr)
+	suite.NotNil(dea)
+	suite.NotNil(dea.MarkedCompleteBy)
+	suite.NotNil(dea.MarkedCompleteDts)
 
 	// Test the job through a text executor, as we need the JID through the worker context
 	pool, err := faktory.NewPool(1)
