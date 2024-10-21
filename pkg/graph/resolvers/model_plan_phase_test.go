@@ -171,32 +171,19 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 	planBasics, err := suite.testConfigs.Store.PlanBasicsGetByModelPlanID(plan.ID)
 	suite.NoError(err)
 
-	completeIcipTime := time.Date(2024, 8, 10, 5, 0, 0, 0, time.UTC)
-	planBasics.CompleteICIP = &completeIcipTime
+	yesterday := time.Now().Add(time.Hour * -24)
+	tomorrow := time.Now().Add(time.Hour * 24)
 
-	clearanceStarts := time.Date(2024, 8, 14, 5, 0, 0, 0, time.UTC)
-	planBasics.ClearanceStarts = &clearanceStarts
-
-	clearanceEnds := time.Date(2025, 10, 16, 5, 0, 0, 0, time.UTC)
-	planBasics.ClearanceEnds = &clearanceEnds
-
-	announceModel := time.Date(2024, 10, 19, 5, 0, 0, 0, time.UTC)
-	planBasics.Announced = &announceModel
-
-	applicationStarts := time.Date(2024, 12, 1, 6, 0, 0, 0, time.UTC)
-	planBasics.ApplicationsStart = &applicationStarts
-
-	applicationEnds := time.Date(2025, 2, 28, 6, 0, 0, 0, time.UTC)
-	planBasics.ApplicationsEnd = &applicationEnds
-
-	performanceStarts := time.Date(2025, 4, 1, 5, 0, 0, 0, time.UTC)
-	planBasics.PerformancePeriodStarts = &performanceStarts
-
-	performanceEnds := time.Date(2029, 4, 1, 5, 0, 0, 0, time.UTC)
-	planBasics.PerformancePeriodEnds = &performanceEnds
-
-	wrapUpEnds := time.Date(2030, 7, 1, 5, 0, 0, 0, time.UTC)
-	planBasics.WrapUpEnds = &wrapUpEnds
+	// Set Plan Basics dates
+	planBasics.CompleteICIP = &tomorrow
+	planBasics.ClearanceStarts = &yesterday // This is the important date for this test! (Clearance Start has passed)
+	planBasics.ClearanceEnds = &tomorrow
+	planBasics.Announced = &tomorrow
+	planBasics.ApplicationsStart = &tomorrow
+	planBasics.ApplicationsEnd = &tomorrow
+	planBasics.PerformancePeriodStarts = &tomorrow
+	planBasics.PerformancePeriodEnds = &tomorrow
+	planBasics.WrapUpEnds = &tomorrow
 
 	phaseSuggestion, err := EvaluateSuggestedStatus(plan.Status, planBasics)
 	suite.NoError(err)
