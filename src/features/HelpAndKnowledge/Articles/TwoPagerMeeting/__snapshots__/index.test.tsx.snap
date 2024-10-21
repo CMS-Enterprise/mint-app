@@ -337,7 +337,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.
           </p>
           <div
-            class="usa-alert usa-alert--info icon-padding flex margin-y-3"
+            class="usa-alert usa-alert--info flex margin-y-3"
             data-testid="alert"
           >
             <div

@@ -436,7 +436,7 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
               </fieldset>
             </div>
             <div
-              class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-y-6"
+              class="usa-alert usa-alert--info usa-alert--slim flex margin-y-6"
               data-testid="alert"
             >
               <div
