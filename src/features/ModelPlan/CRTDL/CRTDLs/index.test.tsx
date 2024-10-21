@@ -3,7 +3,10 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetEchimpCrandTdlDocument } from 'gql/generated/graphql';
+import {
+  GetEchimpCrandTdlDocument,
+  GetEchimpCrandTdlQuery
+} from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -12,6 +15,33 @@ import MessageProvider from 'contexts/MessageContext';
 import CRTDLs from './index';
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+
+export type EchimpCrAndTdlsType =
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+
+const mockData: EchimpCrAndTdlsType[] = [
+  {
+    __typename: 'EChimpCR',
+    id: '123',
+    title: 'Echimp CR',
+    emergencyCrFlag: true,
+    sensitiveFlag: false,
+    crStatus: 'Open',
+    initiator: 'Initiator',
+    implementationDate: '2022-07-30T05:00:00Z',
+    relatedCrTdlNumbers: '123',
+    crSummary: {
+      __typename: 'TaggedContent',
+      rawContent: '<p>CR Summary</p>'
+    }
+  },
+  {
+    __typename: 'EChimpTDL',
+    id: '456',
+    title: 'Echimp TDL',
+    issuedDate: '2022-07-30T05:00:00Z'
+  }
+];
 
 const mocks = [
   {
@@ -22,23 +52,7 @@ const mocks = [
     result: {
       data: {
         modelPlan: {
-          echimpCRsAndTDLs: [
-            {
-              __typename: 'EChimpCR',
-              id: '123',
-              title: 'Echimp CR',
-              emergencyCrFlag: true,
-              sensitiveFlag: false,
-              crStatus: 'Open',
-              implementationDate: '2022-07-30T05:00:00Z'
-            },
-            {
-              __typename: 'EChimpTDL',
-              id: '456',
-              title: 'Echimp TDL',
-              issuedDate: '2022-07-30T05:00:00Z'
-            }
-          ]
+          echimpCRsAndTDLs: mockData
         }
       }
     }
