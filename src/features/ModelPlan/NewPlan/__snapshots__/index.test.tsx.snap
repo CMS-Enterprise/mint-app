@@ -54,7 +54,7 @@ exports[`New Model Plan page > matches snapshot 1`] = `
           Model name
         </h1>
         <div
-          class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-4"
+          class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
           data-testid="mandatory-fields-alert"
         >
           <div

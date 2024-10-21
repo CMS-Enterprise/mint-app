@@ -3,7 +3,7 @@
 exports[`Operation Solution Contact > matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="point-of-contact margin-top-6"
+    class="point-of-contact"
   >
     <p
       class="font-body-xs margin-top-0 margin-bottom-3"
