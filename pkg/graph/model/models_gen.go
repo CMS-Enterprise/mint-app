@@ -22,11 +22,22 @@ type Category struct {
 }
 
 type CommonMilestone struct {
-	ID          uuid.UUID          `json:"id"`
-	Key         CommonMilestoneKey `json:"key"`
-	Name        string             `json:"name"`
-	IsAdded     bool               `json:"isAdded"`
-	IsSuggested bool               `json:"isSuggested"`
+	ID              uuid.UUID          `json:"id"`
+	Key             CommonMilestoneKey `json:"key"`
+	Name            string             `json:"name"`
+	Description     string             `json:"description"`
+	IsAdded         bool               `json:"isAdded"`
+	IsSuggested     bool               `json:"isSuggested"`
+	CommonSolutions []*CommonSolution  `json:"commonSolutions"`
+}
+
+type CommonSolution struct {
+	ID          uuid.UUID         `json:"id"`
+	Key         CommonSolutionKey `json:"key"`
+	Name        string            `json:"name"`
+	Description string            `json:"description"`
+	IsAdded     bool              `json:"isAdded"`
+	IsSuggested bool              `json:"isSuggested"`
 }
 
 type CreateOperationalSolutionSubtaskInput struct {
@@ -64,11 +75,17 @@ type LaunchDarklySettings struct {
 }
 
 type Milestone struct {
-	ID                                 uuid.UUID `json:"id"`
-	CategoryName                       *string   `json:"categoryName,omitempty"`
-	WasAddedFromCommonMilestoneLibrary bool      `json:"wasAddedFromCommonMilestoneLibrary"`
-	Name                               string    `json:"name"`
-	Description                        string    `json:"description"`
+	ID                        uuid.UUID   `json:"id"`
+	Name                      string      `json:"name"`
+	Description               string      `json:"description"`
+	FacilitatedBy             *string     `json:"facilitatedBy,omitempty"`
+	NeedBy                    *time.Time  `json:"needBy,omitempty"`
+	Status                    string      `json:"status"`
+	RiskIndicator             string      `json:"riskIndicator"`
+	IsDraftMilestone          bool        `json:"isDraftMilestone"`
+	AddedFromMilestoneLibrary bool        `json:"addedFromMilestoneLibrary"`
+	Solutions                 []*Solution `json:"solutions"`
+	Category                  *Category   `json:"category,omitempty"`
 }
 
 // Represents model plan base translation data
@@ -672,6 +689,16 @@ type SendFeedbackEmailInput struct {
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
 }
 
+type Solution struct {
+	ID                uuid.UUID    `json:"id"`
+	Name              string       `json:"name"`
+	Description       string       `json:"description"`
+	FacilitatedBy     *string      `json:"facilitatedBy,omitempty"`
+	Status            string       `json:"status"`
+	RiskIndicator     string       `json:"riskIndicator"`
+	RelatedMilestones []*Milestone `json:"relatedMilestones"`
+}
+
 type TaskListSectionLockStatus struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
 	Section             models.TaskListSection     `json:"section"`
@@ -1190,6 +1217,47 @@ func (e *CommonMilestoneKey) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CommonMilestoneKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type CommonSolutionKey string
+
+const (
+	CommonSolutionKeySolutionOne CommonSolutionKey = "SOLUTION_ONE"
+	CommonSolutionKeySolutionTwo CommonSolutionKey = "SOLUTION_TWO"
+)
+
+var AllCommonSolutionKey = []CommonSolutionKey{
+	CommonSolutionKeySolutionOne,
+	CommonSolutionKeySolutionTwo,
+}
+
+func (e CommonSolutionKey) IsValid() bool {
+	switch e {
+	case CommonSolutionKeySolutionOne, CommonSolutionKeySolutionTwo:
+		return true
+	}
+	return false
+}
+
+func (e CommonSolutionKey) String() string {
+	return string(e)
+}
+
+func (e *CommonSolutionKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CommonSolutionKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CommonSolutionKey", str)
+	}
+	return nil
+}
+
+func (e CommonSolutionKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

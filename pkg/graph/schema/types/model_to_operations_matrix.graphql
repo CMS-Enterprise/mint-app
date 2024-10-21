@@ -38,8 +38,6 @@ type Solution {
 
   # Custom Resolvers
   relatedMilestones: [Milestone!]! # Can be empty, since you can have a solution with no milestones
-  addedFromMilestoneLibrary: Boolean! # TRUE if this is linked to a common milestone
-  solutions: [Solution!]!
 }
 
 # CommonMilestone represents a Milestone from the "Common Milestones" library

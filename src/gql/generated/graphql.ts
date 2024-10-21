@@ -270,6 +270,8 @@ export enum ClaimsBasedPayType {
 
 export type CommonMilestone = {
   __typename: 'CommonMilestone';
+  commonSolutions: Array<CommonSolution>;
+  description: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   isAdded: Scalars['Boolean']['output'];
   isSuggested: Scalars['Boolean']['output'];
@@ -280,6 +282,21 @@ export type CommonMilestone = {
 export enum CommonMilestoneKey {
   MILESTONE_A = 'MILESTONE_A',
   MILESTONE_B = 'MILESTONE_B'
+}
+
+export type CommonSolution = {
+  __typename: 'CommonSolution';
+  description: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isAdded: Scalars['Boolean']['output'];
+  isSuggested: Scalars['Boolean']['output'];
+  key: CommonSolutionKey;
+  name: Scalars['String']['output'];
+};
+
+export enum CommonSolutionKey {
+  SOLUTION_ONE = 'SOLUTION_ONE',
+  SOLUTION_TWO = 'SOLUTION_TWO'
 }
 
 export enum ComplexityCalculationLevelType {
@@ -663,11 +680,17 @@ export type LinkedExistingModel = ExistingModel | ModelPlan;
 
 export type Milestone = {
   __typename: 'Milestone';
-  categoryName?: Maybe<Scalars['String']['output']>;
+  addedFromMilestoneLibrary: Scalars['Boolean']['output'];
+  category?: Maybe<Category>;
   description: Scalars['String']['output'];
+  facilitatedBy?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
+  isDraftMilestone: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
-  wasAddedFromCommonMilestoneLibrary: Scalars['Boolean']['output'];
+  needBy?: Maybe<Scalars['Time']['output']>;
+  riskIndicator: Scalars['String']['output'];
+  solutions: Array<Solution>;
+  status: Scalars['String']['output'];
 };
 
 export enum MintUses {
@@ -851,6 +874,7 @@ export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<Category>;
   commonMilestones: Array<CommonMilestone>;
+  solutions: Array<Solution>;
 };
 
 export enum MonitoringFileType {
@@ -3438,6 +3462,17 @@ export type SendFeedbackEmailInput = {
   mintUsedForOther?: InputMaybe<Scalars['String']['input']>;
   systemEasyToUse?: InputMaybe<EaseOfUse>;
   systemEasyToUseOther?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Solution = {
+  __typename: 'Solution';
+  description: Scalars['String']['output'];
+  facilitatedBy?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
+  relatedMilestones: Array<Milestone>;
+  riskIndicator: Scalars['String']['output'];
+  status: Scalars['String']['output'];
 };
 
 export enum SortDirection {
