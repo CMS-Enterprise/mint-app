@@ -747,6 +747,10 @@ export const getHeaderText = (change: ChangeRecordType): string => {
     field => field.fieldName === 'status'
   )?.newTranslated;
 
+  const oldStatus = change.translatedFields.find(
+    field => field.fieldName === 'status'
+  )?.oldTranslated;
+
   const teamChangeType = change.translatedFields.find(
     field => field.fieldName === 'team_roles'
   )?.changeType;
@@ -759,7 +763,11 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       headerText = i18next.t(`changeHistory:planStatusUpdate`);
       break;
     case 'taskListStatusUpdate':
-      if (status === 'In progress') {
+      if (
+        status === 'In progress' &&
+        oldStatus !== 'Complete' &&
+        oldStatus !== 'Ready for review'
+      ) {
         headerText = i18next.t(`changeHistory:taskStartedUpdate`);
       } else {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
