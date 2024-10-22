@@ -12,10 +12,10 @@ type Milestone {
   id: UUID!
   name: String!
   description: String! # Not sure if this is actually needed - I think there might only be descriptions on Milestones in the library? (CommonMilestone)
-  facilitatedBy: String # TODO: Make enum for `MilestoneFacilitator` (TBD if that's the same as `SolutionFacilitator`)
+  facilitatedBy: MTOFacilitator
   needBy: Time
-  status: String! # TODO: Make enum for `MilestoneStatus`
-  riskIndicator: String! # TODO: Make enum for `MTORiskIndicator`
+  status: MilestoneStatus!
+  riskIndicator: MTORiskIndicator
   isDraftMilestone: Boolean!
 
   # Custom Resolvers
@@ -32,12 +32,49 @@ type Solution {
   id: UUID!
   name: String!
   description: String!
-  facilitatedBy: String # TODO: Make enum for `SolutionFacilitator` (TBD if that's the same as `MilestoneFacilitator`)
-  status: String! # TODO: Make enum for `SolutionStatus`
-  riskIndicator: String! # TODO: Make enum for `MTORiskIndicator`
+  facilitatedBy: MTOFacilitator
+  status: SolutionStatus!
+  riskIndicator: MTORiskIndicator
 
   # Custom Resolvers
   relatedMilestones: [Milestone!]! # Can be empty, since you can have a solution with no milestones
+}
+
+enum MTOFacilitator {
+  MODEL_TEAM
+  MODEL_LEAD
+  IT_LEAD
+  SOLUTION_ARCHITECT
+  IT_SYSTEM_TEAM_OR_PRODUCT_OWNER
+  PARTICIPANTS
+  APPLICATION_SUPPORT_CONTRACTOR
+  IMPLEMENTATION_CONTRACTOR
+  EVALUATION_CONTRACTOR
+  QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
+  LEARNING_CONTRACTOR
+  MONITORING_CONTRACTOR
+  CONTRACTING_OFFICERS_REPRESENTATIVE
+  LEARNING_AND_DIFFUSION_GROUP
+  RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP
+  OTHER
+}
+
+enum MTORiskIndicator {
+  ON_TRACK
+  OFF_TRACK
+  AT_RISK
+}
+
+# TODO Determine what these should actually be with Zoë & Natalie
+enum MilestoneStatus {
+  MILESTONE_STATUS_ONE
+  MILESTONE_STATUS_TWO
+}
+
+# TODO Determine what these should actually be with Zoë & Natalie
+enum SolutionStatus {
+  SOLN_STATUS_ONE
+  SOLN_STATUS_TWO
 }
 
 # CommonMilestone represents a Milestone from the "Common Milestones" library

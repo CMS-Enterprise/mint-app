@@ -75,17 +75,17 @@ type LaunchDarklySettings struct {
 }
 
 type Milestone struct {
-	ID                        uuid.UUID   `json:"id"`
-	Name                      string      `json:"name"`
-	Description               string      `json:"description"`
-	FacilitatedBy             *string     `json:"facilitatedBy,omitempty"`
-	NeedBy                    *time.Time  `json:"needBy,omitempty"`
-	Status                    string      `json:"status"`
-	RiskIndicator             string      `json:"riskIndicator"`
-	IsDraftMilestone          bool        `json:"isDraftMilestone"`
-	AddedFromMilestoneLibrary bool        `json:"addedFromMilestoneLibrary"`
-	Solutions                 []*Solution `json:"solutions"`
-	Category                  *Category   `json:"category,omitempty"`
+	ID                        uuid.UUID         `json:"id"`
+	Name                      string            `json:"name"`
+	Description               string            `json:"description"`
+	FacilitatedBy             *MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	NeedBy                    *time.Time        `json:"needBy,omitempty"`
+	Status                    MilestoneStatus   `json:"status"`
+	RiskIndicator             *MTORiskIndicator `json:"riskIndicator,omitempty"`
+	IsDraftMilestone          bool              `json:"isDraftMilestone"`
+	AddedFromMilestoneLibrary bool              `json:"addedFromMilestoneLibrary"`
+	Solutions                 []*Solution       `json:"solutions"`
+	Category                  *Category         `json:"category,omitempty"`
 }
 
 // Represents model plan base translation data
@@ -690,13 +690,13 @@ type SendFeedbackEmailInput struct {
 }
 
 type Solution struct {
-	ID                uuid.UUID    `json:"id"`
-	Name              string       `json:"name"`
-	Description       string       `json:"description"`
-	FacilitatedBy     *string      `json:"facilitatedBy,omitempty"`
-	Status            string       `json:"status"`
-	RiskIndicator     string       `json:"riskIndicator"`
-	RelatedMilestones []*Milestone `json:"relatedMilestones"`
+	ID                uuid.UUID         `json:"id"`
+	Name              string            `json:"name"`
+	Description       string            `json:"description"`
+	FacilitatedBy     *MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	Status            SolutionStatus    `json:"status"`
+	RiskIndicator     *MTORiskIndicator `json:"riskIndicator,omitempty"`
+	RelatedMilestones []*Milestone      `json:"relatedMilestones"`
 }
 
 type TaskListSectionLockStatus struct {
@@ -1700,6 +1700,159 @@ func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type MTOFacilitator string
+
+const (
+	MTOFacilitatorModelTeam                            MTOFacilitator = "MODEL_TEAM"
+	MTOFacilitatorModelLead                            MTOFacilitator = "MODEL_LEAD"
+	MTOFacilitatorItLead                               MTOFacilitator = "IT_LEAD"
+	MTOFacilitatorSolutionArchitect                    MTOFacilitator = "SOLUTION_ARCHITECT"
+	MTOFacilitatorItSystemTeamOrProductOwner           MTOFacilitator = "IT_SYSTEM_TEAM_OR_PRODUCT_OWNER"
+	MTOFacilitatorParticipants                         MTOFacilitator = "PARTICIPANTS"
+	MTOFacilitatorApplicationSupportContractor         MTOFacilitator = "APPLICATION_SUPPORT_CONTRACTOR"
+	MTOFacilitatorImplementationContractor             MTOFacilitator = "IMPLEMENTATION_CONTRACTOR"
+	MTOFacilitatorEvaluationContractor                 MTOFacilitator = "EVALUATION_CONTRACTOR"
+	MTOFacilitatorQualityMeasuresDevelopmentContractor MTOFacilitator = "QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR"
+	MTOFacilitatorLearningContractor                   MTOFacilitator = "LEARNING_CONTRACTOR"
+	MTOFacilitatorMonitoringContractor                 MTOFacilitator = "MONITORING_CONTRACTOR"
+	MTOFacilitatorContractingOfficersRepresentative    MTOFacilitator = "CONTRACTING_OFFICERS_REPRESENTATIVE"
+	MTOFacilitatorLearningAndDiffusionGroup            MTOFacilitator = "LEARNING_AND_DIFFUSION_GROUP"
+	MTOFacilitatorResearchAndRapidCycleEvaluationGroup MTOFacilitator = "RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP"
+	MTOFacilitatorOther                                MTOFacilitator = "OTHER"
+)
+
+var AllMTOFacilitator = []MTOFacilitator{
+	MTOFacilitatorModelTeam,
+	MTOFacilitatorModelLead,
+	MTOFacilitatorItLead,
+	MTOFacilitatorSolutionArchitect,
+	MTOFacilitatorItSystemTeamOrProductOwner,
+	MTOFacilitatorParticipants,
+	MTOFacilitatorApplicationSupportContractor,
+	MTOFacilitatorImplementationContractor,
+	MTOFacilitatorEvaluationContractor,
+	MTOFacilitatorQualityMeasuresDevelopmentContractor,
+	MTOFacilitatorLearningContractor,
+	MTOFacilitatorMonitoringContractor,
+	MTOFacilitatorContractingOfficersRepresentative,
+	MTOFacilitatorLearningAndDiffusionGroup,
+	MTOFacilitatorResearchAndRapidCycleEvaluationGroup,
+	MTOFacilitatorOther,
+}
+
+func (e MTOFacilitator) IsValid() bool {
+	switch e {
+	case MTOFacilitatorModelTeam, MTOFacilitatorModelLead, MTOFacilitatorItLead, MTOFacilitatorSolutionArchitect, MTOFacilitatorItSystemTeamOrProductOwner, MTOFacilitatorParticipants, MTOFacilitatorApplicationSupportContractor, MTOFacilitatorImplementationContractor, MTOFacilitatorEvaluationContractor, MTOFacilitatorQualityMeasuresDevelopmentContractor, MTOFacilitatorLearningContractor, MTOFacilitatorMonitoringContractor, MTOFacilitatorContractingOfficersRepresentative, MTOFacilitatorLearningAndDiffusionGroup, MTOFacilitatorResearchAndRapidCycleEvaluationGroup, MTOFacilitatorOther:
+		return true
+	}
+	return false
+}
+
+func (e MTOFacilitator) String() string {
+	return string(e)
+}
+
+func (e *MTOFacilitator) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MTOFacilitator(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MTOFacilitator", str)
+	}
+	return nil
+}
+
+func (e MTOFacilitator) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MTORiskIndicator string
+
+const (
+	MTORiskIndicatorOnTrack  MTORiskIndicator = "ON_TRACK"
+	MTORiskIndicatorOffTrack MTORiskIndicator = "OFF_TRACK"
+	MTORiskIndicatorAtRisk   MTORiskIndicator = "AT_RISK"
+)
+
+var AllMTORiskIndicator = []MTORiskIndicator{
+	MTORiskIndicatorOnTrack,
+	MTORiskIndicatorOffTrack,
+	MTORiskIndicatorAtRisk,
+}
+
+func (e MTORiskIndicator) IsValid() bool {
+	switch e {
+	case MTORiskIndicatorOnTrack, MTORiskIndicatorOffTrack, MTORiskIndicatorAtRisk:
+		return true
+	}
+	return false
+}
+
+func (e MTORiskIndicator) String() string {
+	return string(e)
+}
+
+func (e *MTORiskIndicator) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MTORiskIndicator(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MTORiskIndicator", str)
+	}
+	return nil
+}
+
+func (e MTORiskIndicator) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MilestoneStatus string
+
+const (
+	MilestoneStatusMilestoneStatusOne MilestoneStatus = "MILESTONE_STATUS_ONE"
+	MilestoneStatusMilestoneStatusTwo MilestoneStatus = "MILESTONE_STATUS_TWO"
+)
+
+var AllMilestoneStatus = []MilestoneStatus{
+	MilestoneStatusMilestoneStatusOne,
+	MilestoneStatusMilestoneStatusTwo,
+}
+
+func (e MilestoneStatus) IsValid() bool {
+	switch e {
+	case MilestoneStatusMilestoneStatusOne, MilestoneStatusMilestoneStatusTwo:
+		return true
+	}
+	return false
+}
+
+func (e MilestoneStatus) String() string {
+	return string(e)
+}
+
+func (e *MilestoneStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MilestoneStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MilestoneStatus", str)
+	}
+	return nil
+}
+
+func (e MilestoneStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type MintUses string
 
 const (
@@ -2587,6 +2740,47 @@ func (e *SelectionMethodType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SelectionMethodType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SolutionStatus string
+
+const (
+	SolutionStatusSolnStatusOne SolutionStatus = "SOLN_STATUS_ONE"
+	SolutionStatusSolnStatusTwo SolutionStatus = "SOLN_STATUS_TWO"
+)
+
+var AllSolutionStatus = []SolutionStatus{
+	SolutionStatusSolnStatusOne,
+	SolutionStatusSolnStatusTwo,
+}
+
+func (e SolutionStatus) IsValid() bool {
+	switch e {
+	case SolutionStatusSolnStatusOne, SolutionStatusSolnStatusTwo:
+		return true
+	}
+	return false
+}
+
+func (e SolutionStatus) String() string {
+	return string(e)
+}
+
+func (e *SolutionStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SolutionStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SolutionStatus", str)
+	}
+	return nil
+}
+
+func (e SolutionStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

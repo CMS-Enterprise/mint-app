@@ -678,20 +678,50 @@ export type LaunchDarklySettings = {
 /** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
 export type LinkedExistingModel = ExistingModel | ModelPlan;
 
+export enum MtoFacilitator {
+  APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
+  CONTRACTING_OFFICERS_REPRESENTATIVE = 'CONTRACTING_OFFICERS_REPRESENTATIVE',
+  EVALUATION_CONTRACTOR = 'EVALUATION_CONTRACTOR',
+  IMPLEMENTATION_CONTRACTOR = 'IMPLEMENTATION_CONTRACTOR',
+  IT_LEAD = 'IT_LEAD',
+  IT_SYSTEM_TEAM_OR_PRODUCT_OWNER = 'IT_SYSTEM_TEAM_OR_PRODUCT_OWNER',
+  LEARNING_AND_DIFFUSION_GROUP = 'LEARNING_AND_DIFFUSION_GROUP',
+  LEARNING_CONTRACTOR = 'LEARNING_CONTRACTOR',
+  MODEL_LEAD = 'MODEL_LEAD',
+  MODEL_TEAM = 'MODEL_TEAM',
+  MONITORING_CONTRACTOR = 'MONITORING_CONTRACTOR',
+  OTHER = 'OTHER',
+  PARTICIPANTS = 'PARTICIPANTS',
+  QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP = 'RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP',
+  SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
+}
+
+export enum MtoRiskIndicator {
+  AT_RISK = 'AT_RISK',
+  OFF_TRACK = 'OFF_TRACK',
+  ON_TRACK = 'ON_TRACK'
+}
+
 export type Milestone = {
   __typename: 'Milestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
   category?: Maybe<Category>;
   description: Scalars['String']['output'];
-  facilitatedBy?: Maybe<Scalars['String']['output']>;
+  facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   isDraftMilestone: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
-  riskIndicator: Scalars['String']['output'];
+  riskIndicator?: Maybe<MtoRiskIndicator>;
   solutions: Array<Solution>;
-  status: Scalars['String']['output'];
+  status: MilestoneStatus;
 };
+
+export enum MilestoneStatus {
+  MILESTONE_STATUS_ONE = 'MILESTONE_STATUS_ONE',
+  MILESTONE_STATUS_TWO = 'MILESTONE_STATUS_TWO'
+}
 
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
@@ -3468,13 +3498,18 @@ export type SendFeedbackEmailInput = {
 export type Solution = {
   __typename: 'Solution';
   description: Scalars['String']['output'];
-  facilitatedBy?: Maybe<Scalars['String']['output']>;
+  facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   name: Scalars['String']['output'];
   relatedMilestones: Array<Milestone>;
-  riskIndicator: Scalars['String']['output'];
-  status: Scalars['String']['output'];
+  riskIndicator?: Maybe<MtoRiskIndicator>;
+  status: SolutionStatus;
 };
+
+export enum SolutionStatus {
+  SOLN_STATUS_ONE = 'SOLN_STATUS_ONE',
+  SOLN_STATUS_TWO = 'SOLN_STATUS_TWO'
+}
 
 export enum SortDirection {
   ASC = 'ASC',
