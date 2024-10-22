@@ -996,10 +996,14 @@ The Model team will receive an implementation milestone schedule that identifies
             {
               link: '/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
               external: false
+            },
+            {
+              link: '/help-and-knowledge/operational-solutions?solution=model-space&section=about',
+              external: false
             }
           ],
           description:
-            'ISP supplies the capabilities below through: <link1>Centralized Data Exchange (CDX)</link1>, <link2>Health Data Reporting (HDR)</link2>, and <link3>Expanded Data Feedback Reporting (eDFR)</link3>. You can work with BSG to configure the specific capabilities you need for your model.'
+            'ISP supplies the capabilities below through: <link1>Centralized Data Exchange (CDX)</link1>, <link2>Health Data Reporting (HDR)</link2>, <link3>Expanded Data Feedback Reporting (eDFR)</link3>, and <link4>Model Space</link4>. You can work with BSG to configure the specific capabilities you need for your model.'
         },
         {
           header: 'Access management',
