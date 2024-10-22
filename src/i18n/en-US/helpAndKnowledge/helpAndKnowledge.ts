@@ -1975,7 +1975,7 @@ There are two types of CRs:`,
     about: {
       description: `Model Space is a secure analytic platform that enables model teams and their contractors to access, share, and analyze data. As part of the <link1>Innovation Support Platform (ISP)</link1>, Model Space provides a single, secure platform for data-related tasks. It offers access to shared resources and technical assistance. Leveraging Databricks, a secure cloud-based data platform, each Model team and their contractor receives a dedicated space in Databricks, accessible only to them via a CMS user account.
 
-      Model Space offers model teams and their contractors templates or Databricks notebooks of prewritten code for completing analysis, such as computing quality measures, attribution, or payment. You can save, reuse, and edit the Databricks notebooks based on your needs.`,
+Model Space offers model teams and their contractors templates or Databricks notebooks of prewritten code for completing analysis, such as computing quality measures, attribution, or payment. You can save, reuse, and edit the Databricks notebooks based on your needs.`,
       links: [
         {
           external: false,
@@ -2022,7 +2022,7 @@ There are two types of CRs:`,
         {
           header: 'Start using Model Space',
           description: 'Access your Model Space in Databricks.',
-          description2: '<link1>Go to Databricks</link1>',
+          description2: ' <link1>Go to Databricks</link1>',
           links: [
             {
               external: true,
