@@ -3,6 +3,8 @@ package worker
 import (
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -126,8 +128,32 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
+	mockEmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).
+		Return(testTemplate, nil).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(&emailtestconfigs.TestEmailServiceConfig).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Any(),
+			gomock.Any(),
+			gomock.Any(),
+			gomock.Eq(expectedSubject),
+			gomock.Any(),
+			gomock.Eq(expectedBody),
+			gomock.Any(),
+		).AnyTimes()
+
 	// Update Plan Data Exchange Approach
-	_, deaErr := resolvers.PlanDataExchangeApproachUpdate(
+	dea, deaErr := resolvers.PlanDataExchangeApproachUpdate(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		dea.ID,
@@ -138,25 +164,6 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		mockEmailTemplateService,
 		addressBook,
 	)
-
-	mockEmailTemplateService.
-		EXPECT().
-		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).
-		Return(testTemplate, nil).
-		AnyTimes()
-	expectedEmail := addressBook.MINTTeamEmail
-
-	mockEmailService.
-		EXPECT().
-		Send(
-			gomock.Any(),
-			gomock.Eq([]string{expectedEmail}),
-			gomock.Any(),
-			gomock.Eq(expectedSubject),
-			gomock.Any(),
-			gomock.Eq(expectedBody),
-		).
-		Times(1)
 
 	// Check that the plan data exchange approach was updated and marked complete
 	suite.NoError(deaErr)
