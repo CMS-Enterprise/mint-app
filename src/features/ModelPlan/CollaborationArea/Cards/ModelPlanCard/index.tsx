@@ -25,6 +25,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
+import TaskListSectionKeys from 'constants/enums';
 import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
 
@@ -42,6 +43,9 @@ export const getLastModifiedSection = (
   if (!modelPlan) return null;
   let latestSection: any;
   getKeys(modelPlan).forEach(section => {
+    if (!TaskListSectionKeys.includes(section)) {
+      return;
+    }
     if (
       modelPlan[section] &&
       (

@@ -82,7 +82,7 @@ func PlanDataExchangeApproachUpdate(
 					deaChangedToComplete = true
 					existing.MarkedCompleteBy = &principal.Account().ID
 					existing.MarkedCompleteDts = models.TimePointer(time.Now().UTC())
-					existing.Status = models.DataExchangeApproachStatusCompleted
+					existing.Status = models.DataExchangeApproachStatusComplete
 				} else if !isSettingToComplete {
 					existing.MarkedCompleteBy = nil
 					existing.MarkedCompleteDts = nil
