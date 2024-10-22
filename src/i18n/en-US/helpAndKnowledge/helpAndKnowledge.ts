@@ -1989,21 +1989,25 @@ Model Space offers model teams and their contractors templates or Databricks not
       components: [
         {
           header: 'Capabilities',
-          level: 'h4',
+          level: 'h3',
           items: [
             'Access data from the Integrated Data Repository Cloud (IDR-C)',
             'Add third-party data and link it to CMS data',
             'Complete calculations such as attribution, quality measures, payment, etc.',
-            'See the details of the software that the ISP contractor developed for the model, if relevant (e.g., supply visibility into how ISP computes a claims-based quality measurement).',
-            '<link1>View more information about Model Space on Confluence</link1>'
-          ],
+            'See the details of the software that the ISP contractor developed for the model, if relevant (e.g., supply visibility into how ISP computes a claims-based quality measurement).'
+          ]
+        },
+        {
+          description:
+            '<link1>View more information about Model Space on Confluence</link1>',
+          header: '',
+          items: [],
           links: [
             {
               link: `https://confluenceent.cms.gov/display/ISPPS/Model+Space+Main+Page`,
               external: true
             }
-          ],
-          hideBullet: [1]
+          ]
         }
       ]
     },
