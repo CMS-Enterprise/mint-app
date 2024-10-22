@@ -164,6 +164,8 @@ export const echimpCRsAndTDLsMock = [
     result: {
       data: {
         modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
           echimpCRsAndTDLs: echimpCRandTDLMockData
         }
       }

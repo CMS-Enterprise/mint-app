@@ -4,6 +4,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
+import { echimpCRsAndTDLsMock } from 'tests/mock/general';
 import allMocks, {
   modelID,
   operationalNeedsMock,
@@ -35,7 +36,8 @@ describe('ShareExportModal', () => {
               ...allMocks,
               ...summaryMock,
               ...operationalNeedsMock,
-              ...possibleOperationalSolutionDataMocks
+              ...possibleOperationalSolutionDataMocks,
+              ...echimpCRsAndTDLsMock
             ]}
             addTypename={false}
           >
@@ -91,7 +93,8 @@ describe('ShareExportModal', () => {
               ...allMocks,
               ...summaryMock,
               ...operationalNeedsMock,
-              ...possibleOperationalSolutionDataMocks
+              ...possibleOperationalSolutionDataMocks,
+              ...echimpCRsAndTDLsMock
             ]}
             addTypename={false}
           >
