@@ -565,7 +565,17 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Model Space',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
-    }
+    },
+    systemOwner: {
+      name: 'Business Services Group',
+      system: 'Center for Medicare and Medicaid Innovation'
+    },
+    contractors: [
+      {
+        name: 'Global Alliant',
+        system: 'Innovation Support Platform (ISP)'
+      }
+    ]
   },
   {
     enum: OperationalSolutionKey.MIDS,
