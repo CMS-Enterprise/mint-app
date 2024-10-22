@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   ClaimsBasedPayType,
   FrequencyType,
@@ -109,11 +114,11 @@ describe('Model Plan -- Recover', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
-      ).toBeChecked();
-    });
+    await waitForElementToBeRemoved(() =>
+      screen.getByTestId('payment-payment-start-date-note-add-note-toggle')
+    );
+
+    expect(asFragment()).toMatchSnapshot();
 
     expect(asFragment()).toMatchSnapshot();
   });
