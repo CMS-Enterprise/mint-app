@@ -31,54 +31,46 @@ clearanceMockData.beneficiaries.id = beneficiaryID;
 
 type GetClearanceStatusesType = GetClearanceStatusesQuery['modelPlan'];
 
+const repeatedMockData = {
+  id: '1234',
+  readyForClearanceByUserAccount: null,
+  readyForClearanceDts: null,
+  status: TaskStatus.READY
+};
+
 const GetClearanceStatusesMockData: GetClearanceStatusesType = {
   __typename: 'ModelPlan',
   id: modelID,
   basics: {
     __typename: 'PlanBasics',
-    id: '1234',
-    readyForClearanceByUserAccount: null,
-    readyForClearanceDts: null,
-    status: TaskStatus.READY
+    ...repeatedMockData
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
-    id: '1234',
-    readyForClearanceByUserAccount: null,
-    readyForClearanceDts: null,
-    status: TaskStatus.READY
+    ...repeatedMockData
   },
   participantsAndProviders: {
     __typename: 'PlanParticipantsAndProviders',
-    id: '1234',
-    readyForClearanceByUserAccount: null,
-    readyForClearanceDts: null,
-    status: TaskStatus.READY
+    ...repeatedMockData
   },
   beneficiaries: {
     __typename: 'PlanBeneficiaries',
-    id: beneficiaryID,
+    id: '1234',
     readyForClearanceByUserAccount: {
       __typename: 'UserAccount',
       id: '123',
       commonName: 'Jerry Seinfeld'
     },
-    readyForClearanceDts: null,
+    readyForClearanceDts: '2022-10-24T19:32:24.412662Z',
     status: TaskStatus.READY_FOR_CLEARANCE
   },
   opsEvalAndLearning: {
     __typename: 'PlanOpsEvalAndLearning',
-    id: '1234',
-    readyForClearanceByUserAccount: null,
-    readyForClearanceDts: null,
-    status: TaskStatus.READY
+    ...repeatedMockData
   },
   payments: {
     __typename: 'PlanPayments',
-    id: '1234',
-    readyForClearanceByUserAccount: null,
-    readyForClearanceDts: null,
-    status: TaskStatus.READY
+    ...repeatedMockData
   },
   prepareForClearance: {
     __typename: 'PrepareForClearance',
