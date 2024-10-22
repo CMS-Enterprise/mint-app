@@ -16,7 +16,10 @@ import Sinon from 'sinon';
 import { benficiaryMocks } from 'tests/mock/readonly';
 import setup from 'tests/util';
 
-import { initialPrepareForClearanceValues } from '../Checklist';
+import {
+  initialClearanceFormValues,
+  initialPrepareForClearanceValues
+} from '../Checklist';
 
 import ClearanceReview from '.';
 
@@ -37,9 +40,30 @@ const clearanceMock = [
     result: {
       data: {
         modelPlan: {
+          __typename: 'ModelPlan',
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
-          ...clearanceMockData,
+          basics: { __typename: 'PlanBasics', ...initialClearanceFormValues },
+          generalCharacteristics: {
+            __typename: 'PlanGeneralCharacteristics',
+            ...initialClearanceFormValues
+          },
+          participantsAndProviders: {
+            __typename: 'PlanParticipantsAndProviders',
+            ...initialClearanceFormValues
+          },
+          beneficiaries: {
+            __typename: 'PlanBeneficiaries',
+            ...initialClearanceFormValues
+          },
+          opsEvalAndLearning: {
+            __typename: 'PlanOpsEvalAndLearning',
+            ...initialClearanceFormValues
+          },
+          payments: {
+            __typename: 'PlanPayments',
+            ...initialClearanceFormValues
+          },
           prepareForClearance: {
             status: PrepareForClearanceStatus.READY
           }
