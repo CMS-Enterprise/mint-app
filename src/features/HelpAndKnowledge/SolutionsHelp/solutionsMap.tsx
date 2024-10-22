@@ -558,6 +558,16 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
+    enum: OperationalSolutionKey.MODEL_SPACE,
+    key: 'modelSpace',
+    route: 'model-space',
+    categories: [OperationalSolutionCategories.DATA],
+    name: 'Model Space',
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
     enum: OperationalSolutionKey.MIDS,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
