@@ -1970,6 +1970,68 @@ There are two types of CRs:`,
         }
       ]
     }
+  },
+  modelSpace: {
+    about: {
+      description: `Model Space is a secure analytic platform that enables model teams and their contractors to access, share, and analyze data. As part of the <link1>Innovation Support Platform (ISP)</link1>, Model Space provides a single, secure platform for data-related tasks. It offers access to shared resources and technical assistance. Leveraging Databricks, a secure cloud-based data platform, each Model team and their contractor receives a dedicated space in Databricks, accessible only to them via a CMS user account.
+
+      Model Space offers model teams and their contractors templates or Databricks notebooks of prewritten code for completing analysis, such as computing quality measures, attribution, or payment. You can save, reuse, and edit the Databricks notebooks based on your needs.`,
+      links: [
+        {
+          external: false,
+          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+        }
+      ],
+      components: [
+        {
+          header: 'Capabilities',
+          level: 'h4',
+          items: [
+            'Access data from the Integrated Data Repository Cloud (IDR-C)',
+            'Add third-party data and link it to CMS data',
+            'Complete calculations such as attribution, quality measures, payment, etc.',
+            'See the details of the software that the ISP contractor developed for the model, if relevant (e.g., supply visibility into how ISP computes a claims-based quality measurement).',
+            '<link1>View more information about Model Space on Confluence</link1>'
+          ],
+          links: [
+            {
+              link: `https://confluenceent.cms.gov/display/ISPPS/Model+Space+Main+Page`,
+              external: true
+            }
+          ],
+          hideBullet: [1]
+        }
+      ]
+    },
+    timeline: {
+      description: `It typically takes two weeks set up a new workspace in Model Space.`,
+      items: [
+        {
+          header: 'Reach out to the Product Owners',
+          description: `If you're interested in using Model Space or want to learn more about the system, please get in touch with Product Owners Zach Nall and Curtis Naumann.`
+        },
+        {
+          header: 'Meet to understand requirements',
+          description: `ISP will configure Model Space according to the model contractor’s requirements. Model Space is in the CMS Amazon Web Services (AWS) Cloud, and your workspace will be made in Databricks.`
+        },
+        {
+          header: 'Setup occurs',
+          description:
+            'ISP will configure Model Space according to the model contractor’s requirements. Model Space is in the CMS Amazon Web Services (AWS) Cloud, and your workspace will be made in Databricks.'
+        },
+        {
+          header: 'Start using Model Space',
+          description: 'Access your Model Space in Databricks.',
+          description2: '<link1>Go to Databricks</link1>',
+          links: [
+            {
+              external: true,
+              link: `https://accounts.cloud.databricks.com/login?tuuid=1ebf46da-d4b7-4617-8a64-ed7ec69f3dac`
+            }
+          ]
+        }
+      ]
+    }
   }
 };
 
