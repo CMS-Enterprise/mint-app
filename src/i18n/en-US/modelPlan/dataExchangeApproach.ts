@@ -16,6 +16,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     sublabel:
       'Please select all that apply. Depending on your selections, there may be follow-up questions.',
     multiSelectLabel: 'Selected data types',
+    pageLabel: 'Data collection',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     order: 1.01,
@@ -55,6 +56,17 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     readonlyOptions: {
       REPORTS_FROM_PARTICIPANTS: 'Reports from participants',
       OTHER: 'Other'
+    },
+    optionsRelatedInfo: {
+      REPORTS_FROM_PARTICIPANTS: 'dataToCollectFromParticipantsReportsDetails',
+      OTHER: 'dataToCollectFromParticipantsOther'
+    },
+    tooltips: {
+      FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES:
+        '(e.g., reduce FFS payment)',
+      LEARNING_SYSTEM_METRICS: '(e.g., # of learning events)',
+      PARTICIPANT_REPORTED_DATA: '(e.g., unique model metrics)',
+      REPORTS_FROM_PARTICIPANTS: '(e.g., health equity report)'
     }
   },
   dataToCollectFromParticipantsReportsDetails: {
@@ -85,8 +97,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     dbField: 'data_will_not_be_collected_from_participants',
     label: 'Data will not be collected from participants',
     dataType: TranslationDataType.BOOLEAN,
-    formType: TranslationFormType.CHECKBOX,
+    formType: TranslationFormType.RADIO, // tecnically checkbox but behaves as radio - used for readonly
     order: 1.04,
+    hideIfFalsy: true,
     options: {
       true: 'Yes',
       false: 'No'
@@ -108,6 +121,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     goField: 'DataToSendToParticipants',
     dbField: 'data_to_send_to_participants',
     label: 'What data will you send to participants?',
+    pageLabel: 'Sending data',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 1.06,
@@ -141,6 +155,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     goField: 'DoesNeedToMakeMultiPayerDataAvailable',
     dbField: 'does_need_to_make_multi_payer_data_available',
     label: 'Do you need to make multi-payer data available to participants?',
+    pageLabel: 'Multi-payer data',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 2.01,
@@ -190,6 +205,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     dbField: 'does_need_to_collect_and_aggregate_multi_source_data',
     label:
       'Do you need to collect and aggregate multi-source data for analyses by the model team and implementation contractor?',
+    pageLabel: 'Multi-source collection and aggregation',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 2.04,
@@ -258,6 +274,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
       'Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?',
     sublabel:
       'If so, please describe. If you aren’t sure, it is OK to leave blank.',
+    pageLabel: 'New methodologies',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.01,
@@ -293,6 +310,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     goField: 'AdditionalDataExchangeConsiderationsDescription',
     dbField: 'additional_data_exchange_considerations_description',
     label: 'Please describe any additional data exchange considerations.',
+    pageLabel: 'Additional considerations',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 3.04
@@ -310,7 +328,8 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     options: {
       true: 'This data exchange approach is complete.',
       false: 'No'
-    }
+    },
+    hideFromReadonly: true
   },
   markedCompleteBy: {
     gqlField: 'markedCompleteBy',

@@ -61,6 +61,11 @@ const ReadOnlySection = <
     return null;
   }
 
+  // Dont render if config hideIfFalsy and value is falsy - ex: dataWillNotBeCollectedFromParticipants
+  if (config.hideIfFalsy && !value) {
+    return null;
+  }
+
   // Checks if current view is filtered, then check if question belongs to filter group
   // If not, return null
   if (
