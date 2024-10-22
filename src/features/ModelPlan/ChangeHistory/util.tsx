@@ -637,10 +637,6 @@ export const separateStatusChanges = (
       return;
     }
 
-    if (change.tableName === TableName.PLAN_DATA_EXCHANGE_APPROACH) {
-      console.log(change);
-    }
-
     // Create a new change record for the other changes without the status change
     const otherChanges = { ...change };
     const otherTranslatedFields = [...change.translatedFields];

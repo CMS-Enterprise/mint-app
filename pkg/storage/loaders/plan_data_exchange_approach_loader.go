@@ -36,6 +36,6 @@ func batchPlanDataExchangeApproachByModelPlanID(ctx context.Context, modelPlanID
 	getKeyFunc := func(data *models.PlanDataExchangeApproach) uuid.UUID {
 		return data.ModelPlanID
 	}
-	return oneToOneDataLoaderFunc(modelPlanIDs, data, getKeyFunc)
+	return oneToOneDataLoader(modelPlanIDs, data, getKeyFunc)
 
 }

@@ -38,6 +38,6 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 		return data.ModelPlanID
 	}
 
-	return oneToOneDataLoaderFunc(modelPlanIDs, data, getKeyFunc)
+	return oneToOneDataLoader(modelPlanIDs, data, getKeyFunc)
 
 }
