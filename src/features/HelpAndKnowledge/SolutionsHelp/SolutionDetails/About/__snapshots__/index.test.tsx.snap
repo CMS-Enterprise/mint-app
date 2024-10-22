@@ -2655,63 +2655,73 @@ Model Space offers model teams and their contractors templates or Databricks not
       <div
         class="margin-top-4"
       >
-        <h4
-          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        <h3
+          class="margin-bottom-2"
         >
           Capabilities
-        </h4>
+        </h3>
         <ul
           class="padding-left-4 margin-top-0"
         >
           <li
-            class=""
+            class="list-item"
           >
             Access data from the Integrated Data Repository Cloud (IDR-C)
           </li>
           <li
-            class="list-style-none"
+            class="list-item"
           >
             Add third-party data and link it to CMS data
           </li>
           <li
-            class=""
+            class="list-item"
           >
             Complete calculations such as attribution, quality measures, payment, etc.
           </li>
           <li
-            class=""
+            class="list-item"
           >
             See the details of the software that the ISP contractor developed for the model, if relevant (e.g., supply visibility into how ISP computes a claims-based quality measurement).
           </li>
-          <li
-            class=""
-          >
-            <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-              data-testid="button"
-              type="button"
-            >
-              <span
-                class="position-relative"
-              >
-                View more information about Model Space on Confluence
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
-            </button>
-          </li>
         </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        />
+        <span
+          class="text-pre-wrap "
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            data-testid="button"
+            type="button"
+          >
+            <span
+              class="position-relative"
+            >
+              View more information about Model Space on Confluence
+              <svg
+                class="usa-icon margin-left-05 position-absolute"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+        <ul
+          class="padding-left-4"
+        />
       </div>
     </div>
   </div>
