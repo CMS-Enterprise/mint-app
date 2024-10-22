@@ -282,6 +282,8 @@ const (
 	// AnalyzedPlanSectionsHumanizedClearances is human readable
 	// sentence template of multiple AnalyzedPlanSections.ReadyForClearance
 	AnalyzedPlanSectionsHumanizedClearances = "%s are ready for clearance"
+
+	DataExchangeHumanizedMarkedComplete = "Data exchange approach is complete"
 )
 
 // IsEmpty returns if AnalyzedPlanSections fields are empty
@@ -332,6 +334,12 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 				fmt.Sprintf(AnalyzedPlanSectionsHumanizedReviews, strings.Join(updatedSectionNames, ", ")))
 		}
 	}
+
+	// Marked complete
+	if a.DataExchangeApproachMarkedComplete {
+		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, DataExchangeHumanizedMarkedComplete)
+	}
+
 	return humanizedAnalyzedPlanSections
 }
 
