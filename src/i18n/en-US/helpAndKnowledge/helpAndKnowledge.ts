@@ -1100,7 +1100,7 @@ The Model team will receive an implementation milestone schedule that identifies
     },
     timeline: {
       description:
-        'The ISP systems (CDX, HDR, eDFR) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.',
+        'The ISP systems (CDX, HDR, eDFR, and Model Space) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.',
       items: [
         {
           header: 'Contact the ISP Team',
@@ -2021,8 +2021,10 @@ Model Space offers model teams and their contractors templates or Databricks not
         },
         {
           header: 'Start using Model Space',
-          description: 'Access your Model Space in Databricks.',
-          description2: ' <link1>Go to Databricks</link1>',
+          description: `Access your Model Space in Databricks.
+<link1>Go to Databricks</link1>
+          `,
+          // description2: ' <link1>Go to Databricks</link1>',
           links: [
             {
               external: true,
