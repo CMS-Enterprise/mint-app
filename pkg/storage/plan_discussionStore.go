@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -32,9 +33,6 @@ var planDiscussionGetByID string
 
 //go:embed SQL/plan_discussion/get_most_recent_user_role.sql
 var getUserRoleSQL string
-
-//go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
-var planDiscussionGetByModelPlanIDLoaderSQL string
 
 //TODO: Migrate all these queries to the sql_queries package
 
@@ -65,29 +63,16 @@ func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(
 }
 
 // PlanDiscussionGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanDiscussionGetByModelPlanIDLOADER(
+func PlanDiscussionGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
-	paramTableJSON string,
+	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanDiscussion, error) {
-
-	var discSlice []*models.PlanDiscussion
-
-	stmt, err := s.db.PrepareNamed(planDiscussionGetByModelPlanIDLoaderSQL)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
+	args := map[string]interface{}{
+		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
-	err = stmt.Select(&discSlice, arg) //this returns more than one
-	if err != nil {
-		return nil, err
-	}
-
-	return discSlice, nil
+	return sqlutils.SelectProcedure[models.PlanDiscussion](np, sqlqueries.PlanDiscussion.GetByModelPlanIDLoader, args)
 }
 
 // PlanDiscussionCreate creates a plan discussion
