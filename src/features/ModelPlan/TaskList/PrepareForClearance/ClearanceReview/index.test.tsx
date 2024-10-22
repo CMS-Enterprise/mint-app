@@ -9,6 +9,7 @@ import {
 } from '@testing-library/react';
 import {
   GetClearanceStatusesDocument,
+  GetClearanceStatusesQuery,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -16,10 +17,7 @@ import Sinon from 'sinon';
 import { benficiaryMocks } from 'tests/mock/readonly';
 import setup from 'tests/util';
 
-import {
-  initialClearanceFormValues,
-  initialPrepareForClearanceValues
-} from '../Checklist';
+import { initialPrepareForClearanceValues } from '../Checklist';
 
 import ClearanceReview from '.';
 
@@ -31,6 +29,63 @@ const clearanceMockData = initialPrepareForClearanceValues;
 clearanceMockData.beneficiaries.status = TaskStatus.READY_FOR_CLEARANCE;
 clearanceMockData.beneficiaries.id = beneficiaryID;
 
+type GetClearanceStatusesType = GetClearanceStatusesQuery['modelPlan'];
+
+const GetClearanceStatusesMockData: GetClearanceStatusesType = {
+  __typename: 'ModelPlan',
+  id: modelID,
+  basics: {
+    __typename: 'PlanBasics',
+    id: '1234',
+    readyForClearanceByUserAccount: null,
+    readyForClearanceDts: null,
+    status: TaskStatus.READY
+  },
+  generalCharacteristics: {
+    __typename: 'PlanGeneralCharacteristics',
+    id: '1234',
+    readyForClearanceByUserAccount: null,
+    readyForClearanceDts: null,
+    status: TaskStatus.READY
+  },
+  participantsAndProviders: {
+    __typename: 'PlanParticipantsAndProviders',
+    id: '1234',
+    readyForClearanceByUserAccount: null,
+    readyForClearanceDts: null,
+    status: TaskStatus.READY
+  },
+  beneficiaries: {
+    __typename: 'PlanBeneficiaries',
+    id: beneficiaryID,
+    readyForClearanceByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'Jerry Seinfeld'
+    },
+    readyForClearanceDts: null,
+    status: TaskStatus.READY_FOR_CLEARANCE
+  },
+  opsEvalAndLearning: {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: '1234',
+    readyForClearanceByUserAccount: null,
+    readyForClearanceDts: null,
+    status: TaskStatus.READY
+  },
+  payments: {
+    __typename: 'PlanPayments',
+    id: '1234',
+    readyForClearanceByUserAccount: null,
+    readyForClearanceDts: null,
+    status: TaskStatus.READY
+  },
+  prepareForClearance: {
+    __typename: 'PrepareForClearance',
+    status: PrepareForClearanceStatus.READY
+  }
+};
+
 const clearanceMock = [
   {
     request: {
@@ -39,35 +94,7 @@ const clearanceMock = [
     },
     result: {
       data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          modelName: 'My excellent plan that I just initiated',
-          basics: { __typename: 'PlanBasics', ...initialClearanceFormValues },
-          generalCharacteristics: {
-            __typename: 'PlanGeneralCharacteristics',
-            ...initialClearanceFormValues
-          },
-          participantsAndProviders: {
-            __typename: 'PlanParticipantsAndProviders',
-            ...initialClearanceFormValues
-          },
-          beneficiaries: {
-            __typename: 'PlanBeneficiaries',
-            ...initialClearanceFormValues
-          },
-          opsEvalAndLearning: {
-            __typename: 'PlanOpsEvalAndLearning',
-            ...initialClearanceFormValues
-          },
-          payments: {
-            __typename: 'PlanPayments',
-            ...initialClearanceFormValues
-          },
-          prepareForClearance: {
-            status: PrepareForClearanceStatus.READY
-          }
-        }
+        modelPlan: GetClearanceStatusesMockData
       }
     }
   }
