@@ -399,7 +399,8 @@ const Table = ({
                       paddingBottom: '.5rem',
                       position: 'relative',
                       minWidth: column.width,
-                      maxWidth: column.width
+                      maxWidth: column.width,
+                      textAlign: 'left'
                     }}
                     key={column.id}
                   >

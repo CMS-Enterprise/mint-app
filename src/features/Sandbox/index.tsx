@@ -10,13 +10,6 @@ import { GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 
-// Define the data type
-interface Data {
-  name: string;
-  age: number;
-  country: string;
-}
-
 type Milestone = {
   id: string;
   name: string;
@@ -36,29 +29,151 @@ type SubCategory = {
 type Category = {
   id: string;
   name: string;
-  subCategories: Category[];
+  facilitatedBy: null;
+  solutions: null;
+  needBy: null;
+  status: null;
+  actions: null;
+  subCategories: SubCategory[];
 };
 
 // Sample Usage
-const columns: Column<Data>[] = [
+const columns: Column<Partial<Category>>[] = [
   {
-    Header: 'Name',
+    Header: 'Model milestone',
     accessor: 'name'
   },
   {
-    Header: 'Age',
-    accessor: 'age'
+    Header: 'Facilitated by',
+    accessor: 'facilitatedBy'
   },
   {
-    Header: 'Country',
-    accessor: 'country'
+    Header: 'Solution',
+    accessor: 'solutions'
+  },
+  {
+    Header: 'Need by',
+    accessor: 'needBy'
+  },
+  {
+    Header: 'Status',
+    accessor: 'status'
+  },
+  {
+    Header: 'Actions',
+    accessor: 'actions'
   }
 ];
 
-const rawData: Data[] = [
-  { name: 'John Doe', age: 28, country: 'USA' },
-  { name: 'Jane Smith', age: 34, country: 'Canada' },
-  { name: 'Kevin Brown', age: 23, country: 'UK' }
+const rawData: Partial<Category>[] = [
+  {
+    id: '1',
+    name: 'Category 1',
+    subCategories: [
+      {
+        id: '1-1',
+        name: 'Sub-Category 1',
+        milestones: [
+          {
+            id: '1-1-1',
+            name: 'Milestone 1',
+            facilitatedBy: 'Facilitator 1',
+            solutions: ['Solution 1', 'Solution 2'],
+            needBy: '2022-01-01',
+            status: 'In Progress',
+            actions: 'Actions 1'
+          },
+          {
+            id: '1-1-2',
+            name: 'Milestone 2',
+            facilitatedBy: 'Facilitator 2',
+            solutions: ['Solution 3', 'Solution 4'],
+            needBy: '2022-01-02',
+            status: 'In Progress',
+            actions: 'Actions 2'
+          }
+        ]
+      },
+      {
+        id: '1-2',
+        name: 'Sub-Category 2',
+        milestones: [
+          {
+            id: '1-2-1',
+            name: 'Milestone 3',
+            facilitatedBy: 'Facilitator 3',
+            solutions: ['Solution 5', 'Solution 6'],
+            needBy: '2022-01-03',
+            status: 'In Progress',
+            actions: 'Actions 3'
+          },
+          {
+            id: '1-2-2',
+            name: 'Milestone 4',
+            facilitatedBy: 'Facilitator 4',
+            solutions: ['Solution 7', 'Solution 8'],
+            needBy: '2022-01-04',
+            status: 'In Progress',
+            actions: 'Actions 4'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: '2',
+    name: 'Category 2',
+    subCategories: [
+      {
+        id: '1-1',
+        name: 'Sub-Category 1',
+        milestones: [
+          {
+            id: '1-1-1',
+            name: 'Milestone 1',
+            facilitatedBy: 'Facilitator 1',
+            solutions: ['Solution 1', 'Solution 2'],
+            needBy: '2022-01-01',
+            status: 'In Progress',
+            actions: 'Actions 1'
+          },
+          {
+            id: '1-1-2',
+            name: 'Milestone 2',
+            facilitatedBy: 'Facilitator 2',
+            solutions: ['Solution 3', 'Solution 4'],
+            needBy: '2022-01-02',
+            status: 'In Progress',
+            actions: 'Actions 2'
+          }
+        ]
+      },
+      {
+        id: '1-2',
+        name: 'Sub-Category 2',
+        milestones: [
+          {
+            id: '1-2-1',
+            name: 'Milestone 3',
+            facilitatedBy: 'Facilitator 3',
+            solutions: ['Solution 5', 'Solution 6'],
+            needBy: '2022-01-03',
+            status: 'In Progress',
+            actions: 'Actions 3'
+          },
+          {
+            id: '1-2-2',
+            name: 'Milestone 4',
+            facilitatedBy: 'Facilitator 4',
+            solutions: ['Solution 7', 'Solution 8'],
+            needBy: '2022-01-04',
+            status: 'In Progress',
+            actions: 'Actions 4'
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 const Sandbox = () => {
@@ -66,7 +181,7 @@ const Sandbox = () => {
     document.title = 'Sandbox';
   }, []);
 
-  const [data, setData] = useState(rawData);
+  const [data, setData] = useState<Partial<Category>[]>(rawData);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
@@ -101,131 +216,216 @@ const Sandbox = () => {
 
   return (
     <MainContent>
-      <GridContainer>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <table
-            {...getTableProps()}
-            style={{ width: '100%', borderCollapse: 'collapse' }}
-          >
-            <thead>
-              {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    <th
-                      {...column.getHeaderProps()}
-                      style={{
-                        borderBottom: '1px solid black',
-                        padding: '10px'
-                      }}
-                    >
-                      {column.render('Header')}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <Droppable droppableId="table">
-              {provided => (
-                <tbody
-                  {...getTableBodyProps()}
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {rows.map((row, index) => {
-                    prepareRow(row);
-                    const isExpanded = expandedRows.includes(row.id);
-                    const isSubExpanded = subExpandedRows.includes(
-                      `${row.id}-sub`
-                    );
-
-                    return (
-                      <Draggable
-                        key={row.id}
-                        draggableId={row.id}
-                        index={index}
+      <GridContainer className="margin-y-6">
+        <div style={{ width: '101%', overflow: 'auto' }}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <table {...getTableProps()} style={{ borderCollapse: 'collapse' }}>
+              <thead>
+                {headerGroups.map(headerGroup => (
+                  <tr
+                    {...headerGroup.getHeaderGroupProps()}
+                    key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                  >
+                    {headerGroup.headers.map(column => (
+                      <th
+                        {...column.getHeaderProps()}
+                        key={{ ...column.getHeaderProps() }.key}
+                        style={{
+                          borderBottom: '1px solid black',
+                          padding: '1rem',
+                          textAlign: 'left',
+                          width: '190px',
+                          minWidth: '190px',
+                          maxWidth: '190px'
+                        }}
                       >
-                        {(provided2: DraggableProvided) => (
-                          <>
-                            <tr
-                              {...row.getRowProps()}
-                              ref={provided2.innerRef}
-                              {...provided2.draggableProps}
-                              {...provided2.dragHandleProps}
-                              style={{
-                                ...provided2.draggableProps.style,
-                                cursor: 'pointer',
-                                backgroundColor: isExpanded
-                                  ? '#f0f0f0'
-                                  : 'white'
-                              }}
-                              onClick={() => toggleRow(row.id)}
-                            >
-                              {row.cells.map(cell => (
-                                <td
-                                  {...cell.getCellProps()}
-                                  style={{
-                                    padding: '10px',
-                                    borderBottom: '1px solid black'
-                                  }}
-                                >
-                                  {cell.render('Cell')}
-                                </td>
-                              ))}
-                            </tr>
+                        {column.render('Header')}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <Droppable droppableId="table">
+                {provided => (
+                  <tbody
+                    {...getTableBodyProps()}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {rows.map((row, index) => {
+                      prepareRow(row);
+                      const isExpanded = expandedRows.includes(
+                        row.original.id!
+                      );
 
-                            {/* First Level Expandable Row Content */}
-                            {isExpanded && (
-                              <tr>
-                                <td
-                                  colSpan={columns.length}
-                                  style={{
-                                    padding: '10px',
-                                    backgroundColor: '#f9f9f9'
-                                  }}
-                                >
-                                  <div style={{ paddingBottom: '10px' }}>
-                                    Expanded content for row {row.id} goes here!
-                                  </div>
+                      const { subCategories } = row.original;
 
-                                  {/* Second Level Expand Button */}
-                                  <button
-                                    type="button"
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      toggleSubRow(`${row.id}-sub`);
+                      return (
+                        <Draggable
+                          key={row.original.id}
+                          draggableId={row.original.id!}
+                          index={index}
+                        >
+                          {(provided2: DraggableProvided) => (
+                            <>
+                              <tr
+                                {...row.getRowProps()}
+                                ref={provided2.innerRef}
+                                {...provided2.draggableProps}
+                                {...provided2.dragHandleProps}
+                                style={{
+                                  ...provided2.draggableProps.style,
+                                  cursor: 'pointer',
+                                  backgroundColor: '#E1F3F8',
+                                  borderBottom: '1px solid black'
+                                }}
+                                onClick={() => toggleRow(row.original.id!)}
+                              >
+                                {row.cells.map(cell => (
+                                  <td
+                                    {...cell.getCellProps()}
+                                    key={{ ...cell.getCellProps() }.key}
+                                    style={{
+                                      padding: '1rem',
+                                      borderBottom: '1px solid black',
+                                      fontWeight: 'bold',
+                                      fontSize: '1.2em'
                                     }}
                                   >
-                                    {isSubExpanded
-                                      ? 'Hide Sub-Details'
-                                      : 'Show Sub-Details'}
-                                  </button>
-
-                                  {/* Second Level Expanded Content */}
-                                  {isSubExpanded && (
-                                    <div
-                                      style={{
-                                        padding: '10px',
-                                        marginTop: '10px',
-                                        backgroundColor: '#e0e0e0'
-                                      }}
-                                    >
-                                      Nested expanded content for row {row.id}.
-                                    </div>
-                                  )}
-                                </td>
+                                    {cell.render('Cell')}
+                                  </td>
+                                ))}
                               </tr>
-                            )}
-                          </>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                  {provided.placeholder}
-                </tbody>
-              )}
-            </Droppable>
-          </table>
-        </DragDropContext>
+
+                              {/* First Level Expandable Row Content */}
+                              {isExpanded &&
+                                subCategories?.map((subCategory, subIndex) => {
+                                  const { milestones } = subCategory;
+
+                                  const isSubExpanded =
+                                    subExpandedRows.includes(
+                                      `${row.original.id!}-${subCategory.id}`
+                                    );
+
+                                  return (
+                                    <tr
+                                      key={subCategory.id}
+                                      style={{
+                                        ...provided2.draggableProps.style,
+                                        cursor: 'pointer',
+                                        backgroundColor: '#F0F0F0'
+                                      }}
+                                      onClick={() =>
+                                        toggleSubRow(
+                                          `${row.original.id!}-${subCategory.id}`
+                                        )
+                                      }
+                                    >
+                                      <td
+                                        colSpan={columns.length}
+                                        style={{
+                                          backgroundColor: '#f9f9f9'
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            padding: '1rem',
+                                            fontWeight: 'bold',
+                                            borderBottom: '1px solid black'
+                                          }}
+                                        >
+                                          {subCategory.name}
+                                        </div>
+
+                                        {/* Second Level Expanded Content */}
+                                        {isSubExpanded &&
+                                          milestones?.map(
+                                            (milestone, milestoneIndex) => {
+                                              return (
+                                                <tr
+                                                  key={milestone.id}
+                                                  style={{
+                                                    backgroundColor: 'white',
+                                                    borderBottom:
+                                                      '1px solid black'
+                                                  }}
+                                                >
+                                                  <td
+                                                    role="cell"
+                                                    style={{
+                                                      width: '190px',
+                                                      padding: '1rem'
+                                                    }}
+                                                  >
+                                                    {milestone.name}
+                                                  </td>
+                                                  <td
+                                                    role="cell"
+                                                    style={{
+                                                      width: '190px',
+                                                      padding: '1rem'
+                                                    }}
+                                                  >
+                                                    {milestone.facilitatedBy}
+                                                  </td>
+                                                  <td
+                                                    role="cell"
+                                                    style={{
+                                                      width: '190px',
+                                                      padding: '1rem'
+                                                    }}
+                                                  >
+                                                    {milestone.solutions.join(
+                                                      ', '
+                                                    )}
+                                                  </td>
+                                                  <td
+                                                    role="cell"
+                                                    style={{
+                                                      width: '190px',
+                                                      padding: '1rem'
+                                                    }}
+                                                  >
+                                                    {milestone.needBy}
+                                                  </td>
+                                                  <td
+                                                    role="cell"
+                                                    style={{
+                                                      width: '190px',
+                                                      padding: '1rem'
+                                                    }}
+                                                  >
+                                                    {milestone.status}
+                                                  </td>
+                                                  <td
+                                                    role="cell"
+                                                    style={{
+                                                      width: '190px',
+                                                      padding: '1rem'
+                                                    }}
+                                                  >
+                                                    {milestone.actions}
+                                                  </td>
+                                                </tr>
+                                              );
+                                            }
+                                          )}
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                            </>
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
+                  </tbody>
+                )}
+              </Droppable>
+            </table>
+          </DragDropContext>
+        </div>
       </GridContainer>
     </MainContent>
   );
