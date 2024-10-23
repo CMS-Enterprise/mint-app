@@ -707,7 +707,8 @@ export type Milestone = {
   __typename: 'Milestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
   category?: Maybe<Category>;
-  description: Scalars['String']['output'];
+  commonMilestone?: Maybe<CommonMilestone>;
+  commonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   isDraftMilestone: Scalars['Boolean']['output'];
@@ -3497,18 +3498,27 @@ export type SendFeedbackEmailInput = {
 
 export type Solution = {
   __typename: 'Solution';
-  description: Scalars['String']['output'];
+  addedFromSolutionLibrary: Scalars['Boolean']['output'];
+  commonSolution?: Maybe<CommonSolution>;
+  commonSolutionID?: Maybe<Scalars['UUID']['output']>;
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   name: Scalars['String']['output'];
   relatedMilestones: Array<Milestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
+  solutionType: SolutionType;
   status: SolutionStatus;
 };
 
 export enum SolutionStatus {
   SOLN_STATUS_ONE = 'SOLN_STATUS_ONE',
   SOLN_STATUS_TWO = 'SOLN_STATUS_TWO'
+}
+
+export enum SolutionType {
+  CONTRACTOR = 'CONTRACTOR',
+  IT_SYSTEM = 'IT_SYSTEM',
+  OTHER = 'OTHER'
 }
 
 export enum SortDirection {

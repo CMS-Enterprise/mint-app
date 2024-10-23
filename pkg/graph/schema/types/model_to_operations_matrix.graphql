@@ -10,16 +10,17 @@ type ModelsToOperationMatrix {
 type Milestone {
   # DB Fields
   id: UUID!
-  name: String!
-  description: String! # Not sure if this is actually needed - I think there might only be descriptions on Milestones in the library? (CommonMilestone)
+  name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
   facilitatedBy: MTOFacilitator
   needBy: Time
   status: MilestoneStatus!
   riskIndicator: MTORiskIndicator
   isDraftMilestone: Boolean!
+  commonMilestoneID: UUID
 
   # Custom Resolvers
-  addedFromMilestoneLibrary: Boolean!
+  addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
+  commonMilestone: CommonMilestone
   solutions: [Solution!]!
   category: Category # Can be NULL if not part of a category (TODO: Unless we handle "Uncategorized" as an actual category)
   # TODO Is ^^ confusing for fetching subcategories too? Should we just have 2 resolvers, one for `category`, one for `subcategory`?
@@ -30,14 +31,23 @@ type Milestone {
 type Solution {
   # DB Fields
   id: UUID!
-  name: String!
-  description: String!
+  name: String! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
   facilitatedBy: MTOFacilitator
   status: SolutionStatus!
   riskIndicator: MTORiskIndicator
+  commonSolutionID: UUID
+  solutionType: SolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
 
   # Custom Resolvers
   relatedMilestones: [Milestone!]! # Can be empty, since you can have a solution with no milestones
+  addedFromSolutionLibrary: Boolean!
+  commonSolution: CommonSolution
+}
+
+enum SolutionType {
+  IT_SYSTEM
+  CONTRACTOR
+  OTHER
 }
 
 enum MTOFacilitator {

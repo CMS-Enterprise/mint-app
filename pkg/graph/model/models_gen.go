@@ -77,13 +77,14 @@ type LaunchDarklySettings struct {
 type Milestone struct {
 	ID                        uuid.UUID         `json:"id"`
 	Name                      string            `json:"name"`
-	Description               string            `json:"description"`
 	FacilitatedBy             *MTOFacilitator   `json:"facilitatedBy,omitempty"`
 	NeedBy                    *time.Time        `json:"needBy,omitempty"`
 	Status                    MilestoneStatus   `json:"status"`
 	RiskIndicator             *MTORiskIndicator `json:"riskIndicator,omitempty"`
 	IsDraftMilestone          bool              `json:"isDraftMilestone"`
+	CommonMilestoneID         *uuid.UUID        `json:"commonMilestoneID,omitempty"`
 	AddedFromMilestoneLibrary bool              `json:"addedFromMilestoneLibrary"`
+	CommonMilestone           *CommonMilestone  `json:"commonMilestone,omitempty"`
 	Solutions                 []*Solution       `json:"solutions"`
 	Category                  *Category         `json:"category,omitempty"`
 }
@@ -690,13 +691,16 @@ type SendFeedbackEmailInput struct {
 }
 
 type Solution struct {
-	ID                uuid.UUID         `json:"id"`
-	Name              string            `json:"name"`
-	Description       string            `json:"description"`
-	FacilitatedBy     *MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	Status            SolutionStatus    `json:"status"`
-	RiskIndicator     *MTORiskIndicator `json:"riskIndicator,omitempty"`
-	RelatedMilestones []*Milestone      `json:"relatedMilestones"`
+	ID                       uuid.UUID         `json:"id"`
+	Name                     string            `json:"name"`
+	FacilitatedBy            *MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	Status                   SolutionStatus    `json:"status"`
+	RiskIndicator            *MTORiskIndicator `json:"riskIndicator,omitempty"`
+	CommonSolutionID         *uuid.UUID        `json:"commonSolutionID,omitempty"`
+	SolutionType             SolutionType      `json:"solutionType"`
+	RelatedMilestones        []*Milestone      `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool              `json:"addedFromSolutionLibrary"`
+	CommonSolution           *CommonSolution   `json:"commonSolution,omitempty"`
 }
 
 type TaskListSectionLockStatus struct {
@@ -2781,6 +2785,49 @@ func (e *SolutionStatus) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SolutionStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SolutionType string
+
+const (
+	SolutionTypeItSystem   SolutionType = "IT_SYSTEM"
+	SolutionTypeContractor SolutionType = "CONTRACTOR"
+	SolutionTypeOther      SolutionType = "OTHER"
+)
+
+var AllSolutionType = []SolutionType{
+	SolutionTypeItSystem,
+	SolutionTypeContractor,
+	SolutionTypeOther,
+}
+
+func (e SolutionType) IsValid() bool {
+	switch e {
+	case SolutionTypeItSystem, SolutionTypeContractor, SolutionTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e SolutionType) String() string {
+	return string(e)
+}
+
+func (e *SolutionType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SolutionType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SolutionType", str)
+	}
+	return nil
+}
+
+func (e SolutionType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
