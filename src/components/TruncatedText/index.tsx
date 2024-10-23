@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-
-import MentionTextArea from 'components/MentionTextArea';
+import parse from 'html-react-parser';
 
 import './index.scss';
 
@@ -62,7 +61,7 @@ const TruncatedText = ({
   });
 
   useEffect(() => {
-    const elm = document.querySelector('.line-clamped .tiptap') as HTMLElement;
+    const elm = document.querySelector('.line-clamped') as HTMLElement;
     const truncationNeeded =
       (!!charLimit && text.length > charLimit) ||
       (!!lineClamp && isTextClamped(elm));
@@ -86,14 +85,9 @@ const TruncatedText = ({
           : undefined
       }
     >
-      <span className="display-block" id={id}>
-        <MentionTextArea
-          id={`mention-${id}`}
-          editable={false}
-          initialContent={isOpen ? startOfText : text}
-          className={lineClamp ? 'line-clamped' : ''}
-        />
-      </span>
+      <div className={lineClamp ? 'line-clamped' : ''}>
+        {parse(isOpen ? startOfText : text)}
+      </div>
       {needsTruncation && (
         <Button
           type="button"
