@@ -55,12 +55,15 @@ describe('The TruncatedText component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('matches lineClamp snapshot', () => {
-    const { asFragment } = render(
+  it('matches lineClamp snapshot', async () => {
+    const { getByTestId, asFragment } = render(
       <VerboseMockedProvider mocks={mocks} addTypename={false}>
         <TruncatedText id="test" text={textString} lineClamp={2} />
       </VerboseMockedProvider>
     );
+
+    expect(getByTestId('truncated-text')).toHaveStyle('--line-clamp: 2');
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

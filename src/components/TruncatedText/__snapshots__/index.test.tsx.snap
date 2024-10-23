@@ -6,26 +6,11 @@ exports[`The TruncatedText component > matches charLimit snapshot 1`] = `
     class="truncated-text"
     data-testid="truncated-text"
   >
-    <span
-      class="display-block"
-      id="test"
+    <div
+      class=""
     >
-      <div
-        class="tiptap__readonly"
-        id="mention-test"
-      >
-        <div
-          class="tiptap ProseMirror"
-          contenteditable="false"
-          id="mention-test"
-          translate="no"
-        >
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing ...
-          </p>
-        </div>
-      </div>
-    </span>
+      Lorem ipsum dolor sit amet consectetur adipisicing ...
+    </div>
     <button
       aria-controls="test"
       aria-expanded="true"
@@ -59,59 +44,44 @@ exports[`The TruncatedText component > matches lineClamp snapshot 1`] = `
     data-testid="truncated-text"
     style="--line-clamp: 2;"
   >
-    <span
-      class="display-block"
-      id="test"
+    <div
+      class="line-clamped"
     >
-      <div
-        class="line-clamped tiptap__readonly"
-        id="mention-test"
-      >
-        <div
-          class="tiptap ProseMirror"
-          contenteditable="false"
-          id="mention-test"
-          translate="no"
-        >
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus sit minima dolor asperiores pariatur deleniti blanditiis sint dolorem, laboriosam corporis labore culpa tenetur est quaerat.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </p>
-        </div>
-      </div>
-    </span>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus sit minima dolor asperiores pariatur deleniti blanditiis sint dolorem, laboriosam corporis labore culpa tenetur est quaerat.
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+    </div>
   </div>
 </DocumentFragment>
 `;
