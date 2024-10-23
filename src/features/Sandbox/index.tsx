@@ -219,7 +219,10 @@ const Sandbox = () => {
       <GridContainer className="margin-y-6">
         <div style={{ width: '101%', overflow: 'auto' }}>
           <DragDropContext onDragEnd={onDragEnd}>
-            <table {...getTableProps()} style={{ borderCollapse: 'collapse' }}>
+            <table
+              {...getTableProps()}
+              style={{ borderCollapse: 'collapse', paddingBottom: '2rem' }}
+            >
               <thead>
                 {headerGroups.map(headerGroup => (
                   <tr
@@ -262,7 +265,7 @@ const Sandbox = () => {
 
                       return (
                         <Draggable
-                          key={row.original.id}
+                          key={row.original.id!}
                           draggableId={row.original.id!}
                           index={index}
                         >
@@ -289,7 +292,7 @@ const Sandbox = () => {
                                       padding: '1rem',
                                       borderBottom: '1px solid black',
                                       fontWeight: 'bold',
-                                      fontSize: '1.2em'
+                                      fontSize: '1.25em'
                                     }}
                                   >
                                     {cell.render('Cell')}
@@ -312,14 +315,8 @@ const Sandbox = () => {
                                       key={subCategory.id}
                                       style={{
                                         ...provided2.draggableProps.style,
-                                        cursor: 'pointer',
                                         backgroundColor: '#F0F0F0'
                                       }}
-                                      onClick={() =>
-                                        toggleSubRow(
-                                          `${row.original.id!}-${subCategory.id}`
-                                        )
-                                      }
                                     >
                                       <td
                                         colSpan={columns.length}
@@ -331,8 +328,26 @@ const Sandbox = () => {
                                           style={{
                                             padding: '1rem',
                                             fontWeight: 'bold',
-                                            borderBottom: '1px solid black'
+                                            borderBottom: '1px solid black',
+                                            cursor: 'pointer'
                                           }}
+                                          onClick={() =>
+                                            toggleSubRow(
+                                              `${row.original.id!}-${subCategory.id}`
+                                            )
+                                          }
+                                          onKeyPress={e => {
+                                            if (
+                                              e.key === 'Enter' ||
+                                              e.key === ' '
+                                            ) {
+                                              toggleSubRow(
+                                                `${row.original.id!}-${subCategory.id}`
+                                              );
+                                            }
+                                          }}
+                                          tabIndex={0}
+                                          role="button"
                                         >
                                           {subCategory.name}
                                         </div>
