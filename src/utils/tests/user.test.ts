@@ -47,7 +47,8 @@ describe('user', () => {
             notificationsEnabled: false,
             changeHistoryEnabled: false,
             changeHistoryReleaseDate: '',
-            modelsApproachingClearanceEnabled: false
+            modelsApproachingClearanceEnabled: false,
+            sandbox: true
           })
         ).toBe(false);
       });
