@@ -22,9 +22,8 @@ type Milestone {
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
   commonMilestone: CommonMilestone
   solutions: [Solution!]!
-  category: Category # Can be NULL if not part of a category (TODO: Unless we handle "Uncategorized" as an actual category)
-  # TODO Is ^^ confusing for fetching subcategories too? Should we just have 2 resolvers, one for `category`, one for `subcategory`?
-
+  category: Category!
+  subCategory: Subcategory!
 }
 
 # Solution represents a Solution that has been added to a Model Plan's MTO
@@ -133,8 +132,18 @@ type Category {
   # DB Fields
   id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
   name: String!
+  isUncategorized: Boolean!
+
+  # Custom Resolvers
+  subCategories: [Subcategory!]!
+}
+
+type Subcategory {
+  # DB Fields
+  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
+  name: String!
+  isUncategorized: Boolean!
 
   # Custom Resolvers
   milestones: [Milestone!]!
-  subCategories: [Category!]!
 }

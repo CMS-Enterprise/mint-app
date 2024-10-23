@@ -239,9 +239,9 @@ export enum CmsCenter {
 export type Category = {
   __typename: 'Category';
   id: Scalars['UUID']['output'];
-  milestones: Array<Milestone>;
+  isUncategorized: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
-  subCategories: Array<Category>;
+  subCategories: Array<Subcategory>;
 };
 
 export enum CcmInvolvmentType {
@@ -706,7 +706,7 @@ export enum MtoRiskIndicator {
 export type Milestone = {
   __typename: 'Milestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
-  category?: Maybe<Category>;
+  category: Category;
   commonMilestone?: Maybe<CommonMilestone>;
   commonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   facilitatedBy?: Maybe<MtoFacilitator>;
@@ -717,6 +717,7 @@ export type Milestone = {
   riskIndicator?: Maybe<MtoRiskIndicator>;
   solutions: Array<Solution>;
   status: MilestoneStatus;
+  subCategory: Subcategory;
 };
 
 export enum MilestoneStatus {
@@ -3595,6 +3596,14 @@ export enum StatesAndTerritories {
   WV = 'WV',
   WY = 'WY'
 }
+
+export type Subcategory = {
+  __typename: 'Subcategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  milestones: Array<Milestone>;
+  name: Scalars['String']['output'];
+};
 
 export type Subscription = {
   __typename: 'Subscription';
