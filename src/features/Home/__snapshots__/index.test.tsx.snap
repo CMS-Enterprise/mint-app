@@ -57,7 +57,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       CMS confidential information—for official use only—not to be disseminated.
                     </h3>
                     <div
-                      class="mint-collapsable-link"
+                      class=""
                     >
                       <button
                         aria-controls="pre-decisional-collapse"
@@ -68,7 +68,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Read more
                         <svg
-                          class="usa-icon top-05 margin-right-05"
+                          class="usa-icon margin-right-05"
                           focusable="false"
                           height="1em"
                           role="img"

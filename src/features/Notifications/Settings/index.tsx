@@ -29,7 +29,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
-import { dirtyInput } from 'utils/formDiff';
+import { dirtyInput } from 'utils/formUtil';
 import { tObject } from 'utils/translation';
 
 type GetNotifcationSettingsType =

@@ -93,7 +93,7 @@ const ExternalLink = ({
         >
           <span>
             {children}
-            <Icon.Launch className="margin-left-05 top-2px" />
+            <Icon.Launch className="margin-left-05 top-05" />
           </span>
         </span>
       ) : (
