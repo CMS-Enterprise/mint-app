@@ -169,6 +169,7 @@ export type AnalyzedPlanDiscussions = {
 
 export type AnalyzedPlanSections = {
   __typename: 'AnalyzedPlanSections';
+  dataExchangeApproachMarkedComplete?: Maybe<Scalars['Boolean']['output']>;
   readyForClearance: Array<TableName>;
   readyForReview: Array<TableName>;
   updated: Array<TableName>;
@@ -3699,6 +3700,7 @@ export enum TableName {
   PLAN_BENEFICIARIES = 'plan_beneficiaries',
   PLAN_COLLABORATOR = 'plan_collaborator',
   PLAN_CR = 'plan_cr',
+  PLAN_DATA_EXCHANGE_APPROACH = 'plan_data_exchange_approach',
   PLAN_DISCUSSION = 'plan_discussion',
   PLAN_DOCUMENT = 'plan_document',
   PLAN_DOCUMENT_SOLUTION_LINK = 'plan_document_solution_link',
