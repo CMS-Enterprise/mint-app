@@ -1203,6 +1203,82 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Points of Contact Components > matches the snapshot > Model Space 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Center for Medicare and Medicaid Innovation
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Business Services Group
+            </h3>
+          </div>
+        </div>
+      </li>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        Contractors
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Innovation Support Platform (ISP)
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Global Alliant
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Outlook Mailbox 1`] = `
 <DocumentFragment>
   <div>

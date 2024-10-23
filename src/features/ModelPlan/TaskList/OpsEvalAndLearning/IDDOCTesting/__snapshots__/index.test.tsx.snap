@@ -115,7 +115,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         Testing questions
       </h3>
       <div
-        class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-4"
+        class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
         data-testid="mandatory-fields-alert"
       >
         <div

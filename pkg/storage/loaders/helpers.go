@@ -21,12 +21,15 @@ func transformToDataLoaderResultAllowNils[V any](val V, valueFound bool) *datalo
 	return &dataloader.Result[V]{Data: val, Error: nil}
 }
 
-func oneToOneDataLoaderFunc[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[V] {
+func oneToOneDataLoader[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[V] {
 
-	return helpers.OneToOneFunc(keys, values, getKey, transformToDataLoaderResult)
+	return helpers.OneToOne(keys, values, getKey, transformToDataLoaderResult)
 }
-func oneToManyDataLoaderFunc[K comparable, V any, mapKey comparable](keys []K, values []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool)) []*dataloader.Result[[]V] {
-	return helpers.OneToManyFunc(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
+func oneToManyWithCustomKeyDataLoader[K comparable, V any, mapKey comparable](keys []K, values []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool)) []*dataloader.Result[[]V] {
+	return helpers.OneToManyWithCustomKey(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
+}
+func oneToManyDataLoader[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[[]V] {
+	return helpers.OneToMany(keys, values, getKey, transformToDataLoaderResultAllowNils)
 }
 
 func errorPerEachKey[K comparable, V any](keys []K, err error) []*dataloader.Result[V] {

@@ -383,7 +383,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
       <button
         aria-controls="read-only-model-plan__subNav"
         aria-expanded="false"
-        class="usa-menu-btn mint-header__basic width-full bg-primary-dark"
+        class="usa-menu-btn mint-header__basic width-full display-flex flex-justify flex-align-center desktop:display-none bg-primary-dark"
         type="button"
       >
         <h3
@@ -411,7 +411,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
       data-testid="gridContainer"
     >
       <div
-        class="usa-alert usa-alert--warning icon-padding flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
+        class="usa-alert usa-alert--warning flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
         data-testid="alert"
       >
         <div

@@ -43,6 +43,6 @@ func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx con
 		// }
 		return res, ok
 	}
-	return oneToManyDataLoaderFunc(keys, sols, getKeyFunc, getResFunc)
+	return oneToManyWithCustomKeyDataLoader(keys, sols, getKeyFunc, getResFunc)
 
 }

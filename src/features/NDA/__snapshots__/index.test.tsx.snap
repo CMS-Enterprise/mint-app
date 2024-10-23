@@ -34,7 +34,7 @@ exports[`NDA Page > matches snapshot 1`] = `
           data-testid="accepted-nda"
         >
           <div
-            class="usa-alert usa-alert--success usa-alert--slim icon-padding flex margin-y-3"
+            class="usa-alert usa-alert--success usa-alert--slim flex margin-y-3"
             data-testid="alert"
             id="nda-alert"
           >

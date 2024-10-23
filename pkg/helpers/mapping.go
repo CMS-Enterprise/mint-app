@@ -1,6 +1,6 @@
 package helpers
 
-// OneToOneFunc takes a list of keys and a list of values which map one-to-one (key-to-value).
+// OneToOne takes a list of keys and a list of values which map one-to-one (key-to-value).
 // it relies on the transformOutput func to return the result in expected format
 // Example:
 //
@@ -26,9 +26,9 @@ package helpers
 //	    return user.Name
 //	}
 //
-//	result := OneToOneFunc(keys, users, getKeyFunc, transformOutputFunc)
+//	result := OneToOne(keys, users, getKeyFunc, transformOutputFunc)
 //	// result: []string{"Alice", "Bob"}
-func OneToOneFunc[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func(V, bool) Output) []Output {
+func OneToOne[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func(V, bool) Output) []Output {
 	store := map[K]V{}
 
 	for _, val := range vals {
@@ -45,7 +45,7 @@ func OneToOneFunc[K comparable, V any, Output any](keys []K, vals []V, getKey fu
 	return output
 }
 
-// OneToManyFunc takes a list of keys and a list of values which map one-to-many (key-to-value)
+// OneToManyWithCustomKey takes a list of keys and a list of values which map one-to-many (key-to-value)
 // ex: vals could be a list of collaborators where more than one collaborator exists for the same model plan id
 // getKey: this function takes a value, and gets mapKey key for the intermediate map of data. This is needed for cases where you can't directly infer a key from a value
 // getRes: this function takes an original key, and the intermediate response and returns a value and bool if hte value exists
@@ -84,11 +84,11 @@ data := []*models.OperationalSolution {lots of operational solutions}
 	return &dataloader.Result[V]{Data: val, Error: nil}
 }
 
-	return OneToManyFunc(keys, sols, getKeyFunc, getResFunc, transformFunc)
+	return OneToManyWithCustomKey(keys, sols, getKeyFunc, getResFunc, transformFunc)
 
 
 */
-func OneToManyFunc[K comparable, V any, mapKey comparable, Output any](keys []K, vals []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
+func OneToManyWithCustomKey[K comparable, V any, mapKey comparable, Output any](keys []K, vals []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
 	// create a map to store values grouped by key (of type K)
 	// each key will map to a slice of values (of type V)
 	store := map[mapKey][]V{}
@@ -107,4 +107,25 @@ func OneToManyFunc[K comparable, V any, mapKey comparable, Output any](keys []K,
 	}
 
 	return output
+}
+
+// // func getResSimplified
+// func getResultSimplified[K comparable, V any, mapKey comparable](key K, resultMap map[mapKey][]V) ([]V, bool) {
+// 	res, ok := resultMap[key]
+// 	return res, ok
+
+// }
+
+// getResultSimplified is a standard function to get the result of a one to many map assuming a simple map operation where the map key is the same as the dataloader key
+
+func getResultSimplified[K comparable, V any](key K, resultMap map[K][]V) ([]V, bool) {
+	res, ok := resultMap[key]
+	return res, ok
+}
+
+// OneToMany uses the standard OneToManyFunc, but assumes that the mapKey is the same as the dataloaderkey K.
+func OneToMany[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func([]V, bool) Output) []Output {
+
+	return OneToManyWithCustomKey(keys, vals, getKey, getResultSimplified[K, V], transformOutput)
+
 }

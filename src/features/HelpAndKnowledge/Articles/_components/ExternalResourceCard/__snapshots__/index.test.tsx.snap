@@ -53,7 +53,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           </span>
         </a>
         <div
-          class="usa-card__body padding-x-0 article__body padding-top-2"
+          class="usa-card__body padding-x-0 padding-top-2"
           data-testid="CardBody"
         >
           <div

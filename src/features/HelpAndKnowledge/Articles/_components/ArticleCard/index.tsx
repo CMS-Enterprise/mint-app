@@ -59,6 +59,7 @@ const ArticleCard = ({
       <CardBody className="padding-x-0 article__body padding-top-2">
         <p>{t('description')}</p>
       </CardBody>
+
       <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
         <button
           type="button"
