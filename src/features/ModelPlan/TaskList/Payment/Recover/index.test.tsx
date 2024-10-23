@@ -119,7 +119,5 @@ describe('Model Plan -- Recover', () => {
     );
 
     expect(asFragment()).toMatchSnapshot();
-
-    expect(asFragment()).toMatchSnapshot();
   });
 });
