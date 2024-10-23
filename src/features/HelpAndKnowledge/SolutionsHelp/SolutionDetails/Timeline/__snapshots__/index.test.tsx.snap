@@ -2518,16 +2518,17 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mode
           Access your Model Space in Databricks.
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               Go to Databricks
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"

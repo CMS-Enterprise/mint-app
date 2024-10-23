@@ -60,26 +60,11 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
             class="truncated-text"
             data-testid="truncated-text"
           >
-            <span
-              class="display-block"
-              id="QUALITY_VERTICAL_HEALTH_EQUITY"
+            <div
+              class=""
             >
-              <div
-                class="tiptap__readonly"
-                id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
-              >
-                <div
-                  class="tiptap ProseMirror"
-                  contenteditable="false"
-                  id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
-                  translate="no"
-                >
-                  <p>
-                    Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...
-                  </p>
-                </div>
-              </div>
-            </span>
+              Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...
+            </div>
             <button
               aria-controls="QUALITY_VERTICAL_HEALTH_EQUITY"
               aria-expanded="true"

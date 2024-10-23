@@ -332,26 +332,11 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="truncated-text"
                       data-testid="truncated-text"
                     >
-                      <span
-                        class="display-block"
-                        id="ANNOUNCEMENT_MATERIALS"
+                      <div
+                        class=""
                       >
-                        <div
-                          class="tiptap__readonly"
-                          id="mention-ANNOUNCEMENT_MATERIALS"
-                        >
-                          <div
-                            class="tiptap ProseMirror"
-                            contenteditable="false"
-                            id="mention-ANNOUNCEMENT_MATERIALS"
-                            translate="no"
-                          >
-                            <p>
-                              Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The avail ...
-                            </p>
-                          </div>
-                        </div>
-                      </span>
+                        Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The avail ...
+                      </div>
                       <button
                         aria-controls="ANNOUNCEMENT_MATERIALS"
                         aria-expanded="true"
@@ -467,26 +452,11 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="truncated-text"
                       data-testid="truncated-text"
                     >
-                      <span
-                        class="display-block"
-                        id="CMMI_CLEARANCE_SITE"
+                      <div
+                        class=""
                       >
-                        <div
-                          class="tiptap__readonly"
-                          id="mention-CMMI_CLEARANCE_SITE"
-                        >
-                          <div
-                            class="tiptap ProseMirror"
-                            contenteditable="false"
-                            id="mention-CMMI_CLEARANCE_SITE"
-                            translate="no"
-                          >
-                            <p>
-                              This site includes clearance document and process overviews, timeline estimates, and writing resources for the ...
-                            </p>
-                          </div>
-                        </div>
-                      </span>
+                        This site includes clearance document and process overviews, timeline estimates, and writing resources for the ...
+                      </div>
                       <button
                         aria-controls="CMMI_CLEARANCE_SITE"
                         aria-expanded="true"
@@ -653,26 +623,11 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="truncated-text"
                       data-testid="truncated-text"
                     >
-                      <span
-                        class="display-block"
-                        id="FRAUD_AND_ABUSE_WAIVER"
+                      <div
+                        class=""
                       >
-                        <div
-                          class="tiptap__readonly"
-                          id="mention-FRAUD_AND_ABUSE_WAIVER"
-                        >
-                          <div
-                            class="tiptap ProseMirror"
-                            contenteditable="false"
-                            id="mention-FRAUD_AND_ABUSE_WAIVER"
-                            translate="no"
-                          >
-                            <p>
-                              Fraud and Abuse waivers are complicated and involve working with colleagues in other parts as CMS and in other ...
-                            </p>
-                          </div>
-                        </div>
-                      </span>
+                        Fraud and Abuse waivers are complicated and involve working with colleagues in other parts as CMS and in other ...
+                      </div>
                       <button
                         aria-controls="FRAUD_AND_ABUSE_WAIVER"
                         aria-expanded="true"
@@ -839,26 +794,11 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="truncated-text"
                       data-testid="truncated-text"
                     >
-                      <span
-                        class="display-block"
-                        id="ICIP_REPOSITORY"
+                      <div
+                        class=""
                       >
-                        <div
-                          class="tiptap__readonly"
-                          id="mention-ICIP_REPOSITORY"
-                        >
-                          <div
-                            class="tiptap ProseMirror"
-                            contenteditable="false"
-                            id="mention-ICIP_REPOSITORY"
-                            translate="no"
-                          >
-                            <p>
-                              The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is ...
-                            </p>
-                          </div>
-                        </div>
-                      </span>
+                        The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is  ...
+                      </div>
                       <button
                         aria-controls="ICIP_REPOSITORY"
                         aria-expanded="true"
@@ -974,26 +914,11 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="truncated-text"
                       data-testid="truncated-text"
                     >
-                      <span
-                        class="display-block"
-                        id="IT_LEAD_TRAINING_MATERIALS"
+                      <div
+                        class=""
                       >
-                        <div
-                          class="tiptap__readonly"
-                          id="mention-IT_LEAD_TRAINING_MATERIALS"
-                        >
-                          <div
-                            class="tiptap ProseMirror"
-                            contenteditable="false"
-                            id="mention-IT_LEAD_TRAINING_MATERIALS"
-                            translate="no"
-                          >
-                            <p>
-                              IT leads are BSG team members who work with model teams. Access training slides and recordings to understand I ...
-                            </p>
-                          </div>
-                        </div>
-                      </span>
+                        IT leads are BSG team members who work with model teams. Access training slides and recordings to understand I ...
+                      </div>
                       <button
                         aria-controls="IT_LEAD_TRAINING_MATERIALS"
                         aria-expanded="true"
