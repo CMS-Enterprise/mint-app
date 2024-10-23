@@ -10021,6 +10021,47 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="font-sans-md line-height-sans-4"
                     >
                       Operations data
+                      <span
+                        class="top-2px position-relative"
+                      >
+                        <span
+                          class="usa-tooltip"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print margin-left-05"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="(e.g., attribution file, benchmark file)"
+                          >
+                            (e.g., attribution file, benchmark file)
+                          </span>
+                        </span>
+                      </span>
                     </li>
                     <ul />
                   </ul>
@@ -10287,6 +10328,62 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
                       Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?
+                      <span
+                        class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                      >
+                        <span
+                          class="usa-tooltip top-2px"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                            wrapperclasses="top-2px"
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                          >
+                            <div>
+                              Examples of novel data exchange methodologies include:
+                              <ul
+                                class="margin-0 padding-left-3"
+                              >
+                                <li>
+                                  Privacy-preserving record linkage
+                                </li>
+                                <li>
+                                  Utilizing the Trusted Exchange Framework and Common Agreement (TEFCA)
+                                </li>
+                                <li>
+                                  Enabling an additional data stream not previously used at CMMI
+                                </li>
+                              </ul>
+                            </div>
+                          </span>
+                        </span>
+                      </span>
                     </span>
                   </div>
                   <div
