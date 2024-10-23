@@ -588,22 +588,7 @@ func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussio
 
 // PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
 func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	discLoader := allLoaders.DiscussionLoader
-	key := loaders.NewKeyArgs()
-	key.Args["model_plan_id"] = modelPlanID
-
-	thunk := discLoader.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
-
-	return result.([]*models.PlanDiscussion), nil
+	return loaders.PlanDiscussion.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
 // PlanDiscussionGetByID returns a single discussion from the database for a given discussionID

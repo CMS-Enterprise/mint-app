@@ -45,6 +45,6 @@ func operationalSolutionGetByIDBatch(
 		return data.ID
 	}
 
-	return oneToOneDataLoaderFunc(ids, opSols, getKeyFunc)
+	return oneToOneDataLoader(ids, opSols, getKeyFunc)
 
 }
