@@ -3,6 +3,8 @@ package resolvers
 import (
 	"github.com/golang/mock/gomock"
 
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
@@ -20,7 +22,7 @@ func (suite *ResolverSuite) TestDataExchangeApproachMarkedCompleteEmail() {
 		MINTTeamEmail: "mint.team@local.fake",
 	}
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).

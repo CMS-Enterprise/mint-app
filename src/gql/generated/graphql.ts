@@ -169,7 +169,7 @@ export type AnalyzedPlanDiscussions = {
 
 export type AnalyzedPlanSections = {
   __typename: 'AnalyzedPlanSections';
-  dataExchangeApproachMarkedComplete: Scalars['Boolean']['output'];
+  dataExchangeApproachMarkedComplete?: Maybe<Scalars['Boolean']['output']>;
   readyForClearance: Array<TableName>;
   readyForReview: Array<TableName>;
   updated: Array<TableName>;

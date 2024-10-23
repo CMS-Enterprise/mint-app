@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/spf13/viper"
@@ -11,7 +10,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/local"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
-	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/s3testconfigs"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
@@ -129,35 +127,4 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	ps := pubsub.NewServicePubSub()
 
 	return config, ldClient, logger, userInfo, ps
-}
-
-func createTemplateCacheHelper(
-	planName string,
-	plan *models.ModelPlan) (*emailtemplates.EmailTemplate, string, string) {
-
-	return CreateTemplateCacheHelperWithInputTemplates(
-		planName,
-		plan,
-		"{{.ModelName}}'s Test",
-		"{{.ModelName}} {{.ModelID}}")
-}
-
-// CreateTemplateCacheHelperWithInputTemplates creates a test template with the given subject and body
-func CreateTemplateCacheHelperWithInputTemplates(
-	planName string,
-	plan *models.ModelPlan,
-	subject string,
-	body string) (*emailtemplates.EmailTemplate, string, string) {
-	templateCache := emailtemplates.NewTemplateCache()
-	_ = templateCache.LoadTextTemplateFromString("testSubject", subject)
-	_ = templateCache.LoadHTMLTemplateFromString("testBody", body, nil)
-	testTemplate := emailtemplates.NewEmailTemplate(
-		templateCache,
-		"testSubject",
-		"testBody",
-	)
-
-	expectedSubject := fmt.Sprintf("%s's Test", planName)
-	expectedBody := fmt.Sprintf("%s %s", planName, plan.ID.String())
-	return testTemplate, expectedSubject, expectedBody
 }

@@ -43,7 +43,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
-	testTemplate, expectedSubject, expectedBody := resolvers.CreateTemplateCacheHelperWithInputTemplates(
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelperWithInputTemplates(
 		newPlan.ModelName,
 		newPlan,
 		"{{.ModelName}}'s Test",
