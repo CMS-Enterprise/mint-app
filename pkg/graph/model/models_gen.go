@@ -14,13 +14,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type Category struct {
-	ID              uuid.UUID      `json:"id"`
-	Name            string         `json:"name"`
-	IsUncategorized bool           `json:"isUncategorized"`
-	SubCategories   []*Subcategory `json:"subCategories"`
-}
-
 type CommonMilestone struct {
 	ID              uuid.UUID          `json:"id"`
 	Key             CommonMilestoneKey `json:"key"`
@@ -75,19 +68,19 @@ type LaunchDarklySettings struct {
 }
 
 type Milestone struct {
-	ID                        uuid.UUID         `json:"id"`
-	Name                      string            `json:"name"`
-	FacilitatedBy             *MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	NeedBy                    *time.Time        `json:"needBy,omitempty"`
-	Status                    MilestoneStatus   `json:"status"`
-	RiskIndicator             *MTORiskIndicator `json:"riskIndicator,omitempty"`
-	IsDraftMilestone          bool              `json:"isDraftMilestone"`
-	CommonMilestoneID         *uuid.UUID        `json:"commonMilestoneID,omitempty"`
-	AddedFromMilestoneLibrary bool              `json:"addedFromMilestoneLibrary"`
-	CommonMilestone           *CommonMilestone  `json:"commonMilestone,omitempty"`
-	Solutions                 []*Solution       `json:"solutions"`
-	Category                  Category          `json:"category"`
-	SubCategory               Subcategory       `json:"subCategory"`
+	ID                        uuid.UUID             `json:"id"`
+	Name                      string                `json:"name"`
+	FacilitatedBy             *MTOFacilitator       `json:"facilitatedBy,omitempty"`
+	NeedBy                    *time.Time            `json:"needBy,omitempty"`
+	Status                    MilestoneStatus       `json:"status"`
+	RiskIndicator             *MTORiskIndicator     `json:"riskIndicator,omitempty"`
+	IsDraftMilestone          bool                  `json:"isDraftMilestone"`
+	CommonMilestoneID         *uuid.UUID            `json:"commonMilestoneID,omitempty"`
+	AddedFromMilestoneLibrary bool                  `json:"addedFromMilestoneLibrary"`
+	CommonMilestone           *CommonMilestone      `json:"commonMilestone,omitempty"`
+	Solutions                 []*Solution           `json:"solutions"`
+	Category                  models.MTOCategory    `json:"category"`
+	SubCategory               models.MTOSubcategory `json:"subCategory"`
 }
 
 // Represents model plan base translation data
@@ -702,13 +695,6 @@ type Solution struct {
 	RelatedMilestones        []*Milestone      `json:"relatedMilestones"`
 	AddedFromSolutionLibrary bool              `json:"addedFromSolutionLibrary"`
 	CommonSolution           *CommonSolution   `json:"commonSolution,omitempty"`
-}
-
-type Subcategory struct {
-	ID              uuid.UUID    `json:"id"`
-	Name            string       `json:"name"`
-	IsUncategorized bool         `json:"isUncategorized"`
-	Milestones      []*Milestone `json:"milestones"`
 }
 
 type TaskListSectionLockStatus struct {
