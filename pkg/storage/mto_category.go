@@ -25,7 +25,7 @@ func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 	return returned, nil
 
 } // MTOCategoryCreate creates a new MTOCategory in the database
-func MTOCategoryCreate(np sqlutils.NamedPreparer, MTOCategory *models.MTOCategory) (*models.MTOCategory, error) {
+func MTOCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *models.MTOCategory) (*models.MTOCategory, error) {
 	if MTOCategory.ID == uuid.Nil {
 		MTOCategory.ID = uuid.New()
 	}
@@ -38,7 +38,7 @@ func MTOCategoryCreate(np sqlutils.NamedPreparer, MTOCategory *models.MTOCategor
 }
 
 // MTOCategoryUpdate updates a new MTOCategory in the database
-func MTOCategoryUpdate(np sqlutils.NamedPreparer, MTOCategory *models.MTOCategory) (*models.MTOCategory, error) {
+func MTOCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *models.MTOCategory) (*models.MTOCategory, error) {
 	returned, procErr := sqlutils.GetProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.Update, MTOCategory)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating MTOCategory object: %w", procErr)
@@ -47,7 +47,7 @@ func MTOCategoryUpdate(np sqlutils.NamedPreparer, MTOCategory *models.MTOCategor
 }
 
 // MTOCategoryGetByID returns an existing MTOCategory from the database
-func MTOCategoryGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*models.MTOCategory, error) {
+func MTOCategoryGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCategory, error) {
 
 	arg := map[string]interface{}{"id": id}
 
