@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TranslationDataExchangeApproach } from 'types/translation';
 
 import {
@@ -135,6 +137,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
         'Data will not be sent to participants'
     },
     optionsLabels: {
+      OPERATIONS_DATA: '(e.g., attribution file, benchmark file)'
+    },
+    tooltips: {
       OPERATIONS_DATA: '(e.g., attribution file, benchmark file)'
     }
   },
@@ -281,7 +286,22 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    questionTooltip: (
+      <div>
+        Examples of novel data exchange methodologies include:
+        <ul className="margin-0 padding-left-3">
+          <li>Privacy-preserving record linkage</li>
+          <li>
+            Utilizing the Trusted Exchange Framework and Common Agreement
+            (TEFCA)
+          </li>
+          <li>
+            Enabling an additional data stream not previously used at CMMI
+          </li>
+        </ul>
+      </div>
+    )
   },
   newDataExchangeMethodsDescription: {
     gqlField: 'newDataExchangeMethodsDescription',

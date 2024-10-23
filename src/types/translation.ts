@@ -2,6 +2,7 @@
   Typed translation mappings for question centric architecture for a model plan
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
+import React from 'react';
 import {
   AgencyOrStateHelpType,
   AgreementType,
@@ -117,7 +118,7 @@ export type TranslationFieldProperties = Omit<
     adjacentField: string;
   };
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
-  questionTooltip?: string; // Render tooltip next to the question
+  questionTooltip?: string | React.ReactNode; // Render tooltip next to the question
   hideFromReadonly?: boolean; // Hide question from readonly view
   groupLabel?: string;
   groupLabelTooltip?: string;
