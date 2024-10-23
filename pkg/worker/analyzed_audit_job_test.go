@@ -216,7 +216,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_payments"))
-	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "data_exchange_approach"))
+	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_data_exchange_approach"))
 
 	// ReadyForClearance Sections
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForClearance, "plan_basics"))
