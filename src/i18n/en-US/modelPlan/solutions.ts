@@ -149,7 +149,8 @@ const operationalSolutions: TranslationOperationalSolutions = {
       SHARED_SYSTEMS: 'Shared Systems',
       BCDA: 'Beneficiary Claims Data API',
       ISP: 'Innovation Support Platform',
-      MIDS: 'Measure and Instrument Development and Support'
+      MIDS: 'Measure and Instrument Development and Support',
+      MODEL_SPACE: 'Model Space'
     }
   },
   status: {
