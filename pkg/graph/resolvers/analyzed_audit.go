@@ -306,7 +306,7 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 	dataExchangeApproachMarkedComplete := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "status") {
-			if m.Fields["status"].New.(string) == string(models.DataExchangeApproachStatusCompleted) {
+			if m.Fields["status"].New.(string) == string(models.DataExchangeApproachStatusComplete) {
 				return m.TableName, true
 			}
 		}
