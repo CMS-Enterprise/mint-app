@@ -20,7 +20,7 @@ type Milestone = {
   actions: any;
 };
 
-type SubCategory = {
+type SubCategoryType = {
   id: string;
   name: string;
   milestones: Milestone[];
@@ -34,7 +34,7 @@ type Category = {
   needBy: null;
   status: null;
   actions: null;
-  subCategories: SubCategory[];
+  subCategories: SubCategoryType[];
 };
 
 // Sample Usage
@@ -125,11 +125,11 @@ const rawData: Partial<Category>[] = [
     name: 'Category 2',
     subCategories: [
       {
-        id: '1-1',
+        id: '2-1',
         name: 'Sub-Category 1',
         milestones: [
           {
-            id: '1-1-1',
+            id: '2-1-1',
             name: 'Milestone 1',
             facilitatedBy: 'Facilitator 1',
             solutions: ['Solution 1', 'Solution 2'],
@@ -138,7 +138,7 @@ const rawData: Partial<Category>[] = [
             actions: 'Actions 1'
           },
           {
-            id: '1-1-2',
+            id: '2-1-2',
             name: 'Milestone 2',
             facilitatedBy: 'Facilitator 2',
             solutions: ['Solution 3', 'Solution 4'],
@@ -149,11 +149,11 @@ const rawData: Partial<Category>[] = [
         ]
       },
       {
-        id: '1-2',
+        id: '2-2',
         name: 'Sub-Category 2',
         milestones: [
           {
-            id: '1-2-1',
+            id: '2-2-1',
             name: 'Milestone 3',
             facilitatedBy: 'Facilitator 3',
             solutions: ['Solution 5', 'Solution 6'],
@@ -162,7 +162,7 @@ const rawData: Partial<Category>[] = [
             actions: 'Actions 3'
           },
           {
-            id: '1-2-2',
+            id: '2-2-2',
             name: 'Milestone 4',
             facilitatedBy: 'Facilitator 4',
             solutions: ['Solution 7', 'Solution 8'],
@@ -175,6 +175,162 @@ const rawData: Partial<Category>[] = [
     ]
   }
 ];
+
+type SubCategoryProps = {
+  type: 'CATEGORY' | 'SUBCATEGORY';
+  subcategories: SubCategoryType[];
+  rowID: string;
+  toggleSubRow: (index: string) => void;
+  subExpandedRows: string[];
+};
+
+const SubCategory = ({
+  type,
+  subcategories,
+  rowID,
+  toggleSubRow,
+  subExpandedRows
+}: SubCategoryProps) => {
+  return (
+    <Droppable droppableId={`${rowID}`} type={type}>
+      {(provided, snapshot) => (
+        <div
+          style={{ display: 'contents' }}
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          {subcategories.map((subCategory, subIndex) => {
+            const { milestones } = subCategory;
+
+            const isSubExpanded = subExpandedRows.includes(
+              `${rowID}-${subCategory.id}`
+            );
+
+            return (
+              <Draggable
+                key={subCategory.id}
+                draggableId={subCategory.id}
+                index={subIndex}
+              >
+                {(provided2, snapshot2) => (
+                  <tr
+                    key={subCategory.id}
+                    ref={provided2.innerRef}
+                    {...provided2.draggableProps}
+                    {...provided2.dragHandleProps}
+                    style={{
+                      ...provided2.draggableProps.style,
+                      backgroundColor: '#F0F0F0'
+                    }}
+                  >
+                    <td
+                      colSpan={columns.length}
+                      style={{
+                        backgroundColor: '#f9f9f9'
+                      }}
+                    >
+                      <div
+                        style={{
+                          padding: '1rem',
+                          fontWeight: 'bold',
+                          borderBottom: '1px solid black',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() =>
+                          toggleSubRow(`${rowID}-${subCategory.id}`)
+                        }
+                        onKeyPress={e => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            toggleSubRow(`${rowID}-${subCategory.id}`);
+                          }
+                        }}
+                        tabIndex={0}
+                        role="button"
+                      >
+                        {subCategory.name}
+                      </div>
+
+                      {/* Second Level Expanded Content */}
+                      {isSubExpanded &&
+                        milestones?.map((milestone, milestoneIndex) => {
+                          return (
+                            <tr
+                              key={milestone.id}
+                              style={{
+                                backgroundColor: 'white',
+                                borderBottom: '1px solid black'
+                              }}
+                            >
+                              <td
+                                role="cell"
+                                style={{
+                                  width: '190px',
+                                  padding: '1rem'
+                                }}
+                              >
+                                {milestone.name}
+                              </td>
+                              <td
+                                role="cell"
+                                style={{
+                                  width: '190px',
+                                  padding: '1rem'
+                                }}
+                              >
+                                {milestone.facilitatedBy}
+                              </td>
+                              <td
+                                role="cell"
+                                style={{
+                                  width: '190px',
+                                  padding: '1rem'
+                                }}
+                              >
+                                {milestone.solutions.join(', ')}
+                              </td>
+                              <td
+                                role="cell"
+                                style={{
+                                  width: '190px',
+                                  padding: '1rem'
+                                }}
+                              >
+                                {milestone.needBy}
+                              </td>
+                              <td
+                                role="cell"
+                                style={{
+                                  width: '190px',
+                                  padding: '1rem'
+                                }}
+                              >
+                                {milestone.status}
+                              </td>
+                              <td
+                                role="cell"
+                                style={{
+                                  width: '190px',
+                                  padding: '1rem'
+                                }}
+                              >
+                                {milestone.actions}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </td>
+                    {provided.placeholder}
+                  </tr>
+                )}
+              </Draggable>
+            );
+          })}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  );
+};
 
 const Sandbox = () => {
   useEffect(() => {
@@ -203,15 +359,47 @@ const Sandbox = () => {
     );
   };
 
-  // Drag-and-Drop functions
+  // a little function to help us with reordering the result
+  const reorder = (list: any[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
   const onDragEnd = (result: any) => {
-    if (!result.destination) return;
+    const { source, destination, type } = result;
 
-    const reorderedData = Array.from(data);
-    const [removed] = reorderedData.splice(result.source.index, 1);
-    reorderedData.splice(result.destination.index, 0, removed);
+    if (!destination) return;
 
-    setData(reorderedData);
+    if (type === 'CATEGORY') {
+      // Reorder categories
+      const reorderedCategories = reorder(
+        data,
+        source.index,
+        destination.index
+      );
+      setData(reorderedCategories);
+      // If type === SUBCATEGORY, reorder subcategories
+    } else {
+      // Find the category where subcategory is being reordered
+      const categoryIndex = data.findIndex(
+        category => category.id === result.source.droppableId
+      );
+
+      const updatedCategory = { ...data[categoryIndex] };
+
+      updatedCategory.subCategories = reorder(
+        updatedCategory.subCategories!,
+        source.index,
+        destination.index
+      );
+
+      const newItems = [...data];
+      newItems[categoryIndex] = updatedCategory;
+      setData(newItems);
+    }
   };
 
   return (
@@ -248,7 +436,7 @@ const Sandbox = () => {
                   </tr>
                 ))}
               </thead>
-              <Droppable droppableId="table">
+              <Droppable droppableId="table" type="CATEGORY">
                 {provided => (
                   <tbody
                     {...getTableBodyProps()}
@@ -301,134 +489,15 @@ const Sandbox = () => {
                               </tr>
 
                               {/* First Level Expandable Row Content */}
-                              {isExpanded &&
-                                subCategories?.map((subCategory, subIndex) => {
-                                  const { milestones } = subCategory;
-
-                                  const isSubExpanded =
-                                    subExpandedRows.includes(
-                                      `${row.original.id!}-${subCategory.id}`
-                                    );
-
-                                  return (
-                                    <tr
-                                      key={subCategory.id}
-                                      style={{
-                                        ...provided2.draggableProps.style,
-                                        backgroundColor: '#F0F0F0'
-                                      }}
-                                    >
-                                      <td
-                                        colSpan={columns.length}
-                                        style={{
-                                          backgroundColor: '#f9f9f9'
-                                        }}
-                                      >
-                                        <div
-                                          style={{
-                                            padding: '1rem',
-                                            fontWeight: 'bold',
-                                            borderBottom: '1px solid black',
-                                            cursor: 'pointer'
-                                          }}
-                                          onClick={() =>
-                                            toggleSubRow(
-                                              `${row.original.id!}-${subCategory.id}`
-                                            )
-                                          }
-                                          onKeyPress={e => {
-                                            if (
-                                              e.key === 'Enter' ||
-                                              e.key === ' '
-                                            ) {
-                                              toggleSubRow(
-                                                `${row.original.id!}-${subCategory.id}`
-                                              );
-                                            }
-                                          }}
-                                          tabIndex={0}
-                                          role="button"
-                                        >
-                                          {subCategory.name}
-                                        </div>
-
-                                        {/* Second Level Expanded Content */}
-                                        {isSubExpanded &&
-                                          milestones?.map(
-                                            (milestone, milestoneIndex) => {
-                                              return (
-                                                <tr
-                                                  key={milestone.id}
-                                                  style={{
-                                                    backgroundColor: 'white',
-                                                    borderBottom:
-                                                      '1px solid black'
-                                                  }}
-                                                >
-                                                  <td
-                                                    role="cell"
-                                                    style={{
-                                                      width: '190px',
-                                                      padding: '1rem'
-                                                    }}
-                                                  >
-                                                    {milestone.name}
-                                                  </td>
-                                                  <td
-                                                    role="cell"
-                                                    style={{
-                                                      width: '190px',
-                                                      padding: '1rem'
-                                                    }}
-                                                  >
-                                                    {milestone.facilitatedBy}
-                                                  </td>
-                                                  <td
-                                                    role="cell"
-                                                    style={{
-                                                      width: '190px',
-                                                      padding: '1rem'
-                                                    }}
-                                                  >
-                                                    {milestone.solutions.join(
-                                                      ', '
-                                                    )}
-                                                  </td>
-                                                  <td
-                                                    role="cell"
-                                                    style={{
-                                                      width: '190px',
-                                                      padding: '1rem'
-                                                    }}
-                                                  >
-                                                    {milestone.needBy}
-                                                  </td>
-                                                  <td
-                                                    role="cell"
-                                                    style={{
-                                                      width: '190px',
-                                                      padding: '1rem'
-                                                    }}
-                                                  >
-                                                    {milestone.status}
-                                                  </td>
-                                                  <td
-                                                    role="cell"
-                                                    style={{
-                                                      width: '190px',
-                                                      padding: '1rem'
-                                                    }}
-                                                  >
-                                                    {milestone.actions}
-                                                  </td>
-                                                </tr>
-                                              );
-                                            }
-                                          )}
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
+                              {isExpanded && (
+                                <SubCategory
+                                  type="SUBCATEGORY"
+                                  rowID={row.original.id!}
+                                  subExpandedRows={subExpandedRows}
+                                  subcategories={subCategories!}
+                                  toggleSubRow={toggleSubRow}
+                                />
+                              )}
                             </>
                           )}
                         </Draggable>
