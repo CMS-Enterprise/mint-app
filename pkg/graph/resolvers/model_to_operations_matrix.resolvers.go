@@ -14,9 +14,8 @@ import (
 )
 
 // Categories is the resolver for the categories field.
-func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.MTOCategory, error) {
-	panic(fmt.Errorf("not implemented: Categories - categories"))
-	// Fetch a list of categories filtered out by each model plan ID
+func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCategory, error) {
+	return MTOCategoryGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // CommonMilestones is the resolver for the commonMilestones field.

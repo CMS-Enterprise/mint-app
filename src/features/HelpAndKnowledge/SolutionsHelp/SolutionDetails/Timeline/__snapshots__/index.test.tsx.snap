@@ -2471,7 +2471,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mode
           >
             Meet to understand requirements
           </h3>
-          ISP will configure Model Space according to the model contractor’s requirements. Model Space is in the CMS Amazon Web Services (AWS) Cloud, and your workspace will be made in Databricks.
+          Tell them about the model’s data needs and other requirements.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
