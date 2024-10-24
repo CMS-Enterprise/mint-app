@@ -1,0 +1,28 @@
+
+# TODO: Add a way to determine order of Categories and subcategories
+type MTOCategory {
+  # DB Fields
+  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
+  name: String!
+
+
+  # Custom Resolvers
+  isUncategorized: Boolean!
+  subCategories: [MTOSubcategory!]!
+}
+
+type MTOSubcategory {
+  # DB Fields
+  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
+  name: String!
+
+  # Custom Resolvers
+  isUncategorized: Boolean!
+  milestones: [Milestone!]!
+}
+
+extend type Mutation {
+  #TODO: (category) Consider, should we make two mutations to abstract away needing a parent ID for top level category?
+  createMTOCategory(modelPlanID: UUID!, name: String!, parentID: UUID): MTOCategory!
+  @hasRole(role: MINT_USER)
+}

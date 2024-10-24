@@ -8,23 +8,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/google/uuid"
-
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// SubCategories is the resolver for the subCategories field.
-func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTOCategory) ([]*models.MTOSubcategory, error) {
-	return MTOSubcategoryGetByParentIDLoader(ctx, obj.ModelPlanID, obj.ID)
-}
-
-// Milestones is the resolver for the milestones field.
-func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*model.Milestone, error) {
-	panic(fmt.Errorf("not implemented: Milestones - milestones"))
-}
 
 // Categories is the resolver for the categories field.
 func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCategory, error) {
@@ -42,27 +29,9 @@ func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *mo
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
-// CreateMTOCategory is the resolver for the createMTOCategory field.
-func (r *mutationResolver) CreateMTOCategory(ctx context.Context, modelPlanID uuid.UUID, name string, parentID *uuid.UUID) (*models.MTOCategory, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return MTOCategoryCreate(ctx, logger, principal, r.store, name, modelPlanID, parentID)
-}
-
-// MTOCategory returns generated.MTOCategoryResolver implementation.
-func (r *Resolver) MTOCategory() generated.MTOCategoryResolver { return &mTOCategoryResolver{r} }
-
-// MTOSubcategory returns generated.MTOSubcategoryResolver implementation.
-func (r *Resolver) MTOSubcategory() generated.MTOSubcategoryResolver {
-	return &mTOSubcategoryResolver{r}
-}
-
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
 func (r *Resolver) ModelsToOperationMatrix() generated.ModelsToOperationMatrixResolver {
 	return &modelsToOperationMatrixResolver{r}
 }
 
-type mTOCategoryResolver struct{ *Resolver }
-type mTOSubcategoryResolver struct{ *Resolver }
 type modelsToOperationMatrixResolver struct{ *Resolver }
