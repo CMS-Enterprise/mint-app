@@ -2020,7 +2020,7 @@ Model Space offers model teams and their contractors templates or Databricks not
         },
         {
           header: 'Meet to understand requirements',
-          description: `ISP will configure Model Space according to the model contractor’s requirements. Model Space is in the CMS Amazon Web Services (AWS) Cloud, and your workspace will be made in Databricks.`
+          description: `Tell them about the model’s data needs and other requirements.`
         },
         {
           header: 'Setup occurs',
