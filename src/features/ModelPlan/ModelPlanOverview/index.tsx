@@ -44,8 +44,7 @@ const ModelPlan = () => {
 
   const { data, loading, refetch } = useGetFavoritesQuery({
     variables: {
-      filter: ModelPlanFilter.INCLUDE_ALL,
-      isMAC: true
+      filter: ModelPlanFilter.INCLUDE_ALL
     }
   });
 

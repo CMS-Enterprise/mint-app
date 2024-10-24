@@ -4,6 +4,7 @@ import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import { GetFavoritesQuery, TeamRole } from 'gql/generated/graphql';
+import i18next from 'i18next';
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -37,8 +38,7 @@ const FavoriteCard = ({
     id,
     basics,
     collaborators,
-    crs,
-    tdls,
+    echimpCRsAndTDLs,
     modelName,
     nameHistory,
     status
@@ -47,9 +47,9 @@ const FavoriteCard = ({
   const filteredList = nameHistory.slice(1);
   const firstThreeNames = filteredList.slice(0, 3).join(', ');
 
-  const crtdlIDs = [...(crs || []), ...(tdls || [])].map(
-    crtdl => crtdl.idNumber
-  );
+  const crtdlIDs = echimpCRsAndTDLs.map(crtdl => crtdl.id);
+  const firstThreeCRTDLs = crtdlIDs.slice(0, 3);
+  const remainingCRTDLs: number = crtdlIDs.length - firstThreeCRTDLs.length;
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
@@ -131,7 +131,17 @@ const FavoriteCard = ({
             <p className="margin-bottom-0">{t(`${type}:favorite.cRTDLs`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
               {crtdlIDs.length ? (
-                crtdlIDs.join(', ')
+                <>
+                  {firstThreeCRTDLs.join(', ')}
+                  {remainingCRTDLs > 0 && (
+                    <>
+                      {' '}
+                      {i18next.t('collaborationArea:crtdlsCard.andMore', {
+                        count: remainingCRTDLs
+                      })}
+                    </>
+                  )}
+                </>
               ) : (
                 <i>{t('favorite.noneEntered')}</i>
               )}

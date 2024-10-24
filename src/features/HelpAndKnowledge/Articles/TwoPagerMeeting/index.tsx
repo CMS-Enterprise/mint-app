@@ -188,7 +188,10 @@ const TwoPagerMeeting = () => {
                     i18nKey="sixPageMeeting:paperTemplateAlert"
                     components={{
                       link1: (
-                        <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx">
+                        <ExternalLink
+                          inlineText
+                          href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
+                        >
                           {' '}
                         </ExternalLink>
                       )
@@ -344,6 +347,7 @@ const TwoPagerMeeting = () => {
                       components={{
                         bold: (
                           <ExternalLink
+                            inlineText
                             className="margin-right-0"
                             href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
                           >
@@ -382,7 +386,10 @@ const TwoPagerMeeting = () => {
                     {twoPageMeetingT(
                       'about.summarybox.exampleSummaryBox.footer'
                     )}
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
+                    <ExternalLink
+                      inlineText
+                      href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
+                    >
                       {twoPageMeetingT(
                         'about.summarybox.exampleSummaryBox.footerLink'
                       )}

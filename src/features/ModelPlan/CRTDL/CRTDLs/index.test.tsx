@@ -2,80 +2,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
-import {
-  GetCrtdLsDocument,
-  GetModelPlanBaseDocument,
-  TaskStatus
-} from 'gql/generated/graphql';
+import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
+import { echimpCRsAndTDLsMock, modelID } from 'tests/mock/general';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
-import CRTDL from '..';
-
-const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
-
-const mocks = [
-  {
-    request: {
-      query: GetModelPlanBaseDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          modelName: 'My Plan',
-          modifiedDts: '',
-          status: TaskStatus.IN_PROGRESS
-        }
-      }
-    }
-  },
-  {
-    request: {
-      query: GetCrtdLsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          modelName: 'My Plan',
-          isCollaborator: true,
-          crs: [
-            {
-              __typename: 'PlanCR',
-              id: '123',
-              modelPlanID: modelID,
-              title: 'My CR',
-              idNumber: 'CR123',
-              dateInitiated: '2022-07-30T05:00:00Z',
-              dateImplemented: '2022-07-30T05:00:00Z',
-              note: 'note'
-            }
-          ],
-          tdls: [
-            {
-              __typename: 'PlanTDL',
-              idNumber: 'TDL 456',
-              id: '456',
-              modelPlanID: modelID,
-              title: 'My TDL',
-              dateInitiated: '2022-07-30T05:00:00Z',
-              dateImplemented: '2022-07-30T05:00:00Z',
-              note: 'note'
-            }
-          ]
-        }
-      }
-    }
-  }
-];
+import CRTDLs from './index';
 
 const mockAuthReducer = {
   isUserSet: true,
@@ -86,17 +20,17 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-describe('Model Plan CR and TDL page', () => {
-  it('matches snapshot', async () => {
-    const { asFragment, getByTestId } = render(
+describe('CR and TDLs page', () => {
+  it('renders without errors', async () => {
+    render(
       <MemoryRouter
         initialEntries={[`/models/${modelID}/collaboration-area/cr-and-tdl`]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
               <Provider store={store}>
-                <CRTDL />
+                <CRTDLs />
               </Provider>
             </Route>
           </MessageProvider>
@@ -105,9 +39,40 @@ describe('Model Plan CR and TDL page', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('cr-tdl-table-cr')).toHaveTextContent('My CR');
+      expect(
+        screen.getByTestId('echimp-cr-and-tdls-table')
+      ).toBeInTheDocument();
+      expect(screen.getByText('Echimp CR')).toBeInTheDocument();
+      expect(screen.getByText('Echimp TDL')).toBeInTheDocument();
+      expect(screen.getByTestId('emergency__cr-tag')).toBeInTheDocument();
     });
+  });
 
+  it('matches snapshot', async () => {
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/collaboration-area/cr-and-tdl`]}
+      >
+        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+          <MessageProvider>
+            <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
+              <Provider store={store}>
+                <CRTDLs />
+              </Provider>
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('echimp-cr-and-tdls-table')
+      ).toBeInTheDocument();
+      expect(screen.getByText('Echimp CR')).toBeInTheDocument();
+      expect(screen.getByText('Echimp TDL')).toBeInTheDocument();
+      expect(screen.getByTestId('emergency__cr-tag')).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

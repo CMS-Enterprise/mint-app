@@ -2,59 +2,6 @@
 @use 'uswds-core' as *;
 @use 'colors' as *;
 
-.provider-supplier-modal {
-  &__overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 400;
-  }
-
-  &__content {
-    position: absolute;
-    width: 70%;
-    height: auto;
-    min-height: 100%;
-    background-color: #fff;
-    right: 0;
-    z-index: 1;
-    line-height: 1.6em;
-
-    @media screen and (max-width: $desktop) {
-      width: 100%;
-    }
-
-    .usa-pagination__button {
-      background-color: #fff
-    }
-    .usa-pagination__link {
-      background: transparent;
-      border: 0;
-    }
-
-  }
-  &__x-button-container {
-    width: 100%;
-    box-shadow: 0px 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
-    padding: 1rem 2rem 1rem 1rem;
-  }
-
-  &__x-button {
-    background: none;
-    border: 0;
-    line-height: 0;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-
-}
-
 #provider-supplier-modal--sidenav {
   .usa-sidenav {
     border: none;

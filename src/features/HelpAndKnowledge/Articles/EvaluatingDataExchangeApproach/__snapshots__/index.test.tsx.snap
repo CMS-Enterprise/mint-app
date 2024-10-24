@@ -369,7 +369,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           class="flex-container margin-bottom-05"
                         >
                           <span
-                            class="usa-link pointer margin-right-05"
+                            class="usa-link pointer"
                             role="button"
                             tabindex="0"
                           >
@@ -398,7 +398,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         >
                           Utilizing the 
                           <span
-                            class="usa-link pointer margin-right-05"
+                            class="usa-link pointer"
                             role="button"
                             tabindex="0"
                           >

@@ -126,7 +126,7 @@ const BodyContent = ({
       {filteredGroupSolutions[filteredView] && (
         <div>
           <Divider className="margin-y-8" />
-          <ReadOnlyCRTDLs modelID={modelID} />
+          <ReadOnlyCRTDLs />
         </div>
       )}
 

@@ -5,6 +5,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import {
   GetOperationalNeedsDocument,
+  GetPossibleOperationalSolutionsDocument,
   OperationalNeedKey,
   OperationalSolutionKey,
   OpSolutionStatus
@@ -30,6 +31,7 @@ const returnNeeds = (needed: boolean | null) => {
             id: modelID,
             isCollaborator: true,
             modelName: 'My excellent plan that I just initiated',
+            opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
             operationalNeeds: [
               {
                 __typename: 'OperationalNeed',
@@ -62,6 +64,41 @@ const returnNeeds = (needed: boolean | null) => {
               }
             ]
           }
+        }
+      }
+    },
+    {
+      request: {
+        query: GetPossibleOperationalSolutionsDocument
+      },
+      result: {
+        data: {
+          possibleOperationalSolutions: [
+            {
+              __typename: 'PossibleOperationalSolution',
+              id: 1,
+              name: 'Medicare Advantage Prescription Drug System (MARx)',
+              key: 'MARX'
+            },
+            {
+              __typename: 'PossibleOperationalSolution',
+              id: 2,
+              name: 'Health Plan Management System (HPMS)',
+              key: 'HPMS'
+            },
+            {
+              __typename: 'PossibleOperationalSolution',
+              id: 3,
+              name: 'Salesforce',
+              key: 'SALESFORCE'
+            },
+            {
+              __typename: 'PossibleOperationalSolution',
+              id: 4,
+              name: 'Other',
+              key: 'OTHER_NEW_PROCESS'
+            }
+          ]
         }
       }
     }
@@ -153,7 +190,7 @@ describe('Operational Solutions Home', () => {
         <FilterViewSolutionsAlert
           filterSolutions={[OperationalSolutionKey.CCW]}
           operationalNeeds={
-            returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
+            returnNeeds(true)[0].result.data.modelPlan!.operationalNeeds
           }
         />
       </MockedProvider>

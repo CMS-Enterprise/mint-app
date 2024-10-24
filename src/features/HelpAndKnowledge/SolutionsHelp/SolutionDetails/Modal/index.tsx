@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactModal from 'react-modal';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
 import { subComponentsProps } from 'features/ModelPlan/ReadOnly';
 import MobileNav from 'features/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'features/ModelPlan/ReadOnly/_components/Sidenav';
 import { NotFoundPartial } from 'features/NotFound';
 
 import Alert from 'components/Alert';
+import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import { HelpSolutionType } from '../../solutionsMap';
@@ -95,13 +95,6 @@ const SolutionDetailsModal = ({
     setIsOpen(!!solution);
   }, [solution]);
 
-  // Disabled background component scrolling when modal open and stubs scroll width
-  const handleModal = (state: 'unset' | 'hidden') => {
-    document.body.style.overflow = state;
-    (document.getElementById('root')! as HTMLElement).style.marginRight =
-      state === 'unset' ? '0px' : '23px';
-  };
-
   // On modal close, returns to previous route state if present
   const closeModal = () => {
     history.push(prevRoute || closeRoute, {
@@ -115,98 +108,74 @@ const SolutionDetailsModal = ({
 
   const renderModal = () => {
     return (
-      <ReactModal
+      <Sidepanel
+        ariaLabel={t('ariaLabel')}
         isOpen={isOpen}
-        overlayClassName="mint-discussions__overlay overflow-y-scroll"
-        className="mint-discussions__content solution-details-modal"
-        onAfterOpen={() => handleModal('hidden')}
-        onAfterClose={() => handleModal('unset')}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick
-        contentLabel={t('ariaLabel')}
-        appElement={document.getElementById('root')! as HTMLElement}
+        closeModal={closeModal}
+        modalHeading={t('operationalSolutions')}
+        testid="operational-solution-modal"
       >
-        <div data-testid="operational-solution-modal">
-          <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
-            <button
-              type="button"
-              data-testid="close-discussions"
-              className="mint-discussions__x-button margin-right-2"
-              aria-label="Close Modal"
-              onClick={closeModal}
+        <Header solution={solution} />
+
+        {isMobile && (
+          <MobileNav
+            subComponents={subComponents(solution, location, closeRoute)}
+            subinfo={section}
+            isHelpArticle
+            solutionDetailRoute={prevRoute}
+          />
+        )}
+
+        <GridContainer className="padding-y-6 operational-solution-modal__body">
+          <Grid row>
+            {!isMobile && (
+              <Grid desktop={{ col: 4 }}>
+                <div className="margin-bottom-6">
+                  <SideNav
+                    subComponents={subComponents(
+                      solution,
+                      location,
+                      closeRoute
+                    )}
+                    isHelpArticle
+                    solutionNavigation
+                    paramActive
+                  />
+                </div>
+
+                <Contact contact={primaryContact} closeRoute={closeRoute} />
+
+                <Alert type="info" noIcon lessPadding className="margin-top-5">
+                  {t('itLeadInfo')}
+                </Alert>
+              </Grid>
+            )}
+
+            <Grid
+              desktop={{ col: 7 }}
+              className="padding-bottom-4 border-bottom-1px border-base-light desktop:border-bottom-0"
             >
-              <Icon.Close size={4} className="text-base" />
-            </button>
-            <h4 className="margin-0">{t('operationalSolutions')}</h4>
-          </div>
+              {
+                subComponents(solution, location, closeRoute)[section]
+                  ?.component
+              }
+            </Grid>
 
-          <Header solution={solution} />
-
-          {isMobile && (
-            <MobileNav
-              subComponents={subComponents(solution, location, closeRoute)}
-              subinfo={section}
-              isHelpArticle
-              solutionDetailRoute={prevRoute}
-            />
-          )}
-
-          <GridContainer className="padding-y-6 operational-solution-modal__body">
-            <Grid row>
-              {!isMobile && (
-                <Grid desktop={{ col: 4 }}>
-                  <div className="margin-bottom-6">
-                    <SideNav
-                      subComponents={subComponents(
-                        solution,
-                        location,
-                        closeRoute
-                      )}
-                      isHelpArticle
-                      solutionNavigation
-                      paramActive
-                    />
-                  </div>
-
-                  <Contact contact={primaryContact} closeRoute={closeRoute} />
-
-                  <Alert
-                    type="info"
-                    noIcon
-                    lessPadding
-                    className="margin-top-5"
-                  >
+            {isMobile && (
+              <>
+                <Grid col={12}>
+                  <Contact contact={primaryContact} />
+                </Grid>
+                <Grid col={12}>
+                  <Alert type="info" noIcon lessPadding>
                     {t('itLeadInfo')}
                   </Alert>
                 </Grid>
-              )}
-
-              <Grid
-                desktop={{ col: 7 }}
-                className="padding-bottom-4 border-bottom-1px border-base-light desktop:border-bottom-0"
-              >
-                {
-                  subComponents(solution, location, closeRoute)[section]
-                    ?.component
-                }
-              </Grid>
-
-              {isMobile && (
-                <>
-                  <Grid col={12}>
-                    <Contact contact={primaryContact} />
-                  </Grid>
-                  <Grid col={12}>
-                    <Alert type="info" noIcon lessPadding>
-                      {t('itLeadInfo')}
-                    </Alert>
-                  </Grid>
-                </>
-              )}
-            </Grid>
-          </GridContainer>
-        </div>
-      </ReactModal>
+              </>
+            )}
+          </Grid>
+        </GridContainer>
+      </Sidepanel>
     );
   };
 

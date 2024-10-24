@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { GetCrtdLsQuery, GetModelSummaryQuery } from 'gql/generated/graphql';
+import {
+  GetEchimpCrandTdlQuery,
+  GetModelSummaryQuery
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import CollapsableLink from 'components/CollapsableLink';
@@ -16,13 +19,12 @@ type CollaboratorsType = GetModelSummaryQuery['modelPlan']['collaborators'][0];
 type CharacteristicsType =
   GetModelSummaryQuery['modelPlan']['generalCharacteristics'];
 
-type CRTDLsTypes =
-  | GetCrtdLsQuery['modelPlan']['crs'][0]
-  | GetCrtdLsQuery['modelPlan']['tdls'][0];
+type EchimpCrAndTdlsType =
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
-  crTdls: CRTDLsTypes[] | null;
+  crTdls: EchimpCrAndTdlsType[] | null;
   goal: string;
   loading: boolean;
   modelLeads: CollaboratorsType[];
@@ -64,11 +66,14 @@ const ModelSummary = ({
       }`;
     });
 
-  const formattedCrTdls = (items: CRTDLsTypes[]) => {
-    const idNumbers = items.map(item => item.idNumber);
+  const formattedCrTdls = (items: EchimpCrAndTdlsType[]) => {
+    const idNumbers = items.map(item => item.id);
     if (idNumbers.length > 3) {
-      return `${idNumbers.slice(0, 3).join(', ')} +${idNumbers.length - 3} ${t(
-        'more'
+      return `${idNumbers.slice(0, 3).join(', ')} ${i18next.t(
+        'collaborationArea:crtdlsCard.andMore',
+        {
+          count: idNumbers.length - 3
+        }
       )}`;
     }
     return idNumbers.join(', ');

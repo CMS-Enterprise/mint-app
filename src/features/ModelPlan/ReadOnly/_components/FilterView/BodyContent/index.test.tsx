@@ -52,7 +52,16 @@ const mockData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
-
+  echimpCRsAndTDLs: [
+    {
+      __typename: 'EChimpCR',
+      id: '123'
+    },
+    {
+      __typename: 'EChimpTDL',
+      id: '456'
+    }
+  ],
   collaborators: [
     {
       userAccount: {
@@ -64,20 +73,6 @@ const mockData: GetModelSummaryTypes = {
       },
       teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
-    }
-  ],
-  crs: [
-    {
-      __typename: 'PlanCR',
-      id: '123',
-      idNumber: 'CR 123'
-    }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      id: '456',
-      idNumber: 'TDL-123'
     }
   ]
 };

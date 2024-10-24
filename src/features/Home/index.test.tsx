@@ -9,17 +9,23 @@ import {
 } from '@testing-library/react';
 import {
   GetFavoritesDocument,
+  GetFavoritesQuery,
   GetHomepageSettingsDocument,
   ModelPlanFilter,
+  ModelStatus,
+  TeamRole,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 import { set } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import { modelPlanCollectionMock } from 'tests/mock/general';
+import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
 import HomeNew from '.';
+
+type FavoritesType = GetFavoritesQuery['modelPlanCollection'][0];
 
 vi.mock('@okta/okta-react', () => ({
   useOktaAuth: () => {
@@ -34,6 +40,44 @@ vi.mock('@okta/okta-react', () => ({
     };
   }
 }));
+
+const mockModel: FavoritesType = {
+  id: '0186774a-80b0-454c-b69e-c4e949343483',
+  modelName: 'Plan For General Characteristics',
+  nameHistory: ['first', 'second'],
+  isFavorite: true,
+  status: ModelStatus.PLAN_DRAFT,
+  isCollaborator: false,
+  echimpCRsAndTDLs: [
+    {
+      id: '123',
+      __typename: 'EChimpCR'
+    },
+    {
+      id: '456',
+      __typename: 'EChimpTDL'
+    }
+  ],
+  basics: {
+    id: '123',
+    performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
+    goal: 'The goal',
+    __typename: 'PlanBasics'
+  },
+  collaborators: [
+    {
+      userAccount: {
+        id: '890',
+        __typename: 'UserAccount',
+        commonName: 'Test User'
+      },
+      id: '2134234',
+      teamRoles: [TeamRole.MODEL_LEAD],
+      __typename: 'PlanCollaborator'
+    }
+  ],
+  __typename: 'ModelPlan'
+};
 
 const settingsMock = [
   {
@@ -55,53 +99,12 @@ const settingsMock = [
     request: {
       query: GetFavoritesDocument,
       variables: {
-        filter: 'INCLUDE_ALL',
-        isMAC: true
+        filter: ModelPlanFilter.INCLUDE_ALL
       }
     },
     result: {
       data: {
-        modelPlanCollection: [
-          {
-            id: 'e671f056-2634-4af4-abad-a63850832a0a',
-            modelName: 'Plan With Collaborators',
-            isFavorite: true,
-            nameHistory: ['Plan With Collaborators'],
-            isCollaborator: true,
-            status: 'PLAN_DRAFT',
-            basics: {
-              id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
-              goal: null,
-              performancePeriodStarts: null,
-              __typename: 'PlanBasics'
-            },
-            collaborators: [
-              {
-                id: '064c52cf-854f-4c53-acdf-ab27ffb9cca5',
-                userAccount: {
-                  id: '83bb8c56-b871-43e5-9fe4-2701ad6c593e',
-                  commonName: 'MINT Doe',
-                  __typename: 'UserAccount'
-                },
-                teamRoles: ['MODEL_LEAD'],
-                __typename: 'PlanCollaborator'
-              },
-              {
-                id: 'c6866efe-30d3-4926-bf50-68d9a0150cb0',
-                userAccount: {
-                  id: 'ae6ed775-b4de-4b82-ab19-75c03a907726',
-                  commonName: 'BTAL Doe',
-                  __typename: 'UserAccount'
-                },
-                teamRoles: ['LEADERSHIP'],
-                __typename: 'PlanCollaborator'
-              }
-            ],
-            crs: [],
-            tdls: [],
-            __typename: 'ModelPlan'
-          }
-        ]
+        modelPlanCollection: [mockModel]
       }
     }
   }
@@ -120,7 +123,7 @@ describe('The home page', () => {
   it('renders empty message for no settings selected', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter initialEntries={[`/`]}>
-        <MockedProvider
+        <VerboseMockedProvider
           mocks={[
             ...settingsMock,
             ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
@@ -135,7 +138,7 @@ describe('The home page', () => {
               </MessageProvider>
             </Provider>
           </Route>
-        </MockedProvider>
+        </VerboseMockedProvider>
       </MemoryRouter>
     );
 

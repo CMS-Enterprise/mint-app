@@ -134,7 +134,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                 <span>
                   Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at 
                   <span
-                    class="usa-link pointer margin-right-05"
+                    class="usa-link pointer"
                     role="button"
                     tabindex="0"
                   >

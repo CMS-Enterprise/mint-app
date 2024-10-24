@@ -24,6 +24,11 @@
         @media screen and (min-width: 1024px) and (max-width: 1120px) {
           width: 100%;
         }
+
+        // Overwrite default USWDS button styles of having only one type
+        &:only-of-type {
+          margin-right: 0.5rem;
+        }
       }
 
       .usa-button.usa-button--outline {

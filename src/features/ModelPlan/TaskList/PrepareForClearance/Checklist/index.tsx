@@ -50,8 +50,8 @@ interface ClearanceFormValues {
   status: TaskStatus;
 }
 
-const initialClearanceFormValues = {
-  id: '',
+export const initialClearanceFormValues = {
+  id: '123',
   readyForClearanceByUserAccount: {
     id: '',
     commonName: ''
