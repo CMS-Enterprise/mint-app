@@ -3,7 +3,6 @@ import { GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 
-import DndWrapper from './DnD/DnDWrapper';
 import NestedTable from './DnD/NestedTable';
 
 export type MilestoneType = {
@@ -152,9 +151,7 @@ const Sandbox = () => {
   return (
     <MainContent>
       <GridContainer className="margin-y-6">
-        <DndWrapper>
-          <NestedTable rawData={rawData} />
-        </DndWrapper>
+        <NestedTable rawData={rawData} />
       </GridContainer>
     </MainContent>
   );

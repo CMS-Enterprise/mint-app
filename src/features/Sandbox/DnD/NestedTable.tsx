@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { CategoryType, MilestoneType, SubCategoryType } from '..';
 
@@ -182,93 +184,95 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
     });
 
   return (
-    <table
-      style={{ width: '101%', overflow: 'auto', borderCollapse: 'collapse' }}
-    >
-      <thead>
-        <tr>
-          <th
-            style={{
-              borderBottom: '1px solid black',
-              padding: '1rem',
-              paddingLeft: '0px',
-              textAlign: 'left',
-              width: '190px',
-              minWidth: '190px',
-              maxWidth: '190px'
-            }}
-          >
-            Name
-          </th>
-          <th
-            style={{
-              borderBottom: '1px solid black',
-              padding: '1rem',
-              paddingLeft: '0px',
-              textAlign: 'left',
-              width: '190px',
-              minWidth: '190px',
-              maxWidth: '190px'
-            }}
-          >
-            Facilitated By
-          </th>
-          <th
-            style={{
-              borderBottom: '1px solid black',
-              padding: '1rem',
-              paddingLeft: '0px',
-              textAlign: 'left',
-              width: '190px',
-              minWidth: '190px',
-              maxWidth: '190px'
-            }}
-          >
-            Solutions
-          </th>
-          <th
-            style={{
-              borderBottom: '1px solid black',
-              padding: '1rem',
-              paddingLeft: '0px',
-              textAlign: 'left',
-              width: '190px',
-              minWidth: '190px',
-              maxWidth: '190px'
-            }}
-          >
-            Need By
-          </th>
-          <th
-            style={{
-              borderBottom: '1px solid black',
-              padding: '1rem',
-              paddingLeft: '0px',
-              textAlign: 'left',
-              width: '190px',
-              minWidth: '190px',
-              maxWidth: '190px'
-            }}
-          >
-            Status
-          </th>
-          <th
-            style={{
-              borderBottom: '1px solid black',
-              padding: '1rem',
-              paddingLeft: '0px',
-              textAlign: 'left',
-              width: '190px',
-              minWidth: '190px',
-              maxWidth: '190px'
-            }}
-          >
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>{renderCategories()}</tbody>
-    </table>
+    <DndProvider backend={HTML5Backend}>
+      <table
+        style={{ width: '101%', overflow: 'auto', borderCollapse: 'collapse' }}
+      >
+        <thead>
+          <tr>
+            <th
+              style={{
+                borderBottom: '1px solid black',
+                padding: '1rem',
+                paddingLeft: '0px',
+                textAlign: 'left',
+                width: '190px',
+                minWidth: '190px',
+                maxWidth: '190px'
+              }}
+            >
+              Name
+            </th>
+            <th
+              style={{
+                borderBottom: '1px solid black',
+                padding: '1rem',
+                paddingLeft: '0px',
+                textAlign: 'left',
+                width: '190px',
+                minWidth: '190px',
+                maxWidth: '190px'
+              }}
+            >
+              Facilitated By
+            </th>
+            <th
+              style={{
+                borderBottom: '1px solid black',
+                padding: '1rem',
+                paddingLeft: '0px',
+                textAlign: 'left',
+                width: '190px',
+                minWidth: '190px',
+                maxWidth: '190px'
+              }}
+            >
+              Solutions
+            </th>
+            <th
+              style={{
+                borderBottom: '1px solid black',
+                padding: '1rem',
+                paddingLeft: '0px',
+                textAlign: 'left',
+                width: '190px',
+                minWidth: '190px',
+                maxWidth: '190px'
+              }}
+            >
+              Need By
+            </th>
+            <th
+              style={{
+                borderBottom: '1px solid black',
+                padding: '1rem',
+                paddingLeft: '0px',
+                textAlign: 'left',
+                width: '190px',
+                minWidth: '190px',
+                maxWidth: '190px'
+              }}
+            >
+              Status
+            </th>
+            <th
+              style={{
+                borderBottom: '1px solid black',
+                padding: '1rem',
+                paddingLeft: '0px',
+                textAlign: 'left',
+                width: '190px',
+                minWidth: '190px',
+                maxWidth: '190px'
+              }}
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>{renderCategories()}</tbody>
+      </table>
+    </DndProvider>
   );
 };
 
