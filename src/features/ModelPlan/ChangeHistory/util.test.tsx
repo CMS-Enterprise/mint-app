@@ -22,7 +22,7 @@ import {
   handleSortOptions,
   identifyChangeType,
   isInitialCreatedSection,
-  isTranslationTaskListTable,
+  isTableWithStatus,
   linkingTableQuestions,
   parseArray,
   removedUnneededFields,
@@ -83,11 +83,11 @@ const sortData: ChangeRecordType[][] = [
 ];
 
 describe('util.tsx', () => {
-  // Test for isTranslationTaskListTable
-  it('isTranslationTaskListTable', () => {
-    expect(isTranslationTaskListTable(TableName.PLAN_BASICS)).toBe(true);
+  // Test for isTableWithStatus
+  it('isTableWithStatus', () => {
+    expect(isTableWithStatus(TableName.PLAN_BASICS)).toBe(true);
     expect(
-      isTranslationTaskListTable(TableName.OPERATIONAL_SOLUTION_SUBTASK)
+      isTableWithStatus(TableName.OPERATIONAL_SOLUTION_SUBTASK)
     ).toBe(false);
   });
 
