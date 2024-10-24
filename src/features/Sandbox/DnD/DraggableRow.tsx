@@ -14,7 +14,7 @@ const DraggableRow = ({
 
   const [, drop] = useDrop({
     accept: type,
-    hover(item: any) {
+    hover(item: { index: number; type: string }) {
       if (!ref.current) {
         return;
       }
@@ -27,6 +27,7 @@ const DraggableRow = ({
 
       moveRow(dragIndex, hoverIndex);
 
+      // eslint-disable-next-line no-param-reassign
       item.index = hoverIndex;
     }
   });

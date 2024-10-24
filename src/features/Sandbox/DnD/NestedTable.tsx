@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
+import { CategoryType, MilestoneType, SubCategoryType } from '..';
+
 import DraggableRow from './DraggableRow';
 
-const NestedTable = ({ rawData }: any) => {
+const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
   const [data, setData] = useState(rawData);
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
@@ -22,12 +24,11 @@ const NestedTable = ({ rawData }: any) => {
   };
 
   const moveRow = (
-    dragIndex,
-    hoverIndex,
-    type,
-    categoryID,
-    subID,
-    milestoneID
+    dragIndex: number,
+    hoverIndex: number,
+    type: string,
+    subcategoryID?: string,
+    milestoneID?: string
   ) => {
     // Clone the existing data
     const updatedData = [...data];
@@ -39,10 +40,12 @@ const NestedTable = ({ rawData }: any) => {
     } else if (type.includes('subcategory')) {
       // Find the category that contains the dragged subcategory
       const parentCategory = updatedData.find(cat =>
-        cat.subCategories.some(sub => sub.id === subID)
+        cat.subCategories?.some(
+          (sub: SubCategoryType) => sub.id === subcategoryID
+        )
       );
 
-      if (parentCategory) {
+      if (parentCategory?.subCategories) {
         // Find the subcategories array and reorder within it
         const subCategories = [...parentCategory.subCategories];
         const draggedSub = subCategories.splice(dragIndex, 1)[0];
@@ -54,12 +57,12 @@ const NestedTable = ({ rawData }: any) => {
     } else if (type.includes('milestone')) {
       // Find the parent sub-category
       const parentCategory = updatedData.find(cat =>
-        cat.subCategories.some(sub =>
+        cat.subCategories?.some(sub =>
           sub.milestones.some(milestone => milestone.id === milestoneID)
         )
       );
 
-      const parentSubCategory = parentCategory?.subCategories.find(sub =>
+      const parentSubCategory = parentCategory?.subCategories?.find(sub =>
         sub.milestones.some(milestone => milestone.id === milestoneID)
       );
 
@@ -78,19 +81,22 @@ const NestedTable = ({ rawData }: any) => {
     setData(updatedData);
   };
 
-  const renderMilestones = (milestones, categoryID, subID) =>
+  const renderMilestones = (
+    milestones: MilestoneType[],
+    categoryID: string,
+    subcategoryID: string
+  ) =>
     milestones.map((milestone, index) => (
       <DraggableRow
         key={milestone.id}
         index={index}
-        type={`${categoryID}-${subID}-milestone`}
-        moveRow={(dragIndex, hoverIndex) =>
+        type={`${categoryID}-${subcategoryID}-milestone`}
+        moveRow={(dragIndex: number, hoverIndex: number) =>
           moveRow(
             dragIndex,
             hoverIndex,
             'milestone',
-            categoryID,
-            subID,
+            subcategoryID,
             milestone.id
           )
         }
@@ -107,7 +113,10 @@ const NestedTable = ({ rawData }: any) => {
       </DraggableRow>
     ));
 
-  const renderSubCategories = (subCategories, categoryID) =>
+  const renderSubCategories = (
+    subCategories: SubCategoryType[],
+    categoryID: string
+  ) =>
     subCategories.map((sub, index) => {
       const isExpanded = subExpandedRows.includes(sub.id!);
 
@@ -116,8 +125,8 @@ const NestedTable = ({ rawData }: any) => {
           <DraggableRow
             index={index}
             type={`${categoryID}-subcategory`}
-            moveRow={(dragIndex, hoverIndex) =>
-              moveRow(dragIndex, hoverIndex, 'subcategory', categoryID, sub.id)
+            moveRow={(dragIndex: number, hoverIndex: number) =>
+              moveRow(dragIndex, hoverIndex, 'subcategory', sub.id)
             }
             id={sub.id}
             toggleRow={toggleSubRow}
@@ -146,8 +155,8 @@ const NestedTable = ({ rawData }: any) => {
           <DraggableRow
             index={index}
             type="category"
-            moveRow={(dragIndex, hoverIndex) =>
-              moveRow(dragIndex, hoverIndex, 'category', category.id!)
+            moveRow={(dragIndex: number, hoverIndex: number) =>
+              moveRow(dragIndex, hoverIndex, 'category')
             }
             id={category.id}
             toggleRow={toggleRow}

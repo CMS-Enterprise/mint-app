@@ -6,7 +6,7 @@ import MainContent from 'components/MainContent';
 import DndWrapper from './DnD/DnDWrapper';
 import NestedTable from './DnD/NestedTable';
 
-type Milestone = {
+export type MilestoneType = {
   id: string;
   name: string;
   facilitatedBy: string;
@@ -16,13 +16,13 @@ type Milestone = {
   actions: any;
 };
 
-type SubCategoryType = {
+export type SubCategoryType = {
   id: string;
   name: string;
-  milestones: Milestone[];
+  milestones: MilestoneType[];
 };
 
-type Category = {
+export type CategoryType = {
   id: string;
   name: string;
   facilitatedBy: null;
@@ -33,7 +33,7 @@ type Category = {
   subCategories: SubCategoryType[];
 };
 
-const rawData: Partial<Category>[] = [
+const rawData: Partial<CategoryType>[] = [
   {
     id: '1',
     name: 'Category 1',
