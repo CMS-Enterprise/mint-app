@@ -14,6 +14,25 @@ import (
 	"github.com/google/uuid"
 )
 
+type CommonMilestone struct {
+	ID              uuid.UUID          `json:"id"`
+	Key             CommonMilestoneKey `json:"key"`
+	Name            string             `json:"name"`
+	Description     string             `json:"description"`
+	IsAdded         bool               `json:"isAdded"`
+	IsSuggested     bool               `json:"isSuggested"`
+	CommonSolutions []*CommonSolution  `json:"commonSolutions"`
+}
+
+type CommonSolution struct {
+	ID          uuid.UUID         `json:"id"`
+	Key         CommonSolutionKey `json:"key"`
+	Name        string            `json:"name"`
+	Description string            `json:"description"`
+	IsAdded     bool              `json:"isAdded"`
+	IsSuggested bool              `json:"isSuggested"`
+}
+
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -46,6 +65,22 @@ type ExistingModelLinkTranslation struct {
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
 	SignedHash string `json:"signedHash"`
+}
+
+type Milestone struct {
+	ID                        uuid.UUID                `json:"id"`
+	Name                      string                   `json:"name"`
+	FacilitatedBy             *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	NeedBy                    *time.Time               `json:"needBy,omitempty"`
+	Status                    MilestoneStatus          `json:"status"`
+	RiskIndicator             *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
+	IsDraftMilestone          bool                     `json:"isDraftMilestone"`
+	CommonMilestoneID         *uuid.UUID               `json:"commonMilestoneID,omitempty"`
+	AddedFromMilestoneLibrary bool                     `json:"addedFromMilestoneLibrary"`
+	CommonMilestone           *CommonMilestone         `json:"commonMilestone,omitempty"`
+	Solutions                 []*Solution              `json:"solutions"`
+	Category                  models.MTOCategory       `json:"category"`
+	SubCategory               models.MTOSubcategory    `json:"subCategory"`
 }
 
 // Represents model plan base translation data
@@ -649,6 +684,19 @@ type SendFeedbackEmailInput struct {
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
 }
 
+type Solution struct {
+	ID                       uuid.UUID                `json:"id"`
+	Name                     string                   `json:"name"`
+	FacilitatedBy            *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	Status                   SolutionStatus           `json:"status"`
+	RiskIndicator            *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
+	CommonSolutionID         *uuid.UUID               `json:"commonSolutionID,omitempty"`
+	SolutionType             SolutionType             `json:"solutionType"`
+	RelatedMilestones        []*Milestone             `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool                     `json:"addedFromSolutionLibrary"`
+	CommonSolution           *CommonSolution          `json:"commonSolution,omitempty"`
+}
+
 type TaskListSectionLockStatus struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
 	Section             models.TaskListSection     `json:"section"`
@@ -1129,6 +1177,88 @@ func (e ChangeType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type CommonMilestoneKey string
+
+const (
+	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
+	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
+)
+
+var AllCommonMilestoneKey = []CommonMilestoneKey{
+	CommonMilestoneKeyMilestoneA,
+	CommonMilestoneKeyMilestoneB,
+}
+
+func (e CommonMilestoneKey) IsValid() bool {
+	switch e {
+	case CommonMilestoneKeyMilestoneA, CommonMilestoneKeyMilestoneB:
+		return true
+	}
+	return false
+}
+
+func (e CommonMilestoneKey) String() string {
+	return string(e)
+}
+
+func (e *CommonMilestoneKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CommonMilestoneKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CommonMilestoneKey", str)
+	}
+	return nil
+}
+
+func (e CommonMilestoneKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type CommonSolutionKey string
+
+const (
+	CommonSolutionKeySolutionOne CommonSolutionKey = "SOLUTION_ONE"
+	CommonSolutionKeySolutionTwo CommonSolutionKey = "SOLUTION_TWO"
+)
+
+var AllCommonSolutionKey = []CommonSolutionKey{
+	CommonSolutionKeySolutionOne,
+	CommonSolutionKeySolutionTwo,
+}
+
+func (e CommonSolutionKey) IsValid() bool {
+	switch e {
+	case CommonSolutionKeySolutionOne, CommonSolutionKeySolutionTwo:
+		return true
+	}
+	return false
+}
+
+func (e CommonSolutionKey) String() string {
+	return string(e)
+}
+
+func (e *CommonSolutionKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CommonSolutionKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CommonSolutionKey", str)
+	}
+	return nil
+}
+
+func (e CommonSolutionKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type ContractorSupportType string
 
 const (
@@ -1565,6 +1695,47 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MilestoneStatus string
+
+const (
+	MilestoneStatusMilestoneStatusOne MilestoneStatus = "MILESTONE_STATUS_ONE"
+	MilestoneStatusMilestoneStatusTwo MilestoneStatus = "MILESTONE_STATUS_TWO"
+)
+
+var AllMilestoneStatus = []MilestoneStatus{
+	MilestoneStatusMilestoneStatusOne,
+	MilestoneStatusMilestoneStatusTwo,
+}
+
+func (e MilestoneStatus) IsValid() bool {
+	switch e {
+	case MilestoneStatusMilestoneStatusOne, MilestoneStatusMilestoneStatusTwo:
+		return true
+	}
+	return false
+}
+
+func (e MilestoneStatus) String() string {
+	return string(e)
+}
+
+func (e *MilestoneStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MilestoneStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MilestoneStatus", str)
+	}
+	return nil
+}
+
+func (e MilestoneStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -2455,6 +2626,90 @@ func (e *SelectionMethodType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SelectionMethodType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SolutionStatus string
+
+const (
+	SolutionStatusSolnStatusOne SolutionStatus = "SOLN_STATUS_ONE"
+	SolutionStatusSolnStatusTwo SolutionStatus = "SOLN_STATUS_TWO"
+)
+
+var AllSolutionStatus = []SolutionStatus{
+	SolutionStatusSolnStatusOne,
+	SolutionStatusSolnStatusTwo,
+}
+
+func (e SolutionStatus) IsValid() bool {
+	switch e {
+	case SolutionStatusSolnStatusOne, SolutionStatusSolnStatusTwo:
+		return true
+	}
+	return false
+}
+
+func (e SolutionStatus) String() string {
+	return string(e)
+}
+
+func (e *SolutionStatus) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SolutionStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SolutionStatus", str)
+	}
+	return nil
+}
+
+func (e SolutionStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SolutionType string
+
+const (
+	SolutionTypeItSystem   SolutionType = "IT_SYSTEM"
+	SolutionTypeContractor SolutionType = "CONTRACTOR"
+	SolutionTypeOther      SolutionType = "OTHER"
+)
+
+var AllSolutionType = []SolutionType{
+	SolutionTypeItSystem,
+	SolutionTypeContractor,
+	SolutionTypeOther,
+}
+
+func (e SolutionType) IsValid() bool {
+	switch e {
+	case SolutionTypeItSystem, SolutionTypeContractor, SolutionTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e SolutionType) String() string {
+	return string(e)
+}
+
+func (e *SolutionType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SolutionType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SolutionType", str)
+	}
+	return nil
+}
+
+func (e SolutionType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
