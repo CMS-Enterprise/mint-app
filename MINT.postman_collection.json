@@ -2781,7 +2781,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -2820,6 +2820,44 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "mutation NewMTOCategory {\ncreateMTOCategory(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOSubcategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoSubcategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoSubcategoryID\", mtoSubcategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOCategory {\ncreateMTOCategory(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Sub Category\"\n,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -2989,6 +3027,10 @@
 		},
 		{
 			"key": "mtoCategoryID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategoryID",
 			"value": ""
 		}
 	]
