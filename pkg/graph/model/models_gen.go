@@ -82,19 +82,19 @@ type MTOSubcategory struct {
 }
 
 type Milestone struct {
-	ID                        uuid.UUID         `json:"id"`
-	Name                      string            `json:"name"`
-	FacilitatedBy             *MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	NeedBy                    *time.Time        `json:"needBy,omitempty"`
-	Status                    MilestoneStatus   `json:"status"`
-	RiskIndicator             *MTORiskIndicator `json:"riskIndicator,omitempty"`
-	IsDraftMilestone          bool              `json:"isDraftMilestone"`
-	CommonMilestoneID         *uuid.UUID        `json:"commonMilestoneID,omitempty"`
-	AddedFromMilestoneLibrary bool              `json:"addedFromMilestoneLibrary"`
-	CommonMilestone           *CommonMilestone  `json:"commonMilestone,omitempty"`
-	Solutions                 []*Solution       `json:"solutions"`
-	Category                  MTOCategory       `json:"category"`
-	SubCategory               MTOSubcategory    `json:"subCategory"`
+	ID                        uuid.UUID                `json:"id"`
+	Name                      string                   `json:"name"`
+	FacilitatedBy             *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	NeedBy                    *time.Time               `json:"needBy,omitempty"`
+	Status                    MilestoneStatus          `json:"status"`
+	RiskIndicator             *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
+	IsDraftMilestone          bool                     `json:"isDraftMilestone"`
+	CommonMilestoneID         *uuid.UUID               `json:"commonMilestoneID,omitempty"`
+	AddedFromMilestoneLibrary bool                     `json:"addedFromMilestoneLibrary"`
+	CommonMilestone           *CommonMilestone         `json:"commonMilestone,omitempty"`
+	Solutions                 []*Solution              `json:"solutions"`
+	Category                  MTOCategory              `json:"category"`
+	SubCategory               MTOSubcategory           `json:"subCategory"`
 }
 
 // Represents model plan base translation data
@@ -699,16 +699,16 @@ type SendFeedbackEmailInput struct {
 }
 
 type Solution struct {
-	ID                       uuid.UUID         `json:"id"`
-	Name                     string            `json:"name"`
-	FacilitatedBy            *MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	Status                   SolutionStatus    `json:"status"`
-	RiskIndicator            *MTORiskIndicator `json:"riskIndicator,omitempty"`
-	CommonSolutionID         *uuid.UUID        `json:"commonSolutionID,omitempty"`
-	SolutionType             SolutionType      `json:"solutionType"`
-	RelatedMilestones        []*Milestone      `json:"relatedMilestones"`
-	AddedFromSolutionLibrary bool              `json:"addedFromSolutionLibrary"`
-	CommonSolution           *CommonSolution   `json:"commonSolution,omitempty"`
+	ID                       uuid.UUID                `json:"id"`
+	Name                     string                   `json:"name"`
+	FacilitatedBy            *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
+	Status                   SolutionStatus           `json:"status"`
+	RiskIndicator            *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
+	CommonSolutionID         *uuid.UUID               `json:"commonSolutionID,omitempty"`
+	SolutionType             SolutionType             `json:"solutionType"`
+	RelatedMilestones        []*Milestone             `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool                     `json:"addedFromSolutionLibrary"`
+	CommonSolution           *CommonSolution          `json:"commonSolution,omitempty"`
 }
 
 type TaskListSectionLockStatus struct {
@@ -1709,118 +1709,6 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTOFacilitator string
-
-const (
-	MTOFacilitatorModelTeam                            MTOFacilitator = "MODEL_TEAM"
-	MTOFacilitatorModelLead                            MTOFacilitator = "MODEL_LEAD"
-	MTOFacilitatorItLead                               MTOFacilitator = "IT_LEAD"
-	MTOFacilitatorSolutionArchitect                    MTOFacilitator = "SOLUTION_ARCHITECT"
-	MTOFacilitatorItSystemTeamOrProductOwner           MTOFacilitator = "IT_SYSTEM_TEAM_OR_PRODUCT_OWNER"
-	MTOFacilitatorParticipants                         MTOFacilitator = "PARTICIPANTS"
-	MTOFacilitatorApplicationSupportContractor         MTOFacilitator = "APPLICATION_SUPPORT_CONTRACTOR"
-	MTOFacilitatorImplementationContractor             MTOFacilitator = "IMPLEMENTATION_CONTRACTOR"
-	MTOFacilitatorEvaluationContractor                 MTOFacilitator = "EVALUATION_CONTRACTOR"
-	MTOFacilitatorQualityMeasuresDevelopmentContractor MTOFacilitator = "QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR"
-	MTOFacilitatorLearningContractor                   MTOFacilitator = "LEARNING_CONTRACTOR"
-	MTOFacilitatorMonitoringContractor                 MTOFacilitator = "MONITORING_CONTRACTOR"
-	MTOFacilitatorContractingOfficersRepresentative    MTOFacilitator = "CONTRACTING_OFFICERS_REPRESENTATIVE"
-	MTOFacilitatorLearningAndDiffusionGroup            MTOFacilitator = "LEARNING_AND_DIFFUSION_GROUP"
-	MTOFacilitatorResearchAndRapidCycleEvaluationGroup MTOFacilitator = "RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP"
-	MTOFacilitatorOther                                MTOFacilitator = "OTHER"
-)
-
-var AllMTOFacilitator = []MTOFacilitator{
-	MTOFacilitatorModelTeam,
-	MTOFacilitatorModelLead,
-	MTOFacilitatorItLead,
-	MTOFacilitatorSolutionArchitect,
-	MTOFacilitatorItSystemTeamOrProductOwner,
-	MTOFacilitatorParticipants,
-	MTOFacilitatorApplicationSupportContractor,
-	MTOFacilitatorImplementationContractor,
-	MTOFacilitatorEvaluationContractor,
-	MTOFacilitatorQualityMeasuresDevelopmentContractor,
-	MTOFacilitatorLearningContractor,
-	MTOFacilitatorMonitoringContractor,
-	MTOFacilitatorContractingOfficersRepresentative,
-	MTOFacilitatorLearningAndDiffusionGroup,
-	MTOFacilitatorResearchAndRapidCycleEvaluationGroup,
-	MTOFacilitatorOther,
-}
-
-func (e MTOFacilitator) IsValid() bool {
-	switch e {
-	case MTOFacilitatorModelTeam, MTOFacilitatorModelLead, MTOFacilitatorItLead, MTOFacilitatorSolutionArchitect, MTOFacilitatorItSystemTeamOrProductOwner, MTOFacilitatorParticipants, MTOFacilitatorApplicationSupportContractor, MTOFacilitatorImplementationContractor, MTOFacilitatorEvaluationContractor, MTOFacilitatorQualityMeasuresDevelopmentContractor, MTOFacilitatorLearningContractor, MTOFacilitatorMonitoringContractor, MTOFacilitatorContractingOfficersRepresentative, MTOFacilitatorLearningAndDiffusionGroup, MTOFacilitatorResearchAndRapidCycleEvaluationGroup, MTOFacilitatorOther:
-		return true
-	}
-	return false
-}
-
-func (e MTOFacilitator) String() string {
-	return string(e)
-}
-
-func (e *MTOFacilitator) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTOFacilitator(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTOFacilitator", str)
-	}
-	return nil
-}
-
-func (e MTOFacilitator) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTORiskIndicator string
-
-const (
-	MTORiskIndicatorOnTrack  MTORiskIndicator = "ON_TRACK"
-	MTORiskIndicatorOffTrack MTORiskIndicator = "OFF_TRACK"
-	MTORiskIndicatorAtRisk   MTORiskIndicator = "AT_RISK"
-)
-
-var AllMTORiskIndicator = []MTORiskIndicator{
-	MTORiskIndicatorOnTrack,
-	MTORiskIndicatorOffTrack,
-	MTORiskIndicatorAtRisk,
-}
-
-func (e MTORiskIndicator) IsValid() bool {
-	switch e {
-	case MTORiskIndicatorOnTrack, MTORiskIndicatorOffTrack, MTORiskIndicatorAtRisk:
-		return true
-	}
-	return false
-}
-
-func (e MTORiskIndicator) String() string {
-	return string(e)
-}
-
-func (e *MTORiskIndicator) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTORiskIndicator(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTORiskIndicator", str)
-	}
-	return nil
-}
-
-func (e MTORiskIndicator) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
