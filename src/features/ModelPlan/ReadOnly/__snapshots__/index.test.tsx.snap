@@ -527,6 +527,16 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   class="usa-sidenav__item"
                 >
                   <a
+                    class="nav-group-border"
+                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/data-exchange-approach"
+                  >
+                    Data exchange approach
+                  </a>
+                </li>
+                <li
+                  class="usa-sidenav__item"
+                >
+                  <a
                     class=""
                     href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/team"
                   >

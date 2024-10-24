@@ -95,7 +95,8 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   const isLockable: boolean =
     to.split('/')[4] === 'task-list' ||
-    to.split('/')[4] === 'data-exchange-approach';
+    (to.split('/')[4] === 'data-exchange-approach' &&
+      to.split('/')[3] !== 'read-view');
 
   const taskListRoute = lockedRouteParser(to);
 

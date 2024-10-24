@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Grid, Link } from '@trussworks/react-uswds';
 import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyCRTDLs from 'features/ModelPlan/ReadOnly/CRTDLs';
+import ReadOnlyDataExchangeApproach from 'features/ModelPlan/ReadOnly/DataExchangeapproach';
 import ReadOnlyGeneralCharacteristics from 'features/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'features/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyOpsEvalAndLearning from 'features/ModelPlan/ReadOnly/OpsEvalAndLearning';
@@ -31,7 +32,8 @@ const components: Record<string, React.ElementType> = {
   participantsAndProviders: ReadOnlyParticipantsAndProviders,
   beneficiaries: ReadOnlyBeneficiaries,
   opsEvalAndLearning: ReadOnlyOpsEvalAndLearning,
-  payments: ReadOnlyPayments
+  payments: ReadOnlyPayments,
+  dataExchangeApproach: ReadOnlyDataExchangeApproach
 };
 
 const FitleredViewSection = ({

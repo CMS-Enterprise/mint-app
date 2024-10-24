@@ -6,6 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 import allMocks, {
   crtdlMocks,
+  dataExchangeApproachMocks,
   modelID,
   operationalNeedsMock,
   possibleOperationalSolutionDataMocks,
@@ -34,6 +35,7 @@ describe('ShareExportModal', () => {
           <VerboseMockedProvider
             mocks={[
               ...allMocks,
+              ...dataExchangeApproachMocks,
               ...summaryMock,
               ...operationalNeedsMock,
               ...crtdlMocks,
@@ -91,6 +93,7 @@ describe('ShareExportModal', () => {
           <VerboseMockedProvider
             mocks={[
               ...allMocks,
+              ...dataExchangeApproachMocks,
               ...summaryMock,
               ...operationalNeedsMock,
               ...crtdlMocks,
