@@ -932,6 +932,7 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  createMTOCategory: MtoCategory;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1007,6 +1008,14 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCategoryArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 

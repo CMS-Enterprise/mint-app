@@ -8,6 +8,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -25,8 +28,7 @@ func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTO
 
 // Categories is the resolver for the categories field.
 func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCategory, error) {
-	panic(fmt.Errorf("not implemented: Categories - categories"))
-	// Fetch a list of categories filtered out by each model plan ID
+	return MTOCategoryGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // CommonMilestones is the resolver for the commonMilestones field.
@@ -38,6 +40,14 @@ func (r *modelsToOperationMatrixResolver) CommonMilestones(ctx context.Context, 
 // Solutions is the resolver for the solutions field.
 func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.Solution, error) {
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+}
+
+// CreateMTOCategory is the resolver for the createMTOCategory field.
+func (r *mutationResolver) CreateMTOCategory(ctx context.Context, modelPlanID uuid.UUID, name string, parentID *uuid.UUID) (*models.MTOCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return MTOCategoryCreate(ctx, logger, principal, r.store, name, modelPlanID, parentID)
 }
 
 // MTOCategory returns generated.MTOCategoryResolver implementation.

@@ -12,21 +12,23 @@ type MTOCategory struct {
 	baseStruct
 	modelPlanRelation
 
-	Name     string    `json:"name" db:"name"`
-	ParentID uuid.UUID `json:"parent_id" db:"parent_id"`
+	Name     string     `json:"name" db:"name"`
+	ParentID *uuid.UUID `json:"parent_id" db:"parent_id"`
 }
 
-func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID) *MTOCategory {
+// NewMTOCategory returns a new mtoCategory object. A Nil parentID means that this is a top level category, and not a subcategory
+func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
 	return &MTOCategory{
 		Name:              name,
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+		ParentID:          parentID,
 	}
 }
 
 // MTOUncategorized returns a placeholder category to hold all milestones that aren't categorized into a subcategory
-func MTOUncategorized(modelPlanID uuid.UUID) *MTOCategory {
-	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID)
+func MTOUncategorized(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
+	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID)
 }
 
 // MTOSubcategory is the same as a MTOCategory in the database. It is separated here so we can be precise in graphql

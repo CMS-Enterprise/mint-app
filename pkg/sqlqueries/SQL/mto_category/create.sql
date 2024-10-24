@@ -8,7 +8,7 @@ INSERT INTO mto_category (
 VALUES (
     :id,
     :name,
-    :parent_id
+    :parent_id,
     :model_plan_id,
     :created_by
 )

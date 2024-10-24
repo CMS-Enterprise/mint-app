@@ -2768,6 +2768,75 @@
 			]
 		},
 		{
+			"name": "Models to Operations Matrix",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "GetMTOCategories",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOCategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoCategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoCategoryID\", mtoCategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOCategory {\ncreateMTOCategory(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Get Model Plan with ECHIMP data",
 			"request": {
 				"method": "POST",
@@ -2917,6 +2986,10 @@
 			"key": "sampleModelPlanID",
 			"value": "f25d8f70-6470-47e6-a6d9-debc10f26567",
 			"type": "string"
+		},
+		{
+			"key": "mtoCategoryID",
+			"value": ""
 		}
 	]
 }

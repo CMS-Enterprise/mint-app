@@ -127,6 +127,7 @@ enum CommonSolutionKey {
   SOLUTION_TWO
 }
 
+#TODO consider, should we move this to it's own file?
 # TODO: Add a way to determine order of Categories and subcategories
 type MTOCategory {
   # DB Fields
@@ -147,4 +148,10 @@ type MTOSubcategory {
 
   # Custom Resolvers
   milestones: [Milestone!]!
+}
+
+extend type Mutation {
+  #TODO: (category) Consider, should we make two mutations to abstract away needing a parent ID for top level category?
+  createMTOCategory(modelPlanID: UUID!, name: String!, parentID: UUID): MTOCategory!
+  @hasRole(role: MINT_USER)
 }
