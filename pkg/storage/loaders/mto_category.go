@@ -14,7 +14,10 @@ import (
 
 // mtoCategoryLoaders is a struct that holds LoaderWrappers related to MTO Categories
 type mtoCategoryLoaders struct {
-	// ByModelPlanID Gets a list of mto category records associated with a model plan by the supplied model plan id
+	// AndSubCategoriesByModelPlanID Gets a list of mto category records associated with a model plan by the supplied model plan id.
+	// It includes all categories associated with a model plan, and returns all subcategories at the same level as parent categories
+	AndSubCategoriesByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCategory]
+	// ByModelPlanID Gets a list of mto category records at the parent level associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCategory]
 }
 
@@ -26,7 +29,8 @@ type mtoSubcategoryLoaders struct {
 
 // MTOCategory is the singleton instance of all LoaderWrappers related to MTO Categories
 var MTOCategory = &mtoCategoryLoaders{
-	ByModelPlanID: NewLoaderWrapper(batchMTOCategoryGetByModelPlanID),
+	ByModelPlanID:                 NewLoaderWrapper(batchMTOCategoryGetByModelPlanID),
+	AndSubCategoriesByModelPlanID: NewLoaderWrapper(batchMTOCategoryAndSubCategoriesByModelPlanID),
 }
 
 // MTOSubcategory is the singleton instance of all LoaderWrappers related to MTO Categories
@@ -53,7 +57,25 @@ func batchMTOCategoryGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 
 }
+func batchMTOCategoryAndSubCategoriesByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOCategory] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.MTOCategory](modelPlanIDs, err)
+	}
 
+	data, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(loaders.DataReader.Store, logger, modelPlanIDs)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.MTOCategory](modelPlanIDs, err)
+	}
+	getKeyFunc := func(data *models.MTOCategory) uuid.UUID {
+		return data.ModelPlanID
+	}
+
+	// implement one to many
+	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
+
+}
 func batchMTOSubcategoryGetByModelPlanID(ctx context.Context, parentIDS []uuid.UUID) []*dataloader.Result[[]*models.MTOSubcategory] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
