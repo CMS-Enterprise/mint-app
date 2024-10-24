@@ -14,7 +14,7 @@ import (
 )
 
 // Categories is the resolver for the categories field.
-func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.Category, error) {
+func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.MTOCategory, error) {
 	panic(fmt.Errorf("not implemented: Categories - categories"))
 	// Fetch a list of categories filtered out by each model plan ID
 }

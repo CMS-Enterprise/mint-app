@@ -1,7 +1,7 @@
 # ModelsToOperationMatrix Notes:
 # - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones oustide the scope of a Category
 type ModelsToOperationMatrix {
-  categories: [Category!]! # Categories is at the top level because you _can_ have empty categories
+  categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [CommonMilestone!]!
   solutions: [Solution!]! # Need to support solutions that _don't_ have milestones
 }
@@ -22,8 +22,8 @@ type Milestone {
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
   commonMilestone: CommonMilestone
   solutions: [Solution!]!
-  category: Category!
-  subCategory: Subcategory!
+  category: MTOCategory!
+  subCategory: MTOSubcategory!
 }
 
 # Solution represents a Solution that has been added to a Model Plan's MTO
@@ -128,17 +128,17 @@ enum CommonSolutionKey {
 }
 
 # TODO: Add a way to determine order of Categories and subcategories
-type Category {
+type MTOCategory {
   # DB Fields
   id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
   name: String!
   isUncategorized: Boolean!
 
   # Custom Resolvers
-  subCategories: [Subcategory!]!
+  subCategories: [MTOSubcategory!]!
 }
 
-type Subcategory {
+type MTOSubcategory {
   # DB Fields
   id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
   name: String!

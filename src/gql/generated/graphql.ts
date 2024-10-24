@@ -236,14 +236,6 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
-export type Category = {
-  __typename: 'Category';
-  id: Scalars['UUID']['output'];
-  isUncategorized: Scalars['Boolean']['output'];
-  name: Scalars['String']['output'];
-  subCategories: Array<Subcategory>;
-};
-
 export enum CcmInvolvmentType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -678,6 +670,14 @@ export type LaunchDarklySettings = {
 /** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
 export type LinkedExistingModel = ExistingModel | ModelPlan;
 
+export type MtoCategory = {
+  __typename: 'MTOCategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  subCategories: Array<MtoSubcategory>;
+};
+
 export enum MtoFacilitator {
   APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
   CONTRACTING_OFFICERS_REPRESENTATIVE = 'CONTRACTING_OFFICERS_REPRESENTATIVE',
@@ -703,10 +703,18 @@ export enum MtoRiskIndicator {
   ON_TRACK = 'ON_TRACK'
 }
 
+export type MtoSubcategory = {
+  __typename: 'MTOSubcategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  milestones: Array<Milestone>;
+  name: Scalars['String']['output'];
+};
+
 export type Milestone = {
   __typename: 'Milestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
-  category: Category;
+  category: MtoCategory;
   commonMilestone?: Maybe<CommonMilestone>;
   commonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   facilitatedBy?: Maybe<MtoFacilitator>;
@@ -717,7 +725,7 @@ export type Milestone = {
   riskIndicator?: Maybe<MtoRiskIndicator>;
   solutions: Array<Solution>;
   status: MilestoneStatus;
-  subCategory: Subcategory;
+  subCategory: MtoSubcategory;
 };
 
 export enum MilestoneStatus {
@@ -904,7 +912,7 @@ export enum ModelViewFilter {
 
 export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
-  categories: Array<Category>;
+  categories: Array<MtoCategory>;
   commonMilestones: Array<CommonMilestone>;
   solutions: Array<Solution>;
 };
@@ -3596,14 +3604,6 @@ export enum StatesAndTerritories {
   WV = 'WV',
   WY = 'WY'
 }
-
-export type Subcategory = {
-  __typename: 'Subcategory';
-  id: Scalars['UUID']['output'];
-  isUncategorized: Scalars['Boolean']['output'];
-  milestones: Array<Milestone>;
-  name: Scalars['String']['output'];
-};
 
 export type Subscription = {
   __typename: 'Subscription';

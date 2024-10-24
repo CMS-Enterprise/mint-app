@@ -14,13 +14,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type Category struct {
-	ID              uuid.UUID      `json:"id"`
-	Name            string         `json:"name"`
-	IsUncategorized bool           `json:"isUncategorized"`
-	SubCategories   []*Subcategory `json:"subCategories"`
-}
-
 type CommonMilestone struct {
 	ID              uuid.UUID          `json:"id"`
 	Key             CommonMilestoneKey `json:"key"`
@@ -74,6 +67,20 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
+type MTOCategory struct {
+	ID              uuid.UUID         `json:"id"`
+	Name            string            `json:"name"`
+	IsUncategorized bool              `json:"isUncategorized"`
+	SubCategories   []*MTOSubcategory `json:"subCategories"`
+}
+
+type MTOSubcategory struct {
+	ID              uuid.UUID    `json:"id"`
+	Name            string       `json:"name"`
+	IsUncategorized bool         `json:"isUncategorized"`
+	Milestones      []*Milestone `json:"milestones"`
+}
+
 type Milestone struct {
 	ID                        uuid.UUID         `json:"id"`
 	Name                      string            `json:"name"`
@@ -86,8 +93,8 @@ type Milestone struct {
 	AddedFromMilestoneLibrary bool              `json:"addedFromMilestoneLibrary"`
 	CommonMilestone           *CommonMilestone  `json:"commonMilestone,omitempty"`
 	Solutions                 []*Solution       `json:"solutions"`
-	Category                  Category          `json:"category"`
-	SubCategory               Subcategory       `json:"subCategory"`
+	Category                  MTOCategory       `json:"category"`
+	SubCategory               MTOSubcategory    `json:"subCategory"`
 }
 
 // Represents model plan base translation data
@@ -702,13 +709,6 @@ type Solution struct {
 	RelatedMilestones        []*Milestone      `json:"relatedMilestones"`
 	AddedFromSolutionLibrary bool              `json:"addedFromSolutionLibrary"`
 	CommonSolution           *CommonSolution   `json:"commonSolution,omitempty"`
-}
-
-type Subcategory struct {
-	ID              uuid.UUID    `json:"id"`
-	Name            string       `json:"name"`
-	IsUncategorized bool         `json:"isUncategorized"`
-	Milestones      []*Milestone `json:"milestones"`
 }
 
 type TaskListSectionLockStatus struct {
