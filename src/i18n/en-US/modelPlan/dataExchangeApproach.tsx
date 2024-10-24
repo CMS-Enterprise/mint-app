@@ -287,6 +287,9 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
       true: 'Yes',
       false: 'No'
     },
+    optionsRelatedInfo: {
+      true: 'newDataExchangeMethodsDescription'
+    },
     questionTooltip: (
       <div>
         Examples of novel data exchange methodologies include:
