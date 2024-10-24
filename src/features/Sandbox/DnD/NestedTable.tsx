@@ -21,20 +21,11 @@ const NestedTable = ({ rawData }: any) => {
     );
   };
 
-  const moveRow = (
-    dragIndex,
-    hoverIndex,
-    type,
-    parentId,
-    subID,
-    milestoneID
-  ) => {
-    // console.log('dragIndex', dragIndex);
-    // console.log('hoverIndex', hoverIndex);
-    // console.log('type', type);
-    // console.log('parentId', parentId);
+  const moveRow = (dragIndex, hoverIndex, type, subID, milestoneID) => {
     // Clone the existing data
     const updatedData = [...data];
+
+    console.log(dragIndex, hoverIndex, subID, milestoneID);
 
     if (type === 'category') {
       //   console.log('category');
@@ -81,9 +72,6 @@ const NestedTable = ({ rawData }: any) => {
       }
     }
 
-    // console.log('rawData', rawData);
-    // console.log('data', data);
-    // console.log('updatedData', updatedData);
     // Set the new data state
     setData(updatedData);
   };
@@ -95,31 +83,24 @@ const NestedTable = ({ rawData }: any) => {
         index={index}
         type="milestone"
         moveRow={(dragIndex, hoverIndex) =>
-          moveRow(
-            dragIndex,
-            hoverIndex,
-            'milestone',
-            categoryID,
-            subID,
-            milestone.id
-          )
+          moveRow(dragIndex, hoverIndex, 'milestone', subID, milestone.id)
         }
-        data={milestone}
         id={milestone.id}
       >
-        <td>{milestone.name}</td>
-        <td>{milestone.facilitatedBy}</td>
-        <td>{milestone.needBy}</td>
-        <td>{milestone.status}</td>
-        <td>{milestone.actions}</td>
+        <td className="padding-2 padding-left-0">{milestone.name}</td>
+        <td className="padding-2 padding-left-0">{milestone.facilitatedBy}</td>
+        <td className="padding-2 padding-left-0">
+          {milestone.solutions.join(', ')}
+        </td>
+        <td className="padding-2 padding-left-0">{milestone.needBy}</td>
+        <td className="padding-2 padding-left-0">{milestone.status}</td>
+        <td className="padding-2 padding-left-0">{milestone.actions}</td>
       </DraggableRow>
     ));
 
   const renderSubCategories = (subCategories, categoryID) =>
     subCategories.map((sub, index) => {
       const isExpanded = subExpandedRows.includes(sub.id!);
-      console.log(subExpandedRows, sub.id);
-      console.log(isExpanded);
 
       return (
         <div style={{ display: 'contents' }}>
@@ -127,13 +108,20 @@ const NestedTable = ({ rawData }: any) => {
             index={index}
             type="subcategory"
             moveRow={(dragIndex, hoverIndex) =>
-              moveRow(dragIndex, hoverIndex, 'subcategory', categoryID, sub.id)
+              moveRow(dragIndex, hoverIndex, 'subcategory', sub.id)
             }
-            data={sub}
             id={sub.id}
             toggleRow={toggleSubRow}
+            style={{
+              backgroundColor: '#F0F0F0',
+              fontWeight: 'bold',
+              borderBottom: '1px solid black',
+              cursor: 'pointer'
+            }}
           >
-            <td colSpan={5}>{sub.name}</td>
+            <td colSpan={6} className="padding-2 padding-left-0">
+              {sub.name}
+            </td>
           </DraggableRow>
           {isExpanded && renderMilestones(sub.milestones, categoryID, sub.id)}
         </div>
@@ -150,13 +138,21 @@ const NestedTable = ({ rawData }: any) => {
             index={index}
             type="category"
             moveRow={(dragIndex, hoverIndex) =>
-              moveRow(dragIndex, hoverIndex, 'category', category.id)
+              moveRow(dragIndex, hoverIndex, 'category')
             }
-            data={category}
             id={category.id}
             toggleRow={toggleRow}
+            style={{
+              cursor: 'pointer',
+              backgroundColor: '#E1F3F8',
+              borderBottom: '1px solid black',
+              fontWeight: 'bold',
+              fontSize: '1.25em'
+            }}
           >
-            <td colSpan={5}>{category.name}</td>
+            <td colSpan={6} className="padding-2 padding-left-0">
+              {category.name}
+            </td>
           </DraggableRow>
 
           {isExpanded &&
@@ -166,14 +162,89 @@ const NestedTable = ({ rawData }: any) => {
     });
 
   return (
-    <table>
+    <table
+      style={{ width: '101%', overflow: 'auto', borderCollapse: 'collapse' }}
+    >
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Facilitated By</th>
-          <th>Need By</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th
+            style={{
+              borderBottom: '1px solid black',
+              padding: '1rem',
+              paddingLeft: '0px',
+              textAlign: 'left',
+              width: '190px',
+              minWidth: '190px',
+              maxWidth: '190px'
+            }}
+          >
+            Name
+          </th>
+          <th
+            style={{
+              borderBottom: '1px solid black',
+              padding: '1rem',
+              paddingLeft: '0px',
+              textAlign: 'left',
+              width: '190px',
+              minWidth: '190px',
+              maxWidth: '190px'
+            }}
+          >
+            Facilitated By
+          </th>
+          <th
+            style={{
+              borderBottom: '1px solid black',
+              padding: '1rem',
+              paddingLeft: '0px',
+              textAlign: 'left',
+              width: '190px',
+              minWidth: '190px',
+              maxWidth: '190px'
+            }}
+          >
+            Solutions
+          </th>
+          <th
+            style={{
+              borderBottom: '1px solid black',
+              padding: '1rem',
+              paddingLeft: '0px',
+              textAlign: 'left',
+              width: '190px',
+              minWidth: '190px',
+              maxWidth: '190px'
+            }}
+          >
+            Need By
+          </th>
+          <th
+            style={{
+              borderBottom: '1px solid black',
+              padding: '1rem',
+              paddingLeft: '0px',
+              textAlign: 'left',
+              width: '190px',
+              minWidth: '190px',
+              maxWidth: '190px'
+            }}
+          >
+            Status
+          </th>
+          <th
+            style={{
+              borderBottom: '1px solid black',
+              padding: '1rem',
+              paddingLeft: '0px',
+              textAlign: 'left',
+              width: '190px',
+              minWidth: '190px',
+              maxWidth: '190px'
+            }}
+          >
+            Actions
+          </th>
         </tr>
       </thead>
       <tbody>{renderCategories()}</tbody>

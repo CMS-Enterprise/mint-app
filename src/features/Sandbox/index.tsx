@@ -1,11 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  DraggableProvided,
-  Droppable
-} from 'react-beautiful-dnd';
-import { Column, useTable } from 'react-table';
+import React, { useEffect } from 'react';
 import { GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
@@ -39,34 +32,6 @@ type Category = {
   actions: null;
   subCategories: SubCategoryType[];
 };
-
-// Sample Usage
-const columns: Column<Partial<Category>>[] = [
-  {
-    Header: 'Model milestone',
-    accessor: 'name'
-  },
-  {
-    Header: 'Facilitated by',
-    accessor: 'facilitatedBy'
-  },
-  {
-    Header: 'Solution',
-    accessor: 'solutions'
-  },
-  {
-    Header: 'Need by',
-    accessor: 'needBy'
-  },
-  {
-    Header: 'Status',
-    accessor: 'status'
-  },
-  {
-    Header: 'Actions',
-    accessor: 'actions'
-  }
-];
 
 const rawData: Partial<Category>[] = [
   {
@@ -185,9 +150,13 @@ const Sandbox = () => {
   }, []);
 
   return (
-    <DndWrapper>
-      <NestedTable rawData={rawData} />
-    </DndWrapper>
+    <MainContent>
+      <GridContainer className="margin-y-6">
+        <DndWrapper>
+          <NestedTable rawData={rawData} />
+        </DndWrapper>
+      </GridContainer>
+    </MainContent>
   );
 };
 

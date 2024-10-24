@@ -3,12 +3,12 @@ import { useDrag, useDrop } from 'react-dnd';
 
 const DraggableRow = ({
   type,
-  data,
   index,
   moveRow,
   children,
   id,
-  toggleRow
+  toggleRow,
+  style
 }: any) => {
   const ref = useRef(null);
   const [, drop] = useDrop({
@@ -26,10 +26,13 @@ const DraggableRow = ({
 
       moveRow(dragIndex, hoverIndex);
       item.index = hoverIndex;
+    },
+    options: {
+      dropEffect: 'copy'
     }
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [, drag] = useDrag({
     type,
     item: { type, index },
     collect: monitor => ({
@@ -37,16 +40,14 @@ const DraggableRow = ({
     })
   });
 
-  drag(drop(ref));
-
-  // console.log('id', id);
+  setTimeout(() => drag(drop(ref)), 100);
 
   return (
     <tr
       ref={ref}
       key={id}
       onClick={() => toggleRow(id)}
-      style={{ cursor: 'pointer', opacity: isDragging ? 0.5 : 1 }}
+      style={style}
       onKeyPress={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           toggleRow(id);
