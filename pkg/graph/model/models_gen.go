@@ -107,6 +107,27 @@ type ModelPlanTranslation struct {
 	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
+type ModelToOperationsCommonMilestone struct {
+	ID                    uuid.UUID                   `json:"id"`
+	CategoryName          string                      `json:"categoryName"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
+type ModelToOperationsCommonSolution struct {
+	ID                    uuid.UUID                   `json:"id"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`

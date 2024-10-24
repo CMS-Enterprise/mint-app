@@ -891,6 +891,29 @@ export enum ModelStatus {
   PLAN_DRAFT = 'PLAN_DRAFT'
 }
 
+export type ModelToOperationsCommonMilestone = {
+  __typename: 'ModelToOperationsCommonMilestone';
+  categoryName: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type ModelToOperationsCommonSolution = {
+  __typename: 'ModelToOperationsCommonSolution';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
 export enum ModelType {
   MANDATORY_NATIONAL = 'MANDATORY_NATIONAL',
   MANDATORY_REGIONAL_OR_STATE = 'MANDATORY_REGIONAL_OR_STATE',
@@ -3280,6 +3303,8 @@ export type Query = {
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
+  modelToOperationsCommonMilestone: ModelToOperationsCommonMilestone;
+  modelToOperationsCommonSolution: ModelToOperationsCommonSolution;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
@@ -3353,6 +3378,18 @@ export type QueryModelPlanCollectionArgs = {
 /** Query definition for the schema */
 export type QueryModelPlansByOperationalSolutionKeyArgs = {
   operationalSolutionKey: OperationalSolutionKey;
+};
+
+
+/** Query definition for the schema */
+export type QueryModelToOperationsCommonMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryModelToOperationsCommonSolutionArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
