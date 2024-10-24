@@ -24,7 +24,23 @@ func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 	}
 	return returned, nil
 
-} // MTOCategoryCreate creates a new MTOCategory in the database
+}
+
+// MTOCategoryGetByParentIDLoader returns the plan basics for a slice of model plan ids
+func MTOCategoryGetByParentIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, parentIDs []uuid.UUID) ([]*models.MTOCategory, error) {
+
+	args := map[string]interface{}{
+		"parent_ids": pq.Array(parentIDs),
+	}
+	returned, err := sqlutils.SelectProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.GetByParentIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+
+}
+
+// MTOCategoryCreate creates a new MTOCategory in the database
 func MTOCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *models.MTOCategory) (*models.MTOCategory, error) {
 	if MTOCategory.ID == uuid.Nil {
 		MTOCategory.ID = uuid.New()
