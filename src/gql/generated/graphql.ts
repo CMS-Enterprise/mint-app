@@ -932,6 +932,11 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  /**
+   * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
+   * Note, the parent must belong to the same model plan, or this will return an error
+   */
+  createMTOCategory: MtoCategory;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -965,6 +970,11 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  /**
+   * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
+   * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
+   */
+  updateMTOCategory: MtoCategory;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1007,6 +1017,14 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCategoryArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
@@ -1172,6 +1190,13 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
 };
 
 

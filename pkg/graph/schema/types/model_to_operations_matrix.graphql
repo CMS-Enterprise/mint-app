@@ -127,23 +127,3 @@ enum CommonSolutionKey {
   SOLUTION_TWO
 }
 
-# TODO: Add a way to determine order of Categories and subcategories
-type MTOCategory {
-  # DB Fields
-  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
-  name: String!
-  isUncategorized: Boolean!
-
-  # Custom Resolvers
-  subCategories: [MTOSubcategory!]!
-}
-
-type MTOSubcategory {
-  # DB Fields
-  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
-  name: String!
-  isUncategorized: Boolean!
-
-  # Custom Resolvers
-  milestones: [Milestone!]!
-}

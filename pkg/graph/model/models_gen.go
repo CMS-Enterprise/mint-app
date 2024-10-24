@@ -67,20 +67,6 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-type MTOCategory struct {
-	ID              uuid.UUID         `json:"id"`
-	Name            string            `json:"name"`
-	IsUncategorized bool              `json:"isUncategorized"`
-	SubCategories   []*MTOSubcategory `json:"subCategories"`
-}
-
-type MTOSubcategory struct {
-	ID              uuid.UUID    `json:"id"`
-	Name            string       `json:"name"`
-	IsUncategorized bool         `json:"isUncategorized"`
-	Milestones      []*Milestone `json:"milestones"`
-}
-
 type Milestone struct {
 	ID                        uuid.UUID                `json:"id"`
 	Name                      string                   `json:"name"`
@@ -93,8 +79,8 @@ type Milestone struct {
 	AddedFromMilestoneLibrary bool                     `json:"addedFromMilestoneLibrary"`
 	CommonMilestone           *CommonMilestone         `json:"commonMilestone,omitempty"`
 	Solutions                 []*Solution              `json:"solutions"`
-	Category                  MTOCategory              `json:"category"`
-	SubCategory               MTOSubcategory           `json:"subCategory"`
+	Category                  models.MTOCategory       `json:"category"`
+	SubCategory               models.MTOSubcategory    `json:"subCategory"`
 }
 
 // Represents model plan base translation data
