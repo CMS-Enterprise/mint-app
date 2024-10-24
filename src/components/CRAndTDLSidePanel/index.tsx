@@ -105,7 +105,7 @@ const CRAndTDLSidePanel = ({
                     <TruncatedText
                       id={id}
                       text={crSummary?.rawContent}
-                      charLimit={269}
+                      lineClamp={5}
                     />
                   </div>
                 )}
