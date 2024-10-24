@@ -2,7 +2,12 @@
 package emailtestconfigs
 
 import (
+	"fmt"
+
 	"github.com/golang/mock/gomock"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -46,4 +51,36 @@ func InitializeAddressBook() email.AddressBook {
 			"test.receiver.2@mint.dev.cms.gov",
 		},
 	}
+}
+
+// CreateTemplateCacheHelper creates a default test template
+func CreateTemplateCacheHelper(
+	planName string,
+	plan *models.ModelPlan) (*emailtemplates.EmailTemplate, string, string) {
+
+	return CreateTemplateCacheHelperWithInputTemplates(
+		planName,
+		plan,
+		"{{.ModelName}}'s Test",
+		"{{.ModelName}} {{.ModelID}}")
+}
+
+// CreateTemplateCacheHelperWithInputTemplates creates a test template with the given subject and body
+func CreateTemplateCacheHelperWithInputTemplates(
+	planName string,
+	plan *models.ModelPlan,
+	subject string,
+	body string) (*emailtemplates.EmailTemplate, string, string) {
+	templateCache := emailtemplates.NewTemplateCache()
+	_ = templateCache.LoadTextTemplateFromString("testSubject", subject)
+	_ = templateCache.LoadHTMLTemplateFromString("testBody", body, nil)
+	testTemplate := emailtemplates.NewEmailTemplate(
+		templateCache,
+		"testSubject",
+		"testBody",
+	)
+
+	expectedSubject := fmt.Sprintf("%s's Test", planName)
+	expectedBody := fmt.Sprintf("%s %s", planName, plan.ID.String())
+	return testTemplate, expectedSubject, expectedBody
 }

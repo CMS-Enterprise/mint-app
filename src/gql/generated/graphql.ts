@@ -169,6 +169,7 @@ export type AnalyzedPlanDiscussions = {
 
 export type AnalyzedPlanSections = {
   __typename: 'AnalyzedPlanSections';
+  dataExchangeApproachMarkedComplete?: Maybe<Scalars['Boolean']['output']>;
   readyForClearance: Array<TableName>;
   readyForReview: Array<TableName>;
   updated: Array<TableName>;
@@ -1458,6 +1459,7 @@ export enum OperationalSolutionKey {
   MDM_NCBP = 'MDM_NCBP',
   MDM_POR = 'MDM_POR',
   MIDS = 'MIDS',
+  MODEL_SPACE = 'MODEL_SPACE',
   OTHER_NEW_PROCESS = 'OTHER_NEW_PROCESS',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
   POST_PORTAL = 'POST_PORTAL',
