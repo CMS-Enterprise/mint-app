@@ -32,9 +32,19 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	return storage.MTOCategoryCreate(store, logger, category)
 }
 
-// MTOCategoryGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
+// MTOCategoryGetByModelPlanIDLOADER implements resolver logic to get all parent level MTO Categories by a model plan ID using a data loader
 func MTOCategoryGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOCategory, error) {
 	dbCategories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	// return while adding an uncategorized record as well
+	return append(dbCategories, models.MTOUncategorized(modelPlanID, nil)), nil
+}
+
+// MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER implements resolver logic to get all MTO Categories (including subcategories) by a model plan ID using a data loader
+func MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOCategory, error) {
+	dbCategories, err := loaders.MTOCategory.AndSubCategoriesByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
