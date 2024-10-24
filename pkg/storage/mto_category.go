@@ -12,7 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// MTOCategoryGetByModelPlanIDLoader returns the plan basics for a slice of model plan ids
+// MTOCategoryGetByModelPlanIDLoader returns all top level categories for a slice of model plan ids
 func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOCategory, error) {
 
 	args := map[string]interface{}{
@@ -26,7 +26,7 @@ func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 
 }
 
-// MTOCategoryAndSubCategoriesGetByModelPlanIDLoader returns the plan basics for a slice of model plan ids
+// MTOCategoryAndSubCategoriesGetByModelPlanIDLoader returns all mto categories for a slice of model plan ids
 func MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOCategory, error) {
 
 	args := map[string]interface{}{
@@ -40,7 +40,7 @@ func MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(np sqlutils.NamedPreparer
 
 }
 
-// MTOSubcategoryGetByParentIDLoader returns the plan basics for a slice of model plan ids
+// MTOSubcategoryGetByParentIDLoader returns the categories that are sub categories for a slice of category ids
 // Note, this returns the object as a subcategory, but it is the same table
 func MTOSubcategoryGetByParentIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, parentIDs []uuid.UUID) ([]*models.MTOSubcategory, error) {
 
