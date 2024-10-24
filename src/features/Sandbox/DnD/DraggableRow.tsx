@@ -11,6 +11,7 @@ const DraggableRow = ({
   style
 }: any) => {
   const ref = useRef(null);
+
   const [, drop] = useDrop({
     accept: type,
     hover(item: any) {
@@ -25,10 +26,8 @@ const DraggableRow = ({
       }
 
       moveRow(dragIndex, hoverIndex);
+
       item.index = hoverIndex;
-    },
-    options: {
-      dropEffect: 'copy'
     }
   });
 

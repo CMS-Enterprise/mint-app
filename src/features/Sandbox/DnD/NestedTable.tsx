@@ -21,19 +21,22 @@ const NestedTable = ({ rawData }: any) => {
     );
   };
 
-  const moveRow = (dragIndex, hoverIndex, type, subID, milestoneID) => {
+  const moveRow = (
+    dragIndex,
+    hoverIndex,
+    type,
+    categoryID,
+    subID,
+    milestoneID
+  ) => {
     // Clone the existing data
     const updatedData = [...data];
 
-    console.log(dragIndex, hoverIndex, subID, milestoneID);
-
     if (type === 'category') {
-      //   console.log('category');
       // Handle Category reordering
       const [draggedCategory] = updatedData.splice(dragIndex, 1);
       updatedData.splice(hoverIndex, 0, draggedCategory);
-    } else if (type === 'subcategory') {
-      //   console.log('subcategory');
+    } else if (type.includes('subcategory')) {
       // Find the category that contains the dragged subcategory
       const parentCategory = updatedData.find(cat =>
         cat.subCategories.some(sub => sub.id === subID)
@@ -48,12 +51,11 @@ const NestedTable = ({ rawData }: any) => {
         // Replace the modified subcategories array back to the parent category
         parentCategory.subCategories = subCategories;
       }
-    } else if (type === 'milestone') {
-      //   console.log('milestone');
+    } else if (type.includes('milestone')) {
       // Find the parent sub-category
       const parentCategory = updatedData.find(cat =>
         cat.subCategories.some(sub =>
-          sub.milestones.some(milestone => milestone.id === subID)
+          sub.milestones.some(milestone => milestone.id === milestoneID)
         )
       );
 
@@ -61,7 +63,7 @@ const NestedTable = ({ rawData }: any) => {
         sub.milestones.some(milestone => milestone.id === milestoneID)
       );
 
-      if (parentSubCategory) {
+      if (parentCategory && parentSubCategory) {
         // Reorder milestones within the found sub-category
         const milestones = [...parentSubCategory.milestones];
         const draggedMilestone = milestones.splice(dragIndex, 1)[0];
@@ -81,9 +83,16 @@ const NestedTable = ({ rawData }: any) => {
       <DraggableRow
         key={milestone.id}
         index={index}
-        type="milestone"
+        type={`${categoryID}-${subID}-milestone`}
         moveRow={(dragIndex, hoverIndex) =>
-          moveRow(dragIndex, hoverIndex, 'milestone', subID, milestone.id)
+          moveRow(
+            dragIndex,
+            hoverIndex,
+            'milestone',
+            categoryID,
+            subID,
+            milestone.id
+          )
         }
         id={milestone.id}
       >
@@ -106,9 +115,9 @@ const NestedTable = ({ rawData }: any) => {
         <div style={{ display: 'contents' }}>
           <DraggableRow
             index={index}
-            type="subcategory"
+            type={`${categoryID}-subcategory`}
             moveRow={(dragIndex, hoverIndex) =>
-              moveRow(dragIndex, hoverIndex, 'subcategory', sub.id)
+              moveRow(dragIndex, hoverIndex, 'subcategory', categoryID, sub.id)
             }
             id={sub.id}
             toggleRow={toggleSubRow}
@@ -138,7 +147,7 @@ const NestedTable = ({ rawData }: any) => {
             index={index}
             type="category"
             moveRow={(dragIndex, hoverIndex) =>
-              moveRow(dragIndex, hoverIndex, 'category')
+              moveRow(dragIndex, hoverIndex, 'category', category.id!)
             }
             id={category.id}
             toggleRow={toggleRow}
