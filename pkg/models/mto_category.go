@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 )
 
 const unCategorizedMTOName = "Uncategorized"
@@ -30,9 +31,19 @@ func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID, par
 func MTOUncategorized(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
 	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID)
 }
+func MTOUncategorizedSubcategory(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOSubcategory {
+	category := NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID)
+	helpers.PointerTo(category)
+
+	return category.ToSubcategory()
+}
 
 // MTOSubcategory is the same as a MTOCategory in the database. It is separated here so we can be precise in graphql
 type MTOSubcategory MTOCategory
+
+func (m *MTOCategory) ToSubcategory() *MTOSubcategory {
+	return (*MTOSubcategory)(m)
+}
 
 // IsUncategorized returns if a category is an actual category, or if it is a placeholder category that is not store in the database
 func (m MTOCategory) IsUncategorized() bool {

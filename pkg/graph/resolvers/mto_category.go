@@ -41,3 +41,12 @@ func MTOCategoryGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUI
 	// return while adding an uncategorized record as well
 	return append(dbCategories, models.MTOUncategorized(modelPlanID, nil)), nil
 }
+
+func MTOSubcategoryGetByParentIDLoader(ctx context.Context, modelPlanID uuid.UUID, parentID uuid.UUID) ([]*models.MTOSubcategory, error) {
+	dbCategories, err := loaders.MTOSubcategory.ByParentID.Load(ctx, parentID)
+	if err != nil {
+		return nil, err
+	}
+	// return while adding an uncategorized record as well
+	return append(dbCategories, models.MTOUncategorizedSubcategory(modelPlanID, &parentID)), nil
+}

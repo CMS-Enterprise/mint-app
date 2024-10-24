@@ -26,13 +26,14 @@ func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 
 }
 
-// MTOCategoryGetByParentIDLoader returns the plan basics for a slice of model plan ids
-func MTOCategoryGetByParentIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, parentIDs []uuid.UUID) ([]*models.MTOCategory, error) {
+// MTOSubcategoryGetByParentIDLoader returns the plan basics for a slice of model plan ids
+// Note, this returns the object as a subcategory, but it is the same table
+func MTOSubcategoryGetByParentIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, parentIDs []uuid.UUID) ([]*models.MTOSubcategory, error) {
 
 	args := map[string]interface{}{
 		"parent_ids": pq.Array(parentIDs),
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.GetByParentIDLoader, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOSubcategory](np, sqlqueries.MTOCategory.GetByParentIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

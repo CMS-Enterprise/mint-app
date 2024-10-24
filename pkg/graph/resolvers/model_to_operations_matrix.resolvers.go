@@ -18,7 +18,7 @@ import (
 
 // SubCategories is the resolver for the subCategories field.
 func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTOCategory) ([]*models.MTOSubcategory, error) {
-	panic(fmt.Errorf("not implemented: SubCategories - subCategories"))
+	return MTOSubcategoryGetByParentIDLoader(ctx, obj.ModelPlanID, obj.ID)
 }
 
 // Milestones is the resolver for the milestones field.
