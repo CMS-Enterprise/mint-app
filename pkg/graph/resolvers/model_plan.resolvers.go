@@ -151,6 +151,13 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
 }
 
+// MtoMatrix is the resolver for the mtoMatrix field.
+func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan) (*models.ModelsToOperationMatrix, error) {
+	return &models.ModelsToOperationMatrix{
+		ModelPlan: obj, // pass a reference of the Model Plan to the MTO Matrix object so we can fetch stuff based on it!
+	}, nil
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
