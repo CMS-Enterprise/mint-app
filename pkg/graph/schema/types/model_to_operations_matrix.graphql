@@ -144,9 +144,9 @@ type MTOSubcategory {
   # DB Fields
   id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
   name: String!
-  isUncategorized: Boolean!
 
   # Custom Resolvers
+  isUncategorized: Boolean!
   milestones: [Milestone!]!
 }
 
