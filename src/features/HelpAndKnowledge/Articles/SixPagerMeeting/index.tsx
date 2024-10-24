@@ -434,7 +434,7 @@ const SixPagerMeeting = () => {
                         <ul className="margin-top-0 margin-bottom-05 text-normal">
                           {section.items.map(
                             (item2: Record<string, string>, index2: number) => (
-                              <li>
+                              <li key={item2.text}>
                                 <Trans
                                   i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
                                   t={sixPageMeetingT}

@@ -126,7 +126,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                   data-testid="clearance-basics"
-                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/basics/"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/basics/123"
                 >
                   Review model basics
                   <svg
@@ -173,7 +173,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                   data-testid="clearance-generalCharacteristics"
-                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/characteristics/"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/characteristics/123"
                 >
                   Review general characteristics
                   <svg
@@ -220,7 +220,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                   data-testid="clearance-participantsAndProviders"
-                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/participants-and-providers/"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/participants-and-providers/123"
                 >
                   Review participants and providers
                   <svg
@@ -267,7 +267,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                   data-testid="clearance-beneficiaries"
-                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/beneficiaries/"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/beneficiaries/123"
                 >
                   Review beneficiaries
                   <svg
@@ -314,7 +314,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                   data-testid="clearance-opsEvalAndLearning"
-                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/ops-eval-and-learning/"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/ops-eval-and-learning/123"
                 >
                   Review operations, evaluation, and learning
                   <svg
@@ -361,7 +361,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                   data-testid="clearance-payments"
-                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/payment/"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/payment/123"
                 >
                   Review payment
                   <svg

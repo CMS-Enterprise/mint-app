@@ -3,48 +3,13 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetEchimpCrandTdlDocument } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
+import { echimpCRsAndTDLsMock, modelID } from 'tests/mock/general';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
 import ReadOnlyCRTDLs from './index';
-
-const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
-
-const mocks = [
-  {
-    request: {
-      query: GetEchimpCrandTdlDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          echimpCRsAndTDLs: [
-            {
-              __typename: 'EChimpCR',
-              id: '123',
-              title: 'Echimp CR',
-              crStatus: 'Open',
-              emergencyCrFlag: true,
-              implementationDate: '2022-05-12T15:01:39.190679Z',
-              sensitiveFlag: true
-            },
-            {
-              __typename: 'EChimpTDL',
-              id: '456',
-              title: 'Echimp TDL',
-              issuedDate: '2022-05-12T15:01:39.190679Z'
-            }
-          ]
-        }
-      }
-    }
-  }
-];
 
 const mockAuthReducer = {
   isUserSet: true,
@@ -61,11 +26,11 @@ describe('Read Only CR and TDLs page', () => {
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/crs-and-tdl`]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/read-only/crs-and-tdl">
               <Provider store={store}>
-                <ReadOnlyCRTDLs modelID={modelID} />
+                <ReadOnlyCRTDLs />
               </Provider>
             </Route>
           </MessageProvider>
@@ -87,11 +52,11 @@ describe('Read Only CR and TDLs page', () => {
       <MemoryRouter
         initialEntries={[`/models/${modelID}/read-only/crs-and-tdl`]}
       >
-        <MockedProvider mocks={mocks} addTypename={false}>
+        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/read-only/crs-and-tdl">
               <Provider store={store}>
-                <ReadOnlyCRTDLs modelID={modelID} />
+                <ReadOnlyCRTDLs />
               </Provider>
             </Route>
           </MessageProvider>
