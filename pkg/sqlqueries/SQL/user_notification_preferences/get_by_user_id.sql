@@ -10,6 +10,8 @@ SELECT
     new_model_plan,
     dates_changed,
     dates_changed_notification_type,
+    data_exchange_approach_marked_complete,
+    data_exchange_approach_marked_complete_notification_type,
     created_by,
     created_dts,
     modified_by,

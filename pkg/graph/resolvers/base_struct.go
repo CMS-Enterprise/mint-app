@@ -34,7 +34,6 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 	}
 
 	return nil
-
 }
 
 // BaseStructPreCreate is called before an object is created to make sure the user has permissions to do so

@@ -21,7 +21,8 @@ const modelSummary = {
     team: 'Team',
     discussions: 'Discussions',
     documents: 'Documents',
-    'crs-and-tdl': 'FFS CRs and TDLs'
+    'crs-and-tdl': 'FFS CRs and TDLs',
+    'data-exchange-approach': 'Data exchange approach'
   },
   more: ' more'
 };

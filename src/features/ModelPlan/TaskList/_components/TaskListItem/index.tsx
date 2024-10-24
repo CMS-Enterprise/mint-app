@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import {
+  DataExchangeApproachStatus,
   ModelStatus,
   PrepareForClearanceStatus,
   TaskStatus
@@ -23,7 +24,12 @@ export const TaskListStatusTag = ({
   status,
   classname
 }: {
-  status: TaskStatus | PrepareForClearanceStatus | ModelStatus | undefined;
+  status:
+    | TaskStatus
+    | PrepareForClearanceStatus
+    | ModelStatus
+    | DataExchangeApproachStatus
+    | undefined;
   classname?: string;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
@@ -50,6 +56,10 @@ export const TaskListStatusTag = ({
     case 'CANNOT_START':
       tagCopy = t('taskListStatus.CANNOT_START');
       tagStyle = 'bg-white border-2px text-base';
+      break;
+    case 'COMPLETE':
+      tagCopy = t('taskListStatus.COMPLETE');
+      tagStyle = 'bg-success-dark text-white';
       break;
     default:
       tagCopy = '';

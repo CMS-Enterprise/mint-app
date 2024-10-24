@@ -2027,7 +2027,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
         </div>
       </div>
       <div
-        class="margin-bottom-3 mint-collapsable-link"
+        class="margin-bottom-3"
       >
         <button
           aria-controls="data-needed-for-monitoring-questions"
@@ -2037,7 +2037,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           type="button"
         >
           <svg
-            class="usa-icon top-05 margin-right-05"
+            class="usa-icon margin-right-05"
             focusable="false"
             height="1em"
             role="img"

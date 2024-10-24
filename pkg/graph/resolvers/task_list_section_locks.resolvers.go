@@ -15,42 +15,42 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
+// LockLockableSection is the resolver for the lockLockableSection field.
+func (r *mutationResolver) LockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
-	return LockTaskListSection(r.pubsub, modelPlanID, section, principal)
+	return LockLockableSection(r.pubsub, modelPlanID, section, principal)
 }
 
-// UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
+// UnlockLockableSection is the resolver for the unlockLockableSection field.
+func (r *mutationResolver) UnlockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error) {
 	userID := appcontext.Principal(ctx).Account().ID
 
-	return UnlockTaskListSection(r.pubsub, modelPlanID, section, userID, model.ActionTypeNormal)
+	return UnlockLockableSection(r.pubsub, modelPlanID, section, userID, model.ActionTypeNormal)
 }
 
-// UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.
-func (r *mutationResolver) UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
-	return UnlockAllTaskListSections(r.pubsub, modelPlanID)
+// UnlockAllLockableSections is the resolver for the unlockAllLockableSections field.
+func (r *mutationResolver) UnlockAllLockableSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error) {
+	return UnlockAllLockableSections(r.pubsub, modelPlanID)
 }
 
-// TaskListSectionLocks is the resolver for the taskListSectionLocks field.
-func (r *queryResolver) TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
-	return GetTaskListSectionLocks(modelPlanID)
+// LockableSectionLocks is the resolver for the lockableSectionLocks field.
+func (r *queryResolver) LockableSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error) {
+	return GetLockableSectionLocks(modelPlanID)
 }
 
-// OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
-func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+// OnLockableSectionLocksChanged is the resolver for the onLockableSectionLocksChanged field.
+func (r *subscriptionResolver) OnLockableSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.LockableSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx)
 
-	return SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
+	return SubscribeLockableSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
-// OnLockTaskListSectionContext is the resolver for the onLockTaskListSectionContext field.
-func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+// OnLockLockableSectionContext is the resolver for the onLockLockableSectionContext field.
+func (r *subscriptionResolver) OnLockLockableSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.LockableSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx)
 
-	return OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
+	return OnLockLockableSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 // Subscription returns generated.SubscriptionResolver implementation.

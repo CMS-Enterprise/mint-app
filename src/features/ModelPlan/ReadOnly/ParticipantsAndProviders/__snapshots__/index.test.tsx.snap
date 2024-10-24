@@ -122,7 +122,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           </div>
         </div>
         <div
-          class="margin-bottom-3 mint-collapsable-link"
+          class="margin-bottom-3"
         >
           <button
             aria-controls="related-who-are-the-participants"
@@ -132,7 +132,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             type="button"
           >
             <svg
-              class="usa-icon top-05 margin-right-05"
+              class="usa-icon margin-right-05"
               focusable="false"
               height="1em"
               role="img"
@@ -1583,7 +1583,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
           </div>
         </div>
         <div
-          class="margin-bottom-3 mint-collapsable-link"
+          class="margin-bottom-3"
         >
           <button
             aria-controls="related-will-the-providers-overlap-with-other-models"
@@ -1593,7 +1593,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             type="button"
           >
             <svg
-              class="usa-icon top-05 margin-right-05"
+              class="usa-icon margin-right-05"
               focusable="false"
               height="1em"
               role="img"

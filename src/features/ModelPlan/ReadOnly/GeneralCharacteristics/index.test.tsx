@@ -63,7 +63,8 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
           'Accountable Care Organizations (ACOs): General Information'
         )
       ).toBeInTheDocument();
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

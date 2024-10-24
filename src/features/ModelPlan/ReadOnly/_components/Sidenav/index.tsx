@@ -86,7 +86,11 @@ const SideNav = ({
             : location.pathname.split('/')[4] === key;
         }}
         activeClassName="usa-current"
-        className={key === 'it-solutions' ? 'nav-group-border' : ''}
+        className={
+          key === 'it-solutions' || key === 'data-exchange-approach'
+            ? 'nav-group-border'
+            : ''
+        }
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}

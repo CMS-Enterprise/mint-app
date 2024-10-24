@@ -302,7 +302,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="width-full margin-y-2 line-height-body-4 margin-bottom-5 mint-collapsable-link"
+              class="width-full margin-y-2 line-height-body-4 margin-bottom-5"
             >
               <button
                 aria-controls="available-role-info"
@@ -312,7 +312,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                 type="button"
               >
                 <svg
-                  class="usa-icon top-05 margin-right-05"
+                  class="usa-icon margin-right-05"
                   focusable="false"
                   height="1em"
                   role="img"

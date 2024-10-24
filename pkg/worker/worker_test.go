@@ -190,6 +190,9 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 		PlanDiscussions: &models.AnalyzedPlanDiscussions{
 			Activity: discussionActivity,
 		},
+		PlanDataExchangeApproach: &models.AnalyzedPlanDataExchangeApproach{
+			Activity: true,
+		},
 	}
 
 	return &auditChange

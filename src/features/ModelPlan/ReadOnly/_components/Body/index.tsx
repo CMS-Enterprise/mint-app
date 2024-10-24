@@ -60,6 +60,12 @@ const ReadOnlyBody = ({
               </div>
             )}
 
+            {config[field]?.pageLabel && (
+              <div className="mint-body-large line-height-normal margin-bottom-2 margin-top-5">
+                {config[field]?.pageLabel}
+              </div>
+            )}
+
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (
               <>

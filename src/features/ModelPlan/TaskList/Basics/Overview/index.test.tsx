@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   GetOverviewDocument,
   GetOverviewQuery,
@@ -56,6 +61,10 @@ describe('Basics overview page', () => {
           </Route>
         </MockedProvider>
       </MemoryRouter>
+    );
+
+    await waitForElementToBeRemoved(() =>
+      screen.getByTestId('ModelType-note-add-note-toggle')
     );
 
     await waitFor(() => {

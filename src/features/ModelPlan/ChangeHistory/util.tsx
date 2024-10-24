@@ -54,6 +54,7 @@ export type TranslationTables =
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
   | TableName.PLAN_PAYMENTS
   | TableName.PLAN_COLLABORATOR
+  | TableName.PLAN_DATA_EXCHANGE_APPROACH
   | TableName.PLAN_DISCUSSION
   | TableName.DISCUSSION_REPLY
   | TableName.PLAN_DOCUMENT
@@ -65,24 +66,26 @@ export type TranslationTables =
   | TableName.PLAN_DOCUMENT_SOLUTION_LINK
   | TableName.EXISTING_MODEL_LINK;
 
-export type TranslationTaskListTable =
+export type TableWithStatus =
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
   | TableName.PLAN_BENEFICIARIES
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
-  | TableName.PLAN_PAYMENTS;
+  | TableName.PLAN_PAYMENTS
+  | TableName.PLAN_DATA_EXCHANGE_APPROACH;
 
-export const isTranslationTaskListTable = (
+export const isTableWithStatus = (
   tableName: TableName
-): tableName is TranslationTaskListTable => {
+): tableName is TableWithStatus => {
   return [
     TableName.PLAN_BASICS,
     TableName.PLAN_GENERAL_CHARACTERISTICS,
     TableName.PLAN_PARTICIPANTS_AND_PROVIDERS,
     TableName.PLAN_BENEFICIARIES,
     TableName.PLAN_OPS_EVAL_AND_LEARNING,
-    TableName.PLAN_PAYMENTS
+    TableName.PLAN_PAYMENTS,
+    TableName.PLAN_DATA_EXCHANGE_APPROACH
   ].includes(tableName);
 };
 
@@ -158,6 +161,10 @@ const unneededFields: HiddenFieldTypes[] = [
   {
     table: TableName.PLAN_TDL,
     fields: ['model_plan_id']
+  },
+  {
+    table: TableName.PLAN_DATA_EXCHANGE_APPROACH,
+    fields: ['marked_complete_by', 'marked_complete_dts']
   }
 ];
 
@@ -605,7 +612,7 @@ export const separateStatusChanges = (
 
   changes.forEach(change => {
     if (
-      !isTranslationTaskListTable(change.tableName) &&
+      !isTableWithStatus(change.tableName) &&
       change.tableName !== TableName.MODEL_PLAN
     ) {
       filteredStatusChanges.push(change);
@@ -646,6 +653,7 @@ export const separateStatusChanges = (
     statusChange.translatedFields = [translatedFields[statusIndex]];
     filteredStatusChanges.push(statusChange);
   });
+
   return filteredStatusChanges;
 };
 
@@ -672,7 +680,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
 
   // If the change is a task list status update, return 'Task list status update'
   if (
-    isTranslationTaskListTable(change.tableName) &&
+    isTableWithStatus(change.tableName) &&
     change.translatedFields.find(field => field.fieldName === 'status')
   ) {
     return 'taskListStatusUpdate';
@@ -735,6 +743,10 @@ export const getHeaderText = (change: ChangeRecordType): string => {
     field => field.fieldName === 'status'
   )?.newTranslated;
 
+  const oldStatus = change.translatedFields.find(
+    field => field.fieldName === 'status'
+  )?.oldTranslated;
+
   const teamChangeType = change.translatedFields.find(
     field => field.fieldName === 'team_roles'
   )?.changeType;
@@ -747,7 +759,11 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       headerText = i18next.t(`changeHistory:planStatusUpdate`);
       break;
     case 'taskListStatusUpdate':
-      if (status === 'In progress') {
+      if (
+        status === 'In progress' &&
+        oldStatus !== 'Complete' &&
+        oldStatus !== 'Ready for review'
+      ) {
         headerText = i18next.t(`changeHistory:taskStartedUpdate`);
       } else {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);

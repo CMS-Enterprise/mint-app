@@ -51,7 +51,7 @@ type AnalyzedPlanSections {
     updated: [TableName!]!
     readyForReview: [TableName!]!
     readyForClearance: [TableName!]!
-
+    dataExchangeApproachMarkedComplete: Boolean
 }
 
 type AnalyzedModelLeads {

@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
 import {
+  DataExchangeApproachStatus,
   GetModelPlanDocument,
   GetModelPlanQuery,
   ModelPhase,
@@ -17,7 +18,7 @@ import ModelPlanCard, { getLastModifiedSection } from './index';
 const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
-const modelPlan = {
+const modelPlan: GetModelPlanTypes = {
   __typename: 'ModelPlan',
   isFavorite: true,
   id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
@@ -42,6 +43,10 @@ const modelPlan = {
     modifiedDts: null,
     clearanceStarts: '2022-05-12T15:01:39.190679Z',
     readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    },
     status: TaskStatus.READY
   },
   opsEvalAndLearning: {
@@ -52,6 +57,10 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    },
     status: TaskStatus.IN_PROGRESS
   },
   generalCharacteristics: {
@@ -62,6 +71,10 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    },
     status: TaskStatus.IN_PROGRESS
   },
   participantsAndProviders: {
@@ -72,6 +85,10 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    },
     status: TaskStatus.IN_PROGRESS
   },
   beneficiaries: {
@@ -82,6 +99,10 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    },
     status: TaskStatus.IN_PROGRESS
   },
   prepareForClearance: {
@@ -97,10 +118,25 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    },
     status: TaskStatus.IN_PROGRESS
   },
   crs: [],
   tdls: [],
+  dataExchangeApproach: {
+    __typename: 'PlanDataExchangeApproach',
+    id: '123',
+    status: DataExchangeApproachStatus.IN_PROGRESS,
+    modifiedDts: '2022-05-12T15:01:39.190679Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'John Doe'
+    }
+  },
   operationalNeeds: [] as any,
   documents: [
     {
@@ -127,7 +163,7 @@ const modelPlan = {
       __typename: 'PlanDiscussion',
       id: '456',
       content: {
-        __typename: 'TaggedHTML',
+        __typename: 'TaggedContent',
         rawContent: 'This is a second question.'
       },
       createdBy: 'Jane Doe',
@@ -138,7 +174,7 @@ const modelPlan = {
           discussionID: '456',
           id: 'abc',
           content: {
-            __typename: 'TaggedHTML',
+            __typename: 'TaggedContent',
             rawContent: 'This is an answer.'
           },
           createdBy: 'Jack Doe',
@@ -147,7 +183,7 @@ const modelPlan = {
       ]
     }
   ]
-} as GetModelPlanTypes;
+};
 
 const modelPlanMocks = [
   {
@@ -217,7 +253,8 @@ describe('ModelPlanCard', () => {
       expect(
         queryByText('Most recent edit on 05/12/2022 by')
       ).toBeInTheDocument();
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -66,7 +66,8 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
           )
         )
       ).toBeInTheDocument();
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

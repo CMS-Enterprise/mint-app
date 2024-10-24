@@ -32,7 +32,5 @@ func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 		} else {
 			suite.EqualValues(modelNames[i-1], field.Old)
 		}
-
 	}
-
 }

@@ -58,7 +58,7 @@ import ProtectedRoute from 'components/ProtectedRoute';
 import TextAreaField from 'components/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import { dirtyInput } from 'utils/formDiff';
+import { dirtyInput } from 'utils/formUtil';
 
 import Authority from './Authority';
 import Involvements from './Involvements';

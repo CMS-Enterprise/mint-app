@@ -31,6 +31,7 @@ const (
 	ModelPlan                    = "model_plan"
 	PlanCr                       = "plan_cr"
 	PlanTdl                      = "plan_tdl"
+	PlanDataExchangeApproach     = "plan_data_exchange_approach"
 )
 
 // Constants for humanized table names
@@ -51,6 +52,7 @@ var humanizedTableNames = map[string]string{
 	ModelPlan:                    "Model",
 	PlanCr:                       "CR",
 	PlanTdl:                      "TDL",
+	PlanDataExchangeApproach:     "Data exchange approach",
 }
 
 // GetHumanizedTableName returns the humanized name for the given table name

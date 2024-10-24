@@ -46,13 +46,15 @@ export const mapMultiSelectOptions = (
 // Used to map MultiSelect options from Enums
 export const composeMultiSelectOptions = (
   translationObject: Record<string, string>,
+  readonlyLabels?: Record<string, string>,
   sublabels?: Record<string, string>,
   disabledValue?: string
 ) =>
   getKeys(translationObject).map(key => ({
     value: key,
     label: translationObject[key],
-    subLabel: sublabels ? sublabels[key] : null,
+    readonlyLabel: readonlyLabels ? readonlyLabels[key] : undefined,
+    subLabel: sublabels ? sublabels[key] : undefined,
     isDisabled: key === disabledValue
   }));
 
@@ -156,3 +158,15 @@ export const insertIf = (condition: boolean, ...elements: any) => {
 
 export const convertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
+
+/**
+ * Converts a camelCase string to all lowercase and hyphenates it at the camelCase boundaries.
+ *
+ * @param {string} str - The camelCase string to convert.
+ * @returns {string} The converted string in lowercase with hyphens.
+ */
+export const convertCamelCaseToKebabCase = (str: string): string => {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // Insert hyphen between lowercase and uppercase letters
+    .toLowerCase(); // Convert the entire string to lowercase
+};

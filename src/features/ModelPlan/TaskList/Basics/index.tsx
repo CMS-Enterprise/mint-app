@@ -47,7 +47,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import dirtyInput from 'utils/formDiff';
+import dirtyInput from 'utils/formUtil';
 import planBasicsSchema from 'validations/planBasics';
 
 import Milestones from './Milestones';

@@ -1129,7 +1129,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="margin-bottom-3 mint-collapsable-link"
+        class="margin-bottom-3"
       >
         <button
           aria-controls="cost-sharing-questions"
@@ -1139,7 +1139,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           type="button"
         >
           <svg
-            class="usa-icon top-05 margin-right-05"
+            class="usa-icon margin-right-05"
             focusable="false"
             height="1em"
             role="img"
@@ -1219,7 +1219,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="margin-bottom-3 mint-collapsable-link"
+        class="margin-bottom-3"
       >
         <button
           aria-controls="cost-sharing-questions"
@@ -1229,7 +1229,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           type="button"
         >
           <svg
-            class="usa-icon top-05 margin-right-05"
+            class="usa-icon margin-right-05"
             focusable="false"
             height="1em"
             role="img"

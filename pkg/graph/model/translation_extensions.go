@@ -182,3 +182,13 @@ func (pdt *PlanDocumentSolutionLinkTranslation) TableName() models.TableName {
 func (pdt *PlanDocumentSolutionLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*pdt)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pdt *PlanDataExchangeApproachTranslation) TableName() models.TableName {
+	return models.TNPlanDataExchangeApproach
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pdt *PlanDataExchangeApproachTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pdt)
+}
