@@ -174,6 +174,8 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
           </DraggableRow>
 
           {isExpanded &&
+            category.subCategories &&
+            category.id &&
             renderSubCategories(category.subCategories, category.id)}
         </div>
       );
