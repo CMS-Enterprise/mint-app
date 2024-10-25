@@ -16,6 +16,7 @@ import {
   activityText,
   isAddingCollaborator,
   isDailyDigest,
+  isDataExchangeApproach,
   isDatesChanged,
   isNewDiscussionReply,
   isNewModelPlan,
@@ -135,6 +136,7 @@ const IndividualNotification = ({
                   !isNewModelPlan(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isDatesChanged(metaData) &&
+                  !isDataExchangeApproach(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
                       className="notification__content text-base-darker margin-bottom-1"

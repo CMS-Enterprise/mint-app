@@ -10,6 +10,7 @@ import {
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
+  PlanDataExchangeApproachMarkedCompleteActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta
 } from 'gql/generated/graphql';
@@ -22,7 +23,8 @@ type MetaDataType =
   | ModelPlanSharedActivityMeta
   | AddedAsCollaboratorMeta
   | NewModelPlanActivityMeta
-  | DatesChangedActivityMeta;
+  | DatesChangedActivityMeta
+  | PlanDataExchangeApproachMarkedCompleteActivityMeta;
 
 // Type guard to check union type
 export const isTaggedInDiscussion = (
@@ -79,6 +81,15 @@ export const isNewModelPlan = (
 ): data is NewModelPlanActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewModelPlanActivityMeta';
+};
+
+export const isDataExchangeApproach = (
+  data: MetaDataType
+): data is PlanDataExchangeApproachMarkedCompleteActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return (
+    data.__typename === 'PlanDataExchangeApproachMarkedCompleteActivityMeta'
+  );
 };
 
 export const activityText = (data: MetaDataType) => {
