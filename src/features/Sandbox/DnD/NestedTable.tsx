@@ -130,16 +130,17 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     dragIndex: number,
     hoverIndex: number,
     type: string,
+    categoryID?: string,
     subcategoryID?: string,
     milestoneID?: string
   ) => {
     // Clone the existing data
-    const updatedData = [...data];
+    const updatedData = [...currentItems];
 
     if (type === 'category') {
       // Handle Category reordering
-      const [draggedCategory] = updatedData.splice(dragIndex, 1);
-      updatedData.splice(hoverIndex, 0, draggedCategory);
+      const [draggedCategory] = currentItems.splice(dragIndex, 1);
+      currentItems.splice(hoverIndex, 0, draggedCategory);
     } else if (type.includes('subcategory')) {
       // Find the category that contains the dragged subcategory
       const parentCategory = updatedData.find(cat =>
@@ -219,6 +220,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
             dragIndex,
             hoverIndex,
             'milestone',
+            categoryID,
             subcategoryID,
             milestone.id
           )
@@ -242,7 +244,13 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
             index={index}
             type={`${categoryID}-subcategory`}
             moveRow={(dragIndex: number, hoverIndex: number) =>
-              moveRow(dragIndex, hoverIndex, 'subcategory', subCategory.id)
+              moveRow(
+                dragIndex,
+                hoverIndex,
+                'subcategory',
+                categoryID,
+                subCategory.id
+              )
             }
             id={subCategory.id}
             toggleRow={toggleSubRow}
@@ -275,7 +283,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
             index={index}
             type="category"
             moveRow={(dragIndex: number, hoverIndex: number) =>
-              moveRow(dragIndex, hoverIndex, 'category')
+              moveRow(dragIndex, hoverIndex, 'category', category.id)
             }
             id={category.id}
             toggleRow={toggleRow}
