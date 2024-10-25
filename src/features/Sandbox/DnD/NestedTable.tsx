@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import classNames from 'classnames';
+import { slice } from 'lodash';
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
+import usePagination from 'hooks/usePagination';
 import { getKeys } from 'types/translation';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -26,6 +29,78 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   const [columnSort, setColumnSort] = useState<ColumnSortType>({
     isSorted: false,
     isSortedDesc: false
+  });
+
+  const sliceF = useMemo(() => {
+    return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
+      const startingIndex = pageNum * itemsPerP;
+      const endingIndex = startingIndex + itemsPerP;
+
+      const sliceData: CategoryType[] = [];
+
+      let milestoneIndex = 0;
+
+      sliceItems.forEach((category, categoryIndex) => {
+        category.subCategories.forEach((subCategory, subCategoryIndex) => {
+          subCategory.milestones.forEach(milestone => {
+            if (
+              milestoneIndex >= startingIndex &&
+              milestoneIndex < endingIndex
+            ) {
+              const foundCategory = sliceData.find(
+                sliceCategory => sliceCategory.id === category.id
+              );
+              if (foundCategory) {
+                const foundSubCategory = foundCategory.subCategories.find(
+                  sliceSubCategory => sliceSubCategory.id === subCategory.id
+                );
+                if (foundSubCategory) {
+                  foundSubCategory.milestones.push(milestone);
+                } else {
+                  foundCategory.subCategories.push({
+                    ...subCategory,
+                    milestones: [milestone]
+                  });
+                }
+              } else {
+                sliceData.push({
+                  ...category,
+                  subCategories: [
+                    {
+                      ...subCategory,
+                      milestones: [milestone]
+                    }
+                  ]
+                });
+              }
+            }
+            milestoneIndex += 1;
+          });
+        });
+      });
+
+      return sliceData;
+    };
+  }, []);
+
+  const dataLength = useMemo(() => {
+    return data.reduce(
+      (acc, category) =>
+        acc +
+        category.subCategories.reduce(
+          (subAcc, subCategory) => subAcc + subCategory.milestones.length,
+          0
+        ),
+      0
+    );
+  }, [data]);
+
+  const { currentItems, Pagination } = usePagination<CategoryType[]>({
+    items: data,
+    itemsPerPage: 3,
+    loading: false,
+    sliceFn: sliceF,
+    itemLength: dataLength
   });
 
   // Function to toggle row expansion
@@ -182,7 +257,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     });
 
   const renderCategories = () =>
-    data.map((category, index) => {
+    currentItems.map((category, index) => {
       const isExpanded = expandedRows.includes(category.id);
 
       return (
@@ -274,6 +349,8 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           </thead>
           <tbody>{renderCategories()}</tbody>
         </table>
+
+        {Pagination}
       </div>
     </DndProvider>
   );
