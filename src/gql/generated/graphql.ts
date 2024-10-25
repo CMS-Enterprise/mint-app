@@ -698,9 +698,7 @@ export type ModelPlan = {
   crs: Array<PlanCr>;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
-  echimpCRs: Array<EChimpCr>;
   echimpCRsAndTDLs: Array<EChimpCrAndTdls>;
-  echimpTDLs: Array<EChimpTdl>;
   generalCharacteristics: PlanGeneralCharacteristics;
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
