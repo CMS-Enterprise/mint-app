@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import classNames from 'classnames';
 
-import { CategoryType, MilestoneType, SubCategoryType } from '..';
+import { getKeys } from 'types/translation';
+import { getHeaderSortIcon } from 'utils/tableSort';
+
+import {
+  CategoryType,
+  columns,
+  ColumnSortType,
+  MilestoneType,
+  SubCategoryType
+} from '..';
 
 import DraggableRow from './DraggableRow';
 
-const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
+const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   const [data, setData] = useState(rawData);
+
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
+
+  const [sortCount, setSortCount] = useState<number>(0);
+  const [columnSort, setColumnSort] = useState<ColumnSortType>({
+    isSorted: false,
+    isSortedDesc: false
+  });
 
   // Function to toggle row expansion
   const toggleRow = (index: string) => {
@@ -42,7 +59,7 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
     } else if (type.includes('subcategory')) {
       // Find the category that contains the dragged subcategory
       const parentCategory = updatedData.find(cat =>
-        cat.subCategories?.some(
+        cat.subCategories.some(
           (sub: SubCategoryType) => sub.id === subcategoryID
         )
       );
@@ -59,18 +76,18 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
     } else if (type.includes('milestone')) {
       // Find the parent sub-category
       const parentCategory = updatedData.find(cat =>
-        cat.subCategories?.some(sub =>
+        cat.subCategories.some(sub =>
           sub.milestones.some(milestone => milestone.id === milestoneID)
         )
       );
 
-      const parentSubCategory = parentCategory?.subCategories?.find(sub =>
+      const parentSubCategory = parentCategory?.subCategories.find(sub =>
         sub.milestones.some(milestone => milestone.id === milestoneID)
       );
 
       if (parentCategory && parentSubCategory) {
         // Reorder milestones within the found sub-category
-        const milestones = [...parentSubCategory.milestones];
+        const milestones = [...parentSubCategory.milestones!];
         const draggedMilestone = milestones.splice(dragIndex, 1)[0];
         milestones.splice(hoverIndex, 0, draggedMilestone);
 
@@ -82,6 +99,26 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
     // Set the new data state
     setData(updatedData);
   };
+
+  const renderCells = (row: CategoryType | SubCategoryType | MilestoneType) => (
+    <>
+      {getKeys(row)
+        .filter(key => columns.find(column => column.accessor === key))
+        .map((key, index) => {
+          return (
+            <td
+              className={classNames('padding-2', {
+                'padding-left-05': index === 0,
+                'padding-left-0': index !== 0
+              })}
+              key={key}
+            >
+              {Array.isArray(row[key]) ? row[key].join(', ') : row[key]}
+            </td>
+          );
+        })}
+    </>
+  );
 
   const renderMilestones = (
     milestones: MilestoneType[],
@@ -104,14 +141,7 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
         }
         id={milestone.id}
       >
-        <td className="padding-2 padding-left-0">{milestone.name}</td>
-        <td className="padding-2 padding-left-0">{milestone.facilitatedBy}</td>
-        <td className="padding-2 padding-left-0">
-          {milestone.solutions.join(', ')}
-        </td>
-        <td className="padding-2 padding-left-0">{milestone.needBy}</td>
-        <td className="padding-2 padding-left-0">{milestone.status}</td>
-        <td className="padding-2 padding-left-0">{milestone.actions}</td>
+        {renderCells(milestone)}
       </DraggableRow>
     ));
 
@@ -119,8 +149,8 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
     subCategories: SubCategoryType[],
     categoryID: string
   ) =>
-    subCategories.map((sub, index) => {
-      const isExpanded = subExpandedRows.includes(sub.id!);
+    subCategories.map((subCategory, index) => {
+      const isExpanded = subExpandedRows.includes(subCategory.id);
 
       return (
         <div style={{ display: 'contents' }}>
@@ -128,9 +158,9 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
             index={index}
             type={`${categoryID}-subcategory`}
             moveRow={(dragIndex: number, hoverIndex: number) =>
-              moveRow(dragIndex, hoverIndex, 'subcategory', sub.id)
+              moveRow(dragIndex, hoverIndex, 'subcategory', subCategory.id)
             }
-            id={sub.id}
+            id={subCategory.id}
             toggleRow={toggleSubRow}
             style={{
               backgroundColor: '#F0F0F0',
@@ -139,18 +169,21 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
               cursor: 'pointer'
             }}
           >
-            <td colSpan={6} className="padding-2 padding-left-0">
-              {sub.name}
-            </td>
+            {renderCells(subCategory)}
           </DraggableRow>
-          {isExpanded && renderMilestones(sub.milestones, categoryID, sub.id)}
+          {isExpanded &&
+            renderMilestones(
+              subCategory.milestones,
+              categoryID,
+              subCategory.id
+            )}
         </div>
       );
     });
 
   const renderCategories = () =>
     data.map((category, index) => {
-      const isExpanded = expandedRows.includes(category.id!);
+      const isExpanded = expandedRows.includes(category.id);
 
       return (
         <div style={{ display: 'contents' }}>
@@ -170,9 +203,7 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
               fontSize: '1.25em'
             }}
           >
-            <td colSpan={6} className="padding-2 padding-left-0">
-              {category.name}
-            </td>
+            {renderCells(category)}
           </DraggableRow>
 
           {isExpanded &&
@@ -185,93 +216,65 @@ const NestedTable = ({ rawData }: { rawData: Partial<CategoryType>[] }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <table
-        style={{ width: '101%', overflow: 'auto', borderCollapse: 'collapse' }}
+      <div
+        className="display-block"
+        style={{
+          width: '100%',
+          minWidth: '100%',
+          overflow: 'auto'
+        }}
       >
-        <thead>
-          <tr>
-            <th
-              style={{
-                borderBottom: '1px solid black',
-                padding: '1rem',
-                paddingLeft: '0px',
-                textAlign: 'left',
-                width: '190px',
-                minWidth: '190px',
-                maxWidth: '190px'
-              }}
-            >
-              Name
-            </th>
-            <th
-              style={{
-                borderBottom: '1px solid black',
-                padding: '1rem',
-                paddingLeft: '0px',
-                textAlign: 'left',
-                width: '190px',
-                minWidth: '190px',
-                maxWidth: '190px'
-              }}
-            >
-              Facilitated By
-            </th>
-            <th
-              style={{
-                borderBottom: '1px solid black',
-                padding: '1rem',
-                paddingLeft: '0px',
-                textAlign: 'left',
-                width: '190px',
-                minWidth: '190px',
-                maxWidth: '190px'
-              }}
-            >
-              Solutions
-            </th>
-            <th
-              style={{
-                borderBottom: '1px solid black',
-                padding: '1rem',
-                paddingLeft: '0px',
-                textAlign: 'left',
-                width: '190px',
-                minWidth: '190px',
-                maxWidth: '190px'
-              }}
-            >
-              Need By
-            </th>
-            <th
-              style={{
-                borderBottom: '1px solid black',
-                padding: '1rem',
-                paddingLeft: '0px',
-                textAlign: 'left',
-                width: '190px',
-                minWidth: '190px',
-                maxWidth: '190px'
-              }}
-            >
-              Status
-            </th>
-            <th
-              style={{
-                borderBottom: '1px solid black',
-                padding: '1rem',
-                paddingLeft: '0px',
-                textAlign: 'left',
-                width: '190px',
-                minWidth: '190px',
-                maxWidth: '190px'
-              }}
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>{renderCategories()}</tbody>
-      </table>
+        <table
+          style={{
+            width: '100%',
+            borderCollapse: 'collapse'
+          }}
+        >
+          <thead>
+            <tr>
+              {columns.map((column, index) => (
+                <th
+                  style={{
+                    borderBottom: '1px solid black',
+                    padding: '1rem',
+                    paddingLeft: index === 0 ? '.5rem' : '0px',
+                    textAlign: 'left',
+                    width: column.width,
+                    minWidth: column.width,
+                    maxWidth: column.width
+                  }}
+                >
+                  {column.canSort !== false ? (
+                    <button
+                      className={classNames(
+                        'usa-button usa-button--unstyled position-relative',
+                        {
+                          'text-no-underline text-bold text-black':
+                            column.Header === 'Actions'
+                        }
+                      )}
+                      onClick={() => {
+                        setSortCount(sortCount + 1);
+                        setColumnSort({
+                          isSorted: sortCount % 3 !== 0,
+                          isSortedDesc: !columnSort.isSortedDesc
+                        });
+                      }}
+                      type="button"
+                    >
+                      {column.Header}
+                      {getHeaderSortIcon(columnSort, false)}
+                    </button>
+                  ) : (
+                    column.Header
+                  )}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>{renderCategories()}</tbody>
+        </table>
+      </div>
     </DndProvider>
   );
 };
