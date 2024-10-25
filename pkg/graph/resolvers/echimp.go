@@ -10,17 +10,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
-// GetEChimpCRs returns echimp CRS from the cache
-func GetEChimpCRs(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) ([]*models.EChimpCR, error) {
-
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
-	if err != nil {
-		return nil, err
-	}
-	return data.CRs, nil
-
-}
-
 // GetEChimpCRByID returns an echimp CR from the cache by id number if it exists
 func GetEChimpCRByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, id string) (*models.EChimpCR, error) {
 
@@ -43,15 +32,6 @@ func GetEChimpCRsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.V
 
 }
 
-// GetEChimpTDLS returns echimptdls from the cache
-func GetEChimpTDLS(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) ([]*models.EChimpTDL, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
-	if err != nil {
-		return nil, err
-	}
-	return data.TDls, nil
-}
-
 // GetEChimpTDLByID returns an Echimp TDL from the cache by id number if it exists
 func GetEChimpTDLByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, id string) (*models.EChimpTDL, error) {
 	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
@@ -69,16 +49,6 @@ func GetEChimpTDLSByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.
 		return nil, err
 	}
 	return data.TDLsByModelPlanID[modelPlanID], nil
-}
-
-// GetEchimpCRAndTdls returns a union of EChimp CR and TDLs from the cache
-func GetEchimpCRAndTdls(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) ([]models.EChimpCRAndTDLS, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
-	if err != nil {
-		return nil, err
-	}
-
-	return data.AllCrsAndTDLs, nil
 }
 
 // GetEchimpCRAndTdlsByModelPlanID returns a union of EChimp CR and TDLs from the cache for a given model plan

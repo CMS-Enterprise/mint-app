@@ -16,15 +16,6 @@ var eChimp2relatedMPID = uuid.MustParse("003032aa-4a75-49c1-8dca-91e645c4384f")
 
 var eEChimpModelIDS = []uuid.UUID{eChimp1relatedMPID, eChimp2relatedMPID}
 
-// GetEChimpCRs returns echimp CRS from the cache
-func (suite *ResolverSuite) TestGetEChimpCRs() {
-
-	crs, err := GetEChimpCRs(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger)
-	suite.NoError(err)
-	suite.Len(crs, 2)
-
-}
-
 // GetEChimpCRsByModelPlanID returns echimp CRS from the cache for a specific model plan
 func (suite *ResolverSuite) TestGetEChimpCRsByModelPlanID() {
 
@@ -44,12 +35,6 @@ func (suite *ResolverSuite) TestGetEChimpCRsByModelPlanID() {
 
 }
 
-func (suite *ResolverSuite) TestGetEChimpTDLS() {
-	result, err := GetEChimpTDLS(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger)
-	suite.NoError(err)
-	suite.NotNil(result)
-}
-
 func (suite *ResolverSuite) TestGetEChimpTDLSByModelPlanID() {
 
 	result, err := GetEChimpTDLSByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
@@ -65,14 +50,6 @@ func (suite *ResolverSuite) TestGetEChimpTDLSByModelPlanID() {
 	if suite.Len(result, 1) {
 		suite.EqualValues(eChimpTDL2Id, result[0].TdlNumber)
 	}
-
-}
-
-func (suite *ResolverSuite) TestGetEchimpCRAndTdls() {
-	result, err := GetEchimpCRAndTdls(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger)
-	suite.NoError(err)
-	suite.NotNil(result)
-	suite.Len(result, 4)
 
 }
 

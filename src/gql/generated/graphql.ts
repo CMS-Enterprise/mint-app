@@ -3169,10 +3169,7 @@ export type Query = {
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
   echimpCR: EChimpCr;
-  echimpCRAndTDLS: Array<EChimpCrAndTdls>;
-  echimpCRs: Array<EChimpCr>;
   echimpTDL: EChimpTdl;
-  echimpTDLs: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
