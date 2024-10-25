@@ -109,6 +109,7 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
+	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
 	logger := appcontext.ZLogger(ctx)
 
 	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
@@ -199,6 +200,7 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
 func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
+	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
