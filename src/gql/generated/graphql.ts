@@ -698,9 +698,7 @@ export type ModelPlan = {
   crs: Array<PlanCr>;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
-  echimpCRs: Array<EChimpCr>;
   echimpCRsAndTDLs: Array<EChimpCrAndTdls>;
-  echimpTDLs: Array<EChimpTdl>;
   generalCharacteristics: PlanGeneralCharacteristics;
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
@@ -3168,11 +3166,6 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
-  echimpCR: EChimpCr;
-  echimpCRAndTDLS: Array<EChimpCrAndTdls>;
-  echimpCRs: Array<EChimpCr>;
-  echimpTDL: EChimpTdl;
-  echimpTDLs: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
@@ -3215,18 +3208,6 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
-};
-
-
-/** Query definition for the schema */
-export type QueryEchimpCrArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryEchimpTdlArgs = {
-  id: Scalars['String']['input'];
 };
 
 

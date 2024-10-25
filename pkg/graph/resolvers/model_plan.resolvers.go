@@ -107,20 +107,6 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 	return PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
-// EchimpCRs is the resolver for the echimpCRs field.
-func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return GetEChimpCRsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
-}
-
-// EchimpTDLs is the resolver for the echimpTDLs field.
-func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
-}
-
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
 	logger := appcontext.ZLogger(ctx)
