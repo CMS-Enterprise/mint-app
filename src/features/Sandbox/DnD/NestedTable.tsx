@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { slice } from 'lodash';
 import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
+import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
 import { getKeys } from 'types/translation';
 import { getHeaderSortIcon } from 'utils/tableSort';
@@ -30,6 +31,8 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     isSorted: false,
     isSortedDesc: false
   });
+
+  const [itemsPerPage, setItemsPerPage] = useState<number>(2);
 
   const sliceF = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
@@ -97,7 +100,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
 
   const { currentItems, Pagination } = usePagination<CategoryType[]>({
     items: data,
-    itemsPerPage: 3,
+    itemsPerPage,
     loading: false,
     sliceFn: sliceF,
     itemLength: dataLength
@@ -350,7 +353,16 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           <tbody>{renderCategories()}</tbody>
         </table>
 
-        {Pagination}
+        <div className="display-flex">
+          {Pagination}
+
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={itemsPerPage}
+            setPageSize={setItemsPerPage}
+            valueArray={[2, 4, 6, 8]}
+          />
+        </div>
       </div>
     </DndProvider>
   );
