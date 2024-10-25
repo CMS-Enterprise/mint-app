@@ -7,7 +7,7 @@ CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
 CREATE TABLE mto_milestone (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
-    -- mto_common_milestone UUID REFERENCES mto_common_milestone(id), TODO: Based on Common Milestone Tables
+    -- mto_common_milestone_id UUID REFERENCES mto_common_milestone(id), TODO: Based on Common Milestone Tables
     -- we allow null because this is will be from the commonMilestone table if it exists
     name ZERO_STRING,
     facilitated_by MTO_FACILITATOR,

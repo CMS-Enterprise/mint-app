@@ -1,18 +1,22 @@
-CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
-    'MILESTONE_STATUS_ONE',
-    'MILESTONE_STATUS_TWO'
+CREATE TYPE MTO_SOLUTION_STATUS AS ENUM (
+    'SOLUTION_STATUS_ONE',
+    'SOLUTION_STATUS_TWO'
 );
 
+/*
+TODO, finish implementing this
+*/
 
 CREATE TABLE mto_solution(
     id UUID PRIMARY KEY,
-    name ZERO_STRING NOT NULL,
+    -- mto_common_solution_id UUID REFERENCES mto_common_solution(id), TODO: Based on Common Solutions Tables
+    -- we allow null because this is will be from the commonMilestone table if it exists
+    name ZERO_STRING,
     facilitated_by MTO_FACILITATOR,
-    need_by TIMESTAMP WITH TIME ZONE,
-    status MTO_MILESTONE_STATUS NOT NULL,
+    status MTO_SOLUTION_STATUS NOT NULL,
     risk_indicator MTO_RISK_INDICATOR,
     is_draft BOOLEAN NOT NULL DEFAULT TRUE,
-    -- commonMilestoneID TODO: Based on Common Milestone Tables
+
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by UUID REFERENCES user_account(id),
