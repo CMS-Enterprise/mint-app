@@ -357,13 +357,9 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
                       onClick={() => {
                         const isSorted =
                           sortCount % 3 === 1 || sortCount % 3 === 0;
-
-                        // console.log(isSorted);
-
                         const isSortedDesc = sortCount % 3 === 1;
 
-                        // console.log(isSortedDesc);
-
+                        setCurrentColumn(index);
                         setSortCount(sortCount + 1);
                         setColumnSort(prev => {
                           const newColumnSort = [...prev];
@@ -374,20 +370,6 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
                           };
                           return newColumnSort;
                         });
-
-                        setCurrentColumn(index);
-
-                        // if (column.sort && isSorted) {
-                        //   setSortedData(
-                        //     column.sort(
-                        //       sortedData,
-                        //       isSortedDesc ? 'DESC' : 'ASC',
-                        //       column.accessor as keyof MilestoneType
-                        //     )
-                        //   );
-                        // } else {
-                        //   setSortedData([...rawData]);
-                        // }
                       }}
                       type="button"
                     >
