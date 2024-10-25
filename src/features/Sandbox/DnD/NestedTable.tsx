@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { raw } from '@storybook/react';
 import classNames from 'classnames';
 
 import TablePageSize from 'components/TablePageSize';
@@ -19,16 +20,22 @@ import {
 import DraggableRow from './DraggableRow';
 
 const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
-  const [data, setData] = useState([...rawData]);
+  const [data, setData] = useState(structuredClone(rawData));
+
+  const [sortedData, setSortedData] = useState<CategoryType[]>([...data]);
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
 
   const [sortCount, setSortCount] = useState<number>(3);
-  const [columnSort, setColumnSort] = useState<ColumnSortType>({
-    isSorted: false,
-    isSortedDesc: false
-  });
+  const [columnSort, setColumnSort] = useState<ColumnSortType[]>(
+    Array.from(columns, () => ({
+      isSorted: false,
+      isSortedDesc: false,
+      sortColumn: ''
+    }))
+  );
+  const [currentColumn, setCurrentColumn] = useState<number>(0);
 
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
@@ -42,7 +49,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       let milestoneIndex = 0;
       const sliceItemsCopy = [...sliceItems];
 
-      sliceItems.forEach((category, categoryIndex) => {
+      sliceItemsCopy.forEach((category, categoryIndex) => {
         category.subCategories.forEach((subCategory, subCategoryIndex) => {
           subCategory.milestones.forEach(milestone => {
             if (
@@ -81,7 +88,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         });
       });
 
-      return sliceItemsCopy;
+      return sliceData;
     };
   }, []);
 
@@ -98,7 +105,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   }, [data]);
 
   const { currentItems, Pagination } = usePagination<CategoryType[]>({
-    items: data,
+    items: sortedData,
     itemsPerPage,
     loading: false,
     sliceFn,
@@ -291,6 +298,21 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       );
     });
 
+  useEffect(() => {
+    if (columns[currentColumn].sort && columnSort[currentColumn].isSorted) {
+      setSortedData(
+        columns[currentColumn].sort(
+          sortedData,
+          columnSort[currentColumn].isSortedDesc ? 'DESC' : 'ASC',
+          columnSort[currentColumn].sortColumn as keyof MilestoneType
+        )
+      );
+    } else {
+      setSortedData(structuredClone(rawData));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentColumn, columnSort, rawData]);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div
@@ -333,25 +355,44 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
                         }
                       )}
                       onClick={() => {
+                        const isSorted =
+                          sortCount % 3 === 1 || sortCount % 3 === 0;
+
+                        // console.log(isSorted);
+
+                        const isSortedDesc = sortCount % 3 === 1;
+
+                        // console.log(isSortedDesc);
+
                         setSortCount(sortCount + 1);
-                        setColumnSort({
-                          isSorted: sortCount % 3 === 1 || sortCount % 3 === 0,
-                          isSortedDesc: sortCount % 3 === 1
+                        setColumnSort(prev => {
+                          const newColumnSort = [...prev];
+                          newColumnSort[index] = {
+                            isSorted,
+                            isSortedDesc,
+                            sortColumn: column.accessor
+                          };
+                          return newColumnSort;
                         });
-                        setData(
-                          column.sort && columnSort.isSorted
-                            ? column.sort(
-                                data,
-                                columnSort.isSortedDesc ? 'DESC' : 'ASC',
-                                column.accessor
-                              )
-                            : [...rawData]
-                        );
+
+                        setCurrentColumn(index);
+
+                        // if (column.sort && isSorted) {
+                        //   setSortedData(
+                        //     column.sort(
+                        //       sortedData,
+                        //       isSortedDesc ? 'DESC' : 'ASC',
+                        //       column.accessor as keyof MilestoneType
+                        //     )
+                        //   );
+                        // } else {
+                        //   setSortedData([...rawData]);
+                        // }
                       }}
                       type="button"
                     >
                       {column.Header}
-                      {getHeaderSortIcon(columnSort, false)}
+                      {getHeaderSortIcon(columnSort[index], false)}
                     </button>
                   ) : (
                     column.Header

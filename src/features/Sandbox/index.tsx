@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
+import { dir } from 'console';
 
 import MainContent from 'components/MainContent';
 
@@ -8,6 +9,7 @@ import NestedTable from './DnD/NestedTable';
 export type ColumnSortType = {
   isSorted: boolean;
   isSortedDesc: boolean;
+  sortColumn: string;
 };
 
 export type MilestoneType = {
@@ -223,17 +225,18 @@ const sortNested = (
   direction: 'ASC' | 'DESC',
   accessor: keyof MilestoneType
 ) => {
-  data.forEach(category => {
+  const copyData = [...data];
+  copyData.forEach(category => {
     category.subCategories.forEach(subCategory => {
       subCategory.milestones.sort((a, b) =>
         a[accessor].localeCompare(b[accessor])
       );
-      if (direction === 'ASC') {
+      if (direction === 'DESC') {
         subCategory.milestones.reverse();
       }
     });
   });
-  return data;
+  return copyData;
 };
 
 export const columns: ColumnType[] = [
@@ -241,22 +244,19 @@ export const columns: ColumnType[] = [
     Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
     accessor: 'risk',
     width: '60px',
-    sort: (
-      data: CategoryType[],
-      direction: 'ASC' | 'DESC',
-      accessor: keyof MilestoneType
-    ) => {
-      data.forEach(category => {
+    sort: (data: CategoryType[], direction: 'ASC' | 'DESC') => {
+      const copyData = [...data];
+      copyData.forEach(category => {
         category.subCategories.forEach(subCategory => {
           subCategory.milestones.sort(
             (a, b) => (riskMap[a.risk] || 0) - (riskMap[b.risk] || 0)
           );
-          if (direction === 'ASC') {
+          if (direction === 'DESC') {
             subCategory.milestones.reverse();
           }
         });
       });
-      return data;
+      return copyData;
     }
   },
   {
@@ -275,22 +275,19 @@ export const columns: ColumnType[] = [
     Header: 'Solutions',
     accessor: 'solutions',
     width: '200px',
-    sort: (
-      data: CategoryType[],
-      direction: 'ASC' | 'DESC',
-      accessor: keyof MilestoneType
-    ) => {
-      data.forEach(category => {
+    sort: (data: CategoryType[], direction: 'ASC' | 'DESC') => {
+      const copyData = [...data];
+      copyData.forEach(category => {
         category.subCategories.forEach(subCategory => {
           subCategory.milestones.sort((a, b) =>
             a.solutions.join().localeCompare(b.solutions.join())
           );
-          if (direction === 'ASC') {
+          if (direction === 'DESC') {
             subCategory.milestones.reverse();
           }
         });
       });
-      return data;
+      return copyData;
     }
   },
   {
