@@ -46,10 +46,10 @@ const DraggableRow = ({
     <tr
       ref={ref}
       key={id}
-      onClick={() => toggleRow(id)}
+      onClick={() => toggleRow && toggleRow(id)}
       style={style}
       onKeyPress={e => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if ((e.key === 'Enter' || e.key === ' ') && toggleRow) {
           toggleRow(id);
         }
       }}

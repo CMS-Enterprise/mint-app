@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { GridContainer } from '@trussworks/react-uswds';
+import { GridContainer, Icon } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 
@@ -135,7 +135,7 @@ const rawData: CategoryType[] = [
       {
         id: '2-1',
         risk: '',
-        name: 'Sub-Category 1',
+        name: 'Sub-Category 3',
         facilitatedBy: '',
         solutions: [],
         needBy: '',
@@ -145,7 +145,7 @@ const rawData: CategoryType[] = [
           {
             id: '2-1-1',
             risk: 'L',
-            name: 'Milestone 1',
+            name: 'Milestone 5',
             facilitatedBy: 'Facilitator 1',
             solutions: ['Solution 1', 'Solution 2'],
             needBy: '2022-01-01',
@@ -155,7 +155,7 @@ const rawData: CategoryType[] = [
           {
             id: '2-1-2',
             risk: 'H',
-            name: 'Milestone 2',
+            name: 'Milestone 6',
             facilitatedBy: 'Facilitator 2',
             solutions: ['Solution 3', 'Solution 4'],
             needBy: '2022-01-02',
@@ -167,7 +167,7 @@ const rawData: CategoryType[] = [
       {
         id: '2-2',
         risk: '',
-        name: 'Sub-Category 2',
+        name: 'Sub-Category 4',
         facilitatedBy: '',
         solutions: [],
         needBy: '',
@@ -177,7 +177,7 @@ const rawData: CategoryType[] = [
           {
             id: '2-2-1',
             risk: 'M',
-            name: 'Milestone 3',
+            name: 'Milestone 7',
             facilitatedBy: 'Facilitator 3',
             solutions: ['Solution 5', 'Solution 6'],
             needBy: '2022-01-03',
@@ -187,7 +187,7 @@ const rawData: CategoryType[] = [
           {
             id: '2-2-2',
             risk: 'H',
-            name: 'Milestone 4',
+            name: 'Milestone 8',
             facilitatedBy: 'Facilitator 4',
             solutions: ['Solution 7', 'Solution 8'],
             needBy: '2022-01-04',
@@ -200,44 +200,110 @@ const rawData: CategoryType[] = [
   }
 ];
 
+const riskMap: { [key: string]: number } = {
+  Low: 1,
+  Medium: 2,
+  High: 3
+};
+
 type ColumnType = {
-  Header: string;
+  Header: string | React.ReactNode;
   accessor: string;
   width: string;
   canSort?: boolean;
+  sort?: (
+    data: CategoryType[],
+    direction: 'ASC' | 'DESC',
+    accessor: keyof MilestoneType
+  ) => CategoryType[];
+};
+
+const sortNested = (
+  data: CategoryType[],
+  direction: 'ASC' | 'DESC',
+  accessor: keyof MilestoneType
+) => {
+  data.forEach(category => {
+    category.subCategories.forEach(subCategory => {
+      subCategory.milestones.sort((a, b) =>
+        a[accessor].localeCompare(b[accessor])
+      );
+      if (direction === 'ASC') {
+        subCategory.milestones.reverse();
+      }
+    });
+  });
+  return data;
 };
 
 export const columns: ColumnType[] = [
   {
-    Header: 'Risk',
+    Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
     accessor: 'risk',
     width: '60px',
-    canSort: false
+    sort: (
+      data: CategoryType[],
+      direction: 'ASC' | 'DESC',
+      accessor: keyof MilestoneType
+    ) => {
+      data.forEach(category => {
+        category.subCategories.forEach(subCategory => {
+          subCategory.milestones.sort(
+            (a, b) => (riskMap[a.risk] || 0) - (riskMap[b.risk] || 0)
+          );
+          if (direction === 'ASC') {
+            subCategory.milestones.reverse();
+          }
+        });
+      });
+      return data;
+    }
   },
   {
     Header: 'Model milestone',
     accessor: 'name',
-    width: '200px'
+    width: '200px',
+    sort: sortNested
   },
   {
     Header: 'Facilitated By',
     accessor: 'facilitatedBy',
-    width: '200px'
+    width: '200px',
+    sort: sortNested
   },
   {
     Header: 'Solutions',
     accessor: 'solutions',
-    width: '200px'
+    width: '200px',
+    sort: (
+      data: CategoryType[],
+      direction: 'ASC' | 'DESC',
+      accessor: keyof MilestoneType
+    ) => {
+      data.forEach(category => {
+        category.subCategories.forEach(subCategory => {
+          subCategory.milestones.sort((a, b) =>
+            a.solutions.join().localeCompare(b.solutions.join())
+          );
+          if (direction === 'ASC') {
+            subCategory.milestones.reverse();
+          }
+        });
+      });
+      return data;
+    }
   },
   {
     Header: 'Need By',
     accessor: 'needBy',
-    width: '130px'
+    width: '130px',
+    sort: sortNested
   },
   {
     Header: 'Status',
     accessor: 'status',
-    width: '130px'
+    width: '130px',
+    sort: sortNested
   },
   {
     Header: 'Actions',

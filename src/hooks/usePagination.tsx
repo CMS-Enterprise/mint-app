@@ -90,7 +90,7 @@ const usePagination = <T extends any[]>({
           )
     );
     setPageCount(Math.ceil(itemsLength / itemsPerPage));
-  }, [items, currentPageNum, setPageCount, itemsPerPage, sliceFn]);
+  }, [items, currentPageNum, setPageCount, itemsPerPage, sliceFn, itemsLength]);
 
   const handleNext = () => {
     const nextPage = currentPageNum + 1;

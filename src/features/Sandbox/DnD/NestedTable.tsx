@@ -1,9 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import classNames from 'classnames';
-import { slice } from 'lodash';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
@@ -21,20 +19,20 @@ import {
 import DraggableRow from './DraggableRow';
 
 const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
-  const [data, setData] = useState(rawData);
+  const [data, setData] = useState([...rawData]);
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
 
-  const [sortCount, setSortCount] = useState<number>(0);
+  const [sortCount, setSortCount] = useState<number>(3);
   const [columnSort, setColumnSort] = useState<ColumnSortType>({
     isSorted: false,
     isSortedDesc: false
   });
 
-  const [itemsPerPage, setItemsPerPage] = useState<number>(2);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
-  const sliceF = useMemo(() => {
+  const sliceFn = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
       const startingIndex = pageNum * itemsPerP;
       const endingIndex = startingIndex + itemsPerP;
@@ -42,6 +40,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       const sliceData: CategoryType[] = [];
 
       let milestoneIndex = 0;
+      const sliceItemsCopy = [...sliceItems];
 
       sliceItems.forEach((category, categoryIndex) => {
         category.subCategories.forEach((subCategory, subCategoryIndex) => {
@@ -82,11 +81,11 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         });
       });
 
-      return sliceData;
+      return sliceItemsCopy;
     };
   }, []);
 
-  const dataLength = useMemo(() => {
+  const itemLength = useMemo(() => {
     return data.reduce(
       (acc, category) =>
         acc +
@@ -102,8 +101,8 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     items: data,
     itemsPerPage,
     loading: false,
-    sliceFn: sliceF,
-    itemLength: dataLength
+    sliceFn,
+    itemLength
   });
 
   // Function to toggle row expansion
@@ -231,7 +230,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       const isExpanded = subExpandedRows.includes(subCategory.id);
 
       return (
-        <div style={{ display: 'contents' }}>
+        <div style={{ display: 'contents' }} key={subCategory.id}>
           <DraggableRow
             index={index}
             type={`${categoryID}-subcategory`}
@@ -264,7 +263,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       const isExpanded = expandedRows.includes(category.id);
 
       return (
-        <div style={{ display: 'contents' }}>
+        <div style={{ display: 'contents' }} key={category.id}>
           <DraggableRow
             index={index}
             type="category"
@@ -312,10 +311,12 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
             <tr>
               {columns.map((column, index) => (
                 <th
+                  key={column.accessor}
                   style={{
                     borderBottom: '1px solid black',
                     padding: '1rem',
                     paddingLeft: index === 0 ? '.5rem' : '0px',
+                    paddingBottom: '.75rem',
                     textAlign: 'left',
                     width: column.width,
                     minWidth: column.width,
@@ -334,9 +335,18 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
                       onClick={() => {
                         setSortCount(sortCount + 1);
                         setColumnSort({
-                          isSorted: sortCount % 3 !== 0,
-                          isSortedDesc: !columnSort.isSortedDesc
+                          isSorted: sortCount % 3 === 1 || sortCount % 3 === 0,
+                          isSortedDesc: sortCount % 3 === 1
                         });
+                        setData(
+                          column.sort && columnSort.isSorted
+                            ? column.sort(
+                                data,
+                                columnSort.isSortedDesc ? 'DESC' : 'ASC',
+                                column.accessor
+                              )
+                            : [...rawData]
+                        );
                       }}
                       type="button"
                     >
@@ -360,7 +370,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
             className="margin-left-auto desktop:grid-col-auto"
             pageSize={itemsPerPage}
             setPageSize={setItemsPerPage}
-            valueArray={[2, 4, 6, 8]}
+            valueArray={[5, 10, 15, 20]}
           />
         </div>
       </div>
