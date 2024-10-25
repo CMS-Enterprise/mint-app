@@ -93,7 +93,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   }, []);
 
   const itemLength = useMemo(() => {
-    return data.reduce(
+    return structuredClone(rawData).reduce(
       (acc, category) =>
         acc +
         category.subCategories.reduce(
@@ -102,7 +102,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         ),
       0
     );
-  }, [data]);
+  }, [rawData]);
 
   const { currentItems, Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
