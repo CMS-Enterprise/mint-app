@@ -35,8 +35,3 @@ type EChimpTDL {
 # EChimpCRAndTDLS is a type that represents CRS and TDLS so they can be returned together in graphql
 # """
 union EChimpCRAndTDLS = EChimpCR | EChimpTDL
-
-extend type Query {
-  echimpCR(id: String!): EChimpCR!
-  echimpTDL(id: String!): EChimpTDL!
-}
