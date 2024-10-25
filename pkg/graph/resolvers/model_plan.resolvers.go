@@ -12,6 +12,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/flags"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -110,9 +111,56 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
 	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+	// Get flag value for if ECHIMP is enabled or disabled
+	echimpEnabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
+	if err != nil {
+		return nil, err
+	}
+
+	// If ECHIMP integration is enabled, fetch CRs and TDLs by model plan ID from S3 (ECHIMP)
+	if echimpEnabled {
+		return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+	}
+
+	// else (ECHIMP is disabled) fetch from our Database (but return the ECHIMP type)
+	// TODO: Make resolver for CRs and TDLs by SQL --> shape as models.EChimpCRAndTDLs
+	// Fetch CRs and TDLs from DB
+	crsFromDB, err := PlanCRsGetByModelPlanID(logger, obj.ID, r.store)
+	if err != nil {
+		return nil, err
+	}
+	tdlsFromDB, err := PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
+	if err != nil {
+		return nil, err
+	}
+
+	// "Re-shape" from DB model into models.EChimpCRAndTDLS
+	ret := []models.EChimpCRAndTDLS
+	for _, cr := range crsFromDB {
+		acct, err := cr.CreatedByUserAccount()
+		crToAppend := models.EChimpCR{
+			CrNumber:            cr.IDNumber,
+			VersionNum:          "0", // no local equivalent
+			Initiator:           "N/A",
+			FirstName:           "",
+			LastName:            "",
+			Title:               "",
+			SensitiveFlag:       "",
+			ImplementationDate:  "",
+			CrSummary:           "",
+			CrStatus:            "",
+			EmergencyCrFlag:     "",
+			RelatedCrNumbers:    "",
+			RelatedCrTdlNumbers: "",
+			AssociatedModelUids: "",
+		}
+	}
+
+	return nil, nil
+
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
