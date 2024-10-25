@@ -301,7 +301,11 @@ const NotificationSettings = () => {
     modelPlanShared: modelPlanShared ?? [],
     newModelPlan: newModelPlan ?? [],
     datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? undefined
+    datesChangedNotificationType: datesChangedNotificationType ?? undefined,
+    dataExchangeApproachMarkedComplete:
+      dataExchangeApproachMarkedComplete ?? [],
+    dataExchangeApproachMarkedCompleteNotificationType:
+      dataExchangeApproachMarkedCompleteNotificationType ?? undefined
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -386,99 +390,103 @@ const NotificationSettings = () => {
                     <Fieldset disabled={!!error || loading}>
                       {getKeys(notificationSettings).map(setting => {
                         return (
-                          <Grid row key={setting}>
-                            {setting === 'newModelPlan' && (
-                              <Grid mobile={{ col: 12 }}>
-                                <h4 className="margin-top-5 margin-bottom-0">
-                                  {notificationsT(
-                                    'settings.sections.additionalNotifications.heading'
+                          <>
+                            <Grid row key={setting}>
+                              {setting === 'newModelPlan' && (
+                                <Grid mobile={{ col: 12 }}>
+                                  <h4 className="margin-top-5 margin-bottom-0">
+                                    {notificationsT(
+                                      'settings.sections.additionalNotifications.heading'
+                                    )}
+                                  </h4>
+                                </Grid>
+                              )}
+
+                              <Grid mobile={{ col: 6 }}>
+                                <p className="text-wrap margin-y-105">
+                                  {notificationSettings[setting]}
+                                </p>
+                              </Grid>
+
+                              <Grid mobile={{ col: 3 }}>
+                                <Field
+                                  as={Checkbox}
+                                  id={`notification-setting-email-${setting}`}
+                                  data-testid={`notification-setting-email-${setting}`}
+                                  className="padding-left-2"
+                                  name={setting}
+                                  value={UserNotificationPreferenceFlag.EMAIL}
+                                  checked={(values?.[setting] ?? []).includes(
+                                    UserNotificationPreferenceFlag.EMAIL
                                   )}
-                                </h4>
+                                />
+                              </Grid>
+
+                              <Grid mobile={{ col: 3 }}>
+                                <Field
+                                  as={Checkbox}
+                                  id={`notification-setting-in-app-${setting}`}
+                                  data-testid={`notification-setting-in-app-${setting}`}
+                                  className="padding-left-2"
+                                  name={setting}
+                                  value={UserNotificationPreferenceFlag.IN_APP}
+                                  disabled={
+                                    setting !== 'datesChanged' &&
+                                    setting !== 'newModelPlan'
+                                  }
+                                  checked={(values?.[setting] ?? []).includes(
+                                    UserNotificationPreferenceFlag.IN_APP
+                                  )}
+                                />
+                              </Grid>
+                            </Grid>
+                            {(setting === 'datesChanged' ||
+                              setting ===
+                                'dataExchangeApproachMarkedComplete') && (
+                              <Grid row>
+                                <Grid
+                                  className="tablet:padding-left-3"
+                                  tablet={{ col: 6 }}
+                                >
+                                  <Label
+                                    htmlFor="notification-setting-whichModel"
+                                    className="text-normal margin-top-0"
+                                  >
+                                    {notificationsT(
+                                      'settings.additionalConfigurations.whichModel'
+                                    )}
+                                  </Label>
+
+                                  <Field
+                                    as={Select}
+                                    id="notification-setting-whichModel"
+                                    data-testid="notification-setting-whichModel"
+                                    name="datesChangedNotificationType"
+                                    value={values.datesChangedNotificationType}
+                                    disabled={!values.datesChanged.length}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      setFieldValue(
+                                        'datesChangedNotificationType',
+                                        e.target.value
+                                      );
+                                    }}
+                                  >
+                                    {getKeys(whichModelType).map(type => {
+                                      return (
+                                        <option key={type} value={type}>
+                                          {whichModelType[type]}
+                                        </option>
+                                      );
+                                    })}
+                                  </Field>
+                                </Grid>
                               </Grid>
                             )}
-
-                            <Grid mobile={{ col: 6 }}>
-                              <p className="text-wrap margin-y-105">
-                                {notificationSettings[setting]}
-                              </p>
-                            </Grid>
-
-                            <Grid mobile={{ col: 3 }}>
-                              <Field
-                                as={Checkbox}
-                                id={`notification-setting-email-${setting}`}
-                                data-testid={`notification-setting-email-${setting}`}
-                                className="padding-left-2"
-                                name={setting}
-                                value={UserNotificationPreferenceFlag.EMAIL}
-                                checked={(values?.[setting] ?? []).includes(
-                                  UserNotificationPreferenceFlag.EMAIL
-                                )}
-                              />
-                            </Grid>
-
-                            <Grid mobile={{ col: 3 }}>
-                              <Field
-                                as={Checkbox}
-                                id={`notification-setting-in-app-${setting}`}
-                                data-testid={`notification-setting-in-app-${setting}`}
-                                className="padding-left-2"
-                                name={setting}
-                                value={UserNotificationPreferenceFlag.IN_APP}
-                                disabled={
-                                  setting !== 'datesChanged' &&
-                                  setting !== 'newModelPlan'
-                                }
-                                checked={(values?.[setting] ?? []).includes(
-                                  UserNotificationPreferenceFlag.IN_APP
-                                )}
-                              />
-                            </Grid>
-                          </Grid>
+                          </>
                         );
                       })}
-
-                      {/* Additional Notification Section */}
-                      <Grid row>
-                        <Grid
-                          className="tablet:padding-left-3"
-                          tablet={{ col: 6 }}
-                        >
-                          <Label
-                            htmlFor="notification-setting-whichModel"
-                            className="text-normal margin-top-0"
-                          >
-                            {notificationsT(
-                              'settings.additionalConfigurations.whichModel'
-                            )}
-                          </Label>
-
-                          <Field
-                            as={Select}
-                            id="notification-setting-whichModel"
-                            data-testid="notification-setting-whichModel"
-                            name="datesChangedNotificationType"
-                            value={values.datesChangedNotificationType}
-                            disabled={!values.datesChanged.length}
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setFieldValue(
-                                'datesChangedNotificationType',
-                                e.target.value
-                              );
-                            }}
-                          >
-                            {getKeys(whichModelType).map(type => {
-                              return (
-                                <option key={type} value={type}>
-                                  {whichModelType[type]}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </Grid>
-                      </Grid>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" disabled={!dirty}>

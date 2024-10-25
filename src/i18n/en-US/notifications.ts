@@ -122,7 +122,9 @@ const notifications = {
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me',
       newModelPlan: 'When a new Model Plan is created',
-      datesChanged: 'When model dates change'
+      datesChanged: 'When model dates change',
+      dataExchangeApproachMarkedComplete:
+        'When a data exchange approach is completed'
     },
     additionalConfigurations: {
       whichModel: 'Which models?',
