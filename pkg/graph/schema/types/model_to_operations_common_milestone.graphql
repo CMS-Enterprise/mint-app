@@ -1,0 +1,16 @@
+type ModelToOperationsCommonMilestone {
+  id: UUID!
+  categoryName: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  modelToOperationsCommonMilestone(id: UUID!): ModelToOperationsCommonMilestone!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
