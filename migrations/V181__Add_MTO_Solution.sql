@@ -9,7 +9,7 @@ TODO, finish implementing this
 
 CREATE TABLE mto_solution(
     id UUID PRIMARY KEY,
-    -- mto_common_solution_id UUID REFERENCES mto_common_solution(id), TODO: Based on Common Solutions Tables
+    mto_common_solution_id UUID REFERENCES mto_common_solution(id),
     -- we allow null because this is will be from the commonMilestone table if it exists
     name ZERO_STRING,
     facilitated_by MTO_FACILITATOR,
