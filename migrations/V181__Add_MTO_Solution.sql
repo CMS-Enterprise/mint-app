@@ -9,7 +9,7 @@ CREATE TYPE MTO_SOLUTION_TYPE AS ENUM (
     'IT_SYSTEM',
     'CONTRACT',
     'CROSS_CUTTING_GROUP',
-    'OTHER',
+    'OTHER'
 );
 
 /*
