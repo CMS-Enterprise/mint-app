@@ -1,11 +1,10 @@
---TODO (mto) confirm these statuses
+--TODO (mto) confirm these statuses, they could change
 
 CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
-    'BACKLOG',
     'NOT_STARTED',
-    'IN_PROGRESS'
+    'IN_PROGRESS',
+    'COMPLETED'
 );
-
 
 CREATE TABLE mto_milestone (
     id UUID PRIMARY KEY,
