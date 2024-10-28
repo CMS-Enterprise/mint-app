@@ -102,6 +102,7 @@ services:
       - AWS_S3_ECHIMP_BUCKET
       - AWS_ECHIMP_CR_FILE_NAME
       - AWS_ECHIMP_TDL_FILE_NAME
+      - AWS_ECHIMP_CACHE_TIME_MINS
       # - AWS_ACCESS_KEY_ID
       # - AWS_SECRET_ACCESS_KEY
       - PGHOST=db # We need to override this to point to the docker-compose service name, rather than `localhost`
