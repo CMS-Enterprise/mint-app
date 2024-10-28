@@ -1,0 +1,29 @@
+# TODO Determine what these should actually be with Zoë & Natalie
+enum SolutionStatus {
+  SOLN_STATUS_ONE
+  SOLN_STATUS_TWO
+}
+
+
+enum SolutionType {
+  IT_SYSTEM
+  CONTRACTOR
+  OTHER
+}
+
+# Solution represents a Solution that has been added to a Model Plan's MTO
+type Solution {
+  # DB Fields
+  id: UUID!
+  name: String! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  facilitatedBy: MTOFacilitator
+  status: SolutionStatus!
+  riskIndicator: MTORiskIndicator
+  commonSolutionID: UUID
+  solutionType: SolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+
+  # Custom Resolvers
+  relatedMilestones: [Milestone!]! # Can be empty, since you can have a solution with no milestones
+  addedFromSolutionLibrary: Boolean!
+  commonSolution: CommonSolution
+}

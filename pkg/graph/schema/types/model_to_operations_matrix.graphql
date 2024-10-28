@@ -6,48 +6,6 @@ type ModelsToOperationMatrix {
   solutions: [Solution!]! # Need to support solutions that _don't_ have milestones
 }
 
-# Milestone represents a Milestone that has been added to a Model Plan's MTO
-type Milestone {
-  # DB Fields
-  id: UUID!
-  name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
-  facilitatedBy: MTOFacilitator
-  needBy: Time
-  status: MilestoneStatus!
-  riskIndicator: MTORiskIndicator
-  isDraftMilestone: Boolean!
-  commonMilestoneID: UUID
-
-  # Custom Resolvers
-  addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
-  commonMilestone: CommonMilestone
-  solutions: [Solution!]!
-  category: MTOCategory!
-  subCategory: MTOSubcategory!
-}
-
-# Solution represents a Solution that has been added to a Model Plan's MTO
-type Solution {
-  # DB Fields
-  id: UUID!
-  name: String! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  facilitatedBy: MTOFacilitator
-  status: SolutionStatus!
-  riskIndicator: MTORiskIndicator
-  commonSolutionID: UUID
-  solutionType: SolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-
-  # Custom Resolvers
-  relatedMilestones: [Milestone!]! # Can be empty, since you can have a solution with no milestones
-  addedFromSolutionLibrary: Boolean!
-  commonSolution: CommonSolution
-}
-
-enum SolutionType {
-  IT_SYSTEM
-  CONTRACTOR
-  OTHER
-}
 
 enum MTOFacilitator {
   MODEL_TEAM
@@ -72,18 +30,6 @@ enum MTORiskIndicator {
   ON_TRACK
   OFF_TRACK
   AT_RISK
-}
-
-# TODO Determine what these should actually be with Zoë & Natalie
-enum MilestoneStatus {
-  MILESTONE_STATUS_ONE
-  MILESTONE_STATUS_TWO
-}
-
-# TODO Determine what these should actually be with Zoë & Natalie
-enum SolutionStatus {
-  SOLN_STATUS_ONE
-  SOLN_STATUS_TWO
 }
 
 # CommonMilestone represents a Milestone from the "Common Milestones" library
