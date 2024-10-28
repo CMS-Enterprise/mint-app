@@ -1,3 +1,5 @@
+--TODO (mto) confirm these statuses
+
 CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
     'MILESTONE_STATUS_ONE',
     'MILESTONE_STATUS_TWO'

@@ -1,3 +1,5 @@
+--TODO (mto) confirm these statuses
+
 CREATE TYPE MTO_SOLUTION_STATUS AS ENUM (
     'SOLUTION_STATUS_ONE',
     'SOLUTION_STATUS_TWO'
