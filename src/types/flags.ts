@@ -8,7 +8,7 @@ export type Flags = {
   changeHistoryEnabled: boolean;
   changeHistoryReleaseDate: string;
   modelsApproachingClearanceEnabled: boolean;
-  echimpEnabled: boolean;
+  echimpEnabled: boolean; // TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
 };
 
 export type FlagsState = {
