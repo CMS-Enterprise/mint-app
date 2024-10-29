@@ -6,6 +6,7 @@
     "label": "What data will you collect from participants?",
     "sublabel": "Please select all that apply. Depending on your selections, there may be follow-up questions.",
     "multiSelectLabel": "Selected data types",
+    "pageLabel": "Data collection",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "order": 1.01,
@@ -68,8 +69,9 @@
     "dbField": "data_will_not_be_collected_from_participants",
     "label": "Data will not be collected from participants",
     "dataType": "BOOLEAN",
-    "formType": "CHECKBOX",
+    "formType": "RADIO",
     "order": 1.04,
+    "hideIfFalsy": true,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -91,6 +93,7 @@
     "goField": "DataToSendToParticipants",
     "dbField": "data_to_send_to_participants",
     "label": "What data will you send to participants?",
+    "pageLabel": "Sending data",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "order": 1.06,
@@ -122,6 +125,7 @@
     "goField": "DoesNeedToMakeMultiPayerDataAvailable",
     "dbField": "does_need_to_make_multi_payer_data_available",
     "label": "Do you need to make multi-payer data available to participants?",
+    "pageLabel": "Multi-payer data",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 2.01,
@@ -166,6 +170,7 @@
       "goField": "DoesNeedToMakeMultiPayerDataAvailable",
       "dbField": "does_need_to_make_multi_payer_data_available",
       "label": "Do you need to make multi-payer data available to participants?",
+      "pageLabel": "Multi-payer data",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 2.01,
@@ -191,6 +196,7 @@
     "goField": "DoesNeedToCollectAndAggregateMultiSourceData",
     "dbField": "does_need_to_collect_and_aggregate_multi_source_data",
     "label": "Do you need to collect and aggregate multi-source data for analyses by the model team and implementation contractor?",
+    "pageLabel": "Multi-source collection and aggregation",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 2.04,
@@ -253,6 +259,7 @@
       "goField": "DoesNeedToCollectAndAggregateMultiSourceData",
       "dbField": "does_need_to_collect_and_aggregate_multi_source_data",
       "label": "Do you need to collect and aggregate multi-source data for analyses by the model team and implementation contractor?",
+      "pageLabel": "Multi-source collection and aggregation",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 2.04,
@@ -290,12 +297,67 @@
     "dbField": "will_implement_new_data_exchange_methods",
     "label": "Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?",
     "sublabel": "If so, please describe. If you aren’t sure, it is OK to leave blank.",
+    "pageLabel": "New methodologies",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 3.01,
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "children": [
+          "Examples of novel data exchange methodologies include:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Privacy-preserving record linkage"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Utilizing the Trusted Exchange Framework and Common Agreement (TEFCA)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Enabling an additional data stream not previously used at CMMI"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
     }
   },
   "newDataExchangeMethodsDescription": {
@@ -325,6 +387,7 @@
     "goField": "AdditionalDataExchangeConsiderationsDescription",
     "dbField": "additional_data_exchange_considerations_description",
     "label": "Please describe any additional data exchange considerations.",
+    "pageLabel": "Additional considerations",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 3.04
@@ -341,7 +404,8 @@
     "options": {
       "true": "This data exchange approach is complete.",
       "false": "No"
-    }
+    },
+    "hideFromReadonly": true
   },
   "markedCompleteBy": {
     "gqlField": "markedCompleteBy",
