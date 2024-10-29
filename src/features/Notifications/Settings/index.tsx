@@ -179,9 +179,14 @@ const NotificationSettings = () => {
     );
     // Data Exchange Approach Marked Complete variables
     const isSubscribedDataExchangeApproachMarkedCompleteEmail =
-      datesChanged.includes(UserNotificationPreferenceFlag.EMAIL);
+      dataExchangeApproachMarkedComplete.includes(
+        UserNotificationPreferenceFlag.EMAIL
+      );
+
     const isSubscribedDataExchangeApproachMarkedCompleteInApp =
-      datesChanged.includes(UserNotificationPreferenceFlag.IN_APP);
+      dataExchangeApproachMarkedComplete.includes(
+        UserNotificationPreferenceFlag.IN_APP
+      );
 
     // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
     // then show error alert banner
@@ -256,9 +261,10 @@ const NotificationSettings = () => {
           ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
         ) {
           changes = {
-            datesChanged: isSubscribedDataExchangeApproachMarkedCompleteInApp
-              ? [UserNotificationPreferenceFlag.IN_APP]
-              : []
+            dataExchangeApproachMarkedComplete:
+              isSubscribedDataExchangeApproachMarkedCompleteInApp
+                ? [UserNotificationPreferenceFlag.IN_APP]
+                : []
           };
         }
 
@@ -309,6 +315,7 @@ const NotificationSettings = () => {
       history.replace({ search: params.toString() });
     }
   }, [
+    dataExchangeApproachMarkedComplete,
     datesChanged,
     history,
     loading,
@@ -340,7 +347,7 @@ const NotificationSettings = () => {
   }
 
   return (
-    <MainContent data-testid="new-plan">
+    <MainContent data-testid="notification-setting-page">
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
           <Breadcrumbs
@@ -417,8 +424,8 @@ const NotificationSettings = () => {
                     <Fieldset disabled={!!error || loading}>
                       {getKeys(notificationSettings).map(setting => {
                         return (
-                          <>
-                            <Grid row key={setting}>
+                          <React.Fragment key={setting}>
+                            <Grid row>
                               {setting === 'newModelPlan' && (
                                 <Grid mobile={{ col: 12 }}>
                                   <h4 className="margin-top-5 margin-bottom-0">
@@ -489,7 +496,7 @@ const NotificationSettings = () => {
                                   <Field
                                     as={Select}
                                     id="notification-setting-whichModel"
-                                    data-testid="notification-setting-whichModel"
+                                    data-testid={`notification-setting-whichModel-${setting}`}
                                     name={`${setting}NotificationType`}
                                     value={
                                       setting === 'datesChanged'
@@ -517,7 +524,7 @@ const NotificationSettings = () => {
                                 </Grid>
                               </Grid>
                             )}
-                          </>
+                          </React.Fragment>
                         );
                       })}
 
