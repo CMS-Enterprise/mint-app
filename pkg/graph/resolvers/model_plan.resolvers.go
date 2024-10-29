@@ -15,6 +15,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/flags"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
@@ -138,29 +139,65 @@ func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.Mo
 	}
 
 	// "Re-shape" from DB model into models.EChimpCRAndTDLS
-	ret := []models.EChimpCRAndTDLS
+	ret := []models.EChimpCRAndTDLS{}
+
+	// first, CRs
 	for _, cr := range crsFromDB {
-		acct, err := cr.CreatedByUserAccount()
-		crToAppend := models.EChimpCR{
+		// get imp date
+		var implementationDate *string
+		if cr.DateImplemented != nil {
+			implementationDate = helpers.PointerTo(cr.DateImplemented.Format(time.DateOnly))
+		}
+
+		// get cr summary from cr note
+		var crSummary *models.TaggedContent
+		if cr.Note != nil {
+			crSummary = &models.TaggedContent{
+				RawContent: models.HTML(*cr.Note),
+			}
+		}
+
+		crToAppend := &models.EChimpCR{
 			CrNumber:            cr.IDNumber,
 			VersionNum:          "0", // no local equivalent
-			Initiator:           "N/A",
-			FirstName:           "",
-			LastName:            "",
-			Title:               "",
-			SensitiveFlag:       "",
-			ImplementationDate:  "",
-			CrSummary:           "",
-			CrStatus:            "",
-			EmergencyCrFlag:     "",
-			RelatedCrNumbers:    "",
-			RelatedCrTdlNumbers: "",
-			AssociatedModelUids: "",
+			Initiator:           nil,
+			FirstName:           nil,
+			LastName:            nil,
+			Title:               &cr.Title,
+			SensitiveFlag:       nil,
+			ImplementationDate:  implementationDate,
+			CrSummary:           crSummary,
+			CrStatus:            nil,
+			EmergencyCrFlag:     nil,
+			RelatedCrNumbers:    nil,
+			RelatedCrTdlNumbers: nil,
+			AssociatedModelUids: &obj.ID, // associated ID is just the model plans ID
 		}
+		ret = append(ret, crToAppend)
 	}
 
-	return nil, nil
+	// then, TDLs
+	for _, tdl := range tdlsFromDB {
+		// get imp date
+		var initiationDate *string
+		if tdl.DateInitiated != nil {
+			initiationDate = helpers.PointerTo(tdl.DateInitiated.Format(time.DateOnly))
+		}
 
+		tdlToAppend := &models.EChimpTDL{
+			TdlNumber:           tdl.IDNumber,
+			VersionNum:          "0",
+			Initiator:           nil,
+			FirstName:           nil,
+			LastName:            nil,
+			Title:               &tdl.Title,
+			IssuedDate:          initiationDate, // TODO, is this right?
+			Status:              nil,
+			AssociatedModelUids: &obj.ID, // associated ID is just the model plans ID
+		}
+		ret = append(ret, tdlToAppend)
+	}
+	return ret, nil
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
