@@ -37,3 +37,13 @@ COMMENT ON INDEX unique_name_per_model_plan_when_mto_common_milestone_is_null IS
 ALTER TABLE mto_milestone
 ADD CONSTRAINT unique_mto_common_milestone_per_model_plan UNIQUE (model_plan_id, mto_common_milestone_id);
 COMMENT ON CONSTRAINT unique_mto_common_milestone_per_model_plan ON mto_milestone IS 'Constraint to ensure that each common milestone can be linked to a model plan only once';
+
+
+ALTER TABLE mto_milestone
+ADD CONSTRAINT check_name_or_common_milestone_null CHECK (
+    (mto_common_milestone_id IS NULL OR name IS NULL)
+    AND NOT (mto_common_milestone_id IS NULL AND name IS NULL)
+);
+
+COMMENT ON CONSTRAINT check_name_or_common_milestone_null ON mto_milestone IS 
+'Ensures either mto_common_milestone_id or name is null, but not both: if a common milestone is referenced, name must be null; if name is specified, no common milestone may be referenced.';
