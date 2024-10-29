@@ -12,7 +12,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -22,7 +21,7 @@ func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTO
 }
 
 // Milestones is the resolver for the milestones field.
-func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*model.MTOMilestone, error) {
+func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*models.MTOMilestone, error) {
 	panic(fmt.Errorf("not implemented: Milestones - milestones"))
 }
 
