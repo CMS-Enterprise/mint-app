@@ -8,6 +8,7 @@ export type Flags = {
   changeHistoryEnabled: boolean;
   changeHistoryReleaseDate: string;
   modelsApproachingClearanceEnabled: boolean;
+  echimpEnabled: boolean;
 };
 
 export type FlagsState = {

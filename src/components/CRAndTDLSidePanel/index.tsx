@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
@@ -40,6 +41,8 @@ const CRAndTDLSidePanel = ({
   crSummary
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
+
+  const flags = useFlags();
 
   return (
     <GridContainer className="padding-y-5 padding-x-4 side-panel--cr-and-tdl">
@@ -148,13 +151,15 @@ const CRAndTDLSidePanel = ({
               </div>
             )}
 
-            <ExternalLink
-              href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
-              className="sidepanel--full-width margin-right-0"
-              toEchimp
-            >
-              {crtdlsT('echimpCard.viewThisInECHIMP')}
-            </ExternalLink>
+            {flags.echimpEnabled && (
+              <ExternalLink
+                href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+                className="sidepanel--full-width margin-right-0"
+                toEchimp
+              >
+                {crtdlsT('echimpCard.viewThisInECHIMP')}
+              </ExternalLink>
+            )}
           </div>
         </Grid>
       </Grid>

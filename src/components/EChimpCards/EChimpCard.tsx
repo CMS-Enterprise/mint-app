@@ -8,6 +8,7 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
 
@@ -39,6 +40,8 @@ const EChimpCard = ({
   setIsSidepanelOpen
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
+
+  const flags = useFlags();
 
   return (
     <Card
@@ -111,13 +114,15 @@ const EChimpCard = ({
         >
           {crtdlsT('echimpCard.viewMore')}
         </Button>
-        <ExternalLink
-          href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
-          className="margin-right-0"
-          toEchimp
-        >
-          {crtdlsT('echimpCard.viewThisInECHIMP')}
-        </ExternalLink>
+        {flags.echimpEnabled && (
+          <ExternalLink
+            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+            className="margin-right-0"
+            toEchimp
+          >
+            {crtdlsT('echimpCard.viewThisInECHIMP')}
+          </ExternalLink>
+        )}
       </CardFooter>
     </Card>
   );

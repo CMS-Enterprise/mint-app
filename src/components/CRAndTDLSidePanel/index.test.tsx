@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import CRAndTDLSidePanel from './index';
 
 describe('The CRAndTDLSidePanel component', () => {
-  it('renders TDL without crashing', () => {
+  it('renders TDL without crashing (flag disabled)', () => {
     const { asFragment } = render(
       <CRAndTDLSidePanel
         isCR={false}
@@ -15,7 +15,7 @@ describe('The CRAndTDLSidePanel component', () => {
     );
     expect(screen.getByText('abc123')).toBeInTheDocument();
     expect(screen.getByText('Test Title')).toBeInTheDocument();
-    expect(screen.getByText('View this in ECHIMP')).toBeInTheDocument();
+    expect(screen.queryByText('View this in ECHIMP')).not.toBeInTheDocument(); // TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
     expect(asFragment()).toMatchSnapshot();
   });
 });
