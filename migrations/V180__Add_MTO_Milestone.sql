@@ -5,6 +5,8 @@ CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
     'IN_PROGRESS',
     'COMPLETED'
 );
+COMMENT ON TYPE MTO_MILESTONE_STATUS IS 'Status of the milestone within the model to operation process';
+
 
 CREATE TABLE mto_milestone (
     id UUID PRIMARY KEY,
@@ -23,13 +25,15 @@ CREATE TABLE mto_milestone (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
+COMMENT ON TABLE mto_milestone IS 'Table to track milestones related to a specific model plan, with status and facilitator details';
 
 
--- Adding the partial unique index
 CREATE UNIQUE INDEX unique_name_per_model_plan_when_mto_common_milestone_is_null
 ON mto_milestone (model_plan_id, name)
 WHERE mto_common_milestone_id IS NULL;
+COMMENT ON INDEX unique_name_per_model_plan_when_mto_common_milestone_is_null IS 'Unique index to enforce that milestone names are unique per model plan when no common milestone is associated';
 
 
 ALTER TABLE mto_milestone
 ADD CONSTRAINT unique_mto_common_milestone_per_model_plan UNIQUE (model_plan_id, mto_common_milestone_id);
+COMMENT ON CONSTRAINT unique_mto_common_milestone_per_model_plan ON mto_milestone IS 'Constraint to ensure that each common milestone can be linked to a model plan only once';
