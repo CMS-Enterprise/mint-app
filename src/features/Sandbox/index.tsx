@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
-import { dir } from 'console';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 
 import NestedTable from './DnD/NestedTable';
@@ -11,6 +11,8 @@ export type ColumnSortType = {
   isSortedDesc: boolean;
   sortColumn: string;
 };
+
+export type MTORowType = 'category' | 'subcategory' | 'milestone';
 
 export type MilestoneType = {
   id: string;
@@ -47,6 +49,8 @@ export type CategoryType = {
   subCategories: SubCategoryType[];
 };
 
+export type RowType = CategoryType | SubCategoryType | MilestoneType;
+
 const rawData: CategoryType[] = [
   {
     id: '1',
@@ -74,17 +78,27 @@ const rawData: CategoryType[] = [
             name: 'Milestone 1',
             facilitatedBy: 'Facilitator 1',
             solutions: ['Solution 1', 'Solution 2'],
-            needBy: '2022-01-01',
+            needBy: '2025-01-01',
             status: 'In Progress',
             actions: 'Actions 1'
           },
           {
             id: '1-1-2',
             risk: 'L',
-            name: 'Milestone 2',
-            facilitatedBy: 'Facilitator 2',
-            solutions: ['Solution 3', 'Solution 4'],
-            needBy: '2022-01-02',
+            name: 'Second milestone',
+            facilitatedBy: 'Rupert Harrison',
+            solutions: [],
+            needBy: '2025-06-07',
+            status: 'In Progress',
+            actions: 'Actions 2'
+          },
+          {
+            id: '1-1-3',
+            risk: 'M',
+            name: 'Just another milestone',
+            facilitatedBy: 'John Doe',
+            solutions: ['IPC', '4i'],
+            needBy: '2023-01-02',
             status: 'In Progress',
             actions: 'Actions 2'
           }
@@ -115,7 +129,7 @@ const rawData: CategoryType[] = [
             risk: 'H',
             name: 'Milestone 4',
             facilitatedBy: 'Facilitator 4',
-            solutions: ['Solution 7', 'Solution 8'],
+            solutions: [],
             needBy: '2022-01-04',
             status: 'In Progress',
             actions: 'Actions 4'
@@ -159,7 +173,7 @@ const rawData: CategoryType[] = [
             risk: 'H',
             name: 'Milestone 6',
             facilitatedBy: 'Facilitator 2',
-            solutions: ['Solution 3', 'Solution 4'],
+            solutions: [],
             needBy: '2022-01-02',
             status: 'In Progress',
             actions: 'Actions 2'
@@ -218,6 +232,13 @@ type ColumnType = {
     direction: 'ASC' | 'DESC',
     accessor: keyof MilestoneType
   ) => CategoryType[];
+  Cell?: ({
+    row,
+    rowType
+  }: {
+    row: CategoryType | SubCategoryType | MilestoneType;
+    rowType: MTORowType;
+  }) => JSX.Element;
 };
 
 const sortNested = (
@@ -239,11 +260,14 @@ const sortNested = (
   return copyData;
 };
 
+type RowProps = { row: RowType; rowType: MTORowType };
+
 export const columns: ColumnType[] = [
   {
     Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
     accessor: 'risk',
     width: '60px',
+    canSort: false,
     sort: (data: CategoryType[], direction: 'ASC' | 'DESC') => {
       const copyData = [...data];
       copyData.forEach(category => {
@@ -257,19 +281,43 @@ export const columns: ColumnType[] = [
         });
       });
       return copyData;
+    },
+    Cell: ({ row, rowType }: RowProps) => {
+      const { risk } = row;
+      if (rowType !== 'milestone')
+        return <span className="margin-left-05">&#x2015;</span>;
+      return (
+        <span className="text-bold text-base-lighter">
+          {(() => {
+            if (risk === 'H')
+              return <Icon.Error className="text-error-dark top-05" size={3} />;
+            if (risk === 'M')
+              return (
+                <Icon.Warning className="text-warning-dark top-05" size={3} />
+              );
+            return '';
+          })()}
+        </span>
+      );
     }
   },
   {
     Header: 'Model milestone',
     accessor: 'name',
     width: '200px',
-    sort: sortNested
+    sort: sortNested,
+    Cell: ({ row }: RowProps) => {
+      return <>{row.name}</>;
+    }
   },
   {
     Header: 'Facilitated By',
     accessor: 'facilitatedBy',
     width: '200px',
-    sort: sortNested
+    sort: sortNested,
+    Cell: ({ row }: RowProps) => {
+      return <>{row.facilitatedBy}</>;
+    }
   },
   {
     Header: 'Solutions',
@@ -288,25 +336,46 @@ export const columns: ColumnType[] = [
         });
       });
       return copyData;
+    },
+    Cell: ({ row, rowType }: RowProps) => {
+      if (rowType !== 'milestone') return <></>;
+      if (row.solutions.length === 0)
+        return (
+          <UswdsReactLink to="#">
+            Select a solution{' '}
+            <Icon.ArrowForward className="top-05 margin-left-05" />
+          </UswdsReactLink>
+        );
+
+      return <>{row.solutions.join(', ')}</>;
     }
   },
   {
     Header: 'Need By',
     accessor: 'needBy',
     width: '130px',
-    sort: sortNested
+    sort: sortNested,
+    Cell: ({ row }: RowProps) => {
+      return <>{row.needBy}</>;
+    }
   },
   {
     Header: 'Status',
     accessor: 'status',
     width: '130px',
-    sort: sortNested
+    sort: sortNested,
+    Cell: ({ row }: RowProps) => {
+      return <>{row.status}</>;
+    }
   },
   {
     Header: 'Actions',
     accessor: 'actions',
     width: '130px',
-    canSort: false
+    canSort: false,
+    Cell: ({ row }: RowProps) => {
+      return <>{row.actions}</>;
+    }
   }
 ];
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { raw } from '@storybook/react';
 import classNames from 'classnames';
 
 import TablePageSize from 'components/TablePageSize';
@@ -14,6 +13,8 @@ import {
   columns,
   ColumnSortType,
   MilestoneType,
+  MTORowType,
+  RowType,
   SubCategoryType
 } from '..';
 
@@ -49,8 +50,8 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       let milestoneIndex = 0;
       const sliceItemsCopy = [...sliceItems];
 
-      sliceItemsCopy.forEach((category, categoryIndex) => {
-        category.subCategories.forEach((subCategory, subCategoryIndex) => {
+      sliceItemsCopy.forEach(category => {
+        category.subCategories.forEach(subCategory => {
           subCategory.milestones.forEach(milestone => {
             if (
               milestoneIndex >= startingIndex &&
@@ -129,7 +130,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   const moveRow = (
     dragIndex: number,
     hoverIndex: number,
-    type: string,
+    type: MTORowType,
     categoryID?: string,
     subcategoryID?: string,
     milestoneID?: string
@@ -185,20 +186,28 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     setData(updatedData);
   };
 
-  const renderCells = (row: CategoryType | SubCategoryType | MilestoneType) => (
+  const renderCells = (row: RowType, rowType: MTORowType) => (
     <>
       {getKeys(row)
         .filter(key => columns.find(column => column.accessor === key))
         .map((key, index) => {
+          const columnCell = columns.find(column => column.accessor === key);
+
+          const RenderCell = columnCell?.Cell ? columnCell.Cell : '';
+
           return (
             <td
-              className={classNames('padding-2', {
+              className={classNames('padding-1 line-height-normal', {
                 'padding-left-05': index === 0,
                 'padding-left-0': index !== 0
               })}
               key={key}
             >
-              {Array.isArray(row[key]) ? row[key].join(', ') : row[key]}
+              {RenderCell ? (
+                <RenderCell row={row} rowType={rowType} />
+              ) : (
+                row[key]
+              )}
             </td>
           );
         })}
@@ -227,7 +236,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         }
         id={milestone.id}
       >
-        {renderCells(milestone)}
+        {renderCells(milestone, 'milestone')}
       </DraggableRow>
     ));
 
@@ -261,7 +270,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
               cursor: 'pointer'
             }}
           >
-            {renderCells(subCategory)}
+            {renderCells(subCategory, 'subcategory')}
           </DraggableRow>
           {isExpanded &&
             renderMilestones(
@@ -295,7 +304,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
               fontSize: '1.25em'
             }}
           >
-            {renderCells(category)}
+            {renderCells(category, 'category')}
           </DraggableRow>
 
           {isExpanded &&
@@ -328,7 +337,9 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         style={{
           width: '100%',
           minWidth: '100%',
-          overflow: 'auto'
+          overflow: 'auto',
+          borderBottom: '1px solid black',
+          marginBottom: '.75rem'
         }}
       >
         <table
@@ -393,17 +404,17 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           </thead>
           <tbody>{renderCategories()}</tbody>
         </table>
+      </div>
 
-        <div className="display-flex">
-          {Pagination}
+      <div className="display-flex">
+        {Pagination}
 
-          <TablePageSize
-            className="margin-left-auto desktop:grid-col-auto"
-            pageSize={itemsPerPage}
-            setPageSize={setItemsPerPage}
-            valueArray={[5, 10, 15, 20]}
-          />
-        </div>
+        <TablePageSize
+          className="margin-left-auto desktop:grid-col-auto"
+          pageSize={itemsPerPage}
+          setPageSize={setItemsPerPage}
+          valueArray={[5, 10, 15, 20]}
+        />
       </div>
     </DndProvider>
   );
