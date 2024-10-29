@@ -12,17 +12,6 @@ CREATE TYPE MTO_SOLUTION_STATUS AS ENUM (
 COMMENT ON TYPE MTO_SOLUTION_STATUS IS 
 'Defines the stages of progress for solutions within the model plan, from not started to completion.';
 
-CREATE TYPE MTO_SOLUTION_TYPE AS ENUM (
-    'IT_SYSTEM',
-    'CONTRACT',
-    'CROSS_CUTTING_GROUP',
-    'OTHER'
-);
--- TODO (mto) the solution type might need to move to the common solution migration. A common solution should likely have a type defined with it
-
-
-COMMENT ON TYPE MTO_SOLUTION_TYPE IS 
-'Specifies the type of solution, such as IT system, contract, cross-cutting group, or other, to categorize solutions used within the model plan.';
 
 CREATE TABLE mto_solution(
     id UUID PRIMARY KEY,
