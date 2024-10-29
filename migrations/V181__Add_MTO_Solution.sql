@@ -63,10 +63,10 @@ COMMENT ON INDEX unique_name_per_model_plan_when_mto_common_solution_is_null IS
 
 
 ALTER TABLE mto_solution
-ADD CONSTRAINT check_name_or_common_solution_null CHECK (
-    (mto_common_solution_id IS NULL OR name IS NULL)
-    AND NOT (mto_common_solution_id IS NULL AND name IS NULL)
+ADD CONSTRAINT check_name_type_and_common_solution CHECK (
+    (mto_common_solution_id IS NULL AND name IS NOT NULL AND type IS NOT NULL)
+    OR (mto_common_solution_id IS NOT NULL AND name IS NULL AND type IS NULL)
 );
 
-COMMENT ON CONSTRAINT check_name_or_common_solution_null ON mto_solution IS 
-'Ensures either mto_common_solution_id or name is null, but not both: if a common solution is referenced, name must be null; if name is specified, no common solution may be referenced.';
+COMMENT ON CONSTRAINT check_name_type_and_common_solution ON mto_solution IS 
+'Ensures that if mto_common_solution_id is null, both name and type must be non-null; if mto_common_solution_id is provided, both name and type must be null.';
