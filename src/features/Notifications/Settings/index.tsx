@@ -177,6 +177,11 @@ const NotificationSettings = () => {
     const isSubscribedDatesChangedInApp = datesChanged.includes(
       UserNotificationPreferenceFlag.IN_APP
     );
+    // Data Exchange Approach Marked Complete variables
+    const isSubscribedDataExchangeApproachMarkedCompleteEmail =
+      datesChanged.includes(UserNotificationPreferenceFlag.EMAIL);
+    const isSubscribedDataExchangeApproachMarkedCompleteInApp =
+      datesChanged.includes(UserNotificationPreferenceFlag.IN_APP);
 
     // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
     // then show error alert banner
@@ -184,7 +189,10 @@ const NotificationSettings = () => {
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
         !isSubscribedModelPlanEmail) ||
       (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
-        !isSubscribedDatesChangedEmail)
+        !isSubscribedDatesChangedEmail) ||
+      (unsubscribeEmailParams ===
+        ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE &&
+        !isSubscribedDataExchangeApproachMarkedCompleteEmail)
     ) {
       showMessage(
         <Alert
@@ -215,10 +223,16 @@ const NotificationSettings = () => {
     // Unsubscribe from New Model Plan email notifications
     if (
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
-      unsubscribeEmailParams === ActivityType.DATES_CHANGED
+      unsubscribeEmailParams === ActivityType.DATES_CHANGED ||
+      unsubscribeEmailParams ===
+        ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
     ) {
       // if user has email notifications, then proceeed to unsubscribe
-      if (isSubscribedModelPlanEmail || isSubscribedDatesChangedEmail) {
+      if (
+        isSubscribedModelPlanEmail ||
+        isSubscribedDatesChangedEmail ||
+        isSubscribedDataExchangeApproachMarkedCompleteEmail
+      ) {
         let changes;
         // Adjust payload if New Model Plan in-app notifications are enabled
         if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
@@ -232,6 +246,17 @@ const NotificationSettings = () => {
         if (unsubscribeEmailParams === ActivityType.DATES_CHANGED) {
           changes = {
             datesChanged: isSubscribedDatesChangedInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+        // Adjust payload if Data Exchange Approach in-app notifications are enabled
+        if (
+          unsubscribeEmailParams ===
+          ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
+        ) {
+          changes = {
+            datesChanged: isSubscribedDataExchangeApproachMarkedCompleteInApp
               ? [UserNotificationPreferenceFlag.IN_APP]
               : []
           };

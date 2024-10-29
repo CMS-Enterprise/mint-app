@@ -148,7 +148,9 @@ const notifications = {
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
-        DATES_CHANGED: 'when model dates change'
+        DATES_CHANGED: 'when model dates change',
+        DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
+          'when a data exchange approach is completed'
       }
     }
   }
