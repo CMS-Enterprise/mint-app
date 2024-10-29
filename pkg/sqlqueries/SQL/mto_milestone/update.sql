@@ -1,6 +1,6 @@
 UPDATE mto_milestone
 SET 
-    mto_common_milestone_id=:mto_common_milestone_id,
+    mto_category_id := mto_category_id,
     name=:name,
     facilitated_by=:facilitated_by,
     need_by=:need_by,
@@ -14,6 +14,7 @@ RETURNING
 id,
 model_plan_id,
 mto_common_milestone_id,
+mto_category_id,
 name,
 facilitated_by,
 need_by,

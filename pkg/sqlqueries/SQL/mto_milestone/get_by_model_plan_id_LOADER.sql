@@ -7,6 +7,7 @@ SELECT
     mto_milestone.id,
     mto_milestone.model_plan_id,
     mto_milestone.mto_common_milestone_id,
+    mto_milestone.mto_category_id,
     mto_milestone.name,
     mto_milestone.facilitated_by,
     mto_milestone.need_by,

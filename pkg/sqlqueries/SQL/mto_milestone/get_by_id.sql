@@ -2,6 +2,7 @@ SELECT
     id,
     model_plan_id,
     mto_common_milestone_id,
+    mto_category_id,
     name,
     facilitated_by,
     need_by,
