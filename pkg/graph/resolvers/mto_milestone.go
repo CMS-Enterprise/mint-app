@@ -54,7 +54,12 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 	return storage.MTOMilestoneUpdate(store, logger, existing)
 }
 
-// MTOMilestoneGetByModelPlanIDLOADER implements resolver logic to get all parent level MTO Categories by a model plan ID using a data loader
+// MTOMilestoneGetByModelPlanIDLOADER implements resolver logic to get all MTO milestones by a model plan ID using a data loader
 func MTOMilestoneGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOMilestone, error) {
+	return loaders.MTOMilestone.ByModelPlanID.Load(ctx, modelPlanID)
+}
+
+// MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER implements resolver logic to get all MTO milestones by a model plan ID and MTO category ID using a data loader
+func MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.ByModelPlanID.Load(ctx, modelPlanID)
 }

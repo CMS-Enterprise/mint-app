@@ -26,6 +26,26 @@ func MTOMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger
 
 }
 
+// MTOMilestoneGetByModelPlanIDAndCategoryIDLoader returns  mto milestones that are associated with a model plan id and category
+func MTOMilestoneGetByModelPlanIDAndCategoryIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []MTOMilestoneByModelPlanAndCategoryKey) ([]*models.MTOMilestone, error) {
+
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByModelPlanIDLoader, arg)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+
+}
+
 // MTOMilestoneCreate creates a new MTOMilestone in the database
 func MTOMilestoneCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestone, error) {
 	if MTOMilestone.ID == uuid.Nil {

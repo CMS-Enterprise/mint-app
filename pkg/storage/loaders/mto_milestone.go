@@ -16,13 +16,15 @@ import (
 type mtoMilestoneLoaders struct {
 
 	// ByModelPlanID Gets a list of mto Milestone records at the parent level associated with a model plan by the supplied model plan id.
-	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
+	ByModelPlanID                 LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
+	ByModelPlanIDAndMTOCategoryID LoaderWrapper[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone]
 	// TODO: (mto) do we need to get by ID ever? By anything else?
 }
 
 // MTOMilestone is the singleton instance of all LoaderWrappers related to MTO Milestones
 var MTOMilestone = &mtoMilestoneLoaders{
-	ByModelPlanID: NewLoaderWrapper(batchMTOMilestoneGetByModelPlanID),
+	ByModelPlanID:                 NewLoaderWrapper(batchMTOMilestoneGetByModelPlanID),
+	ByModelPlanIDAndMTOCategoryID: NewLoaderWrapper(batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID),
 }
 
 func batchMTOMilestoneGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOMilestone] {
@@ -42,5 +44,28 @@ func batchMTOMilestoneGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.
 
 	// implement one to many
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
+
+}
+
+func batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID(ctx context.Context, keys []storage.MTOMilestoneByModelPlanAndCategoryKey) []*dataloader.Result[[]*models.MTOMilestone] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone](keys, err)
+	}
+
+	data, err := storage.MTOMilestoneGetByModelPlanIDAndCategoryIDLoader(loaders.DataReader.Store, logger, keys)
+	if err != nil {
+		return errorPerEachKey[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone](keys, err)
+	}
+	getKeyFunc := func(data *models.MTOMilestone) storage.MTOMilestoneByModelPlanAndCategoryKey {
+		return storage.MTOMilestoneByModelPlanAndCategoryKey{
+			ModelPlanID:   data.ModelPlanID,
+			MTOCategoryID: data.MTOCategoryID,
+		}
+	}
+
+	// implement one to many
+	return oneToManyDataLoader(keys, data, getKeyFunc)
 
 }
