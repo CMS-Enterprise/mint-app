@@ -182,6 +182,9 @@ const AWSS3ECHIMPCRFileName = "AWS_ECHIMP_CR_FILE_NAME"
 // AWSS3ECHIMPTDLFileName is the name for the file in the echimp bucket that contains TDL data
 const AWSS3ECHIMPTDLFileName = "AWS_ECHIMP_TDL_FILE_NAME"
 
+// AWSS3ECHIMPCacheTimeMins is the length of time that echimp data will be cached
+const AWSS3ECHIMPCacheTimeMins = "AWS_ECHIMP_CACHE_TIME_MINS"
+
 // LocalMinioAddressKey is the host used for local minio
 const LocalMinioAddressKey = "MINIO_ADDRESS"
 
