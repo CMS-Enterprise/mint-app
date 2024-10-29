@@ -15,7 +15,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/flags"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
@@ -127,7 +126,7 @@ func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.Mo
 	}
 
 	// else (ECHIMP is disabled) fetch from our Database (but return the ECHIMP type)
-	// TODO: Make resolver for CRs and TDLs by SQL --> shape as models.EChimpCRAndTDLs
+	// TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
 	// Fetch CRs and TDLs from DB
 	crsFromDB, err := PlanCRsGetByModelPlanID(logger, obj.ID, r.store)
 	if err != nil {
@@ -143,60 +142,14 @@ func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.Mo
 
 	// first, CRs
 	for _, cr := range crsFromDB {
-		// get imp date
-		var implementationDate *string
-		if cr.DateImplemented != nil {
-			implementationDate = helpers.PointerTo(cr.DateImplemented.Format(time.DateOnly))
-		}
-
-		// get cr summary from cr note
-		var crSummary *models.TaggedContent
-		if cr.Note != nil {
-			crSummary = &models.TaggedContent{
-				RawContent: models.HTML(*cr.Note),
-			}
-		}
-
-		crToAppend := &models.EChimpCR{
-			CrNumber:            cr.IDNumber,
-			VersionNum:          "0", // no local equivalent
-			Initiator:           nil,
-			FirstName:           nil,
-			LastName:            nil,
-			Title:               &cr.Title,
-			SensitiveFlag:       nil,
-			ImplementationDate:  implementationDate,
-			CrSummary:           crSummary,
-			CrStatus:            nil,
-			EmergencyCrFlag:     nil,
-			RelatedCrNumbers:    nil,
-			RelatedCrTdlNumbers: nil,
-			AssociatedModelUids: &obj.ID, // associated ID is just the model plans ID
-		}
-		ret = append(ret, crToAppend)
+		ret = append(ret, cr.ToEchimpCR(&obj.ID))
 	}
 
 	// then, TDLs
 	for _, tdl := range tdlsFromDB {
-		// get imp date
-		var initiationDate *string
-		if tdl.DateInitiated != nil {
-			initiationDate = helpers.PointerTo(tdl.DateInitiated.Format(time.DateOnly))
-		}
-
-		tdlToAppend := &models.EChimpTDL{
-			TdlNumber:           tdl.IDNumber,
-			VersionNum:          "0",
-			Initiator:           nil,
-			FirstName:           nil,
-			LastName:            nil,
-			Title:               &tdl.Title,
-			IssuedDate:          initiationDate, // TODO, is this right?
-			Status:              nil,
-			AssociatedModelUids: &obj.ID, // associated ID is just the model plans ID
-		}
-		ret = append(ret, tdlToAppend)
+		ret = append(ret, tdl.ToEchimpTDL(&obj.ID))
 	}
+
 	return ret, nil
 }
 
@@ -288,7 +241,14 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.Mo
 	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
+
+	// Get flag value for if ECHIMP is enabled or disabled
+	// TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
+	echimpEnabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
+	if err != nil {
+		return nil, err
+	}
+	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter, echimpEnabled)
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
