@@ -17,7 +17,7 @@ CREATE TABLE mto_milestone (
     facilitated_by MTO_FACILITATOR,
     need_by TIMESTAMP WITH TIME ZONE,
     status MTO_MILESTONE_STATUS NOT NULL,
-    risk_indicator MTO_RISK_INDICATOR,
+    risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
     is_draft BOOLEAN NOT NULL DEFAULT TRUE,
 
     created_by UUID NOT NULL REFERENCES user_account(id),
