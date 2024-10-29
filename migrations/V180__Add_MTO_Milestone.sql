@@ -23,3 +23,13 @@ CREATE TABLE mto_milestone (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
+
+
+-- Adding the partial unique index
+CREATE UNIQUE INDEX unique_name_per_model_plan_when_mto_common_milestone_is_null
+ON mto_milestone (model_plan_id, name)
+WHERE mto_common_milestone_id IS NULL;
+
+
+ALTER TABLE mto_milestone
+ADD CONSTRAINT unique_mto_common_milestone_per_model_plan UNIQUE (model_plan_id, mto_common_milestone_id);
