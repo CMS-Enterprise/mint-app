@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import classNames from 'classnames';
+import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 
 import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
@@ -43,21 +44,39 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
 
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
+  const renderedRowIndexes = useRef<{
+    category: number[];
+    subCategory: number[][];
+    milestone: number[][][];
+  }>({
+    category: [],
+    subCategory: [],
+    milestone: []
+  });
+
   const sliceFn = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
       const startingIndex = pageNum * itemsPerP;
       const endingIndex = startingIndex + itemsPerP;
-
-      // console.log('sliceItems', sliceItems);
 
       const sliceData: CategoryType[] = [];
 
       let milestoneIndex = 0;
       const sliceItemsCopy = [...sliceItems];
 
-      sliceItemsCopy.forEach(category => {
-        category.subCategories.forEach(subCategory => {
-          subCategory.milestones.forEach(milestone => {
+      const shownIndexes: {
+        category: number[];
+        subCategory: number[][];
+        milestone: number[][][];
+      } = {
+        category: [],
+        subCategory: [],
+        milestone: []
+      };
+
+      sliceItemsCopy.forEach((category, catIndex) => {
+        category.subCategories.forEach((subCategory, subIndex) => {
+          subCategory.milestones.forEach((milestone, milIndex) => {
             if (
               milestoneIndex >= startingIndex &&
               milestoneIndex < endingIndex
@@ -65,19 +84,50 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
               const foundCategory = sliceData.find(
                 sliceCategory => sliceCategory.id === category.id
               );
+
               if (foundCategory) {
                 const foundSubCategory = foundCategory.subCategories.find(
                   sliceSubCategory => sliceSubCategory.id === subCategory.id
                 );
                 if (foundSubCategory) {
+                  if (!shownIndexes.milestone[catIndex][subIndex]) {
+                    shownIndexes.milestone[catIndex][subIndex] = [];
+                  }
                   foundSubCategory.milestones.push(milestone);
+                  if (!shownIndexes.milestone[catIndex][subIndex]) {
+                    shownIndexes.milestone[catIndex][subIndex] = [];
+                  }
+                  shownIndexes.milestone[catIndex][subIndex].push(milIndex);
                 } else {
+                  if (!shownIndexes.subCategory[catIndex]) {
+                    shownIndexes.subCategory[catIndex] = [];
+                  }
+                  shownIndexes.subCategory[catIndex].push(subIndex);
+                  if (!shownIndexes.milestone[catIndex]) {
+                    shownIndexes.milestone[catIndex] = [];
+                  }
+                  if (!shownIndexes.milestone[catIndex][subIndex]) {
+                    shownIndexes.milestone[catIndex][subIndex] = [];
+                  }
+                  shownIndexes.milestone[catIndex][subIndex].push(milIndex);
                   foundCategory.subCategories.push({
                     ...subCategory,
                     milestones: [milestone]
                   });
                 }
               } else {
+                shownIndexes.category.push(catIndex);
+                if (!shownIndexes.subCategory[catIndex]) {
+                  shownIndexes.subCategory[catIndex] = [];
+                }
+                shownIndexes.subCategory[catIndex].push(subIndex);
+                if (!shownIndexes.milestone[catIndex]) {
+                  shownIndexes.milestone[catIndex] = [];
+                }
+                if (!shownIndexes.milestone[catIndex][subIndex]) {
+                  shownIndexes.milestone[catIndex][subIndex] = [];
+                }
+                shownIndexes.milestone[catIndex][subIndex].push(milIndex);
                 sliceData.push({
                   ...category,
                   subCategories: [
@@ -93,6 +143,8 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           });
         });
       });
+
+      renderedRowIndexes.current = shownIndexes;
 
       return sliceData;
     };
@@ -110,9 +162,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     );
   }, [rawData]);
 
-  const { currentItems, startIndex, endIndex, Pagination } = usePagination<
-    CategoryType[]
-  >({
+  const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
     itemsPerPage,
     loading: false,
@@ -222,24 +272,21 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     </>
   );
 
-  const milestoneCount = useRef<number>(0);
-
-  useEffect(() => {
-    milestoneCount.current = startIndex;
-  }, [startIndex]);
-
   const renderMilestones = (
     milestones: MilestoneType[],
     categoryID: string,
-    subcategoryID: string
+    subcategoryID: string,
+    categoryIndex: number,
+    subcategoryIndex: number
   ) =>
     milestones.map((milestone, index) => {
-      // if (
-      //   milestoneCount.current < startIndex ||
-      //   milestoneCount.current >= endIndex
-      // ) {
-      //   return null;
-      // }
+      if (
+        !renderedRowIndexes.current.milestone[categoryIndex][
+          subcategoryIndex
+        ].includes(index)
+      ) {
+        return null;
+      }
 
       return (
         <DraggableRow
@@ -265,32 +312,16 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
 
   const renderSubCategories = (
     subCategories: SubCategoryType[],
-    categoryID: string
+    categoryID: string,
+    categoryIndex: number
   ) =>
     subCategories.map((subCategory, index) => {
       const isExpanded = subExpandedRows.includes(subCategory.id);
 
-      const subCategoryMilestoneCount = subCategory.milestones.length;
-
       if (
-        milestoneCount.current + subCategoryMilestoneCount < startIndex ||
-        milestoneCount.current > endIndex
+        !renderedRowIndexes.current.subCategory[categoryIndex].includes(index)
       ) {
         return null;
-      }
-
-      const remainder =
-        milestoneCount.current + subCategoryMilestoneCount - endIndex;
-
-      console.log(remainder);
-
-      let slicedSubCategoryMilestones = [...subCategory.milestones];
-
-      if (remainder > 0) {
-        slicedSubCategoryMilestones = slicedSubCategoryMilestones.slice(
-          0,
-          subCategoryMilestoneCount - remainder
-        );
       }
 
       return (
@@ -320,9 +351,11 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           </DraggableRow>
           {isExpanded &&
             renderMilestones(
-              slicedSubCategoryMilestones,
+              subCategory.milestones,
               categoryID,
-              subCategory.id
+              subCategory.id,
+              categoryIndex,
+              index
             )}
         </div>
       );
@@ -330,26 +363,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
 
   const renderCategories = () =>
     sortedData.map((category, index) => {
-      if (index === 0) {
-        milestoneCount.current = startIndex;
-      }
-
-      const categoryMilestoneCount = category.subCategories.reduce(
-        (acc, subCategory) =>
-          acc + (subCategory.milestones ? subCategory.milestones.length : 0),
-        0
-      );
-
-      // if (categoryMilestoneCount + milestoneCount.current <= endIndex) {
-      //   milestoneCount.current += categoryMilestoneCount;
-      // } else {
-      //   milestoneCount.current = endIndex;
-      // }
-
-      if (
-        milestoneCount.current + categoryMilestoneCount < startIndex ||
-        milestoneCount.current > endIndex
-      ) {
+      if (!renderedRowIndexes.current.category.includes(index)) {
         return null;
       }
 
@@ -379,7 +393,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           {isExpanded &&
             category.subCategories &&
             category.id &&
-            renderSubCategories(category.subCategories, category.id)}
+            renderSubCategories(category.subCategories, category.id, index)}
         </div>
       );
     });
