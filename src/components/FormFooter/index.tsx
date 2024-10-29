@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 
-type FormFooterProps = {
+type SubmittionFooterProps = {
   homeArea: string;
   homeRoute: string;
   backPage?: string;
