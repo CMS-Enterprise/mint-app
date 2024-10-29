@@ -76,7 +76,9 @@ const NotificationSettings = () => {
     modelPlanShared,
     newModelPlan,
     datesChanged,
-    datesChangedNotificationType
+    datesChangedNotificationType,
+    dataExchangeApproachMarkedComplete,
+    dataExchangeApproachMarkedCompleteNotificationType
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -432,7 +434,9 @@ const NotificationSettings = () => {
                                   value={UserNotificationPreferenceFlag.IN_APP}
                                   disabled={
                                     setting !== 'datesChanged' &&
-                                    setting !== 'newModelPlan'
+                                    setting !== 'newModelPlan' &&
+                                    setting !==
+                                      'dataExchangeApproachMarkedComplete'
                                   }
                                   checked={(values?.[setting] ?? []).includes(
                                     UserNotificationPreferenceFlag.IN_APP
@@ -461,14 +465,18 @@ const NotificationSettings = () => {
                                     as={Select}
                                     id="notification-setting-whichModel"
                                     data-testid="notification-setting-whichModel"
-                                    name="datesChangedNotificationType"
-                                    value={values.datesChangedNotificationType}
-                                    disabled={!values.datesChanged.length}
+                                    name={`${setting}NotificationType`}
+                                    value={
+                                      setting === 'datesChanged'
+                                        ? values.datesChangedNotificationType
+                                        : values.dataExchangeApproachMarkedCompleteNotificationType
+                                    }
+                                    disabled={!values[setting].length}
                                     onChange={(
                                       e: React.ChangeEvent<HTMLInputElement>
                                     ) => {
                                       setFieldValue(
-                                        'datesChangedNotificationType',
+                                        `${setting}NotificationType`,
                                         e.target.value
                                       );
                                     }}
