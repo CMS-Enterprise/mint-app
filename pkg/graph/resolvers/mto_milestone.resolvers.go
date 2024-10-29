@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -53,6 +54,21 @@ func (r *mTOMilestoneResolver) Category(ctx context.Context, obj *models.MTOMile
 // SubCategory is the resolver for the subCategory field.
 func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOMilestone) (*models.MTOSubcategory, error) {
 	panic(fmt.Errorf("not implemented: SubCategory - subCategory"))
+}
+
+// CreateMTOMilestone is the resolver for the createMTOMilestone field.
+func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneID *uuid.UUID, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneID, modelPlanID)
+}
+
+// UpdateMTOMilestone is the resolver for the updateMTOMilestone field.
+func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOMilestone, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes)
 }
 
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.

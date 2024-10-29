@@ -714,6 +714,15 @@ export type MtoMilestone = {
   subCategory: MtoSubcategory;
 };
 
+export type MtoMilestoneChanges = {
+  facilitatedBy?: InputMaybe<MtoFacilitator>;
+  isDraftMilestone?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  needBy?: InputMaybe<Scalars['Time']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoMilestoneStatus>;
+};
+
 export enum MtoMilestoneStatus {
   COMPLETED = 'COMPLETED',
   IN_PROGRESS = 'IN_PROGRESS',
@@ -989,6 +998,7 @@ export type Mutation = {
    * Note, the parent must belong to the same model plan, or this will return an error
    */
   createMTOCategory: MtoCategory;
+  createMTOMilestone: MtoMilestone;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1027,6 +1037,7 @@ export type Mutation = {
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
    */
   updateMTOCategory: MtoCategory;
+  updateMTOMilestone: MtoMilestone;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1077,6 +1088,15 @@ export type MutationCreateMtoCategoryArgs = {
   modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneArgs = {
+  commonMilestoneID?: InputMaybe<Scalars['UUID']['input']>;
+  modelPlanID: Scalars['UUID']['input'];
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1249,6 +1269,13 @@ export type MutationUpdateExistingModelLinksArgs = {
 export type MutationUpdateMtoCategoryArgs = {
   id: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoMilestoneArgs = {
+  changes: MtoMilestoneChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
