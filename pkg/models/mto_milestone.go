@@ -9,6 +9,7 @@ type MTOMilestone struct {
 	modelPlanRelation
 
 	Name *string `json:"name" db:"name"`
+	/*TODO (mto) implement the rest of this based on GQL and database */
 }
 
 // NewMTOMilestone returns a new mtoMileMTOMilestone object. A Nil parentID means that this is a top level MileMTOMilestone, and not a subMileMTOMilestone
