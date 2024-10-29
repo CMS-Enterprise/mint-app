@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import classNames from 'classnames';
@@ -24,6 +24,9 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   const [data, setData] = useState(structuredClone(rawData));
 
   const [sortedData, setSortedData] = useState<CategoryType[]>([...data]);
+  const [rearrangedData, setRearrangedData] = useState<CategoryType[]>([
+    ...data
+  ]);
 
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
@@ -44,6 +47,8 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
       const startingIndex = pageNum * itemsPerP;
       const endingIndex = startingIndex + itemsPerP;
+
+      // console.log('sliceItems', sliceItems);
 
       const sliceData: CategoryType[] = [];
 
@@ -105,7 +110,9 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     );
   }, [rawData]);
 
-  const { currentItems, Pagination } = usePagination<CategoryType[]>({
+  const { currentItems, startIndex, endIndex, Pagination } = usePagination<
+    CategoryType[]
+  >({
     items: sortedData,
     itemsPerPage,
     loading: false,
@@ -136,12 +143,12 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     milestoneID?: string
   ) => {
     // Clone the existing data
-    const updatedData = [...currentItems];
+    const updatedData = [...sortedData];
 
     if (type === 'category') {
       // Handle Category reordering
-      const [draggedCategory] = currentItems.splice(dragIndex, 1);
-      currentItems.splice(hoverIndex, 0, draggedCategory);
+      const [draggedCategory] = sortedData.splice(dragIndex, 1);
+      sortedData.splice(hoverIndex, 0, draggedCategory);
     } else if (type.includes('subcategory')) {
       // Find the category that contains the dragged subcategory
       const parentCategory = updatedData.find(cat =>
@@ -173,7 +180,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
 
       if (parentCategory && parentSubCategory) {
         // Reorder milestones within the found sub-category
-        const milestones = [...parentSubCategory.milestones!];
+        const milestones = [...parentSubCategory.milestones];
         const draggedMilestone = milestones.splice(dragIndex, 1)[0];
         milestones.splice(hoverIndex, 0, draggedMilestone);
 
@@ -183,6 +190,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     }
 
     // Set the new data state
+    setRearrangedData([...updatedData]);
     setData(updatedData);
   };
 
@@ -214,31 +222,46 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     </>
   );
 
+  const milestoneCount = useRef<number>(0);
+
+  useEffect(() => {
+    milestoneCount.current = startIndex;
+  }, [startIndex]);
+
   const renderMilestones = (
     milestones: MilestoneType[],
     categoryID: string,
     subcategoryID: string
   ) =>
-    milestones.map((milestone, index) => (
-      <DraggableRow
-        key={milestone.id}
-        index={index}
-        type={`${categoryID}-${subcategoryID}-milestone`}
-        moveRow={(dragIndex: number, hoverIndex: number) =>
-          moveRow(
-            dragIndex,
-            hoverIndex,
-            'milestone',
-            categoryID,
-            subcategoryID,
-            milestone.id
-          )
-        }
-        id={milestone.id}
-      >
-        {renderCells(milestone, 'milestone')}
-      </DraggableRow>
-    ));
+    milestones.map((milestone, index) => {
+      // if (
+      //   milestoneCount.current < startIndex ||
+      //   milestoneCount.current >= endIndex
+      // ) {
+      //   return null;
+      // }
+
+      return (
+        <DraggableRow
+          key={milestone.id}
+          index={index}
+          type={`${categoryID}-${subcategoryID}-milestone`}
+          moveRow={(dragIndex: number, hoverIndex: number) =>
+            moveRow(
+              dragIndex,
+              hoverIndex,
+              'milestone',
+              categoryID,
+              subcategoryID,
+              milestone.id
+            )
+          }
+          id={milestone.id}
+        >
+          {renderCells(milestone, 'milestone')}
+        </DraggableRow>
+      );
+    });
 
   const renderSubCategories = (
     subCategories: SubCategoryType[],
@@ -246,6 +269,29 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   ) =>
     subCategories.map((subCategory, index) => {
       const isExpanded = subExpandedRows.includes(subCategory.id);
+
+      const subCategoryMilestoneCount = subCategory.milestones.length;
+
+      if (
+        milestoneCount.current + subCategoryMilestoneCount < startIndex ||
+        milestoneCount.current > endIndex
+      ) {
+        return null;
+      }
+
+      const remainder =
+        milestoneCount.current + subCategoryMilestoneCount - endIndex;
+
+      console.log(remainder);
+
+      let slicedSubCategoryMilestones = [...subCategory.milestones];
+
+      if (remainder > 0) {
+        slicedSubCategoryMilestones = slicedSubCategoryMilestones.slice(
+          0,
+          subCategoryMilestoneCount - remainder
+        );
+      }
 
       return (
         <div style={{ display: 'contents' }} key={subCategory.id}>
@@ -274,7 +320,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
           </DraggableRow>
           {isExpanded &&
             renderMilestones(
-              subCategory.milestones,
+              slicedSubCategoryMilestones,
               categoryID,
               subCategory.id
             )}
@@ -283,7 +329,30 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
     });
 
   const renderCategories = () =>
-    currentItems.map((category, index) => {
+    sortedData.map((category, index) => {
+      if (index === 0) {
+        milestoneCount.current = startIndex;
+      }
+
+      const categoryMilestoneCount = category.subCategories.reduce(
+        (acc, subCategory) =>
+          acc + (subCategory.milestones ? subCategory.milestones.length : 0),
+        0
+      );
+
+      // if (categoryMilestoneCount + milestoneCount.current <= endIndex) {
+      //   milestoneCount.current += categoryMilestoneCount;
+      // } else {
+      //   milestoneCount.current = endIndex;
+      // }
+
+      if (
+        milestoneCount.current + categoryMilestoneCount < startIndex ||
+        milestoneCount.current > endIndex
+      ) {
+        return null;
+      }
+
       const isExpanded = expandedRows.includes(category.id);
 
       return (
@@ -325,7 +394,7 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         )
       );
     } else {
-      setSortedData(structuredClone(rawData));
+      setSortedData(structuredClone(rearrangedData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentColumn, columnSort, rawData]);

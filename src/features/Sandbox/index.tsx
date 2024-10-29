@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
+import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
+import { TaskStatus } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -79,7 +81,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 1',
             solutions: ['Solution 1', 'Solution 2'],
             needBy: '2025-01-01',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 1'
           },
           {
@@ -89,7 +91,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Rupert Harrison',
             solutions: [],
             needBy: '2025-06-07',
-            status: 'In Progress',
+            status: 'NOT_STARTED',
             actions: 'Actions 2'
           },
           {
@@ -99,7 +101,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'John Doe',
             solutions: ['IPC', '4i'],
             needBy: '2023-01-02',
-            status: 'In Progress',
+            status: 'COMPLETE',
             actions: 'Actions 2'
           }
         ]
@@ -121,7 +123,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 3',
             solutions: ['Solution 5', 'Solution 6'],
             needBy: '2022-01-03',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 3'
           },
           {
@@ -131,7 +133,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 4',
             solutions: [],
             needBy: '2022-01-04',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 4'
           }
         ]
@@ -165,7 +167,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 1',
             solutions: ['Solution 1', 'Solution 2'],
             needBy: '2022-01-01',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 1'
           },
           {
@@ -175,7 +177,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 2',
             solutions: [],
             needBy: '2022-01-02',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 2'
           }
         ]
@@ -197,7 +199,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 3',
             solutions: ['Solution 5', 'Solution 6'],
             needBy: '2022-01-03',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 3'
           },
           {
@@ -207,7 +209,7 @@ const rawData: CategoryType[] = [
             facilitatedBy: 'Facilitator 4',
             solutions: ['Solution 7', 'Solution 8'],
             needBy: '2022-01-04',
-            status: 'In Progress',
+            status: 'IN_PROGRESS',
             actions: 'Actions 4'
           }
         ]
@@ -260,6 +262,7 @@ const sortNested = (
   return copyData;
 };
 
+// eslint-disable-next-line react/no-unused-prop-types
 type RowProps = { row: RowType; rowType: MTORowType };
 
 export const columns: ColumnType[] = [
@@ -285,7 +288,11 @@ export const columns: ColumnType[] = [
     Cell: ({ row, rowType }: RowProps) => {
       const { risk } = row;
       if (rowType !== 'milestone')
-        return <span className="margin-left-05">&#x2015;</span>;
+        return (
+          <span style={{ fontSize: '1.25rem' }} className="margin-left-05">
+            &#x2015;
+          </span>
+        );
       return (
         <span className="text-bold text-base-lighter">
           {(() => {
@@ -364,8 +371,10 @@ export const columns: ColumnType[] = [
     accessor: 'status',
     width: '130px',
     sort: sortNested,
-    Cell: ({ row }: RowProps) => {
-      return <>{row.status}</>;
+    Cell: ({ row, rowType }: RowProps) => {
+      const { status } = row;
+      if (rowType !== 'milestone') return <></>;
+      return <MTOStatusTag status={status as MTOStatus} />;
     }
   },
   {
@@ -373,8 +382,17 @@ export const columns: ColumnType[] = [
     accessor: 'actions',
     width: '130px',
     canSort: false,
-    Cell: ({ row }: RowProps) => {
-      return <>{row.actions}</>;
+    Cell: ({ row, rowType }: RowProps) => {
+      if (rowType !== 'milestone')
+        return (
+          <div
+            style={{ textAlign: 'right', fontSize: '1.25rem' }}
+            className="width-full padding-right-1 "
+          >
+            &#8230;
+          </div>
+        );
+      return <UswdsReactLink to="#">Edit details</UswdsReactLink>;
     }
   }
 ];
@@ -394,3 +412,50 @@ const Sandbox = () => {
 };
 
 export default Sandbox;
+
+type MTOStatus = 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETE';
+
+export const MTOStatusTag = ({
+  status,
+  variant,
+  classname
+}: {
+  status: MTOStatus;
+  variant?: 'default' | 'mint';
+  classname?: string;
+}) => {
+  let tagStyle;
+  let tagCopy;
+  switch (status) {
+    case 'NOT_STARTED':
+      tagCopy = 'Not started';
+      tagStyle = 'bg-base-lighter text-base-darker';
+      break;
+    case 'IN_PROGRESS':
+      tagCopy = 'In progress';
+      tagStyle = 'bg-warning';
+      break;
+
+    case 'COMPLETE':
+      tagCopy = 'Complete';
+      tagStyle = 'bg-success-dark text-white';
+      break;
+    default:
+      tagCopy = '';
+      tagStyle = 'bg-info-light';
+  }
+
+  return (
+    <div
+      data-testid="tasklist-tag"
+      style={{
+        width: 'fit-content'
+      }}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle} ${
+        classname ?? ''
+      }`}
+    >
+      <span>{tagCopy}</span>
+    </div>
+  );
+};

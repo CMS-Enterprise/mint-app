@@ -28,6 +28,8 @@ const usePagination = <T extends any[]>({
   itemLength
 }: PaginationProps): {
   currentItems: T;
+  startIndex: number;
+  endIndex: number;
   Pagination: JSX.Element;
   Results: JSX.Element;
 } => {
@@ -130,6 +132,8 @@ const usePagination = <T extends any[]>({
 
   return {
     currentItems: currentItems as T,
+    startIndex: pageOffset,
+    endIndex: pageOffset + itemsPerPage,
     Pagination: (
       <div className={classNames(className)}>
         {pageCount > 1 && (
