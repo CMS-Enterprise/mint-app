@@ -741,7 +741,6 @@ export type MtoSolution = {
 };
 
 export enum MtoSolutionStatus {
-  AT_RISK = 'AT_RISK',
   BACKLOG = 'BACKLOG',
   COMPLETED = 'COMPLETED',
   IN_PROGRESS = 'IN_PROGRESS',

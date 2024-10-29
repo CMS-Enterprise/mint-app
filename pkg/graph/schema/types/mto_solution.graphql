@@ -5,7 +5,6 @@ enum MTOSolutionStatus {
   BACKLOG
   IN_PROGRESS
   COMPLETED
-  AT_RISK
 }
 
 
