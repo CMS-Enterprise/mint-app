@@ -1770,7 +1770,6 @@ const (
 	MTOSolutionStatusBacklog    MTOSolutionStatus = "BACKLOG"
 	MTOSolutionStatusInProgress MTOSolutionStatus = "IN_PROGRESS"
 	MTOSolutionStatusCompleted  MTOSolutionStatus = "COMPLETED"
-	MTOSolutionStatusAtRisk     MTOSolutionStatus = "AT_RISK"
 )
 
 var AllMTOSolutionStatus = []MTOSolutionStatus{
@@ -1779,12 +1778,11 @@ var AllMTOSolutionStatus = []MTOSolutionStatus{
 	MTOSolutionStatusBacklog,
 	MTOSolutionStatusInProgress,
 	MTOSolutionStatusCompleted,
-	MTOSolutionStatusAtRisk,
 }
 
 func (e MTOSolutionStatus) IsValid() bool {
 	switch e {
-	case MTOSolutionStatusNotStarted, MTOSolutionStatusOnboarding, MTOSolutionStatusBacklog, MTOSolutionStatusInProgress, MTOSolutionStatusCompleted, MTOSolutionStatusAtRisk:
+	case MTOSolutionStatusNotStarted, MTOSolutionStatusOnboarding, MTOSolutionStatusBacklog, MTOSolutionStatusInProgress, MTOSolutionStatusCompleted:
 		return true
 	}
 	return false
