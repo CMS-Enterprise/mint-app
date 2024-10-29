@@ -74,6 +74,15 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
         milestone: []
       };
 
+      // Initialize the shownIndexes object
+      sliceItemsCopy.forEach((category, catIndex) => {
+        shownIndexes.subCategory[catIndex] = [];
+        shownIndexes.milestone[catIndex] = [];
+        category.subCategories.forEach((subCategory, subIndex) => {
+          shownIndexes.milestone[catIndex][subIndex] = [];
+        });
+      });
+
       sliceItemsCopy.forEach((category, catIndex) => {
         category.subCategories.forEach((subCategory, subIndex) => {
           subCategory.milestones.forEach((milestone, milIndex) => {
@@ -90,53 +99,15 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
                   sliceSubCategory => sliceSubCategory.id === subCategory.id
                 );
                 if (foundSubCategory) {
-                  if (!shownIndexes.milestone[catIndex][subIndex]) {
-                    shownIndexes.milestone[catIndex][subIndex] = [];
-                  }
-                  foundSubCategory.milestones.push(milestone);
-                  if (!shownIndexes.milestone[catIndex][subIndex]) {
-                    shownIndexes.milestone[catIndex][subIndex] = [];
-                  }
                   shownIndexes.milestone[catIndex][subIndex].push(milIndex);
                 } else {
-                  if (!shownIndexes.subCategory[catIndex]) {
-                    shownIndexes.subCategory[catIndex] = [];
-                  }
                   shownIndexes.subCategory[catIndex].push(subIndex);
-                  if (!shownIndexes.milestone[catIndex]) {
-                    shownIndexes.milestone[catIndex] = [];
-                  }
-                  if (!shownIndexes.milestone[catIndex][subIndex]) {
-                    shownIndexes.milestone[catIndex][subIndex] = [];
-                  }
                   shownIndexes.milestone[catIndex][subIndex].push(milIndex);
-                  foundCategory.subCategories.push({
-                    ...subCategory,
-                    milestones: [milestone]
-                  });
                 }
               } else {
                 shownIndexes.category.push(catIndex);
-                if (!shownIndexes.subCategory[catIndex]) {
-                  shownIndexes.subCategory[catIndex] = [];
-                }
                 shownIndexes.subCategory[catIndex].push(subIndex);
-                if (!shownIndexes.milestone[catIndex]) {
-                  shownIndexes.milestone[catIndex] = [];
-                }
-                if (!shownIndexes.milestone[catIndex][subIndex]) {
-                  shownIndexes.milestone[catIndex][subIndex] = [];
-                }
                 shownIndexes.milestone[catIndex][subIndex].push(milIndex);
-                sliceData.push({
-                  ...category,
-                  subCategories: [
-                    {
-                      ...subCategory,
-                      milestones: [milestone]
-                    }
-                  ]
-                });
               }
             }
             milestoneIndex += 1;
@@ -289,24 +260,27 @@ const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
       }
 
       return (
-        <DraggableRow
-          key={milestone.id}
-          index={index}
-          type={`${categoryID}-${subcategoryID}-milestone`}
-          moveRow={(dragIndex: number, hoverIndex: number) =>
-            moveRow(
-              dragIndex,
-              hoverIndex,
-              'milestone',
-              categoryID,
-              subcategoryID,
-              milestone.id
-            )
-          }
-          id={milestone.id}
-        >
+        <tr id={milestone.id} key={milestone.id}>
           {renderCells(milestone, 'milestone')}
-        </DraggableRow>
+        </tr>
+        // <DraggableRow
+        //   key={milestone.id}
+        //   index={index}
+        //   type={`${categoryID}-${subcategoryID}-milestone`}
+        //   moveRow={(dragIndex: number, hoverIndex: number) =>
+        //     moveRow(
+        //       dragIndex,
+        //       hoverIndex,
+        //       'milestone',
+        //       categoryID,
+        //       subcategoryID,
+        //       milestone.id
+        //     )
+        //   }
+        //   id={milestone.id}
+        // >
+        //   {renderCells(milestone, 'milestone')}
+        // </DraggableRow>
       );
     });
 

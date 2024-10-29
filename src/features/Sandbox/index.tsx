@@ -90,7 +90,7 @@ const rawData: CategoryType[] = [
             name: 'Second milestone',
             facilitatedBy: 'Rupert Harrison',
             solutions: [],
-            needBy: '2025-06-07',
+            needBy: '',
             status: 'NOT_STARTED',
             actions: 'Actions 2'
           },
@@ -122,7 +122,7 @@ const rawData: CategoryType[] = [
             name: 'Milestone 3',
             facilitatedBy: 'Facilitator 3',
             solutions: ['Solution 5', 'Solution 6'],
-            needBy: '2022-01-03',
+            needBy: '',
             status: 'IN_PROGRESS',
             actions: 'Actions 3'
           },
@@ -176,7 +176,7 @@ const rawData: CategoryType[] = [
             name: 'Milestone 6',
             facilitatedBy: 'Facilitator 2',
             solutions: [],
-            needBy: '2022-01-02',
+            needBy: '',
             status: 'IN_PROGRESS',
             actions: 'Actions 2'
           }
@@ -362,7 +362,9 @@ export const columns: ColumnType[] = [
     accessor: 'needBy',
     width: '130px',
     sort: sortNested,
-    Cell: ({ row }: RowProps) => {
+    Cell: ({ row, rowType }: RowProps) => {
+      if (!row.needBy && rowType === 'milestone')
+        return <span className="text-italic">None added yet</span>;
       return <>{row.needBy}</>;
     }
   },
