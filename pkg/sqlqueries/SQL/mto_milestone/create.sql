@@ -1,0 +1,38 @@
+INSERT INTO mto_milestone(
+    id,
+    model_plan_id,
+    mto_common_milestone_id,
+    name,
+    facilitated_by,
+    need_by,
+    status,
+    risk_indicator,
+    is_draft,
+    created_by
+)
+VALUES (
+    :id,
+    :model_plan_id,
+    :mto_common_milestone_id,
+    :name,
+    :facilitated_by,
+    :need_by,
+    :status,
+    :risk_indicator,
+    :is_draft,
+    :created_by
+)
+RETURNING
+id,
+model_plan_id,
+mto_common_milestone_id,
+name,
+facilitated_by,
+need_by,
+status,
+risk_indicator,
+is_draft,
+created_by,
+created_dts,
+modified_by,
+modified_dts;
