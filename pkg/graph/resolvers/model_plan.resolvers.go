@@ -238,7 +238,6 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
 func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
-	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
