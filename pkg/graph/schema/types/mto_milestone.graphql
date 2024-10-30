@@ -32,6 +32,14 @@ type MTOMilestone {
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
   commonMilestone: CommonMilestone
   solutions: [MTOSolution!]!
+  # Category: {
+  #   mtoCategoryID: UUID
+  #   subcategoryID: UUID
+  #   Category: MTOCategory
+  #   subCategory: MTOSubcategory
+  # }
+  # TODO (mto) do we need to resolve category? Should we need to resolve it here? Also, 
+  # category: UNION MTOCategory | MTOSubcategory ?
   category: MTOCategory!
   subCategory: MTOSubcategory!
 }
