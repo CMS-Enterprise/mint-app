@@ -100,6 +100,13 @@ const IndividualNotification = ({
         history.push(`/models/${metaData.modelPlanID}/read-view`);
       });
     }
+    if (isDataExchangeApproach(metaData)) {
+      handleMarkAsRead(() => {
+        history.push(
+          `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`
+        );
+      });
+    }
   };
 
   // Mint System Account -> MINT
