@@ -36,7 +36,7 @@ describe('Web Socket Connections', () => {
     });
 
     cy.get('[data-testid="page-locked"]').contains(
-      'Someone is currently editing the Model Plan section you’re trying to access'
+      'Someone is currently editing the section you’re trying to access.'
     );
   });
 });
