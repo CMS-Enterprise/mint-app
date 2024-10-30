@@ -12,3 +12,19 @@ jobs:
   run_tests:
     uses: ./.github/workflows/run_tests.yml
     secrets: inherit
+  check_todos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Track TODOs
+        uses: ribtoks/tdg-github-action@v0.4.13-beta
+        with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          REF: ${{ github.ref }}
+          # `CLOSE_ON_SAME_BRANCH: false` Allows us to close issues on branches that weren't the branch they were created on
+          # This also means we can create new TODO comments in feature branches and potentially close them in other PRs/branches
+          # The main downside is that issues will disappear before they make it to `main`
+          CLOSE_ON_SAME_BRANCH: false
+          DRY_RUN: true
