@@ -78,7 +78,7 @@ const IndividualNotification = ({
     ) {
       handleMarkAsRead(() =>
         history.push(
-          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+          `/models/${metaData.modelPlanID}/read-view/discussions?discussionID=${metaData.discussionID}`
         )
       );
     }
@@ -97,7 +97,7 @@ const IndividualNotification = ({
     }
     if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {
       handleMarkAsRead(() => {
-        history.push(`/models/${metaData.modelPlanID}/read-only`);
+        history.push(`/models/${metaData.modelPlanID}/read-view`);
       });
     }
   };
