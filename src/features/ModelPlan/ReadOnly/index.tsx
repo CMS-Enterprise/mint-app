@@ -6,7 +6,6 @@ import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
-  GetCrtdLsQuery,
   GetModelSummaryQuery,
   ModelStatus,
   TeamRole,
@@ -60,10 +59,6 @@ import ReadOnlyTeamInfo from './Team';
 import './index.scss';
 
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
-
-type CRTDLType =
-  | GetCrtdLsQuery['modelPlan']['crs'][0]
-  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 export type subComponentProps = {
   route: string;
@@ -152,9 +147,7 @@ export const ReadOnlyComponents = (
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
       helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
-      component: (
-        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
-      )
+      component: <ReadOnlyCRTDLs />
     }
   };
 };
@@ -263,14 +256,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     generalCharacteristics,
     collaborators,
     isCollaborator,
-    crs,
-    tdls
+    echimpCRsAndTDLs
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
-
-  const planCRs = crs || [];
-  const planTDLs = tdls || [];
-
-  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const hasEditAccess: boolean =
     !isHelpArticle &&
@@ -386,7 +373,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               modelLeads={collaborators?.filter(c =>
                 c.teamRoles.includes(TeamRole.MODEL_LEAD)
               )}
-              crTdls={crTdls}
+              crTdls={echimpCRsAndTDLs}
             />
           </div>
         )}

@@ -77,48 +77,60 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	// Create 3 plans without additional collaborators (TEST is the only one, by default)
 	_ = suite.createModelPlan("Test Plan")
 	_ = suite.createModelPlan("Test Plan 2")
-	planWithCRTDLs := suite.createModelPlan("Test Plan with CRTDL")
+
+	// create model plans with the expected IDS from the test data
+	_ = suite.createModelPlanWithID("Test Plan with CRTDL", &eChimp1relatedMPID)
+	_ = suite.createModelPlanWithID("Test Plan with CRTDL", &eChimp2relatedMPID)
 
 	// Create a plan that has CLAB as a collaborator (along with TEST)
 	planWithCollab := suite.createModelPlan("Test Plan 4 (Collab)")
 	suite.createPlanCollaborator(planWithCollab, "CLAB", []models.TeamRole{models.TeamRoleEvaluation})
 
-	suite.createPlanCR(planWithCRTDLs, "Happy Happy Test", time.Now(), time.Now().Add(time.Hour*48), "Good CR", "This is a test")
-	suite.createPlanTDL(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good TDL", "This is a test")
+	// Create a plan that has DB (non-ECHIMP) CRs/TDLs
+	planWithDBCrAndTdl := suite.createModelPlan("Test Plan with DB CR and TDL")
+	suite.createPlanCR(planWithDBCrAndTdl, "Happy Happy Test", time.Now(), time.Now().Add(time.Hour*48), "Good CR", "This is a test")
+	suite.createPlanTDL(planWithDBCrAndTdl, "Happy Happy Test", time.Now(), "Good TDL", "This is a test")
 
 	// Get plan collection as CLAB
 	clabPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CLAB")
 	clabPrincipal.JobCodeASSESSMENT = false
 
 	// Assert that CLAB only sees 1 model plan with collab only filter
-	result, err := ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
+	result, err := ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly, true)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 1)
 
-	// Assert that CLAB sees all 4 model plans with include all filter
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
+	// Assert that CLAB sees all 5 model plans with include all filter
+	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, clabPrincipal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll, true)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 4)
+	suite.Len(result, 6)
 
-	// Assert that TEST only sees all 4 model plans with collab only filter (as they're a collaborator on all of them)
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly)
+	// Assert that TEST only sees all 5 model plans with collab only filter (as they're a collaborator on all of them)
+	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterCollabOnly, true)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 4)
+	suite.Len(result, 6)
 
-	// Assert that TEST sees all 4 model plans with include all filter
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll)
+	// Assert that TEST sees all 5 model plans with include all filter
+	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterIncludeAll, true)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 4)
+	suite.Len(result, 6)
 
-	// Assert that TEST sees all 1 model plan when CRDTL is selected
-	result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls)
+	// Assert that TEST sees all model plans with CR / TDLS (ECHIMP)
+	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls, true)
 	suite.NoError(err)
 	suite.NotNil(result)
-	suite.Len(result, 1)
+	suite.Len(result, len(eEChimpModelIDS))
+
+	// Assert that TEST sees all model plans with CR / TDLS (DB non-ECHIMP)
+	// TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
+	result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterWithCrTdls, false) // note the `false` param here
+	suite.NoError(err)
+	suite.NotNil(result)
+	suite.Len(result, 1) // only created 1 model plan
 
 	suite.Run("Models Approaching Clearance grabs models approaching clearance within 6 months", func() {
 		// Will show up, in date range
@@ -184,7 +196,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		)
 		suite.NoError(err)
 
-		result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterApproachingClearance)
+		result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterApproachingClearance, true)
 		suite.NoError(err)
 		if suite.NotNil(result) {
 			if suite.Len(result, 1) {
@@ -214,7 +226,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		suite.NoError(err)
 
 		// Assert that we see the additional model as approaching clearance now. Assert that the results are ordered from soonest, to latest
-		result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterApproachingClearance)
+		result, err = ModelPlanCollection(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterApproachingClearance, true)
 		suite.NoError(err)
 		if suite.NotNil(result) {
 			if suite.Len(result, 2) {

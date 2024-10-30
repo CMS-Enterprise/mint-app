@@ -1,4 +1,6 @@
 import {
+  GetEchimpCrandTdlDocument,
+  GetEchimpCrandTdlQuery,
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetModelPlansDocument,
@@ -10,11 +12,14 @@ import {
 
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
 type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
+export type EchimpCrAndTdlsType =
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const modelPlanData: GetModelPlansType = [
   {
+    __typename: 'ModelPlan',
     id: modelID,
     modelName: 'My plan',
     status: ModelStatus.PLAN_DRAFT,
@@ -48,19 +53,16 @@ const modelPlanData: GetModelPlansType = [
     },
     collaborators: [],
     discussions: [],
-    crs: [
+    echimpCRsAndTDLs: [
       {
-        __typename: 'PlanCR',
-        idNumber: 'CR 123'
-      }
-    ],
-    tdls: [
+        id: '123',
+        __typename: 'EChimpCR'
+      },
       {
-        __typename: 'PlanTDL',
-        idNumber: 'TDL 456'
+        id: '456',
+        __typename: 'EChimpTDL'
       }
-    ],
-    __typename: 'ModelPlan'
+    ]
   }
 ];
 
@@ -85,6 +87,7 @@ export const modelPlanCollectionMock = (
 
 const favoritesModelPlanData: GetFavoritesType = [
   {
+    __typename: 'ModelPlan',
     id: modelID,
     modelName: 'My plan',
     status: ModelStatus.PLAN_DRAFT,
@@ -99,31 +102,25 @@ const favoritesModelPlanData: GetFavoritesType = [
       __typename: 'PlanBasics'
     },
     collaborators: [],
-    crs: [
+    echimpCRsAndTDLs: [
       {
-        __typename: 'PlanCR',
-        idNumber: 'CR 123'
-      }
-    ],
-    tdls: [
+        id: '123',
+        __typename: 'EChimpCR'
+      },
       {
-        __typename: 'PlanTDL',
-        idNumber: 'TDL 456'
+        id: '456',
+        __typename: 'EChimpTDL'
       }
-    ],
-    __typename: 'ModelPlan'
+    ]
   }
 ];
 
-export const favoritesPlanCollectionMock = (
-  filter: ModelPlanFilter,
-  isMAC: boolean = false
-) => {
+export const favoritesPlanCollectionMock = (filter: ModelPlanFilter) => {
   return [
     {
       request: {
         query: GetFavoritesDocument,
-        variables: { filter, isMAC }
+        variables: { filter }
       },
       result: {
         data: {
@@ -133,3 +130,45 @@ export const favoritesPlanCollectionMock = (
     }
   ];
 };
+
+const echimpCRandTDLMockData: EchimpCrAndTdlsType[] = [
+  {
+    __typename: 'EChimpCR',
+    id: '123',
+    title: 'Echimp CR',
+    emergencyCrFlag: true,
+    sensitiveFlag: false,
+    crStatus: 'Open',
+    initiator: 'Initiator',
+    implementationDate: '2022-07-30T05:00:00Z',
+    relatedCrTdlNumbers: '123',
+    crSummary: {
+      __typename: 'TaggedContent',
+      rawContent: '<p>CR Summary</p>'
+    }
+  },
+  {
+    __typename: 'EChimpTDL',
+    id: '456',
+    title: 'Echimp TDL',
+    issuedDate: '2022-07-30T05:00:00Z'
+  }
+];
+
+export const echimpCRsAndTDLsMock = [
+  {
+    request: {
+      query: GetEchimpCrandTdlDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          echimpCRsAndTDLs: echimpCRandTDLMockData
+        }
+      }
+    }
+  }
+];

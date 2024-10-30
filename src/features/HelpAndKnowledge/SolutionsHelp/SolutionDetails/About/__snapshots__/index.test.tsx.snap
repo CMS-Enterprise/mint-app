@@ -174,16 +174,17 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
         </h4>
         <span>
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -378,16 +379,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
         </h4>
         <span>
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -1668,16 +1670,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
       </div>
       <span>
         <button
-          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+          class="usa-button usa-button--unstyled"
           data-testid="button"
           type="button"
         >
           <span
-            class="position-relative"
+            class="display-flex flex-align-center"
+            style="column-gap: 0.25rem;"
           >
             View on SharePoint what is needed to onboard Models to the IPC Portal
             <svg
-              class="usa-icon margin-left-05 position-absolute"
+              class="usa-icon"
               focusable="false"
               height="1em"
               role="img"
@@ -1856,16 +1859,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           >
             API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a 
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 data standard for emergency services.
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -1940,16 +1944,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           class="text-pre-wrap "
         >
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               See a video sample.
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -1985,16 +1990,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
             <span>
               Participant feedback dashboards that supply curated reports to participants based on CMS data (
               <button
-                class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                class="usa-button usa-button--unstyled"
                 data-testid="button"
                 type="button"
               >
                 <span
-                  class="position-relative"
+                  class="display-flex flex-align-center"
+                  style="column-gap: 0.25rem;"
                 >
                   see a video sample
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -2695,16 +2701,17 @@ Model Space offers model teams and their contractors templates or Databricks not
           class="text-pre-wrap "
         >
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               View more information about Model Space on Confluence
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2808,16 +2815,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 Quality Vertical Model Resources on SharePoint
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2836,16 +2844,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 Measure Management System (MMS) Tools
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2864,16 +2873,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 Quality Payment Program
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3048,16 +3058,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class=""
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View an ARS screenshot
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3147,16 +3158,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View sample 1
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3175,16 +3187,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View sample 2
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3303,16 +3316,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class=""
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View an LOI sample
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3481,16 +3495,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View sample 1
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3509,16 +3524,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class="list-item"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View sample 2
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3664,16 +3680,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             class=""
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 View an RFA screenshot
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -3707,16 +3724,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
         </h4>
         <span>
           <button
-            class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+            class="usa-button usa-button--unstyled"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3775,16 +3793,17 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
             class="list-style-none"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
               <span
-                class="position-relative"
+                class="display-flex flex-align-center"
+                style="column-gap: 0.25rem;"
               >
                 Go to Fee For Service Change Request Resource Center
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon"
                   focusable="false"
                   height="1em"
                   role="img"
