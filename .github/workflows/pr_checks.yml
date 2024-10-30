@@ -27,4 +27,4 @@ jobs:
           # This also means we can create new TODO comments in feature branches and potentially close them in other PRs/branches
           # The main downside is that issues will disappear before they make it to `main`
           CLOSE_ON_SAME_BRANCH: false
-          DRY_RUN: true
+          DRY_RUN: false
