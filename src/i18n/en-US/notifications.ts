@@ -46,6 +46,10 @@ const notifications = {
       NEW_MODEL_PLAN: {
         text: ' created a Model Plan: {{-modelName}}.',
         cta: 'View Model Plan'
+      },
+      DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: {
+        text: ' marked the data exchange approach complete for {{-modelName}}.',
+        cta: 'View data exchange approach'
       }
     },
     dailyDigest: {
