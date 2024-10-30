@@ -154,6 +154,14 @@ export const activityText = (data: MetaDataType) => {
       />
     );
   }
+  if (isDataExchangeApproach(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
 
   return '';
 };
@@ -239,6 +247,14 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isDataExchangeApproach(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );

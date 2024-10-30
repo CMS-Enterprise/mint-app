@@ -138,16 +138,9 @@ export default gql(/* GraphQL */ `
               ... on PlanDataExchangeApproachMarkedCompleteActivityMeta {
                 version
                 type
-                dataExchangeApproachID
-                dataExchangeApproach {
-                  id
-                }
                 modelPlan {
                   id
-                }
-                markedCompleteBy
-                markedCompleteByUserAccount {
-                  id
+                  modelName
                 }
               }
             }
