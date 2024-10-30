@@ -702,10 +702,16 @@ export type MtoMilestone = {
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
   category: MtoCategory;
   commonMilestone?: Maybe<CommonMilestone>;
-  commonMilestoneID?: Maybe<Scalars['UUID']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
-  isDraftMilestone: Scalars['Boolean']['output'];
+  isDraft: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoCommonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
@@ -716,7 +722,7 @@ export type MtoMilestone = {
 
 export type MtoMilestoneChanges = {
   facilitatedBy?: InputMaybe<MtoFacilitator>;
-  isDraftMilestone?: InputMaybe<Scalars['Boolean']['input']>;
+  isDraft?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   needBy?: InputMaybe<Scalars['Time']['input']>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
@@ -740,8 +746,14 @@ export type MtoSolution = {
   addedFromSolutionLibrary: Scalars['Boolean']['output'];
   commonSolution?: Maybe<CommonSolution>;
   commonSolutionID?: Maybe<Scalars['UUID']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;

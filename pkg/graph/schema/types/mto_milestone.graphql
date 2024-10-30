@@ -12,12 +12,20 @@ type MTOMilestone {
   # DB Fields
   id: UUID!
   name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  mtoCommonMilestoneID: UUID
   facilitatedBy: MTOFacilitator
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator
-  isDraftMilestone: Boolean!
-  commonMilestoneID: UUID
+  isDraft: Boolean!
+
+  #Meta Data
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 
   # Custom Resolvers
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
@@ -33,7 +41,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   needBy: Time
   status: MTOMilestoneStatus 
   riskIndicator: MTORiskIndicator
-  isDraftMilestone: Boolean
+  isDraft: Boolean
 }
 
 extend type Mutation {

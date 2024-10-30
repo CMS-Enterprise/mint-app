@@ -25,6 +25,14 @@ type MTOSolution {
   commonSolutionID: UUID
   solutionType: MTOSolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
 
+  #Meta Data
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
   # Custom Resolvers
   relatedMilestones: [MTOMilestone!]! # Can be empty, since you can have a solution with no milestones
   addedFromSolutionLibrary: Boolean!

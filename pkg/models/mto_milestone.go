@@ -21,6 +21,7 @@ type MTOMilestone struct {
 	Name                       *string            `json:"name" db:"name"`
 	mtoCommonMilestoneRelation                    //TODO (mto) maybe we shouldn't have an mto relation here? maybe just add the field?
 	MTOCategoryID              *uuid.UUID         `json:"MTOCategoryID" db:"mto_category_id"`
+	FacilitatedBy              *MTOFacilitator    `json:"facilitatedBy" db:"facilitated_by"`
 	NeedBy                     *time.Time         `json:"needBy" db:"need_by"`
 	Status                     MTOMilestoneStatus `json:"status" db:"status"`
 	RiskIndicator              MTORiskIndicator   `json:"riskIndicator" db:"risk_indicator"`
@@ -38,5 +39,6 @@ func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneID *uuid.
 		mtoCommonMilestoneRelation: NewMTOCommonMilestoneRelation(commonMilestoneID),
 		IsDraft:                    true,
 		RiskIndicator:              MTORiskIndicatorOnTrack,
+		Status:                     MTMNotStarted,
 	}
 }

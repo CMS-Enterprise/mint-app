@@ -68,16 +68,22 @@ type LaunchDarklySettings struct {
 }
 
 type MTOSolution struct {
-	ID                       uuid.UUID                `json:"id"`
-	Name                     string                   `json:"name"`
-	FacilitatedBy            *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	Status                   MTOSolutionStatus        `json:"status"`
-	RiskIndicator            *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
-	CommonSolutionID         *uuid.UUID               `json:"commonSolutionID,omitempty"`
-	SolutionType             MTOSolutionType          `json:"solutionType"`
-	RelatedMilestones        []*models.MTOMilestone   `json:"relatedMilestones"`
-	AddedFromSolutionLibrary bool                     `json:"addedFromSolutionLibrary"`
-	CommonSolution           *CommonSolution          `json:"commonSolution,omitempty"`
+	ID                       uuid.UUID                   `json:"id"`
+	Name                     string                      `json:"name"`
+	FacilitatedBy            *models.MTOFacilitator      `json:"facilitatedBy,omitempty"`
+	Status                   MTOSolutionStatus           `json:"status"`
+	RiskIndicator            *models.MTORiskIndicator    `json:"riskIndicator,omitempty"`
+	CommonSolutionID         *uuid.UUID                  `json:"commonSolutionID,omitempty"`
+	SolutionType             MTOSolutionType             `json:"solutionType"`
+	CreatedBy                uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount     authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts               time.Time                   `json:"createdDts"`
+	ModifiedBy               *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount    *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts              *time.Time                  `json:"modifiedDts,omitempty"`
+	RelatedMilestones        []*models.MTOMilestone      `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool                        `json:"addedFromSolutionLibrary"`
+	CommonSolution           *CommonSolution             `json:"commonSolution,omitempty"`
 }
 
 // Represents model plan base translation data

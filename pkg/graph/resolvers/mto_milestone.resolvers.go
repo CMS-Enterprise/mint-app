@@ -16,21 +16,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// FacilitatedBy is the resolver for the facilitatedBy field.
-func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) (*models.MTOFacilitator, error) {
-	panic(fmt.Errorf("not implemented: FacilitatedBy - facilitatedBy"))
-}
-
-// IsDraftMilestone is the resolver for the isDraftMilestone field.
-func (r *mTOMilestoneResolver) IsDraftMilestone(ctx context.Context, obj *models.MTOMilestone) (bool, error) {
-	panic(fmt.Errorf("not implemented: IsDraftMilestone - isDraftMilestone"))
-}
-
-// CommonMilestoneID is the resolver for the commonMilestoneID field.
-func (r *mTOMilestoneResolver) CommonMilestoneID(ctx context.Context, obj *models.MTOMilestone) (*uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: CommonMilestoneID - commonMilestoneID"))
-}
-
 // AddedFromMilestoneLibrary is the resolver for the addedFromMilestoneLibrary field.
 func (r *mTOMilestoneResolver) AddedFromMilestoneLibrary(ctx context.Context, obj *models.MTOMilestone) (bool, error) {
 	panic(fmt.Errorf("not implemented: AddedFromMilestoneLibrary - addedFromMilestoneLibrary"))
