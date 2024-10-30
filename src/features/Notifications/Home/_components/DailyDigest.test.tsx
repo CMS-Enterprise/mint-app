@@ -45,7 +45,8 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
         __typename: 'AnalyzedPlanSections',
         updated: [TableName.PLAN_BASICS],
         readyForReview: [],
-        readyForClearance: []
+        readyForClearance: [],
+        dataExchangeApproachMarkedComplete: true
       },
       modelLeads: {
         __typename: 'AnalyzedModelLeads',
@@ -95,6 +96,9 @@ describe('Daily Digest in Notifications', () => {
       expect(
         screen.getByText(/This Model Plan is complete/i)
       ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Data exchange approach is complete/i)
+      ).toBeInTheDocument();
       expect(screen.getByText(/Updates to Model Basics/i)).toBeInTheDocument();
       expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
       expect(
@@ -123,6 +127,9 @@ describe('Daily Digest in Notifications', () => {
       expect(screen.getByText(/previously Old Name/i)).toBeInTheDocument();
       expect(
         screen.getByText(/MINT Doe has been added as a model lead/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Data exchange approach is complete/i)
       ).toBeInTheDocument();
       expect(
         screen.getByText(/This Model Plan is complete/i)
