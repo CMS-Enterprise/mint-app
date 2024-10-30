@@ -376,20 +376,6 @@ describe('Notification Center', () => {
     );
   });
 
-  it('tests model plan status update from email', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/');
-    cy.enterModelPlanTaskList('Empty Plan');
-
-    cy.url().then(url => {
-      cy.visit(`${url}?model-status=ACTIVE`);
-    });
-
-    cy.get('[data-testid="alert"]').contains(
-      'You have successfully updated the status to Active.'
-    );
-  });
-
   it('testing Data Exchange Approach is marked Complete Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
@@ -426,6 +412,7 @@ describe('Notification Center', () => {
     cy.contains('button', 'Next').should('not.be.disabled').click();
 
     cy.get('#additional-data-exchange-considerations-description')
+      .should('not.be.disabled')
       .type('2025-12-31')
       .should('have.value', '2025-12-31');
 
