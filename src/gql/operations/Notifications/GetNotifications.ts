@@ -122,6 +122,7 @@ export default gql(/* GraphQL */ `
                       updated
                       readyForReview
                       readyForClearance
+                      dataExchangeApproachMarkedComplete
                     }
                     modelLeads {
                       added {
