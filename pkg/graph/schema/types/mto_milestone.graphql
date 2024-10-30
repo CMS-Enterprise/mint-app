@@ -17,7 +17,7 @@ type MTOMilestone {
   facilitatedBy: MTOFacilitator
   needBy: Time
   status: MTOMilestoneStatus!
-  riskIndicator: MTORiskIndicator
+  riskIndicator: MTORiskIndicator!
   isDraft: Boolean!
 
   #Meta Data

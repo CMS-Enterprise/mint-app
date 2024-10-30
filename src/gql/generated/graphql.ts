@@ -715,7 +715,7 @@ export type MtoMilestone = {
   mtoCommonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
-  riskIndicator?: Maybe<MtoRiskIndicator>;
+  riskIndicator: MtoRiskIndicator;
   solutions: Array<MtoSolution>;
   status: MtoMilestoneStatus;
   subCategory: MtoSubcategory;
