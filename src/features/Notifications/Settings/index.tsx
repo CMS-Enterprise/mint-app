@@ -15,6 +15,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
+  DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
@@ -99,6 +100,15 @@ const NotificationSettings = () => {
       // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
       changes.datesChangedNotificationType =
         DatesChangedNotificationType.ALL_MODELS;
+    }
+    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
+    if (
+      !changes.dataExchangeApproachMarkedCompleteNotificationType &&
+      changes.dataExchangeApproachMarkedComplete?.length
+    ) {
+      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+      changes.dataExchangeApproachMarkedCompleteNotificationType =
+        DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS;
     }
 
     if (dirtyInputs.taggedInDiscussion) {
