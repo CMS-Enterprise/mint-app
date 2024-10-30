@@ -445,6 +445,8 @@ func (s *Seeder) SeedData() {
 			"highLevelNote":   "Some high level note",
 		},
 	)
+
+	s.seedModelPlanWithMTOData("Model Plan for MTO testing", "MINT", &mtoModelPlanUUID)
 }
 
 func (s *Seeder) SetDefaultUserViews() {
