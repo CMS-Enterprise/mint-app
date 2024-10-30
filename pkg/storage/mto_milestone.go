@@ -38,7 +38,7 @@ func MTOMilestoneGetByModelPlanIDAndCategoryIDLoader(np sqlutils.NamedPreparer, 
 		"paramTableJSON": jsonParam,
 	}
 
-	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByModelPlanIDLoader, arg)
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByModelPlanIDAndCategoryIDLoader, arg)
 	if err != nil {
 		return nil, err
 	}

@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -22,7 +21,11 @@ func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTO
 
 // Milestones is the resolver for the milestones field.
 func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*models.MTOMilestone, error) {
-	panic(fmt.Errorf("not implemented: Milestones - milestones"))
+	var categoryID *uuid.UUID
+	if !obj.IsUncategorized() {
+		categoryID = &obj.ID
+	}
+	return MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx, obj.ModelPlanID, categoryID)
 }
 
 // CreateMTOCategory is the resolver for the createMTOCategory field.

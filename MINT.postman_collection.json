@@ -2950,7 +2950,74 @@
 							"name": "NewMTOSubcategory Copy",
 							"request": {
 								"method": "POST",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Milestones",
+					"item": [
+						{
+							"name": "NewMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOMilestone",
+											"",
+											"mtoMilestoneID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoMilestoneID\", mtoMilestoneID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOMilestone {\ncreateMTOMilestone(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Milestone\"\n# commonMilestoneID: \"{{commonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCommonMilestoneID\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTOCategories And Milestones",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                        mtoCommonMilestoneID\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
 							},
 							"response": []
 						}
@@ -3115,6 +3182,10 @@
 		},
 		{
 			"key": "mtoSubcategoryID",
+			"value": ""
+		},
+		{
+			"key": "mtoMilestoneID",
 			"value": ""
 		}
 	]

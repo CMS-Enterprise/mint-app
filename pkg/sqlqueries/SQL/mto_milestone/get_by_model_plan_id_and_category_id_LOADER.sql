@@ -5,8 +5,8 @@ WITH QUERIED_IDS AS (
         mto_category_id
     FROM
         JSON_TO_RECORDSET(:paramTableJSON)
-        AS x("model_plan_id" UUID, "mto_category_id" BOOLEAN ) --noqa
-),
+        AS x("model_plan_id" UUID, "mto_category_id" UUID ) --noqa
+)
 
 SELECT
     mto_milestone.id,
@@ -24,4 +24,9 @@ SELECT
     mto_milestone.modified_by,
     mto_milestone.modified_dts
 FROM mto_milestone
-INNER JOIN QUERIED_IDS AS qIDs ON mto_milestone.model_plan_id = qIDs.model_plan_id AND mto_milestone.mto_category_id = qIDs.mto_category_id;
+INNER JOIN QUERIED_IDS AS qIDs ON
+    mto_milestone.model_plan_id = qIDs.model_plan_id 
+    AND (
+        mto_milestone.mto_category_id = qIDs.mto_category_id -- match null values
+        OR (mto_milestone.mto_category_id IS NULL AND qIDs.mto_category_id IS NULL)
+    );
