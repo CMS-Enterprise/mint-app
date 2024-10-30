@@ -15,8 +15,9 @@ import (
 // mtoMilestoneLoaders is a struct that holds LoaderWrappers related to MTO Milestones
 type mtoMilestoneLoaders struct {
 
-	// ByModelPlanID Gets a list of mto Milestone records at the parent level associated with a model plan by the supplied model plan id.
-	ByModelPlanID                 LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
+	// ByModelPlanID Gets a list of mto Milestone records associated with a model plan by the supplied model plan id.
+	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
+	// ByModelPlanIDAndMTOCategoryID Gets a list of mto Milestone records associated with a model plan a specific category
 	ByModelPlanIDAndMTOCategoryID LoaderWrapper[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone]
 	// TODO: (mto) do we need to get by ID ever? By anything else?
 }
@@ -59,9 +60,15 @@ func batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID(ctx context.Context, keys
 		return errorPerEachKey[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone](keys, err)
 	}
 	getKeyFunc := func(data *models.MTOMilestone) storage.MTOMilestoneByModelPlanAndCategoryKey {
+		var categoryID uuid.UUID
+
+		if data.MTOCategoryID != nil {
+			categoryID = *data.MTOCategoryID
+		}
+
 		return storage.MTOMilestoneByModelPlanAndCategoryKey{
 			ModelPlanID:   data.ModelPlanID,
-			MTOCategoryID: data.MTOCategoryID,
+			MTOCategoryID: categoryID,
 		}
 	}
 

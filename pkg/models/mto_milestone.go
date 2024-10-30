@@ -31,12 +31,13 @@ type MTOMilestone struct {
 }
 
 // NewMTOMilestone returns a new mtoMileMTOMilestone object. A Nil parentID means that this is a top level MileMTOMilestone, and not a subMileMTOMilestone
-func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneID *uuid.UUID, modelPlanID uuid.UUID) *MTOMilestone {
+func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneID *uuid.UUID, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{
 		Name:                       name,
 		baseStruct:                 NewBaseStruct(createdBy),
 		modelPlanRelation:          NewModelPlanRelation(modelPlanID),
 		mtoCommonMilestoneRelation: NewMTOCommonMilestoneRelation(commonMilestoneID),
+		MTOCategoryID:              mtoCategoryID,
 		IsDraft:                    true,
 		RiskIndicator:              MTORiskIndicatorOnTrack,
 		Status:                     MTMNotStarted,

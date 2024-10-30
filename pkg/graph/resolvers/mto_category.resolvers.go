@@ -21,9 +21,14 @@ func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTO
 
 // Milestones is the resolver for the milestones field.
 func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*models.MTOMilestone, error) {
-	var categoryID *uuid.UUID
-	if !obj.IsUncategorized() {
-		categoryID = &obj.ID
+	var categoryID uuid.UUID
+	if obj.IsUncategorized() {
+		// We show everything as a subcategory, if it is uncategorized, but has a parent id, it belongs to the parent cat
+		if obj.ParentID != nil {
+			categoryID = *obj.ParentID
+		}
+	} else {
+		categoryID = obj.ID
 	}
 	return MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx, obj.ModelPlanID, categoryID)
 }

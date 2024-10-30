@@ -45,7 +45,7 @@ func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOM
 func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneID *uuid.UUID, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneID, modelPlanID)
+	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneID, modelPlanID, mtoCategoryID)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.

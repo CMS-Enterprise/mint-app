@@ -18,12 +18,13 @@ func MTOMilestoneCreate(ctx context.Context, logger *zap.Logger, principal authe
 	name *string,
 	commonMilestoneID *uuid.UUID,
 	modelPlanID uuid.UUID,
+	mtoCategoryID *uuid.UUID,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	Milestone := models.NewMTOMilestone(principalAccount.ID, name, commonMilestoneID, modelPlanID)
+	Milestone := models.NewMTOMilestone(principalAccount.ID, name, commonMilestoneID, modelPlanID, mtoCategoryID)
 
 	err := BaseStructPreCreate(logger, Milestone, principal, store, true)
 	if err != nil {
@@ -60,7 +61,7 @@ func MTOMilestoneGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UU
 }
 
 // MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER implements resolver logic to get all MTO milestones by a model plan ID and MTO category ID using a data loader
-func MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx context.Context, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) ([]*models.MTOMilestone, error) {
+func MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx context.Context, modelPlanID uuid.UUID, mtoCategoryID uuid.UUID) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.ByModelPlanIDAndMTOCategoryID.Load(ctx,
 		storage.MTOMilestoneByModelPlanAndCategoryKey{
 			ModelPlanID:   modelPlanID,

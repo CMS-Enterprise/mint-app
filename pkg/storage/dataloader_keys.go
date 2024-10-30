@@ -15,5 +15,5 @@ type MTOMilestoneByModelPlanAndCategoryKey struct {
 	// ModelPlanID is the model plan the milestone is in reference to
 	ModelPlanID uuid.UUID `json:"model_plan_id"`
 	// MTOCategoryID is the category the milestone is associated with. Note, this can be null
-	MTOCategoryID *uuid.UUID `json:"mto_category_id"`
+	MTOCategoryID uuid.UUID `json:"mto_category_id"`
 }
