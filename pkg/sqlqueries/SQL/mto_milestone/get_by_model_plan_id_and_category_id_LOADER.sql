@@ -28,5 +28,5 @@ INNER JOIN QUERIED_IDS AS qIDs ON
     mto_milestone.model_plan_id = qIDs.model_plan_id 
     AND (
         mto_milestone.mto_category_id = qIDs.mto_category_id -- match null values
-        OR (mto_milestone.mto_category_id IS NULL AND qIDs.mto_category_id IS NULL)
+        OR (mto_milestone.mto_category_id IS NULL AND qIDs.mto_category_id = '00000000-0000-0000-0000-000000000000')
     );
