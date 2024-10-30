@@ -25,7 +25,7 @@ func (r *modelsToOperationMatrixResolver) CommonMilestones(ctx context.Context, 
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.Solution, error) {
+func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.MTOSolution, error) {
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 

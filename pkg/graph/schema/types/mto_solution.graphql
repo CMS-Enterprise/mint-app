@@ -1,0 +1,32 @@
+# TODO (mto) Verify all these. Zoë said they should match previous solution statuses
+enum MTOSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+}
+
+
+enum MTOSolutionType {
+  IT_SYSTEM
+  CONTRACTOR
+  OTHER
+}
+
+# MTOSolution represents a Solution that has been added to a Model Plan's MTO
+type MTOSolution {
+  # DB Fields
+  id: UUID!
+  name: String! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  facilitatedBy: MTOFacilitator
+  status: MTOSolutionStatus!
+  riskIndicator: MTORiskIndicator
+  commonSolutionID: UUID
+  solutionType: MTOSolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+
+  # Custom Resolvers
+  relatedMilestones: [MTOMilestone!]! # Can be empty, since you can have a solution with no milestones
+  addedFromSolutionLibrary: Boolean!
+  commonSolution: CommonSolution
+}

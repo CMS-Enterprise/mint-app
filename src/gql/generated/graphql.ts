@@ -697,22 +697,8 @@ export enum MtoFacilitator {
   SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
 }
 
-export enum MtoRiskIndicator {
-  AT_RISK = 'AT_RISK',
-  OFF_TRACK = 'OFF_TRACK',
-  ON_TRACK = 'ON_TRACK'
-}
-
-export type MtoSubcategory = {
-  __typename: 'MTOSubcategory';
-  id: Scalars['UUID']['output'];
-  isUncategorized: Scalars['Boolean']['output'];
-  milestones: Array<Milestone>;
-  name: Scalars['String']['output'];
-};
-
-export type Milestone = {
-  __typename: 'Milestone';
+export type MtoMilestone = {
+  __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
   category: MtoCategory;
   commonMilestone?: Maybe<CommonMilestone>;
@@ -723,15 +709,58 @@ export type Milestone = {
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
-  solutions: Array<Solution>;
-  status: MilestoneStatus;
+  solutions: Array<MtoSolution>;
+  status: MtoMilestoneStatus;
   subCategory: MtoSubcategory;
 };
 
-export enum MilestoneStatus {
-  MILESTONE_STATUS_ONE = 'MILESTONE_STATUS_ONE',
-  MILESTONE_STATUS_TWO = 'MILESTONE_STATUS_TWO'
+export enum MtoMilestoneStatus {
+  COMPLETED = 'COMPLETED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_STARTED = 'NOT_STARTED'
 }
+
+export enum MtoRiskIndicator {
+  AT_RISK = 'AT_RISK',
+  OFF_TRACK = 'OFF_TRACK',
+  ON_TRACK = 'ON_TRACK'
+}
+
+export type MtoSolution = {
+  __typename: 'MTOSolution';
+  addedFromSolutionLibrary: Scalars['Boolean']['output'];
+  commonSolution?: Maybe<CommonSolution>;
+  commonSolutionID?: Maybe<Scalars['UUID']['output']>;
+  facilitatedBy?: Maybe<MtoFacilitator>;
+  id: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
+  relatedMilestones: Array<MtoMilestone>;
+  riskIndicator?: Maybe<MtoRiskIndicator>;
+  solutionType: MtoSolutionType;
+  status: MtoSolutionStatus;
+};
+
+export enum MtoSolutionStatus {
+  BACKLOG = 'BACKLOG',
+  COMPLETED = 'COMPLETED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_STARTED = 'NOT_STARTED',
+  ONBOARDING = 'ONBOARDING'
+}
+
+export enum MtoSolutionType {
+  CONTRACTOR = 'CONTRACTOR',
+  IT_SYSTEM = 'IT_SYSTEM',
+  OTHER = 'OTHER'
+}
+
+export type MtoSubcategory = {
+  __typename: 'MTOSubcategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  milestones: Array<MtoMilestone>;
+  name: Scalars['String']['output'];
+};
 
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
@@ -937,7 +966,7 @@ export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
   commonMilestones: Array<CommonMilestone>;
-  solutions: Array<Solution>;
+  solutions: Array<MtoSolution>;
 };
 
 export enum MonitoringFileType {
@@ -3566,31 +3595,6 @@ export type SendFeedbackEmailInput = {
   systemEasyToUse?: InputMaybe<EaseOfUse>;
   systemEasyToUseOther?: InputMaybe<Scalars['String']['input']>;
 };
-
-export type Solution = {
-  __typename: 'Solution';
-  addedFromSolutionLibrary: Scalars['Boolean']['output'];
-  commonSolution?: Maybe<CommonSolution>;
-  commonSolutionID?: Maybe<Scalars['UUID']['output']>;
-  facilitatedBy?: Maybe<MtoFacilitator>;
-  id: Scalars['UUID']['output'];
-  name: Scalars['String']['output'];
-  relatedMilestones: Array<Milestone>;
-  riskIndicator?: Maybe<MtoRiskIndicator>;
-  solutionType: SolutionType;
-  status: SolutionStatus;
-};
-
-export enum SolutionStatus {
-  SOLN_STATUS_ONE = 'SOLN_STATUS_ONE',
-  SOLN_STATUS_TWO = 'SOLN_STATUS_TWO'
-}
-
-export enum SolutionType {
-  CONTRACTOR = 'CONTRACTOR',
-  IT_SYSTEM = 'IT_SYSTEM',
-  OTHER = 'OTHER'
-}
 
 export enum SortDirection {
   ASC = 'ASC',
