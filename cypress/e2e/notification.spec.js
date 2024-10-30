@@ -173,12 +173,7 @@ describe('Notification Center', () => {
     cy.enterModelPlanCollaborationArea('Empty Plan');
 
     // Add SF13 as a collaborator
-    // cy.contains('button', 'Add a team member').click();
     cy.get('[data-testid="add-collaborator"]').click();
-
-    // cy.get('a[href*="/collaboration-area/collaborators?view=manage"]').click();
-
-    // cy.contains('a', 'Add team member').click();
 
     cy.get('#react-select-model-team-cedar-contact-input')
       .click()
