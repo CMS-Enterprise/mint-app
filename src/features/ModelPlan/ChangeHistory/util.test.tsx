@@ -86,9 +86,9 @@ describe('util.tsx', () => {
   // Test for isTableWithStatus
   it('isTableWithStatus', () => {
     expect(isTableWithStatus(TableName.PLAN_BASICS)).toBe(true);
-    expect(
-      isTableWithStatus(TableName.OPERATIONAL_SOLUTION_SUBTASK)
-    ).toBe(false);
+    expect(isTableWithStatus(TableName.OPERATIONAL_SOLUTION_SUBTASK)).toBe(
+      false
+    );
   });
 
   // Test for parseArray
