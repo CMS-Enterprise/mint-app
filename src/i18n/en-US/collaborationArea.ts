@@ -1,5 +1,3 @@
-import { start } from 'repl';
-
 const collaborationArea = {
   home: 'Home',
   heading: 'Model collaboration area',
