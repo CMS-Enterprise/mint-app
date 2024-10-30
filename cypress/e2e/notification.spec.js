@@ -276,7 +276,7 @@ describe('Notification Center', () => {
     );
   });
 
-  it.only('testing Dates Changed Notification', () => {
+  it('testing Dates Changed Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
@@ -384,6 +384,91 @@ describe('Notification Center', () => {
 
     cy.get('[data-testid="alert"]').contains(
       'You have successfully updated the status to Active.'
+    );
+  });
+
+  it('testing Data Exchange Approach is marked Complete Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the new model plan in-app checkbox
+    cy.get(
+      '[data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"]'
+    )
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get(
+      '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
+    )
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to start a new model plan
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.enterModelPlanCollaborationArea('Empty Plan');
+    cy.contains('button', 'Start approach').click();
+    cy.contains('button', 'Next').should('not.be.disabled').click();
+    cy.contains('button', 'Next').should('not.be.disabled').click();
+    cy.contains('button', 'Next').should('not.be.disabled').click();
+
+    cy.get('#additional-data-exchange-considerations-description')
+      .type('2025-12-31')
+      .should('have.value', '2025-12-31');
+
+    cy.get('#isDataExchangeApproachComplete-true')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains(
+      'button',
+      'Save and return to model collaboration area'
+    ).click();
+
+    cy.get('[data-testid="navmenu__notification"]').click();
+    cy.url().should('include', '/notifications');
+    cy.get('[data-testid="spinner"]').should('not.exist');
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'MINT Doe marked the data exchange approach complete for Empty Plan.'
+    );
+
+    cy.contains('button', 'View data exchange approach').click();
+
+    cy.url().should('include', '/read-view/data-exchange-approach');
+
+    // Unsubscribe via email link
+    cy.visit(
+      '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
+    );
+
+    cy.get(
+      '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
+    ).should('be.not.checked');
+
+    cy.get('[data-testid="success-alert"]').contains(
+      'You have successfully unsubscribed from email notifications when a data exchange approach is completed.'
+    );
+
+    cy.visit(
+      '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
+    );
+
+    cy.get('[data-testid="error-alert"]').contains(
+      'You are already unsubscribed from email notifications when a data exchange approach is completed.'
     );
   });
 });
