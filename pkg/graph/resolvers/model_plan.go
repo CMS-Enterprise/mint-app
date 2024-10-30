@@ -356,7 +356,7 @@ func ModelPlansWithEchimpCRAndTDLS(echimpS3Client *s3.S3Client, viperConfig *vip
 }
 
 // ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
+func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter, echimpEnabledFlag bool) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 	var err error
 	switch filter {
@@ -365,7 +365,12 @@ func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, 
 	case model.ModelPlanFilterCollabOnly:
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
-		modelPlans, err = ModelPlansWithEchimpCRAndTDLS(echimpS3Client, viperConfig, logger, store)
+		// TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
+		if echimpEnabledFlag {
+			modelPlans, err = ModelPlansWithEchimpCRAndTDLS(echimpS3Client, viperConfig, logger, store)
+		} else {
+			modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+		}
 	case model.ModelPlanFilterFavorited:
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterApproachingClearance:
