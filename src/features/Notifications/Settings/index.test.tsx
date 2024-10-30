@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetNotificationSettingsDocument,
+  GetNotificationSettingsQuery,
   UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
 import setup from 'tests/util';
@@ -11,6 +12,46 @@ import setup from 'tests/util';
 import MessageProvider from 'contexts/MessageContext';
 
 import NotificationSettings from '.';
+
+type NotificationPerferenceType =
+  GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
+
+const notificationPreferences: NotificationPerferenceType = {
+  __typename: 'UserNotificationPreferences',
+  id: '123',
+  dailyDigestComplete: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  addedAsCollaborator: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  taggedInDiscussion: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  taggedInDiscussionReply: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  newDiscussionReply: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  modelPlanShared: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  newModelPlan: [],
+  datesChanged: [],
+  datesChangedNotificationType: null,
+  dataExchangeApproachMarkedComplete: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
+  dataExchangeApproachMarkedCompleteNotificationType: null
+};
 
 const notificationsSettingsMock = [
   {
@@ -20,36 +61,7 @@ const notificationsSettingsMock = [
     result: {
       data: {
         currentUser: {
-          notificationPreferences: {
-            id: '123',
-            dailyDigestComplete: [
-              UserNotificationPreferenceFlag.EMAIL,
-              UserNotificationPreferenceFlag.IN_APP
-            ],
-            addedAsCollaborator: [
-              UserNotificationPreferenceFlag.EMAIL,
-              UserNotificationPreferenceFlag.IN_APP
-            ],
-            taggedInDiscussion: [
-              UserNotificationPreferenceFlag.EMAIL,
-              UserNotificationPreferenceFlag.IN_APP
-            ],
-            taggedInDiscussionReply: [
-              UserNotificationPreferenceFlag.EMAIL,
-              UserNotificationPreferenceFlag.IN_APP
-            ],
-            newDiscussionReply: [
-              UserNotificationPreferenceFlag.EMAIL,
-              UserNotificationPreferenceFlag.IN_APP
-            ],
-            modelPlanShared: [
-              UserNotificationPreferenceFlag.EMAIL,
-              UserNotificationPreferenceFlag.IN_APP
-            ],
-            newModelPlan: [],
-            datesChanged: [],
-            datesChangedNotificationType: null
-          }
+          notificationPreferences
         }
       }
     }
@@ -87,7 +99,7 @@ describe('Notification Settings Page', () => {
         screen.getByTestId('notification-setting-email-datesChanged')
       ).not.toBeChecked();
       expect(
-        screen.getByTestId('notification-setting-whichModel')
+        screen.getByTestId('notification-setting-whichModel-datesChanged')
       ).toBeDisabled();
     });
 
@@ -114,7 +126,7 @@ describe('Notification Settings Page', () => {
         screen.getByTestId('notification-setting-email-datesChanged')
       ).toBeChecked();
       expect(
-        screen.getByTestId('notification-setting-whichModel')
+        screen.getByTestId('notification-setting-whichModel-datesChanged')
       ).not.toBeDisabled();
     });
   });

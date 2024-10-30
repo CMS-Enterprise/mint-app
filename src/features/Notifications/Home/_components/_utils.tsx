@@ -10,6 +10,7 @@ import {
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
+  PlanDataExchangeApproachMarkedCompleteActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta
 } from 'gql/generated/graphql';
@@ -22,7 +23,8 @@ type MetaDataType =
   | ModelPlanSharedActivityMeta
   | AddedAsCollaboratorMeta
   | NewModelPlanActivityMeta
-  | DatesChangedActivityMeta;
+  | DatesChangedActivityMeta
+  | PlanDataExchangeApproachMarkedCompleteActivityMeta;
 
 // Type guard to check union type
 export const isTaggedInDiscussion = (
@@ -79,6 +81,15 @@ export const isNewModelPlan = (
 ): data is NewModelPlanActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewModelPlanActivityMeta';
+};
+
+export const isDataExchangeApproach = (
+  data: MetaDataType
+): data is PlanDataExchangeApproachMarkedCompleteActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return (
+    data.__typename === 'PlanDataExchangeApproachMarkedCompleteActivityMeta'
+  );
 };
 
 export const activityText = (data: MetaDataType) => {
@@ -139,6 +150,14 @@ export const activityText = (data: MetaDataType) => {
     return (
       <Trans
         i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+  if (isDataExchangeApproach(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -228,6 +247,14 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isDataExchangeApproach(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );

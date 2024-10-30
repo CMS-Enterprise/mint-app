@@ -135,6 +135,14 @@ export default gql(/* GraphQL */ `
                   }
                 }
               }
+              ... on PlanDataExchangeApproachMarkedCompleteActivityMeta {
+                version
+                type
+                modelPlan {
+                  id
+                  modelName
+                }
+              }
             }
           }
         }

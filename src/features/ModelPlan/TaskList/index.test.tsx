@@ -10,6 +10,7 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import {
+  DataExchangeApproachStatus,
   GetModelPlanDocument,
   GetModelPlanQuery,
   ModelPhase,
@@ -149,6 +150,13 @@ describe('The Model Plan Task List', () => {
       }
     ],
     collaborators: [],
+    dataExchangeApproach: {
+      __typename: 'PlanDataExchangeApproach',
+      id: '4321',
+      status: DataExchangeApproachStatus.IN_PROGRESS,
+      modifiedDts: null,
+      modifiedByUserAccount: null
+    },
     discussions: [
       {
         __typename: 'PlanDiscussion',

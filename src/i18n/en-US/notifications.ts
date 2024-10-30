@@ -46,6 +46,10 @@ const notifications = {
       NEW_MODEL_PLAN: {
         text: ' created a Model Plan: {{-modelName}}.',
         cta: 'View Model Plan'
+      },
+      DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: {
+        text: ' marked the data exchange approach complete for {{-modelName}}.',
+        cta: 'View data exchange approach'
       }
     },
     dailyDigest: {
@@ -122,7 +126,9 @@ const notifications = {
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me',
       newModelPlan: 'When a new Model Plan is created',
-      datesChanged: 'When model dates change'
+      datesChanged: 'When model dates change',
+      dataExchangeApproachMarkedComplete:
+        'When a data exchange approach is completed'
     },
     additionalConfigurations: {
       whichModel: 'Which models?',
@@ -146,7 +152,9 @@ const notifications = {
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
-        DATES_CHANGED: 'when model dates change'
+        DATES_CHANGED: 'when model dates change',
+        DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
+          'when a data exchange approach is completed'
       }
     }
   }
