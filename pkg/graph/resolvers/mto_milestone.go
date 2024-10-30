@@ -47,7 +47,7 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 	}
 
 	// Just check access, don't apply changes here
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, false, true)
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}

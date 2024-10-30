@@ -3001,6 +3001,39 @@
 							"response": []
 						},
 						{
+							"name": "UpdateMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n}\n# commonMilestoneID: \"{{commonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCommonMilestoneID\n    mtoCategoryID\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "GetMTOCategories And Milestones",
 							"request": {
 								"method": "POST",

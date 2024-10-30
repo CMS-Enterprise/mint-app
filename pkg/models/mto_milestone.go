@@ -20,7 +20,7 @@ type MTOMilestone struct {
 
 	Name                       *string            `json:"name" db:"name"`
 	mtoCommonMilestoneRelation                    //TODO (mto) maybe we shouldn't have an mto relation here? maybe just add the field?
-	MTOCategoryID              *uuid.UUID         `json:"MTOCategoryID" db:"mto_category_id"`
+	MTOCategoryID              *uuid.UUID         `json:"mtoCategoryID" db:"mto_category_id"`
 	FacilitatedBy              *MTOFacilitator    `json:"facilitatedBy" db:"facilitated_by"`
 	NeedBy                     *time.Time         `json:"needBy" db:"need_by"`
 	Status                     MTOMilestoneStatus `json:"status" db:"status"`

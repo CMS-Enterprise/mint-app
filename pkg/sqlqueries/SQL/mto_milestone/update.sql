@@ -1,15 +1,15 @@
 UPDATE mto_milestone
 SET 
-    mto_category_id := mto_category_id,
-    name=:name,
-    facilitated_by=:facilitated_by,
-    need_by=:need_by,
-    status=:status,
-    risk_indicator=:risk_indicator,
-    is_draft=:is_draft,
-    modified_by=:modified_by,
+    mto_category_id = :mto_category_id,
+    name= :name,
+    facilitated_by= :facilitated_by,
+    need_by= :need_by,
+    status= :status,
+    risk_indicator= :risk_indicator,
+    is_draft= :is_draft,
+    modified_by= :modified_by,
     modified_dts=CURRENT_TIMESTAMP
-WHERE mto_milestone.id=:id
+WHERE mto_milestone.id= :id
 RETURNING
 id,
 model_plan_id,

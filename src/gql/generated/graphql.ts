@@ -711,6 +711,7 @@ export type MtoMilestone = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
   mtoCommonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
@@ -723,6 +724,7 @@ export type MtoMilestone = {
 export type MtoMilestoneChanges = {
   facilitatedBy?: InputMaybe<MtoFacilitator>;
   isDraft?: InputMaybe<Scalars['Boolean']['input']>;
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   needBy?: InputMaybe<Scalars['Time']['input']>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
