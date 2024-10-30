@@ -170,16 +170,19 @@ describe('Notification Center', () => {
   it('testing Adding Collaborator Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
-    cy.enterModelPlanTaskList('Empty Plan');
+    cy.enterModelPlanCollaborationArea('Empty Plan');
 
     // Add SF13 as a collaborator
-    cy.get('a[href*="/collaboration-area/collaborators?view=manage"]').click();
+    // cy.contains('button', 'Add a team member').click();
+    cy.get('[data-testid="add-collaborator"]').click();
 
-    cy.contains('a', 'Add team member').click();
+    // cy.get('a[href*="/collaboration-area/collaborators?view=manage"]').click();
+
+    // cy.contains('a', 'Add team member').click();
 
     cy.get('#react-select-model-team-cedar-contact-input')
       .click()
-      .type('Jer', { delay: 100 });
+      .type('Jerry', { delay: 100 });
 
     cy.get('#react-select-model-team-cedar-contact-option-0')
       .contains('Jerry Seinfeld, SF13')
@@ -211,7 +214,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Start collaborating').click();
 
-    cy.url().should('include', '/collaboration-area/task-list');
+    cy.url().should('include', '/collaboration-area');
   });
 
   it('testing New Model Plan Notification', () => {
