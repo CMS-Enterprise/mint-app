@@ -62,6 +62,7 @@ const notifications = {
       documentsAdded: '{{-number}} new documents have been uploaded',
       crTdlsUpdate: 'Updates to FFS CRs/TDLs',
       discussionActivity: 'New activity in Discussions',
+      dataExchangeApproachComplete: 'Data exchange approach is complete',
       readyForReview: '{{-taskSection}} is ready for review ',
       readyForClearance: '{{-taskSection}}  is ready for clearance',
       updatesTo: 'Updates to {{-taskSection}}',
@@ -71,7 +72,8 @@ const notifications = {
         plan_participants_and_providers: 'Participants and providers',
         plan_beneficiaries: 'Beneficiaries',
         plan_general_characteristics: 'General characteristics',
-        plan_basics: 'Model Basics'
+        plan_basics: 'Model Basics',
+        plan_data_exchange_approach: 'Data exchange approach'
       },
       statusChange: {
         PLAN_DRAFT: 'This model has been announced',
