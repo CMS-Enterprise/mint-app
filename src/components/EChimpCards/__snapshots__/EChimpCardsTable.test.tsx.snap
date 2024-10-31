@@ -1,0 +1,301 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EChimpCardsTable > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="echimp-cr-and-tdls-table"
+  >
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          class="usa-form usa-search margin-bottom-3 maxw-none tablet:width-mobile-lg"
+          data-testid="table-client-filter"
+          role="search"
+        >
+          <label
+            class="usa-sr-only"
+            data-testid="label"
+            for="cr-and-tdl-table-search"
+          >
+            Search Table
+          </label>
+          <input
+            class="usa-input"
+            data-testid="textInput"
+            id="cr-and-tdl-table-search"
+            name="FFS CRs and TDLs Search"
+            role="searchbox"
+            type="search"
+            value=""
+          />
+          <button
+            class="usa-button grid-row flex-justify-center flex-align-center no-pointer"
+            data-testid="button"
+            type="submit"
+          >
+            <svg
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:margin-left-auto display-flex"
+          style="max-width: 13rem;"
+        >
+          <label
+            class="usa-label text-normal margin-top-1 margin-right-1"
+            data-testid="label"
+            for="sort"
+          >
+            Sort
+          </label>
+          <select
+            class="usa-select margin-bottom-2 margin-top-0"
+            data-testid="Select"
+            id="sort"
+            name="sort"
+          >
+            <option
+              value="id"
+            >
+              By ID number
+            </option>
+            <option
+              value="title"
+            >
+              By title
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="grid-row margin-bottom-4"
+      data-testid="grid"
+    >
+      <div
+        class="grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class=""
+          data-testid="page-results"
+        >
+          <span>
+            <div
+              aria-live="polite"
+              role="status"
+            >
+              Showing 1-2 of 2 results 
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <ul
+      class="usa-card-group"
+      data-testid="CardGroup"
+    >
+      <li
+        class="usa-card desktop:grid-col-4 echimp-card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container shadow-2"
+        >
+          <header
+            class="usa-card__header echimp-card__header"
+            data-testid="CardHeader"
+          >
+            <h4
+              class="text-base"
+            >
+              123
+            </h4>
+            <h3
+              class="echimp-card__header"
+            >
+              Echimp CR
+            </h3>
+          </header>
+          <div
+            class="usa-card__body"
+            data-testid="CardBody"
+          >
+            <div
+              class="echimp-card__cr-tags"
+            >
+              <div
+                class="echimp-card__cr-tag echimp-card__cr-tag--emergency"
+                data-testid="emergency__cr-tag"
+              >
+                <svg
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 12.9-2.13 2.09c-.56.56-.87 1.29-.87 2.07C9 18.68 10.35 20 12 20s3-1.32 3-2.94c0-.78-.31-1.52-.87-2.07L12 12.9z"
+                  />
+                  <path
+                    d="m16 6-.44.55C14.38 8.02 12 7.19 12 5.3V2S4 6 4 13c0 2.92 1.56 5.47 3.89 6.86-.56-.79-.89-1.76-.89-2.8 0-1.32.52-2.56 1.47-3.5L12 10.1l3.53 3.47c.95.93 1.47 2.17 1.47 3.5 0 1.02-.31 1.96-.85 2.75 1.89-1.15 3.29-3.06 3.71-5.3.66-3.55-1.07-6.9-3.86-8.52z"
+                  />
+                </svg>
+                Emergency
+              </div>
+            </div>
+            <div
+              class="echimp-card__cr-status"
+            >
+              <p
+                class="text-bold"
+              >
+                CR Status
+              </p>
+              <p>
+                Open
+              </p>
+            </div>
+            <div
+              class="echimp-card__date"
+            >
+              <p
+                class="text-bold"
+              >
+                Implementation Date
+              </p>
+              <p>
+                2022-07-30T05:00:00Z
+              </p>
+            </div>
+          </div>
+          <div
+            class="usa-card__footer"
+            data-testid="CardFooter"
+          >
+            <button
+              class="usa-button usa-button"
+              data-testid="button"
+              type="button"
+            >
+              View more
+            </button>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card desktop:grid-col-4 echimp-card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container shadow-2"
+        >
+          <header
+            class="usa-card__header echimp-card__header"
+            data-testid="CardHeader"
+          >
+            <h4
+              class="text-base"
+            >
+              456
+            </h4>
+            <h3
+              class="echimp-card__header"
+            >
+              Echimp TDL
+            </h3>
+          </header>
+          <div
+            class="usa-card__body"
+            data-testid="CardBody"
+          >
+            <div
+              class="echimp-card__date"
+            >
+              <p
+                class="text-bold"
+              >
+                Issued date
+              </p>
+              <p>
+                2022-07-30T05:00:00Z
+              </p>
+            </div>
+          </div>
+          <div
+            class="usa-card__footer"
+            data-testid="CardFooter"
+          >
+            <button
+              class="usa-button usa-button"
+              data-testid="button"
+              type="button"
+            >
+              View more
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class=""
+      />
+      <div
+        class="desktop:margin-top-2 margin-left-auto desktop:grid-col-auto"
+      >
+        <select
+          class="usa-select margin-top-0 width-auto"
+          data-testid="table-page-size"
+          id="table-page-size"
+          name="tablePageSize"
+        >
+          <option
+            value="6"
+          >
+            Show 6
+          </option>
+          <option
+            value="9"
+          >
+            Show 9
+          </option>
+          <option
+            value="100000"
+          >
+            Show all
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

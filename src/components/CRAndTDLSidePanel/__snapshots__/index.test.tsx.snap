@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The CRAndTDLSidePanel component > renders TDL without crashing (flag disabled) 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container padding-y-5 padding-x-4 side-panel--cr-and-tdl"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="sidepanel__header"
+        >
+          <h4
+            class="text-base"
+          >
+            abc123
+          </h4>
+          <h1>
+            Test Title
+          </h1>
+        </div>
+        <div
+          class="sidepanel__content"
+        >
+          <div>
+            <p
+              class="text-bold"
+            >
+              Issued date
+            </p>
+            <p>
+              2023
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

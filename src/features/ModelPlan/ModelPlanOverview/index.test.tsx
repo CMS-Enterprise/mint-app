@@ -29,7 +29,7 @@ describe('Read Only Model Plan Overivew', () => {
         <MockedProvider
           mocks={[
             ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, false),
-            ...favoritesPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, true)
+            ...favoritesPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL)
           ]}
         >
           <Route path="/models">

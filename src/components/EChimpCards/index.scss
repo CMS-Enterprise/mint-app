@@ -1,0 +1,92 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.echimp-card {
+  @media (min-width: $desktop) {
+    min-height: 422px;
+  }
+
+  &__header {
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+    h3 {
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 26px;
+      margin: 0 0 1rem;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  &__cr-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__cr-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 15px;
+    line-height: 16px;
+    border-radius: 4px;
+    padding: 4px 8px 4px 6px !important;
+    width: fit-content;
+
+    &--emergency {
+      color: color($theme-color-secondary-dark);
+      background-color: color($theme-color-error-lighter);
+    }
+    &--sensitive {
+      color: color($theme-color-base-dark);
+      background-color: color($theme-color-warning-lighter);
+    }
+  }
+
+  &__cr-status,
+  &__date {
+    margin: 0 0 1rem;
+
+    p {
+      line-height: 25px;
+      margin: 0;
+      &:not(.text-bold) {
+        font-size: 17px;
+      }
+    }
+  }
+
+  .usa-card__body {
+    padding-bottom: 1rem;
+  }
+
+  .usa-card__footer {
+    border-top: 1px solid color("base-light");
+    padding-inline: 0;
+    margin-inline: 1.5rem;
+    padding-top: 1.5rem;
+
+    .usa-button {
+      width: 100%;
+      margin-bottom: 1rem;
+
+      @media screen and (min-width: 520px) {
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 1rem;
+      }
+
+      @media screen and (min-width: 1024px) and (max-width: 1172px) {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
