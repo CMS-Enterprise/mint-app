@@ -21,9 +21,11 @@ func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTO
 
 // Milestones is the resolver for the milestones field.
 func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*models.MTOMilestone, error) {
+	// All milestones (in the DB) have a mto_category_id, so we need to identify which to filter by in the query
+	// We do this by passing the subcategory's parent ID (which is the Category ID) if the milestone doesn't actually have a subcategory
+	// Otherwise, we can just filter by the actual subcategory ID
 	var categoryID uuid.UUID
 	if obj.IsUncategorized() {
-		// We show everything as a subcategory, if it is uncategorized, but has a parent id, it belongs to the parent cat
 		if obj.ParentID != nil {
 			categoryID = *obj.ParentID
 		}
