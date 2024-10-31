@@ -18,6 +18,12 @@ func (s *Seeder) seedModelPlanWithMTOData(
 
 	princ := s.getTestPrincipalByUsername(euaID)
 
+	// Make uncategorized Milestone from Common milestone library
+	_, err := resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, nil, helpers.PointerTo(models.CommonMilestoneKeyMilestoneA), plan.ID, nil)
+	if err != nil {
+		panic(err)
+	}
+
 	// Make top level and sub categories
 	cat1Name := "Category 1"
 	cat1SubAName := "Category 1A"
@@ -55,11 +61,6 @@ func (s *Seeder) seedModelPlanWithMTOData(
 		panic(err)
 	}
 
-	// Make uncategorized Milestone
-	_, err = resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, helpers.PointerTo("Uncategorized Milestone"), nil, plan.ID, nil)
-	if err != nil {
-		panic(err)
-	}
 	// Make milestones to go under the categories
 	_, err = resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, helpers.PointerTo("Milestone"+cat1Name), nil, plan.ID, &category1.ID)
 	if err != nil {
