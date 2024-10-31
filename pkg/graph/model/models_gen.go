@@ -15,13 +15,13 @@ import (
 )
 
 type CommonMilestone struct {
-	ID              uuid.UUID          `json:"id"`
-	Key             CommonMilestoneKey `json:"key"`
-	Name            string             `json:"name"`
-	Description     string             `json:"description"`
-	IsAdded         bool               `json:"isAdded"`
-	IsSuggested     bool               `json:"isSuggested"`
-	CommonSolutions []*CommonSolution  `json:"commonSolutions"`
+	ID              uuid.UUID                 `json:"id"`
+	Key             models.CommonMilestoneKey `json:"key"`
+	Name            string                    `json:"name"`
+	Description     string                    `json:"description"`
+	IsAdded         bool                      `json:"isAdded"`
+	IsSuggested     bool                      `json:"isSuggested"`
+	CommonSolutions []*CommonSolution         `json:"commonSolutions"`
 }
 
 type CommonSolution struct {
@@ -1185,47 +1185,6 @@ func (e *ChangeType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ChangeType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type CommonMilestoneKey string
-
-const (
-	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
-	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
-)
-
-var AllCommonMilestoneKey = []CommonMilestoneKey{
-	CommonMilestoneKeyMilestoneA,
-	CommonMilestoneKeyMilestoneB,
-}
-
-func (e CommonMilestoneKey) IsValid() bool {
-	switch e {
-	case CommonMilestoneKeyMilestoneA, CommonMilestoneKeyMilestoneB:
-		return true
-	}
-	return false
-}
-
-func (e CommonMilestoneKey) String() string {
-	return string(e)
-}
-
-func (e *CommonMilestoneKey) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CommonMilestoneKey(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CommonMilestoneKey", str)
-	}
-	return nil
-}
-
-func (e CommonMilestoneKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

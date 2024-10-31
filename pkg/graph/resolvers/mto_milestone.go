@@ -16,7 +16,7 @@ import (
 // MTOMilestoneCreate uses the provided information to create a new mto Milestone
 func MTOMilestoneCreate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	name *string,
-	commonMilestoneID *uuid.UUID,
+	commonMilestoneKey *models.CommonMilestoneKey,
 	modelPlanID uuid.UUID,
 	mtoCategoryID *uuid.UUID,
 ) (*models.MTOMilestone, error) {
@@ -24,7 +24,7 @@ func MTOMilestoneCreate(ctx context.Context, logger *zap.Logger, principal authe
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	Milestone := models.NewMTOMilestone(principalAccount.ID, name, commonMilestoneID, modelPlanID, mtoCategoryID)
+	Milestone := models.NewMTOMilestone(principalAccount.ID, name, commonMilestoneKey, modelPlanID, mtoCategoryID)
 
 	err := BaseStructPreCreate(logger, Milestone, principal, store, true)
 	if err != nil {

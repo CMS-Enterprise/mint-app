@@ -708,6 +708,7 @@ export type MtoMilestone = {
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   isDraft: Scalars['Boolean']['output'];
+  key?: Maybe<CommonMilestoneKey>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -1107,7 +1108,7 @@ export type MutationCreateMtoCategoryArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateMtoMilestoneArgs = {
-  commonMilestoneID?: InputMaybe<Scalars['UUID']['input']>;
+  commonMilestoneKey?: InputMaybe<CommonMilestoneKey>;
   modelPlanID: Scalars['UUID']['input'];
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;

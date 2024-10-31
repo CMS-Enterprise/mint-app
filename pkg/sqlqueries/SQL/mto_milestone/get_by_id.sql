@@ -4,6 +4,7 @@ SELECT
     mto_milestone.mto_common_milestone_id,
     mto_milestone.mto_category_id,
     COALESCE(mto_milestone.name, mto_common_milestone.name) AS "name",
+    mto_common_milestone.key,
     mto_milestone.facilitated_by,
     mto_milestone.need_by,
     mto_milestone.status,

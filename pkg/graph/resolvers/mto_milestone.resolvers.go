@@ -37,10 +37,10 @@ func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOM
 }
 
 // CreateMTOMilestone is the resolver for the createMTOMilestone field.
-func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneID *uuid.UUID, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneKey *models.CommonMilestoneKey, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneID, modelPlanID, mtoCategoryID)
+	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneKey, modelPlanID, mtoCategoryID)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.
@@ -55,3 +55,13 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 func (r *Resolver) MTOMilestone() generated.MTOMilestoneResolver { return &mTOMilestoneResolver{r} }
 
 type mTOMilestoneResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mTOMilestoneResolver) Key(ctx context.Context, obj *models.MTOMilestone) (*models.CommonMilestoneKey, error) {
+	panic(fmt.Errorf("not implemented: Key - key"))
+}

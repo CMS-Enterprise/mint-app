@@ -35,6 +35,7 @@ SELECT
     retVal.mto_common_milestone_id,
     retVal.mto_category_id,
     COALESCE(retVal.name, mto_common_milestone.name) AS "name",
+    mto_common_milestone.key,
     retVal.facilitated_by,
     retVal.need_by,
     retVal.status,

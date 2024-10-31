@@ -15,7 +15,7 @@ WITH retVal AS (
     VALUES (
         :id,
         :model_plan_id,
-        :mto_common_milestone_id,
+        (SELECT mto_common_milestone.id FROM mto_common_milestone WHERE mto_common_milestone.key = :key),
         :mto_category_id,
         :name,
         :facilitated_by,
@@ -49,6 +49,7 @@ SELECT
     retVal.mto_common_milestone_id,
     retVal.mto_category_id,
     COALESCE(retVal.name, mto_common_milestone.name) AS "name",
+    mto_common_milestone.key,
     retVal.facilitated_by,
     retVal.need_by,
     retVal.status,

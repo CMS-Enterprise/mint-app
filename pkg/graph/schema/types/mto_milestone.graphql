@@ -12,6 +12,7 @@ type MTOMilestone {
   # DB Fields
   id: UUID!
   name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  key: CommonMilestoneKey
   mtoCommonMilestoneID: UUID
   mtoCategoryID: UUID
   facilitatedBy: MTOFacilitator
@@ -55,7 +56,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Mutation {
-  createMTOMilestone(modelPlanID: UUID!, name: String, commonMilestoneID: UUID, mtoCategoryID: UUID): MTOMilestone!
+  createMTOMilestone(modelPlanID: UUID!, name: String, commonMilestoneKey: CommonMilestoneKey, mtoCategoryID: UUID): MTOMilestone!
   @hasRole(role: MINT_USER)
   updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!): MTOMilestone!
   @hasRole(role: MINT_USER)
