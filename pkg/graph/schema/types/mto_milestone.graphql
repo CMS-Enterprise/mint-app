@@ -59,4 +59,5 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
   updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!): MTOMilestone!
   @hasRole(role: MINT_USER)
+  #TODO (mto) will we need any other mutations here? Can we ever delete?
 }

@@ -32,8 +32,6 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     analyzed_audit,
 	existing_model_link,
 	mto_category,
-	mto_common_milestone,
-	mto_common_solution,
 	mto_milestone,
 	mto_solution,
 	mto_milestone_solution_link,
