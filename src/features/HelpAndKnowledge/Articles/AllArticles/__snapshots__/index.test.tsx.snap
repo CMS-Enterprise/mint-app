@@ -338,11 +338,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                           id="mention-ANNOUNCEMENT_MATERIALS"
                         >
                           <div
-                            aria-label="Rich-Text Editor"
                             class="tiptap ProseMirror"
                             contenteditable="false"
                             id="mention-ANNOUNCEMENT_MATERIALS"
-                            role="textbox"
                             translate="no"
                           >
                             <p>
@@ -471,11 +469,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                           id="mention-CMMI_CLEARANCE_SITE"
                         >
                           <div
-                            aria-label="Rich-Text Editor"
                             class="tiptap ProseMirror"
                             contenteditable="false"
                             id="mention-CMMI_CLEARANCE_SITE"
-                            role="textbox"
                             translate="no"
                           >
                             <p>
@@ -655,11 +651,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                           id="mention-FRAUD_AND_ABUSE_WAIVER"
                         >
                           <div
-                            aria-label="Rich-Text Editor"
                             class="tiptap ProseMirror"
                             contenteditable="false"
                             id="mention-FRAUD_AND_ABUSE_WAIVER"
-                            role="textbox"
                             translate="no"
                           >
                             <p>
@@ -839,11 +833,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                           id="mention-ICIP_REPOSITORY"
                         >
                           <div
-                            aria-label="Rich-Text Editor"
                             class="tiptap ProseMirror"
                             contenteditable="false"
                             id="mention-ICIP_REPOSITORY"
-                            role="textbox"
                             translate="no"
                           >
                             <p>
@@ -972,11 +964,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                           id="mention-IT_LEAD_TRAINING_MATERIALS"
                         >
                           <div
-                            aria-label="Rich-Text Editor"
                             class="tiptap ProseMirror"
                             contenteditable="false"
                             id="mention-IT_LEAD_TRAINING_MATERIALS"
-                            role="textbox"
                             translate="no"
                           >
                             <p>

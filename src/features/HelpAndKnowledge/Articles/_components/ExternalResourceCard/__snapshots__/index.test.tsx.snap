@@ -66,11 +66,9 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
                 id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
               >
                 <div
-                  aria-label="Rich-Text Editor"
                   class="tiptap ProseMirror"
                   contenteditable="false"
                   id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
-                  role="textbox"
                   translate="no"
                 >
                   <p>
