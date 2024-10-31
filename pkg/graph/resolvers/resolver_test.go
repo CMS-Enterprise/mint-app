@@ -5,12 +5,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/echimptestdata"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/golang/mock/gomock"
@@ -71,6 +72,10 @@ func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username stri
 }
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
+	return suite.createModelPlanWithID(planName, nil)
+}
+
+func (suite *ResolverSuite) createModelPlanWithID(planName string, id *uuid.UUID) *models.ModelPlan {
 	mp, err := ModelPlanCreate(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
@@ -78,7 +83,7 @@ func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
 		nil,
 		email.AddressBook{},
 		planName,
-		nil,
+		id,
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),

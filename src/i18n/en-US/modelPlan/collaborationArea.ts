@@ -40,6 +40,13 @@ const collaborationArea = {
     discussion_other: '{{count}} discussions',
     noDiscussions: 'No discussions started'
   },
+  crtdlsCard: {
+    heading: 'FFS CRs and TDLS',
+    addInEChimp: 'Add in ECHIMP',
+    viewAll: 'View all',
+    noCrtdls: 'No CRs or TDLs',
+    andMore: ' + {{count}} more'
+  },
   dataExchangeApproachCard: {
     heading: 'Data exchange approach',
     body: 'After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you’ll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.',

@@ -43,11 +43,11 @@ const modelPlan: GetModelPlanTypes = {
     modifiedDts: null,
     clearanceStarts: '2022-05-12T15:01:39.190679Z',
     readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
+    status: TaskStatus.READY,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
-    },
-    status: TaskStatus.READY
+    }
   },
   opsEvalAndLearning: {
     __typename: 'PlanOpsEvalAndLearning',
@@ -57,11 +57,11 @@ const modelPlan: GetModelPlanTypes = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
-    },
-    status: TaskStatus.IN_PROGRESS
+    }
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
@@ -71,11 +71,11 @@ const modelPlan: GetModelPlanTypes = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
-    },
-    status: TaskStatus.IN_PROGRESS
+    }
   },
   participantsAndProviders: {
     __typename: 'PlanParticipantsAndProviders',
@@ -85,11 +85,11 @@ const modelPlan: GetModelPlanTypes = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
-    },
-    status: TaskStatus.IN_PROGRESS
+    }
   },
   beneficiaries: {
     __typename: 'PlanBeneficiaries',
@@ -99,11 +99,11 @@ const modelPlan: GetModelPlanTypes = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
-    },
-    status: TaskStatus.IN_PROGRESS
+    }
   },
   prepareForClearance: {
     __typename: 'PrepareForClearance',
@@ -118,14 +118,13 @@ const modelPlan: GetModelPlanTypes = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
-    },
-    status: TaskStatus.IN_PROGRESS
+    }
   },
-  crs: [],
-  tdls: [],
+  echimpCRsAndTDLs: [],
   dataExchangeApproach: {
     __typename: 'PlanDataExchangeApproach',
     id: '123',

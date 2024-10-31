@@ -41,8 +41,6 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
-  GetCrtdLsDocument,
-  GetCrtdLsQuery,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
@@ -767,6 +765,16 @@ const summaryData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
+  echimpCRsAndTDLs: [
+    {
+      __typename: 'EChimpCR',
+      id: '123'
+    },
+    {
+      __typename: 'EChimpTDL',
+      id: '456'
+    }
+  ],
   collaborators: [
     {
       userAccount: {
@@ -778,20 +786,6 @@ const summaryData: GetModelSummaryTypes = {
       },
       teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
-    }
-  ],
-  crs: [
-    {
-      __typename: 'PlanCR',
-      id: '123',
-      idNumber: 'CR 123'
-    }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      id: '456',
-      idNumber: 'TDL 456'
     }
   ]
 };
@@ -955,51 +949,6 @@ export const possibleOperationalSolutionDataMocks = [
     },
     result: {
       data: possibleOperationalSolutionData
-    }
-  }
-];
-
-const crtdlData: GetCrtdLsQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    modelName: 'My excellent plan that I just initiated',
-    isCollaborator: true,
-    crs: [
-      {
-        __typename: 'PlanCR',
-        id: '123',
-        modelPlanID: modelID,
-        title: 'My CR',
-        idNumber: 'CR123',
-        dateInitiated: '2022-07-30T05:00:00Z',
-        dateImplemented: '2022-07-30T05:00:00Z',
-        note: 'note'
-      }
-    ],
-    tdls: [
-      {
-        __typename: 'PlanTDL',
-        id: '1234',
-        modelPlanID: modelID,
-        title: 'My TDL',
-        idNumber: 'TDL123',
-        dateInitiated: '2022-07-30T05:00:00Z',
-        note: 'note'
-      }
-    ]
-  }
-};
-
-export const crtdlMocks = [
-  {
-    request: {
-      query: GetCrtdLsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: crtdlData
     }
   }
 ];

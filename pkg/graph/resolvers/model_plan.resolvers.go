@@ -12,6 +12,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/flags"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -112,25 +113,49 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 	return PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
-// EchimpCRs is the resolver for the echimpCRs field.
-func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return GetEChimpCRsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
-}
-
-// EchimpTDLs is the resolver for the echimpTDLs field.
-func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
-}
-
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
+	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+	// Get flag value for if ECHIMP is enabled or disabled
+	echimpEnabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
+	if err != nil {
+		return nil, err
+	}
+
+	// If ECHIMP integration is enabled, fetch CRs and TDLs by model plan ID from S3 (ECHIMP)
+	if echimpEnabled {
+		return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+	}
+
+	// else (ECHIMP is disabled) fetch from our Database (but return the ECHIMP type)
+	// TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
+	// Fetch CRs and TDLs from DB
+	crsFromDB, err := PlanCRsGetByModelPlanID(logger, obj.ID, r.store)
+	if err != nil {
+		return nil, err
+	}
+	tdlsFromDB, err := PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
+	if err != nil {
+		return nil, err
+	}
+
+	// "Re-shape" from DB model into models.EChimpCRAndTDLS
+	ret := []models.EChimpCRAndTDLS{}
+
+	// first, CRs
+	for _, cr := range crsFromDB {
+		ret = append(ret, cr.ToEchimpCR(&obj.ID))
+	}
+
+	// then, TDLs
+	for _, tdl := range tdlsFromDB {
+		ret = append(ret, tdl.ToEchimpTDL(&obj.ID))
+	}
+
+	return ret, nil
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
@@ -220,7 +245,14 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return ModelPlanCollection(logger, principal, r.store, filter)
+
+	// Get flag value for if ECHIMP is enabled or disabled
+	// TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
+	echimpEnabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
+	if err != nil {
+		return nil, err
+	}
+	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter, echimpEnabled)
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
