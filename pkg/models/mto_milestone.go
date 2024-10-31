@@ -30,6 +30,12 @@ type MTOMilestone struct {
 	/*TODO (mto) implement the rest of this based on GQL and database */
 }
 
+// AddedFromMilestoneLibrary returns true or false if this was added from the common milestone library.
+// It simply checks if the common  milestone id is populated or not
+func (m *MTOMilestone) AddedFromMilestoneLibrary() bool {
+	return m.MTOCommonMilestoneID != nil
+}
+
 // NewMTOMilestone returns a new mtoMileMTOMilestone object. A Nil parentID means that this is a top level MileMTOMilestone, and not a subMileMTOMilestone
 func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneID *uuid.UUID, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{

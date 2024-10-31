@@ -16,11 +16,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// AddedFromMilestoneLibrary is the resolver for the addedFromMilestoneLibrary field.
-func (r *mTOMilestoneResolver) AddedFromMilestoneLibrary(ctx context.Context, obj *models.MTOMilestone) (bool, error) {
-	panic(fmt.Errorf("not implemented: AddedFromMilestoneLibrary - addedFromMilestoneLibrary"))
-}
-
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*model.CommonMilestone, error) {
 	panic(fmt.Errorf("not implemented: CommonMilestone - commonMilestone"))
