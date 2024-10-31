@@ -10,6 +10,8 @@ name: Check Migrations
 
 on:
   pull_request:
+    branches:
+      - main # Only run this when targeting main, otherwise we should be free to edit / have bad migrations.
 
 jobs:
   check_migrations:
