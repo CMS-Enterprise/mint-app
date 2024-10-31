@@ -242,7 +242,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                 class="padding-bottom-05"
               >
                 <span
-                  class="usa-link pointer margin-right-05"
+                  class="usa-link pointer"
                   role="button"
                   tabindex="0"
                 >
@@ -269,7 +269,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
               >
                 Utilizing the 
                 <span
-                  class="usa-link pointer margin-right-05"
+                  class="usa-link pointer"
                   role="button"
                   tabindex="0"
                 >

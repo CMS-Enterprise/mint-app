@@ -103,7 +103,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
             <span>
               Enterprise Electronic Change Information Management Portal (ECHIMP)
               <svg
-                class="usa-icon margin-left-05 top-2px"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
