@@ -18,24 +18,22 @@ const mockModel: FavoritesType = {
   isFavorite: true,
   status: ModelStatus.PLAN_DRAFT,
   isCollaborator: false,
+  echimpCRsAndTDLs: [
+    {
+      id: '123',
+      __typename: 'EChimpCR'
+    },
+    {
+      id: '456',
+      __typename: 'EChimpTDL'
+    }
+  ],
   basics: {
     id: '123',
     performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
-  crs: [
-    {
-      __typename: 'PlanCR',
-      idNumber: 'CR 123'
-    }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      idNumber: 'TDL 456'
-    }
-  ],
   collaborators: [
     {
       userAccount: {

@@ -56,27 +56,15 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           class="usa-card__body padding-x-0 padding-top-2"
           data-testid="CardBody"
         >
-          <div>
-            <span
-              class="display-block"
-              id="QUALITY_VERTICAL_HEALTH_EQUITY"
+          <div
+            class="truncated-text"
+            data-testid="truncated-text"
+          >
+            <div
+              class=""
             >
-              <div
-                class="tiptap__readonly"
-                id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
-              >
-                <div
-                  class="tiptap ProseMirror"
-                  contenteditable="false"
-                  id="mention-QUALITY_VERTICAL_HEALTH_EQUITY"
-                  translate="no"
-                >
-                  <p>
-                    Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...
-                  </p>
-                </div>
-              </div>
-            </span>
+              Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...
+            </div>
             <button
               aria-controls="QUALITY_VERTICAL_HEALTH_EQUITY"
               aria-expanded="true"
@@ -106,16 +94,17 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           data-testid="CardFooter"
         >
           <button
-            class="usa-button usa-button usa-button--outline margin-right-2 padding-right-5"
+            class="usa-button usa-button usa-button--outline"
             data-testid="button"
             type="button"
           >
             <span
-              class="position-relative"
+              class="display-flex flex-align-center"
+              style="column-gap: 0.25rem;"
             >
               View on SharePoint
               <svg
-                class="usa-icon margin-left-05 position-absolute"
+                class="usa-icon"
                 focusable="false"
                 height="1em"
                 role="img"

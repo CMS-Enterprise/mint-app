@@ -17,7 +17,7 @@ import ModelPlanCard, { getLastModifiedSection } from './index';
 const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
-const modelPlan = {
+const modelPlan: GetModelPlanTypes = {
   __typename: 'ModelPlan',
   isFavorite: true,
   id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
@@ -42,7 +42,11 @@ const modelPlan = {
     modifiedDts: null,
     clearanceStarts: '2022-05-12T15:01:39.190679Z',
     readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
-    status: TaskStatus.READY
+    status: TaskStatus.READY,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
   },
   opsEvalAndLearning: {
     __typename: 'PlanOpsEvalAndLearning',
@@ -52,7 +56,11 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
-    status: TaskStatus.IN_PROGRESS
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
@@ -62,7 +70,11 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
-    status: TaskStatus.IN_PROGRESS
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
   },
   participantsAndProviders: {
     __typename: 'PlanParticipantsAndProviders',
@@ -72,7 +84,11 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
-    status: TaskStatus.IN_PROGRESS
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
   },
   beneficiaries: {
     __typename: 'PlanBeneficiaries',
@@ -82,7 +98,11 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
-    status: TaskStatus.IN_PROGRESS
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
   },
   prepareForClearance: {
     __typename: 'PrepareForClearance',
@@ -97,10 +117,13 @@ const modelPlan = {
     modifiedBy: '',
     modifiedDts: '',
     readyForClearanceDts: '',
-    status: TaskStatus.IN_PROGRESS
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
   },
-  crs: [],
-  tdls: [],
+  echimpCRsAndTDLs: [],
   operationalNeeds: [] as any,
   documents: [
     {
@@ -127,7 +150,7 @@ const modelPlan = {
       __typename: 'PlanDiscussion',
       id: '456',
       content: {
-        __typename: 'TaggedHTML',
+        __typename: 'TaggedContent',
         rawContent: 'This is a second question.'
       },
       createdBy: 'Jane Doe',
@@ -138,7 +161,7 @@ const modelPlan = {
           discussionID: '456',
           id: 'abc',
           content: {
-            __typename: 'TaggedHTML',
+            __typename: 'TaggedContent',
             rawContent: 'This is an answer.'
           },
           createdBy: 'Jack Doe',
@@ -147,7 +170,7 @@ const modelPlan = {
       ]
     }
   ]
-} as GetModelPlanTypes;
+};
 
 const modelPlanMocks = [
   {
