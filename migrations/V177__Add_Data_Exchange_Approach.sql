@@ -120,3 +120,8 @@ COMMENT ON COLUMN plan_data_exchange_approach.created_by IS 'The user that creat
 COMMENT ON COLUMN plan_data_exchange_approach.created_dts IS 'The date and time that the data exchange approach was created.';
 COMMENT ON COLUMN plan_data_exchange_approach.modified_by IS 'The user that last modified the data exchange approach.';
 COMMENT ON COLUMN plan_data_exchange_approach.modified_dts IS 'The date and time that the data exchange approach was last modified.';
+
+-- Insert a plan_data_exchange_approach entry for all existing model plans
+INSERT INTO plan_data_exchange_approach(id, model_plan_id, created_by)
+SELECT GEN_RANDOM_UUID(), id, '00000001-0001-0001-0001-000000000001' -- system account
+FROM model_plan;
