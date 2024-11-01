@@ -486,7 +486,7 @@ func ModelPlanShare(
 		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[*planBasics.ModelCategory])
 	}
 
-	for _, category := range planBasics.AdditionalModelCategories {
+	for _, category := range planBasics.AdditionalModelCategories.Values {
 		// Have to cast the additional category as a models.ModelCategory so we can fetch it from the models.ModelCategoryHumanized map
 		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
 	}
