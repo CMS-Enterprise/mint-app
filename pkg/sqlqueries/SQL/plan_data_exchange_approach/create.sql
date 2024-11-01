@@ -20,7 +20,6 @@ INSERT INTO plan_data_exchange_approach (
     new_data_exchange_methods_note,
     additional_data_exchange_considerations_description,
     created_by,
-    modified_by,
     marked_complete_by,
     marked_complete_dts
 )
@@ -46,7 +45,6 @@ VALUES (
     :new_data_exchange_methods_note,
     :additional_data_exchange_considerations_description,
     :created_by,
-    :modified_by,
     :marked_complete_by,
     :marked_complete_dts
 )
