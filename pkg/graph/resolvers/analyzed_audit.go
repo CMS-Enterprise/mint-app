@@ -313,14 +313,6 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		return "", false
 	})
 
-	/*dataExchangeApproachMarkedComplete := lo.SomeBy(filteredAudits, func(m *models.AuditChange, index int) bool {
-		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") {
-			return m.Fields["status"].New.(string) == string(models.DataExchangeApproachStatusCompleted)
-		}
-		return false
-	})*/
-
 	analyzedPlanSections := models.AnalyzedPlanSections{
 		Updated:                            updatedSections,
 		ReadyForReview:                     readyForReview,
