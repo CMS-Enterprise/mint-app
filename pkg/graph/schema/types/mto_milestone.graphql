@@ -1,0 +1,28 @@
+
+# TODO Determine what these should actually be with Zoë & Natalie. These could change
+enum MTOMilestoneStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+
+# MTOMilestone represents a Milestone that has been added to a Model Plan's MTO
+type MTOMilestone {
+  # DB Fields
+  id: UUID!
+  name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  facilitatedBy: MTOFacilitator
+  needBy: Time
+  status: MTOMilestoneStatus!
+  riskIndicator: MTORiskIndicator
+  isDraftMilestone: Boolean!
+  commonMilestoneID: UUID
+
+  # Custom Resolvers
+  addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
+  commonMilestone: CommonMilestone
+  solutions: [MTOSolution!]!
+  category: MTOCategory!
+  subCategory: MTOSubcategory!
+}

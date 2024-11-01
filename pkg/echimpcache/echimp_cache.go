@@ -14,9 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
-// echimpCacheTimeHours is the length of time before a echimpCache needs to be refreshed
-const echimpCacheTimeHours = 3
-
 var CRAndTDLCache *crAndTDLCache
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
@@ -25,7 +22,7 @@ func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper, logge
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
 	}
-	if CRAndTDLCache.IsOld() {
+	if CRAndTDLCache.IsOld(viperConfig) {
 		err := CRAndTDLCache.refreshCache(client, viperConfig, logger)
 		if err != nil {
 			return nil, err
@@ -48,9 +45,16 @@ type crAndTDLCache struct {
 	CrsAndTDLsByModelPlanID map[uuid.UUID][]models.EChimpCRAndTDLS
 }
 
-func (c *crAndTDLCache) IsOld() bool {
+func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
+	// Get the time to cache the data from env vars
+	cacheMinutes := viperConfig.GetInt(appconfig.AWSS3ECHIMPCacheTimeMins)
+
+	// if the cache time is less than 0, the data is not cached
+	if cacheMinutes <= 0 {
+		return true
+	}
 	// Calculate the cache expiration time by adding the duration to the last checked time
-	expirationTime := c.lastChecked.Add(echimpCacheTimeHours * time.Hour)
+	expirationTime := c.lastChecked.Add(time.Duration(cacheMinutes) * time.Minute)
 	// Return true if the current time is after the expiration time
 	return time.Now().After(expirationTime)
 

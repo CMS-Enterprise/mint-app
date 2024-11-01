@@ -1,0 +1,48 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.side-panel--cr-and-tdl {
+  .sidepanel {
+    &__header {
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid color("base-light");
+
+      h1, h4 {
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 50px;
+      }
+
+      .echimp-card__cr-status {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0;
+      }
+    }
+
+    &__content {
+      padding: 2rem 0rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+
+      .sidepanel--full-width {
+        grid-column: 1 / 3;
+      }
+
+      &  div {
+        margin-bottom: 0;
+
+        p {
+          margin: 0;
+          line-height: 25px;
+        }
+      }
+    }
+  }
+}

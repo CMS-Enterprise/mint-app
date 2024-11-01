@@ -22,7 +22,7 @@ func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTO
 }
 
 // Milestones is the resolver for the milestones field.
-func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*model.Milestone, error) {
+func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*model.MTOMilestone, error) {
 	panic(fmt.Errorf("not implemented: Milestones - milestones"))
 }
 
