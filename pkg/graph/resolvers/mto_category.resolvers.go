@@ -6,13 +6,11 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -22,8 +20,19 @@ func (r *mTOCategoryResolver) SubCategories(ctx context.Context, obj *models.MTO
 }
 
 // Milestones is the resolver for the milestones field.
-func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*model.MTOMilestone, error) {
-	panic(fmt.Errorf("not implemented: Milestones - milestones"))
+func (r *mTOSubcategoryResolver) Milestones(ctx context.Context, obj *models.MTOSubcategory) ([]*models.MTOMilestone, error) {
+	// All milestones (in the DB) have a mto_category_id, so we need to identify which to filter by in the query
+	// We do this by passing the subcategory's parent ID (which is the Category ID) if the milestone doesn't actually have a subcategory
+	// Otherwise, we can just filter by the actual subcategory ID
+	var categoryID uuid.UUID
+	if obj.IsUncategorized() {
+		if obj.ParentID != nil {
+			categoryID = *obj.ParentID
+		}
+	} else {
+		categoryID = obj.ID
+	}
+	return MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx, obj.ModelPlanID, categoryID)
 }
 
 // CreateMTOCategory is the resolver for the createMTOCategory field.

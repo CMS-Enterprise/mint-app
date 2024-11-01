@@ -702,16 +702,38 @@ export type MtoMilestone = {
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
   category: MtoCategory;
   commonMilestone?: Maybe<CommonMilestone>;
-  commonMilestoneID?: Maybe<Scalars['UUID']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
-  isDraftMilestone: Scalars['Boolean']['output'];
+  isDraft: Scalars['Boolean']['output'];
+  key?: Maybe<CommonMilestoneKey>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  /**
+   * Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
+   * This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
+   */
+  mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
+  mtoCommonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
-  riskIndicator?: Maybe<MtoRiskIndicator>;
+  riskIndicator: MtoRiskIndicator;
   solutions: Array<MtoSolution>;
   status: MtoMilestoneStatus;
   subCategory: MtoSubcategory;
+};
+
+export type MtoMilestoneChanges = {
+  facilitatedBy?: InputMaybe<MtoFacilitator>;
+  isDraft?: InputMaybe<Scalars['Boolean']['input']>;
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  needBy?: InputMaybe<Scalars['Time']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoMilestoneStatus>;
 };
 
 export enum MtoMilestoneStatus {
@@ -731,8 +753,14 @@ export type MtoSolution = {
   addedFromSolutionLibrary: Scalars['Boolean']['output'];
   commonSolution?: Maybe<CommonSolution>;
   commonSolutionID?: Maybe<Scalars['UUID']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
@@ -987,6 +1015,7 @@ export type Mutation = {
    * Note, the parent must belong to the same model plan, or this will return an error
    */
   createMTOCategory: MtoCategory;
+  createMTOMilestone: MtoMilestone;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1025,6 +1054,7 @@ export type Mutation = {
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
    */
   updateMTOCategory: MtoCategory;
+  updateMTOMilestone: MtoMilestone;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1075,6 +1105,15 @@ export type MutationCreateMtoCategoryArgs = {
   modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneArgs = {
+  commonMilestoneKey?: InputMaybe<CommonMilestoneKey>;
+  modelPlanID: Scalars['UUID']['input'];
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1247,6 +1286,13 @@ export type MutationUpdateExistingModelLinksArgs = {
 export type MutationUpdateMtoCategoryArgs = {
   id: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoMilestoneArgs = {
+  changes: MtoMilestoneChanges;
+  id: Scalars['UUID']['input'];
 };
 
 

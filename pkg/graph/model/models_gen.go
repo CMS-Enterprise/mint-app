@@ -15,13 +15,13 @@ import (
 )
 
 type CommonMilestone struct {
-	ID              uuid.UUID          `json:"id"`
-	Key             CommonMilestoneKey `json:"key"`
-	Name            string             `json:"name"`
-	Description     string             `json:"description"`
-	IsAdded         bool               `json:"isAdded"`
-	IsSuggested     bool               `json:"isSuggested"`
-	CommonSolutions []*CommonSolution  `json:"commonSolutions"`
+	ID              uuid.UUID                 `json:"id"`
+	Key             models.CommonMilestoneKey `json:"key"`
+	Name            string                    `json:"name"`
+	Description     string                    `json:"description"`
+	IsAdded         bool                      `json:"isAdded"`
+	IsSuggested     bool                      `json:"isSuggested"`
+	CommonSolutions []*CommonSolution         `json:"commonSolutions"`
 }
 
 type CommonSolution struct {
@@ -67,33 +67,23 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-type MTOMilestone struct {
-	ID                        uuid.UUID                `json:"id"`
-	Name                      string                   `json:"name"`
-	FacilitatedBy             *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	NeedBy                    *time.Time               `json:"needBy,omitempty"`
-	Status                    MTOMilestoneStatus       `json:"status"`
-	RiskIndicator             *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
-	IsDraftMilestone          bool                     `json:"isDraftMilestone"`
-	CommonMilestoneID         *uuid.UUID               `json:"commonMilestoneID,omitempty"`
-	AddedFromMilestoneLibrary bool                     `json:"addedFromMilestoneLibrary"`
-	CommonMilestone           *CommonMilestone         `json:"commonMilestone,omitempty"`
-	Solutions                 []*MTOSolution           `json:"solutions"`
-	Category                  models.MTOCategory       `json:"category"`
-	SubCategory               models.MTOSubcategory    `json:"subCategory"`
-}
-
 type MTOSolution struct {
-	ID                       uuid.UUID                `json:"id"`
-	Name                     string                   `json:"name"`
-	FacilitatedBy            *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	Status                   MTOSolutionStatus        `json:"status"`
-	RiskIndicator            *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
-	CommonSolutionID         *uuid.UUID               `json:"commonSolutionID,omitempty"`
-	SolutionType             MTOSolutionType          `json:"solutionType"`
-	RelatedMilestones        []*MTOMilestone          `json:"relatedMilestones"`
-	AddedFromSolutionLibrary bool                     `json:"addedFromSolutionLibrary"`
-	CommonSolution           *CommonSolution          `json:"commonSolution,omitempty"`
+	ID                       uuid.UUID                   `json:"id"`
+	Name                     string                      `json:"name"`
+	FacilitatedBy            *models.MTOFacilitator      `json:"facilitatedBy,omitempty"`
+	Status                   MTOSolutionStatus           `json:"status"`
+	RiskIndicator            *models.MTORiskIndicator    `json:"riskIndicator,omitempty"`
+	CommonSolutionID         *uuid.UUID                  `json:"commonSolutionID,omitempty"`
+	SolutionType             MTOSolutionType             `json:"solutionType"`
+	CreatedBy                uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount     authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts               time.Time                   `json:"createdDts"`
+	ModifiedBy               *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount    *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts              *time.Time                  `json:"modifiedDts,omitempty"`
+	RelatedMilestones        []*models.MTOMilestone      `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool                        `json:"addedFromSolutionLibrary"`
+	CommonSolution           *CommonSolution             `json:"commonSolution,omitempty"`
 }
 
 // Represents model plan base translation data
@@ -1198,47 +1188,6 @@ func (e ChangeType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type CommonMilestoneKey string
-
-const (
-	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
-	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
-)
-
-var AllCommonMilestoneKey = []CommonMilestoneKey{
-	CommonMilestoneKeyMilestoneA,
-	CommonMilestoneKeyMilestoneB,
-}
-
-func (e CommonMilestoneKey) IsValid() bool {
-	switch e {
-	case CommonMilestoneKeyMilestoneA, CommonMilestoneKeyMilestoneB:
-		return true
-	}
-	return false
-}
-
-func (e CommonMilestoneKey) String() string {
-	return string(e)
-}
-
-func (e *CommonMilestoneKey) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CommonMilestoneKey(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CommonMilestoneKey", str)
-	}
-	return nil
-}
-
-func (e CommonMilestoneKey) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type CommonSolutionKey string
 
 const (
@@ -1716,49 +1665,6 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTOMilestoneStatus string
-
-const (
-	MTOMilestoneStatusNotStarted MTOMilestoneStatus = "NOT_STARTED"
-	MTOMilestoneStatusInProgress MTOMilestoneStatus = "IN_PROGRESS"
-	MTOMilestoneStatusCompleted  MTOMilestoneStatus = "COMPLETED"
-)
-
-var AllMTOMilestoneStatus = []MTOMilestoneStatus{
-	MTOMilestoneStatusNotStarted,
-	MTOMilestoneStatusInProgress,
-	MTOMilestoneStatusCompleted,
-}
-
-func (e MTOMilestoneStatus) IsValid() bool {
-	switch e {
-	case MTOMilestoneStatusNotStarted, MTOMilestoneStatusInProgress, MTOMilestoneStatusCompleted:
-		return true
-	}
-	return false
-}
-
-func (e MTOMilestoneStatus) String() string {
-	return string(e)
-}
-
-func (e *MTOMilestoneStatus) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTOMilestoneStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTOMilestoneStatus", str)
-	}
-	return nil
-}
-
-func (e MTOMilestoneStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

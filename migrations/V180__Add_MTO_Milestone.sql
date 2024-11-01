@@ -12,12 +12,13 @@ CREATE TABLE mto_milestone (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     mto_common_milestone_id UUID REFERENCES mto_common_milestone(id),
+    mto_category_id UUID REFERENCES mto_category(id),
     -- we allow null because this is will be from the commonMilestone table if it exists
     name ZERO_STRING,
     facilitated_by MTO_FACILITATOR,
     need_by TIMESTAMP WITH TIME ZONE,
     status MTO_MILESTONE_STATUS NOT NULL,
-    risk_indicator MTO_RISK_INDICATOR,
+    risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
     is_draft BOOLEAN NOT NULL DEFAULT TRUE,
 
     created_by UUID NOT NULL REFERENCES user_account(id),

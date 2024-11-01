@@ -22,8 +22,7 @@ CREATE TABLE mto_solution(
     type MTO_SOLUTION_TYPE,
     facilitated_by MTO_FACILITATOR,
     status MTO_SOLUTION_STATUS NOT NULL,
-    risk_indicator MTO_RISK_INDICATOR,
-    is_draft BOOLEAN NOT NULL DEFAULT TRUE,  --TODO (mto) is this field needed?
+    risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
     poc_name ZERO_STRING NOT NULL,
     poc_email EMAIL NOT NULL,
 
