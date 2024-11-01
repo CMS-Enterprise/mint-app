@@ -10,44 +10,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// Name is the resolver for the name field.
-func (r *mTOCommonMilestoneResolver) Name(ctx context.Context, obj *models.MTOCommonMilestone) (string, error) {
-	panic(fmt.Errorf("not implemented: Name - name"))
-}
-
-// Key is the resolver for the key field.
-func (r *mTOCommonMilestoneResolver) Key(ctx context.Context, obj *models.MTOCommonMilestone) (model.MTOCommonMilestoneKey, error) {
-	panic(fmt.Errorf("not implemented: Key - key"))
-}
-
-// SubCategoryName is the resolver for the subCategoryName field.
-func (r *mTOCommonMilestoneResolver) SubCategoryName(ctx context.Context, obj *models.MTOCommonMilestone) (string, error) {
-	panic(fmt.Errorf("not implemented: SubCategoryName - subCategoryName"))
-}
-
-// Description is the resolver for the description field.
-func (r *mTOCommonMilestoneResolver) Description(ctx context.Context, obj *models.MTOCommonMilestone) (string, error) {
-	panic(fmt.Errorf("not implemented: Description - description"))
-}
-
-// FacilitatedByRole is the resolver for the facilitatedByRole field.
-func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj *models.MTOCommonMilestone) (models.MTOFacilitator, error) {
-	panic(fmt.Errorf("not implemented: FacilitatedByRole - facilitatedByRole"))
-}
 
 // MtoCommonMilestoneDummy is the resolver for the mtoCommonMilestoneDummy field.
 func (r *queryResolver) MtoCommonMilestoneDummy(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
 	panic(fmt.Errorf("not implemented: MtoCommonMilestoneDummy - mtoCommonMilestoneDummy"))
 }
-
-// MTOCommonMilestone returns generated.MTOCommonMilestoneResolver implementation.
-func (r *Resolver) MTOCommonMilestone() generated.MTOCommonMilestoneResolver {
-	return &mTOCommonMilestoneResolver{r}
-}
-
-type mTOCommonMilestoneResolver struct{ *Resolver }

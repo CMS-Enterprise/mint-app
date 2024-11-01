@@ -8,8 +8,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // ModelToOperationsCommonSolution is the resolver for the modelToOperationsCommonSolution field.
