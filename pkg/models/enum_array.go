@@ -7,30 +7,30 @@ import (
 	"github.com/lib/pq"
 )
 
-type EnumArray[enumType ~string] struct {
-	Values []enumType
-}
+// type EnumArray[enumType ~string] struct {
+// 	Values []enumType
+// }
 
-// type EnumArray[enumType ~string] []enumType
+type EnumArray[enumType ~string] []enumType
 
-// Scan Implements the Scanner interface to decode data from the database
+// Scan implements the Scanner interface to decode data from the database
 func (e *EnumArray[EnumType]) Scan(value interface{}) error {
 	var stringArray pq.StringArray
 	if err := stringArray.Scan(value); err != nil {
 		return err
 	}
 
-	e.Values = make([]EnumType, len(stringArray))
+	*e = make(EnumArray[EnumType], len(stringArray))
 	for i, v := range stringArray {
-		e.Values[i] = EnumType(v)
+		(*e)[i] = EnumType(v)
 	}
 	return nil
 }
 
-// Value Implements the Valuer interface to encode data into the database
+// Value implements the Valuer interface to encode data into the database
 func (e EnumArray[EnumType]) Value() (driver.Value, error) {
-	stringArray := make([]string, len(e.Values))
-	for i, v := range e.Values {
+	stringArray := make([]string, len(e))
+	for i, v := range e {
 		stringArray[i] = string(v)
 	}
 	return pq.StringArray(stringArray).Value()
@@ -38,7 +38,7 @@ func (e EnumArray[EnumType]) Value() (driver.Value, error) {
 
 // MarshalJSON marshals the EnumArray into JSON for GraphQL
 func (e EnumArray[EnumType]) MarshalJSON() ([]byte, error) {
-	return json.Marshal(e.Values)
+	return json.Marshal([]EnumType(e))
 }
 
 // UnmarshalJSON unmarshals the EnumArray from JSON for GraphQL
@@ -48,9 +48,9 @@ func (e *EnumArray[EnumType]) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	e.Values = make([]EnumType, len(stringArray))
+	*e = make(EnumArray[EnumType], len(stringArray))
 	for i, v := range stringArray {
-		e.Values[i] = EnumType(v)
+		(*e)[i] = EnumType(v)
 	}
 	return nil
 }

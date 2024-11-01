@@ -35,7 +35,7 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 
 // AdditionalModelCategories is the resolver for the additionalModelCategories field.
 func (r *planBasicsResolver) AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error) {
-	return obj.AdditionalModelCategories.Values, nil
+	return obj.AdditionalModelCategories, nil
 	// modelCategories := models.ConvertEnums[models.ModelCategory](obj.AdditionalModelCategories.StringArray)
 	// return modelCategories, nil
 }
