@@ -1,0 +1,25 @@
+enum MTOCommonSolutionKey {
+  SOLUTION_A,
+  SOLUTION_B,
+}
+
+type MTOCommonSolution {
+  id: UUID!
+  name: String!
+  key: MTOCommonSolutionKey!
+  description: String!
+  role: MTOFacilitator!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  # TODO: Should this be exposed or accessed tangentially?
+  modelToOperationsCommonSolution(id: UUID!): MTOCommonSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

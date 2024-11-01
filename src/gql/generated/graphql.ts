@@ -678,6 +678,48 @@ export type MtoCategory = {
   subCategories: Array<MtoSubcategory>;
 };
 
+export type MtoCommonMilestone = {
+  __typename: 'MTOCommonMilestone';
+  categoryName: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  description: Scalars['String']['output'];
+  facilitatedByRole: MtoFacilitator;
+  id: Scalars['UUID']['output'];
+  key: MtoCommonMilestoneKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  subCategoryName: Scalars['String']['output'];
+};
+
+export enum MtoCommonMilestoneKey {
+  MILESTONE_A = 'MILESTONE_A',
+  MILESTONE_B = 'MILESTONE_B'
+}
+
+export type MtoCommonSolution = {
+  __typename: 'MTOCommonSolution';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  role: MtoFacilitator;
+};
+
+export enum MtoCommonSolutionKey {
+  SOLUTION_A = 'SOLUTION_A',
+  SOLUTION_B = 'SOLUTION_B'
+}
+
 export enum MtoFacilitator {
   APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
   CONTRACTING_OFFICERS_REPRESENTATIVE = 'CONTRACTING_OFFICERS_REPRESENTATIVE',
@@ -917,29 +959,6 @@ export enum ModelStatus {
   PLAN_COMPLETE = 'PLAN_COMPLETE',
   PLAN_DRAFT = 'PLAN_DRAFT'
 }
-
-export type ModelToOperationsCommonMilestone = {
-  __typename: 'ModelToOperationsCommonMilestone';
-  categoryName: Scalars['String']['output'];
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-};
-
-export type ModelToOperationsCommonSolution = {
-  __typename: 'ModelToOperationsCommonSolution';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-};
 
 export enum ModelType {
   MANDATORY_NATIONAL = 'MANDATORY_NATIONAL',
@@ -3350,9 +3369,9 @@ export type Query = {
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
-  modelToOperationsCommonMilestone: ModelToOperationsCommonMilestone;
-  modelToOperationsCommonSolution: ModelToOperationsCommonSolution;
+  modelToOperationsCommonSolution: MtoCommonSolution;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoCommonMilestoneDummy?: Maybe<MtoCommonMilestone>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3417,13 +3436,13 @@ export type QueryModelPlansByOperationalSolutionKeyArgs = {
 
 
 /** Query definition for the schema */
-export type QueryModelToOperationsCommonMilestoneArgs = {
+export type QueryModelToOperationsCommonSolutionArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
-export type QueryModelToOperationsCommonSolutionArgs = {
+export type QueryMtoCommonMilestoneDummyArgs = {
   id: Scalars['UUID']['input'];
 };
 

@@ -1,0 +1,28 @@
+enum MTOCommonMilestoneKey {
+  MILESTONE_A,
+  MILESTONE_B,
+}
+
+type MTOCommonMilestone {
+  id: UUID!
+  name: String!
+  key: MTOCommonMilestoneKey!
+  categoryName: String!
+  subCategoryName: String!
+  description: String!
+  facilitatedByRole: MTOFacilitator!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+
+extend type Query {
+  # TODO: Remove this when MTOCommonMilestone is utilized
+  #       This exists only so gql won't complain about lack of usage
+  mtoCommonMilestoneDummy(id: UUID!): MTOCommonMilestone
+}

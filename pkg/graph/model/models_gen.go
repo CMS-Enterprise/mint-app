@@ -106,27 +106,6 @@ type ModelPlanTranslation struct {
 	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
-type ModelToOperationsCommonMilestone struct {
-	ID                    uuid.UUID                   `json:"id"`
-	CategoryName          string                      `json:"categoryName"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
-}
-
-type ModelToOperationsCommonSolution struct {
-	ID                    uuid.UUID                   `json:"id"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
-}
-
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
@@ -1716,6 +1695,47 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MTOCommonMilestoneKey string
+
+const (
+	MTOCommonMilestoneKeyMilestoneA MTOCommonMilestoneKey = "MILESTONE_A"
+	MTOCommonMilestoneKeyMilestoneB MTOCommonMilestoneKey = "MILESTONE_B"
+)
+
+var AllMTOCommonMilestoneKey = []MTOCommonMilestoneKey{
+	MTOCommonMilestoneKeyMilestoneA,
+	MTOCommonMilestoneKeyMilestoneB,
+}
+
+func (e MTOCommonMilestoneKey) IsValid() bool {
+	switch e {
+	case MTOCommonMilestoneKeyMilestoneA, MTOCommonMilestoneKeyMilestoneB:
+		return true
+	}
+	return false
+}
+
+func (e MTOCommonMilestoneKey) String() string {
+	return string(e)
+}
+
+func (e *MTOCommonMilestoneKey) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MTOCommonMilestoneKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MTOCommonMilestoneKey", str)
+	}
+	return nil
+}
+
+func (e MTOCommonMilestoneKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
