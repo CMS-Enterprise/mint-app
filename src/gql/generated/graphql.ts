@@ -712,6 +712,10 @@ export type MtoMilestone = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  /**
+   * Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
+   * This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
+   */
   mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
   mtoCommonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
