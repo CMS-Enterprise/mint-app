@@ -47,7 +47,7 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
 
-	// Just check access, don't apply changes here
+	// Check access and apply changes
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
