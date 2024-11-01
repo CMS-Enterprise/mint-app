@@ -29,11 +29,6 @@ func PlanDataExchangeApproachGetByID(logger *zap.Logger, store *storage.Store, i
 	return storage.PlanDataExchangeApproachGetByID(store, logger, id)
 }
 
-// PlanDataExchangeApproachGetByModelPlanID retrieves a plan data exchange approach by its model plan ID
-func PlanDataExchangeApproachGetByModelPlanID(logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanDataExchangeApproach, error) {
-	return storage.PlanDataExchangeApproachGetByModelPlanID(store, logger, modelPlanID)
-}
-
 // PlanDataExchangeApproachUpdate updates a plan data exchange approach
 // It looks to see if a user marked the section as complete, and if so it will update the status and mark the user and the date.
 // If a user sets the section as not complete, it will clear that data, and set the status to in progress.
