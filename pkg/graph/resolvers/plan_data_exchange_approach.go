@@ -25,11 +25,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
-// PlanDataExchangeApproachGetByID retrieves a plan data exchange approach by its ID
-func PlanDataExchangeApproachGetByID(logger *zap.Logger, store *storage.Store, id uuid.UUID) (*models.PlanDataExchangeApproach, error) {
-	return storage.PlanDataExchangeApproachGetByID(store, logger, id)
-}
-
 // PlanDataExchangeApproachUpdate updates a plan data exchange approach
 // It looks to see if a user marked the section as complete, and if so it will update the status and mark the user and the date.
 // If a user sets the section as not complete, it will clear that data, and set the status to in progress.

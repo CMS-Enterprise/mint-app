@@ -68,9 +68,7 @@ func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *m
 
 // DataExchangeApproach is the resolver for the dataExchangeApproach field.
 func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) DataExchangeApproach(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.PlanDataExchangeApproach, error) {
-	logger := appcontext.ZLogger(ctx)
-	//TODO: this can be replaced with a a call to // PlanDataExchangeApproachGetByModelPlanIDLoader() when model plan relation is added to the meta type
-	return PlanDataExchangeApproachGetByID(logger, r.store, obj.DataExchangeApproachID)
+	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ModelPlanID)
 }
 
 // ModelPlan is the resolver for the modelPlan field.
