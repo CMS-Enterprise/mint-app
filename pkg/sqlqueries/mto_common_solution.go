@@ -11,5 +11,5 @@ type mtoCommonSolutionScripts struct {
 
 // MTOCommonSolution contains all the SQL queries for the MTO common solution
 var MTOCommonSolution = mtoCommonSolutionScripts{
-	GetByID: mtoCommonMilestoneGetByIDSQL,
+	GetByID: mtoCommonSolutionGetByIDSQL,
 }
