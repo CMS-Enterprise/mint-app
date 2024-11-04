@@ -70,6 +70,10 @@ func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.Rece
 		baseStructs = append(baseStructs, milestone)
 	}
 	mostRecentTime, mostRecentUserUUID := models.GetMostRecentTime(baseStructs)
+	if mostRecentUserUUID == uuid.Nil {
+		// There is no recent edit, nil is returned for the user
+		return nil, nil
+	}
 
 	recentModified := models.NewRecentModification(mostRecentUserUUID, mostRecentTime)
 

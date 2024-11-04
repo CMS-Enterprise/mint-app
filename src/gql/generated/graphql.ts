@@ -998,7 +998,7 @@ export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
   commonMilestones: Array<CommonMilestone>;
-  recentEdit: RecentModification;
+  recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
   status: MtoStatus;
 };
