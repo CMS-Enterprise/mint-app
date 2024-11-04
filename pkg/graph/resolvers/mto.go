@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // MTOStatusGet returns the overall status of an MTO
@@ -17,7 +18,8 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID, mtoMarkedReadyToRe
 	}
 	// Get Categories, Milestones, and Solutions by ModelPlanID. If any are returned, it is in progress. If any errors, it is ReadyToStart
 
-	categories, err := MTOCategoryGetByModelPlanIDLOADER(ctx, modelPlanID)
+	// Call the loader directly so we don't get uncategorized included
+	categories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
 		return models.MTOStatusReadyToStart, err
 	}
@@ -50,7 +52,8 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID, mtoMarkedReadyToRe
 func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.RecentModification, error) {
 	// TODO  (mto) restructure this to use change history
 
-	categories, err := MTOCategoryGetByModelPlanIDLOADER(ctx, modelPlanID)
+	// Call the loader directly so we don't get uncategorized included
+	categories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
