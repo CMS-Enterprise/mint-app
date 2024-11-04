@@ -22,6 +22,7 @@ export default gql(/* GraphQL */ `
           id
           title
           issuedDate
+          status
         }
       }
     }
