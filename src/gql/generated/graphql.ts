@@ -998,6 +998,7 @@ export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
   commonMilestones: Array<CommonMilestone>;
+  recentEdit: RecentModification;
   solutions: Array<MtoSolution>;
   status: MtoStatus;
 };
@@ -3553,6 +3554,13 @@ export type QueryTranslatedAuditCollectionArgs = {
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
+};
+
+export type RecentModification = {
+  __typename: 'RecentModification';
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
 export enum RecruitmentType {

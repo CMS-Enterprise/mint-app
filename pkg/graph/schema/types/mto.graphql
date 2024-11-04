@@ -5,6 +5,13 @@ type ModelsToOperationMatrix {
   commonMilestones: [CommonMilestone!]!
   solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
+  recentEdit: RecentModification! #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
+}
+
+type RecentModification {
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 enum MTOStatus {
