@@ -12,11 +12,13 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
 // PlanDataExchangeApproachCreate creates a new plan data exchange approach
 func PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, _ *zap.Logger, approach *models.PlanDataExchangeApproach) (*models.PlanDataExchangeApproach, error) {
+	approach.ID = utilityuuid.ValueOrNewUUID(approach.ID)
 	return sqlutils.GetProcedure[models.PlanDataExchangeApproach](np, sqlqueries.PlanDataExchangeApproach.Create, approach)
 }
 
