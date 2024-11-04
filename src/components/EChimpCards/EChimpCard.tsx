@@ -18,6 +18,7 @@ export type EChimpCardProps = {
   id: string;
   title?: string | null;
   crStatus?: string | null;
+  status?: string | null;
   emergencyCrFlag?: boolean | null;
   implementationDate?: string | null;
   isInReadView?: boolean;
@@ -31,6 +32,7 @@ const EChimpCard = ({
   id,
   title,
   crStatus,
+  status,
   emergencyCrFlag,
   implementationDate,
   isInReadView,
@@ -82,6 +84,12 @@ const EChimpCard = ({
           <div className="echimp-card__cr-status">
             <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
             <p>{crStatus}</p>
+          </div>
+        )}
+        {status && (
+          <div className="echimp-card__cr-status">
+            <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
+            <p>{status}</p>
           </div>
         )}
         <div className="echimp-card__date">
