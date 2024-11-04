@@ -81,13 +81,13 @@ const EChimpCard = ({
         )}
 
         {crStatus && (
-          <div className="echimp-card__cr-status">
+          <div className="echimp-card__status">
             <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
             <p>{crStatus}</p>
           </div>
         )}
         {status && (
-          <div className="echimp-card__cr-status">
+          <div className="echimp-card__status">
             <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
             <p>{status}</p>
           </div>
