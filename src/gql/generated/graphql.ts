@@ -782,6 +782,12 @@ export enum MtoSolutionType {
   OTHER = 'OTHER'
 }
 
+export enum MtoStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  READY_TO_REVIEW = 'READY_TO_REVIEW',
+  READY_TO_START = 'READY_TO_START'
+}
+
 export type MtoSubcategory = {
   __typename: 'MTOSubcategory';
   id: Scalars['UUID']['output'];
@@ -993,6 +999,7 @@ export type ModelsToOperationMatrix = {
   categories: Array<MtoCategory>;
   commonMilestones: Array<CommonMilestone>;
   solutions: Array<MtoSolution>;
+  status: MtoStatus;
 };
 
 export enum MonitoringFileType {

@@ -4,8 +4,14 @@ type ModelsToOperationMatrix {
   categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [CommonMilestone!]!
   solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
+  status: MTOStatus!
 }
 
+enum MTOStatus {
+  READY_TO_START
+  IN_PROGRESS
+  READY_TO_REVIEW #Note, this is not yet returnable
+}
 
 enum MTOFacilitator {
   MODEL_TEAM

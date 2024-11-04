@@ -29,6 +29,11 @@ func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *mo
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
+// Status is the resolver for the status field.
+func (r *modelsToOperationMatrixResolver) Status(ctx context.Context, obj *models.ModelsToOperationMatrix) (models.MTOStatus, error) {
+	panic(fmt.Errorf("not implemented: Status - status"))
+}
+
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
 func (r *Resolver) ModelsToOperationMatrix() generated.ModelsToOperationMatrixResolver {
 	return &modelsToOperationMatrixResolver{r}
