@@ -31,7 +31,9 @@ func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *mo
 
 // Status is the resolver for the status field.
 func (r *modelsToOperationMatrixResolver) Status(ctx context.Context, obj *models.ModelsToOperationMatrix) (models.MTOStatus, error) {
-	panic(fmt.Errorf("not implemented: Status - status"))
+	//TODO (mto) Update when we have a methodolody for Ready for Review
+	mtoMarkedReadyToReview := false
+	return MTOStatusGet(ctx, obj.ModelPlan.ID, mtoMarkedReadyToReview)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
