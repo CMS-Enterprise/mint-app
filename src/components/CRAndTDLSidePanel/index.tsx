@@ -77,18 +77,15 @@ const CRAndTDLSidePanel = ({
               </div>
             )}
 
-            {crStatus && (
-              <div className="echimp-card__status">
-                <p className="text-bold">{crtdlsT('echimpCard.crStatus')}:</p>
-                <p>{crStatus}</p>
-              </div>
-            )}
-            {status && (
-              <div className="echimp-card__status">
-                <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
-                <p>{status}</p>
-              </div>
-            )}
+            <div className="echimp-card__status">
+              <p className="text-bold">
+                {isCR
+                  ? crtdlsT('echimpCard.crStatus')
+                  : crtdlsT('echimpCard.tdlStatus')}
+                :
+              </p>
+              <p>{crStatus ?? status ?? crtdlsT('echimpCard.noData')}</p>
+            </div>
           </div>
           <div className="sidepanel__content">
             {isCR ? (
@@ -97,29 +94,29 @@ const CRAndTDLSidePanel = ({
                   <p className="text-bold">
                     {crtdlsT('echimpCard.implementationDate')}
                   </p>
-                  <p>{implementationDate}</p>
+                  <p>{implementationDate ?? crtdlsT('echimpCard.noData')}</p>
                 </div>
-                {initiator && (
-                  <div>
-                    <p className="text-bold">
-                      {crtdlsT('echimpCard.initiator')}
-                    </p>
-                    {/* Currently initiator returns name in ALL CAPS */}
-                    <p>{properlyCapitalizeInitiator(initiator)}</p>
-                  </div>
-                )}
-                {crSummary && (
-                  <div className="sidepanel--full-width">
-                    <p className="text-bold">
-                      {crtdlsT('echimpCard.crSummary')}
-                    </p>
+                <div>
+                  <p className="text-bold">{crtdlsT('echimpCard.initiator')}</p>
+                  {/* Currently initiator returns name in ALL CAPS */}
+                  <p>
+                    {initiator
+                      ? properlyCapitalizeInitiator(initiator)
+                      : crtdlsT('echimpCard.noData')}
+                  </p>
+                </div>
+                <div className="sidepanel--full-width">
+                  <p className="text-bold">{crtdlsT('echimpCard.crSummary')}</p>
+                  {crSummary ? (
                     <TruncatedText
                       id={id}
                       text={crSummary?.rawContent}
                       lineClamp={5}
                     />
-                  </div>
-                )}
+                  ) : (
+                    crtdlsT('echimpCard.noData')
+                  )}
+                </div>
 
                 <div>
                   <p className="text-bold">
@@ -147,7 +144,7 @@ const CRAndTDLSidePanel = ({
                   <p className="text-bold">
                     {crtdlsT('echimpCard.relatedCrTdl')}
                   </p>
-                  <p>{relatedCrTdlNumbers}</p>
+                  <p>{relatedCrTdlNumbers ?? crtdlsT('echimpCard.noData')}</p>
                 </div>
               </>
             ) : (
@@ -155,7 +152,9 @@ const CRAndTDLSidePanel = ({
               <div>
                 <p className="text-bold">{crtdlsT('echimpCard.issuedDate')}</p>
                 {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
-                <p>{issuedDate?.split(' ')[0]}</p>
+                <p>
+                  {issuedDate?.split(' ')[0] ?? crtdlsT('echimpCard.noData')}
+                </p>
               </div>
             )}
 
