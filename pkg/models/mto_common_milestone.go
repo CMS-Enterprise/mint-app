@@ -10,6 +10,7 @@ type MTOCommonMilestone struct {
 	Description       string                `json:"description" db:"description"`
 	FacilitatedByRole MTOFacilitator        `json:"facilitatedByRole" db:"facilitated_by_role"`
 	ModelPlanID       *uuid.UUID            `json:"modelPlanID" db:"model_plan_id"` //TODO (mto) verify this, this would facilitate queries and is_added. This is not an actual database column
+	IsAdded           bool                  `json:"isAdded" db:"is_added"`          //TODO (mto) verify this
 }
 
 type MTOCommonMilestoneKey string
