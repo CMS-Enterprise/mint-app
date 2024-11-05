@@ -729,17 +729,11 @@ export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
   categoryName: Scalars['String']['output'];
   commonSolutions: Array<MtoCommonSolution>;
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   facilitatedByRole: MtoFacilitator;
   isAdded: Scalars['Boolean']['output'];
   isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   subCategoryName: Scalars['String']['output'];
 };
@@ -751,15 +745,9 @@ export enum MtoCommonMilestoneKey {
 
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   role: MtoFacilitator;
 };

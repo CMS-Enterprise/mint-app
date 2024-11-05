@@ -20,12 +20,7 @@ CREATE TABLE mto_common_solution (
 
     type MTO_SOLUTION_TYPE NOT NULL,
     description ZERO_STRING NOT NULL,
-    role MTO_FACILITATOR NOT NULL,
-
-    created_by UUID NOT NULL REFERENCES user_account(id),
-    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMP WITH TIME ZONE
+    role MTO_FACILITATOR NOT NULL
 );
 
 
@@ -41,16 +36,12 @@ INSERT INTO "public"."mto_common_solution"(
     "key",
     "type",
     "description",
-    "role",
-    "created_by",
-    "created_dts") VALUES(
+    "role") VALUES(
     'Place Holder Solution',
     'SOLUTION_A',
     'IT_SYSTEM',
     'placeholder description',
-    'MODEL_TEAM',
-    '00000001-0001-0001-0001-000000000001',
-    CURRENT_TIMESTAMP
+    'MODEL_TEAM'
 );
 
 /* End TODO

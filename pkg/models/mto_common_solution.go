@@ -1,8 +1,6 @@
 package models
 
 type MTOCommonSolution struct {
-	baseStruct
-
 	Name        string               `json:"name" db:"name"`
 	Key         MTOCommonSolutionKey `json:"key" db:"key"`
 	Description string               `json:"description" db:"description"`

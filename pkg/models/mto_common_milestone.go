@@ -1,8 +1,6 @@
 package models
 
 type MTOCommonMilestone struct {
-	baseStruct
-
 	Name              string                `json:"name" db:"name"`
 	Key               MTOCommonMilestoneKey `json:"key" db:"key"`
 	CategoryName      string                `json:"categoryName" db:"category_name"`

@@ -12,7 +12,7 @@ type MTOCommonMilestone {
   key: MTOCommonMilestoneKey!
   categoryName: String!
   subCategoryName: String!
-  description: String!
+  description: String! #TODO (mto) is this needed?
   facilitatedByRole: MTOFacilitator!
 
   # Custom Resolvers
@@ -20,13 +20,6 @@ type MTOCommonMilestone {
   isSuggested: Boolean!
   commonSolutions: [MTOCommonSolution!]!
 
-  #Meta Data
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
 }
 
 

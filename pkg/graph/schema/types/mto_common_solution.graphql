@@ -7,20 +7,13 @@ type MTOCommonSolution {
   #DB Fields
   name: String!
   key: MTOCommonSolutionKey!
-  description: String!
+  description: String! #TODO (mto) is this needed?
   role: MTOFacilitator!
 
   #Custom Resolvers
   isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone)
   # isSuggested: Boolean! # TODO (mto) Is this needed? 
 
-  # Meta Data
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
 }
 
 extend type Query {
