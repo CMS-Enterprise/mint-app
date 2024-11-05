@@ -1,0 +1,89 @@
+# ModelsToOperationMatrix Notes:
+# - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones oustide the scope of a Category
+type ModelsToOperationMatrix {
+  categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
+  commonMilestones: [CommonMilestone!]!
+  milestones: [MTOMilestone!]!
+  solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
+  status: MTOStatus!
+  recentEdit: RecentModification #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
+}
+
+type RecentModification {
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+enum MTOStatus {
+  READY
+  IN_PROGRESS
+  READY_FOR_REVIEW #Note, this is not yet returnable
+}
+
+enum MTOFacilitator {
+  MODEL_TEAM
+  MODEL_LEAD
+  IT_LEAD
+  SOLUTION_ARCHITECT
+  IT_SYSTEM_TEAM_OR_PRODUCT_OWNER
+  PARTICIPANTS
+  APPLICATION_SUPPORT_CONTRACTOR
+  IMPLEMENTATION_CONTRACTOR
+  EVALUATION_CONTRACTOR
+  QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
+  LEARNING_CONTRACTOR
+  MONITORING_CONTRACTOR
+  CONTRACTING_OFFICERS_REPRESENTATIVE
+  LEARNING_AND_DIFFUSION_GROUP
+  RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP
+  OTHER
+}
+
+enum MTORiskIndicator {
+  ON_TRACK
+  OFF_TRACK
+  AT_RISK
+}
+
+# CommonMilestone represents a Milestone from the "Common Milestones" library
+# It should not be used in contexts where a milestone has been added to a Model Plan (at that point, it'll be a "Milestone", not a "CommonMilestone")
+type CommonMilestone {
+  # DB Fields
+  id: UUID! # TODO Is this really needed? It might be kind of confusing to reference `id` like this
+  key: CommonMilestoneKey! # Similar to OperationalSolutionKey, enum of possible common milestones
+  name: String!
+  description: String!
+
+  # Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Milestone is _already_ part of the Model Plan's MTO
+  isSuggested: Boolean!
+  commonSolutions: [CommonSolution!]!
+}
+
+type CommonSolution {
+  # DB Fields
+  id: UUID! # TODO Is this really needed? It might be kind of confusing to reference `id` like this
+  key: CommonSolutionKey! # Similar to OperationalSolutionKey, enum of possible common milestones
+  name: String!
+  description: String!
+
+  # Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone)
+  isSuggested: Boolean!
+}
+
+# TODO Update these with real values
+# Right now, this is just a placeholder type to represent the possible common milestones
+enum CommonMilestoneKey {
+  MILESTONE_A
+  MILESTONE_B
+}
+
+# TODO Update these with real values
+# Right now, this is just a placeholder type to represent the possible common solutions
+enum CommonSolutionKey {
+  SOLUTION_ONE
+  SOLUTION_TWO
+}
+

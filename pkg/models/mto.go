@@ -36,3 +36,12 @@ const (
 	MTORiskIndicatorOffTrack MTORiskIndicator = "OFF_TRACK"
 	MTORiskIndicatorAtRisk   MTORiskIndicator = "AT_RISK"
 )
+
+type MTOStatus string
+
+// These are the options for MTOStatus
+const (
+	MTOStatusReadyToStart   MTOStatus = "READY"
+	MTOStatusInProgress     MTOStatus = "IN_PROGRESS"
+	MTOStatusReadyForReview MTOStatus = "READY_FOR_REVIEW"
+)
