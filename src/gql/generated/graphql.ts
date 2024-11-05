@@ -725,6 +725,7 @@ export enum LockableSection {
   BENEFICIARIES = 'BENEFICIARIES',
   DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
   GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
+  MODELS_TO_OPERATION_MATRIX = 'MODELS_TO_OPERATION_MATRIX',
   OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
   PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
   PAYMENT = 'PAYMENT',
@@ -898,6 +899,12 @@ export enum MtoSolutionType {
   CONTRACTOR = 'CONTRACTOR',
   IT_SYSTEM = 'IT_SYSTEM',
   OTHER = 'OTHER'
+}
+
+export enum MtoStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  READY = 'READY',
+  READY_FOR_REVIEW = 'READY_FOR_REVIEW'
 }
 
 export type MtoSubcategory = {
@@ -1088,7 +1095,10 @@ export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
   commonMilestones: Array<CommonMilestone>;
+  milestones: Array<MtoMilestone>;
+  recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
+  status: MtoStatus;
 };
 
 export enum MonitoringFileType {
@@ -3755,6 +3765,13 @@ export type QueryTranslatedAuditCollectionArgs = {
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
+};
+
+export type RecentModification = {
+  __typename: 'RecentModification';
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
 export enum RecruitmentType {

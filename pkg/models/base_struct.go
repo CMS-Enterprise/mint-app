@@ -1,7 +1,10 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
@@ -12,6 +15,7 @@ type IBaseStruct interface {
 	GetCreatedBy() string
 	GetModifiedBy() *string
 	SetModifiedBy(principal authentication.Principal) error
+	MostRecentModification() (time.Time, uuid.UUID)
 }
 
 // baseStruct represents the shared data in common betwen all models
@@ -61,4 +65,24 @@ func (b baseStruct) GetModifiedBy() *string {
 // GetCreatedBy implements the CreatedBy property
 func (b baseStruct) GetCreatedBy() string {
 	return b.CreatedBy.String()
+}
+
+func (b baseStruct) MostRecentModification() (time.Time, uuid.UUID) {
+	if b.ModifiedDts != nil && b.ModifiedBy != nil {
+		return *b.ModifiedDts, *b.ModifiedBy
+	}
+	return b.CreatedDts, b.CreatedBy
+}
+
+func GetMostRecentTime(baseStructs []IBaseStruct) (time.Time, uuid.UUID) {
+	var timeToReturn time.Time //ZeroValue
+	if len(baseStructs) < 1 {
+		return timeToReturn, uuid.Nil
+	}
+
+	latestBaseStruct := lo.LatestBy(baseStructs, func(bs IBaseStruct) time.Time {
+		modificationTime, _ := bs.MostRecentModification()
+		return modificationTime
+	})
+	return latestBaseStruct.MostRecentModification()
 }
