@@ -14,11 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// IsAdded is the resolver for the isAdded field.
-func (r *mTOCommonMilestoneResolver) IsAdded(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
-	panic(fmt.Errorf("not implemented: IsAdded - isAdded"))
-}
-
 // IsSuggested is the resolver for the isSuggested field.
 func (r *mTOCommonMilestoneResolver) IsSuggested(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
 	panic(fmt.Errorf("not implemented: IsSuggested - isSuggested"))
@@ -32,6 +27,8 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 // MtoCommonMilestoneDummy is the resolver for the mtoCommonMilestoneDummy field.
 func (r *queryResolver) MtoCommonMilestoneDummy(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
 	panic(fmt.Errorf("not implemented: MtoCommonMilestoneDummy - mtoCommonMilestoneDummy"))
+	//	// return MTOCommonMilestoneGetByModelPlanIDLOADER(ctx, &id)
+	// TODO: (mto) is this needed?
 }
 
 // MTOCommonMilestone returns generated.MTOCommonMilestoneResolver implementation.
@@ -40,3 +37,13 @@ func (r *Resolver) MTOCommonMilestone() generated.MTOCommonMilestoneResolver {
 }
 
 type mTOCommonMilestoneResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mTOCommonMilestoneResolver) IsAdded(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
+	panic(fmt.Errorf("not implemented: IsAdded - isAdded"))
+}

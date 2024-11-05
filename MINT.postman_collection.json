@@ -3173,6 +3173,32 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Common Milestones",
+					"item": [
+						{
+							"name": "GetMTO Common Milestones",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            # commonSolutions:\n\n        }\n        status\n        recentEdit{\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
