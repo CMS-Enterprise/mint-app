@@ -8,6 +8,7 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
@@ -89,7 +90,9 @@ const EChimpCard = ({
               : crtdlsT('echimpCard.tdlStatus')}
           </p>
           <p
-            className={crStatus == null && status == null ? 'text-italic' : ''}
+            className={classNames({
+              'text-italic': crStatus == null && status == null
+            })}
           >
             {crStatus ?? status ?? crtdlsT('echimpCard.noData')}
           </p>
@@ -101,11 +104,9 @@ const EChimpCard = ({
               : crtdlsT('echimpCard.issuedDate')}
           </p>
           <p
-            className={
-              implementationDate == null && issuedDate == null
-                ? 'text-italic'
-                : ''
-            }
+            className={classNames({
+              'text-italic': crStatus == null && status == null
+            })}
           >
             {implementationDate ??
               issuedDate?.split(' ')[0] ??

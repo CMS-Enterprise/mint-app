@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import i18n from 'config/i18n';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -84,7 +85,13 @@ const CRAndTDLSidePanel = ({
                   : crtdlsT('echimpCard.tdlStatus')}
                 :
               </p>
-              <p>{crStatus ?? status ?? crtdlsT('echimpCard.noData')}</p>
+              <p
+                className={classNames({
+                  'text-italic': crStatus == null && status == null
+                })}
+              >
+                {crStatus ?? status ?? crtdlsT('echimpCard.noData')}
+              </p>
             </div>
           </div>
           <div className="sidepanel__content">
@@ -94,12 +101,22 @@ const CRAndTDLSidePanel = ({
                   <p className="text-bold">
                     {crtdlsT('echimpCard.implementationDate')}
                   </p>
-                  <p>{implementationDate ?? crtdlsT('echimpCard.noData')}</p>
+                  <p
+                    className={classNames({
+                      'text-italic': !implementationDate
+                    })}
+                  >
+                    {implementationDate ?? crtdlsT('echimpCard.noData')}
+                  </p>
                 </div>
                 <div>
                   <p className="text-bold">{crtdlsT('echimpCard.initiator')}</p>
                   {/* Currently initiator returns name in ALL CAPS */}
-                  <p>
+                  <p
+                    className={classNames({
+                      'text-italic': !initiator
+                    })}
+                  >
                     {initiator
                       ? properlyCapitalizeInitiator(initiator)
                       : crtdlsT('echimpCard.noData')}
@@ -114,7 +131,9 @@ const CRAndTDLSidePanel = ({
                       lineClamp={5}
                     />
                   ) : (
-                    crtdlsT('echimpCard.noData')
+                    <p className="text-italic">
+                      {crtdlsT('echimpCard.noData')}
+                    </p>
                   )}
                 </div>
 
@@ -144,7 +163,13 @@ const CRAndTDLSidePanel = ({
                   <p className="text-bold">
                     {crtdlsT('echimpCard.relatedCrTdl')}
                   </p>
-                  <p>{relatedCrTdlNumbers ?? crtdlsT('echimpCard.noData')}</p>
+                  <p
+                    className={classNames({
+                      'text-italic': !relatedCrTdlNumbers
+                    })}
+                  >
+                    {relatedCrTdlNumbers ?? crtdlsT('echimpCard.noData')}
+                  </p>
                 </div>
               </>
             ) : (
@@ -152,7 +177,11 @@ const CRAndTDLSidePanel = ({
               <div>
                 <p className="text-bold">{crtdlsT('echimpCard.issuedDate')}</p>
                 {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
-                <p>
+                <p
+                  className={classNames({
+                    'text-italic': !issuedDate
+                  })}
+                >
                   {issuedDate?.split(' ')[0] ?? crtdlsT('echimpCard.noData')}
                 </p>
               </div>

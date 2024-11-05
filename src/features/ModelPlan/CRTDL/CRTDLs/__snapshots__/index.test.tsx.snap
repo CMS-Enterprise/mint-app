@@ -394,7 +394,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                       Issued date
                     </p>
                     <p
-                      class=""
+                      class="text-italic"
                     >
                       2022-07-30T05:00:00Z
                     </p>
