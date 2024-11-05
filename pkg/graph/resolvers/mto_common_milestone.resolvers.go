@@ -10,10 +10,33 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// IsAdded is the resolver for the isAdded field.
+func (r *mTOCommonMilestoneResolver) IsAdded(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
+	panic(fmt.Errorf("not implemented: IsAdded - isAdded"))
+}
+
+// IsSuggested is the resolver for the isSuggested field.
+func (r *mTOCommonMilestoneResolver) IsSuggested(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
+	panic(fmt.Errorf("not implemented: IsSuggested - isSuggested"))
+}
+
+// CommonSolutions is the resolver for the commonSolutions field.
+func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *models.MTOCommonMilestone) ([]*models.MTOCommonSolution, error) {
+	panic(fmt.Errorf("not implemented: CommonSolutions - commonSolutions"))
+}
 
 // MtoCommonMilestoneDummy is the resolver for the mtoCommonMilestoneDummy field.
 func (r *queryResolver) MtoCommonMilestoneDummy(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
 	panic(fmt.Errorf("not implemented: MtoCommonMilestoneDummy - mtoCommonMilestoneDummy"))
 }
+
+// MTOCommonMilestone returns generated.MTOCommonMilestoneResolver implementation.
+func (r *Resolver) MTOCommonMilestone() generated.MTOCommonMilestoneResolver {
+	return &mTOCommonMilestoneResolver{r}
+}
+
+type mTOCommonMilestoneResolver struct{ *Resolver }

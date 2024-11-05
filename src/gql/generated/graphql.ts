@@ -268,37 +268,6 @@ export enum ClaimsBasedPayType {
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
 }
 
-export type CommonMilestone = {
-  __typename: 'CommonMilestone';
-  commonSolutions: Array<CommonSolution>;
-  description: Scalars['String']['output'];
-  id: Scalars['UUID']['output'];
-  isAdded: Scalars['Boolean']['output'];
-  isSuggested: Scalars['Boolean']['output'];
-  key: CommonMilestoneKey;
-  name: Scalars['String']['output'];
-};
-
-export enum CommonMilestoneKey {
-  MILESTONE_A = 'MILESTONE_A',
-  MILESTONE_B = 'MILESTONE_B'
-}
-
-export type CommonSolution = {
-  __typename: 'CommonSolution';
-  description: Scalars['String']['output'];
-  id: Scalars['UUID']['output'];
-  isAdded: Scalars['Boolean']['output'];
-  isSuggested: Scalars['Boolean']['output'];
-  key: CommonSolutionKey;
-  name: Scalars['String']['output'];
-};
-
-export enum CommonSolutionKey {
-  SOLUTION_ONE = 'SOLUTION_ONE',
-  SOLUTION_TWO = 'SOLUTION_TWO'
-}
-
 export enum ComplexityCalculationLevelType {
   HIGH = 'HIGH',
   LOW = 'LOW',
@@ -755,15 +724,19 @@ export type MtoCategory = {
   subCategories: Array<MtoSubcategory>;
 };
 
+/** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
 export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
   categoryName: Scalars['String']['output'];
+  commonSolutions: Array<MtoCommonSolution>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   facilitatedByRole: MtoFacilitator;
   id: Scalars['UUID']['output'];
+  isAdded: Scalars['Boolean']['output'];
+  isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -784,6 +757,7 @@ export type MtoCommonSolution = {
   createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
+  isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -820,14 +794,14 @@ export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
   category: MtoCategory;
-  commonMilestone?: Maybe<CommonMilestone>;
+  commonMilestone?: Maybe<MtoCommonMilestone>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   isDraft: Scalars['Boolean']['output'];
-  key?: Maybe<CommonMilestoneKey>;
+  key?: Maybe<MtoCommonMilestoneKey>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -870,7 +844,7 @@ export enum MtoRiskIndicator {
 export type MtoSolution = {
   __typename: 'MTOSolution';
   addedFromSolutionLibrary: Scalars['Boolean']['output'];
-  commonSolution?: Maybe<CommonSolution>;
+  commonSolution?: Maybe<MtoCommonSolution>;
   commonSolutionID?: Maybe<Scalars['UUID']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1094,7 +1068,7 @@ export enum ModelViewFilter {
 export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
-  commonMilestones: Array<CommonMilestone>;
+  commonMilestones: Array<MtoCommonMilestone>;
   milestones: Array<MtoMilestone>;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
@@ -1227,7 +1201,7 @@ export type MutationCreateMtoCategoryArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateMtoMilestoneArgs = {
-  commonMilestoneKey?: InputMaybe<CommonMilestoneKey>;
+  commonMilestoneKey?: InputMaybe<MtoCommonMilestoneKey>;
   modelPlanID: Scalars['UUID']['input'];
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;

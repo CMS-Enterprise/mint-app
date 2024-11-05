@@ -16,7 +16,7 @@ import (
 // MTOMilestoneCreate uses the provided information to create a new mto Milestone
 func MTOMilestoneCreate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	name *string,
-	commonMilestoneKey *models.CommonMilestoneKey,
+	commonMilestoneKey *models.MTOCommonMilestoneKey,
 	modelPlanID uuid.UUID,
 	mtoCategoryID *uuid.UUID,
 ) (*models.MTOMilestone, error) {

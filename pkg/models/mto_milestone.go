@@ -6,14 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CommonMilestoneKey string
-
-// TODO (mto) move this to the common milestone file when created, and rename it to MTOCommonMilestone
-const (
-	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
-	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
-)
-
 type MTOMilestoneStatus string
 
 const (
@@ -26,8 +18,8 @@ type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation
 
-	Name *string             `json:"name" db:"name"` // From Common Milestone Table if linked
-	Key  *CommonMilestoneKey `json:"key" db:"key"`   // From Common Milestone Table, db field is for conversation to fk in DB
+	Name *string                `json:"name" db:"name"` // From Common Milestone Table if linked
+	Key  *MTOCommonMilestoneKey `json:"key" db:"key"`   // From Common Milestone Table, db field is for conversation to fk in DB
 
 	MTOCommonMilestoneID *uuid.UUID         `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"` // TODO (mto) do we want / need this? We could just get by  key if needed
 	MTOCategoryID        *uuid.UUID         `json:"mtoCategoryID" db:"mto_category_id"`
@@ -47,7 +39,7 @@ func (m *MTOMilestone) AddedFromMilestoneLibrary() bool {
 }
 
 // NewMTOMilestone returns a new mtoMileMTOMilestone object
-func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneKey *CommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
+func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneKey *MTOCommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{
 		Name:              name,
 		baseStruct:        NewBaseStruct(createdBy),

@@ -10,10 +10,23 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// IsAdded is the resolver for the isAdded field.
+func (r *mTOCommonSolutionResolver) IsAdded(ctx context.Context, obj *models.MTOCommonSolution) (bool, error) {
+	panic(fmt.Errorf("not implemented: IsAdded - isAdded"))
+}
 
 // ModelToOperationsCommonSolution is the resolver for the modelToOperationsCommonSolution field.
 func (r *queryResolver) ModelToOperationsCommonSolution(ctx context.Context, id uuid.UUID) (*models.MTOCommonSolution, error) {
 	panic(fmt.Errorf("not implemented: ModelToOperationsCommonSolution - modelToOperationsCommonSolution"))
 }
+
+// MTOCommonSolution returns generated.MTOCommonSolutionResolver implementation.
+func (r *Resolver) MTOCommonSolution() generated.MTOCommonSolutionResolver {
+	return &mTOCommonSolutionResolver{r}
+}
+
+type mTOCommonSolutionResolver struct{ *Resolver }

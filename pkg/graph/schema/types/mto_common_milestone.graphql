@@ -3,7 +3,11 @@ enum MTOCommonMilestoneKey {
   MILESTONE_B,
 }
 
+"""
+MTOCommonMilestone represents a Milestone from the "Common Milestones" library
+"""
 type MTOCommonMilestone {
+  # DB Fields
   id: UUID!
   name: String!
   key: MTOCommonMilestoneKey!
@@ -12,6 +16,12 @@ type MTOCommonMilestone {
   description: String!
   facilitatedByRole: MTOFacilitator!
 
+  # Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Milestone is _already_ part of the Model Plan's MTO
+  isSuggested: Boolean!
+  commonSolutions: [MTOCommonSolution!]!
+
+  #Meta Data
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!

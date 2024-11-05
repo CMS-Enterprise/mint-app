@@ -4,12 +4,18 @@ enum MTOCommonSolutionKey {
 }
 
 type MTOCommonSolution {
+  #DB Fields
   id: UUID!
   name: String!
   key: MTOCommonSolutionKey!
   description: String!
   role: MTOFacilitator!
 
+  #Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone)
+  # isSuggested: Boolean! # TODO (mto) Is this needed? 
+
+  # Meta Data
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!

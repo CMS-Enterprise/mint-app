@@ -14,25 +14,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CommonMilestone struct {
-	ID              uuid.UUID                 `json:"id"`
-	Key             models.CommonMilestoneKey `json:"key"`
-	Name            string                    `json:"name"`
-	Description     string                    `json:"description"`
-	IsAdded         bool                      `json:"isAdded"`
-	IsSuggested     bool                      `json:"isSuggested"`
-	CommonSolutions []*CommonSolution         `json:"commonSolutions"`
-}
-
-type CommonSolution struct {
-	ID          uuid.UUID         `json:"id"`
-	Key         CommonSolutionKey `json:"key"`
-	Name        string            `json:"name"`
-	Description string            `json:"description"`
-	IsAdded     bool              `json:"isAdded"`
-	IsSuggested bool              `json:"isSuggested"`
-}
-
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -96,7 +77,7 @@ type MTOSolution struct {
 	ModifiedDts              *time.Time                  `json:"modifiedDts,omitempty"`
 	RelatedMilestones        []*models.MTOMilestone      `json:"relatedMilestones"`
 	AddedFromSolutionLibrary bool                        `json:"addedFromSolutionLibrary"`
-	CommonSolution           *CommonSolution             `json:"commonSolution,omitempty"`
+	CommonSolution           *models.MTOCommonSolution   `json:"commonSolution,omitempty"`
 }
 
 // Represents model plan base translation data
@@ -1190,47 +1171,6 @@ func (e *ChangeType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ChangeType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type CommonSolutionKey string
-
-const (
-	CommonSolutionKeySolutionOne CommonSolutionKey = "SOLUTION_ONE"
-	CommonSolutionKeySolutionTwo CommonSolutionKey = "SOLUTION_TWO"
-)
-
-var AllCommonSolutionKey = []CommonSolutionKey{
-	CommonSolutionKeySolutionOne,
-	CommonSolutionKeySolutionTwo,
-}
-
-func (e CommonSolutionKey) IsValid() bool {
-	switch e {
-	case CommonSolutionKeySolutionOne, CommonSolutionKeySolutionTwo:
-		return true
-	}
-	return false
-}
-
-func (e CommonSolutionKey) String() string {
-	return string(e)
-}
-
-func (e *CommonSolutionKey) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CommonSolutionKey(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CommonSolutionKey", str)
-	}
-	return nil
-}
-
-func (e CommonSolutionKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

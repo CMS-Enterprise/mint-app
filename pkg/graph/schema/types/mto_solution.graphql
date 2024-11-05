@@ -36,5 +36,5 @@ type MTOSolution {
   # Custom Resolvers
   relatedMilestones: [MTOMilestone!]! # Can be empty, since you can have a solution with no milestones
   addedFromSolutionLibrary: Boolean!
-  commonSolution: CommonSolution
+  commonSolution: MTOCommonSolution
 }

@@ -17,7 +17,7 @@ import (
 )
 
 // CommonMilestone is the resolver for the commonMilestone field.
-func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*model.CommonMilestone, error) {
+func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
 	panic(fmt.Errorf("not implemented: CommonMilestone - commonMilestone"))
 }
 
@@ -37,7 +37,7 @@ func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOM
 }
 
 // CreateMTOMilestone is the resolver for the createMTOMilestone field.
-func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneKey *models.CommonMilestoneKey, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneKey *models.MTOCommonMilestoneKey, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneKey, modelPlanID, mtoCategoryID)
