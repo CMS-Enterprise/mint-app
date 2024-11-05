@@ -5,7 +5,6 @@ enum MTOCommonSolutionKey {
 
 type MTOCommonSolution {
   #DB Fields
-  id: UUID!
   name: String!
   key: MTOCommonSolutionKey!
   description: String!

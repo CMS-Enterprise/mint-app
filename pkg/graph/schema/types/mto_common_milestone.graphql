@@ -8,7 +8,6 @@ MTOCommonMilestone represents a Milestone from the "Common Milestones" library
 """
 type MTOCommonMilestone {
   # DB Fields
-  id: UUID!
   name: String!
   key: MTOCommonMilestoneKey!
   categoryName: String!

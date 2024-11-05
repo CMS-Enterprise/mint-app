@@ -22,7 +22,7 @@ type MTOSolution {
   facilitatedBy: MTOFacilitator
   status: MTOSolutionStatus!
   riskIndicator: MTORiskIndicator
-  commonSolutionID: UUID
+  key: MTOCommonSolutionKey
   solutionType: MTOSolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
 
   #Meta Data

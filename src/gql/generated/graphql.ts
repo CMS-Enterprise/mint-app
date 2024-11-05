@@ -734,7 +734,6 @@ export type MtoCommonMilestone = {
   createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   facilitatedByRole: MtoFacilitator;
-  id: Scalars['UUID']['output'];
   isAdded: Scalars['Boolean']['output'];
   isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
@@ -756,7 +755,6 @@ export type MtoCommonSolution = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
-  id: Scalars['UUID']['output'];
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -810,7 +808,6 @@ export type MtoMilestone = {
    * This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
    */
   mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
-  mtoCommonMilestoneID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
   riskIndicator: MtoRiskIndicator;
@@ -845,12 +842,12 @@ export type MtoSolution = {
   __typename: 'MTOSolution';
   addedFromSolutionLibrary: Scalars['Boolean']['output'];
   commonSolution?: Maybe<MtoCommonSolution>;
-  commonSolutionID?: Maybe<Scalars['UUID']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<MtoFacilitator>;
   id: Scalars['UUID']['output'];
+  key?: Maybe<MtoCommonSolutionKey>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
