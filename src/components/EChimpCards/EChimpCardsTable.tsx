@@ -249,6 +249,7 @@ const EChimpCardsTable = ({
             isInReadView={isInReadView}
             setShowCRorTDLWithId={setShowCRorTDLWithId}
             setIsSidepanelOpen={setIsSidepanelOpen}
+            isCR={isEChimpCR(card)}
           />
         ))}
       </CardGroup>
