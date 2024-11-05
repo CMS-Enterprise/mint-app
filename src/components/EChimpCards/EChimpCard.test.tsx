@@ -13,7 +13,7 @@ describe('EChimpCard', () => {
     implementationDate: '2022-07-30T05:00:00Z',
     setShowCRorTDLWithId: () => {},
     setIsSidepanelOpen: () => {},
-    isEChimpCR: true
+    isCR: true
   };
 
   it('renders without errors', async () => {

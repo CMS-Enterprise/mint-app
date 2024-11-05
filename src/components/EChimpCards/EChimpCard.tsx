@@ -26,7 +26,7 @@ export type EChimpCardProps = {
   sensitiveFlag?: boolean | null;
   setShowCRorTDLWithId: (id: string) => void;
   setIsSidepanelOpen: (isOpen: boolean) => void;
-  isEChimpCR: boolean;
+  isCR: boolean;
 };
 
 const EChimpCard = ({
@@ -39,7 +39,7 @@ const EChimpCard = ({
   isInReadView,
   issuedDate,
   sensitiveFlag,
-  isEChimpCR,
+  isCR,
   setShowCRorTDLWithId,
   setIsSidepanelOpen
 }: EChimpCardProps) => {
@@ -84,7 +84,7 @@ const EChimpCard = ({
 
         <div className="echimp-card__status">
           <p className="text-bold">
-            {isEChimpCR
+            {isCR
               ? crtdlsT('echimpCard.crStatus')
               : crtdlsT('echimpCard.tdlStatus')}
           </p>
@@ -96,7 +96,7 @@ const EChimpCard = ({
         </div>
         <div className="echimp-card__date">
           <p className="text-bold">
-            {isEChimpCR
+            {isCR
               ? crtdlsT('echimpCard.implementationDate')
               : crtdlsT('echimpCard.issuedDate')}
           </p>
