@@ -2,22 +2,22 @@ package sqlqueries
 
 import _ "embed"
 
-//go:embed SQL/mto_category/create.sql
+//go:embed SQL/mto/category/create.sql
 var mtoCategoryCreateSQL string
 
-//go:embed SQL/mto_category/update.sql
+//go:embed SQL/mto/category/update.sql
 var mtoCategoryUpdateSQL string
 
-//go:embed SQL/mto_category/get_by_id.sql
+//go:embed SQL/mto/category/get_by_id.sql
 var mtoCategoryGetByIDSQL string
 
-//go:embed SQL/mto_category/get_by_model_plan_id_LOADER.sql
+//go:embed SQL/mto/category/get_by_model_plan_id_LOADER.sql
 var mtoCategoryGetByModelPlanIDLoaderSQL string
 
-//go:embed SQL/mto_category/and_subcategories_get_by_model_plan_id_LOADER.sql
+//go:embed SQL/mto/category/and_subcategories_get_by_model_plan_id_LOADER.sql
 var mtoCategoryAndSubCategoriesGetByModelPlanIDLoaderSQL string
 
-//go:embed SQL/mto_category/get_by_parent_id_LOADER.sql
+//go:embed SQL/mto/category/get_by_parent_id_LOADER.sql
 var mtoCategoryGetByParentIDLoaderSQL string
 
 type mtoCategoryScripts struct {
