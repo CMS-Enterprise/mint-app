@@ -3,6 +3,7 @@
 type ModelsToOperationMatrix {
   categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [MTOCommonMilestone!]!
+  commonSolutions: [MTOCommonSolution!]!
   milestones: [MTOMilestone!]!
   solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
