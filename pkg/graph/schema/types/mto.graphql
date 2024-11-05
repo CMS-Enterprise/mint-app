@@ -16,9 +16,9 @@ type RecentModification {
 }
 
 enum MTOStatus {
-  READY_TO_START
+  READY
   IN_PROGRESS
-  READY_TO_REVIEW #Note, this is not yet returnable
+  READY_FOR_REVIEW #Note, this is not yet returnable
 }
 
 enum MTOFacilitator {

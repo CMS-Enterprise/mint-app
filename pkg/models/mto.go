@@ -41,7 +41,7 @@ type MTOStatus string
 
 // These are the options for MTOStatus
 const (
-	MTOStatusReadyToStart  MTOStatus = "READY_TO_START"
-	MTOStatusInProgress    MTOStatus = "IN_PROGRESS"
-	MTOStatusReadyToReview MTOStatus = "READY_TO_REVIEW"
+	MTOStatusReadyToStart   MTOStatus = "READY"
+	MTOStatusInProgress     MTOStatus = "IN_PROGRESS"
+	MTOStatusReadyForReview MTOStatus = "READY_FOR_REVIEW"
 )

@@ -861,8 +861,8 @@ export enum MtoSolutionType {
 
 export enum MtoStatus {
   IN_PROGRESS = 'IN_PROGRESS',
-  READY_TO_REVIEW = 'READY_TO_REVIEW',
-  READY_TO_START = 'READY_TO_START'
+  READY = 'READY',
+  READY_FOR_REVIEW = 'READY_FOR_REVIEW'
 }
 
 export type MtoSubcategory = {

@@ -14,7 +14,7 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID, mtoMarkedReadyToRe
 	//TODO (mto) Decide if this would be better as a DB query, if we should rely on other loaders
 
 	if mtoMarkedReadyToReview {
-		return models.MTOStatusReadyToReview, nil
+		return models.MTOStatusReadyForReview, nil
 	}
 	// Get Categories, Milestones, and Solutions by ModelPlanID. If any are returned, it is in progress. If any errors, it is ReadyToStart
 
