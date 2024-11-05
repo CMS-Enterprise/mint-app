@@ -177,7 +177,9 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               >
                 CR Status
               </p>
-              <p>
+              <p
+                class=""
+              >
                 Open
               </p>
             </div>
@@ -189,7 +191,9 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               >
                 Implementation Date
               </p>
-              <p>
+              <p
+                class=""
+              >
                 2022-07-30T05:00:00Z
               </p>
             </div>
@@ -235,6 +239,20 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
             data-testid="CardBody"
           >
             <div
+              class="echimp-card__status"
+            >
+              <p
+                class="text-bold"
+              >
+                TDL Status
+              </p>
+              <p
+                class="text-italic"
+              >
+                No data available
+              </p>
+            </div>
+            <div
               class="echimp-card__date"
             >
               <p
@@ -242,7 +260,9 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               >
                 Issued date
               </p>
-              <p>
+              <p
+                class=""
+              >
                 2022-07-30T05:00:00Z
               </p>
             </div>

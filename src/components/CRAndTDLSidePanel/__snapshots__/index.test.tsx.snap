@@ -31,7 +31,7 @@ exports[`The CRAndTDLSidePanel component > renders TDL without crashing (flag di
             <p
               class="text-bold"
             >
-              TDL Status
+              TDL Status:
             </p>
             <p>
               Test Status
