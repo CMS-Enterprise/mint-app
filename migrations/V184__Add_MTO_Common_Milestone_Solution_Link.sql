@@ -1,5 +1,5 @@
 CREATE TABLE mto_common_milestone_solution_link (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
     mto_common_milestone_id UUID NOT NULL REFERENCES mto_common_milestone(id),
     mto_common_solution_id UUID NOT NULL REFERENCES mto_common_solution(id),
 
