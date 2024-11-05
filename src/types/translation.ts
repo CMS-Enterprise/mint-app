@@ -2,10 +2,12 @@
   Typed translation mappings for question centric architecture for a model plan
   Used to dynamically iterate/render questions, answers for functionality such as csv export and change history
 */
+import React from 'react';
 import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedMultiPayerDataAvailabilityUseCase,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -16,10 +18,13 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  DataExchangeApproachStatus,
   DataForMonitoringType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
+  DataToCollectFromParticipants,
   DataToSendParticipantsType,
+  DataToSendToParticipants,
   DiscussionReplyTranslation,
   DiscussionUserRole,
   DocumentType,
@@ -39,6 +44,7 @@ import {
   ModelType,
   ModelViewFilter,
   MonitoringFileType,
+  MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
   OperationalNeedTranslation,
@@ -60,6 +66,7 @@ import {
   PlanBeneficiariesTranslation,
   PlanCollaboratorTranslation,
   PlanCrTranslation,
+  PlanDataExchangeApproachTranslation,
   PlanDiscussionTranslation,
   PlanDocumentSolutionLinkTranslation,
   PlanDocumentTranslation,
@@ -111,11 +118,13 @@ export type TranslationFieldProperties = Omit<
     adjacentField: string;
   };
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
-  questionTooltip?: string; // Render tooltip next to the question
+  questionTooltip?: string | React.ReactNode; // Render tooltip next to the question
   hideFromReadonly?: boolean; // Hide question from readonly view
   groupLabel?: string;
   groupLabelTooltip?: string;
-  modalLink?: string; // Adds a modal link
+  pageLabel?: string; // Label for the page
+  modalLink?: string; // Adds a modal link,
+  hideIfFalsy?: boolean; // Hide question if the value is falsy - ex: dataWillNotBeCollectedFromParticipants
 };
 
 /*
@@ -923,6 +932,55 @@ export type TranslationPayments = {
   [K in keyof TranslationPaymentsGQL]: TranslationPaymentsForm[K]; // FE form type
 };
 
+// Beneficiaries
+export type TranslationDataExchangeApproachForm = {
+  // Page 2
+  dataToCollectFromParticipants: TranslationFieldPropertiesWithOptions<DataToCollectFromParticipants>;
+  dataToCollectFromParticipantsReportsDetails: TranslationFieldProperties;
+  dataToCollectFromParticipantsOther: TranslationFieldProperties;
+  dataWillNotBeCollectedFromParticipants: TranslationFieldPropertiesWithOptions<Bool>;
+  dataToCollectFromParticipantsNote: TranslationFieldProperties;
+  dataToSendToParticipants: TranslationFieldPropertiesWithOptions<DataToSendToParticipants>;
+  dataToSendToParticipantsNote: TranslationFieldProperties;
+  // Page 3
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldPropertiesWithOptionsAndParent<
+    AnticipatedMultiPayerDataAvailabilityUseCase,
+    Bool
+  >;
+  doesNeedToMakeMultiPayerDataAvailableNote: TranslationFieldProperties;
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  multiSourceDataToCollect: TranslationFieldPropertiesWithOptionsAndParent<
+    MultiSourceDataToCollect,
+    Bool
+  >;
+  multiSourceDataToCollectOther: TranslationFieldProperties;
+  doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationFieldProperties;
+  // Page 4
+  willImplementNewDataExchangeMethods: TranslationFieldPropertiesWithOptions<Bool>;
+  newDataExchangeMethodsDescription: TranslationFieldProperties;
+  newDataExchangeMethodsNote: TranslationFieldProperties;
+  additionalDataExchangeConsiderationsDescription: TranslationFieldProperties;
+  isDataExchangeApproachComplete: TranslationFieldPropertiesWithOptions<Bool>;
+  // Metadata
+  markedCompleteBy: TranslationFieldProperties;
+  markedCompleteDts: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<DataExchangeApproachStatus>;
+};
+
+type TranslationDataExchangeApproachGQL = Omit<
+  PlanDataExchangeApproachTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationDataExchangeApproach = {
+  [K in keyof TranslationDataExchangeApproachGQL]: TranslationDataExchangeApproachForm[K]; // FE form type
+};
+
 // Collaborators
 export type TranslationCollaboratorsForm = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
@@ -1177,6 +1235,7 @@ export type TranslationPlan = {
   operationalNeeds: TranslationOperationalNeeds;
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
+  dataExchangeApproach: TranslationDataExchangeApproach;
 };
 
 export type TranslationPlanSection =
@@ -1186,7 +1245,8 @@ export type TranslationPlanSection =
   | TranslationPlan['participantsAndProviders']
   | TranslationPlan['beneficiaries']
   | TranslationPlan['opsEvalAndLearning']
-  | TranslationPlan['payments'];
+  | TranslationPlan['payments']
+  | TranslationPlan['dataExchangeApproach'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
@@ -1203,5 +1263,6 @@ export enum PlanSection {
   DOCUMENTS = 'documents',
   OPERATIONAL_NEEDS = 'operationalNeeds',
   OPERATIONAL_SOLUTIONS = 'solutions',
-  OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks'
+  OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
+  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach'
 }

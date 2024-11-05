@@ -9,17 +9,18 @@ import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import {
-  GetTaskListSubscriptionsQuery,
-  TaskListSection,
-  useLockTaskListSectionMutation,
-  useUnlockTaskListSectionMutation
+  GetLockedModelPlanSectionsQuery,
+  LockableSection,
+  useLockModelPlanSectionMutation,
+  useUnlockModelPlanSectionMutation
 } from 'gql/generated/graphql';
 
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { RouterContext } from 'contexts/RouterContext';
 import { isUUID } from 'utils/modelPlan';
 
-type LockSectionType = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+type LockSectionType =
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type SubscriptionHandlerProps = {
   children: React.ReactNode;
@@ -32,25 +33,26 @@ export enum LockStatus {
   CANT_LOCK = 'CANT_LOCK'
 }
 
-type TaskListSectionMapType = {
-  [key: string]: TaskListSection;
+type LockableSectionMapType = {
+  [key: string]: LockableSection;
 };
 
 // Map used to connect url route to Subscription Task List Section
-export const taskListSectionMap: TaskListSectionMapType = {
-  basics: TaskListSection.BASICS,
-  beneficiaries: TaskListSection.BENEFICIARIES,
-  characteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  'ops-eval-and-learning': TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
-  'participants-and-providers': TaskListSection.PARTICIPANTS_AND_PROVIDERS,
-  payment: TaskListSection.PAYMENT
+export const modelPlanSectionMap: LockableSectionMapType = {
+  basics: LockableSection.BASICS,
+  beneficiaries: LockableSection.BENEFICIARIES,
+  characteristics: LockableSection.GENERAL_CHARACTERISTICS,
+  'ops-eval-and-learning': LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  'participants-and-providers': LockableSection.PARTICIPANTS_AND_PROVIDERS,
+  payment: LockableSection.PAYMENT,
+  'data-exchange-approach': LockableSection.DATA_EXCHANGE_APPROACH
 };
 
 // Find lock and sets the LockStatus of the current task list section
 // Returns - LOCKED || UNLOCKED || OCCUPYING
 export const findLockedSection = (
   locks: LockSectionType[],
-  route: TaskListSection,
+  route: LockableSection,
   userEUA?: string
 ): LockStatus => {
   const foundLockedSection = locks.find(
@@ -72,37 +74,43 @@ export const findLockedSection = (
   return LockStatus.OCCUPYING;
 };
 
-// Parses task list route to map to taskListSectionMap
-const taskListRouteParser = (route: string): string => {
+// Parses task list route to map to modelPlanSectionMap
+const lockedRouteParser = (route: string): string => {
+  if (route.split('/')[4] === 'data-exchange-approach') {
+    return route.split('/')[4];
+  }
   return route.split('/')[5];
 };
 
-const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
+const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
   // Context used to get/set previous routes
   const { to, from, setRoute } = useContext(RouterContext);
 
   // Get the subscription context - messages (locks, unlocks), loading
-  const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
+  const { lockableSectionLocks, loading } = useContext(SubscriptionContext);
 
   const history = useHistory();
 
-  const modelID = to.split('/')[2];
+  const modelID: string = to.split('/')[2];
 
-  const isTaskList = to.split('/')[4] === 'task-list';
+  const isLockable: boolean =
+    to.split('/')[4] === 'task-list' ||
+    (to.split('/')[4] === 'data-exchange-approach' &&
+      to.split('/')[3] !== 'read-view');
 
-  const taskListRoute = taskListRouteParser(to);
+  const taskListRoute = lockedRouteParser(to);
 
   const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
   const validModelID: boolean = isUUID(modelID);
 
-  const taskListSection: TaskListSection = taskListSectionMap[taskListRoute];
+  const modelPlanSection: LockableSection = modelPlanSectionMap[taskListRoute];
 
   const [addLock, { loading: addLockLoading }] =
-    useLockTaskListSectionMutation();
+    useLockModelPlanSectionMutation();
 
   const [removeLock, { loading: removeLockLoading }] =
-    useUnlockTaskListSectionMutation();
+    useUnlockModelPlanSectionMutation();
 
   let lockState: LockStatus;
 
@@ -110,16 +118,16 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Returns - 'LOCKED', 'UNLOCKED', 'OCCUPYING', or 'CANT_LOCK' (pages that don't require locking)
   // 'OCCUPYING' refers to the current user already occupying the page
   if (
-    taskListSection &&
-    taskListSectionLocks &&
+    modelPlanSection &&
+    lockableSectionLocks &&
     euaId &&
     !addLockLoading &&
     !removeLockLoading &&
     !loading
   ) {
     lockState = findLockedSection(
-      taskListSectionLocks,
-      taskListSection,
+      lockableSectionLocks,
+      modelPlanSection,
       euaId as string
     );
   } else {
@@ -163,7 +171,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   };
 
   // Removes a section that is locked
-  const addLockedSection = (section: TaskListSection) => {
+  const addLockedSection = (section: LockableSection) => {
     addLock({
       variables: {
         modelPlanID: modelID,
@@ -181,8 +189,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Checks to see if section should be unlocked
   if (
     validModelID &&
-    !taskListSection &&
-    taskListSectionLocks?.length > 0 &&
+    !modelPlanSection &&
+    lockableSectionLocks?.length > 0 &&
     !addLockLoading &&
     !removeLockLoading &&
     !loading &&
@@ -190,10 +198,10 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     from !== to
   ) {
     // Located section to be removed
-    const lockedSection = taskListSectionLocks.find(
+    const lockedSection = lockableSectionLocks.find(
       (section: LockSectionType) =>
         section.lockedByUserAccount.username === euaId &&
-        section.section === taskListSectionMap[taskListRouteParser(from)]
+        section.section === modelPlanSectionMap[lockedRouteParser(from)]
     );
 
     if (lockedSection) removeLockedSection(lockedSection);
@@ -202,8 +210,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Checks to see if section should be locked and calls mutation to add lock
   if (
     (lockState === LockStatus.UNLOCKED || lockState === LockStatus.OCCUPYING) &&
-    isTaskList &&
-    taskListSection &&
+    isLockable &&
+    modelPlanSection &&
     validModelID &&
     !addLockLoading &&
     !removeLockLoading &&
@@ -211,11 +219,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   ) {
     // Check if need to unlock previous section before adding new section
     // i.e. end of task list section or any react-router redirect from one section directly to another
-    const prevLockedSection = taskListSectionLocks.find(
+    const prevLockedSection = lockableSectionLocks.find(
       (section: LockSectionType) =>
         section.lockedByUserAccount.username === euaId &&
-        taskListSectionMap[taskListRouteParser(from)] === section.section &&
-        taskListSectionMap[taskListRouteParser(to)] !== section.section &&
+        modelPlanSectionMap[lockedRouteParser(from)] === section.section &&
+        modelPlanSectionMap[lockedRouteParser(to)] !== section.section &&
         from !== to
     );
 
@@ -224,11 +232,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     }
 
     if (lockState === LockStatus.UNLOCKED) {
-      addLockedSection(taskListSection);
+      addLockedSection(modelPlanSection);
     }
   }
 
   return <div>{children}</div>;
 };
 
-export default SubscriptionHandler;
+export default PageLockWrapper;

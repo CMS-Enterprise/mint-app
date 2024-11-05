@@ -42,7 +42,8 @@ describe('Read Only Model Plan Summary -- Payment', () => {
       expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(
         'In progress'
       );
-      expect(asFragment()).toMatchSnapshot();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

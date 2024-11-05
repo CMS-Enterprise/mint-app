@@ -133,6 +133,13 @@ const DailyDigest = ({
                       })}
                     </li>
                   )}
+                {planSections?.dataExchangeApproachMarkedComplete && (
+                  <li className="line-height-sans-5">
+                    {notificationsT(
+                      'index.dailyDigest.dataExchangeApproachComplete'
+                    )}
+                  </li>
+                )}
                 {modelPlan?.statusChanges &&
                   firstFiveChanges.includes('statusChanges') && (
                     <li className="line-height-sans-5">

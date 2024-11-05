@@ -3,6 +3,12 @@ package worker
 import (
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+
+	"github.com/golang/mock/gomock"
+
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+
 	"github.com/cms-enterprise/mint-app/pkg/email"
 
 	faktory "github.com/contribsys/faktory/client"
@@ -16,6 +22,11 @@ import (
 )
 
 func (suite *WorkerSuite) TestAnalyzedAuditJob() {
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
+	addressBook := email.AddressBook{MINTTeamEmail: "mint.team@local.test"}
+
 	worker := &Worker{
 		Store:  suite.testConfigs.Store,
 		Logger: suite.testConfigs.Logger,
@@ -31,6 +42,12 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	}
 	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
+
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelperWithInputTemplates(
+		newPlan.ModelName,
+		newPlan,
+		"{{.ModelName}}'s Test",
+		"{{.ModelPlanName}} {{.ModelPlanID}}")
 
 	// Add Documents
 	suite.createPlanDocument(plan)
@@ -76,6 +93,8 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	ops, _ := resolvers.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	// plan_payments
 	payment, _ := resolvers.PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	// plan_data_exchange_approach
+	dea, _ := resolvers.PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 
 	// Update sections for ReadyForClearance
 	clearanceChanges := map[string]interface{}{
@@ -108,6 +127,49 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(opsErr)
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
+
+	mockEmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).
+		Return(testTemplate, nil).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(&emailtestconfigs.TestEmailServiceConfig).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Any(),
+			gomock.Any(),
+			gomock.Any(),
+			gomock.Eq(expectedSubject),
+			gomock.Any(),
+			gomock.Eq(expectedBody),
+			gomock.Any(),
+		).AnyTimes()
+
+	// Update Plan Data Exchange Approach
+	dea, deaErr := resolvers.PlanDataExchangeApproachUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		dea.ID,
+		map[string]interface{}{"isDataExchangeApproachComplete": true},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		mockEmailService,
+		mockEmailTemplateService,
+		addressBook,
+	)
+
+	// Check that the plan data exchange approach was updated and marked complete
+	suite.NoError(deaErr)
+	suite.NotNil(dea)
+	suite.NotNil(dea.MarkedCompleteBy)
+	suite.NotNil(dea.MarkedCompleteDts)
 
 	// Test the job through a text executor, as we need the JID through the worker context
 	pool, err := faktory.NewPool(1)
@@ -154,6 +216,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_payments"))
+	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.Updated, "plan_data_exchange_approach"))
 
 	// ReadyForClearance Sections
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForClearance, "plan_basics"))
@@ -164,6 +227,9 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_beneficiaries"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_ops_eval_and_learning"))
 	suite.True(lo.Contains(analyzedAudit.Changes.PlanSections.ReadyForReview, "plan_payments"))
+
+	// Check that data exchange was marked complete in the audit
+	suite.True(analyzedAudit.Changes.PlanSections.DataExchangeApproachMarkedComplete)
 
 	// Dont create if there are no changes
 	mp := models.NewModelPlan(suite.testConfigs.Principal.UserAccount.ID, "NO CHANGES")

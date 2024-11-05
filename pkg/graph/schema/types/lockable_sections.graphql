@@ -1,0 +1,67 @@
+enum ChangeType {
+  ADDED
+  UPDATED
+  REMOVED
+}
+
+enum ActionType {
+  """
+  A normal flow action
+  """
+  NORMAL
+
+  """
+  An administrative action
+  """
+  ADMIN
+}
+
+# LockableSection represents any section of the application that a user can uniquely hold a lock on.
+# It _largely_ (currently) maps to the sections of the Task List, but also includes Data Exchange, which notably isn't part of the Task List.
+enum LockableSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  PREPARE_FOR_CLEARANCE,
+  DATA_EXCHANGE_APPROACH
+}
+
+type LockableSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: LockableSectionLockStatus!
+  actionType: ActionType!
+}
+
+type LockableSectionLockStatus {
+  modelPlanID: UUID!
+  section: LockableSection!
+  lockedByUserAccount: UserAccount!
+  isAssessment: Boolean!
+}
+
+extend type Query {
+  lockableSectionLocks(modelPlanID: UUID!): [LockableSectionLockStatus!]!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  lockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
+  @hasRole(role: MINT_USER)
+
+  unlockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
+  @hasRole(role: MINT_USER)
+
+  unlockAllLockableSections(modelPlanID: UUID!): [LockableSectionLockStatus!]!
+  @hasRole(role: MINT_ASSESSMENT)
+}
+
+type Subscription {
+  onLockableSectionLocksChanged(modelPlanID: UUID!): LockableSectionLockStatusChanged!
+  @hasRole(role: MINT_USER)
+
+  onLockLockableSectionContext(modelPlanID: UUID!): LockableSectionLockStatusChanged!
+  @hasRole(role: MINT_USER)
+}

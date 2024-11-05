@@ -34,7 +34,11 @@ export const formatListValues = <
 
   return getKeys(config.options)
     .filter(option => Array.isArray(value) && value?.includes(option))
-    .map((option): string => config.options[option]);
+    .map((option): string =>
+      config.readonlyOptions?.[option]
+        ? config.readonlyOptions[option]
+        : config.options[option]
+    );
 };
 
 /*

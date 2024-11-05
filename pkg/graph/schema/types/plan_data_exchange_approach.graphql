@@ -1,0 +1,127 @@
+enum DataToCollectFromParticipants {
+  BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS
+  CLINICAL_DATA
+  COLLECT_BIDS_AND_PLAN_INFORMATION
+  COOPERATIVE_AGREEMENT_APPLICATION
+  DECARBONIZATION_DATA
+  EXPANDED_DEMOGRAPHICS_DATA
+  FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES
+  LEARNING_SYSTEM_METRICS
+  PARTICIPANT_AGREEMENT
+  PARTICIPANT_AGREEMENT_LETTER_OF_INTENT
+  PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION
+  PARTICIPANT_REPORTED_DATA
+  PARTICIPANT_REPORTED_QUALITY_MEASURES
+  PROVIDER_PARTICIPANT_ROSTER
+  REPORTS_FROM_PARTICIPANTS
+  SOCIAL_DETERMINANTS_OF_HEALTH
+  SURVEY
+  OTHER
+}
+
+enum DataToSendToParticipants {
+  DATA_FEEDBACK_DASHBOARD
+  NON_CLAIMS_BASED_PAYMENTS
+  OPERATIONS_DATA
+  PARTIALLY_ADJUSTED_CLAIMS_DATA
+  RAW_CLAIMS_DATA
+  DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
+}
+
+enum AnticipatedMultiPayerDataAvailabilityUseCase {
+  MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION
+  SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING
+  FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS
+}
+
+enum MultiSourceDataToCollect {
+  COMMERCIAL_CLAIMS
+  LAB_DATA
+  MANUFACTURER
+  MEDICAID_CLAIMS
+  MEDICARE_CLAIMS
+  PATIENT_REGISTRY
+  OTHER
+}
+
+enum DataExchangeApproachStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+type PlanDataExchangeApproach {
+  id: UUID!
+  modelPlanID: UUID!
+
+  dataToCollectFromParticipants: [DataToCollectFromParticipants!]!
+  dataToCollectFromParticipantsReportsDetails: String
+  dataToCollectFromParticipantsOther: String
+  dataWillNotBeCollectedFromParticipants: Boolean
+  dataToCollectFromParticipantsNote: String
+
+  dataToSendToParticipants: [DataToSendToParticipants!]!
+  dataToSendToParticipantsNote: String
+
+  doesNeedToMakeMultiPayerDataAvailable: Boolean
+  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]!
+  doesNeedToMakeMultiPayerDataAvailableNote: String
+
+  doesNeedToCollectAndAggregateMultiSourceData: Boolean
+  multiSourceDataToCollect: [MultiSourceDataToCollect!]!
+  multiSourceDataToCollectOther: String
+  doesNeedToCollectAndAggregateMultiSourceDataNote: String
+
+  willImplementNewDataExchangeMethods: Boolean
+  newDataExchangeMethodsDescription: String
+  newDataExchangeMethodsNote: String
+
+  additionalDataExchangeConsiderationsDescription: String
+
+  # Metadata fields
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  isDataExchangeApproachComplete: Boolean!
+  markedCompleteBy: UUID
+  markedCompleteByUserAccount: UserAccount
+  markedCompleteDts: Time
+
+  status: DataExchangeApproachStatus!
+}
+
+input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") {
+  dataToCollectFromParticipants: [DataToCollectFromParticipants!]
+  dataToCollectFromParticipantsReportsDetails: String
+  dataToCollectFromParticipantsOther: String
+  dataWillNotBeCollectedFromParticipants: Boolean
+  dataToCollectFromParticipantsNote: String
+
+  dataToSendToParticipants: [DataToSendToParticipants!]
+  dataToSendToParticipantsNote: String
+
+  doesNeedToMakeMultiPayerDataAvailable: Boolean
+  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]
+  doesNeedToMakeMultiPayerDataAvailableNote: String
+
+  doesNeedToCollectAndAggregateMultiSourceData: Boolean
+  multiSourceDataToCollect: [MultiSourceDataToCollect!]
+  multiSourceDataToCollectOther: String
+  doesNeedToCollectAndAggregateMultiSourceDataNote: String
+
+  willImplementNewDataExchangeMethods: Boolean
+  newDataExchangeMethodsDescription: String
+  newDataExchangeMethodsNote: String
+
+  additionalDataExchangeConsiderationsDescription: String
+
+  isDataExchangeApproachComplete: Boolean
+}
+
+extend type Mutation {
+  updatePlanDataExchangeApproach(id: UUID!, changes: PlanDataExchangeApproachChanges!): PlanDataExchangeApproach!
+  @hasRole(role: MINT_USER)
+}
