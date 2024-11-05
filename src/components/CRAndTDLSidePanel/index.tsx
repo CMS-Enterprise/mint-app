@@ -161,7 +161,7 @@ const CRAndTDLSidePanel = ({
 
             {flags.echimpEnabled && (
               <ExternalLink
-                href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+                href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`}
                 className="sidepanel--full-width margin-right-0"
                 toEchimp
               >
