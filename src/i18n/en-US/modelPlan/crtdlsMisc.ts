@@ -112,6 +112,7 @@ const crtdlsMisc = {
       sensitive: 'Sensitive/controversial',
       crQuestion: ' CR?'
     },
+    noData: 'No data available',
     implementationDate: 'Implementation Date',
     issuedDate: 'Issued date',
     viewMore: 'View more',

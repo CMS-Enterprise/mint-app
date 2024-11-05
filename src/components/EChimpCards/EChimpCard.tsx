@@ -26,6 +26,7 @@ export type EChimpCardProps = {
   sensitiveFlag?: boolean | null;
   setShowCRorTDLWithId: (id: string) => void;
   setIsSidepanelOpen: (isOpen: boolean) => void;
+  isEChimpCR: boolean;
 };
 
 const EChimpCard = ({
@@ -38,6 +39,7 @@ const EChimpCard = ({
   isInReadView,
   issuedDate,
   sensitiveFlag,
+  isEChimpCR,
   setShowCRorTDLWithId,
   setIsSidepanelOpen
 }: EChimpCardProps) => {
@@ -80,34 +82,36 @@ const EChimpCard = ({
           </div>
         )}
 
-        {crStatus && (
-          <div className="echimp-card__status">
-            <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
-            <p>{crStatus}</p>
-          </div>
-        )}
-        {status && (
-          <div className="echimp-card__status">
-            <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
-            <p>{status}</p>
-          </div>
-        )}
+        <div className="echimp-card__status">
+          <p className="text-bold">
+            {isEChimpCR
+              ? crtdlsT('echimpCard.crStatus')
+              : crtdlsT('echimpCard.tdlStatus')}
+          </p>
+          <p
+            className={crStatus == null && status == null ? 'text-italic' : ''}
+          >
+            {crStatus ?? status ?? crtdlsT('echimpCard.noData')}
+          </p>
+        </div>
         <div className="echimp-card__date">
-          {implementationDate && (
-            <>
-              <p className="text-bold">
-                {crtdlsT('echimpCard.implementationDate')}
-              </p>
-              <p>{implementationDate}</p>
-            </>
-          )}
-          {issuedDate && (
-            <>
-              <p className="text-bold">{crtdlsT('echimpCard.issuedDate')}</p>
-              {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
-              <p>{issuedDate?.split(' ')[0]}</p>
-            </>
-          )}
+          <p className="text-bold">
+            {isEChimpCR
+              ? crtdlsT('echimpCard.implementationDate')
+              : crtdlsT('echimpCard.issuedDate')}
+          </p>
+          <p
+            className={
+              implementationDate == null && issuedDate == null
+                ? 'text-italic'
+                : ''
+            }
+          >
+            {implementationDate ??
+              issuedDate?.split(' ')[0] ??
+              crtdlsT('echimpCard.noData')}
+            {/* At the time of writing, issuedDate returns '2024-07-24 00:00:00' */}
+          </p>
         </div>
       </CardBody>
 

@@ -246,6 +246,7 @@ const EChimpCardsTable = ({
           <EChimpCard
             key={card.id}
             {...card}
+            isEChimpCR={isEChimpCR(card)}
             isInReadView={isInReadView}
             setShowCRorTDLWithId={setShowCRorTDLWithId}
             setIsSidepanelOpen={setIsSidepanelOpen}
