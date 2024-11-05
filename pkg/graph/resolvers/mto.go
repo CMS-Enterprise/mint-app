@@ -16,34 +16,14 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID, mtoMarkedReadyToRe
 	if mtoMarkedReadyToReview {
 		return models.MTOStatusReadyForReview, nil
 	}
-	// Get Categories, Milestones, and Solutions by ModelPlanID. If any are returned, it is in progress. If any errors, it is ReadyToStart
 
-	// Call the loader directly so we don't get uncategorized included
-	categories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)
+	lastUpdated, err := MTOLastUpdatedGet(ctx, modelPlanID)
 	if err != nil {
 		return models.MTOStatusReadyToStart, err
 	}
-	if len(categories) > 0 {
+	if lastUpdated != nil {
 		return models.MTOStatusInProgress, nil
 	}
-
-	milestones, err := MTOMilestoneGetByModelPlanIDLOADER(ctx, modelPlanID)
-	if err != nil {
-		return models.MTOStatusReadyToStart, err
-	}
-	if len(milestones) > 0 {
-		return models.MTOStatusInProgress, nil
-	}
-	// TODO (mto) add when solution loaders are implemented
-	// solutions, err := MTOSolutionGetByModelPlanIDLOADER(ctx, modelPlanID)
-	// if err != nil {
-	// 	return models.MTOStatusReadyToStart, err
-	// }
-	// if len(solutions) > 0 {
-	// 	return models.MTOStatusInProgress, nil
-	// }
-
-	//If there are no categories, milestones, or solutions, it is just ready to start
 	return models.MTOStatusReadyToStart, nil
 
 }
