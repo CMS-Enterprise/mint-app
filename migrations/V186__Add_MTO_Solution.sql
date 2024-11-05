@@ -15,7 +15,7 @@ COMMENT ON TYPE MTO_SOLUTION_STATUS IS
 CREATE TABLE mto_solution(
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
-    mto_common_solution_id UUID REFERENCES mto_common_solution(id),
+    mto_common_solution_key MTO_COMMON_SOLUTION_KEY REFERENCES mto_common_solution(key),
     -- we allow null because this is will be from the commonSolution table if it exists
     name ZERO_STRING,
     -- we allow null because this is will be from the commonSolution table if it exists
@@ -35,7 +35,7 @@ COMMENT ON TABLE mto_solution IS
 'Tracks solutions associated with a model plan. Each solution may reference a common solution or have a unique name specific to the plan. Includes solution type, facilitator, status, risk indicator, and point-of-contact details.';
 
 ALTER TABLE mto_solution
-ADD CONSTRAINT unique_mto_common_solution_per_model_plan UNIQUE (model_plan_id, mto_common_solution_id);
+ADD CONSTRAINT unique_mto_common_solution_per_model_plan UNIQUE (model_plan_id, mto_common_solution_key);
 
 COMMENT ON CONSTRAINT unique_mto_common_solution_per_model_plan ON mto_solution IS 
 'Ensures each common solution is associated with a given model plan only once.';
@@ -43,7 +43,7 @@ COMMENT ON CONSTRAINT unique_mto_common_solution_per_model_plan ON mto_solution 
 
 CREATE UNIQUE INDEX unique_name_per_model_plan_when_mto_common_solution_is_null
 ON mto_solution (model_plan_id, name)
-WHERE mto_common_solution_id IS NULL;
+WHERE mto_common_solution_key IS NULL;
 
 COMMENT ON INDEX unique_name_per_model_plan_when_mto_common_solution_is_null IS 
 'Unique index to enforce that solution names are unique per model plan when no common solution is associated.';
@@ -51,9 +51,9 @@ COMMENT ON INDEX unique_name_per_model_plan_when_mto_common_solution_is_null IS
 
 ALTER TABLE mto_solution
 ADD CONSTRAINT check_name_type_and_common_solution CHECK (
-    (mto_common_solution_id IS NULL AND name IS NOT NULL AND type IS NOT NULL)
-    OR (mto_common_solution_id IS NOT NULL AND name IS NULL AND type IS NULL)
+    (mto_common_solution_key IS NULL AND name IS NOT NULL AND type IS NOT NULL)
+    OR (mto_common_solution_key IS NOT NULL AND name IS NULL AND type IS NULL)
 );
 
 COMMENT ON CONSTRAINT check_name_type_and_common_solution ON mto_solution IS 
-'Ensures that if mto_common_solution_id is null, both name and type must be non-null; if mto_common_solution_id is provided, both name and type must be null.';
+'Ensures that if mto_common_solution_key is null, both name and type must be non-null; if mto_common_solution_key is provided, both name and type must be null.';

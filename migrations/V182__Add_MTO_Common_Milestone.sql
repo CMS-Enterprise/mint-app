@@ -4,9 +4,10 @@ CREATE TYPE MTO_COMMON_MILESTONE_KEY AS ENUM (
 );
 
 CREATE TABLE mto_common_milestone (
-    id UUID PRIMARY KEY,
+    key MTO_COMMON_MILESTONE_KEY NOT NULL PRIMARY KEY,
+    -- id UUID PRIMARY KEY,
     name ZERO_STRING NOT NULL,
-    key MTO_COMMON_MILESTONE_KEY NOT NULL,
+
     category_name ZERO_STRING NOT NULL,
     sub_category_name ZERO_STRING NOT NULL,
     description ZERO_STRING NOT NULL,
@@ -19,7 +20,6 @@ CREATE TABLE mto_common_milestone (
 );
 
 INSERT INTO "public"."mto_common_milestone"(
-    "id",
     "name",
     "key",
     "category_name",
@@ -28,7 +28,6 @@ INSERT INTO "public"."mto_common_milestone"(
     "facilitated_by_role",
     "created_by",
     "created_dts") VALUES(
-    '7b15b8bc-42db-493a-a0c1-1d4148945330',
     'Place Holder Milestone',
     'MILESTONE_A',
     'placeholder category',

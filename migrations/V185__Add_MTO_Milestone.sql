@@ -11,7 +11,7 @@ COMMENT ON TYPE MTO_MILESTONE_STATUS IS 'Status of the milestone within the mode
 CREATE TABLE mto_milestone (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
-    mto_common_milestone_id UUID REFERENCES mto_common_milestone(id),
+    mto_common_milestone_key MTO_COMMON_MILESTONE_KEY REFERENCES mto_common_milestone(key),
     mto_category_id UUID REFERENCES mto_category(id),
     -- we allow null because this is will be from the commonMilestone table if it exists
     name ZERO_STRING,
@@ -31,20 +31,20 @@ COMMENT ON TABLE mto_milestone IS 'Table to track milestones related to a specif
 
 CREATE UNIQUE INDEX unique_name_per_model_plan_when_mto_common_milestone_is_null
 ON mto_milestone (model_plan_id, name)
-WHERE mto_common_milestone_id IS NULL;
+WHERE mto_common_milestone_key IS NULL;
 COMMENT ON INDEX unique_name_per_model_plan_when_mto_common_milestone_is_null IS 'Unique index to enforce that milestone names are unique per model plan when no common milestone is associated';
 
 
 ALTER TABLE mto_milestone
-ADD CONSTRAINT unique_mto_common_milestone_per_model_plan UNIQUE (model_plan_id, mto_common_milestone_id);
+ADD CONSTRAINT unique_mto_common_milestone_per_model_plan UNIQUE (model_plan_id, mto_common_milestone_key);
 COMMENT ON CONSTRAINT unique_mto_common_milestone_per_model_plan ON mto_milestone IS 'Constraint to ensure that each common milestone can be linked to a model plan only once';
 
 
 ALTER TABLE mto_milestone
 ADD CONSTRAINT check_name_or_common_milestone_null CHECK (
-    (mto_common_milestone_id IS NULL OR name IS NULL)
-    AND NOT (mto_common_milestone_id IS NULL AND name IS NULL)
+    (mto_common_milestone_key IS NULL OR name IS NULL)
+    AND NOT (mto_common_milestone_key IS NULL AND name IS NULL)
 );
 
 COMMENT ON CONSTRAINT check_name_or_common_milestone_null ON mto_milestone IS 
-'Ensures either mto_common_milestone_id or name is null, but not both: if a common milestone is referenced, name must be null; if name is specified, no common milestone may be referenced.';
+'Ensures either mto_common_milestone_key or name is null, but not both: if a common milestone is referenced, name must be null; if name is specified, no common milestone may be referenced.';
