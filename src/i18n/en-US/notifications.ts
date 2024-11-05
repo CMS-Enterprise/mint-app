@@ -46,6 +46,10 @@ const notifications = {
       NEW_MODEL_PLAN: {
         text: ' created a Model Plan: {{-modelName}}.',
         cta: 'View Model Plan'
+      },
+      DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: {
+        text: ' marked the data exchange approach complete for {{-modelName}}.',
+        cta: 'View data exchange approach'
       }
     },
     dailyDigest: {
@@ -58,6 +62,7 @@ const notifications = {
       documentsAdded: '{{-number}} new documents have been uploaded',
       crTdlsUpdate: 'Updates to FFS CRs/TDLs',
       discussionActivity: 'New activity in Discussions',
+      dataExchangeApproachComplete: 'Data exchange approach is complete',
       readyForReview: '{{-taskSection}} is ready for review ',
       readyForClearance: '{{-taskSection}}  is ready for clearance',
       updatesTo: 'Updates to {{-taskSection}}',
@@ -67,7 +72,8 @@ const notifications = {
         plan_participants_and_providers: 'Participants and providers',
         plan_beneficiaries: 'Beneficiaries',
         plan_general_characteristics: 'General characteristics',
-        plan_basics: 'Model Basics'
+        plan_basics: 'Model Basics',
+        plan_data_exchange_approach: 'Data exchange approach'
       },
       statusChange: {
         PLAN_DRAFT: 'This model has been announced',
@@ -122,7 +128,9 @@ const notifications = {
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me',
       newModelPlan: 'When a new Model Plan is created',
-      datesChanged: 'When model dates change'
+      datesChanged: 'When model dates change',
+      dataExchangeApproachMarkedComplete:
+        'When a data exchange approach is completed'
     },
     additionalConfigurations: {
       whichModel: 'Which models?',
@@ -146,7 +154,9 @@ const notifications = {
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
-        DATES_CHANGED: 'when model dates change'
+        DATES_CHANGED: 'when model dates change',
+        DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
+          'when a data exchange approach is completed'
       }
     }
   }

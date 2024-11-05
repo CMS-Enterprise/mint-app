@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { ModelStatus, TaskStatus } from 'gql/generated/graphql';
+import {
+  DataExchangeApproachStatus,
+  ModelStatus,
+  TaskStatus
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/Tag';
@@ -16,7 +20,7 @@ type StatusBannerProps = {
   icon?: boolean;
   modelID: string;
   type?: 'model' | 'task';
-  status: ModelStatus | TaskStatus;
+  status: ModelStatus | TaskStatus | DataExchangeApproachStatus;
   hasEditAccess?: boolean;
   statusLabel?: boolean;
   updateLabel?: boolean;

@@ -11,6 +11,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/echimptestdata"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/golang/mock/gomock"
@@ -168,7 +169,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(mp.ModelName, mp)
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelper(mp.ModelName, mp)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).

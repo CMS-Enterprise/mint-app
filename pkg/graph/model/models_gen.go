@@ -67,6 +67,19 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
+type LockableSectionLockStatus struct {
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Section             models.LockableSection     `json:"section"`
+	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
+	IsAssessment        bool                       `json:"isAssessment"`
+}
+
+type LockableSectionLockStatusChanged struct {
+	ChangeType ChangeType                `json:"changeType"`
+	LockStatus LockableSectionLockStatus `json:"lockStatus"`
+	ActionType ActionType                `json:"actionType"`
+}
+
 type MTOSolution struct {
 	ID                       uuid.UUID                   `json:"id"`
 	Name                     string                      `json:"name"`
@@ -265,6 +278,32 @@ type PlanCollaboratorTranslation struct {
 	Username  models.TranslationField            `json:"username" db:"user_account.username"`
 	UserID    models.TranslationField            `json:"userID" db:"user_id"`
 	TeamRoles models.TranslationFieldWithOptions `json:"teamRoles" db:"team_roles"`
+}
+
+// Represents plan data exchange approach translation data
+type PlanDataExchangeApproachTranslation struct {
+	DataToCollectFromParticipants                    models.TranslationFieldWithOptions            `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants"`
+	DataToCollectFromParticipantsReportsDetails      models.TranslationField                       `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
+	DataToCollectFromParticipantsOther               models.TranslationField                       `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
+	DataWillNotBeCollectedFromParticipants           models.TranslationFieldWithOptions            `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants"`
+	DataToCollectFromParticipantsNote                models.TranslationField                       `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
+	DataToSendToParticipants                         models.TranslationFieldWithOptions            `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
+	DataToSendToParticipantsNote                     models.TranslationField                       `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
+	DoesNeedToMakeMultiPayerDataAvailable            models.TranslationFieldWithOptionsAndChildren `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available"`
+	AnticipatedMultiPayerDataAvailabilityUseCase     models.TranslationFieldWithOptionsAndParent   `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
+	DoesNeedToMakeMultiPayerDataAvailableNote        models.TranslationField                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
+	DoesNeedToCollectAndAggregateMultiSourceData     models.TranslationFieldWithOptionsAndChildren `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data"`
+	MultiSourceDataToCollect                         models.TranslationFieldWithOptionsAndParent   `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
+	MultiSourceDataToCollectOther                    models.TranslationField                       `json:"multiSourceDataToCollectOther" db:"multi_source_data_to_collect_other"`
+	DoesNeedToCollectAndAggregateMultiSourceDataNote models.TranslationField                       `json:"doesNeedToCollectAndAggregateMultiSourceDataNote" db:"does_need_to_collect_and_aggregate_multi_source_data_note"`
+	WillImplementNewDataExchangeMethods              models.TranslationFieldWithOptions            `json:"willImplementNewDataExchangeMethods" db:"will_implement_new_data_exchange_methods"`
+	NewDataExchangeMethodsDescription                models.TranslationField                       `json:"newDataExchangeMethodsDescription" db:"new_data_exchange_methods_description"`
+	NewDataExchangeMethodsNote                       models.TranslationField                       `json:"newDataExchangeMethodsNote" db:"new_data_exchange_methods_note"`
+	AdditionalDataExchangeConsiderationsDescription  models.TranslationField                       `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
+	IsDataExchangeApproachComplete                   models.TranslationFieldWithOptions            `json:"isDataExchangeApproachComplete" db:"is_data_exchange_approach_complete"`
+	MarkedCompleteBy                                 models.TranslationField                       `json:"markedCompleteBy" db:"marked_complete_by"`
+	MarkedCompleteDts                                models.TranslationField                       `json:"markedCompleteDts" db:"marked_complete_dts"`
+	Status                                           models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
@@ -706,19 +745,6 @@ type SendFeedbackEmailInput struct {
 	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
 	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
-}
-
-type TaskListSectionLockStatus struct {
-	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
-	Section             models.TaskListSection     `json:"section"`
-	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
-	IsAssessment        bool                       `json:"isAssessment"`
-}
-
-type TaskListSectionLockStatusChanged struct {
-	ChangeType ChangeType                `json:"changeType"`
-	LockStatus TaskListSectionLockStatus `json:"lockStatus"`
-	ActionType ActionType                `json:"actionType"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {

@@ -66,6 +66,21 @@ func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *m
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
+// DataExchangeApproach is the resolver for the dataExchangeApproach field.
+func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) DataExchangeApproach(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.PlanDataExchangeApproach, error) {
+	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ModelPlanID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
+func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*authentication.UserAccount, error) {
+	return UserAccountGetByIDLOADER(ctx, obj.MarkedCompleteBy)
+}
+
 // ModelPlan is the resolver for the modelPlan field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
@@ -127,6 +142,11 @@ func (r *Resolver) NewModelPlanActivityMeta() generated.NewModelPlanActivityMeta
 	return &newModelPlanActivityMetaResolver{r}
 }
 
+// PlanDataExchangeApproachMarkedCompleteActivityMeta returns generated.PlanDataExchangeApproachMarkedCompleteActivityMetaResolver implementation.
+func (r *Resolver) PlanDataExchangeApproachMarkedCompleteActivityMeta() generated.PlanDataExchangeApproachMarkedCompleteActivityMetaResolver {
+	return &planDataExchangeApproachMarkedCompleteActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -144,5 +164,6 @@ type datesChangedActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
 type newModelPlanActivityMetaResolver struct{ *Resolver }
+type planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }

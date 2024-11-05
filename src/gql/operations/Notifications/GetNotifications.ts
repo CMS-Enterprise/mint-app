@@ -122,6 +122,7 @@ export default gql(/* GraphQL */ `
                       updated
                       readyForReview
                       readyForClearance
+                      dataExchangeApproachMarkedComplete
                     }
                     modelLeads {
                       added {
@@ -133,6 +134,14 @@ export default gql(/* GraphQL */ `
                       activity
                     }
                   }
+                }
+              }
+              ... on PlanDataExchangeApproachMarkedCompleteActivityMeta {
+                version
+                type
+                modelPlan {
+                  id
+                  modelName
                 }
               }
             }

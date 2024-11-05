@@ -8,13 +8,25 @@ import {
 import { FormikProps } from 'formik';
 import { DocumentNode } from 'graphql';
 
-import dirtyInput from 'utils/formDiff';
+import dirtyInput from 'utils/formUtil';
 import sanitizeStatus from 'utils/status';
 
-type HandleMutationConfigType = {
+type HandleFormikMutationConfigType = {
   id: string;
   formikRef: React.RefObject<FormikProps<any>>;
 };
+
+type HandleRHFMutationConfigType = {
+  id: string;
+  rhfRef: {
+    initialValues: any;
+    values: any;
+  };
+};
+
+type HandleMutationConfigType =
+  | HandleFormikMutationConfigType
+  | HandleRHFMutationConfigType;
 
 type ModalConfigType = {
   isModalOpen: boolean;
@@ -24,6 +36,7 @@ type ModalConfigType = {
 
 type MutationReturnType = {
   mutationError: ModalConfigType;
+  loading: boolean;
 };
 
 /**
@@ -49,9 +62,18 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [update] = useMutation<TData, OperationVariables>(mutation);
+  const [update, { loading }] = useMutation<TData, OperationVariables>(
+    mutation
+  );
 
-  const { id, formikRef } = config;
+  const { id } = config;
+
+  useEffect(() => {
+    if (destinationURL && !isModalOpen) {
+      history.push(destinationURL);
+    }
+  }, [destinationURL, history, isModalOpen]);
+
   useEffect(() => {
     if (!isModalOpen) {
       // Blocks the route transition until unblock() is called
@@ -70,10 +92,17 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           return false;
         }
 
-        const changes = dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        );
+        const dirtyChanges = () => {
+          if ('formikRef' in config) {
+            return dirtyInput(
+              config.formikRef.current?.initialValues,
+              config.formikRef.current?.values
+            );
+          }
+          return dirtyInput(config.rhfRef.initialValues, config.rhfRef.values);
+        };
+
+        const changes = dirtyChanges();
 
         // If no changes, don't call mutation
         if (Object.keys(changes).length === 0) {
@@ -98,7 +127,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           .then(response => {
             if (!response?.errors) {
               unblock();
-              history.push(destination.pathname);
+              setDestinationURL(destination.pathname);
             }
           })
           .catch(errors => {
@@ -106,7 +135,9 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
             setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
-            formikRef?.current?.setErrors(errors);
+            if ('formikRef' in config) {
+              config.formikRef.current?.setErrors(errors);
+            }
           });
         return false;
       });
@@ -116,10 +147,11 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
       };
     }
     return () => {};
-  }, [history, id, update, isModalOpen, formikRef, setIsModalOpen, pathname]);
+  }, [history, id, update, isModalOpen, setIsModalOpen, pathname, config]);
 
   return {
-    mutationError: { isModalOpen, setIsModalOpen, destinationURL }
+    mutationError: { isModalOpen, setIsModalOpen, destinationURL },
+    loading
   };
 }
 

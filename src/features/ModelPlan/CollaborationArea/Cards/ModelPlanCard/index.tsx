@@ -25,12 +25,12 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
+import TaskListSectionKeys from 'constants/enums';
 import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
 
 // importing global card styles from Cards/cards.scss
 import '../cards.scss';
-import './index.scss';
 
 type ModelPlanCardType = {
   modelID: string;
@@ -43,6 +43,9 @@ export const getLastModifiedSection = (
   if (!modelPlan) return null;
   let latestSection: any;
   getKeys(modelPlan).forEach(section => {
+    if (!TaskListSectionKeys.includes(section)) {
+      return;
+    }
     if (
       modelPlan[section] &&
       (
@@ -117,14 +120,14 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       </Modal>
       <Card
         gridLayout={{ desktop: { col: 6 } }}
-        className="collaboration-area__card card--model-plan"
+        className="collaboration-area__card collaboration-area__main-card"
       >
         <CardHeader>
           <h3 className="usa-card__heading">
             {collaborationAreaT('modelPlanCard.heading')}
           </h3>
         </CardHeader>
-        <div className="card__section-status flex-align-center">
+        <div className="collaboration-area__status flex-align-center">
           <TaskListStatusTag
             status={modelPlan.taskListStatus}
             classname="width-fit-content"

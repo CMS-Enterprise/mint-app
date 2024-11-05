@@ -6,6 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 import { echimpCRsAndTDLsMock } from 'tests/mock/general';
 import allMocks, {
+  dataExchangeApproachMocks,
   modelID,
   operationalNeedsMock,
   possibleOperationalSolutionDataMocks,
@@ -34,6 +35,7 @@ describe('ShareExportModal', () => {
           <VerboseMockedProvider
             mocks={[
               ...allMocks,
+              ...dataExchangeApproachMocks,
               ...summaryMock,
               ...operationalNeedsMock,
               ...possibleOperationalSolutionDataMocks,
@@ -91,6 +93,7 @@ describe('ShareExportModal', () => {
           <VerboseMockedProvider
             mocks={[
               ...allMocks,
+              ...dataExchangeApproachMocks,
               ...summaryMock,
               ...operationalNeedsMock,
               ...possibleOperationalSolutionDataMocks,

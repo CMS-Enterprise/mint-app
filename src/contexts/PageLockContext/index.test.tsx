@@ -1,6 +1,6 @@
 import {
-  TaskListSection,
-  TaskListSectionLockStatus as LockSectionType
+  LockableSection,
+  LockableSectionLockStatus as LockSectionType
 } from 'gql/generated/graphql';
 
 import { addLockedSection, removeLockedSection } from '.';
@@ -8,9 +8,9 @@ import { addLockedSection, removeLockedSection } from '.';
 describe('SubscriptionWrapper functions', () => {
   it('adds a locked section to subscription context', () => {
     const lockToAdd: LockSectionType = {
-      __typename: 'TaskListSectionLockStatus',
+      __typename: 'LockableSectionLockStatus',
       modelPlanID: '123',
-      section: TaskListSection.BENEFICIARIES,
+      section: LockableSection.BENEFICIARIES,
       lockedByUserAccount: {
         id: '00000001-0001-0001-0001-000000000001',
         username: 'MINT',
@@ -27,9 +27,9 @@ describe('SubscriptionWrapper functions', () => {
 
     const expectedValue: LockSectionType[] = [
       {
-        __typename: 'TaskListSectionLockStatus',
+        __typename: 'LockableSectionLockStatus',
         modelPlanID: '123',
-        section: TaskListSection.BENEFICIARIES,
+        section: LockableSection.BENEFICIARIES,
         lockedByUserAccount: {
           id: '00000001-0001-0001-0001-000000000001',
           username: 'MINT',
@@ -52,9 +52,9 @@ describe('SubscriptionWrapper functions', () => {
 
   it('updates a locked section to subscription context', () => {
     const lockToAdd: LockSectionType = {
-      __typename: 'TaskListSectionLockStatus',
+      __typename: 'LockableSectionLockStatus',
       modelPlanID: '123',
-      section: TaskListSection.BENEFICIARIES,
+      section: LockableSection.BENEFICIARIES,
       lockedByUserAccount: {
         id: '00000000-0000-0000-0000-000000000000',
         username: 'ABCD',
@@ -71,9 +71,9 @@ describe('SubscriptionWrapper functions', () => {
 
     const expectedValue: LockSectionType[] = [
       {
-        __typename: 'TaskListSectionLockStatus',
+        __typename: 'LockableSectionLockStatus',
         modelPlanID: '123',
-        section: TaskListSection.BENEFICIARIES,
+        section: LockableSection.BENEFICIARIES,
         lockedByUserAccount: {
           id: '00000000-0000-0000-0000-000000000000',
           username: 'ABCD',
@@ -92,9 +92,9 @@ describe('SubscriptionWrapper functions', () => {
     const addedLock = addLockedSection(
       [
         {
-          __typename: 'TaskListSectionLockStatus',
+          __typename: 'LockableSectionLockStatus',
           modelPlanID: '123',
-          section: TaskListSection.BENEFICIARIES,
+          section: LockableSection.BENEFICIARIES,
           lockedByUserAccount: {
             id: '00000001-0001-0001-0001-000000000001',
             username: 'MINT',
@@ -112,9 +112,9 @@ describe('SubscriptionWrapper functions', () => {
 
   it('removed a locked section to subscription context', () => {
     const lockToRemove: LockSectionType = {
-      __typename: 'TaskListSectionLockStatus',
+      __typename: 'LockableSectionLockStatus',
       modelPlanID: '123',
-      section: TaskListSection.BENEFICIARIES,
+      section: LockableSection.BENEFICIARIES,
       lockedByUserAccount: {
         id: '00000000-0000-0000-0000-000000000000',
         username: 'ABCD',
@@ -134,9 +134,9 @@ describe('SubscriptionWrapper functions', () => {
     const addedLock = removeLockedSection(
       [
         {
-          __typename: 'TaskListSectionLockStatus',
+          __typename: 'LockableSectionLockStatus',
           modelPlanID: '123',
-          section: TaskListSection.BENEFICIARIES,
+          section: LockableSection.BENEFICIARIES,
           lockedByUserAccount: {
             id: '00000000-0000-0000-0000-000000000000',
             username: 'ABCD',

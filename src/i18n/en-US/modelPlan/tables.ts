@@ -80,6 +80,9 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   },
   [TableName.USER_VIEW_CUSTOMIZATION]: {
     generalName: 'User view customizations'
+  },
+  [TableName.PLAN_DATA_EXCHANGE_APPROACH]: {
+    generalName: 'Data exchange approach'
   }
 };
 

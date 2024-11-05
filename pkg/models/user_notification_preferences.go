@@ -15,15 +15,17 @@ type UserNotificationPreferences struct {
 	// The id of the user this preferences object is for
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 
-	DailyDigestComplete          UserNotificationPreferenceFlags `json:"dailyDigestComplete" db:"daily_digest_complete"`
-	AddedAsCollaborator          UserNotificationPreferenceFlags `json:"addedAsCollaborator" db:"added_as_collaborator"`
-	TaggedInDiscussion           UserNotificationPreferenceFlags `json:"taggedInDiscussion" db:"tagged_in_discussion"`
-	TaggedInDiscussionReply      UserNotificationPreferenceFlags `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
-	NewDiscussionReply           UserNotificationPreferenceFlags `json:"newDiscussionReply" db:"new_discussion_reply"`
-	ModelPlanShared              UserNotificationPreferenceFlags `json:"modelPlanShared" db:"model_plan_shared"`
-	NewModelPlan                 UserNotificationPreferenceFlags `json:"newModelPlan" db:"new_model_plan"`
-	DatesChanged                 UserNotificationPreferenceFlags `json:"datesChanged" db:"dates_changed"`
-	DatesChangedNotificationType *DatesChangedNotificationType   `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
+	DailyDigestComplete                                UserNotificationPreferenceFlags                     `json:"dailyDigestComplete" db:"daily_digest_complete"`
+	AddedAsCollaborator                                UserNotificationPreferenceFlags                     `json:"addedAsCollaborator" db:"added_as_collaborator"`
+	TaggedInDiscussion                                 UserNotificationPreferenceFlags                     `json:"taggedInDiscussion" db:"tagged_in_discussion"`
+	TaggedInDiscussionReply                            UserNotificationPreferenceFlags                     `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
+	NewDiscussionReply                                 UserNotificationPreferenceFlags                     `json:"newDiscussionReply" db:"new_discussion_reply"`
+	ModelPlanShared                                    UserNotificationPreferenceFlags                     `json:"modelPlanShared" db:"model_plan_shared"`
+	NewModelPlan                                       UserNotificationPreferenceFlags                     `json:"newModelPlan" db:"new_model_plan"`
+	DatesChanged                                       UserNotificationPreferenceFlags                     `json:"datesChanged" db:"dates_changed"`
+	DatesChangedNotificationType                       *DatesChangedNotificationType                       `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
+	DataExchangeApproachMarkedComplete                 UserNotificationPreferenceFlags                     `json:"dataExchangeApproachMarkedComplete" db:"data_exchange_approach_marked_complete"`
+	DataExchangeApproachMarkedCompleteNotificationType *DataExchangeApproachMarkedCompleteNotificationType `json:"dataExchangeApproachMarkedCompleteNotificationType" db:"data_exchange_approach_marked_complete_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -32,14 +34,15 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		baseStruct: NewBaseStruct(userID),
 		UserID:     userID,
 
-		DailyDigestComplete:     DefaultUserNotificationPreferencesFlags(),
-		AddedAsCollaborator:     DefaultUserNotificationPreferencesFlags(),
-		TaggedInDiscussion:      DefaultUserNotificationPreferencesFlags(),
-		TaggedInDiscussionReply: DefaultUserNotificationPreferencesFlags(),
-		NewDiscussionReply:      DefaultUserNotificationPreferencesFlags(),
-		ModelPlanShared:         DefaultUserNotificationPreferencesFlags(),
-		NewModelPlan:            EmptyUserNotificationPreferencesFlags(),
-		DatesChanged:            EmptyUserNotificationPreferencesFlags(),
+		DailyDigestComplete:                DefaultUserNotificationPreferencesFlags(),
+		AddedAsCollaborator:                DefaultUserNotificationPreferencesFlags(),
+		TaggedInDiscussion:                 DefaultUserNotificationPreferencesFlags(),
+		TaggedInDiscussionReply:            DefaultUserNotificationPreferencesFlags(),
+		NewDiscussionReply:                 DefaultUserNotificationPreferencesFlags(),
+		ModelPlanShared:                    DefaultUserNotificationPreferencesFlags(),
+		NewModelPlan:                       EmptyUserNotificationPreferencesFlags(),
+		DatesChanged:                       EmptyUserNotificationPreferencesFlags(),
+		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
@@ -75,6 +78,16 @@ const (
 	DatesChangedNotificationTypeAllModels      DatesChangedNotificationType = "ALL_MODELS"
 	DatesChangedNotificationTypeFollowedModels DatesChangedNotificationType = "FOLLOWED_MODELS"
 	DatesChangedNotificationTypeMyModels       DatesChangedNotificationType = "MY_MODELS"
+)
+
+// DataExchangeApproachMarkedCompleteNotificationType is an enum that represents the type of notification a user wants for when a data exchange approach is marked complete
+type DataExchangeApproachMarkedCompleteNotificationType string
+
+// These constants represent the possible values of a DataExchangeApproachMarkedCompleteNotificationType
+const (
+	DataExchangeApproachMarkedCompleteNotificationTypeAllModels      DataExchangeApproachMarkedCompleteNotificationType = "ALL_MODELS"
+	DataExchangeApproachMarkedCompleteNotificationTypeFollowedModels DataExchangeApproachMarkedCompleteNotificationType = "FOLLOWED_MODELS"
+	DataExchangeApproachMarkedCompleteNotificationTypeMyModels       DataExchangeApproachMarkedCompleteNotificationType = "MY_MODELS"
 )
 
 // InApp translates notification preferences to a bool. True means the user desires an in app notification for this notification type

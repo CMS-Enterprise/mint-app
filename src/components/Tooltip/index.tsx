@@ -8,7 +8,7 @@ import classNames from 'classnames';
 type TooltipProps = {
   children: React.ReactNode;
   className?: string;
-  label: string;
+  label: string | React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
   wrapperclasses?: string;
 };
