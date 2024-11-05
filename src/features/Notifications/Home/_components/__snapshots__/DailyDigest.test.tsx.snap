@@ -49,7 +49,17 @@ exports[`Daily Digest in Notifications > matches snapshot 1`] = `
         <li
           class="line-height-sans-5"
         >
+          Data exchange approach is complete
+        </li>
+        <li
+          class="line-height-sans-5"
+        >
           This Model Plan is complete
+        </li>
+        <li
+          class="line-height-sans-5"
+        >
+          +1 more changes
         </li>
       </ul>
       <a

@@ -239,4 +239,17 @@ describe('The Model Plan Form', () => {
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="unfavorited"]');
   });
+
+  it('updates model status in modal dropdown', () => {
+    cy.enterModelPlanCollaborationArea('Enhancing Oncology Model');
+
+    cy.get('[data-testid="update-status-modal"]').should('exist');
+    cy.get('select').should('exist').select('In CMS clearance');
+
+    cy.contains('button', 'Yes, update status').click();
+
+    cy.get('[data-testid="alert"]').contains(
+      'You have successfully updated the status to In CMS clearance.'
+    );
+  });
 });

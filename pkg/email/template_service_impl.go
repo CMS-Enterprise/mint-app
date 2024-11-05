@@ -148,6 +148,15 @@ var modelPlanSuggestedPhaseSubjectTemplate string
 //go:embed templates/model_plan_suggested_phase_body.html
 var modelPlanSuggestedPhaseBodyTemplate string
 
+// DataExchangeApproachMarkedCompleteTemplateName is the template name for the data exchange approach completed email
+const DataExchangeApproachMarkedCompleteTemplateName string = "data_exchange_approach_marked_complete"
+
+//go:embed templates/data_exchange_approach_marked_complete_body.html
+var dataExchangeApproachMarkedCompleteBodyTemplate string
+
+//go:embed templates/data_exchange_approach_marked_complete_subject.html
+var dataExchangeApproachMarkedCompleteSubjectTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -194,6 +203,7 @@ func (t *TemplateServiceImpl) Load() error {
 	if err != nil {
 		return err
 	}
+
 	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
 	if err != nil {
 		return err
@@ -235,6 +245,11 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(ModelPlanSuggestedPhaseTemplateName, modelPlanSuggestedPhaseSubjectTemplate, modelPlanSuggestedPhaseBodyTemplate)
+	if err != nil {
+		return err
+	}
+
+	err = t.loadEmailTemplate(DataExchangeApproachMarkedCompleteTemplateName, dataExchangeApproachMarkedCompleteSubjectTemplate, dataExchangeApproachMarkedCompleteBodyTemplate)
 	if err != nil {
 		return err
 	}

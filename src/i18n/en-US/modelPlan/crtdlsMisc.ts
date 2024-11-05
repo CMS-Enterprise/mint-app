@@ -106,6 +106,7 @@ const crtdlsMisc = {
   echimpCard: {
     sidepanelAriaLabel: 'CR and TDL Sidepanel',
     crStatus: 'CR Status',
+    tdlStatus: 'TDL Status',
     crTag: {
       emergency: 'Emergency',
       sensitive: 'Sensitive/controversial',

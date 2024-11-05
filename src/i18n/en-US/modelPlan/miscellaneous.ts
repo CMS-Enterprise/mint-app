@@ -3,6 +3,8 @@ import { FrequencyType } from 'gql/generated/graphql';
 export const miscellaneous: Record<string, Record<string, string> | string> = {
   mandatoryFields: 'All fields are mandatory',
   saveAndReturn: 'Save and return to task list',
+  saveAndReturnToCollaborationArea:
+    'Save and return to model collaboration area',
   for: 'for',
   home: 'Home',
   next: 'Next',
@@ -55,7 +57,8 @@ export const miscellaneous: Record<string, Record<string, string> | string> = {
     failure:
       'There was an error unfollowing {{-requestName}}. Please try unfollowing the model again if you no longer wish to receive email notifications about it.',
     error: 'Failed to locate and unfollow model plan.'
-  }
+  },
+  pageOf: '(Page {{currentPage}} of {{totalPages}})'
 };
 
 // Reusable translated option for all frequency type questions

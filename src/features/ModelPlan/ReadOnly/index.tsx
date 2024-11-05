@@ -49,6 +49,7 @@ import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
 import ReadOnlyCRTDLs from './CRTDLs';
+import ReadOnlyDataExchangeApproach from './DataExchangeapproach';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
 import ReadOnlyOperationalNeeds from './OperationalNeeds';
@@ -81,7 +82,8 @@ const listOfSubpageKey: string[] = [
   'team',
   'discussions',
   'documents',
-  'crs-and-tdl'
+  'crs-and-tdl',
+  'data-exchange-approach'
 ];
 
 export const ReadOnlyComponents = (
@@ -126,6 +128,11 @@ export const ReadOnlyComponents = (
       route: `/models/${modelID}/read-only/it-solutions`,
       component: <ReadOnlyOperationalNeeds modelID={modelID} />,
       helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
+    },
+    'data-exchange-approach': {
+      route: `/models/${modelID}/read-only/data-exchange-approach`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/data-exchange-approach',
+      component: <ReadOnlyDataExchangeApproach modelID={modelID} />
     },
     team: {
       route: `/models/${modelID}/read-only/team`,

@@ -36,12 +36,10 @@ type baseTaskListSection struct {
 
 // NewBaseTaskListSection makes a task list section by a modelPlanID and user id of the user creating it
 func NewBaseTaskListSection(createdBy uuid.UUID, modelPlanID uuid.UUID) baseTaskListSection {
-
 	return baseTaskListSection{
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-
-		Status:     TaskReady,
-		baseStruct: NewBaseStruct(createdBy),
+		Status:            TaskReady,
+		baseStruct:        NewBaseStruct(createdBy),
 	}
 
 }

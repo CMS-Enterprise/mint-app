@@ -111,6 +111,7 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 			return nil, err
 		}
 		return &meta, nil
+
 	case models.ActivityAddedAsCollaborator:
 		// Deserialize the raw JSON into AddedAsCollaboratorMeta
 		meta := models.AddedAsCollaboratorMeta{}
@@ -139,6 +140,14 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 	case models.ActivityDatesChanged:
 		// Deserialize the raw JSON into DatesChangedActivityMeta
 		meta := models.DatesChangedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+
+	case models.ActivityDataExchangeApproachMarkedComplete:
+		// Deserialize the raw JSON into DataExchangeApproachMarkedCompleteActivityMeta
+		meta := models.PlanDataExchangeApproachMarkedCompleteActivityMeta{}
 		if err := json.Unmarshal(rawData, &meta); err != nil {
 			return nil, err
 		}

@@ -16,6 +16,7 @@ export type CRAndTDLSidePanelProps = {
   id: string;
   title?: string | null;
   crStatus?: string | null;
+  status?: string | null;
   emergencyCrFlag?: boolean | null;
   implementationDate?: string | null;
   issuedDate?: string | null;
@@ -32,6 +33,7 @@ const CRAndTDLSidePanel = ({
   id,
   title,
   crStatus,
+  status,
   emergencyCrFlag,
   implementationDate,
   issuedDate,
@@ -79,6 +81,12 @@ const CRAndTDLSidePanel = ({
               <div className="echimp-card__cr-status">
                 <p className="text-bold">{crtdlsT('echimpCard.crStatus')}:</p>
                 <p>{crStatus}</p>
+              </div>
+            )}
+            {status && (
+              <div className="echimp-card__cr-status">
+                <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
+                <p>{status}</p>
               </div>
             )}
           </div>

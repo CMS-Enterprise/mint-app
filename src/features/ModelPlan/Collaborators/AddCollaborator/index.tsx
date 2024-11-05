@@ -357,8 +357,12 @@ const Collaborators = () => {
                             teamRolesConfig.options,
                             undefined,
                             isModelLead && isLastModelLead(allCollaborators)
-                              ? TeamRole.MODEL_LEAD
-                              : ''
+                              ? {
+                                  [TeamRole.MODEL_LEAD]: collaboratorsT(
+                                    `teamRoles.options.${TeamRole.MODEL_LEAD}`
+                                  )
+                                }
+                              : undefined
                           )}
                           onChange={(value: TeamRole[]) => {
                             setFieldValue('teamRoles', value);

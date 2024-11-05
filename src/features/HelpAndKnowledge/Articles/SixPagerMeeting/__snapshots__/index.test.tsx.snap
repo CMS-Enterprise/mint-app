@@ -454,7 +454,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   <span>
                     Download it from the Strategy Refresh SharePoint site
                     <svg
-                      class="usa-icon margin-left-05 top-2px"
+                      class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -568,7 +568,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   <span>
                     metrics
                     <svg
-                      class="usa-icon margin-left-05 top-2px"
+                      class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -1482,7 +1482,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <span>
                       Model Resources area of SharePoint
                       <svg
-                        class="usa-icon margin-left-05 top-2px"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"

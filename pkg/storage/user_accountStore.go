@@ -184,3 +184,13 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 
 	return recipients, nil
 }
+
+// UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete returns a collection of
+// user accounts that should be notified of when a data exchange approach is marked complete
+func UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) ([]*models.UserAccountAndNotificationPreferences, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesDataExchangeApproachMarkedComplete, arg)
+}
