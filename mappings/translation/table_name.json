@@ -113,5 +113,8 @@
   },
   "user_view_customization": {
     "generalName": "User view customizations"
+  },
+  "plan_data_exchange_approach": {
+    "generalName": "Data exchange approach"
   }
 }

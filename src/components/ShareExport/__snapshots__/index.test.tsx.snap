@@ -1873,7 +1873,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-what-are-the-model-key-characteristics"
@@ -1883,7 +1883,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -2571,7 +2571,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-what-is-the-agreement-type"
@@ -2581,7 +2581,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -3047,7 +3047,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-who-are-the-participants"
@@ -3057,7 +3057,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -4508,7 +4508,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="margin-bottom-3 mint-collapsable-link"
+                  class="margin-bottom-3"
                 >
                   <button
                     aria-controls="related-will-the-providers-overlap-with-other-models"
@@ -4518,7 +4518,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05 margin-right-05"
+                      class="usa-icon margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -7305,7 +7305,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-bottom-3 mint-collapsable-link"
+                class="margin-bottom-3"
               >
                 <button
                   aria-controls="data-needed-for-monitoring-questions"
@@ -7315,7 +7315,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05 margin-right-05"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -9001,7 +9001,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-bottom-3 mint-collapsable-link"
+                class="margin-bottom-3"
               >
                 <button
                   aria-controls="cost-sharing-questions"
@@ -9011,7 +9011,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05 margin-right-05"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -9091,7 +9091,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="margin-bottom-3 mint-collapsable-link"
+                class="margin-bottom-3"
               >
                 <button
                   aria-controls="cost-sharing-questions"
@@ -9101,7 +9101,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05 margin-right-05"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -9806,6 +9806,652 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                   >
                     Note for payment start date
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="read-only-model-plan--beneficiaries"
+            data-testid="read-only-model-plan--beneficiaries"
+          >
+            <div>
+              <h2
+                class="margin-top-0 margin-bottom-2"
+              >
+                Data exchange approach
+              </h2>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="mint-body-large line-height-normal margin-bottom-2 margin-top-5"
+              >
+                Data collection
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-data-will-you-collect-from-participants margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      What data will you collect from participants?
+                    </span>
+                  </div>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Reports from participants
+                      <span
+                        class="top-2px position-relative"
+                      >
+                        <span
+                          class="usa-tooltip"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print margin-left-05"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="(e.g., health equity report)"
+                          >
+                            (e.g., health equity report)
+                          </span>
+                        </span>
+                      </span>
+                    </li>
+                    <ul>
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        report details
+                      </li>
+                    </ul>
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Other
+                    </li>
+                    <ul>
+                      <li
+                        class="font-sans-md line-height-sans-4"
+                      >
+                        other note
+                      </li>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            />
+            <div
+              class=""
+            />
+            <div
+              class=""
+            />
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    collect note
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="mint-body-large line-height-normal margin-bottom-2 margin-top-5"
+              >
+                Sending data
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--what-data-will-you-send-to-participants margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      What data will you send to participants?
+                    </span>
+                  </div>
+                  <ul
+                    class="margin-y-0 padding-left-3"
+                  >
+                    <li
+                      class="font-sans-md line-height-sans-4"
+                    >
+                      Operations data
+                      <span
+                        class="top-2px position-relative"
+                      >
+                        <span
+                          class="usa-tooltip"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print margin-left-05"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="(e.g., attribution file, benchmark file)"
+                          >
+                            (e.g., attribution file, benchmark file)
+                          </span>
+                        </span>
+                      </span>
+                    </li>
+                    <ul />
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    send note
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="mint-body-large line-height-normal margin-bottom-2 margin-top-5"
+              >
+                Multi-payer data
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--do-you-need-to-make-multi-payer-data-available-to-participants margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Do you need to make multi-payer data available to participants?
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    No
+                  </div>
+                </div>
+                <div
+                  class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+                  data-testid="alert"
+                >
+                  <div
+                    class="usa-alert__body"
+                  >
+                    <p
+                      class="usa-alert__text"
+                    >
+                      <span>
+                        There is 1 additional question that is not applicable for this model based on the answers selected in the question above.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="margin-bottom-3"
+                >
+                  <button
+                    aria-controls="related-do-you-need-to-make-multi-payer-data-available-to-participants"
+                    aria-expanded="false"
+                    class="usa-button usa-button--unstyled mint-no-print"
+                    data-testid="related-do-you-need-to-make-multi-payer-data-available-to-participants"
+                    type="button"
+                  >
+                    <svg
+                      class="usa-icon margin-right-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                      />
+                    </svg>
+                    Show other question
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            />
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    data available note
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="mint-body-large line-height-normal margin-bottom-2 margin-top-5"
+              >
+                Multi-source collection and aggregation
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--do-you-need-to-collect-and-aggregate-multi-source-data-for-analyses-by-the-model-team-and-implementation-contractor margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Do you need to collect and aggregate multi-source data for analyses by the model team and implementation contractor?
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    No
+                  </div>
+                </div>
+                <div
+                  class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+                  data-testid="alert"
+                >
+                  <div
+                    class="usa-alert__body"
+                  >
+                    <p
+                      class="usa-alert__text"
+                    >
+                      <span>
+                        There is 1 additional question that is not applicable for this model based on the answers selected in the question above.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="margin-bottom-3"
+                >
+                  <button
+                    aria-controls="related-do-you-need-to-collect-and-aggregate-multi-source-data-for-analyses-by-the-model-team-and-implementation-contractor"
+                    aria-expanded="false"
+                    class="usa-button usa-button--unstyled mint-no-print"
+                    data-testid="related-do-you-need-to-collect-and-aggregate-multi-source-data-for-analyses-by-the-model-team-and-implementation-contractor"
+                    type="button"
+                  >
+                    <svg
+                      class="usa-icon margin-right-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                      />
+                    </svg>
+                    Show other question
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            />
+            <div
+              class=""
+            />
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    multi source note
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="mint-body-large line-height-normal margin-bottom-2 margin-top-5"
+              >
+                New methodologies
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--do-you-plan-to-implement-any-new-or-novel-data-exchange-methods-based-on-new-technologies-or-policy-initiatives margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?
+                      <span
+                        class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                      >
+                        <span
+                          class="usa-tooltip top-2px"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                            wrapperclasses="top-2px"
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                          >
+                            <div>
+                              Examples of novel data exchange methodologies include:
+                              <ul
+                                class="margin-0 padding-left-3"
+                              >
+                                <li>
+                                  Privacy-preserving record linkage
+                                </li>
+                                <li>
+                                  Utilizing the Trusted Exchange Framework and Common Agreement (TEFCA)
+                                </li>
+                                <li>
+                                  Enabling an additional data stream not previously used at CMMI
+                                </li>
+                              </ul>
+                            </div>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    No
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            />
+            <div
+              class=""
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--notes margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Notes
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    new data note
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class="mint-body-large line-height-normal margin-bottom-2 margin-top-5"
+              >
+                Additional considerations
+              </div>
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="read-only-section read-only-section--please-describe-any-additional-data-exchange-considerations margin-bottom-3"
+                >
+                  <div
+                    class="read-only-section--question"
+                  >
+                    <span
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                    >
+                      Please describe any additional data exchange considerations.
+                    </span>
+                  </div>
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                  >
+                    consideration desc
                   </div>
                 </div>
               </div>

@@ -1,0 +1,19 @@
+{{template "shared_header.html" "Data exchange approach complete:"}}
+
+<h3>{{.ModelName}}</h3>
+<p>Marked complete by {{.MarkedCompletedByUserCommonName}}</p>
+<br/>
+<p>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/data-exchange-approach">View data exchange approach</a>
+</p>
+<br/>
+
+{{if .ShowFooter}}
+  <hr>
+  <br/>
+  <p>
+    You are currently subscribed to notifications when data exchange approaches are completed. If you no longer wish to receive these email notifications, please <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_COMPLETED">unsubscribe</a> or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+  </p>
+{{end}}
+
+{{template "shared_footer.html"}}

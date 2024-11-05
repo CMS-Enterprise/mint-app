@@ -16,6 +16,7 @@ import {
   activityText,
   isAddingCollaborator,
   isDailyDigest,
+  isDataExchangeApproach,
   isDatesChanged,
   isNewDiscussionReply,
   isNewModelPlan,
@@ -77,7 +78,7 @@ const IndividualNotification = ({
     ) {
       handleMarkAsRead(() =>
         history.push(
-          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+          `/models/${metaData.modelPlanID}/read-view/discussions?discussionID=${metaData.discussionID}`
         )
       );
     }
@@ -96,7 +97,14 @@ const IndividualNotification = ({
     }
     if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {
       handleMarkAsRead(() => {
-        history.push(`/models/${metaData.modelPlanID}/read-only`);
+        history.push(`/models/${metaData.modelPlanID}/read-view`);
+      });
+    }
+    if (isDataExchangeApproach(metaData)) {
+      handleMarkAsRead(() => {
+        history.push(
+          `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`
+        );
       });
     }
   };
@@ -135,6 +143,7 @@ const IndividualNotification = ({
                   !isNewModelPlan(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isDatesChanged(metaData) &&
+                  !isDataExchangeApproach(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
                       className="notification__content text-base-darker margin-bottom-1"

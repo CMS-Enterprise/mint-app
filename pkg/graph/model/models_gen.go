@@ -15,13 +15,13 @@ import (
 )
 
 type CommonMilestone struct {
-	ID              uuid.UUID          `json:"id"`
-	Key             CommonMilestoneKey `json:"key"`
-	Name            string             `json:"name"`
-	Description     string             `json:"description"`
-	IsAdded         bool               `json:"isAdded"`
-	IsSuggested     bool               `json:"isSuggested"`
-	CommonSolutions []*CommonSolution  `json:"commonSolutions"`
+	ID              uuid.UUID                 `json:"id"`
+	Key             models.CommonMilestoneKey `json:"key"`
+	Name            string                    `json:"name"`
+	Description     string                    `json:"description"`
+	IsAdded         bool                      `json:"isAdded"`
+	IsSuggested     bool                      `json:"isSuggested"`
+	CommonSolutions []*CommonSolution         `json:"commonSolutions"`
 }
 
 type CommonSolution struct {
@@ -67,33 +67,36 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-type MTOMilestone struct {
-	ID                        uuid.UUID                `json:"id"`
-	Name                      string                   `json:"name"`
-	FacilitatedBy             *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	NeedBy                    *time.Time               `json:"needBy,omitempty"`
-	Status                    MTOMilestoneStatus       `json:"status"`
-	RiskIndicator             *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
-	IsDraftMilestone          bool                     `json:"isDraftMilestone"`
-	CommonMilestoneID         *uuid.UUID               `json:"commonMilestoneID,omitempty"`
-	AddedFromMilestoneLibrary bool                     `json:"addedFromMilestoneLibrary"`
-	CommonMilestone           *CommonMilestone         `json:"commonMilestone,omitempty"`
-	Solutions                 []*MTOSolution           `json:"solutions"`
-	Category                  models.MTOCategory       `json:"category"`
-	SubCategory               models.MTOSubcategory    `json:"subCategory"`
+type LockableSectionLockStatus struct {
+	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Section             models.LockableSection     `json:"section"`
+	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
+	IsAssessment        bool                       `json:"isAssessment"`
+}
+
+type LockableSectionLockStatusChanged struct {
+	ChangeType ChangeType                `json:"changeType"`
+	LockStatus LockableSectionLockStatus `json:"lockStatus"`
+	ActionType ActionType                `json:"actionType"`
 }
 
 type MTOSolution struct {
-	ID                       uuid.UUID                `json:"id"`
-	Name                     string                   `json:"name"`
-	FacilitatedBy            *models.MTOFacilitator   `json:"facilitatedBy,omitempty"`
-	Status                   MTOSolutionStatus        `json:"status"`
-	RiskIndicator            *models.MTORiskIndicator `json:"riskIndicator,omitempty"`
-	CommonSolutionID         *uuid.UUID               `json:"commonSolutionID,omitempty"`
-	SolutionType             MTOSolutionType          `json:"solutionType"`
-	RelatedMilestones        []*MTOMilestone          `json:"relatedMilestones"`
-	AddedFromSolutionLibrary bool                     `json:"addedFromSolutionLibrary"`
-	CommonSolution           *CommonSolution          `json:"commonSolution,omitempty"`
+	ID                       uuid.UUID                   `json:"id"`
+	Name                     string                      `json:"name"`
+	FacilitatedBy            *models.MTOFacilitator      `json:"facilitatedBy,omitempty"`
+	Status                   MTOSolutionStatus           `json:"status"`
+	RiskIndicator            *models.MTORiskIndicator    `json:"riskIndicator,omitempty"`
+	CommonSolutionID         *uuid.UUID                  `json:"commonSolutionID,omitempty"`
+	SolutionType             MTOSolutionType             `json:"solutionType"`
+	CreatedBy                uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount     authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts               time.Time                   `json:"createdDts"`
+	ModifiedBy               *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount    *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts              *time.Time                  `json:"modifiedDts,omitempty"`
+	RelatedMilestones        []*models.MTOMilestone      `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool                        `json:"addedFromSolutionLibrary"`
+	CommonSolution           *CommonSolution             `json:"commonSolution,omitempty"`
 }
 
 // Represents model plan base translation data
@@ -254,6 +257,32 @@ type PlanCollaboratorTranslation struct {
 	Username  models.TranslationField            `json:"username" db:"user_account.username"`
 	UserID    models.TranslationField            `json:"userID" db:"user_id"`
 	TeamRoles models.TranslationFieldWithOptions `json:"teamRoles" db:"team_roles"`
+}
+
+// Represents plan data exchange approach translation data
+type PlanDataExchangeApproachTranslation struct {
+	DataToCollectFromParticipants                    models.TranslationFieldWithOptions            `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants"`
+	DataToCollectFromParticipantsReportsDetails      models.TranslationField                       `json:"dataToCollectFromParticipantsReportsDetails" db:"data_to_collect_from_participants_reports_details"`
+	DataToCollectFromParticipantsOther               models.TranslationField                       `json:"dataToCollectFromParticipantsOther" db:"data_to_collect_from_participants_other"`
+	DataWillNotBeCollectedFromParticipants           models.TranslationFieldWithOptions            `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants"`
+	DataToCollectFromParticipantsNote                models.TranslationField                       `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
+	DataToSendToParticipants                         models.TranslationFieldWithOptions            `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
+	DataToSendToParticipantsNote                     models.TranslationField                       `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
+	DoesNeedToMakeMultiPayerDataAvailable            models.TranslationFieldWithOptionsAndChildren `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available"`
+	AnticipatedMultiPayerDataAvailabilityUseCase     models.TranslationFieldWithOptionsAndParent   `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
+	DoesNeedToMakeMultiPayerDataAvailableNote        models.TranslationField                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
+	DoesNeedToCollectAndAggregateMultiSourceData     models.TranslationFieldWithOptionsAndChildren `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data"`
+	MultiSourceDataToCollect                         models.TranslationFieldWithOptionsAndParent   `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
+	MultiSourceDataToCollectOther                    models.TranslationField                       `json:"multiSourceDataToCollectOther" db:"multi_source_data_to_collect_other"`
+	DoesNeedToCollectAndAggregateMultiSourceDataNote models.TranslationField                       `json:"doesNeedToCollectAndAggregateMultiSourceDataNote" db:"does_need_to_collect_and_aggregate_multi_source_data_note"`
+	WillImplementNewDataExchangeMethods              models.TranslationFieldWithOptions            `json:"willImplementNewDataExchangeMethods" db:"will_implement_new_data_exchange_methods"`
+	NewDataExchangeMethodsDescription                models.TranslationField                       `json:"newDataExchangeMethodsDescription" db:"new_data_exchange_methods_description"`
+	NewDataExchangeMethodsNote                       models.TranslationField                       `json:"newDataExchangeMethodsNote" db:"new_data_exchange_methods_note"`
+	AdditionalDataExchangeConsiderationsDescription  models.TranslationField                       `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
+	IsDataExchangeApproachComplete                   models.TranslationFieldWithOptions            `json:"isDataExchangeApproachComplete" db:"is_data_exchange_approach_complete"`
+	MarkedCompleteBy                                 models.TranslationField                       `json:"markedCompleteBy" db:"marked_complete_by"`
+	MarkedCompleteDts                                models.TranslationField                       `json:"markedCompleteDts" db:"marked_complete_dts"`
+	Status                                           models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
@@ -695,19 +724,6 @@ type SendFeedbackEmailInput struct {
 	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
 	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
-}
-
-type TaskListSectionLockStatus struct {
-	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
-	Section             models.TaskListSection     `json:"section"`
-	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
-	IsAssessment        bool                       `json:"isAssessment"`
-}
-
-type TaskListSectionLockStatusChanged struct {
-	ChangeType ChangeType                `json:"changeType"`
-	LockStatus TaskListSectionLockStatus `json:"lockStatus"`
-	ActionType ActionType                `json:"actionType"`
 }
 
 type UpdateOperationalSolutionSubtaskInput struct {
@@ -1174,47 +1190,6 @@ func (e *ChangeType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ChangeType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type CommonMilestoneKey string
-
-const (
-	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
-	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
-)
-
-var AllCommonMilestoneKey = []CommonMilestoneKey{
-	CommonMilestoneKeyMilestoneA,
-	CommonMilestoneKeyMilestoneB,
-}
-
-func (e CommonMilestoneKey) IsValid() bool {
-	switch e {
-	case CommonMilestoneKeyMilestoneA, CommonMilestoneKeyMilestoneB:
-		return true
-	}
-	return false
-}
-
-func (e CommonMilestoneKey) String() string {
-	return string(e)
-}
-
-func (e *CommonMilestoneKey) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CommonMilestoneKey(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CommonMilestoneKey", str)
-	}
-	return nil
-}
-
-func (e CommonMilestoneKey) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1695,49 +1670,6 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTOMilestoneStatus string
-
-const (
-	MTOMilestoneStatusNotStarted MTOMilestoneStatus = "NOT_STARTED"
-	MTOMilestoneStatusInProgress MTOMilestoneStatus = "IN_PROGRESS"
-	MTOMilestoneStatusCompleted  MTOMilestoneStatus = "COMPLETED"
-)
-
-var AllMTOMilestoneStatus = []MTOMilestoneStatus{
-	MTOMilestoneStatusNotStarted,
-	MTOMilestoneStatusInProgress,
-	MTOMilestoneStatusCompleted,
-}
-
-func (e MTOMilestoneStatus) IsValid() bool {
-	switch e {
-	case MTOMilestoneStatusNotStarted, MTOMilestoneStatusInProgress, MTOMilestoneStatusCompleted:
-		return true
-	}
-	return false
-}
-
-func (e MTOMilestoneStatus) String() string {
-	return string(e)
-}
-
-func (e *MTOMilestoneStatus) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTOMilestoneStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTOMilestoneStatus", str)
-	}
-	return nil
-}
-
-func (e MTOMilestoneStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

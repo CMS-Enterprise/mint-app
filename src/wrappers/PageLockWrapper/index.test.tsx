@@ -1,15 +1,15 @@
 import {
-  TaskListSection,
-  TaskListSectionLockStatus
+  LockableSection,
+  LockableSectionLockStatus
 } from 'gql/generated/graphql';
 
 import { findLockedSection, LockStatus } from '.';
 
-const locks: TaskListSectionLockStatus[] = [
+const locks: LockableSectionLockStatus[] = [
   {
-    __typename: 'TaskListSectionLockStatus',
+    __typename: 'LockableSectionLockStatus',
     modelPlanID: '123',
-    section: TaskListSection.BENEFICIARIES,
+    section: LockableSection.BENEFICIARIES,
     lockedByUserAccount: {
       id: '00000001-0001-0001-0001-000000000001',
       username: 'MINT',
@@ -24,9 +24,9 @@ const locks: TaskListSectionLockStatus[] = [
     isAssessment: true
   },
   {
-    __typename: 'TaskListSectionLockStatus',
+    __typename: 'LockableSectionLockStatus',
     modelPlanID: '123',
-    section: TaskListSection.PAYMENT,
+    section: LockableSection.PAYMENT,
     lockedByUserAccount: {
       id: '00000001-0001-0001-0001-000000000001',
       username: 'MINT',
@@ -46,7 +46,7 @@ const euaId = 'QWER';
 
 describe('SubscriptionHandler functions', () => {
   it('finds a locked section', () => {
-    const route: TaskListSection = TaskListSection.PAYMENT;
+    const route: LockableSection = LockableSection.PAYMENT;
 
     const expectedValue: LockStatus = LockStatus.LOCKED;
 
@@ -56,7 +56,7 @@ describe('SubscriptionHandler functions', () => {
   });
 
   it('finds an unlocked section', () => {
-    const route: TaskListSection = TaskListSection.BASICS;
+    const route: LockableSection = LockableSection.BASICS;
 
     const expectedValue: LockStatus = LockStatus.UNLOCKED;
 
@@ -66,7 +66,7 @@ describe('SubscriptionHandler functions', () => {
   });
 
   it('finds an occupied section', () => {
-    const route: TaskListSection = TaskListSection.BENEFICIARIES;
+    const route: LockableSection = LockableSection.BENEFICIARIES;
 
     const expectedValue: LockStatus = LockStatus.OCCUPYING;
 

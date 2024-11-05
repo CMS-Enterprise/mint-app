@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+
 	"github.com/lib/pq"
 
 	"github.com/golang/mock/gomock"
@@ -35,7 +37,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelper(planName, plan)
 
 	mockEmailTemplateService.
 		EXPECT().
@@ -120,7 +122,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelper(planName, plan)
 
 	mockEmailTemplateService.
 		EXPECT().
