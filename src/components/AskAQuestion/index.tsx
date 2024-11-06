@@ -10,7 +10,12 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 type AskAQuestionType = {
   modelID: string;
-  renderTextFor?: 'need' | 'solution' | 'status' | 'dataExchangeApproach';
+  renderTextFor?:
+    | 'need'
+    | 'solution'
+    | 'status'
+    | 'dataExchangeApproach'
+    | 'modelToOperations';
   inlineText?: boolean;
   className?: string;
 };
@@ -26,6 +31,8 @@ const AskAQuestion = ({
   const { t: dataExchangeApproachT } = useTranslation(
     'dataExchangeApproachMisc'
   );
+  const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
+
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -38,6 +45,8 @@ const AskAQuestion = ({
         return opSolutionsMiscT('helpTiming');
       case 'dataExchangeApproach':
         return dataExchangeApproachT('needHelpDiscussion');
+      case 'modelToOperations':
+        return modelToOperationsT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');
@@ -57,7 +66,9 @@ const AskAQuestion = ({
 
       <div
         className={classNames('padding-2 bg-primary-lighter', {
-          'display-flex flex-justify flex-align-center': inlineText && !isMobile
+          'display-flex flex-justify flex-align-center':
+            inlineText && !isMobile,
+          'padding-bottom-205': renderTextFor === 'modelToOperations'
         })}
       >
         {renderTextFor && (

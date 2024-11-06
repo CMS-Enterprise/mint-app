@@ -25,6 +25,7 @@ import CRTDL from 'features/ModelPlan/CRTDL';
 import DataEchangeApproach from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
+import ModelToOperations from 'features/ModelPlan/ModelToOperations';
 import NewPlan from 'features/ModelPlan/NewPlan';
 import ReadOnly from 'features/ModelPlan/ReadOnly';
 import Status from 'features/ModelPlan/Status';
@@ -165,6 +166,12 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/collaboration-area/data-exchange-approach"
             component={DataEchangeApproach}
+          />
+
+          {/* Model to Operation Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-to-operation"
+            component={ModelToOperations}
           />
 
           {/* Task List Routes */}
