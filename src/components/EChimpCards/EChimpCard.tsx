@@ -26,6 +26,7 @@ export type EChimpCardProps = {
   sensitiveFlag?: boolean | null;
   setShowCRorTDLWithId: (id: string) => void;
   setIsSidepanelOpen: (isOpen: boolean) => void;
+  isCR: boolean;
 };
 
 const EChimpCard = ({
@@ -39,7 +40,8 @@ const EChimpCard = ({
   issuedDate,
   sensitiveFlag,
   setShowCRorTDLWithId,
-  setIsSidepanelOpen
+  setIsSidepanelOpen,
+  isCR
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
@@ -124,7 +126,7 @@ const EChimpCard = ({
         </Button>
         {flags.echimpEnabled && (
           <ExternalLink
-            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`}
             className="margin-right-0"
             toEchimp
           >
