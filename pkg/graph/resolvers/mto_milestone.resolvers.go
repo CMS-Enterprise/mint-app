@@ -18,7 +18,11 @@ import (
 
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: CommonMilestone - commonMilestone"))
+	if obj.Key != nil {
+		return MTOCommonMilestoneGetByKeyLOADER(ctx, *obj.Key)
+	}
+	// if key is nil, there is no common milestone
+	return nil, nil
 }
 
 // Solutions is the resolver for the solutions field.

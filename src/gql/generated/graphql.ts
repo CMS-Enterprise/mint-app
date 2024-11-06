@@ -3578,8 +3578,6 @@ export type Query = {
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
-  mtoCommonMilestone: MtoCommonMilestone;
-  mtoCommonSolution: MtoCommonSolution;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3645,18 +3643,6 @@ export type QueryModelPlanCollectionArgs = {
 /** Query definition for the schema */
 export type QueryModelPlansByOperationalSolutionKeyArgs = {
   operationalSolutionKey: OperationalSolutionKey;
-};
-
-
-/** Query definition for the schema */
-export type QueryMtoCommonMilestoneArgs = {
-  key: MtoCommonMilestoneKey;
-};
-
-
-/** Query definition for the schema */
-export type QueryMtoCommonSolutionArgs = {
-  key: MtoCommonSolutionKey;
 };
 
 

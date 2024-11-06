@@ -22,9 +22,3 @@ type MTOCommonSolution {
   # isSuggested: Boolean! # TODO (mto) Is this needed? 
 
 }
-
-extend type Query {
-    # TODO: Verify if this is needed
-  mtoCommonSolution(key: MTOCommonSolutionKey!): MTOCommonSolution!
-  @hasAnyRole(roles: [MINT_USER])
-}

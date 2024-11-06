@@ -9,6 +9,7 @@ SELECT
     mto_common_milestone.category_name,
     mto_common_milestone.sub_category_name,
     mto_common_milestone.description,
-    mto_common_milestone.facilitated_by_role
+    mto_common_milestone.facilitated_by_role,
+    FALSE AS is_added
 FROM mto_common_milestone
 INNER JOIN QUERIED_IDS AS qIDs ON mto_common_milestone.key = qIDs.key
