@@ -6,12 +6,11 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // MtoCommonSolution is the resolver for the mtoCommonSolution field.
 func (r *queryResolver) MtoCommonSolution(ctx context.Context, key models.MTOCommonSolutionKey) (*models.MTOCommonSolution, error) {
-	panic(fmt.Errorf("not implemented: MtoCommonSolution - mtoCommonSolution"))
+	return MTOCommonSolutionGetByKeyLOADER(ctx, key)
 }

@@ -19,7 +19,7 @@ func (r *mTOCommonMilestoneResolver) IsSuggested(ctx context.Context, obj *model
 
 // CommonSolutions is the resolver for the commonSolutions field.
 func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *models.MTOCommonMilestone) ([]*models.MTOCommonSolution, error) {
-	panic(fmt.Errorf("not implemented: CommonSolutions - commonSolutions"))
+	return MTOCommonSolutionGetByCommonMilestoneKeyLOADER(ctx, obj.Key)
 }
 
 // MtoCommonMilestone is the resolver for the mtoCommonMilestone field.

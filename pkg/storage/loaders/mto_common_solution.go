@@ -22,7 +22,7 @@ type mtoCommonSolutionLoaders struct {
 	ByKey LoaderWrapper[models.MTOCommonSolutionKey, *models.MTOCommonSolution]
 
 	// ByCommonMilestoneKey returns a list of mto Common Solution records by it's keys. It does not currently have contextual data
-	ByCommonMilestoneKey LoaderWrapper[models.MTOCommonMilestoneKey, *models.MTOCommonSolution]
+	ByCommonMilestoneKey LoaderWrapper[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution]
 }
 
 // MTOCommonSolution is the singleton instance of all LoaderWrappers related to MTO Common Solutions
@@ -85,16 +85,16 @@ func batchMTOCommonSolutionGetByKey(ctx context.Context, commonSolutionKeys []mo
 }
 
 // batchMTOCommonSolutionGetByCommonMilestoneKey returns a list of common Solutions as a dataloader.Result for a list of commonMilestoneKeys (they are linked)
-func batchMTOCommonSolutionGetByCommonMilestoneKey(ctx context.Context, commonMilestoneKeys []models.MTOCommonMilestoneKey) []*dataloader.Result[*models.MTOCommonSolution] {
+func batchMTOCommonSolutionGetByCommonMilestoneKey(ctx context.Context, commonMilestoneKeys []models.MTOCommonMilestoneKey) []*dataloader.Result[[]*models.MTOCommonSolution] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, *models.MTOCommonSolution](commonMilestoneKeys, err)
+		return errorPerEachKey[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution](commonMilestoneKeys, err)
 	}
 
 	data, err := storage.MTOCommonSolutionGetByCommonMilestoneKeyLoader(loaders.DataReader.Store, logger, commonMilestoneKeys)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, *models.MTOCommonSolution](commonMilestoneKeys, err)
+		return errorPerEachKey[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution](commonMilestoneKeys, err)
 	}
 
 	getKeyFunc := func(data *models.MTOCommonSolution) models.MTOCommonMilestoneKey {
@@ -106,6 +106,6 @@ func batchMTOCommonSolutionGetByCommonMilestoneKey(ctx context.Context, commonMi
 	}
 
 	// implement one to many
-	return oneToOneDataLoader(commonMilestoneKeys, data, getKeyFunc)
+	return oneToManyDataLoader(commonMilestoneKeys, data, getKeyFunc)
 
 }

@@ -25,7 +25,7 @@ func (r *modelsToOperationMatrixResolver) CommonMilestones(ctx context.Context, 
 
 // CommonSolutions is the resolver for the commonSolutions field.
 func (r *modelsToOperationMatrixResolver) CommonSolutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCommonSolution, error) {
-	panic(fmt.Errorf("not implemented: CommonSolutions - commonSolutions"))
+	return MTOCommonSolutionGetByModelPlanIDLOADER(ctx, &obj.ModelPlan.ID)
 }
 
 // Milestones is the resolver for the milestones field.
