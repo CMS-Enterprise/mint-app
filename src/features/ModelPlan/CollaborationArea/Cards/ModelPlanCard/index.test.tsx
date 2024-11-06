@@ -7,6 +7,7 @@ import {
   GetModelPlanQuery,
   ModelPhase,
   ModelStatus,
+  MtoStatus,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -125,6 +126,11 @@ const modelPlan: GetModelPlanTypes = {
     }
   },
   echimpCRsAndTDLs: [],
+  mtoMatrix: {
+    __typename: 'ModelsToOperationMatrix',
+    status: MtoStatus.IN_PROGRESS,
+    recentEdit: null
+  },
   dataExchangeApproach: {
     __typename: 'PlanDataExchangeApproach',
     id: '123',
