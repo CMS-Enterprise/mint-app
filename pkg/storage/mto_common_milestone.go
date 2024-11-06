@@ -11,7 +11,7 @@ import (
 )
 
 // MTOCommonMilestoneGetByModelPlanIDLoader returns all top level categories for a slice of model plan ids
-func MTOCommonMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []*uuid.UUID) ([]*models.MTOCommonMilestone, error) {
+func MTOCommonMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOCommonMilestone, error) {
 
 	args := map[string]interface{}{
 		"model_plan_ids": pq.Array(modelPlanIDs),

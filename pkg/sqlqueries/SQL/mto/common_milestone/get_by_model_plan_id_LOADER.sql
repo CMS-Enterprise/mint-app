@@ -18,3 +18,4 @@ LEFT JOIN mto_milestone
     ON
         mto_common_milestone.key = mto_milestone.mto_common_milestone_key 
         AND qIDs.model_plan_id = mto_milestone.model_plan_id;
+        /* Note, this will send a 0 value uuid for model_plan_id instead of nil*/
