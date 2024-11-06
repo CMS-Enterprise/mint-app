@@ -412,6 +412,30 @@ const csvFields: (CSVLabel | string)[] = [
   'payments.readyForReviewDts',
   'payments.status',
 
+  // Data Exchange Approach
+  'dataExchangeApproach.dataToCollectFromParticipants',
+  'dataExchangeApproach.dataToCollectFromParticipantsReportsDetails',
+  'dataExchangeApproach.dataToCollectFromParticipantsOther',
+  'dataExchangeApproach.dataWillNotBeCollectedFromParticipants',
+  'dataExchangeApproach.dataToCollectFromParticipantsNote',
+  'dataExchangeApproach.dataToSendToParticipants',
+  'dataExchangeApproach.dataToSendToParticipantsNote',
+  'dataExchangeApproach.doesNeedToMakeMultiPayerDataAvailable',
+  'dataExchangeApproach.anticipatedMultiPayerDataAvailabilityUseCase',
+  'dataExchangeApproach.doesNeedToMakeMultiPayerDataAvailableNote',
+  'dataExchangeApproach.doesNeedToCollectAndAggregateMultiSourceData',
+  'dataExchangeApproach.multiSourceDataToCollect',
+  'dataExchangeApproach.multiSourceDataToCollectOther',
+  'dataExchangeApproach.doesNeedToCollectAndAggregateMultiSourceDataNote',
+  'dataExchangeApproach.willImplementNewDataExchangeMethods',
+  'dataExchangeApproach.newDataExchangeMethodsDescription',
+  'dataExchangeApproach.newDataExchangeMethodsNote',
+  'dataExchangeApproach.additionalDataExchangeConsiderationsDescription',
+  'dataExchangeApproach.isDataExchangeApproachComplete',
+  'dataExchangeApproach.markedCompleteByUserAccount.commonName',
+  'dataExchangeApproach.markedCompleteDts',
+  'dataExchangeApproach.status',
+
   // Collaborators
   {
     label: `${i18next.t<string, {}, string>(
