@@ -1,13 +1,5 @@
 @use 'viewports' as *;
 
-.solution-details-modal {
-    width: 70%;
-
-    @media screen and (max-width: $desktop) {
-        width: 100%;
-      }
-}
-
 .operational-solution-modal__body > .grid-row {
   gap: 2rem;
   @media screen and (min-width: $desktop) {

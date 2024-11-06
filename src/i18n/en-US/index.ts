@@ -15,9 +15,13 @@ import homepageSettings from './home/settings';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import changeHistory from './modelPlan/changeHistory';
+import collaborationArea from './modelPlan/collaborationArea';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import crs from './modelPlan/crs';
 import crtdlsMisc from './modelPlan/crtdlsMisc';
+import dataExchangeApproach, {
+  dataExchangeApproachMisc
+} from './modelPlan/dataExchangeApproach';
 import { discussions, discussionsMisc } from './modelPlan/discussions';
 import { documents, documentsMisc } from './modelPlan/documents';
 import {
@@ -49,7 +53,6 @@ import modelSummary from './readOnly/modelSummary';
 import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
-import collaborationArea from './collaborationArea';
 import cookies from './cookies';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
@@ -90,6 +93,8 @@ const enUS = {
   modelPlanMisc,
   basics,
   basicsMisc,
+  dataExchangeApproach,
+  dataExchangeApproachMisc,
   generalCharacteristics,
   generalCharacteristicsMisc,
   participantsAndProviders,

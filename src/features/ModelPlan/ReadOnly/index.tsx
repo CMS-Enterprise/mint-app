@@ -6,7 +6,6 @@ import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
-  GetCrtdLsQuery,
   GetModelSummaryQuery,
   ModelStatus,
   TeamRole,
@@ -50,6 +49,7 @@ import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
 import ReadOnlyCRTDLs from './CRTDLs';
+import ReadOnlyDataExchangeApproach from './DataExchangeapproach';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
 import ReadOnlyOperationalNeeds from './OperationalNeeds';
@@ -60,10 +60,6 @@ import ReadOnlyTeamInfo from './Team';
 import './index.scss';
 
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
-
-type CRTDLType =
-  | GetCrtdLsQuery['modelPlan']['crs'][0]
-  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 export type subComponentProps = {
   route: string;
@@ -86,7 +82,8 @@ const listOfSubpageKey: string[] = [
   'team',
   'discussions',
   'documents',
-  'crs-and-tdl'
+  'crs-and-tdl',
+  'data-exchange-approach'
 ];
 
 export const ReadOnlyComponents = (
@@ -132,6 +129,11 @@ export const ReadOnlyComponents = (
       component: <ReadOnlyOperationalNeeds modelID={modelID} />,
       helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
     },
+    'data-exchange-approach': {
+      route: `/models/${modelID}/read-only/data-exchange-approach`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/data-exchange-approach',
+      component: <ReadOnlyDataExchangeApproach modelID={modelID} />
+    },
     team: {
       route: `/models/${modelID}/read-only/team`,
       helpRoute: '/help-and-knowledge/sample-model-plan/team',
@@ -152,9 +154,7 @@ export const ReadOnlyComponents = (
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
       helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
-      component: (
-        <ReadOnlyCRTDLs modelID={modelID} isHelpArticle={isHelpArticle} />
-      )
+      component: <ReadOnlyCRTDLs />
     }
   };
 };
@@ -263,14 +263,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     generalCharacteristics,
     collaborators,
     isCollaborator,
-    crs,
-    tdls
+    echimpCRsAndTDLs
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
-
-  const planCRs = crs || [];
-  const planTDLs = tdls || [];
-
-  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const hasEditAccess: boolean =
     !isHelpArticle &&
@@ -386,7 +380,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               modelLeads={collaborators?.filter(c =>
                 c.teamRoles.includes(TeamRole.MODEL_LEAD)
               )}
-              crTdls={crTdls}
+              crTdls={echimpCRsAndTDLs}
             />
           </div>
         )}

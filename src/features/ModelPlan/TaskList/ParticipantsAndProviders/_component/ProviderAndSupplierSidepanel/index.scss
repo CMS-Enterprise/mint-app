@@ -1,0 +1,51 @@
+@use 'viewports' as *;
+@use 'uswds-core' as *;
+@use 'colors' as *;
+
+#provider-supplier-modal--sidenav {
+  .usa-sidenav {
+    border: none;
+
+    &__item {
+      border: none !important;
+    }
+  }
+  .sidenav-button {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+
+    &:hover {
+      background-color: color($theme-color-base-lightest);
+      color: color($theme-color-primary);
+    }
+
+    &.current {
+      position: relative;
+      color: color($theme-color-primary);
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      margin-left: -1rem;
+
+      &::after {
+        background-color: #005ea2;
+        border-radius: 99rem;
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0.25rem;
+        top: 0.25rem;
+        width: 0.25rem;
+        left: 0;
+      }
+    }
+
+    &:not(.current) {
+      padding-left: 0;
+      color: color($theme-color-base-darkest);
+
+      &:hover {
+        color: color($theme-color-primary);
+      }
+    }
+  }
+}

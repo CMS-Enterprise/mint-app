@@ -188,151 +188,139 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           >
             Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.
           </p>
-          <div
-            class="grid-row grid-gap"
-            data-testid="grid"
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
           >
-            <ul
-              class="usa-card-group"
-              data-testid="CardGroup"
+            <li
+              class="usa-card mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="article-card"
             >
               <div
-                class="tablet:grid-col-6 desktop:grid-col-6 display-flex flex-align-stretch"
-                data-testid="grid"
+                class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <li
-                  class="usa-card"
-                  data-testid="article-card"
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
                 >
-                  <div
-                    class="usa-card__container radius-md shadow-2 padding-2"
+                  <h4
+                    class="line-height-body-4 margin-bottom-05"
                   >
-                    <header
-                      class="usa-card__header padding-0"
-                      data-testid="CardHeader"
+                    Strategy Refresh SharePoint site
+                  </h4>
+                </header>
+                <div
+                  class="usa-card__body padding-0"
+                  data-testid="CardBody"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled mint-body-normal"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
-                      <h4
-                        class="line-height-body-4 margin-bottom-1"
+                      Go to the Strategy Refresh landing page
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Strategy Refresh SharePoint site
-                      </h4>
-                    </header>
-                    <div
-                      class="usa-card__body padding-0 line-height-sans-6"
-                      data-testid="CardBody"
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="usa-button usa-button--unstyled mint-body-normal"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
-                      <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                        data-testid="button"
-                        type="button"
+                      Go to the Resources page
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <span
-                          class="position-relative"
-                        >
-                          Go to the Strategy Refresh landing page
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
-                      </button>
-                      <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                        data-testid="button"
-                        type="button"
-                      >
-                        <span
-                          class="position-relative"
-                        >
-                          Go to the Resources page
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </li>
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
               </div>
+            </li>
+            <li
+              class="usa-card mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="article-card"
+            >
               <div
-                class="tablet:grid-col-6 desktop:grid-col-6 display-flex flex-align-stretch"
-                data-testid="grid"
+                class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <li
-                  class="usa-card width-full"
-                  data-testid="article-card"
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
                 >
-                  <div
-                    class="usa-card__container radius-md shadow-2 padding-2"
+                  <h4
+                    class="line-height-body-4 margin-bottom-05"
                   >
-                    <header
-                      class="usa-card__header padding-0"
-                      data-testid="CardHeader"
+                    6-page concept paper template
+                  </h4>
+                  <p
+                    class="margin-y-0 text-base mint-body-normal"
+                  >
+                    Download the template from the Strategy Refresh SharePoint site.
+                  </p>
+                </header>
+                <div
+                  class="usa-card__body padding-0"
+                  data-testid="CardBody"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled mint-body-normal"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
-                      <h4
-                        class="line-height-body-4 margin-bottom-1"
+                      Go to the template on SharePoint
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        6-page concept paper template
-                      </h4>
-                      <p
-                        class="margin-y-0 text-base"
-                      >
-                        Download the template from the Strategy Refresh SharePoint site.
-                      </p>
-                    </header>
-                    <div
-                      class="usa-card__body padding-0 line-height-sans-6"
-                      data-testid="CardBody"
-                    >
-                      <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                        data-testid="button"
-                        type="button"
-                      >
-                        <span
-                          class="position-relative"
-                        >
-                          Go to the template on SharePoint
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </li>
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
               </div>
-            </ul>
-          </div>
+            </li>
+          </ul>
         </div>
         <div
           class="margin-bottom-5 scroll-target"
@@ -364,17 +352,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 style="white-space: pre;"
               >
                 Much of the content below is also accessible in the 6-page concept paper template. 
-                <button
-                  class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                  data-testid="button"
-                  type="button"
+                <span
+                  class="usa-link pointer"
+                  role="button"
+                  tabindex="0"
                 >
-                  <span
-                    class="position-relative"
-                  >
+                  <span>
                     Download it from the Strategy Refresh SharePoint site
                     <svg
-                      class="usa-icon margin-left-05 position-absolute"
+                      class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -387,7 +373,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       />
                     </svg>
                   </span>
-                </button>
+                </span>
               </div>
               <p />
             </div>
@@ -671,17 +657,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0"
                 >
                   Visit the 
-                  <button
-                    class="usa-button usa-button--unstyled margin-right-0 margin-right-2 padding-right-5"
-                    data-testid="button"
-                    type="button"
+                  <span
+                    class="margin-right-0 usa-link pointer"
+                    role="button"
+                    tabindex="0"
                   >
-                    <span
-                      class="position-relative"
-                    >
+                    <span>
                       Strategy Refresh SharePoint site
                       <svg
-                        class="usa-icon margin-left-05 position-absolute"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -694,7 +678,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         />
                       </svg>
                     </span>
-                  </button>
+                  </span>
                    for additional guidance and helpful resources such as the 2-page concept paper template.
                 </p>
               </div>
@@ -727,16 +711,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled"
                       data-testid="button"
                       type="button"
                     >
                       <span
-                        class="position-relative"
+                        class="display-flex flex-align-center"
+                        style="column-gap: 0.25rem;"
                       >
                         AHEAD 2-page concept paper
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -755,16 +740,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled"
                       data-testid="button"
                       type="button"
                     >
                       <span
-                        class="position-relative"
+                        class="display-flex flex-align-center"
+                        style="column-gap: 0.25rem;"
                       >
                         Enhancing Oncology Model 2-page concept paper
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -783,16 +769,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled"
                       data-testid="button"
                       type="button"
                     >
                       <span
-                        class="position-relative"
+                        class="display-flex flex-align-center"
+                        style="column-gap: 0.25rem;"
                       >
                         Innovation in Behavioral Health 2-pager concept paper
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -811,16 +798,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     class="margin-bottom-1"
                   >
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled"
                       data-testid="button"
                       type="button"
                     >
                       <span
-                        class="position-relative"
+                        class="display-flex flex-align-center"
+                        style="column-gap: 0.25rem;"
                       >
                         Making Care Primary 2-pager concept paper
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -840,17 +828,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0"
                 >
                   To view the links above, you will need access to the 
-                  <button
-                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                    data-testid="button"
-                    type="button"
+                  <span
+                    class="usa-link pointer"
+                    role="button"
+                    tabindex="0"
                   >
-                    <span
-                      class="position-relative"
-                    >
+                    <span>
                       Model Resources area of SharePoint.
                       <svg
-                        class="usa-icon margin-left-05 position-absolute"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -863,7 +849,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         />
                       </svg>
                     </span>
-                  </button>
+                  </span>
                 </span>
               </div>
             </div>

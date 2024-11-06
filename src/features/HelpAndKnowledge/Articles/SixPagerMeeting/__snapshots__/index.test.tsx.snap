@@ -209,151 +209,139 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           <p>
             Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 6-page and 6-page concept papers.
           </p>
-          <div
-            class="grid-row grid-gap"
-            data-testid="grid"
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
           >
-            <ul
-              class="usa-card-group"
-              data-testid="CardGroup"
+            <li
+              class="usa-card mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="article-card"
             >
               <div
-                class="tablet:grid-col-6 desktop:grid-col-6 display-flex flex-align-stretch"
-                data-testid="grid"
+                class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <li
-                  class="usa-card"
-                  data-testid="article-card"
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
                 >
-                  <div
-                    class="usa-card__container radius-md shadow-2 padding-2"
+                  <h4
+                    class="line-height-body-4 margin-bottom-05"
                   >
-                    <header
-                      class="usa-card__header padding-0"
-                      data-testid="CardHeader"
+                    Strategy Refresh SharePoint site
+                  </h4>
+                </header>
+                <div
+                  class="usa-card__body padding-0"
+                  data-testid="CardBody"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled mint-body-normal"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
-                      <h4
-                        class="line-height-body-4 margin-bottom-1"
+                      Go to the Strategy Refresh landing page
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Strategy Refresh SharePoint site
-                      </h4>
-                    </header>
-                    <div
-                      class="usa-card__body padding-0 line-height-sans-6"
-                      data-testid="CardBody"
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="usa-button usa-button--unstyled mint-body-normal"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
-                      <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                        data-testid="button"
-                        type="button"
+                      Go to the Resources page
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <span
-                          class="position-relative"
-                        >
-                          Go to the Strategy Refresh landing page
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
-                      </button>
-                      <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                        data-testid="button"
-                        type="button"
-                      >
-                        <span
-                          class="position-relative"
-                        >
-                          Go to the Resources page
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </li>
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
               </div>
+            </li>
+            <li
+              class="usa-card mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="article-card"
+            >
               <div
-                class="tablet:grid-col-6 desktop:grid-col-6 display-flex flex-align-stretch"
-                data-testid="grid"
+                class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <li
-                  class="usa-card width-full"
-                  data-testid="article-card"
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
                 >
-                  <div
-                    class="usa-card__container radius-md shadow-2 padding-2"
+                  <h4
+                    class="line-height-body-4 margin-bottom-05"
                   >
-                    <header
-                      class="usa-card__header padding-0"
-                      data-testid="CardHeader"
+                    6-page concept paper template
+                  </h4>
+                  <p
+                    class="margin-y-0 text-base mint-body-normal"
+                  >
+                    Download the template from the Strategy Refresh SharePoint site.
+                  </p>
+                </header>
+                <div
+                  class="usa-card__body padding-0"
+                  data-testid="CardBody"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled mint-body-normal"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
-                      <h4
-                        class="line-height-body-4 margin-bottom-1"
+                      Go to the template on SharePoint
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        6-page concept paper template
-                      </h4>
-                      <p
-                        class="margin-y-0 text-base"
-                      >
-                        Download the template from the Strategy Refresh SharePoint site.
-                      </p>
-                    </header>
-                    <div
-                      class="usa-card__body padding-0 line-height-sans-6"
-                      data-testid="CardBody"
-                    >
-                      <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                        data-testid="button"
-                        type="button"
-                      >
-                        <span
-                          class="position-relative"
-                        >
-                          Go to the template on SharePoint
-                          <svg
-                            class="usa-icon margin-left-05 position-absolute"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                            />
-                          </svg>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </li>
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
               </div>
-            </ul>
-          </div>
+            </li>
+          </ul>
         </div>
         <div
           class="scroll-target"
@@ -459,14 +447,14 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               <div>
                 Much of the content below is also accessible in the 6-page concept paper template. 
                 <span
-                  class="usa-link pointer margin-right-05"
+                  class="usa-link pointer"
                   role="button"
                   tabindex="0"
                 >
                   <span>
                     Download it from the Strategy Refresh SharePoint site
                     <svg
-                      class="usa-icon margin-left-05 top-2px"
+                      class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -573,14 +561,14 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 </strong>
                  Describe how the proposed model would support or advance CMMI’s strategic objectives and 
                 <span
-                  class="usa-link pointer margin-right-05"
+                  class="usa-link pointer"
                   role="button"
                   tabindex="0"
                 >
                   <span>
                     metrics
                     <svg
-                      class="usa-icon margin-left-05 top-2px"
+                      class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -703,16 +691,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     View the 
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled"
                       data-testid="button"
                       type="button"
                     >
                       <span
-                        class="position-relative"
+                        class="display-flex flex-align-center"
+                        style="column-gap: 0.25rem;"
                       >
                         Health Equity Resources on the Quality Vertical SharePoint
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -732,16 +721,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     View the 
                     <button
-                      class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                      class="usa-button usa-button--unstyled"
                       data-testid="button"
                       type="button"
                     >
                       <span
-                        class="position-relative"
+                        class="display-flex flex-align-center"
+                        style="column-gap: 0.25rem;"
                       >
                         CMS Framework for Health Equity
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -869,16 +859,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   You can view more resources by visiting the  
                   <button
-                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                    class="usa-button usa-button--unstyled"
                     data-testid="button"
                     type="button"
                   >
                     <span
-                      class="position-relative"
+                      class="display-flex flex-align-center"
+                      style="column-gap: 0.25rem;"
                     >
                       Strategy Refresh Model Development Library
                       <svg
-                        class="usa-icon margin-left-05 position-absolute"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -904,16 +895,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             2-pager repository
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -930,16 +922,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             6-pager repository
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -956,16 +949,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             ICIP repository
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -982,16 +976,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Waiver database
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1008,16 +1003,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Model Interactions framework resource PPT
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1034,16 +1030,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Guidance on Model Expansion and Other Opportunities for Scaling
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1067,16 +1064,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Quality Design Process
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1093,16 +1091,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Patient Reported Outcome Measure(PROM) strategy
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1126,16 +1125,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Quality Vertical Health Equity Resource Guide
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1152,16 +1152,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Implicit Bias Guide
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1178,16 +1179,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1204,16 +1206,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             HRSN Screening and Referral Implementation Guide
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1230,16 +1233,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       </li>
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1263,16 +1267,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       <li>
                         <button
-                          class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                          class="usa-button usa-button--unstyled"
                           data-testid="button"
                           type="button"
                         >
                           <span
-                            class="position-relative"
+                            class="display-flex flex-align-center"
+                            style="column-gap: 0.25rem;"
                           >
                             BSG Checklist
                             <svg
-                              class="usa-icon margin-left-05 position-absolute"
+                              class="usa-icon"
                               focusable="false"
                               height="1em"
                               role="img"
@@ -1379,16 +1384,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       class="padding-bottom-05"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled"
                         data-testid="button"
                         type="button"
                       >
                         <span
-                          class="position-relative"
+                          class="display-flex flex-align-center"
+                          style="column-gap: 0.25rem;"
                         >
                           AHEAD 6-page concept paper
                           <svg
-                            class="usa-icon margin-left-05 position-absolute"
+                            class="usa-icon"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -1407,16 +1413,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       class="padding-bottom-05"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled"
                         data-testid="button"
                         type="button"
                       >
                         <span
-                          class="position-relative"
+                          class="display-flex flex-align-center"
+                          style="column-gap: 0.25rem;"
                         >
                           Enhancing Oncology Model 6-page concept paper
                           <svg
-                            class="usa-icon margin-left-05 position-absolute"
+                            class="usa-icon"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -1435,16 +1442,17 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       class="padding-bottom-05"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
+                        class="usa-button usa-button--unstyled"
                         data-testid="button"
                         type="button"
                       >
                         <span
-                          class="position-relative"
+                          class="display-flex flex-align-center"
+                          style="column-gap: 0.25rem;"
                         >
                           Making Care Primary 6-page concept paper
                           <svg
-                            class="usa-icon margin-left-05 position-absolute"
+                            class="usa-icon"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -1466,17 +1474,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   data-testid="CardFooter"
                 >
                   To view the links above, you will need access to the 
-                  <button
-                    class="usa-button usa-button--unstyled margin-right-2 padding-right-5"
-                    data-testid="button"
-                    type="button"
+                  <span
+                    class="usa-link pointer"
+                    role="button"
+                    tabindex="0"
                   >
-                    <span
-                      class="position-relative"
-                    >
+                    <span>
                       Model Resources area of SharePoint
                       <svg
-                        class="usa-icon margin-left-05 position-absolute"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -1489,7 +1495,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         />
                       </svg>
                     </span>
-                  </button>
+                  </span>
                 </div>
               </div>
             </li>

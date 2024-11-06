@@ -3,7 +3,11 @@ const externalLinkModal = {
   description: `This link may require additional job codes, permissions, and/or connectivity via VPN to access content. 
 
 Please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963 if you need assistance.`,
+  descriptionEchimp: `ECHIMP requires additional job codes and/or permissions and connectivity via VPN to access content within the system. 
+
+Please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963 if you need assistance.`,
   leave: 'Leave MINT',
+  continueEchimp: 'Continue to ECHIMP',
   return: 'Go back to MINT',
   document: {
     heading: 'You are leaving MINT.',

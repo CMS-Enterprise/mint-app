@@ -2,6 +2,7 @@ import {
   AgencyOrStateHelpType,
   AgreementType,
   AlternativePaymentModelType,
+  AnticipatedMultiPayerDataAvailabilityUseCase,
   AuthorityAllowance,
   BenchmarkForPerformanceType,
   BeneficiariesType,
@@ -12,10 +13,13 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  DataExchangeApproachStatus,
   DataForMonitoringType,
   DataFullTimeOrIncrementalType,
   DataStartsType,
+  DataToCollectFromParticipants,
   DataToSendParticipantsType,
+  DataToSendToParticipants,
   EvaluationApproachType,
   FrequencyType,
   FundingSource,
@@ -27,6 +31,8 @@ import {
   GetAllBasicsQuery,
   GetAllBeneficiariesDocument,
   GetAllBeneficiariesQuery,
+  GetAllDataExchangeApproachDocument,
+  GetAllDataExchangeApproachQuery,
   GetAllGeneralCharacteristicsDocument,
   GetAllGeneralCharacteristicsQuery,
   GetAllOpsEvalAndLearningDocument,
@@ -35,8 +41,6 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
-  GetCrtdLsDocument,
-  GetCrtdLsQuery,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
@@ -51,6 +55,7 @@ import {
   ModelStatus,
   ModelType,
   MonitoringFileType,
+  MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
   OperationalSolutionKey,
@@ -94,6 +99,8 @@ type GetModelCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 type GetOperationalNeedsType = GetOperationalNeedsQuery;
+type GetAllDataExchangeApproachType =
+  GetAllDataExchangeApproachQuery['modelPlan']['dataExchangeApproach'];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
@@ -689,6 +696,62 @@ export const paymentsMocks = [
   }
 ];
 
+const dataExchangeApproachData: GetAllDataExchangeApproachType = {
+  __typename: 'PlanDataExchangeApproach',
+  id: '123',
+  dataToCollectFromParticipants: [
+    DataToCollectFromParticipants.REPORTS_FROM_PARTICIPANTS,
+    DataToCollectFromParticipants.OTHER
+  ],
+  dataToCollectFromParticipantsReportsDetails: 'report details',
+  dataToCollectFromParticipantsOther: 'other note',
+  dataWillNotBeCollectedFromParticipants: false,
+  dataToCollectFromParticipantsNote: 'collect note',
+  dataToSendToParticipants: [DataToSendToParticipants.OPERATIONS_DATA],
+  dataToSendToParticipantsNote: 'send note',
+  doesNeedToMakeMultiPayerDataAvailable: false,
+  anticipatedMultiPayerDataAvailabilityUseCase: [
+    AnticipatedMultiPayerDataAvailabilityUseCase.SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING
+  ],
+  doesNeedToMakeMultiPayerDataAvailableNote: 'data available note',
+  doesNeedToCollectAndAggregateMultiSourceData: false,
+  multiSourceDataToCollect: [MultiSourceDataToCollect.OTHER],
+  multiSourceDataToCollectOther: 'other data',
+  doesNeedToCollectAndAggregateMultiSourceDataNote: 'multi source note',
+  willImplementNewDataExchangeMethods: false,
+  newDataExchangeMethodsDescription: '',
+  newDataExchangeMethodsNote: 'new data note',
+  additionalDataExchangeConsiderationsDescription: 'consideration desc',
+  isDataExchangeApproachComplete: false,
+  markedCompleteByUserAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    commonName: 'Common Name'
+  },
+  markedCompleteDts: '2022-06-03T19:32:24.412662Z',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
+  status: DataExchangeApproachStatus.IN_PROGRESS
+};
+
+export const dataExchangeApproachMocks = [
+  {
+    request: {
+      query: GetAllDataExchangeApproachDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          dataExchangeApproach: dataExchangeApproachData
+        }
+      }
+    }
+  }
+];
+
 const summaryData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
   id: modelID,
@@ -708,6 +771,16 @@ const summaryData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
+  echimpCRsAndTDLs: [
+    {
+      __typename: 'EChimpCR',
+      id: '123'
+    },
+    {
+      __typename: 'EChimpTDL',
+      id: '456'
+    }
+  ],
   collaborators: [
     {
       userAccount: {
@@ -719,20 +792,6 @@ const summaryData: GetModelSummaryTypes = {
       },
       teamRoles: [TeamRole.MODEL_LEAD],
       __typename: 'PlanCollaborator'
-    }
-  ],
-  crs: [
-    {
-      __typename: 'PlanCR',
-      id: '123',
-      idNumber: 'CR 123'
-    }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      id: '456',
-      idNumber: 'TDL 456'
     }
   ]
 };
@@ -896,51 +955,6 @@ export const possibleOperationalSolutionDataMocks = [
     },
     result: {
       data: possibleOperationalSolutionData
-    }
-  }
-];
-
-const crtdlData: GetCrtdLsQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    modelName: 'My excellent plan that I just initiated',
-    isCollaborator: true,
-    crs: [
-      {
-        __typename: 'PlanCR',
-        id: '123',
-        modelPlanID: modelID,
-        title: 'My CR',
-        idNumber: 'CR123',
-        dateInitiated: '2022-07-30T05:00:00Z',
-        dateImplemented: '2022-07-30T05:00:00Z',
-        note: 'note'
-      }
-    ],
-    tdls: [
-      {
-        __typename: 'PlanTDL',
-        id: '1234',
-        modelPlanID: modelID,
-        title: 'My TDL',
-        idNumber: 'TDL123',
-        dateInitiated: '2022-07-30T05:00:00Z',
-        note: 'note'
-      }
-    ]
-  }
-};
-
-export const crtdlMocks = [
-  {
-    request: {
-      query: GetCrtdLsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: crtdlData
     }
   }
 ];

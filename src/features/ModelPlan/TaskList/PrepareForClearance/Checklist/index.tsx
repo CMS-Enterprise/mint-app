@@ -39,7 +39,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
-import dirtyInput from 'utils/formDiff';
+import dirtyInput from 'utils/formUtil';
 import { tArray } from 'utils/translation';
 
 // Initial form values and types for each task-list clearance checkbox
@@ -50,8 +50,8 @@ interface ClearanceFormValues {
   status: TaskStatus;
 }
 
-const initialClearanceFormValues = {
-  id: '',
+export const initialClearanceFormValues = {
+  id: '123',
   readyForClearanceByUserAccount: {
     id: '',
     commonName: ''

@@ -46,7 +46,8 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             changeHistoryEnabled: false,
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
-            sandbox: true
+            sandbox: true,
+            echimpEnabled: false // TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
           }
         });
 

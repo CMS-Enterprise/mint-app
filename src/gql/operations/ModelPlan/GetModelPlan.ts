@@ -41,18 +41,27 @@ export default gql(/* GraphQL */ `
         modelPlanID
         createdDts
       }
+      dataExchangeApproach {
+        id
+        status
+        modifiedDts
+        modifiedByUserAccount {
+          id
+          commonName
+        }
+      }
       documents {
         id
         fileName
         fileType
       }
-      crs {
-        id
-        idNumber
-      }
-      tdls {
-        id
-        idNumber
+      echimpCRsAndTDLs {
+        ... on EChimpCR {
+          id
+        }
+        ... on EChimpTDL {
+          id
+        }
       }
       discussions {
         id

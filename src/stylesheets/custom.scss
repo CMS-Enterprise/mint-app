@@ -213,6 +213,12 @@
   font-size: 1rem !important;
 }
 
+.mint-body-medium {
+  font-weight: 300 !important;
+  line-height: 1.5625rem !important;
+  font-size: 1.0625rem !important;
+}
+
 .mint-body-large {
   font-weight: 300 !important;
   line-height: 2.1875rem !important;
@@ -225,4 +231,45 @@
 
 .fixed-table {
   table-layout: fixed;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+@media screen and (min-width: $mobile) {
+  .mobile\:width-50 {
+    width: 50%;
+  }
+}
+@media screen and (min-width: $tablet) {
+  .tablet\:width-50 {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .desktop\:width-50 {
+    width: 50%;
+  }
+}
+
+// Modal and Sidepanel shared styles
+.mint-modal, .mint-sidepanel {
+  &__overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 400;
+  }
+
+  &__content {
+    position: absolute;
+    background-color: #fff;
+    z-index: 1;
+    line-height: 1.6em;
+  }
 }

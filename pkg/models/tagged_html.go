@@ -146,7 +146,10 @@ func htmlMentionsFromStringRegex(htmlString string) ([]*HTMLMention, error) {
 func extractHTMLSpansRegex(htmlString string) ([]string, error) {
 
 	// Define the regex pattern to match the span elements
-	regexPattern := `<span[^>]*>.*?<\/span>`
+	// Also, this only parses <span> elements that have data-type="mention" (otherwise
+	// it's probably just a regular/non-mention span that we shouldn't try and parse)
+	// data-type="mention" comes from TipTap
+	regexPattern := `<span[^>]* data-type="mention"[^>]*>.*?<\/span>`
 
 	// Compile the regex pattern
 	regex, err := regexp.Compile(regexPattern)

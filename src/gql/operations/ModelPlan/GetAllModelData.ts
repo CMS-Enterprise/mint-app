@@ -419,6 +419,36 @@ export default gql(/* GraphQL */ `
         readyForReviewDts
         status
       }
+      dataExchangeApproach {
+        id
+        dataToCollectFromParticipants
+        dataToCollectFromParticipantsReportsDetails
+        dataToCollectFromParticipantsOther
+        dataWillNotBeCollectedFromParticipants
+        dataToCollectFromParticipantsNote
+        dataToSendToParticipants
+        dataToSendToParticipantsNote
+        doesNeedToMakeMultiPayerDataAvailable
+        anticipatedMultiPayerDataAvailabilityUseCase
+        doesNeedToMakeMultiPayerDataAvailableNote
+        doesNeedToCollectAndAggregateMultiSourceData
+        multiSourceDataToCollect
+        multiSourceDataToCollectOther
+        doesNeedToCollectAndAggregateMultiSourceDataNote
+        willImplementNewDataExchangeMethods
+        newDataExchangeMethodsDescription
+        newDataExchangeMethodsNote
+        additionalDataExchangeConsiderationsDescription
+        isDataExchangeApproachComplete
+        markedCompleteByUserAccount {
+          id
+          commonName
+        }
+        markedCompleteDts
+        modifiedDts
+        createdDts
+        status
+      }
       collaborators {
         id
         userAccount {

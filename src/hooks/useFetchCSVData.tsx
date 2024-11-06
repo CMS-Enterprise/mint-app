@@ -59,25 +59,32 @@ const getSectionAndFieldName = (csvHeader: string) => {
   };
 };
 
+// Generic translation for Ready for review/marked complete fields
+const getUserHeaderLabel = (fieldName: string, dataField: string): string => {
+  if (fieldName === 'readyForReviewByUserAccount.commonName') {
+    return i18next.t('modelPlanMisc:readyForReviewBy');
+  }
+  if (fieldName === 'readyForReviewDts') {
+    return i18next.t('modelPlanMisc:readyForReviewAt');
+  }
+  if (fieldName === 'markedCompleteByUserAccount.commonName') {
+    return i18next.t('dataExchangeApproach:markedCompleteBy.label');
+  }
+  // If no translation, format using hardcoded label in csvFields
+  return dataField;
+};
+
 // Formats headers for data from translations or hardcoded labels
 export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   const { section, fieldName } = getSectionAndFieldName(dataField);
 
   let translation = dataField;
 
+  translation = getUserHeaderLabel(fieldName, dataField);
+
   // Gets the label value from translation object
   if (allPlanTranslation[section][fieldName]?.label) {
     translation = allPlanTranslation[section][fieldName].label;
-  }
-  // Generic translation for Ready for review fields
-  else if (fieldName === 'readyForReviewByUserAccount.commonName') {
-    translation = i18next.t('modelPlanMisc:readyForReviewBy');
-  } else if (fieldName === 'readyForReviewDts') {
-    translation = i18next.t('modelPlanMisc:readyForReviewAt');
-  }
-  // If no translation, format using hardcoded label in csvFields
-  else {
-    translation = dataField;
   }
 
   // Append Task list section to status headers so differentiate values

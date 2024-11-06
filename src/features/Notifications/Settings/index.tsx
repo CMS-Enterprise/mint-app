@@ -15,6 +15,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
+  DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
@@ -29,7 +30,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
-import { dirtyInput } from 'utils/formDiff';
+import { dirtyInput } from 'utils/formUtil';
 import { tObject } from 'utils/translation';
 
 type GetNotifcationSettingsType =
@@ -76,7 +77,9 @@ const NotificationSettings = () => {
     modelPlanShared,
     newModelPlan,
     datesChanged,
-    datesChangedNotificationType
+    datesChangedNotificationType,
+    dataExchangeApproachMarkedComplete,
+    dataExchangeApproachMarkedCompleteNotificationType
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -97,6 +100,15 @@ const NotificationSettings = () => {
       // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
       changes.datesChangedNotificationType =
         DatesChangedNotificationType.ALL_MODELS;
+    }
+    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
+    if (
+      !changes.dataExchangeApproachMarkedCompleteNotificationType &&
+      changes.dataExchangeApproachMarkedComplete?.length
+    ) {
+      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+      changes.dataExchangeApproachMarkedCompleteNotificationType =
+        DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS;
     }
 
     if (dirtyInputs.taggedInDiscussion) {
@@ -175,6 +187,16 @@ const NotificationSettings = () => {
     const isSubscribedDatesChangedInApp = datesChanged.includes(
       UserNotificationPreferenceFlag.IN_APP
     );
+    // Data Exchange Approach Marked Complete variables
+    const isSubscribedDataExchangeApproachMarkedCompleteEmail =
+      dataExchangeApproachMarkedComplete.includes(
+        UserNotificationPreferenceFlag.EMAIL
+      );
+
+    const isSubscribedDataExchangeApproachMarkedCompleteInApp =
+      dataExchangeApproachMarkedComplete.includes(
+        UserNotificationPreferenceFlag.IN_APP
+      );
 
     // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
     // then show error alert banner
@@ -182,7 +204,10 @@ const NotificationSettings = () => {
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
         !isSubscribedModelPlanEmail) ||
       (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
-        !isSubscribedDatesChangedEmail)
+        !isSubscribedDatesChangedEmail) ||
+      (unsubscribeEmailParams ===
+        ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE &&
+        !isSubscribedDataExchangeApproachMarkedCompleteEmail)
     ) {
       showMessage(
         <Alert
@@ -213,10 +238,16 @@ const NotificationSettings = () => {
     // Unsubscribe from New Model Plan email notifications
     if (
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
-      unsubscribeEmailParams === ActivityType.DATES_CHANGED
+      unsubscribeEmailParams === ActivityType.DATES_CHANGED ||
+      unsubscribeEmailParams ===
+        ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
     ) {
       // if user has email notifications, then proceeed to unsubscribe
-      if (isSubscribedModelPlanEmail || isSubscribedDatesChangedEmail) {
+      if (
+        isSubscribedModelPlanEmail ||
+        isSubscribedDatesChangedEmail ||
+        isSubscribedDataExchangeApproachMarkedCompleteEmail
+      ) {
         let changes;
         // Adjust payload if New Model Plan in-app notifications are enabled
         if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
@@ -232,6 +263,18 @@ const NotificationSettings = () => {
             datesChanged: isSubscribedDatesChangedInApp
               ? [UserNotificationPreferenceFlag.IN_APP]
               : []
+          };
+        }
+        // Adjust payload if Data Exchange Approach in-app notifications are enabled
+        if (
+          unsubscribeEmailParams ===
+          ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
+        ) {
+          changes = {
+            dataExchangeApproachMarkedComplete:
+              isSubscribedDataExchangeApproachMarkedCompleteInApp
+                ? [UserNotificationPreferenceFlag.IN_APP]
+                : []
           };
         }
 
@@ -282,6 +325,7 @@ const NotificationSettings = () => {
       history.replace({ search: params.toString() });
     }
   }, [
+    dataExchangeApproachMarkedComplete,
     datesChanged,
     history,
     loading,
@@ -301,7 +345,11 @@ const NotificationSettings = () => {
     modelPlanShared: modelPlanShared ?? [],
     newModelPlan: newModelPlan ?? [],
     datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? undefined
+    datesChangedNotificationType: datesChangedNotificationType ?? undefined,
+    dataExchangeApproachMarkedComplete:
+      dataExchangeApproachMarkedComplete ?? [],
+    dataExchangeApproachMarkedCompleteNotificationType:
+      dataExchangeApproachMarkedCompleteNotificationType ?? undefined
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -309,7 +357,7 @@ const NotificationSettings = () => {
   }
 
   return (
-    <MainContent data-testid="new-plan">
+    <MainContent data-testid="notification-setting-page">
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
           <Breadcrumbs
@@ -386,99 +434,109 @@ const NotificationSettings = () => {
                     <Fieldset disabled={!!error || loading}>
                       {getKeys(notificationSettings).map(setting => {
                         return (
-                          <Grid row key={setting}>
-                            {setting === 'newModelPlan' && (
-                              <Grid mobile={{ col: 12 }}>
-                                <h4 className="margin-top-5 margin-bottom-0">
-                                  {notificationsT(
-                                    'settings.sections.additionalNotifications.heading'
+                          <React.Fragment key={setting}>
+                            <Grid row>
+                              {setting === 'newModelPlan' && (
+                                <Grid mobile={{ col: 12 }}>
+                                  <h4 className="margin-top-5 margin-bottom-0">
+                                    {notificationsT(
+                                      'settings.sections.additionalNotifications.heading'
+                                    )}
+                                  </h4>
+                                </Grid>
+                              )}
+
+                              <Grid mobile={{ col: 6 }}>
+                                <p className="text-wrap margin-y-105">
+                                  {notificationSettings[setting]}
+                                </p>
+                              </Grid>
+
+                              <Grid mobile={{ col: 3 }}>
+                                <Field
+                                  as={Checkbox}
+                                  id={`notification-setting-email-${setting}`}
+                                  data-testid={`notification-setting-email-${setting}`}
+                                  className="padding-left-2"
+                                  name={setting}
+                                  value={UserNotificationPreferenceFlag.EMAIL}
+                                  checked={(values?.[setting] ?? []).includes(
+                                    UserNotificationPreferenceFlag.EMAIL
                                   )}
-                                </h4>
+                                />
+                              </Grid>
+
+                              <Grid mobile={{ col: 3 }}>
+                                <Field
+                                  as={Checkbox}
+                                  id={`notification-setting-in-app-${setting}`}
+                                  data-testid={`notification-setting-in-app-${setting}`}
+                                  className="padding-left-2"
+                                  name={setting}
+                                  value={UserNotificationPreferenceFlag.IN_APP}
+                                  disabled={
+                                    setting !== 'datesChanged' &&
+                                    setting !== 'newModelPlan' &&
+                                    setting !==
+                                      'dataExchangeApproachMarkedComplete'
+                                  }
+                                  checked={(values?.[setting] ?? []).includes(
+                                    UserNotificationPreferenceFlag.IN_APP
+                                  )}
+                                />
+                              </Grid>
+                            </Grid>
+                            {(setting === 'datesChanged' ||
+                              setting ===
+                                'dataExchangeApproachMarkedComplete') && (
+                              <Grid row>
+                                <Grid
+                                  className="tablet:padding-left-3"
+                                  tablet={{ col: 6 }}
+                                >
+                                  <Label
+                                    htmlFor="notification-setting-whichModel"
+                                    className="text-normal margin-top-0"
+                                  >
+                                    {notificationsT(
+                                      'settings.additionalConfigurations.whichModel'
+                                    )}
+                                  </Label>
+
+                                  <Field
+                                    as={Select}
+                                    id="notification-setting-whichModel"
+                                    data-testid={`notification-setting-whichModel-${setting}`}
+                                    name={`${setting}NotificationType`}
+                                    value={
+                                      setting === 'datesChanged'
+                                        ? values.datesChangedNotificationType
+                                        : values.dataExchangeApproachMarkedCompleteNotificationType
+                                    }
+                                    disabled={!values[setting].length}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      setFieldValue(
+                                        `${setting}NotificationType`,
+                                        e.target.value
+                                      );
+                                    }}
+                                  >
+                                    {getKeys(whichModelType).map(type => {
+                                      return (
+                                        <option key={type} value={type}>
+                                          {whichModelType[type]}
+                                        </option>
+                                      );
+                                    })}
+                                  </Field>
+                                </Grid>
                               </Grid>
                             )}
-
-                            <Grid mobile={{ col: 6 }}>
-                              <p className="text-wrap margin-y-105">
-                                {notificationSettings[setting]}
-                              </p>
-                            </Grid>
-
-                            <Grid mobile={{ col: 3 }}>
-                              <Field
-                                as={Checkbox}
-                                id={`notification-setting-email-${setting}`}
-                                data-testid={`notification-setting-email-${setting}`}
-                                className="padding-left-2"
-                                name={setting}
-                                value={UserNotificationPreferenceFlag.EMAIL}
-                                checked={(values?.[setting] ?? []).includes(
-                                  UserNotificationPreferenceFlag.EMAIL
-                                )}
-                              />
-                            </Grid>
-
-                            <Grid mobile={{ col: 3 }}>
-                              <Field
-                                as={Checkbox}
-                                id={`notification-setting-in-app-${setting}`}
-                                data-testid={`notification-setting-in-app-${setting}`}
-                                className="padding-left-2"
-                                name={setting}
-                                value={UserNotificationPreferenceFlag.IN_APP}
-                                disabled={
-                                  setting !== 'datesChanged' &&
-                                  setting !== 'newModelPlan'
-                                }
-                                checked={(values?.[setting] ?? []).includes(
-                                  UserNotificationPreferenceFlag.IN_APP
-                                )}
-                              />
-                            </Grid>
-                          </Grid>
+                          </React.Fragment>
                         );
                       })}
-
-                      {/* Additional Notification Section */}
-                      <Grid row>
-                        <Grid
-                          className="tablet:padding-left-3"
-                          tablet={{ col: 6 }}
-                        >
-                          <Label
-                            htmlFor="notification-setting-whichModel"
-                            className="text-normal margin-top-0"
-                          >
-                            {notificationsT(
-                              'settings.additionalConfigurations.whichModel'
-                            )}
-                          </Label>
-
-                          <Field
-                            as={Select}
-                            id="notification-setting-whichModel"
-                            data-testid="notification-setting-whichModel"
-                            name="datesChangedNotificationType"
-                            value={values.datesChangedNotificationType}
-                            disabled={!values.datesChanged.length}
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setFieldValue(
-                                'datesChangedNotificationType',
-                                e.target.value
-                              );
-                            }}
-                          >
-                            {getKeys(whichModelType).map(type => {
-                              return (
-                                <option key={type} value={type}>
-                                  {whichModelType[type]}
-                                </option>
-                              );
-                            })}
-                          </Field>
-                        </Grid>
-                      </Grid>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" disabled={!dirty}>

@@ -8,7 +8,7 @@ import React, {
   useState
 } from 'react';
 import ReactGA from 'react-ga4';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import {
@@ -17,15 +17,13 @@ import {
   GridContainer,
   Icon,
   SummaryBox,
-  SummaryBoxContent,
-  SummaryBoxHeading
+  SummaryBoxContent
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
-  GetCrtdLsQuery,
+  GetLockedModelPlanSectionsQuery,
   GetModelPlanQuery,
-  GetTaskListSubscriptionsQuery,
-  TaskListSection,
+  LockableSection,
   TaskStatus,
   useGetModelPlanQuery
 } from 'gql/generated/graphql';
@@ -45,18 +43,18 @@ import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
+import SectionLock from '../../../components/SectionLock';
 import Discussions from '../Discussions';
 import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 
 import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
-import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
 
 import './index.scss';
 
 type TaskListSectionLockStatus =
-  GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
@@ -73,10 +71,6 @@ type ParticipantsAndProvidersType =
 type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
 type PrepareForClearanceType =
   GetModelPlanQuery['modelPlan']['prepareForClearance'];
-
-type CRTDLType =
-  | GetCrtdLsQuery['modelPlan']['crs'][0]
-  | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ITSolutionsType = {
   modifiedDts: string | null | undefined;
@@ -95,18 +89,14 @@ type TaskListSectionsType = {
     | PrepareForClearanceType;
 };
 
-type TaskListSectionMapType = {
-  [key: string]: string;
-};
-
-const taskListSectionMap: TaskListSectionMapType = {
-  basics: TaskListSection.BASICS,
-  beneficiaries: TaskListSection.BENEFICIARIES,
-  generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
-  participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
-  payments: TaskListSection.PAYMENT,
-  prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
+const taskListSectionMap: Partial<Record<string, LockableSection>> = {
+  basics: LockableSection.BASICS,
+  generalCharacteristics: LockableSection.GENERAL_CHARACTERISTICS,
+  participantsAndProviders: LockableSection.PARTICIPANTS_AND_PROVIDERS,
+  beneficiaries: LockableSection.BENEFICIARIES,
+  opsEvalAndLearning: LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  payments: LockableSection.PAYMENT,
+  prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
 };
 
 export const getLatestModifiedDate = (
@@ -165,7 +155,7 @@ const TaskList = () => {
   // Used to conditonally render role specific text in task list
   const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
 
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
+  const { lockableSectionLocks } = useContext(SubscriptionContext);
 
   const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
@@ -179,9 +169,6 @@ const TaskList = () => {
     modelName,
     basics,
     discussions,
-    documents,
-    crs,
-    tdls,
     status,
     generalCharacteristics,
     participantsAndProviders,
@@ -193,11 +180,6 @@ const TaskList = () => {
     collaborators,
     suggestedPhase
   } = modelPlan;
-
-  const planCRs = crs || [];
-  const planTDLs = tdls || [];
-
-  const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   const itSolutions: ITSolutionsType = {
     modifiedDts: getLatestModifiedDate(operationalNeeds),
@@ -245,7 +227,7 @@ const TaskList = () => {
   const getTaskListLockedStatus = (
     section: string
   ): TaskListSectionLockStatus | undefined => {
-    return taskListSectionLocks.find(
+    return lockableSectionLocks.find(
       sectionLock => sectionLock.section === taskListSectionMap[section]
     );
   };
@@ -353,17 +335,6 @@ const TaskList = () => {
                 setIsDiscussionOpen={setIsDiscussionOpen}
               />
 
-              {/* Document and CR TDL Banners */}
-              <Grid row gap={2}>
-                <Grid desktop={{ col: 12 }} className="margin-top-2">
-                  <CRTDLBanner
-                    crTdls={crTdls}
-                    modelID={modelID}
-                    expand={!!documents.length || !!crTdls.length}
-                  />
-                </Grid>
-              </Grid>
-
               <ol
                 data-testid="task-list"
                 className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
@@ -412,18 +383,9 @@ const TaskList = () => {
                           status={taskListSections[key].status}
                         />
 
-                        <TaskListLock
-                          isAssessment={
-                            !!getTaskListLockedStatus(key)?.isAssessment
-                          }
-                          selfLocked={
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                              .username === euaId
-                          }
-                          lockedByUserAccount={
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                          }
-                        />
+                        {taskListSectionMap[key] && (
+                          <SectionLock section={taskListSectionMap[key]} />
+                        )}
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (
                         <Divider className="margin-bottom-4" />
@@ -522,79 +484,6 @@ const DicussionBanner = ({
             >
               {d('viewDiscussions')}
             </Button>
-          </>
-        )}
-      </SummaryBoxContent>
-    </SummaryBox>
-  );
-};
-
-type CRTDLBannerType = {
-  crTdls: CRTDLType[];
-  modelID: string;
-  expand: boolean;
-};
-
-// CRTDL component for rendering CRTDL summary
-const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
-  const { t } = useTranslation('modelPlanTaskList');
-
-  return (
-    <SummaryBox
-      className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
-        'model-plan-task-list__min-card': expand
-      })}
-    >
-      <SummaryBoxHeading headingLevel="h3" className="margin-0">
-        {t('modelPlanTaskList:crTDLsSummaryBox.heading')}
-      </SummaryBoxHeading>
-
-      <SummaryBoxContent>
-        {crTdls?.length > 0 ? (
-          <>
-            <p
-              className="margin-0 padding-bottom-1 padding-top-05"
-              data-testid="cr-tdl-items"
-            >
-              {crTdls.map(
-                (crtdl, index) =>
-                  index < 3 &&
-                  `${crtdl.idNumber}${index !== crTdls.length - 1 ? ',' : ''} `
-              )}
-              {crTdls.length > 3 &&
-                `+${crTdls.length - 3} ${t('crTDLsSummaryBox.more')}`}{' '}
-            </p>
-
-            <UswdsReactLink
-              variant="unstyled"
-              className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/collaboration-area/cr-and-tdl`}
-            >
-              {t('crTDLsSummaryBox.viewAll')}
-            </UswdsReactLink>
-
-            <UswdsReactLink
-              variant="unstyled"
-              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
-            >
-              {t('crTDLsSummaryBox.uploadAnother')}
-            </UswdsReactLink>
-          </>
-        ) : (
-          <>
-            <p className="margin-0 margin-bottom-1">
-              <Trans i18nKey="modelPlanTaskList:crTDLsSummaryBox.copy">
-                indexZero
-              </Trans>
-            </p>
-
-            <UswdsReactLink
-              className="usa-button usa-button--outline"
-              variant="unstyled"
-              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
-            >
-              {t('crTDLsSummaryBox.add')}
-            </UswdsReactLink>
           </>
         )}
       </SummaryBoxContent>

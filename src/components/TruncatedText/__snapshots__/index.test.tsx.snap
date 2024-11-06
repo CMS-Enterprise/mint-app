@@ -1,0 +1,87 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The TruncatedText component > matches charLimit snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="truncated-text"
+    data-testid="truncated-text"
+  >
+    <div
+      class=""
+    >
+      Lorem ipsum dolor sit amet consectetur adipisicing ...
+    </div>
+    <button
+      aria-controls="test"
+      aria-expanded="true"
+      class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
+      data-testid="button"
+      type="button"
+    >
+      Read more
+      <svg
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+        />
+      </svg>
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`The TruncatedText component > matches lineClamp snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="truncated-text"
+    data-testid="truncated-text"
+    style="--line-clamp: 2;"
+  >
+    <div
+      class="line-clamped"
+    >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus sit minima dolor asperiores pariatur deleniti blanditiis sint dolorem, laboriosam corporis labore culpa tenetur est quaerat.
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -2,18 +2,33 @@ import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import Discussions from 'features/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
 
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+
 type AskAQuestionType = {
   modelID: string;
-  renderTextFor?: 'need' | 'solution' | 'status';
+  renderTextFor?: 'need' | 'solution' | 'status' | 'dataExchangeApproach';
+  inlineText?: boolean;
+  className?: string;
 };
 
-const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
+const AskAQuestion = ({
+  modelID,
+  renderTextFor,
+  inlineText,
+  className
+}: AskAQuestionType) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
+  const { t: dataExchangeApproachT } = useTranslation(
+    'dataExchangeApproachMisc'
+  );
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+
+  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const renderText = (text: string | undefined) => {
     switch (text) {
@@ -21,6 +36,8 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
         return opSolutionsMiscT('notSureWhatToDoNext');
       case 'status':
         return opSolutionsMiscT('helpTiming');
+      case 'dataExchangeApproach':
+        return dataExchangeApproachT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');
@@ -28,7 +45,7 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
   };
 
   return (
-    <>
+    <div className={className}>
       {isDiscussionOpen && (
         <DiscussionModalWrapper
           isOpen={isDiscussionOpen}
@@ -38,9 +55,19 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
         </DiscussionModalWrapper>
       )}
 
-      <div className="padding-2 bg-primary-lighter">
+      <div
+        className={classNames('padding-2 bg-primary-lighter', {
+          'display-flex flex-justify flex-align-center': inlineText && !isMobile
+        })}
+      >
         {renderTextFor && (
-          <p className="text-bold margin-top-0">{renderText(renderTextFor)}</p>
+          <p
+            className={classNames('text-bold margin-top-0', {
+              'margin-0': inlineText && !isMobile
+            })}
+          >
+            {renderText(renderTextFor)}
+          </p>
         )}
 
         <div className="display-flex" data-testid="ask-a-question">
@@ -66,7 +93,7 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

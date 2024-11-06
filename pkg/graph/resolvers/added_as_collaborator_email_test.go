@@ -3,6 +3,8 @@ package resolvers
 import (
 	"github.com/golang/mock/gomock"
 
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -25,7 +27,7 @@ func (suite *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
