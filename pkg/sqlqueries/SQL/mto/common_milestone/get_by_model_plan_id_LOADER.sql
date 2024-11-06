@@ -13,6 +13,7 @@ SELECT
     qIDs.model_plan_id,
     (mto_milestone.id IS NOT NULL) AS is_added
 FROM mto_common_milestone
+-- CROSS JOIN joins the model plan id to every record, without a specific join condition
 CROSS JOIN QUERIED_IDS AS qIDs
 LEFT JOIN mto_milestone 
     ON

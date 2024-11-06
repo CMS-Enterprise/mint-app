@@ -11,13 +11,13 @@ type MTOCommonSolution {
   role: MTOFacilitator!
 
   #Custom Resolvers
-  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone)
+  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone) #TODO, do we need to compare to a need? Or specifically just to a model plan
   # isSuggested: Boolean! # TODO (mto) Is this needed? 
 
 }
 
 extend type Query {
-  # TODO: Should this be exposed or accessed tangentially?
-  modelToOperationsCommonSolution(id: UUID!): MTOCommonSolution!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    # TODO: Verify if this is needed
+  mtoCommonSolution(key: MTOCommonSolutionKey!): MTOCommonSolution!
+  @hasAnyRole(roles: [MINT_USER])
 }

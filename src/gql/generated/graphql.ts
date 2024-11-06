@@ -3576,9 +3576,9 @@ export type Query = {
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
-  modelToOperationsCommonSolution: MtoCommonSolution;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
-  mtoCommonMilestone?: Maybe<MtoCommonMilestone>;
+  mtoCommonMilestone: MtoCommonMilestone;
+  mtoCommonSolution: MtoCommonSolution;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3648,14 +3648,14 @@ export type QueryModelPlansByOperationalSolutionKeyArgs = {
 
 
 /** Query definition for the schema */
-export type QueryModelToOperationsCommonSolutionArgs = {
-  id: Scalars['UUID']['input'];
+export type QueryMtoCommonMilestoneArgs = {
+  key: MtoCommonMilestoneKey;
 };
 
 
 /** Query definition for the schema */
-export type QueryMtoCommonMilestoneArgs = {
-  key: MtoCommonMilestoneKey;
+export type QueryMtoCommonSolutionArgs = {
+  key: MtoCommonSolutionKey;
 };
 
 

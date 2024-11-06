@@ -2,14 +2,24 @@ package sqlqueries
 
 import _ "embed"
 
-//go:embed SQL/mto/common_solution/get_by_key.sql
-var mtoCommonSolutionGetByKeySQL string
+//go:embed SQL/mto/common_solution/get_by_key_LOADER.sql
+var mtoCommonSolutionGetByKeyLoaderSQL string
+
+//go:embed SQL/mto/common_solution/get_by_milestone_key_LOADER.sql
+var mtoCommonSolutionGetByMilestoneKeyLoaderSQL string
+
+//go:embed SQL/mto/common_solution/get_by_model_plan_id_LOADER.sql
+var mtoCommonSolutionGetByModelPlanIDLoaderSQL string
 
 type mtoCommonSolutionScripts struct {
-	GetByKey string
+	GetByKeyLoader                string
+	GetByCommonMilestoneKeyLoader string
+	GetByModelPlanIDLoader        string
 }
 
 // MTOCommonSolution contains all the SQL queries for the MTO common solution
 var MTOCommonSolution = mtoCommonSolutionScripts{
-	GetByKey: mtoCommonSolutionGetByKeySQL,
+	GetByKeyLoader:                mtoCommonSolutionGetByKeyLoaderSQL,
+	GetByCommonMilestoneKeyLoader: mtoCommonSolutionGetByMilestoneKeyLoaderSQL,
+	GetByModelPlanIDLoader:        mtoCommonSolutionGetByModelPlanIDLoaderSQL,
 }

@@ -25,5 +25,6 @@ type MTOCommonMilestone {
 
 extend type Query {
   # TODO: Verify if this is needed
-  mtoCommonMilestone(key: MTOCommonMilestoneKey!): MTOCommonMilestone
+  mtoCommonMilestone(key: MTOCommonMilestoneKey!): MTOCommonMilestone!
+  @hasAnyRole(roles: [MINT_USER])
 }
