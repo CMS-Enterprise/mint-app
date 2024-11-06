@@ -24,7 +24,6 @@ type MTOCommonMilestone {
 
 
 extend type Query {
-  # TODO: Remove this when MTOCommonMilestone is utilized
-  #       This exists only so gql won't complain about lack of usage
-  mtoCommonMilestoneDummy(id: UUID!): MTOCommonMilestone
+  # TODO: Verify if this is needed
+  mtoCommonMilestone(key: MTOCommonMilestoneKey!): MTOCommonMilestone
 }

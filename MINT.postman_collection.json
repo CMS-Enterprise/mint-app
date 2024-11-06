@@ -3197,6 +3197,27 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GetMTO Common Milestones By Key",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmtoCommonMilestone(key: MILESTONE_A) {\n\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            # commonSolutions:\n\n       \n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},

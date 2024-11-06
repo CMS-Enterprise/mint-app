@@ -3578,7 +3578,7 @@ export type Query = {
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   modelToOperationsCommonSolution: MtoCommonSolution;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
-  mtoCommonMilestoneDummy?: Maybe<MtoCommonMilestone>;
+  mtoCommonMilestone?: Maybe<MtoCommonMilestone>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3654,8 +3654,8 @@ export type QueryModelToOperationsCommonSolutionArgs = {
 
 
 /** Query definition for the schema */
-export type QueryMtoCommonMilestoneDummyArgs = {
-  id: Scalars['UUID']['input'];
+export type QueryMtoCommonMilestoneArgs = {
+  key: MtoCommonMilestoneKey;
 };
 
 
