@@ -10,7 +10,8 @@ SELECT
     mto_common_solution.type,
     mto_common_solution.description,
     NULL AS mto_common_milestone_key,
-    (mto_solution.id IS NOT NULL) AS is_added
+    (mto_solution.id IS NOT NULL) AS is_added,
+    qIDs.model_plan_id
 FROM mto_common_solution
 -- CROSS JOIN joins the model plan id to every record, without a specific join condition
 CROSS JOIN QUERIED_IDS AS qIDs
