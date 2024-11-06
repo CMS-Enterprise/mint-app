@@ -3206,7 +3206,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmtoCommonMilestone(key: MILESTONE_A) {\n\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            # commonSolutions:\n\n       \n    }\n}",
+										"query": "query ModelPlanMTOCategories {\nmtoCommonMilestone(key: MILESTONE_A) {\n\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            commonSolutions {\n                name\n                key\n                type\n                description\n                isAdded\n            }\n\n       \n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3230,6 +3230,74 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query modelPlanCollectionMTO{\n    modelPlanCollection(filter: INCLUDE_ALL) {\n    id\n    modelName\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            # commonSolutions:\n\n        }\n        status\n        recentEdit{\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Common Solutions",
+			"item": [
+				{
+					"name": "GetMTO Common Milestone with Solutions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            commonSolutions {\n                name\n                key\n                type\n                description\n                isAdded\n            }\n\n        }\n\n            \n        }\n        id\n        modelName\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMTO Common Solutions By Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MTOCommonSolution {\nmtoCommonSolution(key: SOLUTION_A){\n    name\n    key\n    type\n    description\n    isAdded\n            \n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMTO Common Solutions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        description\n        isAdded\n    }\n    }\n\n}\n}",
 								"variables": ""
 							}
 						},
