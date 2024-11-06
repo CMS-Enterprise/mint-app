@@ -18,7 +18,7 @@ type mtoCommonMilestoneLoaders struct {
 	// ByModelPlanID Gets a list of mto Common Milestone records  with  contextual data based on its associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCommonMilestone]
 
-	// By Key ret
+	// By Key returns an MTO Common Milestone associated with a specific key. It doesn't return any meta data for it.
 	ByKey LoaderWrapper[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone]
 }
 
