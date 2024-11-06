@@ -27,7 +27,11 @@ export default gql(/* GraphQL */ `
         newDataExchangeMethodsNote
         additionalDataExchangeConsiderationsDescription
         isDataExchangeApproachComplete
-
+        markedCompleteByUserAccount {
+          id
+          commonName
+        }
+        markedCompleteDts
         modifiedDts
         createdDts
         status

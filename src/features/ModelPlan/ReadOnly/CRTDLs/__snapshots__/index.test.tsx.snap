@@ -291,6 +291,20 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
               data-testid="CardBody"
             >
               <div
+                class="echimp-card__status"
+              >
+                <p
+                  class="text-bold"
+                >
+                  TDL Status
+                </p>
+                <p
+                  class="text-base text-italic"
+                >
+                  No data available
+                </p>
+              </div>
+              <div
                 class="echimp-card__date"
               >
                 <p

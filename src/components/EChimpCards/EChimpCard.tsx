@@ -26,6 +26,17 @@ export type EChimpCardProps = {
   sensitiveFlag?: boolean | null;
   setShowCRorTDLWithId: (id: string) => void;
   setIsSidepanelOpen: (isOpen: boolean) => void;
+  isCR: boolean;
+};
+
+export const DataOrNoData = ({ data }: { data: string | null | undefined }) => {
+  const { t: crtdlsT } = useTranslation('crtdlsMisc');
+  if (!data) {
+    return (
+      <p className="text-base text-italic">{crtdlsT('echimpCard.noData')}</p>
+    );
+  }
+  return <p>{data}</p>;
 };
 
 const EChimpCard = ({
@@ -39,7 +50,8 @@ const EChimpCard = ({
   issuedDate,
   sensitiveFlag,
   setShowCRorTDLWithId,
-  setIsSidepanelOpen
+  setIsSidepanelOpen,
+  isCR
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
@@ -80,34 +92,24 @@ const EChimpCard = ({
           </div>
         )}
 
-        {crStatus && (
-          <div className="echimp-card__status">
-            <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
-            <p>{crStatus}</p>
-          </div>
-        )}
-        {status && (
-          <div className="echimp-card__status">
-            <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
-            <p>{status}</p>
-          </div>
-        )}
+        <div className="echimp-card__status">
+          <p className="text-bold">
+            {isCR
+              ? crtdlsT('echimpCard.crStatus')
+              : crtdlsT('echimpCard.tdlStatus')}
+          </p>
+          <DataOrNoData data={crStatus ?? status} />
+        </div>
         <div className="echimp-card__date">
-          {implementationDate && (
-            <>
-              <p className="text-bold">
-                {crtdlsT('echimpCard.implementationDate')}
-              </p>
-              <p>{implementationDate}</p>
-            </>
-          )}
-          {issuedDate && (
-            <>
-              <p className="text-bold">{crtdlsT('echimpCard.issuedDate')}</p>
-              {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
-              <p>{issuedDate?.split(' ')[0]}</p>
-            </>
-          )}
+          <p className="text-bold">
+            {isCR
+              ? crtdlsT('echimpCard.implementationDate')
+              : crtdlsT('echimpCard.issuedDate')}
+          </p>
+          {/* At the time of writing, issuedDate returns '2024-07-24 00:00:00' */}
+          <DataOrNoData
+            data={implementationDate ?? issuedDate?.split(' ')[0]}
+          />
         </div>
       </CardBody>
 
@@ -124,7 +126,7 @@ const EChimpCard = ({
         </Button>
         {flags.echimpEnabled && (
           <ExternalLink
-            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${id.slice(0, 3)}&crNum=${id}`}
+            href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`}
             className="margin-right-0"
             toEchimp
           >
