@@ -7,22 +7,31 @@ import {
   CardHeader
 } from '@trussworks/react-uswds';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import {
-  DataExchangeApproachStatus,
-  LockableSection
-} from 'gql/generated/graphql';
+import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
 
-// import { Avatar } from 'components/Avatar';
+import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
 import useSectionLock from 'hooks/useSectionLock';
-// import { formatDateLocal } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 
-const MTOCard = ({ modelID }: { modelID: string }) => {
+type MTOMatrixType = GetModelPlanQuery['modelPlan']['mtoMatrix'];
+
+const MTOCard = ({
+  modelID,
+  mtoMatrix
+}: {
+  modelID: string;
+  mtoMatrix: MTOMatrixType;
+}) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const { SectionLock } = useSectionLock({
+  const { SectionLock, isLocked } = useSectionLock({
     section: LockableSection.MODELS_TO_OPERATION_MATRIX
   });
+
+  const { recentEdit, status } = mtoMatrix;
+
+  // const { modifiedDts, modifiedByUserAccount } = recentEdit;
 
   return (
     <Card
@@ -35,27 +44,26 @@ const MTOCard = ({ modelID }: { modelID: string }) => {
         </h3>
       </CardHeader>
       <div className="collaboration-area__status flex-align-center">
-        <TaskListStatusTag
-          status={DataExchangeApproachStatus.READY}
-          classname="width-fit-content"
-        />
+        <TaskListStatusTag status={status} classname="width-fit-content" />
       </div>
       <CardBody>
         <p>{collaborationAreaT('mtoCard.body')}</p>
 
-        {/* {modifiedDts && modifiedByUserAccount && !isLocked && (
-          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
-            <span className="text-base margin-right-1">
-              {collaborationAreaT('mtoCard.lastModified', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-              })}
-            </span>
-            <Avatar
-              className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
-            />
-          </div>
-        )} */}
+        {recentEdit?.modifiedDts &&
+          recentEdit?.modifiedByUserAccount &&
+          !isLocked && (
+            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
+              <span className="text-base margin-right-1">
+                {collaborationAreaT('mtoCard.lastModified', {
+                  date: formatDateLocal(recentEdit?.modifiedDts, 'MM/dd/yyyy')
+                })}
+              </span>
+              <Avatar
+                className="text-base-darkest"
+                user={recentEdit?.modifiedByUserAccount.commonName}
+              />
+            </div>
+          )}
 
         <SectionLock />
       </CardBody>

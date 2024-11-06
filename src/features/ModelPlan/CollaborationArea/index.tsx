@@ -67,7 +67,8 @@ const CollaborationArea = () => {
     status,
     collaborators,
     isFavorite,
-    suggestedPhase
+    suggestedPhase,
+    mtoMatrix
   } = modelPlan;
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -215,7 +216,7 @@ const CollaborationArea = () => {
                     dataExhangeApproachData={dataExchangeApproach}
                   />
 
-                  <MTOCard modelID={modelID} />
+                  <MTOCard mtoMatrix={mtoMatrix} modelID={modelID} />
                 </CardGroup>
               </Grid>
             </Grid>
