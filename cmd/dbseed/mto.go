@@ -19,7 +19,7 @@ func (s *Seeder) seedModelPlanWithMTOData(
 	princ := s.getTestPrincipalByUsername(euaID)
 
 	// Make uncategorized Milestone from Common milestone library
-	_, err := resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, nil, helpers.PointerTo(models.CommonMilestoneKeyMilestoneA), plan.ID, nil)
+	_, err := resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, nil, helpers.PointerTo(models.MTOCommonMilestoneKeyMilestoneA), plan.ID, nil)
 	if err != nil {
 		panic(err)
 	}

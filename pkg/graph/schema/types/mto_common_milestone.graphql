@@ -1,0 +1,24 @@
+enum MTOCommonMilestoneKey {
+  MILESTONE_A,
+  MILESTONE_B,
+}
+
+"""
+MTOCommonMilestone represents a Milestone from the "Common Milestones" library
+"""
+type MTOCommonMilestone {
+  # DB Fields
+  name: String!
+  key: MTOCommonMilestoneKey!
+  categoryName: String!
+  subCategoryName: String!
+  description: String! #TODO (mto) is this needed?
+  facilitatedByRole: MTOFacilitator!
+
+  # Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Milestone is _already_ part of the Model Plan's MTO
+  isSuggested: Boolean!
+  commonSolutions: [MTOCommonSolution!]!
+
+}
+
