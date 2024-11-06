@@ -54,6 +54,12 @@ const collaborationArea = {
     startApproach: 'Start approach',
     editApproach: 'Edit approach',
     viewHelpArticle: 'View help article'
+  },
+  mtoCard: {
+    heading: 'Model-to-operations matrix',
+    body: 'Work with your IT Lead to document key model milestones and determine which operational solutions or IT systems your model will use to accomplish those milestones. Some milestones are suggested based on responses to questions in the Model Plan.',
+    goToMatrix: 'Go to matrix',
+    shareOrExport: 'Share or export matrix'
   }
 };
 

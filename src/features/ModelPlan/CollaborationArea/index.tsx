@@ -27,6 +27,7 @@ import DataExchangeApproachCard from './Cards/DataExchangeApproachCard';
 import DiscussionsCard from './Cards/DiscussionsCard';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
+import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 
 import './index.scss';
@@ -213,6 +214,8 @@ const CollaborationArea = () => {
                     modelID={modelID}
                     dataExhangeApproachData={dataExchangeApproach}
                   />
+
+                  <MTOCard modelID={modelID} />
                 </CardGroup>
               </Grid>
             </Grid>
