@@ -723,6 +723,12 @@ const dataExchangeApproachData: GetAllDataExchangeApproachType = {
   newDataExchangeMethodsNote: 'new data note',
   additionalDataExchangeConsiderationsDescription: 'consideration desc',
   isDataExchangeApproachComplete: false,
+  markedCompleteByUserAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    commonName: 'Common Name'
+  },
+  markedCompleteDts: '2022-06-03T19:32:24.412662Z',
   modifiedDts: '2022-06-03T19:32:24.412662Z',
   createdDts: '2022-06-03T19:32:24.412662Z',
   status: DataExchangeApproachStatus.IN_PROGRESS
