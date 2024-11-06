@@ -68,7 +68,7 @@ type MTOSolution struct {
 	Status                   MTOSolutionStatus            `json:"status"`
 	RiskIndicator            *models.MTORiskIndicator     `json:"riskIndicator,omitempty"`
 	Key                      *models.MTOCommonSolutionKey `json:"key,omitempty"`
-	SolutionType             MTOSolutionType              `json:"solutionType"`
+	Type                     models.MTOSolutionType       `json:"type"`
 	CreatedBy                uuid.UUID                    `json:"createdBy"`
 	CreatedByUserAccount     authentication.UserAccount   `json:"createdByUserAccount"`
 	CreatedDts               time.Time                    `json:"createdDts"`
@@ -1657,49 +1657,6 @@ func (e *MTOSolutionStatus) UnmarshalGQL(v interface{}) error {
 }
 
 func (e MTOSolutionStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTOSolutionType string
-
-const (
-	MTOSolutionTypeItSystem   MTOSolutionType = "IT_SYSTEM"
-	MTOSolutionTypeContractor MTOSolutionType = "CONTRACTOR"
-	MTOSolutionTypeOther      MTOSolutionType = "OTHER"
-)
-
-var AllMTOSolutionType = []MTOSolutionType{
-	MTOSolutionTypeItSystem,
-	MTOSolutionTypeContractor,
-	MTOSolutionTypeOther,
-}
-
-func (e MTOSolutionType) IsValid() bool {
-	switch e {
-	case MTOSolutionTypeItSystem, MTOSolutionTypeContractor, MTOSolutionTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e MTOSolutionType) String() string {
-	return string(e)
-}
-
-func (e *MTOSolutionType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTOSolutionType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTOSolutionType", str)
-	}
-	return nil
-}
-
-func (e MTOSolutionType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

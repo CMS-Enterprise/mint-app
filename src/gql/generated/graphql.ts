@@ -750,6 +750,7 @@ export type MtoCommonSolution = {
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
   role: MtoFacilitator;
+  type: MtoSolutionType;
 };
 
 export enum MtoCommonSolutionKey {
@@ -842,8 +843,8 @@ export type MtoSolution = {
   name: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
-  solutionType: MtoSolutionType;
   status: MtoSolutionStatus;
+  type: MtoSolutionType;
 };
 
 export enum MtoSolutionStatus {

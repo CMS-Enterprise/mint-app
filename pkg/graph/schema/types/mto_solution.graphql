@@ -8,11 +8,6 @@ enum MTOSolutionStatus {
 }
 
 
-enum MTOSolutionType {
-  IT_SYSTEM
-  CONTRACTOR
-  OTHER
-}
 
 # MTOSolution represents a Solution that has been added to a Model Plan's MTO
 type MTOSolution {
@@ -23,7 +18,7 @@ type MTOSolution {
   status: MTOSolutionStatus!
   riskIndicator: MTORiskIndicator
   key: MTOCommonSolutionKey
-  solutionType: MTOSolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  type: MTOSolutionType! # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
 
   #Meta Data
   createdBy: UUID!

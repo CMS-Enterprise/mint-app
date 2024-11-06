@@ -3,10 +3,17 @@ enum MTOCommonSolutionKey {
   SOLUTION_B,
 }
 
+enum MTOSolutionType {
+  IT_SYSTEM
+  CONTRACTOR
+  OTHER
+}
+
 type MTOCommonSolution {
   #DB Fields
   name: String!
   key: MTOCommonSolutionKey!
+  type: MTOSolutionType! 
   description: String! #TODO (mto) is this needed?
   role: MTOFacilitator!
 
