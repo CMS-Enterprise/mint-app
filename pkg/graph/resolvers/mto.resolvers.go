@@ -19,9 +19,13 @@ func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *m
 }
 
 // CommonMilestones is the resolver for the commonMilestones field.
-func (r *modelsToOperationMatrixResolver) CommonMilestones(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.CommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: CommonMilestones - commonMilestones"))
-	// Fetch a list of common milestone rows with the additional context for properties like `isAdded` and `isSuggested`
+func (r *modelsToOperationMatrixResolver) CommonMilestones(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCommonMilestone, error) {
+	return MTOCommonMilestoneGetByModelPlanIDLOADER(ctx, &obj.ModelPlan.ID)
+}
+
+// CommonSolutions is the resolver for the commonSolutions field.
+func (r *modelsToOperationMatrixResolver) CommonSolutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCommonSolution, error) {
+	return MTOCommonSolutionGetByModelPlanIDLOADER(ctx, &obj.ModelPlan.ID)
 }
 
 // Milestones is the resolver for the milestones field.

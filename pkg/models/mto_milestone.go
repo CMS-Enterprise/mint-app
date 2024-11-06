@@ -6,14 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CommonMilestoneKey string
-
-// TODO (mto) move this to the common milestone file when created, and rename it to MTOCommonMilestone
-const (
-	CommonMilestoneKeyMilestoneA CommonMilestoneKey = "MILESTONE_A"
-	CommonMilestoneKeyMilestoneB CommonMilestoneKey = "MILESTONE_B"
-)
-
 type MTOMilestoneStatus string
 
 const (
@@ -26,28 +18,25 @@ type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation
 
-	Name *string             `json:"name" db:"name"` // From Common Milestone Table if linked
-	Key  *CommonMilestoneKey `json:"key" db:"key"`   // From Common Milestone Table, db field is for conversation to fk in DB
+	Name *string                `json:"name" db:"name"`                    // From Common Milestone Table if linked
+	Key  *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"` // Foreign Key to the Common Milestone Table
 
-	MTOCommonMilestoneID *uuid.UUID         `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"` // TODO (mto) do we want / need this? We could just get by  key if needed
-	MTOCategoryID        *uuid.UUID         `json:"mtoCategoryID" db:"mto_category_id"`
-	FacilitatedBy        *MTOFacilitator    `json:"facilitatedBy" db:"facilitated_by"`
-	NeedBy               *time.Time         `json:"needBy" db:"need_by"`
-	Status               MTOMilestoneStatus `json:"status" db:"status"`
-	RiskIndicator        MTORiskIndicator   `json:"riskIndicator" db:"risk_indicator"`
-	IsDraft              bool               `json:"isDraft" db:"is_draft"`
-
-	/*TODO (mto) implement the rest of this based on GQL and database */
+	MTOCategoryID *uuid.UUID         `json:"mtoCategoryID" db:"mto_category_id"`
+	FacilitatedBy *MTOFacilitator    `json:"facilitatedBy" db:"facilitated_by"`
+	NeedBy        *time.Time         `json:"needBy" db:"need_by"`
+	Status        MTOMilestoneStatus `json:"status" db:"status"`
+	RiskIndicator MTORiskIndicator   `json:"riskIndicator" db:"risk_indicator"`
+	IsDraft       bool               `json:"isDraft" db:"is_draft"`
 }
 
 // AddedFromMilestoneLibrary returns true or false if this was added from the common milestone library.
 // It simply checks if the common  milestone id is populated or not
 func (m *MTOMilestone) AddedFromMilestoneLibrary() bool {
-	return m.MTOCommonMilestoneID != nil
+	return m.Key != nil
 }
 
 // NewMTOMilestone returns a new mtoMileMTOMilestone object
-func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneKey *CommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
+func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneKey *MTOCommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{
 		Name:              name,
 		baseStruct:        NewBaseStruct(createdBy),

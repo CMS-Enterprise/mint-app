@@ -14,25 +14,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CommonMilestone struct {
-	ID              uuid.UUID                 `json:"id"`
-	Key             models.CommonMilestoneKey `json:"key"`
-	Name            string                    `json:"name"`
-	Description     string                    `json:"description"`
-	IsAdded         bool                      `json:"isAdded"`
-	IsSuggested     bool                      `json:"isSuggested"`
-	CommonSolutions []*CommonSolution         `json:"commonSolutions"`
-}
-
-type CommonSolution struct {
-	ID          uuid.UUID         `json:"id"`
-	Key         CommonSolutionKey `json:"key"`
-	Name        string            `json:"name"`
-	Description string            `json:"description"`
-	IsAdded     bool              `json:"isAdded"`
-	IsSuggested bool              `json:"isSuggested"`
-}
-
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
@@ -81,22 +62,22 @@ type LockableSectionLockStatusChanged struct {
 }
 
 type MTOSolution struct {
-	ID                       uuid.UUID                   `json:"id"`
-	Name                     string                      `json:"name"`
-	FacilitatedBy            *models.MTOFacilitator      `json:"facilitatedBy,omitempty"`
-	Status                   MTOSolutionStatus           `json:"status"`
-	RiskIndicator            *models.MTORiskIndicator    `json:"riskIndicator,omitempty"`
-	CommonSolutionID         *uuid.UUID                  `json:"commonSolutionID,omitempty"`
-	SolutionType             MTOSolutionType             `json:"solutionType"`
-	CreatedBy                uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount     authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts               time.Time                   `json:"createdDts"`
-	ModifiedBy               *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount    *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts              *time.Time                  `json:"modifiedDts,omitempty"`
-	RelatedMilestones        []*models.MTOMilestone      `json:"relatedMilestones"`
-	AddedFromSolutionLibrary bool                        `json:"addedFromSolutionLibrary"`
-	CommonSolution           *CommonSolution             `json:"commonSolution,omitempty"`
+	ID                       uuid.UUID                    `json:"id"`
+	Name                     string                       `json:"name"`
+	FacilitatedBy            *models.MTOFacilitator       `json:"facilitatedBy,omitempty"`
+	Status                   MTOSolutionStatus            `json:"status"`
+	RiskIndicator            *models.MTORiskIndicator     `json:"riskIndicator,omitempty"`
+	Key                      *models.MTOCommonSolutionKey `json:"key,omitempty"`
+	Type                     models.MTOSolutionType       `json:"type"`
+	CreatedBy                uuid.UUID                    `json:"createdBy"`
+	CreatedByUserAccount     authentication.UserAccount   `json:"createdByUserAccount"`
+	CreatedDts               time.Time                    `json:"createdDts"`
+	ModifiedBy               *uuid.UUID                   `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount    *authentication.UserAccount  `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts              *time.Time                   `json:"modifiedDts,omitempty"`
+	RelatedMilestones        []*models.MTOMilestone       `json:"relatedMilestones"`
+	AddedFromSolutionLibrary bool                         `json:"addedFromSolutionLibrary"`
+	CommonSolution           *models.MTOCommonSolution    `json:"commonSolution,omitempty"`
 }
 
 // Represents model plan base translation data
@@ -107,27 +88,6 @@ type ModelPlanTranslation struct {
 	Abbreviation models.TranslationField            `json:"abbreviation" db:"abbreviation"`
 	Archived     models.TranslationFieldWithOptions `json:"archived" db:"archived"`
 	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
-}
-
-type ModelToOperationsCommonMilestone struct {
-	ID                    uuid.UUID                   `json:"id"`
-	CategoryName          string                      `json:"categoryName"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
-}
-
-type ModelToOperationsCommonSolution struct {
-	ID                    uuid.UUID                   `json:"id"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
 }
 
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
@@ -1214,47 +1174,6 @@ func (e ChangeType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type CommonSolutionKey string
-
-const (
-	CommonSolutionKeySolutionOne CommonSolutionKey = "SOLUTION_ONE"
-	CommonSolutionKeySolutionTwo CommonSolutionKey = "SOLUTION_TWO"
-)
-
-var AllCommonSolutionKey = []CommonSolutionKey{
-	CommonSolutionKeySolutionOne,
-	CommonSolutionKeySolutionTwo,
-}
-
-func (e CommonSolutionKey) IsValid() bool {
-	switch e {
-	case CommonSolutionKeySolutionOne, CommonSolutionKeySolutionTwo:
-		return true
-	}
-	return false
-}
-
-func (e CommonSolutionKey) String() string {
-	return string(e)
-}
-
-func (e *CommonSolutionKey) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CommonSolutionKey(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CommonSolutionKey", str)
-	}
-	return nil
-}
-
-func (e CommonSolutionKey) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type ContractorSupportType string
 
 const (
@@ -1738,49 +1657,6 @@ func (e *MTOSolutionStatus) UnmarshalGQL(v interface{}) error {
 }
 
 func (e MTOSolutionStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTOSolutionType string
-
-const (
-	MTOSolutionTypeItSystem   MTOSolutionType = "IT_SYSTEM"
-	MTOSolutionTypeContractor MTOSolutionType = "CONTRACTOR"
-	MTOSolutionTypeOther      MTOSolutionType = "OTHER"
-)
-
-var AllMTOSolutionType = []MTOSolutionType{
-	MTOSolutionTypeItSystem,
-	MTOSolutionTypeContractor,
-	MTOSolutionTypeOther,
-}
-
-func (e MTOSolutionType) IsValid() bool {
-	switch e {
-	case MTOSolutionTypeItSystem, MTOSolutionTypeContractor, MTOSolutionTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e MTOSolutionType) String() string {
-	return string(e)
-}
-
-func (e *MTOSolutionType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTOSolutionType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTOSolutionType", str)
-	}
-	return nil
-}
-
-func (e MTOSolutionType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

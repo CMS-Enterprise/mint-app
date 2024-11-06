@@ -1,0 +1,24 @@
+enum MTOCommonSolutionKey {
+  SOLUTION_A,
+  SOLUTION_B,
+}
+
+enum MTOSolutionType {
+  IT_SYSTEM
+  CONTRACTOR
+  OTHER
+}
+
+type MTOCommonSolution {
+  #DB Fields
+  name: String!
+  key: MTOCommonSolutionKey!
+  type: MTOSolutionType! 
+  description: String! #TODO (mto) is this needed?
+  role: MTOFacilitator!
+
+  #Custom Resolvers
+  isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone) #TODO, do we need to compare to a need? Or specifically just to a model plan
+  # isSuggested: Boolean! # TODO (mto) Is this needed? 
+
+}
