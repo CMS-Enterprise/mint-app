@@ -8,7 +8,6 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
@@ -30,6 +29,16 @@ export type EChimpCardProps = {
   isCR: boolean;
 };
 
+export const DataOrNoData = ({ data }: { data: string | null | undefined }) => {
+  const { t: crtdlsT } = useTranslation('crtdlsMisc');
+  if (!data) {
+    return (
+      <p className="text-base text-italic">{crtdlsT('echimpCard.noData')}</p>
+    );
+  }
+  return <p>{data}</p>;
+};
+
 const EChimpCard = ({
   id,
   title,
@@ -40,7 +49,6 @@ const EChimpCard = ({
   isInReadView,
   issuedDate,
   sensitiveFlag,
-  isCR,
   setShowCRorTDLWithId,
   setIsSidepanelOpen,
   isCR
@@ -90,13 +98,7 @@ const EChimpCard = ({
               ? crtdlsT('echimpCard.crStatus')
               : crtdlsT('echimpCard.tdlStatus')}
           </p>
-          <p
-            className={classNames({
-              'text-italic': crStatus == null && status == null
-            })}
-          >
-            {crStatus ?? status ?? crtdlsT('echimpCard.noData')}
-          </p>
+          <DataOrNoData data={crStatus ?? status} />
         </div>
         <div className="echimp-card__date">
           <p className="text-bold">
@@ -104,16 +106,10 @@ const EChimpCard = ({
               ? crtdlsT('echimpCard.implementationDate')
               : crtdlsT('echimpCard.issuedDate')}
           </p>
-          <p
-            className={classNames({
-              'text-italic': crStatus == null && status == null
-            })}
-          >
-            {implementationDate ??
-              issuedDate?.split(' ')[0] ??
-              crtdlsT('echimpCard.noData')}
-            {/* At the time of writing, issuedDate returns '2024-07-24 00:00:00' */}
-          </p>
+          {/* At the time of writing, issuedDate returns '2024-07-24 00:00:00' */}
+          <DataOrNoData
+            data={implementationDate ?? issuedDate?.split(' ')[0]}
+          />
         </div>
       </CardBody>
 
