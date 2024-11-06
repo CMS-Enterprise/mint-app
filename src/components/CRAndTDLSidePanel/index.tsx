@@ -106,7 +106,7 @@ const CRAndTDLSidePanel = ({
                 </div>
                 <div className="sidepanel--full-width">
                   <p className="text-bold">{crtdlsT('echimpCard.crSummary')}</p>
-                  {crSummary ? (
+                  {crSummary?.rawContent ? (
                     <TruncatedText
                       id={id}
                       text={crSummary?.rawContent}

@@ -62,9 +62,7 @@ exports[`EChimpCard > renders without errors 1`] = `
           >
             CR Status
           </p>
-          <p
-            class=""
-          >
+          <p>
             Open
           </p>
         </div>
@@ -76,9 +74,7 @@ exports[`EChimpCard > renders without errors 1`] = `
           >
             Implementation Date
           </p>
-          <p
-            class=""
-          >
+          <p>
             2022-07-30T05:00:00Z
           </p>
         </div>

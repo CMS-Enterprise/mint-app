@@ -33,9 +33,7 @@ exports[`The CRAndTDLSidePanel component > renders TDL without crashing (flag di
             >
               TDL Status:
             </p>
-            <p
-              class=""
-            >
+            <p>
               Test Status
             </p>
           </div>
@@ -49,9 +47,7 @@ exports[`The CRAndTDLSidePanel component > renders TDL without crashing (flag di
             >
               Issued date
             </p>
-            <p
-              class=""
-            >
+            <p>
               2023
             </p>
           </div>
