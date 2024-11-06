@@ -23,6 +23,7 @@ import useMessage from 'hooks/useMessage';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
 import CRTDLCard from './Cards/CRTDLCard';
+import DataExchangeApproachCard from './Cards/DataExchangeApproachCard';
 import DiscussionsCard from './Cards/DiscussionsCard';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
@@ -60,6 +61,7 @@ const CollaborationArea = () => {
     modelName,
     discussions,
     documents,
+    dataExchangeApproach,
     echimpCRsAndTDLs,
     status,
     collaborators,
@@ -205,6 +207,11 @@ const CollaborationArea = () => {
                   <ModelPlanCard
                     modelID={modelID}
                     setStatusMessage={setStatusMessage}
+                  />
+
+                  <DataExchangeApproachCard
+                    modelID={modelID}
+                    dataExhangeApproachData={dataExchangeApproach}
                   />
                 </CardGroup>
               </Grid>

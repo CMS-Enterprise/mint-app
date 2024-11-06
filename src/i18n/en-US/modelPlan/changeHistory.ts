@@ -64,7 +64,8 @@ const changeHistory = {
     operational_solution_subtask:
       'Operational solutions and implementation status tracker',
     plan_document_solution_link:
-      'Operational solutions and implementation status tracker'
+      'Operational solutions and implementation status tracker',
+    plan_data_exchange_approach: 'Data exchange approach'
   },
   self: 'self',
   showDetails: 'Show details',

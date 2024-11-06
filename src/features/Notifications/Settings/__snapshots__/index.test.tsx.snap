@@ -4,7 +4,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
-    data-testid="new-plan"
+    data-testid="notification-setting-page"
     id="main-content"
     role="main"
     tabindex="-1"
@@ -572,10 +572,108 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 </label>
                 <select
                   class="usa-select"
-                  data-testid="notification-setting-whichModel"
+                  data-testid="notification-setting-whichModel-datesChanged"
                   disabled=""
                   id="notification-setting-whichModel"
                   name="datesChangedNotificationType"
+                >
+                  <option
+                    value="ALL_MODELS"
+                  >
+                    All models
+                  </option>
+                  <option
+                    value="FOLLOWED_MODELS"
+                  >
+                    Models I’m following
+                  </option>
+                  <option
+                    value="MY_MODELS"
+                  >
+                    My Model Plans
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
+              <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-wrap margin-y-105"
+                >
+                  When a data exchange approach is completed
+                </p>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"
+                    id="notification-setting-email-dataExchangeApproachMarkedComplete"
+                    name="dataExchangeApproachMarkedComplete"
+                    type="checkbox"
+                    value="EMAIL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-email-dataExchangeApproachMarkedComplete"
+                  />
+                </div>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"
+                    id="notification-setting-in-app-dataExchangeApproachMarkedComplete"
+                    name="dataExchangeApproachMarkedComplete"
+                    type="checkbox"
+                    value="IN_APP"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-in-app-dataExchangeApproachMarkedComplete"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
+              <div
+                class="tablet:grid-col-6 tablet:padding-left-3"
+                data-testid="grid"
+              >
+                <label
+                  class="usa-label text-normal margin-top-0"
+                  data-testid="label"
+                  for="notification-setting-whichModel"
+                >
+                  Which models?
+                </label>
+                <select
+                  class="usa-select"
+                  data-testid="notification-setting-whichModel-dataExchangeApproachMarkedComplete"
+                  id="notification-setting-whichModel"
+                  name="dataExchangeApproachMarkedCompleteNotificationType"
                 >
                   <option
                     value="ALL_MODELS"

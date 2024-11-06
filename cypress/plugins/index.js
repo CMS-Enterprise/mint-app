@@ -16,7 +16,7 @@ const apollo = require('@apollo/client');
 const fetch = require('cross-fetch'); // needed to allow apollo-client to make queries from Node environment
 
 const {
-  LockTaskListSectionDocument
+  LockModelPlanSectionDocument
 } = require('../../src/gql/generated/graphql');
 
 const cache = new apollo.InMemoryCache();
@@ -47,7 +47,7 @@ function lockTaskListSection({ euaId, modelPlanID, section }) {
   // need to return this Promise to indicate to Cypress that the task was handled
   // https://docs.cypress.io/api/commands/task#Usage - "The command will fail if undefined is returned or if the promise is resolved with undefined."
   return apolloClient.mutate({
-    mutation: LockTaskListSectionDocument,
+    mutation: LockModelPlanSectionDocument,
     variables: input
   });
 }

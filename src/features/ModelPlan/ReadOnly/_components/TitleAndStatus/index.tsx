@@ -1,5 +1,9 @@
 import React from 'react';
-import { ModelStatus, TaskStatus } from 'gql/generated/graphql';
+import {
+  DataExchangeApproachStatus,
+  ModelStatus,
+  TaskStatus
+} from 'gql/generated/graphql';
 
 import StatusBanner from 'components/StatusBanner';
 
@@ -9,7 +13,7 @@ type TitleAndStatusProps = {
   clearanceTitle: string;
   heading: string;
   isViewingFilteredView?: boolean;
-  status: ModelStatus | TaskStatus;
+  status: ModelStatus | TaskStatus | DataExchangeApproachStatus;
   modifiedOrCreatedDts?: string | null;
 };
 

@@ -55,7 +55,7 @@ exports[`EChimpCard > renders without errors 1`] = `
           </div>
         </div>
         <div
-          class="echimp-card__cr-status"
+          class="echimp-card__status"
         >
           <p
             class="text-bold"

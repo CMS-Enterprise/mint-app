@@ -1,7 +1,7 @@
 /**
-  Subscription wrapper and context for fetching and updating task list locked states.
+  Subscription wrapper and context for fetching and updating model plan locked states.
   subscribeToMore method returns a previous state and a new subscription message.
-  SubscriptionContext gets modified based on the addition or removal of a locked task list section.
+  SubscriptionContext gets modified based on the addition or removal of a locked model plan section.
   SubscriptionContext can be accessed from anywhere in a model plan
  */
 
@@ -9,15 +9,16 @@ import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   ChangeType,
-  GetTaskListSubscriptionsQuery,
-  TaskListSubscriptionDocument,
-  TaskListSubscriptionSubscription,
-  useGetTaskListSubscriptionsLazyQuery
+  GetLockedModelPlanSectionsQuery,
+  ModelPlanSubscriptionDocument,
+  ModelPlanSubscriptionSubscription,
+  useGetLockedModelPlanSectionsLazyQuery
 } from 'gql/generated/graphql';
 
 import { isUUID } from 'utils/modelPlan';
 
-type LockSectionType = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+export type LockSectionType =
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type SubscriptionWrapperProps = {
   children: React.ReactNode;
@@ -64,42 +65,43 @@ export const removeLockedSection = (
 
 // Create the subscription context - can be used anywhere in a model plan
 export const SubscriptionContext = createContext<{
-  taskListSectionLocks: LockSectionType[];
+  lockableSectionLocks: LockSectionType[];
   loading: boolean;
 }>({
-  taskListSectionLocks: [],
+  lockableSectionLocks: [],
   loading: true
 });
 
-const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
+const PageLockContext = ({ children }: SubscriptionWrapperProps) => {
   // Gets the model plan id from any location within the application
   const { pathname } = useLocation();
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
-  // Needed to only subscribe on task-list views of current model
-  const taskList: boolean = pathname.split('/')[4] === 'task-list';
+  // Needed to only subscribe on model plan views of current model
+  const shouldFetchLocks: boolean =
+    pathname.split('/')[3] === 'collaboration-area';
 
   // Holds reference to subscribeToMore used for closing ws connection on leaving model plan
   const subscribed = useRef<ReturnType<typeof subscribeToMore> | null>(null);
 
   // // The value that will be given to the context
   const subscriptionContextData = useRef<{
-    taskListSectionLocks: LockSectionType[];
+    lockableSectionLocks: LockSectionType[];
     loading: boolean;
   }>({
-    taskListSectionLocks: [],
+    lockableSectionLocks: [],
     loading: true
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [getTaskListLocks, { data: subData, subscribeToMore }] =
-    useGetTaskListSubscriptionsLazyQuery();
+  const [getModelPlanLocks, { data: subData, subscribeToMore }] =
+    useGetLockedModelPlanSectionsLazyQuery();
 
   useEffect(() => {
-    if (validModelID && subscribeToMore && taskList) {
+    if (validModelID && subscribeToMore && shouldFetchLocks) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
-      getTaskListLocks({ variables: { modelPlanID: modelID } });
+      getModelPlanLocks({ variables: { modelPlanID: modelID } });
 
       if (subData) {
         // Sets the initial lock statuses once useLazyQuery data is fetched
@@ -109,7 +111,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribed.current = subscribeToMore({
-          document: TaskListSubscriptionDocument,
+          document: ModelPlanSubscriptionDocument,
           variables: {
             modelPlanID: modelID
           },
@@ -117,29 +119,29 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
             prev,
             {
               subscriptionData: { data }
-            }: { subscriptionData: { data: TaskListSubscriptionSubscription } }
+            }: { subscriptionData: { data: ModelPlanSubscriptionSubscription } }
           ) => {
             if (!data) return prev;
 
-            const lockChange = data.onLockTaskListSectionContext;
+            const lockChange = data.onLockLockableSectionContext;
 
             const updatedSubscriptionContext =
               lockChange.changeType === ChangeType.REMOVED
                 ? // If section lock is to be freed, remove the lock from the SubscriptionContext
                   removeLockedSection(
-                    prev.taskListSectionLocks,
+                    prev.lockableSectionLocks,
                     lockChange.lockStatus
                   )
                 : // If section lock is to be added, add the lock from the SubscriptionContext
                   addLockedSection(
-                    prev.taskListSectionLocks,
+                    prev.lockableSectionLocks,
                     lockChange.lockStatus
                   );
 
             // Formatting lock object to mirror prev updateQuery param
             const formattedSubscriptionContext = {
               ...prev,
-              taskListSectionLocks: updatedSubscriptionContext,
+              lockableSectionLocks: updatedSubscriptionContext,
               loading: false
             };
 
@@ -157,10 +159,10 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
     }
   }, [
     modelID,
-    taskList,
+    shouldFetchLocks,
     validModelID,
     subData,
-    getTaskListLocks,
+    getModelPlanLocks,
     subscribeToMore,
     subscribed
   ]);
@@ -173,4 +175,4 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   );
 };
 
-export default SubscriptionWrapper;
+export default PageLockContext;

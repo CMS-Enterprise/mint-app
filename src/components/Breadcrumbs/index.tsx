@@ -20,6 +20,7 @@ export enum BreadcrumbItemOptions {
   HOME_SETTINGS = 'HOME_SETTINGS',
   TASK_LIST = 'TASK_LIST',
   COLLABORATION_AREA = 'COLLABORATION_AREA',
+  DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
   NOTIFICATIONS = 'NOTIFICATIONS',
   HELP_CENTER = 'HELP_CENTER',
   HELP_SOLUTIONS = 'HELP_SOLUTIONS',
@@ -65,6 +66,10 @@ export const commonBreadCrumbs = (
   COLLABORATION_AREA: {
     text: 'collaborationArea:heading',
     url: `/models/${modelID}/collaboration-area`
+  },
+  DATA_EXCHANGE_APPROACH: {
+    text: 'dataExchangeApproachMisc:heading',
+    url: `/models/${modelID}/collaboration-area/data-exchange-approach`
   },
   NOTIFICATIONS: {
     text: 'notifications:breadcrumb',

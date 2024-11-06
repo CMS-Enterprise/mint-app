@@ -3,6 +3,8 @@ package resolvers
 import (
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
@@ -33,7 +35,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelperWithInputTemplates(
+	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelperWithInputTemplates(
 		planName,
 		plan,
 		"{{.ModelName}}'s Test",
