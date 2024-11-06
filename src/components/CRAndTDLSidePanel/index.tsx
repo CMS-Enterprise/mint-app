@@ -4,6 +4,7 @@ import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import { DataOrNoData } from 'components/EChimpCards/EChimpCard';
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
 
@@ -77,18 +78,15 @@ const CRAndTDLSidePanel = ({
               </div>
             )}
 
-            {crStatus && (
-              <div className="echimp-card__cr-status">
-                <p className="text-bold">{crtdlsT('echimpCard.crStatus')}:</p>
-                <p>{crStatus}</p>
-              </div>
-            )}
-            {status && (
-              <div className="echimp-card__cr-status">
-                <p className="text-bold">{crtdlsT('echimpCard.tdlStatus')}</p>
-                <p>{status}</p>
-              </div>
-            )}
+            <div className="echimp-card__status">
+              <p className="text-bold">
+                {isCR
+                  ? crtdlsT('echimpCard.crStatus')
+                  : crtdlsT('echimpCard.tdlStatus')}
+                :
+              </p>
+              <DataOrNoData data={crStatus ?? status} />
+            </div>
           </div>
           <div className="sidepanel__content">
             {isCR ? (
@@ -97,29 +95,29 @@ const CRAndTDLSidePanel = ({
                   <p className="text-bold">
                     {crtdlsT('echimpCard.implementationDate')}
                   </p>
-                  <p>{implementationDate}</p>
+                  <DataOrNoData data={implementationDate} />
                 </div>
-                {initiator && (
-                  <div>
-                    <p className="text-bold">
-                      {crtdlsT('echimpCard.initiator')}
-                    </p>
-                    {/* Currently initiator returns name in ALL CAPS */}
-                    <p>{properlyCapitalizeInitiator(initiator)}</p>
-                  </div>
-                )}
-                {crSummary && (
-                  <div className="sidepanel--full-width">
-                    <p className="text-bold">
-                      {crtdlsT('echimpCard.crSummary')}
-                    </p>
+                <div>
+                  <p className="text-bold">{crtdlsT('echimpCard.initiator')}</p>
+                  {/* Currently initiator returns name in ALL CAPS */}
+                  <DataOrNoData
+                    data={initiator && properlyCapitalizeInitiator(initiator)}
+                  />
+                </div>
+                <div className="sidepanel--full-width">
+                  <p className="text-bold">{crtdlsT('echimpCard.crSummary')}</p>
+                  {crSummary?.rawContent ? (
                     <TruncatedText
                       id={id}
                       text={crSummary?.rawContent}
                       lineClamp={5}
                     />
-                  </div>
-                )}
+                  ) : (
+                    <p className="text-base text-italic">
+                      {crtdlsT('echimpCard.noData')}
+                    </p>
+                  )}
+                </div>
 
                 <div>
                   <p className="text-bold">
@@ -147,7 +145,7 @@ const CRAndTDLSidePanel = ({
                   <p className="text-bold">
                     {crtdlsT('echimpCard.relatedCrTdl')}
                   </p>
-                  <p>{relatedCrTdlNumbers}</p>
+                  <DataOrNoData data={relatedCrTdlNumbers} />
                 </div>
               </>
             ) : (
@@ -155,7 +153,7 @@ const CRAndTDLSidePanel = ({
               <div>
                 <p className="text-bold">{crtdlsT('echimpCard.issuedDate')}</p>
                 {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
-                <p>{issuedDate?.split(' ')[0]}</p>
+                <DataOrNoData data={issuedDate} />
               </div>
             )}
 
