@@ -14,10 +14,12 @@ type MTOCategory struct {
 	modelPlanRelation
 
 	Name     string     `json:"name" db:"name"`
+	Order    int        `json:"order" db:"order"`
 	ParentID *uuid.UUID `json:"parent_id" db:"parent_id"`
 }
 
 // NewMTOCategory returns a new mtoCategory object. A Nil parentID means that this is a top level category, and not a subcategory
+// Note, a new category automatically is added as the last in order. It can be re-ordered, but it can't be set from the start
 func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
 	return &MTOCategory{
 		Name:              name,

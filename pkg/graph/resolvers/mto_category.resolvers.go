@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -43,12 +44,17 @@ func (r *mutationResolver) CreateMTOCategory(ctx context.Context, modelPlanID uu
 	return MTOCategoryCreate(ctx, logger, principal, r.store, name, modelPlanID, parentID)
 }
 
-// UpdateMTOCategory is the resolver for the updateMTOCategory field.
-func (r *mutationResolver) UpdateMTOCategory(ctx context.Context, id uuid.UUID, name string) (*models.MTOCategory, error) {
+// RenameMTOCategory is the resolver for the renameMTOCategory field.
+func (r *mutationResolver) RenameMTOCategory(ctx context.Context, id uuid.UUID, name string) (*models.MTOCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return MTOCategoryUpdate(ctx, logger, principal, r.store, id, name)
+	return MTOCategoryRename(ctx, logger, principal, r.store, id, name)
+}
+
+// ReorderMTOCategory is the resolver for the reorderMTOCategory field.
+func (r *mutationResolver) ReorderMTOCategory(ctx context.Context, id uuid.UUID, newOrder int) (*models.MTOCategory, error) {
+	panic(fmt.Errorf("not implemented: ReorderMTOCategory - reorderMTOCategory"))
 }
 
 // MTOCategory returns generated.MTOCategoryResolver implementation.
@@ -61,3 +67,19 @@ func (r *Resolver) MTOSubcategory() generated.MTOSubcategoryResolver {
 
 type mTOCategoryResolver struct{ *Resolver }
 type mTOSubcategoryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) UpdateMTOCategory(ctx context.Context, id uuid.UUID, name string) (*models.MTOCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return MTOCategoryRename(ctx, logger, principal, r.store, id, name)
+}
+func (r *mutationResolver) ReOrderMTOCategory(ctx context.Context, id uuid.UUID, newOrder int) (*models.MTOCategory, error) {
+	panic(fmt.Errorf("not implemented: ReOrderMTOCategory - reOrderMTOCategory"))
+}

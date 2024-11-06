@@ -2877,7 +2877,7 @@
 							"response": []
 						},
 						{
-							"name": "UpdateMTOCategory",
+							"name": "RenameMTOCategory",
 							"event": [
 								{
 									"listen": "test",
@@ -2901,7 +2901,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation UpdateMTOCategory {\nupdateMTOCategory(id: \"{{mtoCategoryID}}\",\nname: \"Awesome renamed Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"query": "mutation RenameMTOCategory {\nrenameMTOCategory(id: \"{{mtoCategoryID}}\",\nname: \"Awesome renamed Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -2915,7 +2915,7 @@
 							"response": []
 						},
 						{
-							"name": "UpdateMTOSubcategory",
+							"name": "RenameMTOSubcategory",
 							"event": [
 								{
 									"listen": "test",
@@ -2939,7 +2939,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation UpdateMTOSubCategory {\nupdateMTOCategory(id: \"{{mtoSubcategoryID}}\",\nname: \"Awesome renamed Sub Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"query": "mutation RenameMTOSubcategory {\nrenameMTOCategory(id: \"{{mtoSubcategoryID}}\",\nname: \"Awesome renamed Sub Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
 										"variables": ""
 									}
 								},

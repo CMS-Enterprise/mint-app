@@ -32,8 +32,8 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	return storage.MTOCategoryCreate(store, logger, category)
 }
 
-// MTOCategoryUpdate updates the name of MTOCategory or SubCategory
-func MTOCategoryUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+// MTOCategoryRename updates the name of MTOCategory or SubCategory
+func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 	name string,
 ) (*models.MTOCategory, error) {
