@@ -170,8 +170,9 @@ const AppRoutes = () => {
 
           {/* Model to Operation Routes */}
           <ProtectedRoute
-            path="/models/:modelID/collaboration-area/model-to-operation"
+            path="/models/:modelID/collaboration-area/model-to-operations"
             component={ModelToOperations}
+            enabled={flags.modelToOperationsEnabled}
           />
 
           {/* Task List Routes */}

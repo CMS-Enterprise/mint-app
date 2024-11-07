@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useParams } from 'react-router-dom';
-import { Grid } from '@trussworks/react-uswds';
+import { Grid, Icon } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
+import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
+
+import { TaskListStatusTag } from '../TaskList/_components/TaskListItem';
 
 import MTOHome from './Home';
 
@@ -18,6 +22,14 @@ const ModelToOperations = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const { modelName } = useContext(ModelInfoContext);
+
+  const { data, loading, error } = useGetModelToOperationsMatrixQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
 
   return (
     <MainContent
@@ -32,17 +44,22 @@ const ModelToOperations = () => {
         ]}
       />
 
-      <Grid row>
+      <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
           <h1 className="margin-bottom-0 margin-top-5 line-height-large">
             {t('heading')}
           </h1>
 
-          <p className="mint-body-large margin-bottom-0 margin-top-05">
+          <p className="mint-body-large margin-bottom-2 margin-top-05">
             {t('forModel', {
               modelName
             })}
           </p>
+
+          <TaskListStatusTag
+            status={modelToOperationsMatrix?.status}
+            classname="width-fit-content"
+          />
         </Grid>
 
         <Grid desktop={{ col: 3 }}>
@@ -54,11 +71,19 @@ const ModelToOperations = () => {
         </Grid>
       </Grid>
 
-      <p className="mint-body-medium">{t('description')}</p>
+      <UswdsReactLink
+        to={`/models/${modelID}/collaboration-area`}
+        data-testid="return-to-collaboration"
+      >
+        <span>
+          <Icon.ArrowBack className="top-3px margin-right-1" />
+          {t('returnToCollaboration')}
+        </span>
+      </UswdsReactLink>
 
       <Switch>
         <ProtectedRoute
-          path="/models/:modelID/collaboration-area/model-to-operation"
+          path="/models/:modelID/collaboration-area/model-to-operations"
           component={MTOHome}
           exact
         />

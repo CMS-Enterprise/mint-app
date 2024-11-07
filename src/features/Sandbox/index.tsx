@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
-import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { TaskStatus } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';

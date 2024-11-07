@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {
   DataExchangeApproachStatus,
   ModelStatus,
+  MtoStatus,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -29,6 +30,7 @@ export const TaskListStatusTag = ({
     | PrepareForClearanceStatus
     | ModelStatus
     | DataExchangeApproachStatus
+    | MtoStatus
     | undefined;
   classname?: string;
 }) => {
