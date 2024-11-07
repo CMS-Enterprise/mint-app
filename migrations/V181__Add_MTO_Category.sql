@@ -3,7 +3,7 @@ CREATE TABLE mto_category (
     name ZERO_STRING NOT NULL,
     parent_id UUID REFERENCES mto_category(id),
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
-    order int NOT NULL,
+    position INT NOT NULL,
 
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

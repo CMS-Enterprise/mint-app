@@ -8,6 +8,7 @@ SELECT
     mto_category.name, 
     mto_category.parent_id, 
     mto_category.model_plan_id, 
+    mto_category.position, 
     mto_category.created_by, 
     mto_category.created_dts, 
     mto_category.modified_by, 

@@ -721,7 +721,7 @@ export type MtoCategory = {
   id: Scalars['UUID']['output'];
   isUncategorized: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
-  order: Scalars['Int']['output'];
+  position: Scalars['Int']['output'];
   subCategories: Array<MtoSubcategory>;
 };
 
@@ -874,7 +874,7 @@ export type MtoSubcategory = {
   isUncategorized: Scalars['Boolean']['output'];
   milestones: Array<MtoMilestone>;
   name: Scalars['String']['output'];
-  order: Scalars['Int']['output'];
+  position: Scalars['Int']['output'];
 };
 
 export enum MintUses {

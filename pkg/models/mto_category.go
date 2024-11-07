@@ -14,7 +14,7 @@ type MTOCategory struct {
 	modelPlanRelation
 
 	Name     string     `json:"name" db:"name"`
-	Order    int        `json:"order" db:"order"`
+	Position int        `json:"position" db:"position"`
 	ParentID *uuid.UUID `json:"parent_id" db:"parent_id"`
 }
 
