@@ -1,0 +1,35 @@
+name: Deploy MTO feature branch to DEV
+
+on:
+  push:
+    branches:
+      - feature/MINT-3175_mto
+
+concurrency:
+  group: mto-dev-deploy
+
+jobs:
+  run_tests:
+    uses: ./.github/workflows/run_tests.yml
+    secrets: inherit
+
+  build_frontend_assets:
+    strategy:
+      matrix:
+        env: [dev]
+    uses: ./.github/workflows/build_frontend_assets.yml
+    with:
+      env: ${{ matrix.env }}
+    secrets: inherit
+
+  build_application_images:
+    uses: ./.github/workflows/build_application_images.yml
+    needs: run_tests
+    secrets: inherit
+
+  deploy_dev:
+    needs: [build_application_images, build_frontend_assets]
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: dev
+    secrets: inherit
