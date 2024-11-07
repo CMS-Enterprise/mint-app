@@ -162,7 +162,8 @@ describe('The Model Plan Task List', () => {
     mtoMatrix: {
       __typename: 'ModelsToOperationMatrix',
       status: MtoStatus.IN_PROGRESS,
-      recentEdit: null
+      recentEdit: null,
+      milestones: []
     },
     discussions: [
       {

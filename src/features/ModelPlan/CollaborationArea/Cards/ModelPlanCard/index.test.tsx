@@ -129,7 +129,8 @@ const modelPlan: GetModelPlanTypes = {
   mtoMatrix: {
     __typename: 'ModelsToOperationMatrix',
     status: MtoStatus.IN_PROGRESS,
-    recentEdit: null
+    recentEdit: null,
+    milestones: []
   },
   dataExchangeApproach: {
     __typename: 'PlanDataExchangeApproach',

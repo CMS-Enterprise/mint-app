@@ -156,6 +156,10 @@ export default gql(/* GraphQL */ `
             commonName
           }
         }
+        milestones {
+          id
+          name
+        }
       }
     }
   }
