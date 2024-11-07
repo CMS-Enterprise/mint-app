@@ -45,6 +45,11 @@ const MTOCard = ({
       </CardHeader>
       <div className="collaboration-area__status flex-align-center">
         <TaskListStatusTag status={status} classname="width-fit-content" />
+        <span className="text-base">
+          {collaborationAreaT('mtoCard.modelMilestonesAdded', {
+            count: 0
+          })}
+        </span>
       </div>
       <CardBody>
         <p>{collaborationAreaT('mtoCard.body')}</p>
