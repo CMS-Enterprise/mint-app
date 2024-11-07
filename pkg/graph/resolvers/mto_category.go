@@ -56,6 +56,30 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	return storage.MTOCategoryUpdate(store, logger, existing)
 }
 
+// MTOCategoryReorder updates the position of an MTOCategory or SubCategory
+func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	id uuid.UUID,
+	order int,
+) (*models.MTOCategory, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+	existing, err := storage.MTOCategoryGetByID(store, logger, id)
+	if err != nil {
+		return nil, fmt.Errorf("unable to update MTO category. Err %w", err)
+	}
+	// update the name
+	existing.Position = order
+
+	// Just check access, don't apply changes here
+	err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, store, false, true)
+	if err != nil {
+		return nil, err
+	}
+	return storage.MTOCategoryUpdate(store, logger, existing)
+}
+
 // MTOCategoryGetByModelPlanIDLOADER implements resolver logic to get all parent level MTO Categories by a model plan ID using a data loader
 func MTOCategoryGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOCategory, error) {
 	dbCategories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)

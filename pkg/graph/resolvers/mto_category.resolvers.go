@@ -54,7 +54,9 @@ func (r *mutationResolver) RenameMTOCategory(ctx context.Context, id uuid.UUID, 
 
 // ReorderMTOCategory is the resolver for the reorderMTOCategory field.
 func (r *mutationResolver) ReorderMTOCategory(ctx context.Context, id uuid.UUID, newOrder int) (*models.MTOCategory, error) {
-	panic(fmt.Errorf("not implemented: ReorderMTOCategory - reorderMTOCategory"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOCategoryReorder(ctx, logger, principal, r.store, id, newOrder)
 }
 
 // MTOCategory returns generated.MTOCategoryResolver implementation.
