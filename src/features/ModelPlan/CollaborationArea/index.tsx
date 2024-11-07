@@ -216,7 +216,7 @@ const CollaborationArea = () => {
                     dataExhangeApproachData={dataExchangeApproach}
                   />
 
-                  <MTOCard mtoMatrix={mtoMatrix} modelID={modelID} />
+                  <MTOCard modelID={modelID} mtoMatrix={mtoMatrix} />
                 </CardGroup>
               </Grid>
             </Grid>

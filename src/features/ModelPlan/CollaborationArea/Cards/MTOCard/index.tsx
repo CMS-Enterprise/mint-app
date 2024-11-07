@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -14,24 +16,22 @@ import UswdsReactLink from 'components/LinkWrapper';
 import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
-type MTOMatrixType = GetModelPlanQuery['modelPlan']['mtoMatrix'];
-
-const MTOCard = ({
-  modelID,
-  mtoMatrix
-}: {
+type MtoCardProps = {
   modelID: string;
-  mtoMatrix: MTOMatrixType;
-}) => {
+  mtoMatrix: GetModelPlanQuery['modelPlan']['mtoMatrix'];
+};
+
+const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
+
+  const history = useHistory();
 
   const { SectionLock, isLocked } = useSectionLock({
     section: LockableSection.MODELS_TO_OPERATION_MATRIX
   });
 
-  const { recentEdit, status, milestones } = mtoMatrix;
-
-  const { modifiedDts, modifiedByUserAccount } = recentEdit || {};
+  const { status, recentEdit, milestones } = mtoMatrix;
+  const { modifiedByUserAccount, modifiedDts } = recentEdit || {};
 
   return (
     <Card
@@ -45,11 +45,13 @@ const MTOCard = ({
       </CardHeader>
       <div className="collaboration-area__status flex-align-center">
         <TaskListStatusTag status={status} classname="width-fit-content" />
-        <span className="text-base">
-          {collaborationAreaT('mtoCard.modelMilestonesAdded', {
-            count: milestones.length
-          })}
-        </span>
+        {status !== 'READY' && (
+          <span className="text-base">
+            {collaborationAreaT('mtoCard.modelMilestonesAdded', {
+              count: milestones.length
+            })}
+          </span>
+        )}
       </div>
       <CardBody>
         <p>{collaborationAreaT('mtoCard.body')}</p>
@@ -71,22 +73,26 @@ const MTOCard = ({
         <SectionLock />
       </CardBody>
       <CardFooter>
-        <UswdsReactLink
-          to={`/models/${modelID}/collaboration-area/`}
-          className="usa-button"
-          variant="unstyled"
-          data-testid="go-to-the-matrix"
+        <Button
+          type="button"
+          className="margin-right-2"
+          disabled={isLocked}
+          onClick={() => history.push(`/models/${modelID}/collaboration-area/`)}
+          data-testid="to-model-to-operation"
         >
           {collaborationAreaT('mtoCard.goToMatrix')}
-        </UswdsReactLink>
-        <UswdsReactLink
-          to={`/models/${modelID}/collaboration-area/`}
-          className="usa-button usa-button--outline margin-left-0"
-          variant="unstyled"
-          data-testid="manage-collaborators"
-        >
-          {collaborationAreaT('mtoCard.shareOrExport')}
-        </UswdsReactLink>
+        </Button>
+
+        {status !== 'READY' && (
+          <UswdsReactLink
+            to={`/models/${modelID}/collaboration-area/`}
+            className="usa-button usa-button--outline margin-left-0"
+            variant="unstyled"
+            data-testid="manage-collaborators"
+          >
+            {collaborationAreaT('mtoCard.shareOrExport')}
+          </UswdsReactLink>
+        )}
       </CardFooter>
     </Card>
   );
