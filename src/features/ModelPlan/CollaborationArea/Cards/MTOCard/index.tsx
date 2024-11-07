@@ -29,9 +29,9 @@ const MTOCard = ({
     section: LockableSection.MODELS_TO_OPERATION_MATRIX
   });
 
-  const { recentEdit, status } = mtoMatrix;
+  const { recentEdit, status, milestones } = mtoMatrix;
 
-  // const { modifiedDts, modifiedByUserAccount } = recentEdit;
+  const { modifiedDts, modifiedByUserAccount } = recentEdit || {};
 
   return (
     <Card
@@ -47,28 +47,26 @@ const MTOCard = ({
         <TaskListStatusTag status={status} classname="width-fit-content" />
         <span className="text-base">
           {collaborationAreaT('mtoCard.modelMilestonesAdded', {
-            count: 0
+            count: milestones.length
           })}
         </span>
       </div>
       <CardBody>
         <p>{collaborationAreaT('mtoCard.body')}</p>
 
-        {recentEdit?.modifiedDts &&
-          recentEdit?.modifiedByUserAccount &&
-          !isLocked && (
-            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
-              <span className="text-base margin-right-1">
-                {collaborationAreaT('mtoCard.lastModified', {
-                  date: formatDateLocal(recentEdit?.modifiedDts, 'MM/dd/yyyy')
-                })}
-              </span>
-              <Avatar
-                className="text-base-darkest"
-                user={recentEdit?.modifiedByUserAccount.commonName}
-              />
-            </div>
-          )}
+        {modifiedDts && modifiedByUserAccount && !isLocked && (
+          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
+            <span className="text-base margin-right-1">
+              {collaborationAreaT('dataExchangeApproachCard.lastModified', {
+                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+              })}
+            </span>
+            <Avatar
+              className="text-base-darkest"
+              user={modifiedByUserAccount.commonName}
+            />
+          </div>
+        )}
 
         <SectionLock />
       </CardBody>
