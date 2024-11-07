@@ -16,7 +16,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
-type MtoCardProps = {
+export type MtoCardProps = {
   modelID: string;
   mtoMatrix: GetModelPlanQuery['modelPlan']['mtoMatrix'];
 };
