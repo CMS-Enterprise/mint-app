@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
@@ -18,7 +18,11 @@ const MTOHome = () => {
   const history = useHistory();
 
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+
+  const params = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
+
   const viewparam = params.get('view');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -28,11 +32,15 @@ const MTOHome = () => {
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
       setCurrentView(viewparam as MTOOption);
+    } else {
+      // Default to milestones if no view param present
+      params.set('view', 'milestones');
+      history.push({ search: params.toString() });
     }
-  }, [viewparam]);
+  }, [viewparam, history, params]);
 
   return (
-    <div className="model-to-operations margin-top-6">
+    <div className="model-to-operations margin-y-6">
       <Header
         basic
         extended={false}

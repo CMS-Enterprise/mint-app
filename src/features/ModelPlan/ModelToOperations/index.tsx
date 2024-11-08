@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Redirect, Route, Switch, useParams } from 'react-router-dom';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
@@ -84,9 +84,15 @@ const ModelToOperations = () => {
 
       <Switch>
         <ProtectedRoute
-          path="/models/:modelID/collaboration-area/model-to-operations"
+          path="/models/:modelID/collaboration-area/model-to-operations/matrix"
           component={MTOHome}
           exact
+        />
+
+        <Redirect
+          exact
+          from="/models/:modelID/collaboration-area/model-to-operations"
+          to="/models/:modelID/collaboration-area/model-to-operations/matrix"
         />
 
         <Route path="*" render={() => <NotFoundPartial />} />
