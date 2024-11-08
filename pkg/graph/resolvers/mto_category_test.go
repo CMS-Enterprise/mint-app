@@ -66,3 +66,35 @@ func (suite *ResolverSuite) TestMTOCategoryCreate() {
 	suite.Equal(2, category3.Position, "Categories should be added to the next available position")
 
 }
+
+func (suite *ResolverSuite) TestMTOCategoryReorderingTrigger() {
+}
+
+func (suite *ResolverSuite) TestMTOCategoryRename() {
+	plan := suite.createModelPlan("testing category creation plan")
+	// Make top level and sub categories
+	cat1Name := "Category 1"
+	cat1Rename := "Category 1 Renamed Hooray!"
+
+	category1, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat1Name, plan.ID, nil)
+	suite.NoError(err)
+	// Assert all fields are as expected for first model
+	suite.Equal(0, category1.Position, "Categories should be added to the next available position")
+	suite.Equal(cat1Name, category1.Name)
+	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, category1.CreatedBy)
+	suite.NotNil(category1.CreatedDts)
+	suite.Nil(category1.ParentID)
+	suite.Nil(category1.ModifiedBy)
+	suite.Nil(category1.ModifiedDts)
+	suite.EqualValues(plan.ID, category1.ModelPlanID)
+
+	renamedCategory, err := MTOCategoryRename(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store,
+		category1.ID, cat1Rename)
+	suite.NoError(err)
+	suite.EqualValues(cat1Rename, renamedCategory.Name)
+	// This didn't affect the position
+	suite.EqualValues(0, renamedCategory.Position)
+	// This didn't affect model plan id
+	suite.EqualValues(plan.ID, renamedCategory.ModelPlanID)
+
+}
