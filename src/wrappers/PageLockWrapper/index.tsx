@@ -46,7 +46,7 @@ export const modelPlanSectionMap: LockableSectionMapType = {
   'participants-and-providers': LockableSection.PARTICIPANTS_AND_PROVIDERS,
   payment: LockableSection.PAYMENT,
   'data-exchange-approach': LockableSection.DATA_EXCHANGE_APPROACH,
-  'model-to-operation': LockableSection.MODELS_TO_OPERATION_MATRIX
+  'model-to-operations': LockableSection.MODELS_TO_OPERATION_MATRIX
 };
 
 // Find lock and sets the LockStatus of the current task list section
@@ -79,7 +79,7 @@ export const findLockedSection = (
 const lockedRouteParser = (route: string): string => {
   if (
     route.split('/')[4] === 'data-exchange-approach' ||
-    route.split('/')[4] === 'model-to-operation'
+    route.split('/')[4] === 'model-to-operations'
   ) {
     return route.split('/')[4];
   }
@@ -101,7 +101,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
     to.split('/')[4] === 'task-list' ||
     (to.split('/')[4] === 'data-exchange-approach' &&
       to.split('/')[3] !== 'read-view') ||
-    (to.split('/')[4] === 'model-to-operation' &&
+    (to.split('/')[4] === 'model-to-operations' &&
       to.split('/')[3] !== 'read-view');
 
   const taskListRoute = lockedRouteParser(to);

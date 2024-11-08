@@ -12,7 +12,6 @@ import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskL
 import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
-import UswdsReactLink from 'components/LinkWrapper';
 import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
@@ -77,21 +76,24 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
           type="button"
           className="margin-right-2"
           disabled={isLocked}
-          onClick={() => history.push(`/models/${modelID}/collaboration-area/`)}
-          data-testid="to-model-to-operation"
+          onClick={() =>
+            history.push(
+              `/models/${modelID}/collaboration-area/model-to-operations`
+            )
+          }
+          data-testid="to-model-to-operations"
         >
           {collaborationAreaT('mtoCard.goToMatrix')}
         </Button>
 
         {status !== 'READY' && (
-          <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/`}
-            className="usa-button usa-button--outline margin-left-0"
-            variant="unstyled"
-            data-testid="manage-collaborators"
+          <Button
+            type="button"
+            onClick={() => {}} // TODO: Implement share/export functionality
+            data-testid="to-model-to-operations"
           >
             {collaborationAreaT('mtoCard.shareOrExport')}
-          </UswdsReactLink>
+          </Button>
         )}
       </CardFooter>
     </Card>
