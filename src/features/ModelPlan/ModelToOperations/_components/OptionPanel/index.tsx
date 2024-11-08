@@ -12,7 +12,6 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 
 import { MTOOption, mtoOptions } from '../../Home';
@@ -39,6 +38,7 @@ const MTOOptionsCard = ({
       className={classNames('desktop:grid-col-6 article', className)}
     >
       <div
+        style={{ paddingTop: '2px', paddingBottom: '2px' }}
         className={classNames(
           'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg',
           {
@@ -47,8 +47,12 @@ const MTOOptionsCard = ({
           }
         )}
       >
-        {t(`optionsCard.${mtoType}.label`)}{' '}
-        <Icon.Launch className="margin-right-05" style={{ top: '4px' }} />
+        {t(`optionsCard.${mtoType}.label`).toLocaleUpperCase()}{' '}
+        {mtoType === 'milestones' ? (
+          <Icon.Flag className="margin-right-05" style={{ top: '4px' }} />
+        ) : (
+          <Icon.Build className="margin-right-05" style={{ top: '4px' }} />
+        )}
       </div>
 
       <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full">
@@ -100,6 +104,68 @@ const MTOOptionsPanel = () => {
           <MTOOptionsCard mtoType={option} className="margin-top-2" />
         ))}
       </Grid>
+
+      <h3 className="margin-y-0">{t('startWithCategories')}</h3>
+
+      <Grid row gap={2}>
+        <Grid desktop={{ col: 6 }}>
+          <h5 className="margin-bottom-0 margin-top-2 text-normal">
+            {t('aboutTemplates')}
+          </h5>
+          <p className="mint-body-normal margin-y-0">
+            {t('aboutTemplatesDescription')}
+          </p>
+        </Grid>
+
+        <Grid desktop={{ col: 6 }}>
+          <h5 className="margin-bottom-0 margin-top-2 text-normal">
+            {t('aboutCategories')}
+          </h5>
+          <p className="mint-body-normal margin-y-0">
+            {t('aboutCategoriesDescription')}
+          </p>
+        </Grid>
+      </Grid>
+
+      <Card
+        containerProps={{
+          className: 'radius-lg shadow-2 padding-0 margin-0'
+        }}
+        data-testid="article-card"
+        className="margin-top-2"
+      >
+        <div
+          style={{ paddingTop: '2px', paddingBottom: '2px' }}
+          className={classNames(
+            'display-flex flex-justify bg-base-lightest padding-x-3 radius-top-lg bg-base-lighter'
+          )}
+        >
+          {t('optionsCard.template.label').toLocaleUpperCase()}{' '}
+          <Icon.GridView className="margin-right-05" style={{ top: '4px' }} />
+        </div>
+
+        <div className="padding-x-3 display-flex flex-column height-full">
+          <CardBody className="padding-x-0 padding-y-2">
+            <Grid row gap={2}>
+              <Grid desktop={{ col: 9 }} tablet={{ col: 9 }}>
+                <h4 className="line-height-body-4 margin-y-0">
+                  {t(`optionsCard.template.header`)}
+                </h4>
+
+                {t(`optionsCard.template.description`)}
+              </Grid>
+
+              <Grid desktop={{ col: 3 }} tablet={{ col: 3 }}>
+                <div className="display-flex flex-justify-end">
+                  <Button type="button" outline onClick={() => {}}>
+                    {t('optionsCard.template.buttonText')}
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </CardBody>
+        </div>
+      </Card>
     </div>
   );
 };

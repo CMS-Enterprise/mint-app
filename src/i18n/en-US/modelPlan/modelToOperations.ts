@@ -11,6 +11,13 @@ export const modelToOperationsMisc: Record<string, any> = {
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOdescription: 'Choose an option below to get started.',
   returnToCollaboration: 'Return to model collaboration area',
+  startWithCategories: 'Start with categories or templates',
+  aboutTemplates: 'About templates',
+  aboutTemplatesDescription:
+    'All models are unique, but many have similarities based on key characteristics of the model. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added.',
+  aboutCategories: 'About categories',
+  aboutCategoriesDescription:
+    'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
   optionsCard: {
     milestones: {
       label: 'Milestones',
@@ -27,6 +34,12 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Models use a variety of IT systems or solutions to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.',
       buttonText: 'Browse common solutions',
       linkText: 'or, add a custom solution'
+    },
+    template: {
+      label: 'Template',
+      header: 'Standard categories',
+      description: '18 categories, 0 milestones, 0 solutions',
+      buttonText: 'Use this template'
     }
   }
 };
