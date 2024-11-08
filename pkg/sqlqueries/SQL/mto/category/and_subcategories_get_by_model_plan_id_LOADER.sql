@@ -14,4 +14,5 @@ SELECT
     mto_category.modified_by, 
     mto_category.modified_dts
 FROM mto_category 
-INNER JOIN QUERIED_IDS AS qIDs ON mto_category.model_plan_id = qIDs.model_plan_id;
+INNER JOIN QUERIED_IDS AS qIDs ON mto_category.model_plan_id = qIDs.model_plan_id
+ORDER BY mto_category.position;
