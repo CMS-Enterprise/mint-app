@@ -36,32 +36,8 @@ BEGIN
             position_adjustment := 1;
         END IF;
 
-        /*
-        Check if either the parent_id or model_plan_id changed. If so, adjust the old, and the new values
-        TODO (mto) --> make this work. Could also remove because it functionally shouldn't occur
-        */
         IF OLD.parent_id IS DISTINCT FROM NEW.parent_id AND OLD.model_plan_id IS DISTINCT FROM NEW.model_plan_id THEN
-            -- If the parent_id or model_plan_id changes, adjust positions for both
-            -- Handle deletion of the category from the old parent
-            UPDATE mto_category
-            SET position = position + 1,
-                modified_by = NEW.modified_by,
-                modified_dts = NEW.modified_dts
-            WHERE ((parent_id IS NULL AND OLD.parent_id IS NULL) OR (parent_id = OLD.parent_id))
-              AND ((model_plan_id IS NULL AND OLD.model_plan_id IS NULL) OR (model_plan_id = OLD.model_plan_id))
-              AND position > OLD.position
-              AND id != NEW.id;  -- Exclude the updated row
-            
-            -- Handle insertion of the category into the new parent
-            UPDATE mto_category
-            SET position = position - 1,
-                modified_by = NEW.modified_by,
-                modified_dts = NEW.modified_dts
-            WHERE ((parent_id IS NULL AND NEW.parent_id IS NULL) OR (parent_id = NEW.parent_id))
-              AND ((model_plan_id IS NULL AND NEW.model_plan_id IS NULL) OR (model_plan_id = NEW.model_plan_id))
-              AND position >= NEW.position
-              AND id != NEW.id;  -- Exclude the updated row
-
+        RAISE EXCEPTION 'updating model_plan_id or parent_id is not allows. Caught in trigger function update_position_based_on_parent_and_model_plan';
         ELSIF OLD.parent_id IS NOT DISTINCT FROM NEW.parent_id AND OLD.model_plan_id IS NOT DISTINCT FROM NEW.model_plan_id THEN
             -- Handle the case where the position is changed without changing parent_id or model_plan_id
             /* The category moved down */
