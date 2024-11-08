@@ -221,4 +221,38 @@ func (suite *ResolverSuite) TestMTOCategoryReordering() {
 	suite.EqualValues(1, category0SubBReorder.Position)
 	suite.EqualValues(category0SubB.ID, category0SubBReorder.ID)
 
+	/****
+	// Move Category back down to old position
+	****/
+
+	category2To0To2, err := MTOCategoryReorder(ctx, logger, principal, store, category2.ID, 2)
+	suite.NoError(err)
+	//It's the same category
+	suite.Equal(category2To0.ID, category2To0To2.ID)
+	suite.EqualValues(2, category2To0To2.Position)
+
+	// this returns uncategorized as well, expect 4
+	topCategoriesModel1Again, err := MTOCategoryGetByModelPlanIDLOADER(ctx, plan1.ID)
+	suite.NoError(err)
+	suite.NotNil(topCategoriesModel1)
+	suite.Len(topCategoriesModel1, 4)
+	//Assert the categories are as expected and in the expected position  (and returned in order by position)
+	// Assert 0 to 1 to 0
+	category0To1To0 := topCategoriesModel1Again[0]
+	suite.Equal(category0.ID, category0To1To0.ID)
+	suite.EqualValues(0, category0To1To0.Position)
+	//Assert 1 to 2 to 1
+	category1To2To1 := topCategoriesModel1Again[1]
+	suite.Equal(category1.ID, category1To2To1.ID)
+	suite.EqualValues(1, category1To2To1.Position)
+
+	movedCategory := topCategoriesModel1Again[2]
+	suite.Equal(category2To0To2.ID, movedCategory.ID)
+	// suite.True(uncategorizedAgain.IsUncategorized())
+
+	//
+	uncategorizedAgain := topCategoriesModel1Again[3]
+	suite.Equal(uuid.Nil, uncategorizedAgain.ID)
+	suite.True(uncategorizedAgain.IsUncategorized())
+
 }

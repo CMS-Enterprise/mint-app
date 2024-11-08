@@ -31,6 +31,7 @@ func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID, par
 
 // MTOUncategorized returns a placeholder category to hold all milestones that aren't categorized into a subcategory
 func MTOUncategorized(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
+	//TODO (mto) should we add a position? Or ok leaving this as the base implementation?
 	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID)
 }
 func MTOUncategorizedSubcategory(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOSubcategory {
