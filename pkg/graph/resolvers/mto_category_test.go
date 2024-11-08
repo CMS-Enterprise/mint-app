@@ -213,4 +213,12 @@ func (suite *ResolverSuite) TestMTOCategoryReordering() {
 	suite.NotNil(category0To1SubCategories)
 	suite.Len(category0To1SubCategories, 3)
 
+	category0SubAReorder := category0To1SubCategories[0]
+	suite.EqualValues(0, category0SubAReorder.Position)
+	suite.EqualValues(category0SubA.ID, category0SubAReorder.ID)
+
+	category0SubBReorder := category0To1SubCategories[1]
+	suite.EqualValues(1, category0SubBReorder.Position)
+	suite.EqualValues(category0SubB.ID, category0SubBReorder.ID)
+
 }
