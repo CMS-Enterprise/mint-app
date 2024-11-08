@@ -7,6 +7,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   'systems-and-solutions': 'IT systems and solutions',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
+  isMTOInProgress: 'Is this MTO still in progress',
   lastUpdated: 'MTO last updated {{date}}',
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOdescription: 'Choose an option below to get started.',

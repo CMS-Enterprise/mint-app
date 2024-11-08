@@ -4,6 +4,8 @@ import { Button } from '@trussworks/react-uswds';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import { MtoStatus } from 'gql/generated/graphql';
 
+import { formatDateLocal } from 'utils/date';
+
 import '../../index.scss';
 
 const MTOStatusBanner = ({
@@ -22,7 +24,9 @@ const MTOStatusBanner = ({
       {status !== MtoStatus.READY && (
         <>
           <Button type="button" unstyled className="margin-x-2">
-            {t('isMTOReady')}
+            {status === MtoStatus.IN_PROGRESS
+              ? t('isMTOReady')
+              : t('isMTOInProgress')}
           </Button>
 
           {lastUpdated && (
@@ -33,7 +37,7 @@ const MTOStatusBanner = ({
 
               <span className="margin-left-2 text-base padding-top-05">
                 {t('lastUpdated', {
-                  date: lastUpdated
+                  date: formatDateLocal(lastUpdated, 'MM/dd/yyyy')
                 })}
               </span>
             </>

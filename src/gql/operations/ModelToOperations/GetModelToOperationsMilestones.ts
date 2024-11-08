@@ -22,11 +22,11 @@ export default gql(/* GraphQL */ `
               needBy
               status
               riskIndicator
-              solutions {
-                id
-                name
-                key
-              }
+              # solutions {
+              #   id
+              #   name
+              #   key
+              # }
             }
           }
         }

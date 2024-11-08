@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
@@ -9,7 +9,7 @@ import PageLoading from 'components/PageLoading';
 import MTOOptionsPanel from '../OptionPanel';
 
 const MTOTable = () => {
-  const { t } = useTranslation('modelToOperationsMisc');
+  //   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -18,8 +18,6 @@ const MTOTable = () => {
       id: modelID
     }
   });
-
-  console.log(data);
 
   if (loading) {
     return <PageLoading />;
