@@ -29,6 +29,24 @@ type ResolverSuite struct {
 	testConfigs *TestConfigs
 }
 
+// AssertEqualPointerValues takes two pointers and compares their values. It passes if both are nil, fails if only one is nil.
+// Otherwise it will just compare the values
+func (suite *ResolverSuite) AssertEqualPointerValues(expected, actual *interface{}) bool {
+	// Check if both pointers are nil
+	if expected == nil && actual == nil {
+		return true
+	}
+
+	// Check if only one of the pointers is nil
+	if expected == nil || actual == nil {
+		suite.FailNow("One of the pointers is nil but the other is not")
+		return false
+	}
+
+	// Dereference both pointers and compare their values
+	return suite.EqualValues(*expected, *actual)
+}
+
 // SetupTest clears the database between each test
 func (suite *ResolverSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
