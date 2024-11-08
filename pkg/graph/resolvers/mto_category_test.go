@@ -248,11 +248,33 @@ func (suite *ResolverSuite) TestMTOCategoryReordering() {
 
 	movedCategory := topCategoriesModel1Again[2]
 	suite.Equal(category2To0To2.ID, movedCategory.ID)
-	// suite.True(uncategorizedAgain.IsUncategorized())
 
 	//
 	uncategorizedAgain := topCategoriesModel1Again[3]
 	suite.Equal(uuid.Nil, uncategorizedAgain.ID)
 	suite.True(uncategorizedAgain.IsUncategorized())
+
+	/***
+	Reorder a child and make sure the order remains as expected
+	***/
+
+	category0SubBTo0, err := MTOCategoryReorder(ctx, logger, principal, store, category0SubB.ID, 0)
+	suite.NoError(err)
+	//It's the same category
+	suite.Equal(category0SubB.ID, category0SubBTo0.ID)
+	suite.EqualValues(0, category0SubBTo0.Position)
+
+	category0SubCategories, err := MTOSubcategoryGetByParentIDLoader(ctx, plan1.ID, category0.ID)
+	suite.NoError(err)
+	suite.NotNil(category0SubCategories)
+	suite.Len(category0SubCategories, 3)
+
+	category0SubBReorder0 := category0SubCategories[0]
+	suite.EqualValues(0, category0SubBReorder0.Position)
+	suite.EqualValues(category0SubB.ID, category0SubBTo0.ID)
+
+	category0SubAReorder1 := category0SubCategories[1]
+	suite.EqualValues(1, category0SubAReorder1.Position)
+	suite.EqualValues(category0SubA.ID, category0SubAReorder1.ID)
 
 }
