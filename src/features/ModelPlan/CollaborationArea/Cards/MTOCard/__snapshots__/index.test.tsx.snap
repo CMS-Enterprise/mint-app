@@ -78,18 +78,18 @@ exports[`MTO Card > matches snapshot 1`] = `
       >
         <button
           class="usa-button margin-right-2"
-          data-testid="to-model-to-operation"
+          data-testid="to-model-to-operations"
           type="button"
         >
           Go to matrix
         </button>
-        <a
-          class="usa-button usa-button--outline margin-left-0"
-          data-testid="manage-collaborators"
-          href="/models/123/collaboration-area/"
+        <button
+          class="usa-button"
+          data-testid="to-model-to-operations"
+          type="button"
         >
           Share or export matrix
-        </a>
+        </button>
       </div>
     </div>
   </li>
