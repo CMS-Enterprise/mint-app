@@ -169,6 +169,14 @@
   background-color: $green-5;
 }
 
+.bg-green-50 {
+  background-color: $green-50  !important;
+}
+
+.indigo-cool-60 {
+  background-color: $indigo-cool-60 !important;
+}
+
 .text-overflow-wrap-break-word {
   overflow-wrap: break-word;
 }
@@ -235,6 +243,10 @@
 
 .width-50 {
   width: 50%;
+}
+
+.text-decoration-none {
+  text-decoration: none !important;
 }
 
 @media screen and (min-width: $mobile) {

@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MTOStatusBanner Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="display-flex model-to-operations"
+  >
+    <div
+      class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
+      data-testid="tasklist-tag"
+    >
+      <span>
+        In progress
+      </span>
+    </div>
+    <button
+      class="usa-button usa-button--unstyled margin-x-2"
+      data-testid="button"
+      type="button"
+    >
+      Is this MTO ready for review?
+    </button>
+    <div
+      style="padding-top: 6px; padding-bottom: 6px;"
+    >
+      <div
+        class="model-to-operations__status-border"
+      />
+    </div>
+    <span
+      class="margin-left-2 text-base padding-top-05"
+    >
+      MTO last updated 01/01/2022
+    </span>
+  </div>
+</DocumentFragment>
+`;
