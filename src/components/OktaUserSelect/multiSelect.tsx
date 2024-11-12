@@ -105,7 +105,10 @@ const OktaMultiSelect = ({
             email: contact.email
           })
         )}
-        onInputChange={(newValue, { action }) => {
+        onInputChange={(
+          newValue: string | undefined,
+          { action }: { action: string }
+        ) => {
           if (action !== 'input-blur' && action !== 'menu-close') {
             // If user selected a value, no need to query and debounce again
             if (action !== 'set-value') {
@@ -122,11 +125,8 @@ const OktaMultiSelect = ({
         hideSelectedOptions={false}
         closeMenuOnSelect={false}
         tabSelectsValue={false}
-        onChange={selectedOptions => {
-          // TODO: Figure out what's happening with typescript here
-          // @ts-ignore
+        onChange={(selectedOptions: MultiSelectOptionProps[]) => {
           setSelected(selectedOptions);
-          // @ts-ignore
           onChange(selectedOptions.map(option => option.value));
         }}
         value={selected}
