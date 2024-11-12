@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import classNames from 'classnames';
-import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 
 import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
