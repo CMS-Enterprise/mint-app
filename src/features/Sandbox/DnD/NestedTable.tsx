@@ -8,6 +8,7 @@ import usePagination from 'hooks/usePagination';
 import { getKeys } from 'types/translation';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import DraggableRow from '../../../components/DraggableRow';
 import {
   CategoryType,
   columns,
@@ -17,8 +18,6 @@ import {
   RowType,
   SubCategoryType
 } from '..';
-
-import DraggableRow from './DraggableRow';
 
 const NestedTable = ({ rawData }: { rawData: CategoryType[] }) => {
   const [data, setData] = useState(structuredClone(rawData));
