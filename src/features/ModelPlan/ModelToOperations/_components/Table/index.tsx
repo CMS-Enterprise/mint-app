@@ -20,7 +20,6 @@ import {
   CategoryType,
   columns,
   ColumnSortType,
-  ColumnType,
   MilestoneType,
   MTORowType,
   RowType,
@@ -42,39 +41,70 @@ const MTOTable = () => {
     }
   });
 
-  const ddata = useMemo(
-    () => (queryData?.modelPlan.mtoMatrix?.categories || []) as CategoryType[],
+  const rawData = useMemo(
+    () =>
+      (queryData?.modelPlan.mtoMatrix?.categories ||
+        []) as unknown as CategoryType[],
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const rawData = useMemo(() => {
-    const formatData = structuredClone(ddata || []);
-    formatData.forEach(category => {
-      category.actions = null;
-      category.riskIndicator = null;
-      category.facilitatedBy = null;
-      category.needBy = null;
-      category.status = null;
-      category.solutions = [];
+  const formattedData = useMemo(() => {
+    const formatData: CategoryType[] = [];
+    rawData.forEach(category => {
+      const formattedCategory = {} as CategoryType;
+      formattedCategory.actions = undefined;
+      formattedCategory.riskIndicator = undefined;
+      formattedCategory.facilitatedBy = undefined;
+      formattedCategory.needBy = undefined;
+      formattedCategory.status = undefined;
+      formattedCategory.solutions = [];
+      formattedCategory.subCategories = [];
+
       category.subCategories.forEach(subCategory => {
-        subCategory.actions = null;
-        subCategory.riskIndicator = null;
-        subCategory.facilitatedBy = null;
-        subCategory.needBy = null;
-        subCategory.status = null;
-        subCategory.solutions = [];
+        const formattedSubCategory = {} as SubCategoryType;
+        formattedSubCategory.actions = undefined;
+        formattedSubCategory.riskIndicator = undefined;
+        formattedSubCategory.facilitatedBy = undefined;
+        formattedSubCategory.needBy = undefined;
+        formattedSubCategory.status = undefined;
+        formattedSubCategory.solutions = [];
+        formattedSubCategory.milestones = [];
+
         subCategory.milestones.forEach(milestone => {
-          milestone.actions = null;
-          milestone.solutions = [];
+          const formattedMilestone = {} as MilestoneType;
+          formattedMilestone.actions = undefined;
+          formattedMilestone.solutions = [];
+          formattedSubCategory.milestones.push({
+            ...formattedMilestone,
+            ...milestone
+          });
+        });
+
+        const { milestones, ...subCategoryData } = subCategory;
+        formattedCategory.subCategories.push({
+          ...formattedSubCategory,
+          ...subCategoryData
         });
       });
+
+      const { subCategories, ...categoryData } = category;
+      formatData.push({ ...formattedCategory, ...categoryData });
     });
     return formatData;
-  }, [ddata]);
+  }, [rawData]);
 
-  const [data, setData] = useState(structuredClone(rawData || []));
+  const [data, setData] = useState(structuredClone(formattedData || []));
+
+  useEffect(() => {
+    setData(structuredClone(formattedData));
+  }, [formattedData]);
 
   const [sortedData, setSortedData] = useState<CategoryType[]>([...data]);
+
+  useEffect(() => {
+    setSortedData([...data]);
+  }, [data]);
+
   const [rearrangedData, setRearrangedData] = useState<CategoryType[]>([
     ...data
   ]);
@@ -172,7 +202,7 @@ const MTOTable = () => {
   }, []);
 
   const itemLength = useMemo(() => {
-    return structuredClone(rawData).reduce(
+    return structuredClone(formattedData).reduce(
       (acc, category) =>
         acc +
         category.subCategories.reduce(
@@ -181,7 +211,7 @@ const MTOTable = () => {
         ),
       0
     );
-  }, [rawData]);
+  }, [formattedData]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -281,7 +311,7 @@ const MTOTable = () => {
             {RenderCell ? (
               <RenderCell row={row} rowType={rowType} />
             ) : (
-              row[column.accessor]
+              row[column.accessor as keyof MilestoneType]
             )}
           </td>
         );
@@ -431,7 +461,7 @@ const MTOTable = () => {
       setSortedData(structuredClone(rearrangedData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentColumn, columnSort, rawData]);
+  }, [currentColumn, columnSort, formattedData, rearrangedData]);
 
   if (loading) {
     return <PageLoading />;
@@ -441,7 +471,7 @@ const MTOTable = () => {
     return <NotFoundPartial />;
   }
 
-  if (queryData?.modelPlan.mtoMatrix?.categories.length === 0) {
+  if (queryData?.modelPlan.mtoMatrix.categories.length === 0) {
     return <MTOOptionsPanel />;
   }
 
@@ -520,7 +550,6 @@ const MTOTable = () => {
           <tbody>{renderCategories()}</tbody>
         </table>
       </div>
-
       <div className="display-flex">
         {Pagination}
 
