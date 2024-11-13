@@ -3002,7 +3002,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"let responseData = pm.response.json().data.createMTOMilestone",
+											"let responseData = pm.response.json().data.createMTOMilestoneCustom",
 											"",
 											"mtoMilestoneID = responseData.id",
 											"",
@@ -3040,7 +3040,7 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"let responseData = pm.response.json().data.createMTOMilestone",
+											"let responseData = pm.response.json().data.createMTOMilestoneCommon",
 											"",
 											"mtoMilestoneID = responseData.id",
 											"",
