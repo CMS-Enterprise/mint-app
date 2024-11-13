@@ -2,7 +2,43 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+func (suite *ResolverSuite) createMTOCategory(catName string, modelPlanID uuid.UUID, parentID *uuid.UUID) *models.MTOCategory {
+	category, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catName, modelPlanID, parentID)
+	suite.NoError(err)
+	suite.NoError(err)
+
+	suite.Equal(catName, category.Name)
+	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, category.CreatedBy)
+	suite.NotNil(category.CreatedDts)
+	if parentID == nil {
+		suite.Nil(category.ParentID)
+	} else {
+		suite.EqualValues(*parentID, category.ParentID)
+	}
+
+	suite.Nil(category.ModifiedBy)
+	suite.Nil(category.ModifiedDts)
+	suite.EqualValues(modelPlanID, category.ModelPlanID)
+
+	return category
+}
+
+// createSubcategories creates multiple subcategories under a specified parent category.
+// Each subcategory is added with a unique position under the parent category.
+func (suite *ResolverSuite) createMultipleMTOcategories(categoryNames []string, modelPlanID uuid.UUID, parentID *uuid.UUID) []*models.MTOCategory {
+	var subcategories []*models.MTOCategory
+
+	for _, name := range categoryNames {
+		subcategory := suite.createMTOCategory(name, modelPlanID, parentID)
+		subcategories = append(subcategories, subcategory)
+	}
+
+	return subcategories
+}
 
 func (suite *ResolverSuite) TestMTOCategoryGetByModelPlanIDLOADER() {
 	//TODO when data exchange approach is complete, use the generic testing functionality introduced to write a unit test for this loader
@@ -279,4 +315,72 @@ func (suite *ResolverSuite) TestMTOCategoryReordering() {
 	suite.EqualValues(1, category0SubAReorder1.Position)
 	suite.EqualValues(category0SubA.ID, category0SubAReorder1.ID)
 
+}
+
+func (suite *ResolverSuite) TestCategoryCreationAndDefaults() {
+	plan := suite.createModelPlan("Testing Plan for Default Categories")
+
+	// Test creation of top-level category
+	topCategory := suite.createMTOCategory("Top Category", plan.ID, nil)
+	suite.Equal(0, topCategory.Position, "Top-level categories should start at position 0")
+
+	// Test creation of subcategory with default position
+	subCategory := suite.createMTOCategory("Sub Category A", plan.ID, &topCategory.ID)
+	suite.Equal(0, subCategory.Position, "Subcategories should start at position 0 within their parent")
+}
+
+func (suite *ResolverSuite) TestMultipleCategoriesWithPositioning() {
+	plan := suite.createModelPlan("Testing Plan for Multiple Categories")
+	cat0Name := "Category 0"
+	cat1Name := "Category 1"
+	cat2Name := "Category 2"
+
+	names := []string{cat0Name, cat1Name, cat2Name}
+	categories := suite.createMultipleMTOcategories(names, plan.ID, nil)
+	suite.Len(categories, 3)
+
+	// Create multiple categories and assert position updates
+	cat0, cat1, cat2 := categories[0], categories[1], categories[2]
+	suite.EqualValues(cat0Name, cat0.Name)
+	suite.EqualValues(cat1Name, cat1.Name)
+	suite.EqualValues(cat2Name, cat2.Name)
+
+	suite.Equal(0, cat0.Position)
+	suite.Equal(1, cat1.Position, "Category 1 should be positioned at 1 after Category 0")
+	suite.Equal(2, cat2.Position, "Category 2 should be positioned at 2 after Category 1")
+
+	plan2 := suite.createModelPlan("Testing Plan for Multiple Categories")
+	plan2Cat := suite.createMTOCategory("placeholder", plan2.ID, nil)
+	suite.Equal(0, plan2Cat.Position)
+
+}
+
+func (suite *ResolverSuite) TestCategoryReorderToPositionZero() {
+	plan := suite.createModelPlan("Testing Plan for Reordering")
+
+	// Create multiple categories for model plan
+	cat0Name := "Category 0"
+	cat1Name := "Category 1"
+	cat2Name := "Category 2"
+	names := []string{cat0Name, cat1Name, cat2Name}
+	categories := suite.createMultipleMTOcategories(names, plan.ID, nil)
+	suite.Len(categories, 3)
+
+	cat0, cat1, cat2 := categories[0], categories[1], categories[2]
+
+	// Move cat2 to position 0 and verify reordering
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2.ID, 0)
+	suite.NoError(err)
+
+	// Verify positions after reordering
+	retCategories, err := MTOCategoryGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Len(retCategories, 4)
+
+	suite.EqualValues(cat2.ID, retCategories[0].ID, "Category 2 should now be in position 0")
+	suite.EqualValues(cat0.ID, retCategories[1].ID, "Category 0 should move to position 1")
+	suite.EqualValues(cat1.ID, retCategories[2].ID, "Category 1 should move to position 2")
+
+	//TODO verify that a child category isn't updated
+	//TODO verify that a category for another model plan isn't updated
 }
