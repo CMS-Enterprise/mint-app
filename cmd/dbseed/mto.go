@@ -84,6 +84,18 @@ func (s *Seeder) seedModelPlanWithMTOData(
 	if err != nil {
 		panic(err)
 	}
+	_, err = resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, helpers.PointerTo("MilestoneB"+cat2SubAName), nil, plan.ID, &category2SubA.ID)
+	if err != nil {
+		panic(err)
+	}
+	_, err = resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, helpers.PointerTo("MilestoneC"+cat2SubAName), nil, plan.ID, &category2SubA.ID)
+	if err != nil {
+		panic(err)
+	}
+	_, err = resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, helpers.PointerTo("MilestoneD"+cat2SubAName), nil, plan.ID, &category2SubA.ID)
+	if err != nil {
+		panic(err)
+	}
 	_, err = resolvers.MTOMilestoneCreate(s.Config.Context, s.Config.Logger, princ, s.Config.Store, helpers.PointerTo("Milestone"+cat2SubBName), nil, plan.ID, &category2SubB.ID)
 	if err != nil {
 		panic(err)

@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { raw } from '@storybook/react';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
@@ -26,8 +25,117 @@ import {
   SubCategoryType
 } from './columns';
 
+/**
+ * Function to format Category and SubCategory data to mirror the structure of Milstone data
+ * This is done to make the data homogenized and easier to work with in the table for drag, drop, sort and pagination
+ * Each row can now be superficially treated as a Milestone row
+ */
+function formatAndHomogenizeMilestoneData(data: CategoryType[]) {
+  const formatData: CategoryType[] = [];
+  data.forEach(category => {
+    const formattedCategory = {} as CategoryType;
+    formattedCategory.actions = undefined;
+    formattedCategory.riskIndicator = undefined;
+    formattedCategory.facilitatedBy = undefined;
+    formattedCategory.needBy = undefined;
+    formattedCategory.status = undefined;
+    formattedCategory.solutions = [];
+    formattedCategory.subCategories = [];
+
+    category.subCategories.forEach(subCategory => {
+      const formattedSubCategory = {} as SubCategoryType;
+      formattedSubCategory.actions = undefined;
+      formattedSubCategory.riskIndicator = undefined;
+      formattedSubCategory.facilitatedBy = undefined;
+      formattedSubCategory.needBy = undefined;
+      formattedSubCategory.status = undefined;
+      formattedSubCategory.solutions = [];
+      formattedSubCategory.milestones = [];
+
+      subCategory.milestones.forEach(milestone => {
+        const formattedMilestone = {} as MilestoneType;
+        formattedMilestone.actions = undefined;
+        formattedMilestone.solutions = [];
+        formattedSubCategory.milestones.push({
+          ...formattedMilestone,
+          ...milestone
+        });
+      });
+
+      const { milestones, ...subCategoryData } = subCategory;
+      formattedCategory.subCategories.push({
+        ...formattedSubCategory,
+        ...subCategoryData
+      });
+    });
+
+    const { subCategories, ...categoryData } = category;
+    formatData.push({ ...formattedCategory, ...categoryData });
+  });
+  return formatData;
+}
+
+const moveRow = (
+  dragIndex: number,
+  hoverIndex: number,
+  type: MTORowType,
+  sortedData: CategoryType[],
+  setRearrangedData: React.Dispatch<React.SetStateAction<CategoryType[]>>,
+  subcategoryID?: string,
+  milestoneID?: string
+) => {
+  // Clone the existing data
+  const updatedData = [...sortedData];
+
+  if (type === 'category') {
+    // Handle Category reordering
+    const [draggedCategory] = updatedData.splice(dragIndex, 1);
+    updatedData.splice(hoverIndex, 0, draggedCategory);
+  } else if (type.includes('subcategory')) {
+    // Find the category that contains the dragged subcategory
+    const parentCategory = updatedData.find(cat =>
+      cat.subCategories.some((sub: SubCategoryType) => sub.id === subcategoryID)
+    );
+
+    if (parentCategory?.subCategories) {
+      // Find the subcategories array and reorder within it
+      const subCategories = [...parentCategory.subCategories];
+      const draggedSub = subCategories.splice(dragIndex, 1)[0];
+      subCategories.splice(hoverIndex, 0, draggedSub);
+
+      // Replace the modified subcategories array back to the parent category
+      parentCategory.subCategories = subCategories;
+    }
+  } else if (type.includes('milestone')) {
+    // Find the parent category
+    const parentCategory = updatedData.find(cat =>
+      cat.subCategories.some(sub =>
+        sub.milestones.some(milestone => milestone.id === milestoneID)
+      )
+    );
+
+    // Find the parent sub-category
+    const parentSubCategory = parentCategory?.subCategories.find(sub =>
+      sub.milestones.some(milestone => milestone.id === milestoneID)
+    );
+
+    if (parentCategory && parentSubCategory) {
+      // Reorder milestones within the found sub-category
+      const milestones = [...parentSubCategory.milestones];
+      const draggedMilestone = milestones.splice(dragIndex, 1)[0];
+      milestones.splice(hoverIndex, 0, draggedMilestone);
+
+      // Update the sub-category with reordered milestones
+      parentSubCategory.milestones = milestones;
+    }
+  }
+
+  // Set the new data state
+  setRearrangedData(updatedData);
+};
+
 const MTOTable = () => {
-  //   const { t } = useTranslation('modelToOperationsMisc');
+  const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -41,77 +149,40 @@ const MTOTable = () => {
     }
   });
 
-  const rawData = useMemo(
+  const formattedData = useMemo(
     () =>
-      (queryData?.modelPlan.mtoMatrix?.categories ||
-        []) as unknown as CategoryType[],
+      formatAndHomogenizeMilestoneData(
+        (queryData?.modelPlan.mtoMatrix?.categories ||
+          []) as unknown as CategoryType[]
+      ),
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const formattedData = useMemo(() => {
-    const formatData: CategoryType[] = [];
-    rawData.forEach(category => {
-      const formattedCategory = {} as CategoryType;
-      formattedCategory.actions = undefined;
-      formattedCategory.riskIndicator = undefined;
-      formattedCategory.facilitatedBy = undefined;
-      formattedCategory.needBy = undefined;
-      formattedCategory.status = undefined;
-      formattedCategory.solutions = [];
-      formattedCategory.subCategories = [];
+  // Holds the rearranged/dragged state of data pre-sorted
+  const [rearrangedData, setRearrangedData] = useState(
+    structuredClone(formattedData || [])
+  );
 
-      category.subCategories.forEach(subCategory => {
-        const formattedSubCategory = {} as SubCategoryType;
-        formattedSubCategory.actions = undefined;
-        formattedSubCategory.riskIndicator = undefined;
-        formattedSubCategory.facilitatedBy = undefined;
-        formattedSubCategory.needBy = undefined;
-        formattedSubCategory.status = undefined;
-        formattedSubCategory.solutions = [];
-        formattedSubCategory.milestones = [];
-
-        subCategory.milestones.forEach(milestone => {
-          const formattedMilestone = {} as MilestoneType;
-          formattedMilestone.actions = undefined;
-          formattedMilestone.solutions = [];
-          formattedSubCategory.milestones.push({
-            ...formattedMilestone,
-            ...milestone
-          });
-        });
-
-        const { milestones, ...subCategoryData } = subCategory;
-        formattedCategory.subCategories.push({
-          ...formattedSubCategory,
-          ...subCategoryData
-        });
-      });
-
-      const { subCategories, ...categoryData } = category;
-      formatData.push({ ...formattedCategory, ...categoryData });
-    });
-    return formatData;
-  }, [rawData]);
-
-  const [data, setData] = useState(structuredClone(formattedData || []));
-
+  // Update the rearrangedData state when the formattedData changes
   useEffect(() => {
-    setData(structuredClone(formattedData));
+    setRearrangedData(structuredClone(formattedData));
   }, [formattedData]);
 
-  const [sortedData, setSortedData] = useState<CategoryType[]>([...data]);
-
-  useEffect(() => {
-    setSortedData([...data]);
-  }, [data]);
-
-  const [rearrangedData, setRearrangedData] = useState<CategoryType[]>([
-    ...data
+  // Holds the sorted data state
+  const [sortedData, setSortedData] = useState<CategoryType[]>([
+    ...rearrangedData
   ]);
 
+  // Update the sorted data state when the rearrangedData changes
+  useEffect(() => {
+    setSortedData([...rearrangedData]);
+  }, [rearrangedData]);
+
+  // Toggle row expansion states
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
 
+  // Sort states
   const [sortCount, setSortCount] = useState<number>(3);
   const [columnSort, setColumnSort] = useState<ColumnSortType[]>(
     Array.from(columns, () => ({
@@ -120,10 +191,12 @@ const MTOTable = () => {
       sortColumn: ''
     }))
   );
+  // Holds the current column that should be sorted
   const [currentColumn, setCurrentColumn] = useState<number>(0);
 
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
+  // State to hold the index of rows that should be rendered in conjunction with pagination
   const renderedRowIndexes = useRef<{
     category: number[];
     subCategory: number[][];
@@ -134,6 +207,7 @@ const MTOTable = () => {
     milestone: []
   });
 
+  // Function to slice the data based on the current page and items per page
   const sliceFn = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
       const startingIndex = pageNum * itemsPerP;
@@ -144,6 +218,7 @@ const MTOTable = () => {
       let milestoneIndex = 0;
       const sliceItemsCopy = [...sliceItems];
 
+      // Initialize the shownIndexes object to later be set to the renderedRowIndexes ref
       const shownIndexes: {
         category: number[];
         subCategory: number[][];
@@ -201,6 +276,7 @@ const MTOTable = () => {
     };
   }, []);
 
+  // Calculate the total number of milestones in the data
   const itemLength = useMemo(() => {
     return structuredClone(formattedData).reduce(
       (acc, category) =>
@@ -235,67 +311,11 @@ const MTOTable = () => {
     );
   };
 
-  const moveRow = (
-    dragIndex: number,
-    hoverIndex: number,
-    type: MTORowType,
-    categoryID?: string,
-    subcategoryID?: string,
-    milestoneID?: string
-  ) => {
-    // Clone the existing data
-    const updatedData = [...sortedData];
-
-    if (type === 'category') {
-      // Handle Category reordering
-      const [draggedCategory] = sortedData.splice(dragIndex, 1);
-      sortedData.splice(hoverIndex, 0, draggedCategory);
-    } else if (type.includes('subcategory')) {
-      // Find the category that contains the dragged subcategory
-      const parentCategory = updatedData.find(cat =>
-        cat.subCategories.some(
-          (sub: SubCategoryType) => sub.id === subcategoryID
-        )
-      );
-
-      if (parentCategory?.subCategories) {
-        // Find the subcategories array and reorder within it
-        const subCategories = [...parentCategory.subCategories];
-        const draggedSub = subCategories.splice(dragIndex, 1)[0];
-        subCategories.splice(hoverIndex, 0, draggedSub);
-
-        // Replace the modified subcategories array back to the parent category
-        parentCategory.subCategories = subCategories;
-      }
-    } else if (type.includes('milestone')) {
-      // Find the parent sub-category
-      const parentCategory = updatedData.find(cat =>
-        cat.subCategories.some(sub =>
-          sub.milestones.some(milestone => milestone.id === milestoneID)
-        )
-      );
-
-      const parentSubCategory = parentCategory?.subCategories.find(sub =>
-        sub.milestones.some(milestone => milestone.id === milestoneID)
-      );
-
-      if (parentCategory && parentSubCategory) {
-        // Reorder milestones within the found sub-category
-        const milestones = [...parentSubCategory.milestones];
-        const draggedMilestone = milestones.splice(dragIndex, 1)[0];
-        milestones.splice(hoverIndex, 0, draggedMilestone);
-
-        // Update the sub-category with reordered milestones
-        parentSubCategory.milestones = milestones;
-      }
-    }
-
-    // Set the new data state
-    setRearrangedData([...updatedData]);
-    setData(updatedData);
-  };
-
-  const renderCells = (row: RowType, rowType: MTORowType) => (
+  const renderCells = (
+    row: RowType,
+    rowType: MTORowType,
+    expanded: boolean
+  ) => (
     <>
       {columns.map((column, index) => {
         const RenderCell = column?.Cell ?? '';
@@ -309,7 +329,7 @@ const MTOTable = () => {
             key={column.accessor}
           >
             {RenderCell ? (
-              <RenderCell row={row} rowType={rowType} />
+              <RenderCell row={row} rowType={rowType} expanded={expanded} />
             ) : (
               row[column.accessor as keyof MilestoneType]
             )}
@@ -337,26 +357,8 @@ const MTOTable = () => {
 
       return (
         <tr id={milestone.id} key={milestone.id}>
-          {renderCells(milestone, 'milestone')}
+          {renderCells(milestone, 'milestone', false)}
         </tr>
-        // <DraggableRow
-        //   key={milestone.id}
-        //   index={index}
-        //   type={`${categoryID}-${subcategoryID}-milestone`}
-        //   moveRow={(dragIndex: number, hoverIndex: number) =>
-        //     moveRow(
-        //       dragIndex,
-        //       hoverIndex,
-        //       'milestone',
-        //       categoryID,
-        //       subcategoryID,
-        //       milestone.id
-        //     )
-        //   }
-        //   id={milestone.id}
-        // >
-        //   {renderCells(milestone, 'milestone')}
-        // </DraggableRow>
       );
     });
 
@@ -368,6 +370,7 @@ const MTOTable = () => {
     subCategories.map((subCategory, index) => {
       const isExpanded = subExpandedRows.includes(subCategory.id);
 
+      // Don't render if the subcategory is not in the rendered indexes
       if (
         !renderedRowIndexes.current.subCategory[categoryIndex].includes(index)
       ) {
@@ -378,13 +381,14 @@ const MTOTable = () => {
         <div style={{ display: 'contents' }} key={subCategory.id}>
           <DraggableRow
             index={index}
-            type={`${categoryID}-subcategory`}
+            type={`${categoryID}-subcategory-${subCategory.isUncategorized}`}
             moveRow={(dragIndex: number, hoverIndex: number) =>
               moveRow(
                 dragIndex,
                 hoverIndex,
                 'subcategory',
-                categoryID,
+                sortedData,
+                setRearrangedData,
                 subCategory.id
               )
             }
@@ -396,8 +400,9 @@ const MTOTable = () => {
               borderBottom: '1px solid black',
               cursor: 'pointer'
             }}
+            isDraggable={!subCategory.isUncategorized}
           >
-            {renderCells(subCategory, 'subcategory')}
+            {renderCells(subCategory, 'subcategory', isExpanded)}
           </DraggableRow>
           {isExpanded &&
             renderMilestones(
@@ -413,6 +418,7 @@ const MTOTable = () => {
 
   const renderCategories = () =>
     sortedData.map((category, index) => {
+      // Don't render if the category is not in the rendered indexes
       if (!renderedRowIndexes.current.category.includes(index)) {
         return null;
       }
@@ -425,7 +431,13 @@ const MTOTable = () => {
             index={index}
             type="category"
             moveRow={(dragIndex: number, hoverIndex: number) =>
-              moveRow(dragIndex, hoverIndex, 'category', category.id)
+              moveRow(
+                dragIndex,
+                hoverIndex,
+                'category',
+                sortedData,
+                setRearrangedData
+              )
             }
             id={category.id}
             toggleRow={toggleRow}
@@ -436,8 +448,9 @@ const MTOTable = () => {
               fontWeight: 'bold',
               fontSize: '1.25em'
             }}
+            isDraggable={!category.isUncategorized}
           >
-            {renderCells(category, 'category')}
+            {renderCells(category, 'category', isExpanded)}
           </DraggableRow>
 
           {isExpanded &&
@@ -458,10 +471,10 @@ const MTOTable = () => {
         )
       );
     } else {
-      setSortedData(structuredClone(rearrangedData));
+      setSortedData(structuredClone(formattedData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentColumn, columnSort, formattedData, rearrangedData]);
+  }, [currentColumn, columnSort, formattedData]);
 
   if (loading) {
     return <PageLoading />;
@@ -512,11 +525,7 @@ const MTOTable = () => {
                   {column.canSort !== false ? (
                     <button
                       className={classNames(
-                        'usa-button usa-button--unstyled position-relative',
-                        {
-                          'text-no-underline text-bold text-black':
-                            column.Header === 'Actions'
-                        }
+                        'usa-button usa-button--unstyled position-relative'
                       )}
                       onClick={() => {
                         const isSorted =
@@ -541,7 +550,18 @@ const MTOTable = () => {
                       {getHeaderSortIcon(columnSort[index], false)}
                     </button>
                   ) : (
-                    column.Header
+                    <span
+                      className={classNames(
+                        'usa-button usa-button--unstyled position-relative',
+                        {
+                          'text-no-underline text-black':
+                            column.Header ===
+                            t('modelToOperationsMisc:table.actions')
+                        }
+                      )}
+                    >
+                      {column.Header}
+                    </span>
                   )}
                 </th>
               ))}

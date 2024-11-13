@@ -1,6 +1,17 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
+type DraggableRowProps = {
+  type: string;
+  index: number;
+  moveRow: (dragIndex: number, hoverIndex: number) => void;
+  children: React.ReactNode;
+  id: string;
+  toggleRow?: (id: string) => void;
+  style: React.CSSProperties;
+  isDraggable: boolean;
+};
+
 const DraggableRow = ({
   type,
   index,
@@ -8,13 +19,14 @@ const DraggableRow = ({
   children,
   id,
   toggleRow,
-  style
-}: any) => {
+  style,
+  isDraggable
+}: DraggableRowProps) => {
   const ref = useRef(null);
 
-  const [, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: type,
-    hover(item: { index: number; type: string }) {
+    drop(item: { index: number; type: string }) {
       if (!ref.current) {
         return;
       }
@@ -29,12 +41,18 @@ const DraggableRow = ({
 
       // eslint-disable-next-line no-param-reassign
       item.index = hoverIndex;
-    }
+    },
+    collect: monitor => ({
+      isOver: monitor.isOver()
+    })
   });
 
   const [, drag] = useDrag({
     type,
     item: { type, index },
+    canDrag: () => {
+      return !!isDraggable;
+    },
     collect: monitor => ({
       isDragging: monitor.isDragging()
     })
@@ -47,7 +65,10 @@ const DraggableRow = ({
       ref={ref}
       key={id}
       onClick={() => toggleRow && toggleRow(id)}
-      style={style}
+      style={{
+        ...style,
+        backgroundColor: isOver ? 'lightblue' : style.backgroundColor
+      }}
       onKeyPress={e => {
         if ((e.key === 'Enter' || e.key === ' ') && toggleRow) {
           toggleRow(id);

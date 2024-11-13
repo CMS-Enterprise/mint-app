@@ -42,6 +42,16 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '18 categories, 0 milestones, 0 solutions',
       buttonText: 'Use this template'
     }
+  },
+  table: {
+    modelMilestone: 'Model milestone',
+    facilitatedBy: 'Facilitated by',
+    solutions: 'Solutions',
+    needBy: 'Need by',
+    status: 'Status',
+    actions: 'Actions',
+    noneAdded: 'None added yet',
+    editDetails: 'Edit details'
   }
 };
 
