@@ -324,8 +324,13 @@ export default function OktaUserSelect({
           : undefined
       }
       value={value ? { value, label: formatLabel(value) } : undefined}
-      onChange={item => updateContact(item?.value || null)}
-      onInputChange={(newValue, { action }) => {
+      onChange={(item: OktaUserSelectOption) =>
+        updateContact(item?.value || null)
+      }
+      onInputChange={(
+        newValue: string | undefined,
+        { action }: { action: string }
+      ) => {
         if (action !== 'input-blur' && action !== 'menu-close') {
           // If user selected a value, no need to query and debounce again
           if (action === 'set-value') {
