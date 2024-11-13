@@ -320,7 +320,7 @@ func (suite *ResolverSuite) TestMTOCategoryReordering() {
 
 }
 
-func (suite *ResolverSuite) TestCategoryCreationAndDefaults() {
+func (suite *ResolverSuite) TestMTOCategoryCreationAndDefaults() {
 	plan := suite.createModelPlan("Testing Plan for Default Categories")
 
 	// Test creation of top-level category
@@ -332,7 +332,7 @@ func (suite *ResolverSuite) TestCategoryCreationAndDefaults() {
 	suite.Equal(0, subCategory.Position, "Subcategories should start at position 0 within their parent")
 }
 
-func (suite *ResolverSuite) TestMultipleCategoriesWithPositioning() {
+func (suite *ResolverSuite) TestMultipleMTOCategoriesWithPositioning() {
 	plan := suite.createModelPlan("Testing Plan for Multiple Categories")
 	cat0Name := "Category 0"
 	cat1Name := "Category 1"
@@ -358,7 +358,7 @@ func (suite *ResolverSuite) TestMultipleCategoriesWithPositioning() {
 
 }
 
-func (suite *ResolverSuite) TestCategoryReorderToPositionZero() {
+func (suite *ResolverSuite) TestMTOCategoryReorderToPositionZero() {
 	plan := suite.createModelPlan("Testing Plan for Reordering")
 
 	// Create multiple categories for model plan
