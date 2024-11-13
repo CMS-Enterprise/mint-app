@@ -132,6 +132,7 @@ export const columns: ColumnType[] = [
           <span style={{ fontSize: '1.25rem' }} className="margin-left-05">
             {!expanded ? (
               <span
+                aria-label={i18next.t('modelToOperationsMisc:table.expandRow')}
                 style={{
                   fontSize: '1.5rem',
                   padding: '.25rem'
@@ -141,7 +142,14 @@ export const columns: ColumnType[] = [
                 &#x2b;
               </span>
             ) : (
-              <span className="text-primary">&#x2015;</span>
+              <span
+                aria-label={i18next.t(
+                  'modelToOperationsMisc:table.collapseRow'
+                )}
+                className="text-primary"
+              >
+                &#x2015;
+              </span>
             )}
           </span>
         );
@@ -281,6 +289,7 @@ export const ActionMenu = ({
           type="button"
           style={{ fontSize: '1.25rem' }}
           className="width-auto padding-right-1 text-primary text-decoration-none text-bold float-right"
+          aria-label={i18next.t('modelToOperationsMisc:table.openActionMenu')}
           unstyled
           onClick={e => {
             e.stopPropagation();

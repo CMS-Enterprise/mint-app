@@ -52,6 +52,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     needBy: 'Need by',
     status: 'Status',
     actions: 'Actions',
+    openActionMenu: 'Open action menu',
+    expandRow: 'Expand row',
+    collapseRow: 'Collapse row',
     noneAdded: 'None added yet',
     editDetails: 'Edit details',
     menu: {
