@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
@@ -16,6 +17,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 import MTOOptionsPanel from '../OptionPanel';
 
 import {
+  ActionMenu,
   CategoryType,
   columns,
   ColumnSortType,
@@ -314,7 +316,11 @@ const MTOTable = () => {
   const renderCells = (
     row: RowType,
     rowType: MTORowType,
-    expanded: boolean
+    expanded: boolean,
+    currentIndex?: number,
+    rowLength?: number,
+    subcategoryID?: string,
+    milestoneID?: string
   ) => (
     <>
       {columns.map((column, index) => {
@@ -328,10 +334,72 @@ const MTOTable = () => {
             })}
             key={column.accessor}
           >
-            {RenderCell ? (
-              <RenderCell row={row} rowType={rowType} expanded={expanded} />
+            {column.accessor === 'actions' ? (
+              <ActionMenu
+                rowType={rowType}
+                MoveUp={
+                  <Button
+                    type="button"
+                    disabled={currentIndex === 0}
+                    onClick={e => {
+                      e.stopPropagation();
+                      moveRow(
+                        currentIndex || 0,
+                        (currentIndex || 0) - 1,
+                        rowType,
+                        sortedData,
+                        setRearrangedData,
+                        subcategoryID,
+                        milestoneID
+                      );
+                    }}
+                    onKeyPress={e => {
+                      e.stopPropagation();
+                    }}
+                    className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                    unstyled
+                  >
+                    {t(
+                      `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryUp' : 'moveSubCategoryUp'}`
+                    )}
+                  </Button>
+                }
+                MoveDown={
+                  <Button
+                    type="button"
+                    disabled={currentIndex === (rowLength || 0) - 1}
+                    onClick={e => {
+                      e.stopPropagation();
+                      moveRow(
+                        currentIndex || 0,
+                        (currentIndex || 0) + 1,
+                        rowType,
+                        sortedData,
+                        setRearrangedData,
+                        subcategoryID,
+                        milestoneID
+                      );
+                    }}
+                    onKeyPress={e => {
+                      e.stopPropagation();
+                    }}
+                    className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                    unstyled
+                  >
+                    {t(
+                      `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryDown' : 'moveSubCategoryDown'}`
+                    )}
+                  </Button>
+                }
+              />
             ) : (
-              row[column.accessor as keyof MilestoneType]
+              <>
+                {RenderCell ? (
+                  <RenderCell row={row} rowType={rowType} expanded={expanded} />
+                ) : (
+                  row[column.accessor as keyof MilestoneType]
+                )}
+              </>
             )}
           </td>
         );
@@ -400,7 +468,15 @@ const MTOTable = () => {
             }}
             isDraggable={!subCategory.isUncategorized}
           >
-            {renderCells(subCategory, 'subcategory', isExpanded)}
+            {renderCells(
+              subCategory,
+              'subcategory',
+              isExpanded,
+              index,
+              subCategories.length,
+              categoryID,
+              subCategory.id
+            )}
           </DraggableRow>
           {isExpanded &&
             renderMilestones(subCategory.milestones, categoryIndex, index)}
@@ -442,7 +518,14 @@ const MTOTable = () => {
             }}
             isDraggable={!category.isUncategorized}
           >
-            {renderCells(category, 'category', isExpanded)}
+            {renderCells(
+              category,
+              'category',
+              isExpanded,
+              index,
+              sortedData.length,
+              category.id
+            )}
           </DraggableRow>
 
           {isExpanded &&
