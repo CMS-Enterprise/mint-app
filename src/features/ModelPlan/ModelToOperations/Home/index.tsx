@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
+import { Button, Header, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -41,6 +41,11 @@ const MTOHome = () => {
 
   return (
     <div className="model-to-operations margin-y-6">
+      {/* TEMPORARY since WIP components are not finalized */}
+      <Button type="button" onClick={() => {}} className="margin-bottom-4">
+        Add custom category
+      </Button>
+
       <Header
         basic
         extended={false}
