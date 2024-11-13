@@ -40,7 +40,7 @@ func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOM
 	panic(fmt.Errorf("not implemented: SubCategory - subCategory"))
 }
 
-// CreateMTOMilestone is the resolver for the createMTOMilestoneCustom field.
+// CreateMTOMilestoneCustom is the resolver for the createMTOMilestoneCustom field.
 func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPlanID uuid.UUID, name string, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
