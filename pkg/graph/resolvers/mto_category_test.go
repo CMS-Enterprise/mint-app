@@ -15,9 +15,12 @@ func (suite *ResolverSuite) createMTOCategory(catName string, modelPlanID uuid.U
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, category.CreatedBy)
 	suite.NotNil(category.CreatedDts)
 	if parentID == nil {
-		suite.Nil(category.ParentID)
+		suite.Nil(category.ParentID, "parent ID wasn't provided, so the category should have a nil category id")
 	} else {
-		suite.EqualValues(*parentID, category.ParentID)
+		if suite.NotNil(category.ParentID) {
+			suite.EqualValues(*parentID, *category.ParentID, "the returned category doesn't have a parent id as expected")
+		}
+
 	}
 
 	suite.Nil(category.ModifiedBy)
@@ -362,11 +365,23 @@ func (suite *ResolverSuite) TestCategoryReorderToPositionZero() {
 	cat0Name := "Category 0"
 	cat1Name := "Category 1"
 	cat2Name := "Category 2"
+	cat2SubName := "Category 2 Sub"
 	names := []string{cat0Name, cat1Name, cat2Name}
 	categories := suite.createMultipleMTOcategories(names, plan.ID, nil)
 	suite.Len(categories, 3)
 
 	cat0, cat1, cat2 := categories[0], categories[1], categories[2]
+
+	// Make child for category 2
+	cat2ChildCategory := suite.createMTOCategory(cat2SubName, plan.ID, &cat2.ID)
+	suite.Equal(0, cat2ChildCategory.Position)
+
+	// Create a category for another model plan
+	plan2 := suite.createModelPlan("Testing Plan for Multiple Categories")
+	plan2Cat := suite.createMTOCategory("placeholder", plan2.ID, nil)
+	plan2CatSub := suite.createMTOCategory("placeholder sub", plan2.ID, &plan2Cat.ID)
+	suite.Equal(0, plan2Cat.Position)
+	suite.Equal(0, plan2CatSub.Position)
 
 	// Move cat2 to position 0 and verify reordering
 	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2.ID, 0)
@@ -381,6 +396,22 @@ func (suite *ResolverSuite) TestCategoryReorderToPositionZero() {
 	suite.EqualValues(cat0.ID, retCategories[1].ID, "Category 0 should move to position 1")
 	suite.EqualValues(cat1.ID, retCategories[2].ID, "Category 1 should move to position 2")
 
-	//TODO verify that a child category isn't updated
-	//TODO verify that a category for another model plan isn't updated
+	//Verify that a child category isn't updated if parent is reordered
+	retSubCategories, err := MTOSubcategoryGetByParentIDLoader(suite.testConfigs.Context, plan.ID, cat2.ID)
+	suite.NoError(err)
+	suite.Len(retSubCategories, 2, "There should be two sub categories (including uncategorized)")
+	suite.EqualValues(cat2ChildCategory.ID, retSubCategories[0].ID, "Category 2 Sub should remain in position 0")
+
+	/***** verify that a category for another model plan isn't updated
+	*****/
+	// Verify positions after reordering for other Model Plan
+	retCategoriesPLan2, err := MTOCategoryGetByModelPlanIDLOADER(suite.testConfigs.Context, plan2.ID)
+	suite.NoError(err)
+	suite.Len(retCategoriesPLan2, 2)
+	//Verify that a child category isn't updated if parent is reordered
+	retSubCategoriesPlan2, err := MTOSubcategoryGetByParentIDLoader(suite.testConfigs.Context, plan2.ID, plan2Cat.ID)
+	suite.NoError(err)
+	suite.Len(retSubCategoriesPlan2, 2, "There should be two sub categories (including uncategorized)")
+	suite.EqualValues(plan2CatSub.ID, retSubCategoriesPlan2[0].ID, "Category 2 Sub should remain in position 0")
+	/*end */
 }
