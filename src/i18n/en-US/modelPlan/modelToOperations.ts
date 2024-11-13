@@ -47,6 +47,16 @@ export const modelToOperationsMisc: Record<string, any> = {
     title: 'Add a new {{type}}',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    category: {
+      selectPrimaryCategory: {
+        label: 'Select primary category <s>*</s>',
+        sublabel:
+          'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
+      },
+      categoryTitle: {
+        label: 'New category title <s>*</s>'
+      }
+    },
     addButton: 'Add {{type}}',
     cancel: 'Cancel'
   }
