@@ -7,6 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
+  Select,
   TextInput
 } from '@trussworks/react-uswds';
 
@@ -22,9 +23,14 @@ type MTOModalProps = {
 const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      primaryCategory: '',
+      categoryTitle: ''
+    }
+  });
 
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, reset } = methods;
 
   return (
     <Modal
@@ -48,6 +54,7 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
       </div>
       <FormProvider {...methods}>
         <Form
+          className="maxw-none"
           id="custom-category-form"
           onSubmit={handleSubmit(data => {
             // TODO: remove this console log
@@ -56,6 +63,45 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
           })}
         >
           <Fieldset disabled={false}>
+            <Controller
+              name="primaryCategory"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-0 margin-bottom-2">
+                  <Label
+                    htmlFor={convertCamelCaseToKebabCase(field.name)}
+                    className="mint-body-normal maxw-none margin-bottom-1"
+                  >
+                    <Trans
+                      i18nKey={t('modal.category.selectPrimaryCategory.label')}
+                      components={{
+                        s: <span className="text-secondary-dark" />
+                      }}
+                    />
+                  </Label>
+                  <span className="usa-hint">
+                    {t('modal.category.selectPrimaryCategory.sublabel')}
+                  </span>
+
+                  <Select
+                    {...field}
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    value={field.value || ''}
+                    // onChange={e =>
+                    //   setActiveType(
+                    //     e.currentTarget.value as ExistingProviderSupplierTypes
+                    //   )
+                    // }
+                  >
+                    <option>- Select - </option>
+                    <option value="value1">Option A</option>
+                    <option value="value2">Option B</option>
+                    <option value="value3">Option C</option>
+                  </Select>
+                </FormGroup>
+              )}
+            />
+
             <Controller
               name="categoryTitle"
               control={control}
@@ -83,14 +129,17 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
               )}
             />
           </Fieldset>
-          <Button type="submit" disabled={false}>
+          <Button type="submit" disabled={false} className="margin-right-3">
             {/* //TODO: disabled if form is not touched */}
             {t('modal.addButton', { type: 'category' })}
           </Button>
           <Button
             type="button"
             className="usa-button usa-button--unstyled"
-            onClick={() => closeModal()}
+            onClick={() => {
+              reset();
+              closeModal();
+            }}
           >
             {t('modal.cancel')}
           </Button>
