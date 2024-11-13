@@ -36,13 +36,11 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                 class="usa-button-group__item"
               >
                 <button
-                  class="usa-button bg-primary-darker"
+                  class="usa-button padding-y-2 bg-primary-darker"
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Total
                   </div>
                   <div
@@ -56,13 +54,11 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                 class="usa-button-group__item"
               >
                 <button
-                  class="usa-button"
+                  class="usa-button padding-y-2"
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Planned
                   </div>
                   <div
@@ -76,13 +72,11 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                 class="usa-button-group__item"
               >
                 <button
-                  class="usa-button"
+                  class="usa-button padding-y-2"
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Active
                   </div>
                   <div
@@ -96,13 +90,11 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                 class="usa-button-group__item"
               >
                 <button
-                  class="usa-button"
+                  class="usa-button padding-y-2"
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Ended
                   </div>
                   <div

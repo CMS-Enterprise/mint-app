@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MTO Card > matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-6 collaboration-area__card collaboration-area__main-card"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model-to-operations matrix
+        </h3>
+      </header>
+      <div
+        class="collaboration-area__status flex-align-center"
+      >
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <span
+          class="text-base"
+        >
+          Model milestones added: 1
+        </span>
+      </div>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <p>
+          Work with your IT Lead to document key model milestones and determine which operational solutions or IT systems your model will use to accomplish those milestones. Some milestones are suggested based on responses to questions in the Model Plan.
+        </p>
+        <div
+          class="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center"
+        >
+          <span
+            class="text-base margin-right-1"
+          >
+            Most recent edit on 10/01/2023 by 
+          </span>
+          <div
+            class="display-flex text-base-darkest flex-align-center"
+          >
+            <div
+              class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+              data-testid="avatar--basic"
+            >
+              JD
+            </div>
+            <div
+              class="margin-y-0"
+            >
+              <span
+                class=""
+              >
+                John Doe
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <button
+          class="usa-button margin-right-2"
+          data-testid="to-model-to-operations"
+          type="button"
+        >
+          Go to matrix
+        </button>
+        <button
+          class="usa-button"
+          data-testid="to-model-to-operations"
+          type="button"
+        >
+          Share or export matrix
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

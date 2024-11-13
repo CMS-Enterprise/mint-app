@@ -1,0 +1,33 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.model-to-operations {
+    &__nav-container {
+        border-bottom: 1px solid color('base-light');
+    }
+
+    .usa-header--basic .usa-nav__primary-item > .usa-current::after, .usa-header--basic .usa-nav__link:hover::after {
+        bottom: 0 !important;
+    }
+
+    &__banner-buttons {
+        display: flex;
+    }
+
+    &__status-border {
+        border-right: 2px solid color('base-light') !important;
+        height: 100%;
+        @media screen and (max-width: $desktop) {
+            border: none;
+        }
+    }
+
+    &__options-panel {
+        border: 3px dashed color('base-lightest');
+        border-radius: .5rem;
+        padding-top: 3rem;
+        padding-right: 60px;
+        padding-left: 60px;
+        padding-bottom: 56px;
+    }
+}

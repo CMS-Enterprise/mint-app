@@ -59,7 +59,9 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Mutation {
-  createMTOMilestone(modelPlanID: UUID!, name: String, commonMilestoneKey: MTOCommonMilestoneKey, mtoCategoryID: UUID): MTOMilestone!
+  createMTOMilestoneCustom(modelPlanID: UUID!, name: String!, mtoCategoryID: UUID): MTOMilestone!
+  @hasRole(role: MINT_USER)
+  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!): MTOMilestone!
   @hasRole(role: MINT_USER)
   updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!): MTOMilestone!
   @hasRole(role: MINT_USER)
