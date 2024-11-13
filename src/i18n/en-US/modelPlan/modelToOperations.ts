@@ -42,6 +42,13 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '18 categories, 0 milestones, 0 solutions',
       buttonText: 'Use this template'
     }
+  },
+  modal: {
+    title: 'Add a new {{type}}',
+    allFieldsRequired:
+      'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    addButton: 'Add {{type}}',
+    cancel: 'Cancel'
   }
 };
 
