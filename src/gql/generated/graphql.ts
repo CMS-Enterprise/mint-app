@@ -1092,7 +1092,8 @@ export type Mutation = {
    * Note, the parent must belong to the same model plan, or this will return an error
    */
   createMTOCategory: MtoCategory;
-  createMTOMilestone: MtoMilestone;
+  createMTOMilestoneCommon: MtoMilestone;
+  createMTOMilestoneCustom: MtoMilestone;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1187,11 +1188,17 @@ export type MutationCreateMtoCategoryArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationCreateMtoMilestoneArgs = {
-  commonMilestoneKey?: InputMaybe<MtoCommonMilestoneKey>;
+export type MutationCreateMtoMilestoneCommonArgs = {
+  commonMilestoneKey: MtoCommonMilestoneKey;
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneCustomArgs = {
   modelPlanID: Scalars['UUID']['input'];
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 };
 
 

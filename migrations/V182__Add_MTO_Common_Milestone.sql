@@ -7,8 +7,8 @@ CREATE TABLE mto_common_milestone (
     key MTO_COMMON_MILESTONE_KEY NOT NULL PRIMARY KEY,
     name ZERO_STRING NOT NULL,
 
-    category_name ZERO_STRING NOT NULL,
-    sub_category_name ZERO_STRING NOT NULL,
+    category_name ZERO_STRING NOT NULL, -- TODO: Revisit if this should be NOT NULL
+    sub_category_name ZERO_STRING NOT NULL, -- TODO: Revisit if this should be NOT NULL, and if common milestones _actually_ have subCategories
     description ZERO_STRING NOT NULL, -- TODO (mto) is this needed?
     facilitated_by_role MTO_FACILITATOR NOT NULL
 );
