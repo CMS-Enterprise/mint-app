@@ -1,10 +1,14 @@
-import React from 'react';
-import { Icon } from '@trussworks/react-uswds';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Icon, Menu } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import { MtoRiskIndicator, MtoStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+
+import './index.scss';
 
 export type ColumnSortType = {
   isSorted: boolean;
@@ -242,19 +246,143 @@ export const columns: ColumnType[] = [
     width: '130px',
     canSort: false,
     Cell: ({ row, rowType }: RowProps) => {
+      const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+      const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+      const menuRef = useRef<HTMLDivElement>(null);
+
+      // Close menu when clicking outside
+      useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (
+            menuRef.current &&
+            !menuRef.current.contains(event.target as Node)
+          ) {
+            setIsMenuOpen(false);
+          }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, []);
+
       if (rowType !== 'milestone')
         return (
-          <div
-            style={{ textAlign: 'right', fontSize: '1.25rem' }}
-            className="width-full padding-right-1 text-primary"
-          >
-            &#8230;
+          <div ref={menuRef}>
+            <Button
+              type="button"
+              style={{ fontSize: '1.25rem' }}
+              className="width-auto padding-right-1 text-primary text-decoration-none text-bold float-right"
+              unstyled
+              onClick={e => {
+                e.stopPropagation();
+                setIsMenuOpen(!isMenuOpen);
+              }}
+            >
+              &#8230;
+            </Button>
+            <Menu
+              className={classNames(
+                'share-export-modal__menu padding-top-05 padding-bottom-0 bg-white text-primary width-card-lg action-menu',
+                {
+                  'position-absolute': !isTablet
+                }
+              )}
+              items={[
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                  unstyled
+                >
+                  {i18next.t('modelToOperationsMisc:table.menu.close')}
+                </Button>,
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                  unstyled
+                >
+                  {i18next.t(
+                    `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryUp' : 'moveSubCategoryUp'}`
+                  )}
+                </Button>,
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                  unstyled
+                >
+                  {i18next.t(
+                    `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryDown' : 'moveSubCategoryDown'}`
+                  )}
+                </Button>,
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                  unstyled
+                >
+                  {i18next.t('modelToOperationsMisc:table.menu.addMilestone')}
+                </Button>,
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                  unstyled
+                >
+                  {i18next.t(
+                    `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'addSubCategory' : 'moveToAnotherCategory'}`
+                  )}
+                </Button>,
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                  unstyled
+                >
+                  {i18next.t(
+                    `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'editCategoryTitle' : 'editSubCategoryTitle'}`
+                  )}
+                </Button>,
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                  className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item text-red"
+                  unstyled
+                >
+                  {i18next.t(
+                    `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'removeCategory' : 'removeSubCategory'}`
+                  )}
+                </Button>
+              ]}
+              isOpen={isMenuOpen}
+            />
           </div>
         );
       return (
-        <UswdsReactLink to="#">
-          {i18next.t('modelToOperationsMisc:table.editDetails')}
-        </UswdsReactLink>
+        <div style={{ textAlign: 'right' }}>
+          <UswdsReactLink to="#">
+            {i18next.t('modelToOperationsMisc:table.editDetails')}
+          </UswdsReactLink>
+        </div>
       );
     }
   }

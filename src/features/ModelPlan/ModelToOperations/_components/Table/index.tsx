@@ -30,7 +30,7 @@ import {
  * This is done to make the data homogenized and easier to work with in the table for drag, drop, sort and pagination
  * Each row can now be superficially treated as a Milestone row
  */
-function formatAndHomogenizeMilestoneData(data: CategoryType[]) {
+const formatAndHomogenizeMilestoneData = (data: CategoryType[]) => {
   const formatData: CategoryType[] = [];
   data.forEach(category => {
     const formattedCategory = {} as CategoryType;
@@ -73,7 +73,7 @@ function formatAndHomogenizeMilestoneData(data: CategoryType[]) {
     formatData.push({ ...formattedCategory, ...categoryData });
   });
   return formatData;
-}
+};
 
 const moveRow = (
   dragIndex: number,
@@ -207,7 +207,7 @@ const MTOTable = () => {
     milestone: []
   });
 
-  // Function to slice the data based on the current page and items per page
+  // Function to map data indexes to be conditionally rendered based on the current page and items per page
   const sliceFn = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
       const startingIndex = pageNum * itemsPerP;
@@ -229,7 +229,7 @@ const MTOTable = () => {
         milestone: []
       };
 
-      // Initialize the shownIndexes object
+      // Initialize the shownIndexes object with structure of fetched data
       sliceItemsCopy.forEach((category, catIndex) => {
         shownIndexes.subCategory[catIndex] = [];
         shownIndexes.milestone[catIndex] = [];
@@ -341,8 +341,6 @@ const MTOTable = () => {
 
   const renderMilestones = (
     milestones: MilestoneType[],
-    categoryID: string,
-    subcategoryID: string,
     categoryIndex: number,
     subcategoryIndex: number
   ) =>
@@ -405,13 +403,7 @@ const MTOTable = () => {
             {renderCells(subCategory, 'subcategory', isExpanded)}
           </DraggableRow>
           {isExpanded &&
-            renderMilestones(
-              subCategory.milestones,
-              categoryID,
-              subCategory.id,
-              categoryIndex,
-              index
-            )}
+            renderMilestones(subCategory.milestones, categoryIndex, index)}
         </div>
       );
     });
@@ -515,7 +507,7 @@ const MTOTable = () => {
                     borderBottom: '1px solid black',
                     padding: '1rem',
                     paddingLeft: index === 0 ? '.5rem' : '0px',
-                    paddingBottom: '.75rem',
+                    paddingBottom: '.25rem',
                     textAlign: 'left',
                     width: column.width,
                     minWidth: column.width,

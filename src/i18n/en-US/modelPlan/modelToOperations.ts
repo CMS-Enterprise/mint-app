@@ -1,3 +1,5 @@
+import { add, remove } from 'lodash';
+
 export const modelToOperations: any = {};
 
 export const modelToOperationsMisc: Record<string, any> = {
@@ -51,7 +53,21 @@ export const modelToOperationsMisc: Record<string, any> = {
     status: 'Status',
     actions: 'Actions',
     noneAdded: 'None added yet',
-    editDetails: 'Edit details'
+    editDetails: 'Edit details',
+    menu: {
+      close: 'Close menu',
+      moveCategoryUp: 'Move category up',
+      moveSubCategoryUp: 'Move sub-category up',
+      moveCategoryDown: 'Move category down',
+      moveSubCategoryDown: 'Move sub-category down',
+      addMilestone: 'Add model milestone',
+      moveToAnotherCategory: 'Move to another category',
+      addSubCategory: 'Add sub-category',
+      editCategoryTitle: 'Edit category title',
+      editSubCategoryTitle: 'Edit sub-category title',
+      removeCategory: 'Remove category',
+      removeSubCategory: 'Remove sub-category'
+    }
   }
 };
 
