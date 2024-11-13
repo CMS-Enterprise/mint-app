@@ -29,7 +29,7 @@ const MTOHome = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
