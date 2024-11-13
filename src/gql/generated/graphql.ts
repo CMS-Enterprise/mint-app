@@ -841,10 +841,23 @@ export type MtoSolution = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  pocEmail: Scalars['String']['output'];
+  pocName: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
   status: MtoSolutionStatus;
   type: MtoSolutionType;
+};
+
+export type MtoSolutionChanges = {
+  facilitatedBy?: InputMaybe<MtoFacilitator>;
+  key?: InputMaybe<MtoCommonSolutionKey>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  pocEmail?: InputMaybe<Scalars['String']['input']>;
+  pocName?: InputMaybe<Scalars['String']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoSolutionStatus>;
+  type?: InputMaybe<MtoSolutionType>;
 };
 
 export enum MtoSolutionStatus {
@@ -857,6 +870,7 @@ export enum MtoSolutionStatus {
 
 export enum MtoSolutionType {
   CONTRACTOR = 'CONTRACTOR',
+  CROSS_CUTTING_GROUP = 'CROSS_CUTTING_GROUP',
   IT_SYSTEM = 'IT_SYSTEM',
   OTHER = 'OTHER'
 }
@@ -3570,6 +3584,7 @@ export type Query = {
   __typename: 'Query';
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
+  createMTOSolution: MtoSolution;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -3598,6 +3613,7 @@ export type Query = {
    *     offset: how many records to skip before returning results. If null, no records will be skipped.
    */
   translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
+  updateMTOSolution: MtoSolution;
   userAccount: UserAccount;
   userViewCustomization: UserViewCustomization;
 };
@@ -3613,6 +3629,15 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryCreateMtoSolutionArgs = {
+  name: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  type: MtoSolutionType;
 };
 
 
@@ -3706,6 +3731,13 @@ export type QueryTranslatedAuditCollectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   modelPlanID: Scalars['UUID']['input'];
   offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Query definition for the schema */
+export type QueryUpdateMtoSolutionArgs = {
+  changes: MtoSolutionChanges;
+  id: Scalars['UUID']['input'];
 };
 
 

@@ -9,7 +9,6 @@ import (
 	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -34,7 +33,7 @@ func (r *modelsToOperationMatrixResolver) Milestones(ctx context.Context, obj *m
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.MTOSolution, error) {
+func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOSolution, error) {
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
