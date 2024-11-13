@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
+import MTOModal from '../_components/Modal';
 import MTOTable from '../_components/Table';
 
 export type MTOOption = 'milestones' | 'systems-and-solutions';
@@ -28,6 +29,7 @@ const MTOHome = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
@@ -42,9 +44,27 @@ const MTOHome = () => {
   return (
     <div className="model-to-operations margin-y-6">
       {/* TEMPORARY since WIP components are not finalized */}
-      <Button type="button" onClick={() => {}} className="margin-bottom-4">
-        Add custom category
-      </Button>
+      <MTOModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />
+      <div className="width-fit-content">
+        <div
+          style={{ paddingTop: '2px', paddingBottom: '2px' }}
+          className={classNames(
+            'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-secondary-dark'
+          )}
+        >
+          TEMPORARY
+        </div>
+        <Button
+          type="button"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+          className="margin-bottom-4"
+        >
+          Add custom category
+        </Button>
+      </div>
+      {/* TEMPORARY since WIP components are not finalized */}
 
       <Header
         basic
