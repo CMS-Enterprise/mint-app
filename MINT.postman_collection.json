@@ -2996,7 +2996,7 @@
 					"name": "Milestones",
 					"item": [
 						{
-							"name": "NewMTOMilestone",
+							"name": "NewMTOMilestone (Custom)",
 							"event": [
 								{
 									"listen": "test",
@@ -3020,7 +3020,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOMilestone {\ncreateMTOMilestone(modelPlanID: \"{{modelPlanID}}\",\nname: \"Uncategorized milestone\"\n# commonMilestoneKey: MILESTONE_A\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n# ,mtoCategoryID: \"{{mtoSubcategoryID}}\"\n) {\n    id\n    name\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    key\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCustom(modelPlanID: \"{{modelPlanID}}\",\n    name: \"Uncategorized milestone\"\n    # mtoCategoryID: \"\"\n) {\n    id\n    name\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    key\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3034,7 +3034,7 @@
 							"response": []
 						},
 						{
-							"name": "NewMTOMilestone From Common Milestone",
+							"name": "NewMTOMilestone (Common)",
 							"event": [
 								{
 									"listen": "test",
@@ -3058,7 +3058,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOMilestone {\ncreateMTOMilestone(modelPlanID: \"{{modelPlanID}}\",\n# name: \"Uncategorized commonMilestone \"\ncommonMilestoneKey: MILESTONE_A\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n# ,mtoCategoryID: \"{{mtoSubcategoryID}}\"\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MILESTONE_A\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
 										"variables": ""
 									}
 								},

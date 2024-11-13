@@ -40,11 +40,18 @@ func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOM
 	panic(fmt.Errorf("not implemented: SubCategory - subCategory"))
 }
 
-// CreateMTOMilestone is the resolver for the createMTOMilestone field.
-func (r *mutationResolver) CreateMTOMilestone(ctx context.Context, modelPlanID uuid.UUID, name *string, commonMilestoneKey *models.MTOCommonMilestoneKey, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
+// CreateMTOMilestone is the resolver for the createMTOMilestoneCustom field.
+func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPlanID uuid.UUID, name string, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOMilestoneCreate(ctx, logger, principal, r.store, name, commonMilestoneKey, modelPlanID, mtoCategoryID)
+	return MTOMilestoneCreateCustom(ctx, logger, principal, r.store, name, modelPlanID, mtoCategoryID)
+}
+
+// CreateMTOMilestoneCommon is the resolver for the createMTOMilestoneCommon field.
+func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneKey models.MTOCommonMilestoneKey) (*models.MTOMilestone, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, modelPlanID, commonMilestoneKey)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.
