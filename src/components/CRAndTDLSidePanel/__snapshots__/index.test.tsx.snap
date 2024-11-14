@@ -26,12 +26,12 @@ exports[`The CRAndTDLSidePanel component > renders TDL without crashing (flag di
             Test Title
           </h1>
           <div
-            class="echimp-card__cr-status"
+            class="echimp-card__status"
           >
             <p
               class="text-bold"
             >
-              TDL Status
+              TDL Status:
             </p>
             <p>
               Test Status
