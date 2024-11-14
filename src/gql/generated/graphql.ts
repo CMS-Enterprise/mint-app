@@ -1115,6 +1115,7 @@ export type Mutation = {
   lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
+  markMTOReadyForReview: ModelsToOperationMatrix;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
@@ -1303,6 +1304,13 @@ export type MutationLinkNewPlanDocumentArgs = {
 export type MutationLockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationMarkMtoReadyForReviewArgs = {
+  id: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
 };
 
 

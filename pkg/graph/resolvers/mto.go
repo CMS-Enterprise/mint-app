@@ -2,10 +2,15 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -67,5 +72,46 @@ func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.Rece
 	// if len(solutions) > 0 {
 	// 	return models.MTOStatusInProgress, nil
 	// }
+
+}
+
+func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID, isReadyForReview bool) (*models.ModelsToOperationMatrix, error) {
+	existingPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	// Clear out ready for review if no
+	if !isReadyForReview {
+		//TODO handle all the logic for this, look at task list section logic. Maybe extract into helper?
+		existingPlan.MTOReadyForReviewBy = nil
+		existingPlan.MTOReadyForReviewDts = nil
+
+	} else {
+		// Only set it ready for review if it wasn't already marked ready for review
+		if existingPlan.MTOReadyForReviewBy == nil {
+			if principal.Account() == nil {
+				return nil, fmt.Errorf("principal was nil")
+			}
+			userID := principal.Account().ID
+			now := time.Now()
+
+			existingPlan.MTOReadyForReviewBy = &userID
+			existingPlan.MTOReadyForReviewDts = &now
+
+		}
+	}
+
+	// Just check access, don't apply changes
+	err = BaseStructPreUpdate(logger, existingPlan, nil, principal, store, false, true)
+	if err != nil {
+		return nil, err
+	}
+
+	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.ModelsToOperationMatrix{ModelPlan: retPlan}, err
 
 }

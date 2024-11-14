@@ -51,3 +51,8 @@ enum MTORiskIndicator {
   OFF_TRACK
   AT_RISK
 }
+
+extend type Mutation {
+  markMTOReadyForReview(id: UUID!, readyForReview: Boolean!): ModelsToOperationMatrix!
+  @hasRole(role: MINT_USER)
+}

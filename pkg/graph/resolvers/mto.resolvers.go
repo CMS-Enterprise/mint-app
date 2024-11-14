@@ -11,6 +11,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -72,6 +73,13 @@ func (r *modelsToOperationMatrixResolver) ReadyForReviewByUserAccount(ctx contex
 		return nil, nil
 	}
 	return UserAccountGetByIDLOADER(ctx, *obj.ModelPlan.MTOReadyForReviewBy)
+}
+
+// MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
+func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UUID, readyForReview bool) (*models.ModelsToOperationMatrix, error) {
+	princ := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOToggleReadyForReview(ctx, logger, princ, r.store, id, readyForReview)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
