@@ -83,7 +83,19 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 		if existing.ParentID == nil {
 			return nil, fmt.Errorf("you cannot provide a parent id for a parent category")
 		}
-		existing.ParentID = parentID
+		// If the changing parents, update here
+		if existing.ParentID != parentID {
+			existing.ParentID = parentID
+			// If an order wasn't provided, determine the position from the other subcategories
+			if order == nil {
+				existingSubCategories, err := loaders.MTOSubcategory.ByParentID.Load(ctx, *parentID)
+				if err != nil {
+					return nil, fmt.Errorf("unable to determine order for this new subcategory. Err %w", err)
+				}
+				currentMax := models.GetMaxPosition(existingSubCategories)
+				existing.Position = currentMax + 1
+			}
+		}
 	}
 
 	// Just check access, don't apply changes here
