@@ -10,6 +10,7 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
+import i18next from 'i18next';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -19,6 +20,17 @@ type MTOModalProps = {
   isOpen: boolean;
   closeModal: () => void;
 };
+
+const sortOptions = [
+  {
+    value: 'DEFAULT',
+    label: i18next.t('modelToOperationsMisc:modal.category.sortOptions.default')
+  },
+  {
+    value: '',
+    label: i18next.t('modelToOperationsMisc:modal.category.sortOptions.none')
+  }
+];
 
 const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -87,16 +99,19 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
                     {...field}
                     id={convertCamelCaseToKebabCase(field.name)}
                     value={field.value || ''}
-                    // onChange={e =>
-                    //   setActiveType(
-                    //     e.currentTarget.value as ExistingProviderSupplierTypes
-                    //   )
-                    // }
+                    defaultValue="DEFAULT"
                   >
-                    <option>- Select - </option>
-                    <option value="value1">Option A</option>
-                    <option value="value2">Option B</option>
-                    <option value="value3">Option C</option>
+                    {sortOptions.map(option => {
+                      return (
+                        <option
+                          key={`sort-${option.value}`}
+                          value={option.value}
+                          hidden={option.value === 'DEFAULT'}
+                        >
+                          {option.label}
+                        </option>
+                      );
+                    })}
                   </Select>
                 </FormGroup>
               )}
