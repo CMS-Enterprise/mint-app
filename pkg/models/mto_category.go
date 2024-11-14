@@ -2,12 +2,16 @@ package models
 
 import (
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 )
 
 const unCategorizedMTOName = "Uncategorized"
+
+type Positioner interface {
+	GetPosition() int
+}
 
 type MTOCategory struct {
 	baseStruct
@@ -18,25 +22,58 @@ type MTOCategory struct {
 	ParentID *uuid.UUID `json:"parent_id" db:"parent_id"`
 }
 
+func (m MTOCategory) GetPosition() int {
+	return m.Position
+}
+func (m MTOSubcategory) GetPosition() int {
+	return m.Position
+}
+
 // NewMTOCategory returns a new mtoCategory object. A Nil parentID means that this is a top level category, and not a subcategory
 // Note, a new category automatically is added as the last in order. It can be re-ordered, but it can't be set from the start
-func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
+// We set a position simply to allow manual manipulation of position for non db- entities (uncategorized categories)
+func NewMTOCategory(createdBy uuid.UUID, name string, modelPlanID uuid.UUID, parentID *uuid.UUID, position int) *MTOCategory {
 	return &MTOCategory{
 		Name:              name,
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		ParentID:          parentID,
+		Position:          position,
 	}
 }
 
-// MTOUncategorized returns a placeholder category to hold all milestones that aren't categorized into a subcategory
-func MTOUncategorized(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOCategory {
-	//TODO (mto) should we add a position? Or ok leaving this as the base implementation?
-	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID)
+// MTOUncategorizedFromArray takes an array of sibling categories to determine the next position that is relevant for the array.
+// the new uncategorized result will now have the correct position
+func MTOUncategorizedFromArray(modelPlanID uuid.UUID, parentID *uuid.UUID, categories []*MTOCategory) *MTOCategory {
+	//Find the greatest position, and iterate it to create the new Uncategorized category with a position as well
+	maxPosition := GetMaxPosition(categories)
+	return MTOUncategorized(modelPlanID, parentID, maxPosition+1)
+
 }
-func MTOUncategorizedSubcategory(modelPlanID uuid.UUID, parentID *uuid.UUID) *MTOSubcategory {
-	category := NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID)
-	helpers.PointerTo(category)
+
+// GetMaxPosition will return the max position from an array of positioner types
+func GetMaxPosition[T Positioner](positioners []T) int {
+	if len(positioners) <= 0 {
+		return 0
+	}
+	maxPosition := lo.MaxBy(positioners, func(a, b T) bool {
+		return a.GetPosition() < b.GetPosition()
+	}).GetPosition()
+	return maxPosition
+}
+
+// MTOUncategorized returns a placeholder category to hold all milestones that aren't categorized into a subcategory
+func MTOUncategorized(modelPlanID uuid.UUID, parentID *uuid.UUID, position int) *MTOCategory {
+	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID, position)
+}
+func MTOUncategorizedSubcategory(modelPlanID uuid.UUID, parentID *uuid.UUID, position int) *MTOSubcategory {
+	category := NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID, position)
+
+	return category.ToSubcategory()
+}
+func MTOUncategorizedSubcategoryFromArray(modelPlanID uuid.UUID, parentID *uuid.UUID, subCategories []*MTOSubcategory) *MTOSubcategory {
+	maxPosition := GetMaxPosition(subCategories)
+	category := NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID, maxPosition+1)
 
 	return category.ToSubcategory()
 }

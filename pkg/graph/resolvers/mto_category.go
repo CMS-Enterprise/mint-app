@@ -23,7 +23,8 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	category := models.NewMTOCategory(principalAccount.ID, name, modelPlanID, parentID)
+	// Note, the position added is not respected when inserted. It will be have a position equal to the max of all other positions
+	category := models.NewMTOCategory(principalAccount.ID, name, modelPlanID, parentID, 0)
 
 	err := BaseStructPreCreate(logger, category, principal, store, true)
 	if err != nil {
@@ -87,25 +88,29 @@ func MTOCategoryGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUI
 	if err != nil {
 		return nil, err
 	}
+
 	// return while adding an uncategorized record as well
-	return append(dbCategories, models.MTOUncategorized(modelPlanID, nil)), nil
+	return append(dbCategories, models.MTOUncategorizedFromArray(modelPlanID, nil, dbCategories)), nil
 }
 
 // MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER implements resolver logic to get all MTO Categories (including subcategories) by a model plan ID using a data loader
 func MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOCategory, error) {
+	//TODO, consider removing this. It probably doesn't make sense conceptually, as you are only making on uncategorized
+	// , and giving it a max position of all categories
+
 	dbCategories, err := loaders.MTOCategory.AndSubCategoriesByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 	// return while adding an uncategorized record as well
-	return append(dbCategories, models.MTOUncategorized(modelPlanID, nil)), nil
+	return append(dbCategories, models.MTOUncategorizedFromArray(modelPlanID, nil, dbCategories)), nil
 }
 
 func MTOSubcategoryGetByParentIDLoader(ctx context.Context, modelPlanID uuid.UUID, parentID uuid.UUID) ([]*models.MTOSubcategory, error) {
-	dbCategories, err := loaders.MTOSubcategory.ByParentID.Load(ctx, parentID)
+	dbSubcategories, err := loaders.MTOSubcategory.ByParentID.Load(ctx, parentID)
 	if err != nil {
 		return nil, err
 	}
 	// return while adding an uncategorized record as well
-	return append(dbCategories, models.MTOUncategorizedSubcategory(modelPlanID, &parentID)), nil
+	return append(dbSubcategories, models.MTOUncategorizedSubcategoryFromArray(modelPlanID, &parentID, dbSubcategories)), nil
 }
