@@ -77,6 +77,11 @@ const formatAndHomogenizeMilestoneData = (data: CategoryType[]) => {
   return formatData;
 };
 
+/**
+ * moveRow function
+ * This function handles the reordering of categories, subcategories, and milestones within the sorted data.
+ * It updates the data structure based on the drag-and-drop/menu moveup/down interactions.
+ */
 const moveRow = (
   dragIndex: number,
   hoverIndex: number,
@@ -210,7 +215,7 @@ const MTOTable = () => {
   });
 
   // Function to map data indexes to be conditionally rendered based on the current page and items per page
-  const sliceFn = useMemo(() => {
+  const getVisibleIndexes = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
       const startingIndex = pageNum * itemsPerP;
       const endingIndex = startingIndex + itemsPerP;
@@ -295,7 +300,7 @@ const MTOTable = () => {
     items: sortedData,
     itemsPerPage,
     loading: false,
-    sliceFn,
+    sliceFn: getVisibleIndexes,
     itemLength
   });
 
@@ -334,6 +339,7 @@ const MTOTable = () => {
             })}
             key={column.accessor}
           >
+            {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
             {column.accessor === 'actions' ? (
               <ActionMenu
                 rowType={rowType}
@@ -413,6 +419,7 @@ const MTOTable = () => {
     subcategoryIndex: number
   ) =>
     milestones.map((milestone, index) => {
+      // Don't render if the milestone is not in the rendered indexes
       if (
         !renderedRowIndexes.current.milestone[categoryIndex][
           subcategoryIndex

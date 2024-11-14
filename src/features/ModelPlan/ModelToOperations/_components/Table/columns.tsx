@@ -58,17 +58,16 @@ export type CategoryType = {
 
 export type RowType = CategoryType | SubCategoryType | MilestoneType;
 
-// eslint-disable-next-line react/no-unused-prop-types
-type RowProps = {
-  row: RowType;
-  rowType: MTORowType;
-  expanded?: boolean;
-};
-
 const riskMap: Record<MtoRiskIndicator, number> = {
   [MtoRiskIndicator.ON_TRACK]: 1,
   [MtoRiskIndicator.OFF_TRACK]: 2,
   [MtoRiskIndicator.AT_RISK]: 3
+};
+
+type RowProps = {
+  row: RowType;
+  rowType: MTORowType;
+  expanded?: boolean;
 };
 
 export type ColumnType = {
@@ -81,7 +80,7 @@ export type ColumnType = {
     direction: 'ASC' | 'DESC',
     accessor: keyof MilestoneType
   ) => CategoryType[];
-  Cell?: ({ row, rowType, expanded }: RowProps) => JSX.Element;
+  Cell?: (cellRow: RowProps) => JSX.Element;
 };
 
 const sortNested = (
@@ -173,7 +172,7 @@ export const columns: ColumnType[] = [
     accessor: 'name',
     width: '200px',
     sort: sortNested,
-    Cell: ({ row }: RowProps) => {
+    Cell: ({ row, rowType, expanded }: RowProps) => {
       return <>{row.name}</>;
     }
   },
@@ -182,7 +181,7 @@ export const columns: ColumnType[] = [
     accessor: 'facilitatedBy',
     width: '200px',
     sort: sortNested,
-    Cell: ({ row }: RowProps) => {
+    Cell: ({ row, rowType, expanded }: RowProps) => {
       return <>{row.facilitatedBy}</>;
     }
   },
@@ -204,7 +203,7 @@ export const columns: ColumnType[] = [
       });
       return copyData;
     },
-    Cell: ({ row, rowType }: RowProps) => {
+    Cell: ({ row, rowType, expanded }: RowProps) => {
       if (rowType !== 'milestone') return <></>;
       if (row.solutions.length === 0)
         return (
@@ -222,7 +221,7 @@ export const columns: ColumnType[] = [
     accessor: 'needBy',
     width: '130px',
     sort: sortNested,
-    Cell: ({ row, rowType }: RowProps) => {
+    Cell: ({ row, rowType, expanded }: RowProps) => {
       if (!row.needBy && rowType === 'milestone')
         return (
           <span className="text-italic">
@@ -237,7 +236,7 @@ export const columns: ColumnType[] = [
     accessor: 'status',
     width: '130px',
     sort: sortNested,
-    Cell: ({ row, rowType }: RowProps) => {
+    Cell: ({ row, rowType, expanded }: RowProps) => {
       const { status } = row;
       if (rowType !== 'milestone') return <></>;
       return (
