@@ -37,12 +37,17 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
 
   const methods = useForm({
     defaultValues: {
-      primaryCategory: '',
+      primaryCategory: 'DEFAULT',
       categoryTitle: ''
     }
   });
 
-  const { control, handleSubmit, reset } = methods;
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isValid }
+  } = methods;
 
   return (
     <Modal
@@ -78,6 +83,9 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
             <Controller
               name="primaryCategory"
               control={control}
+              rules={{
+                required: true
+              }}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-top-0 margin-bottom-2">
                   <Label
@@ -120,6 +128,9 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
             <Controller
               name="categoryTitle"
               control={control}
+              rules={{
+                required: true
+              }}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-y-0">
                   <Label
@@ -144,7 +155,7 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
               )}
             />
           </Fieldset>
-          <Button type="submit" disabled={false} className="margin-right-3">
+          <Button type="submit" disabled={!isValid} className="margin-right-3">
             {/* //TODO: disabled if form is not touched */}
             {t('modal.addButton', { type: 'category' })}
           </Button>
