@@ -8,10 +8,12 @@ SELECT
     mto_category.name, 
     mto_category.parent_id, 
     mto_category.model_plan_id, 
+    mto_category.position, 
     mto_category.created_by, 
     mto_category.created_dts, 
     mto_category.modified_by, 
     mto_category.modified_dts
 FROM mto_category 
 INNER JOIN QUERIED_IDS AS qIDs ON mto_category.model_plan_id = qIDs.model_plan_id
-WHERE mto_category.parent_id IS NULL;
+WHERE mto_category.parent_id IS NULL
+ORDER BY mto_category.position;
