@@ -360,7 +360,10 @@ const MTOTable = () => {
                 MoveUp={
                   <Button
                     type="button"
-                    disabled={currentIndex === 0}
+                    disabled={
+                      currentIndex === 0 ||
+                      currentIndex === (rowLength || 0) - 1
+                    }
                     onClick={e => {
                       e.stopPropagation();
                       moveRow(
@@ -387,7 +390,10 @@ const MTOTable = () => {
                 MoveDown={
                   <Button
                     type="button"
-                    disabled={currentIndex === (rowLength || 0) - 1}
+                    disabled={
+                      currentIndex === (rowLength || 0) - 1 ||
+                      currentIndex === (rowLength || 0) - 2
+                    }
                     onClick={e => {
                       e.stopPropagation();
                       moveRow(
@@ -497,7 +503,6 @@ const MTOTable = () => {
               isExpanded,
               index,
               subCategories.length,
-              categoryID,
               subCategory.id
             )}
           </DraggableRow>
