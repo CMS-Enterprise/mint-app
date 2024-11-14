@@ -13,7 +13,6 @@ VALUES (
     :model_plan_id,
     COALESCE(
         ( -- Place category at the bottom in order
-        -- TODO also join on model plan ID!!!! Otherwise the order is for everything
             SELECT MAX(position) 
             FROM mto_category 
             WHERE
