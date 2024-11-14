@@ -69,7 +69,8 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO category. Err %w", err)
 	}
-	// update the name
+	// update the position to the new value
+	// the re-ordering of other rows is handled in the trigger added in migrations/V188__Add_MTO_Category_Reorder_Trigger.sql
 	existing.Position = order
 
 	// Just check access, don't apply changes here
