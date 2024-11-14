@@ -60,8 +60,12 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 // MTOCategoryReorder updates the position of an MTOCategory or SubCategory
 func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
-	order int,
+	order *int,
+	parentID *uuid.UUID,
 ) (*models.MTOCategory, error) {
+	if order == nil && parentID == nil {
+		return nil, fmt.Errorf(" either order or parentID must be provided for MTOCategoryReorder")
+	}
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -72,7 +76,15 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 	// update the position to the new value
 	// the re-ordering of other rows is handled in the trigger added in migrations/V188__Add_MTO_Category_Reorder_Trigger.sql
-	existing.Position = order
+	if order != nil {
+		existing.Position = *order
+	}
+	if parentID != nil {
+		if existing.ParentID == nil {
+			return nil, fmt.Errorf("you cannot provide a parent id for a parent category")
+		}
+		existing.ParentID = parentID
+	}
 
 	// Just check access, don't apply changes here
 	err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, store, false, true)
