@@ -48,7 +48,10 @@ func (r *queryResolver) CreateMTOSolution(ctx context.Context, modelPlanID uuid.
 
 // CreateMTOSolutionWithCommonKey is the resolver for the createMTOSolutionWithCommonKey field.
 func (r *queryResolver) CreateMTOSolutionWithCommonKey(ctx context.Context, key *models.MTOCommonSolutionKey) (*models.MTOSolution, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOSolutionWithCommonKey - createMTOSolutionWithCommonKey"))
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return MTOSolutionCreateWithCommonKey(logger, principal, r.store, key)
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.

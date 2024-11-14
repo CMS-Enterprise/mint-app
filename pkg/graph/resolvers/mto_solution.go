@@ -119,3 +119,34 @@ func MTOSolutionCreate(
 
 	return storage.MTOSolutionCreate(store, logger, mtoSolution)
 }
+
+func MTOSolutionCreateWithCommonKey(
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
+	commonSolutionKey *models.MTOCommonSolutionKey,
+) (*models.MTOSolution, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// TODO: How should we populate these fields?
+	mtoSolution := models.NewMTOSolution(
+		uuid.Nil,
+		commonSolutionKey,
+		"",
+		models.MTOSolutionTypeOther,
+		models.MTOFacilitatorOther,
+		"",
+		"",
+		principalAccount.ID,
+	)
+
+	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return storage.MTOSolutionCreate(store, logger, mtoSolution)
+}
