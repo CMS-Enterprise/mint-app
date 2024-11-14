@@ -39,6 +39,8 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 	suite.Nil(result.ModifiedBy)
 	suite.Nil(result.ModifiedDts)
 	suite.EqualValues(models.ModelStatusPlanDraft, result.Status)
+	suite.Nil(result.MTOReadyForReviewBy)
+	suite.Nil(result.MTOReadyForReviewDts)
 }
 
 func (suite *ResolverSuite) TestModelPlanUpdate() {
