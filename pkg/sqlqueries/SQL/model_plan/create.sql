@@ -4,7 +4,10 @@ INSERT INTO model_plan (
     abbreviation,
     status,
     created_by,
-    modified_by
+    modified_by,
+    mto_ready_for_review_by,
+    mto_ready_for_review_dts
+
 )
 VALUES (
     :id,
@@ -12,7 +15,9 @@ VALUES (
     :abbreviation,
     :status,
     :created_by,
-    :modified_by
+    :modified_by,
+    :mto_ready_for_review_by,
+    :mto_ready_for_review_dts
 )
 RETURNING
 id,
@@ -23,4 +28,6 @@ archived,
 created_by,
 created_dts,
 modified_by,
-modified_dts;
+modified_dts,
+mto_ready_for_review_by,
+mto_ready_for_review_dts;

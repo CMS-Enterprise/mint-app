@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 )
 
@@ -12,6 +14,8 @@ type ModelPlan struct {
 	Archived               bool        `json:"archived" db:"archived"`
 	Status                 ModelStatus `json:"status" db:"status"`
 	PreviousSuggestedPhase *ModelPhase `json:"previousSuggestedPhase" db:"previous_suggested_phase"`
+	MTOReadyForReviewBy    *uuid.UUID  `json:"mtoReadyForReviewBy" db:"mto_ready_for_review_by"`
+	MTOReadyForReviewDts   *time.Time  `json:"mtoReadyForReviewDts" db:"mto_ready_for_review_dts"`
 }
 
 // NewModelPlan returns a new unarchived model plan with a default status of ModelStatusPlanDraft

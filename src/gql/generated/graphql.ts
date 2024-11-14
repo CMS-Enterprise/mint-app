@@ -1057,6 +1057,9 @@ export type ModelsToOperationMatrix = {
   commonMilestones: Array<MtoCommonMilestone>;
   commonSolutions: Array<MtoCommonSolution>;
   milestones: Array<MtoMilestone>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
   status: MtoStatus;

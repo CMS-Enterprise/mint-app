@@ -7,7 +7,11 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -50,6 +54,24 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 	// TODO re-visit when solutions are implemented
 	// TODO re-visit when change history is implemented for MTO
 	return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
+}
+
+// ReadyForReviewBy is the resolver for the readyForReviewBy field.
+func (r *modelsToOperationMatrixResolver) ReadyForReviewBy(ctx context.Context, obj *models.ModelsToOperationMatrix) (*uuid.UUID, error) {
+	return obj.ModelPlan.MTOReadyForReviewBy, nil
+}
+
+// ReadyForReviewDts is the resolver for the readyForReviewDTS field.
+func (r *modelsToOperationMatrixResolver) ReadyForReviewDts(ctx context.Context, obj *models.ModelsToOperationMatrix) (*time.Time, error) {
+	return obj.ModelPlan.MTOReadyForReviewDts, nil
+}
+
+// ReadyForReviewByUserAccount is the resolver for the readyForReviewByUserAccount field.
+func (r *modelsToOperationMatrixResolver) ReadyForReviewByUserAccount(ctx context.Context, obj *models.ModelsToOperationMatrix) (*authentication.UserAccount, error) {
+	if obj.ModelPlan.MTOReadyForReviewBy == nil {
+		return nil, nil
+	}
+	return UserAccountGetByIDLOADER(ctx, *obj.ModelPlan.MTOReadyForReviewBy)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.

@@ -8,8 +8,10 @@ SELECT
     model_plan.created_by,
     model_plan.created_dts,
     model_plan.modified_by,
-    model_plan.modified_dts
+    model_plan.modified_dts,
+    model_plan.mto_ready_for_review_by,
+    model_plan.mto_ready_for_review_dts
 FROM model_plan
-INNER JOIN plan_collaborator ON plan_collaborator.model_plan_id = model_plan.id
+INNER JOIN plan_collaborator ON model_plan.id = plan_collaborator.model_plan_id
 
 WHERE plan_collaborator.user_id = :user_id AND model_plan.archived = :archived

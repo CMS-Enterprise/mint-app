@@ -96,6 +96,7 @@ type ModelPlan {
 
   # MTO Fields (START)
   mtoMatrix: ModelsToOperationMatrix!
+  # Note there are fields for MTO that live on the model plan table, we currently don't expose them here, but instead put them on the child type.
   # MTO Fields (END)
 }
 

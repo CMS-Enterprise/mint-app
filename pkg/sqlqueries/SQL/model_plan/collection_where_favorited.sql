@@ -8,6 +8,8 @@ SELECT DISTINCT
     model_plan.created_by,
     model_plan.created_dts,
     model_plan.modified_by,
-    model_plan.modified_dts
+    model_plan.modified_dts,
+    model_plan.mto_ready_for_review_by,
+    model_plan.mto_ready_for_review_dts
 FROM model_plan
 INNER JOIN plan_favorite ON model_plan.id = plan_favorite.model_plan_id

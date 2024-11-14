@@ -8,7 +8,9 @@ SELECT
     model_plan.created_by,
     model_plan.created_dts,
     model_plan.modified_by,
-    model_plan.modified_dts
+    model_plan.modified_dts,
+    model_plan.mto_ready_for_review_by,
+    model_plan.mto_ready_for_review_dts
 FROM model_plan
 WHERE EXISTS (SELECT 1 FROM plan_tdl WHERE model_plan_id = model_plan.id) OR EXISTS (SELECT 1 FROM plan_cr WHERE model_plan_id = model_plan.id) --noqa
     AND model_plan.archived = FALSE

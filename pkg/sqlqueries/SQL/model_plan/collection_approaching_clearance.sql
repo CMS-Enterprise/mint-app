@@ -8,7 +8,9 @@ SELECT
     mp.created_by,
     mp.created_dts,
     mp.modified_by,
-    mp.modified_dts
+    mp.modified_dts,
+    mp.mto_ready_for_review_by,
+    mp.mto_ready_for_review_dts
 FROM model_plan AS mp
 LEFT JOIN plan_basics AS basics ON mp.id = basics.model_plan_id
 WHERE -- get models that have a clearance start date within 6 months of the current time
