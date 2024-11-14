@@ -584,3 +584,28 @@ func (suite *ResolverSuite) TestMTOSubCategoryReorderToNewParentOrderNotSpecifie
 	suite.EqualValues(plan2CatSub.ID, retSubCategoriesPlan2[0].ID, "Category 2 Sub should remain in position 0")
 	/*end */
 }
+
+// TestMTOCantMakeParentCategorySubCategory validates that a parent can't be made a child category
+func (suite *ResolverSuite) TestMTOCantMakeParentCategorySubCategory() {
+	plan := suite.createModelPlan("Testing Plan for Reordering")
+
+	// Create multiple categories for model plan
+	cat0Name := "Category 0"
+	cat1Name := "Category 1"
+	cat2Name := "Category 2"
+
+	names := []string{cat0Name, cat1Name, cat2Name}
+	categories := suite.createMultipleMTOcategories(names, plan.ID, nil)
+	suite.Len(categories, 3)
+
+	cat0, cat1, cat2 := categories[0], categories[1], categories[2]
+
+	//Try to move cat 1 to be a child of cat 0
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat1.ID, nil, &cat0.ID)
+	suite.Error(err, "we expect that you can't make a parent category a child category. There should be an error for this operation.")
+
+	// Try to reorder without specifying a new position or a new parent. Expect an error
+	_, err2 := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2.ID, nil, nil)
+	suite.Error(err2, "we expect that you can't reorder without specifying both order and parent . There should be an error for this operation.")
+
+}
