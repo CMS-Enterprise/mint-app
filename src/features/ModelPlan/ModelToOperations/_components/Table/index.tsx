@@ -185,9 +185,37 @@ const MTOTable = () => {
     setSortedData([...rearrangedData]);
   }, [rearrangedData]);
 
+  // Load expanded rows from local storage
+  let defaultExpandedRows: string[] = [];
+  try {
+    if (window.localStorage['mto-matrix-expanded-rows']) {
+      defaultExpandedRows = JSON.parse(
+        window.localStorage['mto-matrix-expanded-rows']
+      );
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Error parsing local storage');
+  }
+
   // Toggle row expansion states
-  const [expandedRows, setExpandedRows] = useState<string[]>([]);
-  const [subExpandedRows, setSubExpandedRows] = useState<string[]>([]);
+  const [expandedRows, setExpandedRows] =
+    useState<string[]>(defaultExpandedRows);
+
+  // Function to toggle row expansion
+  const toggleRow = (index: string) => {
+    setExpandedRows(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+  };
+
+  // Update local storage when expanded rows change
+  useEffect(() => {
+    localStorage.setItem(
+      'mto-matrix-expanded-rows',
+      JSON.stringify(expandedRows)
+    );
+  }, [expandedRows]);
 
   // Sort states
   const [sortCount, setSortCount] = useState<number>(3);
@@ -303,20 +331,6 @@ const MTOTable = () => {
     sliceFn: getVisibleIndexes,
     itemLength
   });
-
-  // Function to toggle row expansion
-  const toggleRow = (index: string) => {
-    setExpandedRows(prev =>
-      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-    );
-  };
-
-  // Function to toggle sub-row expansion
-  const toggleSubRow = (index: string) => {
-    setSubExpandedRows(prev =>
-      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-    );
-  };
 
   const renderCells = (
     row: RowType,
@@ -441,7 +455,9 @@ const MTOTable = () => {
     categoryIndex: number
   ) =>
     subCategories.map((subCategory, index) => {
-      const isExpanded = subExpandedRows.includes(subCategory.id);
+      const isExpanded = expandedRows.includes(
+        `${categoryID}-${subCategory.id}`
+      );
 
       // Don't render if the subcategory is not in the rendered indexes
       if (
@@ -465,8 +481,8 @@ const MTOTable = () => {
                 subCategory.id
               )
             }
-            id={subCategory.id}
-            toggleRow={toggleSubRow}
+            id={`${categoryID}-${subCategory.id}`}
+            toggleRow={toggleRow}
             style={{
               backgroundColor: '#F0F0F0',
               fontWeight: 'bold',
