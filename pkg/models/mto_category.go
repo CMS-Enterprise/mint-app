@@ -57,7 +57,7 @@ func GetMaxPosition[T Positioner](positioners []T) int {
 		return 0
 	}
 	maxPosition := lo.MaxBy(positioners, func(a, b T) bool {
-		return a.GetPosition() < b.GetPosition()
+		return a.GetPosition() > b.GetPosition()
 	}).GetPosition()
 	return maxPosition
 }
