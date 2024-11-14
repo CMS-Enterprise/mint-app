@@ -2,6 +2,7 @@ import { TranslationModelPlan } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -92,6 +93,27 @@ export const modelPlan: TranslationModelPlan = {
       PAUSED: 'Paused',
       CANCELED: 'Canceled'
     }
+  },
+  readyForReviewBy: {
+    gqlField: 'readyForReviewBy',
+    goField: 'ReadyForReviewBy',
+    dbField: 'ready_for_review_by',
+    label: 'This section of the Model Plan (Model basics) is ready for review.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    order: 3.13,
+    tableReference: TableName.USER_ACCOUNT,
+    hideFromReadonly: true
+  },
+  readyForReviewDts: {
+    gqlField: 'readyForReviewDts',
+    goField: 'ReadyForReviewDts',
+    dbField: 'ready_for_review_dts',
+    label: 'Ready for review date',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 3.14,
+    hideFromReadonly: true
   }
 };
 

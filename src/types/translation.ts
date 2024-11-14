@@ -300,6 +300,8 @@ export type TranslationModelPlan = {
   abbreviation: TranslationFieldProperties;
   archived: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
 };
 
 // Basics

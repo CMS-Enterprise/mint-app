@@ -1015,6 +1015,8 @@ export type ModelPlanTranslation = {
   modelName: TranslationField;
   nameHistory: TranslationField;
   previousName: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   status: TranslationFieldWithOptions;
 };
 

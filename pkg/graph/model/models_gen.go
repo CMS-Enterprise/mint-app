@@ -82,12 +82,14 @@ type MTOSolution struct {
 
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
-	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`
-	PreviousName models.TranslationField            `json:"previousName"`
-	NameHistory  models.TranslationField            `json:"nameHistory"`
-	Abbreviation models.TranslationField            `json:"abbreviation" db:"abbreviation"`
-	Archived     models.TranslationFieldWithOptions `json:"archived" db:"archived"`
-	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
+	ModelName         models.TranslationField            `json:"modelName" db:"model_name"`
+	PreviousName      models.TranslationField            `json:"previousName"`
+	NameHistory       models.TranslationField            `json:"nameHistory"`
+	Abbreviation      models.TranslationField            `json:"abbreviation" db:"abbreviation"`
+	Archived          models.TranslationFieldWithOptions `json:"archived" db:"archived"`
+	Status            models.TranslationFieldWithOptions `json:"status" db:"status"`
+	ReadyForReviewBy  models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
 }
 
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
