@@ -1013,10 +1013,10 @@ export type ModelPlanTranslation = {
   abbreviation: TranslationField;
   archived: TranslationFieldWithOptions;
   modelName: TranslationField;
+  mtoReadyForReviewBy: TranslationField;
+  mtoReadyForReviewDts: TranslationField;
   nameHistory: TranslationField;
   previousName: TranslationField;
-  readyForReviewBy: TranslationField;
-  readyForReviewDts: TranslationField;
   status: TranslationFieldWithOptions;
 };
 

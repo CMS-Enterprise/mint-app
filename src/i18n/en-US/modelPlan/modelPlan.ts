@@ -94,10 +94,10 @@ export const modelPlan: TranslationModelPlan = {
       CANCELED: 'Canceled'
     }
   },
-  readyForReviewBy: {
-    gqlField: 'readyForReviewBy',
-    goField: 'ReadyForReviewBy',
-    dbField: 'ready_for_review_by',
+  mtoReadyForReviewBy: {
+    gqlField: 'mtoReadyForReviewBy',
+    goField: 'MTOReadyForReviewBy',
+    dbField: 'mto_ready_for_review_by',
     label: 'This section of the Model Plan (Model basics) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
@@ -105,10 +105,10 @@ export const modelPlan: TranslationModelPlan = {
     tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
-  readyForReviewDts: {
-    gqlField: 'readyForReviewDts',
-    goField: 'ReadyForReviewDts',
-    dbField: 'ready_for_review_dts',
+  mtoReadyForReviewDts: {
+    gqlField: 'mtoReadyForReviewDts',
+    goField: 'MTOReadyForReviewDts',
+    dbField: 'mto_ready_for_review_dts',
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,

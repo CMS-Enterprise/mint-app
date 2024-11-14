@@ -74,10 +74,10 @@
       "CANCELED": "Canceled"
     }
   },
-  "readyForReviewBy": {
-    "gqlField": "readyForReviewBy",
-    "goField": "ReadyForReviewBy",
-    "dbField": "ready_for_review_by",
+  "mtoReadyForReviewBy": {
+    "gqlField": "mtoReadyForReviewBy",
+    "goField": "MTOReadyForReviewBy",
+    "dbField": "mto_ready_for_review_by",
     "label": "This section of the Model Plan (Model basics) is ready for review.",
     "dataType": "UUID",
     "formType": "TEXT",
@@ -85,10 +85,10 @@
     "tableReference": "user_account",
     "hideFromReadonly": true
   },
-  "readyForReviewDts": {
-    "gqlField": "readyForReviewDts",
-    "goField": "ReadyForReviewDts",
-    "dbField": "ready_for_review_dts",
+  "mtoReadyForReviewDts": {
+    "gqlField": "mtoReadyForReviewDts",
+    "goField": "MTOReadyForReviewDts",
+    "dbField": "mto_ready_for_review_dts",
     "label": "Ready for review date",
     "dataType": "DATE",
     "formType": "DATEPICKER",
