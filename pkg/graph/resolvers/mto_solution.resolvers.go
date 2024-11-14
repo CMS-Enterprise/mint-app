@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -19,24 +20,43 @@ func (r *mTOSolutionResolver) RelatedMilestones(ctx context.Context, obj *models
 	panic(fmt.Errorf("not implemented: RelatedMilestones - relatedMilestones"))
 }
 
-// AddedFromSolutionLibrary is the resolver for the addedFromSolutionLibrary field.
-func (r *mTOSolutionResolver) AddedFromSolutionLibrary(ctx context.Context, obj *models.MTOSolution) (bool, error) {
-	panic(fmt.Errorf("not implemented: AddedFromSolutionLibrary - addedFromSolutionLibrary"))
-}
-
 // CommonSolution is the resolver for the commonSolution field.
 func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MTOSolution) (*models.MTOCommonSolution, error) {
-	panic(fmt.Errorf("not implemented: CommonSolution - commonSolution"))
+	logger := appcontext.ZLogger(ctx)
+
+	return MTOSolutionGetCommonSolutionByKeyLoader(r.store, logger, obj.Key)
 }
 
 // CreateMTOSolution is the resolver for the createMTOSolution field.
-func (r *queryResolver) CreateMTOSolution(ctx context.Context, typeArg models.MTOSolutionType, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOSolution - createMTOSolution"))
+func (r *queryResolver) CreateMTOSolution(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, facilitatedBy models.MTOFacilitator, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return MTOSolutionCreate(
+		logger,
+		principal,
+		r.store,
+		modelPlanID,
+		nil,
+		name,
+		solutionType,
+		facilitatedBy,
+		pocName,
+		pocEmail,
+	)
+}
+
+// CreateMTOSolutionWithCommonKey is the resolver for the createMTOSolutionWithCommonKey field.
+func (r *queryResolver) CreateMTOSolutionWithCommonKey(ctx context.Context, key *models.MTOCommonSolutionKey) (*models.MTOSolution, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOSolutionWithCommonKey - createMTOSolutionWithCommonKey"))
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.
 func (r *queryResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOSolution, error) {
-	panic(fmt.Errorf("not implemented: UpdateMTOSolution - updateMTOSolution"))
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return MTOSolutionUpdate(logger, principal, r.store, id, changes)
 }
 
 // MTOSolution returns generated.MTOSolutionResolver implementation.

@@ -3585,6 +3585,7 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   createMTOSolution: MtoSolution;
+  createMTOSolutionWithCommonKey: MtoSolution;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -3634,10 +3635,18 @@ export type QueryAuditChangesArgs = {
 
 /** Query definition for the schema */
 export type QueryCreateMtoSolutionArgs = {
+  facilitatedBy: MtoFacilitator;
+  modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   pocEmail: Scalars['String']['input'];
   pocName: Scalars['String']['input'];
-  type: MtoSolutionType;
+  solutionType: MtoSolutionType;
+};
+
+
+/** Query definition for the schema */
+export type QueryCreateMtoSolutionWithCommonKeyArgs = {
+  key?: InputMaybe<MtoCommonSolutionKey>;
 };
 
 
