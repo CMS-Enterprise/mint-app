@@ -16,11 +16,11 @@ import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 const sortOptions = [
   {
-    value: '',
+    value: 'default',
     label: i18n.t('modelToOperationsMisc:modal.category.sortOptions.default')
   },
   {
-    value: '',
+    value: 'none',
     label: i18n.t('modelToOperationsMisc:modal.category.sortOptions.none')
   }
 ];
@@ -30,7 +30,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const methods = useForm({
     defaultValues: {
-      primaryCategory: '',
+      primaryCategory: 'default',
       categoryTitle: ''
     }
   });
@@ -81,15 +81,11 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                   {...field}
                   id={convertCamelCaseToKebabCase(field.name)}
                   value={field.value || ''}
-                  defaultValue="DEFAULT"
+                  defaultValue="default"
                 >
                   {sortOptions.map(option => {
                     return (
-                      <option
-                        key={`sort-${option.value}`}
-                        value={option.value}
-                        hidden={option.value === 'DEFAULT'}
-                      >
+                      <option key={`sort-${option.value}`} value={option.value}>
                         {option.label}
                       </option>
                     );
