@@ -4,9 +4,9 @@ CREATE TABLE mto_milestone_solution_link(
     solution_id UUID NOT NULL REFERENCES mto_solution(id),
     
     --META DATA
-    created_by EUA_ID NOT NULL,
-    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
-    modified_by EUA_ID,
+    created_by UUID NOT NULL REFERENCES user_account(id),
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 
 );
