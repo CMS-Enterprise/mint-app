@@ -51,7 +51,10 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     label: category.name
   }));
 
-  const garyTest: SortProps[] = [...sortOptions, ...mappedCategories];
+  const sortOptionsAndMappedCategories: SortProps[] = [
+    ...sortOptions,
+    ...mappedCategories
+  ];
 
   const methods = useForm({
     defaultValues: {
@@ -108,7 +111,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                   value={field.value || ''}
                   defaultValue="default"
                 >
-                  {garyTest.map(option => {
+                  {sortOptionsAndMappedCategories.map(option => {
                     // debugger;
                     return (
                       <option
