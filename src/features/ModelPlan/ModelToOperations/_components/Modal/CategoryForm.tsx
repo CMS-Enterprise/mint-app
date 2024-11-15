@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -12,10 +12,16 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
+import { useGetMtoCategoriesQuery } from 'gql/generated/graphql';
 
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-const sortOptions = [
+type SortProps = {
+  value: string;
+  label: string;
+};
+
+const sortOptions: SortProps[] = [
   {
     value: 'default',
     label: i18n.t('modelToOperationsMisc:modal.category.sortOptions.default')
@@ -29,7 +35,23 @@ const sortOptions = [
 const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  // const { modelID } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
+
+  const { data, loading } = useGetMtoCategoriesQuery({
+    variables: { id: modelID }
+  });
+
+  const categories = data?.modelPlan?.mtoMatrix?.categories || [];
+  // const noUncategorized = categories.filter(
+  //   category => category.name !== 'Uncategorized'
+  // );
+
+  const mappedCategories: SortProps[] = categories.map(category => ({
+    value: category.id,
+    label: category.name
+  }));
+
+  const garyTest: SortProps[] = [...sortOptions, ...mappedCategories];
 
   const methods = useForm({
     defaultValues: {
@@ -50,13 +72,13 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
       <Form
         className="maxw-none"
         id="custom-category-form"
-        onSubmit={handleSubmit(data => {
+        onSubmit={handleSubmit(formData => {
           // TODO: remove this console log
           // eslint-disable-next-line no-console
-          console.log(data);
+          console.log(formData);
         })}
       >
-        <Fieldset disabled={false}>
+        <Fieldset disabled={loading}>
           <Controller
             name="primaryCategory"
             control={control}
@@ -86,9 +108,13 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                   value={field.value || ''}
                   defaultValue="default"
                 >
-                  {sortOptions.map(option => {
+                  {garyTest.map(option => {
+                    // debugger;
                     return (
-                      <option key={`sort-${option.value}`} value={option.value}>
+                      <option
+                        key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
+                        value={option.value}
+                      >
                         {option.label}
                       </option>
                     );
