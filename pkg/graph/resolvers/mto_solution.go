@@ -124,22 +124,27 @@ func MTOSolutionCreateWithCommonKey(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
+	modelPlanID uuid.UUID,
 	commonSolutionKey *models.MTOCommonSolutionKey,
+	name string,
+	solutionType models.MTOSolutionType,
+	facilitatedBy models.MTOFacilitator,
+	pocName string,
+	pocEmail string,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// TODO: How should we populate these fields?
 	mtoSolution := models.NewMTOSolution(
-		uuid.Nil,
+		modelPlanID,
 		commonSolutionKey,
-		"",
-		models.MTOSolutionTypeOther,
-		models.MTOFacilitatorOther,
-		"",
-		"",
+		name,
+		solutionType,
+		facilitatedBy,
+		pocName,
+		pocEmail,
 		principalAccount.ID,
 	)
 

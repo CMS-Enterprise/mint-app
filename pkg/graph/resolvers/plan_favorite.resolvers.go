@@ -7,10 +7,9 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 // AddPlanFavorite is the resolver for the addPlanFavorite field.

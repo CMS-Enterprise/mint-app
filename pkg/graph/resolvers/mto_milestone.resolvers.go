@@ -8,11 +8,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 // CommonMilestone is the resolver for the commonMilestone field.

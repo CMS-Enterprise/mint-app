@@ -8,11 +8,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 // RelatedMilestones is the resolver for the relatedMilestones field.
@@ -44,14 +43,6 @@ func (r *queryResolver) CreateMTOSolution(ctx context.Context, modelPlanID uuid.
 		pocName,
 		pocEmail,
 	)
-}
-
-// CreateMTOSolutionWithCommonKey is the resolver for the createMTOSolutionWithCommonKey field.
-func (r *queryResolver) CreateMTOSolutionWithCommonKey(ctx context.Context, key *models.MTOCommonSolutionKey) (*models.MTOSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	return MTOSolutionCreateWithCommonKey(logger, principal, r.store, key)
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.
