@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetModelToOperationsCategories {
-    modelPlan(id: "{{modelPlanID}}") {
+  query GetMTOCategories($id: UUID!) {
+    modelPlan(id: $id) {
       mtoMatrix {
         categories {
           id

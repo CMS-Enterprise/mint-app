@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation NewMTOCategory {
-    createMTOCategory(modelPlanID: "{{modelPlanID}}", name: "{{name}}") {
+  mutation CreateMTOCategory($id: UUID!, $name: String!) {
+    createMTOCategory(modelPlanID: $id, name: $name) {
       id
       name
       isUncategorized
