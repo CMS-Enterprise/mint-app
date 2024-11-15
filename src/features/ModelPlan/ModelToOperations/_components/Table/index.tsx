@@ -188,9 +188,9 @@ const MTOTable = () => {
   // Load expanded rows from local storage
   let defaultExpandedRows: string[] = [];
   try {
-    if (window.localStorage['mto-matrix-expanded-rows']) {
+    if (window.localStorage[`mto-matrix-expanded-rows-${modelID}`]) {
       defaultExpandedRows = JSON.parse(
-        window.localStorage['mto-matrix-expanded-rows']
+        window.localStorage[`mto-matrix-expanded-rows-${modelID}`]
       );
     }
   } catch (e) {
@@ -212,10 +212,10 @@ const MTOTable = () => {
   // Update local storage when expanded rows change
   useEffect(() => {
     localStorage.setItem(
-      'mto-matrix-expanded-rows',
+      `mto-matrix-expanded-rows-${modelID}`,
       JSON.stringify(expandedRows)
     );
-  }, [expandedRows]);
+  }, [expandedRows, modelID]);
 
   // Sort states
   const [sortCount, setSortCount] = useState<number>(3);
@@ -587,7 +587,7 @@ const MTOTable = () => {
     return <NotFoundPartial />;
   }
 
-  if (queryData?.modelPlan.mtoMatrix.categories.length === 0) {
+  if ((queryData?.modelPlan.mtoMatrix.categories.length || 0) < 2) {
     return <MTOOptionsPanel />;
   }
 
@@ -681,6 +681,7 @@ const MTOTable = () => {
           pageSize={itemsPerPage}
           setPageSize={setItemsPerPage}
           valueArray={[5, 10, 15, 20]}
+          suffix={t('modelToOperationsMisc:table.milestones')}
         />
       </div>
     </DndProvider>

@@ -55,6 +55,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     collapseRow: 'Collapse row',
     noneAdded: 'None added yet',
     editDetails: 'Edit details',
+    milestones: 'milestones',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',

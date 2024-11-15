@@ -148,6 +148,19 @@ export default gql(/* GraphQL */ `
         status
         modifiedDts: latestClearanceDts
       }
+      mtoMatrix {
+        status
+        recentEdit {
+          modifiedDts
+          modifiedByUserAccount {
+            commonName
+          }
+        }
+        milestones {
+          id
+          name
+        }
+      }
     }
   }
 `);
