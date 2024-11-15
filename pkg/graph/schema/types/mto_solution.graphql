@@ -50,6 +50,8 @@ input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
 extend type Mutation {
   createMTOSolutionCustom(modelPlanID: UUID!, solutionType: MTOSolutionType!, facilitatedBy: MTOFacilitator!, name: String!, pocName: String!, pocEmail: String!): MTOSolution!
   @hasRole(role: MINT_USER)
+  createMTOSolutionCommon(key: MTOCommonSolutionKey): MTOSolution!
+  @hasRole(role: MINT_USER)
   updateMTOSolution(id: UUID!, changes: MTOSolutionChanges!): MTOSolution!
   @hasRole(role: MINT_USER)
 }

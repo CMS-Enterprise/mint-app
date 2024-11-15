@@ -76,8 +76,8 @@ func MTOSolutionUpdate(
 	return storage.MTOSolutionUpdate(store, logger, existing[0])
 }
 
-// MTOSolutionCreate uses the provided information to create a new MTOSolution
-func MTOSolutionCreate(
+// MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
+func MTOSolutionCreateCustom(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
@@ -113,17 +113,11 @@ func MTOSolutionCreate(
 	return storage.MTOSolutionCreate(store, logger, mtoSolution)
 }
 
-func MTOSolutionCreateWithCommonKey(
+func MTOSolutionCreateCommon(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
-	modelPlanID uuid.UUID,
 	commonSolutionKey *models.MTOCommonSolutionKey,
-	name string,
-	solutionType models.MTOSolutionType,
-	facilitatedBy models.MTOFacilitator,
-	pocName string,
-	pocEmail string,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -131,13 +125,13 @@ func MTOSolutionCreateWithCommonKey(
 	}
 
 	mtoSolution := models.NewMTOSolution(
-		modelPlanID,
+		uuid.Nil, // modelPlanID, // TODO: ???
 		commonSolutionKey,
-		name,
-		solutionType,
-		facilitatedBy,
-		pocName,
-		pocEmail,
+		"",                 // name, // TODO: ???
+		"",                 // solutionType, // TODO: ???git
+		"MINT_TEAM",        // facilitatedBy, // TODO: ???
+		"",                 // pocName, // TODO: ???
+		"empty@email.test", // pocEmail, // TODO: ???
 		principalAccount.ID,
 	)
 

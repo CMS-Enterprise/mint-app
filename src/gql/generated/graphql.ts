@@ -1107,6 +1107,7 @@ export type Mutation = {
    */
   createMTOCategory: MtoCategory;
   createMTOMilestone: MtoMilestone;
+  createMTOSolutionCommon: MtoSolution;
   createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
@@ -1208,6 +1209,12 @@ export type MutationCreateMtoMilestoneArgs = {
   modelPlanID: Scalars['UUID']['input'];
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCommonArgs = {
+  key?: InputMaybe<MtoCommonSolutionKey>;
 };
 
 

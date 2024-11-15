@@ -13,6 +13,7 @@ import (
 )
 
 // MTOSolutionGetByIDLoader returns solutions by ID
+// TODO: This function is not technically loader specific, we will revisit this during a design pass before merging
 func MTOSolutionGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOSolution, error) {
 	args := map[string]interface{}{
 		"ids": ids,
