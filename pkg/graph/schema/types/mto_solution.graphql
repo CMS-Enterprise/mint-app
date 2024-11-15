@@ -47,8 +47,8 @@ input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
   pocEmail: String
 }
 
-extend type Query {
-  createMTOSolution(modelPlanID: UUID!, solutionType: MTOSolutionType!, facilitatedBy: MTOFacilitator!, name: String!, pocName: String!, pocEmail: String!): MTOSolution!
+extend type Mutation {
+  createMTOSolutionCustom(modelPlanID: UUID!, solutionType: MTOSolutionType!, facilitatedBy: MTOFacilitator!, name: String!, pocName: String!, pocEmail: String!): MTOSolution!
   @hasRole(role: MINT_USER)
   updateMTOSolution(id: UUID!, changes: MTOSolutionChanges!): MTOSolution!
   @hasRole(role: MINT_USER)

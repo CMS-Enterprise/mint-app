@@ -18,18 +18,15 @@ import (
 // solutions by a model plan ID using a data loader
 func MTOSolutionGetByModelPlanIDLOADER(
 	ctx context.Context,
-	modelPlanID *uuid.UUID,
+	modelPlanID uuid.UUID,
 ) ([]*models.MTOCommonSolution, error) {
 
 	// Translate a nil key to UUID nil, as we need a primitive type for translating results later
-	var key uuid.UUID
-	if modelPlanID != nil {
-		key = *modelPlanID
-	}
-	return loaders.MTOCommonSolution.ByModelPlanID.Load(ctx, key)
+	return loaders.MTOCommonSolution.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
 func MTOSolutionGetCommonSolutionByKeyLoader(
+	ctx context.Context,
 	namedPreparer sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	key *models.MTOCommonSolutionKey,
@@ -38,20 +35,16 @@ func MTOSolutionGetCommonSolutionByKeyLoader(
 		return nil, fmt.Errorf("common solution key is nil")
 	}
 
-	commonSolution, err := storage.MTOCommonSolutionGetByKeyLoader(
-		namedPreparer,
-		logger,
-		[]models.MTOCommonSolutionKey{*key},
-	)
+	commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, *key)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(commonSolution) == 0 {
-		return nil, fmt.Errorf("common solution not found for solution key %s", *key)
+	if commonSolution == nil {
+		return nil, fmt.Errorf("common solution not found for key %s", *key)
 	}
 
-	return commonSolution[0], nil
+	return commonSolution, nil
 }
 
 // MTOSolutionUpdate updates the MTOSolution

@@ -1107,6 +1107,7 @@ export type Mutation = {
    */
   createMTOCategory: MtoCategory;
   createMTOMilestone: MtoMilestone;
+  createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1146,6 +1147,7 @@ export type Mutation = {
    */
   updateMTOCategory: MtoCategory;
   updateMTOMilestone: MtoMilestone;
+  updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1206,6 +1208,17 @@ export type MutationCreateMtoMilestoneArgs = {
   modelPlanID: Scalars['UUID']['input'];
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCustomArgs = {
+  facilitatedBy: MtoFacilitator;
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  solutionType: MtoSolutionType;
 };
 
 
@@ -1384,6 +1397,13 @@ export type MutationUpdateMtoCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateMtoMilestoneArgs = {
   changes: MtoMilestoneChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoSolutionArgs = {
+  changes: MtoSolutionChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -3584,7 +3604,6 @@ export type Query = {
   __typename: 'Query';
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
-  createMTOSolution: MtoSolution;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -3613,7 +3632,6 @@ export type Query = {
    *     offset: how many records to skip before returning results. If null, no records will be skipped.
    */
   translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
-  updateMTOSolution: MtoSolution;
   userAccount: UserAccount;
   userViewCustomization: UserViewCustomization;
 };
@@ -3629,17 +3647,6 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
-};
-
-
-/** Query definition for the schema */
-export type QueryCreateMtoSolutionArgs = {
-  facilitatedBy: MtoFacilitator;
-  modelPlanID: Scalars['UUID']['input'];
-  name: Scalars['String']['input'];
-  pocEmail: Scalars['String']['input'];
-  pocName: Scalars['String']['input'];
-  solutionType: MtoSolutionType;
 };
 
 
@@ -3733,13 +3740,6 @@ export type QueryTranslatedAuditCollectionArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   modelPlanID: Scalars['UUID']['input'];
   offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-/** Query definition for the schema */
-export type QueryUpdateMtoSolutionArgs = {
-  changes: MtoSolutionChanges;
-  id: Scalars['UUID']['input'];
 };
 
 

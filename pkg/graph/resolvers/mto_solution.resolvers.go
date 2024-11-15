@@ -26,7 +26,27 @@ func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MT
 	return MTOSolutionGetCommonSolutionByKeyLoader(r.store, logger, obj.Key)
 }
 
-// CreateMTOSolution is the resolver for the createMTOSolution field.
+// CreateMTOSolutionCustom is the resolver for the createMTOSolutionCustom field.
+func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, facilitatedBy models.MTOFacilitator, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOSolutionCustom - createMTOSolutionCustom"))
+}
+
+// UpdateMTOSolution is the resolver for the updateMTOSolution field.
+func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOSolution, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOSolution - updateMTOSolution"))
+}
+
+// MTOSolution returns generated.MTOSolutionResolver implementation.
+func (r *Resolver) MTOSolution() generated.MTOSolutionResolver { return &mTOSolutionResolver{r} }
+
+type mTOSolutionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
 func (r *queryResolver) CreateMTOSolution(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, facilitatedBy models.MTOFacilitator, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
@@ -44,16 +64,9 @@ func (r *queryResolver) CreateMTOSolution(ctx context.Context, modelPlanID uuid.
 		pocEmail,
 	)
 }
-
-// UpdateMTOSolution is the resolver for the updateMTOSolution field.
 func (r *queryResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
 	return MTOSolutionUpdate(logger, principal, r.store, id, changes)
 }
-
-// MTOSolution returns generated.MTOSolutionResolver implementation.
-func (r *Resolver) MTOSolution() generated.MTOSolutionResolver { return &mTOSolutionResolver{r} }
-
-type mTOSolutionResolver struct{ *Resolver }
