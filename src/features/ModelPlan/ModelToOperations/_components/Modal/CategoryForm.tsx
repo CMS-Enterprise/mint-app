@@ -1,6 +1,7 @@
 import React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
+// import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -27,6 +28,8 @@ const sortOptions = [
 
 const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  // const { modelID } = useParams<{ modelID: string }>();
 
   const methods = useForm({
     defaultValues: {
