@@ -42,11 +42,11 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   });
 
   const categories = data?.modelPlan?.mtoMatrix?.categories || [];
-  // const noUncategorized = categories.filter(
-  //   category => category.name !== 'Uncategorized'
-  // );
+  const noUncategorized = categories.filter(
+    category => category.name !== 'Uncategorized'
+  );
 
-  const mappedCategories: SortProps[] = categories.map(category => ({
+  const mappedCategories: SortProps[] = noUncategorized.map(category => ({
     value: category.id,
     label: category.name
   }));
