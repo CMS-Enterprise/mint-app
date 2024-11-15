@@ -1,5 +1,10 @@
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FormProvider,
+  SubmitHandler,
+  useForm
+} from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
@@ -12,9 +17,17 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
-import { useGetMtoCategoriesQuery } from 'gql/generated/graphql';
+import {
+  useCreateMtoCategoryMutation,
+  useGetMtoCategoriesQuery
+} from 'gql/generated/graphql';
 
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
+
+type FormValues = {
+  primaryCategory: string;
+  name: string;
+};
 
 type SortProps = {
   value: string;
@@ -41,25 +54,29 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     variables: { id: modelID }
   });
 
+  // Get categories from the data
   const categories = data?.modelPlan?.mtoMatrix?.categories || [];
   const noUncategorized = categories.filter(
     category => category.name !== 'Uncategorized'
   );
 
+  // Map categories to sort options
   const mappedCategories: SortProps[] = noUncategorized.map(category => ({
     value: category.id,
     label: category.name
   }));
 
+  // Combine sort options and mapped categories
   const sortOptionsAndMappedCategories: SortProps[] = [
     ...sortOptions,
     ...mappedCategories
   ];
 
-  const methods = useForm({
+  // Variables for the form
+  const methods = useForm<FormValues>({
     defaultValues: {
       primaryCategory: 'default',
-      categoryTitle: ''
+      name: ''
     }
   });
 
@@ -70,16 +87,29 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
+  const [create] = useCreateMtoCategoryMutation();
+
+  const onSubmit: SubmitHandler<FormValues> = formData => {
+    create({
+      variables: {
+        id: modelID,
+        name: formData.name,
+        parentID:
+          formData.primaryCategory === 'none' ? null : formData.primaryCategory
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        closeModal();
+      }
+    });
+  };
+
   return (
     <FormProvider {...methods}>
       <Form
         className="maxw-none"
         id="custom-category-form"
-        onSubmit={handleSubmit(formData => {
-          // TODO: remove this console log
-          // eslint-disable-next-line no-console
-          console.log(formData);
-        })}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Fieldset disabled={loading}>
           <Controller
@@ -112,7 +142,6 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                   defaultValue="default"
                 >
                   {sortOptionsAndMappedCategories.map(option => {
-                    // debugger;
                     return (
                       <option
                         key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
@@ -128,7 +157,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
           />
 
           <Controller
-            name="categoryTitle"
+            name="name"
             control={control}
             rules={{
               required: true
