@@ -9,7 +9,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -27,14 +26,8 @@ func MTOSolutionGetByModelPlanIDLOADER(
 
 func MTOSolutionGetCommonSolutionByKeyLoader(
 	ctx context.Context,
-	namedPreparer sqlutils.NamedPreparer,
-	logger *zap.Logger,
 	key *models.MTOCommonSolutionKey,
 ) (*models.MTOCommonSolution, error) {
-	if key == nil {
-		return nil, fmt.Errorf("common solution key is nil")
-	}
-
 	commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, *key)
 	if err != nil {
 		return nil, err

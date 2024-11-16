@@ -22,9 +22,12 @@ func (r *mTOSolutionResolver) RelatedMilestones(ctx context.Context, obj *models
 
 // CommonSolution is the resolver for the commonSolution field.
 func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MTOSolution) (*models.MTOCommonSolution, error) {
-	logger := appcontext.ZLogger(ctx)
+	// If the key is nil there is no common solution
+	if obj.Key == nil {
+		return nil, nil
+	}
 
-	return MTOSolutionGetCommonSolutionByKeyLoader(ctx, r.store, logger, obj.Key)
+	return MTOSolutionGetCommonSolutionByKeyLoader(ctx, obj.Key)
 }
 
 // CreateMTOSolutionCustom is the resolver for the createMTOSolutionCustom field.
