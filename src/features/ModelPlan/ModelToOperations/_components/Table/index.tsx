@@ -137,69 +137,13 @@ const MTOTable = () => {
   // Function to map data indexes to be conditionally rendered based on the current page and items per page
   const getVisibleIndexes = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
-      const startingIndex = pageNum * itemsPerP;
-      const endingIndex = startingIndex + itemsPerP;
+      renderedRowIndexes.current = getRenderedRowIndexes(
+        sliceItems,
+        pageNum,
+        itemsPerP
+      );
 
-      const sliceData: CategoryType[] = [];
-
-      let milestoneIndex = 0;
-      const sliceItemsCopy = [...sliceItems];
-
-      // Initialize the shownIndexes object to later be set to the renderedRowIndexes ref
-      const shownIndexes: {
-        category: number[];
-        subCategory: number[][];
-        milestone: number[][][];
-      } = {
-        category: [],
-        subCategory: [],
-        milestone: []
-      };
-
-      // Initialize the shownIndexes object with structure of fetched data
-      sliceItemsCopy.forEach((category, catIndex) => {
-        shownIndexes.subCategory[catIndex] = [];
-        shownIndexes.milestone[catIndex] = [];
-        category.subCategories.forEach((subCategory, subIndex) => {
-          shownIndexes.milestone[catIndex][subIndex] = [];
-        });
-      });
-
-      sliceItemsCopy.forEach((category, catIndex) => {
-        category.subCategories.forEach((subCategory, subIndex) => {
-          subCategory.milestones.forEach((milestone, milIndex) => {
-            if (
-              milestoneIndex >= startingIndex &&
-              milestoneIndex < endingIndex
-            ) {
-              const foundCategory = sliceData.find(
-                sliceCategory => sliceCategory.id === category.id
-              );
-
-              if (foundCategory) {
-                const foundSubCategory = foundCategory.subCategories.find(
-                  sliceSubCategory => sliceSubCategory.id === subCategory.id
-                );
-                if (foundSubCategory) {
-                  shownIndexes.milestone[catIndex][subIndex].push(milIndex);
-                } else {
-                  shownIndexes.subCategory[catIndex].push(subIndex);
-                  shownIndexes.milestone[catIndex][subIndex].push(milIndex);
-                }
-              } else {
-                shownIndexes.category.push(catIndex);
-                shownIndexes.subCategory[catIndex].push(subIndex);
-                shownIndexes.milestone[catIndex][subIndex].push(milIndex);
-              }
-            }
-            milestoneIndex += 1;
-          });
-        });
-      });
-
-      renderedRowIndexes.current = shownIndexes;
-
-      return sliceData;
+      return sliceItems;
     };
   }, []);
 
@@ -693,4 +637,53 @@ export const moveRow = (
   }
 
   return updatedData;
+};
+
+export const getRenderedRowIndexes = (
+  sliceItems: CategoryType[],
+  pageNum: number,
+  itemsPerP: number
+) => {
+  const startingIndex = pageNum * itemsPerP;
+  const endingIndex = startingIndex + itemsPerP;
+
+  let milestoneIndex = 0;
+  const sliceItemsCopy = [...sliceItems];
+
+  // Initialize the shownIndexes object to later be set to the renderedRowIndexes ref
+  const shownIndexes: {
+    category: number[];
+    subCategory: number[][];
+    milestone: number[][][];
+  } = {
+    category: [],
+    subCategory: [],
+    milestone: []
+  };
+
+  // Initialize the shownIndexes object with structure of fetched data
+  sliceItemsCopy.forEach((category, catIndex) => {
+    shownIndexes.subCategory[catIndex] = [];
+    shownIndexes.milestone[catIndex] = [];
+    category.subCategories.forEach((subCategory, subIndex) => {
+      shownIndexes.milestone[catIndex][subIndex] = [];
+    });
+  });
+
+  sliceItemsCopy.forEach((category, catIndex) => {
+    category.subCategories.forEach((subCategory, subIndex) => {
+      subCategory.milestones.forEach((milestone, milIndex) => {
+        if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
+          shownIndexes.category.push(catIndex);
+          shownIndexes.subCategory[catIndex].push(subIndex);
+          shownIndexes.milestone[catIndex][subIndex].push(milIndex);
+        }
+        milestoneIndex += 1;
+      });
+    });
+  });
+
+  console.log(shownIndexes);
+
+  return shownIndexes;
 };
