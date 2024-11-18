@@ -14,7 +14,7 @@ var mtoGetByIDLoaderSQL string
 type mtoScripts struct {
 	Create string
 	Update string
-	// Hols the SQL to
+	// Holds the SQL to get a mto information by id. Note, in the schema, the id is the same as the model plan id
 	GetByIDLoader string
 }
 
