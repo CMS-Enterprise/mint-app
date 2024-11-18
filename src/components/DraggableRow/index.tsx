@@ -3,8 +3,8 @@ import { useDrag, useDrop } from 'react-dnd';
 
 type DraggableRowProps = {
   type: string;
-  index: number;
-  moveRow: (dragIndex: number, hoverIndex: number) => void;
+  index: number[];
+  moveRow: (dragIndex: number[], hoverIndex: number[]) => void;
   children: React.ReactNode;
   id: string;
   toggleRow?: (id: string) => void;
@@ -26,14 +26,14 @@ const DraggableRow = ({
 
   const [{ isOver }, drop] = useDrop({
     accept: type,
-    drop(item: { index: number; type: string }) {
+    drop(item: { index: number[]; type: string }) {
       if (!ref.current) {
         return;
       }
       const dragIndex = item.index;
       const hoverIndex = index;
 
-      if (dragIndex === hoverIndex) {
+      if (JSON.stringify(dragIndex) === JSON.stringify(hoverIndex)) {
         return;
       }
 

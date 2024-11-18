@@ -178,7 +178,7 @@ describe('moveRow', () => {
   });
 
   it('should move a category', () => {
-    const result = moveRow(0, 1, 'category', mockData);
+    const result = moveRow([0], [1], 'category', mockData);
     expect(result).toEqual([
       {
         __typename: 'MTOCategory',
@@ -260,7 +260,7 @@ describe('moveRow', () => {
   });
 
   it('should move a subcategory', () => {
-    const result = moveRow(0, 1, 'subcategory', mockData, '456');
+    const result = moveRow([0, 0], [0, 1], 'subcategory', mockData);
     expect(result).toEqual([
       {
         __typename: 'MTOCategory',
