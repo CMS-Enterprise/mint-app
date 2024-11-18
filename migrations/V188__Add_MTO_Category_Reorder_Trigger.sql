@@ -34,10 +34,10 @@ BEGIN
         RAISE EXCEPTION 'updating model_plan_id is not allowed. Caught in trigger function update_position_based_on_parent_and_model_plan';
     END IF;
 
-        IF OLD.parent_id IS DISTINCT FROM NEW.parent_id THEN
         /*
         Handle the old parent changes like a delete, move all lower categories up one for old parent
         */
+        IF OLD.parent_id IS DISTINCT FROM NEW.parent_id THEN
         UPDATE mto_category
         SET position = position - 1,
             modified_by = NEW.modified_by,
