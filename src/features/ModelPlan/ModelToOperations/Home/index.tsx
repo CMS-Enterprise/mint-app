@@ -29,7 +29,10 @@ const MTOHome = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<
+    'category' | 'system' | 'solution'
+  >('category');
 
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
@@ -44,7 +47,11 @@ const MTOHome = () => {
   return (
     <div className="model-to-operations margin-y-6">
       {/* TEMPORARY since WIP components are not finalized */}
-      <MTOModal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />
+      <MTOModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        modalType={modalType}
+      />
       <div className="width-fit-content">
         <div
           style={{ paddingTop: '2px', paddingBottom: '2px' }}
@@ -57,6 +64,7 @@ const MTOHome = () => {
         <Button
           type="button"
           onClick={() => {
+            setModalType('category');
             setIsModalOpen(true);
           }}
           className="margin-bottom-4"

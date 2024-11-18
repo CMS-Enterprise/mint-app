@@ -9,9 +9,10 @@ import CategoryForm from './CategoryForm';
 type MTOModalProps = {
   isOpen: boolean;
   closeModal: () => void;
+  modalType: 'category' | 'system' | 'solution';
 };
 
-const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
+const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   return (
@@ -23,7 +24,7 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {t('modal.title', { type: 'category' })}
+          {t('modal.title', { type: modalType })}
         </PageHeading>
         <p className="margin-y-0 text-base">
           <Trans
@@ -36,7 +37,7 @@ const MTOModal = ({ isOpen, closeModal }: MTOModalProps) => {
       </div>
 
       {/* if type is category, then render CategoryForm */}
-      <CategoryForm closeModal={closeModal} />
+      {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
     </Modal>
   );
 };
