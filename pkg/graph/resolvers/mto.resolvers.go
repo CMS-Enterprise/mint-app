@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -56,12 +57,14 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 
 // Info is the resolver for the info field.
 func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
-	panic(fmt.Errorf("not implemented: Info - info"))
+	return MTOInfoGetByIDOrModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
-func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UUID, readyForReview bool) (*models.ModelsToOperationMatrix, error) {
-	panic(fmt.Errorf("not implemented: MarkMTOReadyForReview - markMTOReadyForReview"))
+func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UUID, readyForReview bool) (*models.MTOInfo, error) {
+	princ := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOToggleReadyForReview(ctx, logger, princ, r.store, id, readyForReview)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
@@ -70,13 +73,3 @@ func (r *Resolver) ModelsToOperationMatrix() generated.ModelsToOperationMatrixRe
 }
 
 type modelsToOperationMatrixResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *modelsToOperationMatrixResolver) Mto(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
-	panic(fmt.Errorf("not implemented: Mto - mto"))
-}

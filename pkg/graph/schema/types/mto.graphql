@@ -52,7 +52,8 @@ enum MTORiskIndicator {
   AT_RISK
 }
 
+# TODO (mto) should this live in the mto info.graphql file?
 extend type Mutation {
-  markMTOReadyForReview(id: UUID!, readyForReview: Boolean!): ModelsToOperationMatrix!
+  markMTOReadyForReview(id: UUID!, readyForReview: Boolean!): MTOInfo!
   @hasRole(role: MINT_USER)
 }

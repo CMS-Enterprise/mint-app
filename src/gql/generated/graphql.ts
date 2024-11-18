@@ -1131,7 +1131,7 @@ export type Mutation = {
   lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
-  markMTOReadyForReview: ModelsToOperationMatrix;
+  markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
