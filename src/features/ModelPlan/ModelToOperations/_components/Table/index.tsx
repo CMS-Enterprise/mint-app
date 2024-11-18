@@ -683,7 +683,5 @@ export const getRenderedRowIndexes = (
     });
   });
 
-  console.log(shownIndexes);
-
   return shownIndexes;
 };
