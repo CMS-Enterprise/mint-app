@@ -258,14 +258,15 @@ const MTOTable = () => {
                     }
                     onClick={e => {
                       e.stopPropagation();
-                      moveRow(
-                        currentIndex || 0,
-                        (currentIndex || 0) - 1,
-                        rowType,
-                        sortedData,
-                        setRearrangedData,
-                        subcategoryID,
-                        milestoneID
+                      setRearrangedData(
+                        moveRow(
+                          currentIndex || 0,
+                          (currentIndex || 0) - 1,
+                          rowType,
+                          sortedData,
+                          subcategoryID,
+                          milestoneID
+                        )
                       );
                     }}
                     onKeyPress={e => {
@@ -288,14 +289,15 @@ const MTOTable = () => {
                     }
                     onClick={e => {
                       e.stopPropagation();
-                      moveRow(
-                        currentIndex || 0,
-                        (currentIndex || 0) + 1,
-                        rowType,
-                        sortedData,
-                        setRearrangedData,
-                        subcategoryID,
-                        milestoneID
+                      setRearrangedData(
+                        moveRow(
+                          currentIndex || 0,
+                          (currentIndex || 0) + 1,
+                          rowType,
+                          sortedData,
+                          subcategoryID,
+                          milestoneID
+                        )
                       );
                     }}
                     onKeyPress={e => {
@@ -370,13 +372,14 @@ const MTOTable = () => {
             index={index}
             type={`${categoryID}-subcategory-${subCategory.isUncategorized}`}
             moveRow={(dragIndex: number, hoverIndex: number) =>
-              moveRow(
-                dragIndex,
-                hoverIndex,
-                'subcategory',
-                sortedData,
-                setRearrangedData,
-                subCategory.id
+              setRearrangedData(
+                moveRow(
+                  dragIndex,
+                  hoverIndex,
+                  'subcategory',
+                  sortedData,
+                  subCategory.id
+                )
               )
             }
             id={`${categoryID}-${subCategory.id}`}
@@ -419,12 +422,8 @@ const MTOTable = () => {
             index={index}
             type="category"
             moveRow={(dragIndex: number, hoverIndex: number) =>
-              moveRow(
-                dragIndex,
-                hoverIndex,
-                'category',
-                sortedData,
-                setRearrangedData
+              setRearrangedData(
+                moveRow(dragIndex, hoverIndex, 'category', sortedData)
               )
             }
             id={category.id}
@@ -639,12 +638,11 @@ export const formatAndHomogenizeMilestoneData = (
  * This function handles the reordering of categories, subcategories, and milestones within the sorted data.
  * It updates the data structure based on the drag-and-drop/menu moveup/down interactions.
  */
-const moveRow = (
+export const moveRow = (
   dragIndex: number,
   hoverIndex: number,
   type: MTORowType,
   sortedData: CategoryType[],
-  setRearrangedData: React.Dispatch<React.SetStateAction<CategoryType[]>>,
   subcategoryID?: string,
   milestoneID?: string
 ) => {
@@ -694,6 +692,5 @@ const moveRow = (
     }
   }
 
-  // Set the new data state
-  setRearrangedData(updatedData);
+  return updatedData;
 };

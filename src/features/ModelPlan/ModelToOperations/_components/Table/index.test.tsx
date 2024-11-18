@@ -6,7 +6,7 @@ import {
 } from 'gql/generated/graphql';
 
 import { CategoryType } from './columns';
-import { formatAndHomogenizeMilestoneData } from '.';
+import { formatAndHomogenizeMilestoneData, moveRow } from '.';
 
 type QueryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']['categories'];
@@ -87,27 +87,253 @@ describe('formatAndHomogenizeMilestoneData', () => {
     const result = formatAndHomogenizeMilestoneData(mockData);
     expect(result).toEqual(expectedOutput);
   });
+});
 
-  //   it('format query data to mimic milestone type', () => {
-  //     const mockData = [
-  //       {
-  //         id: '1',
-  //         name: 'Milestone 1'
-  //         // Missing date and status
-  //       }
-  //     ];
+describe('moveRow', () => {
+  let mockData: CategoryType[];
 
-  //     const expectedOutput = [
-  //       {
-  //         id: '1',
-  //         name: 'Milestone 1',
-  //         date: undefined,
-  //         status: undefined,
-  //         formattedDate: undefined // Assuming the function handles missing fields
-  //       }
-  //     ];
+  beforeEach(() => {
+    mockData = [
+      {
+        __typename: 'MTOCategory',
+        id: '123',
+        riskIndicator: undefined,
+        name: 'Milestone 1',
+        facilitatedBy: undefined,
+        solutions: [],
+        needBy: undefined,
+        status: undefined,
+        actions: undefined,
+        subCategories: [
+          {
+            __typename: 'MTOSubcategory',
+            id: '456',
+            riskIndicator: undefined,
+            name: 'Subcategory 1',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '789',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 1',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: false
+          },
+          {
+            __typename: 'MTOSubcategory',
+            id: '4562',
+            riskIndicator: undefined,
+            name: 'Subcategory 2',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '7892',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 2',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: false
+          }
+        ],
+        isUncategorized: false
+      },
+      {
+        __typename: 'MTOCategory',
+        id: '1232',
+        riskIndicator: undefined,
+        name: 'Category 2',
+        facilitatedBy: undefined,
+        solutions: [],
+        needBy: undefined,
+        status: undefined,
+        actions: undefined,
+        subCategories: []
+      }
+    ];
+  });
 
-  //     const result = formatAndHomogenizeMilestoneData(mockData);
-  //     expect(result).toEqual(expectedOutput);
-  //   });
+  it('should move a category', () => {
+    const result = moveRow(0, 1, 'category', mockData);
+    expect(result).toEqual([
+      {
+        __typename: 'MTOCategory',
+        id: '1232',
+        riskIndicator: undefined,
+        name: 'Category 2',
+        facilitatedBy: undefined,
+        solutions: [],
+        needBy: undefined,
+        status: undefined,
+        actions: undefined,
+        subCategories: []
+      },
+      {
+        __typename: 'MTOCategory',
+        id: '123',
+        riskIndicator: undefined,
+        name: 'Milestone 1',
+        facilitatedBy: undefined,
+        solutions: [],
+        needBy: undefined,
+        status: undefined,
+        actions: undefined,
+        subCategories: [
+          {
+            __typename: 'MTOSubcategory',
+            id: '456',
+            riskIndicator: undefined,
+            name: 'Subcategory 1',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '789',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 1',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: false
+          },
+          {
+            __typename: 'MTOSubcategory',
+            id: '4562',
+            riskIndicator: undefined,
+            name: 'Subcategory 2',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '7892',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 2',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: false
+          }
+        ],
+        isUncategorized: false
+      }
+    ]);
+  });
+
+  it('should move a subcategory', () => {
+    const result = moveRow(0, 1, 'subcategory', mockData, '456');
+    expect(result).toEqual([
+      {
+        __typename: 'MTOCategory',
+        id: '123',
+        riskIndicator: undefined,
+        name: 'Milestone 1',
+        facilitatedBy: undefined,
+        solutions: [],
+        needBy: undefined,
+        status: undefined,
+        actions: undefined,
+        subCategories: [
+          {
+            __typename: 'MTOSubcategory',
+            id: '4562',
+            riskIndicator: undefined,
+            name: 'Subcategory 2',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '7892',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 2',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: false
+          },
+          {
+            __typename: 'MTOSubcategory',
+            id: '456',
+            riskIndicator: undefined,
+            name: 'Subcategory 1',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '789',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 1',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: false
+          }
+        ],
+        isUncategorized: false
+      },
+      {
+        __typename: 'MTOCategory',
+        id: '1232',
+        riskIndicator: undefined,
+        name: 'Category 2',
+        facilitatedBy: undefined,
+        solutions: [],
+        needBy: undefined,
+        status: undefined,
+        actions: undefined,
+        subCategories: []
+      }
+    ]);
+  });
 });
