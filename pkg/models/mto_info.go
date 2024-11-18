@@ -14,3 +14,10 @@ type MTOInfo struct {
 	ReadyForReviewBy  *uuid.UUID `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 }
+
+func NewMTOInfo(createdBy uuid.UUID, modelPlanID uuid.UUID) *MTOInfo {
+	return &MTOInfo{
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+	}
+}
