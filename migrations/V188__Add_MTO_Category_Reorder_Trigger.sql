@@ -29,11 +29,11 @@ BEGIN
     
     -- Handle Update: Reorder positions when a row's position is changed 
     ELSIF TG_OP = 'UPDATE' THEN
+    /* Prevent updates to model_plan_id as categories cannot move from one model plan to another */
     IF OLD.model_plan_id IS DISTINCT FROM NEW.model_plan_id THEN
         RAISE EXCEPTION 'updating model_plan_id is not allowed. Caught in trigger function update_position_based_on_parent_and_model_plan';
     END IF;
 
- /* Prevent updates to model_plan_id and parent_id as these are fixed for each category */
         IF OLD.parent_id IS DISTINCT FROM NEW.parent_id THEN
         /*
         Handle the old parent changes like a delete, move all lower categories up one for old parent
