@@ -721,6 +721,7 @@ export type MtoCategory = {
   id: Scalars['UUID']['output'];
   isUncategorized: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
   subCategories: Array<MtoSubcategory>;
 };
 
@@ -873,6 +874,7 @@ export type MtoSubcategory = {
   isUncategorized: Scalars['Boolean']['output'];
   milestones: Array<MtoMilestone>;
   name: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
 };
 
 export enum MintUses {
@@ -1115,6 +1117,12 @@ export type Mutation = {
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  /**
+   * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
+   * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
+   */
+  renameMTOCategory: MtoCategory;
+  reorderMTOCategory: MtoCategory;
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
@@ -1127,11 +1135,6 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
-  /**
-   * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
-   * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
-   */
-  updateMTOCategory: MtoCategory;
   updateMTOMilestone: MtoMilestone;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
@@ -1317,6 +1320,20 @@ export type MutationRemovePlanDocumentSolutionLinksArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationRenameMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationReorderMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  newOrder: Scalars['Int']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationReportAProblemArgs = {
   input: ReportAProblemInput;
 };
@@ -1364,13 +1381,6 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationUpdateMtoCategoryArgs = {
-  id: Scalars['UUID']['input'];
-  name: Scalars['String']['input'];
 };
 
 
