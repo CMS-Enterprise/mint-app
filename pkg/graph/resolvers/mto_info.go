@@ -29,6 +29,7 @@ func MTOInfoUpdate(ctx context.Context, logger *zap.Logger, id uuid.UUID, change
 		return nil, err
 	}
 	//TODO (mto) this is a bit of a departure, note this function will fail if a data loader  is not initiated
+	//TODO (mto) do we even want to expose this? Or should we just leave the specific mutation to toggle ready for review
 
 	err = BaseStructPreUpdate(logger, existingRecord, changes, principal, store, true, true)
 	if err != nil {
