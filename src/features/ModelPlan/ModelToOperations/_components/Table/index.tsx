@@ -7,8 +7,10 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import {
+  GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
-  useGetModelToOperationsMatrixQuery
+  useGetModelToOperationsMatrixQuery,
+  useReorderMtoCategoryMutation
 } from 'gql/generated/graphql';
 
 import DraggableRow from 'components/DraggableRow';
@@ -37,6 +39,15 @@ const MTOTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const [updateOrder] = useReorderMtoCategoryMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: { id: modelID }
+      }
+    ]
+  });
 
   const {
     data: queryData,
@@ -239,7 +250,8 @@ const MTOTable = () => {
                           setIndexes,
                           moveRowDirection(-1),
                           rowType,
-                          sortedData
+                          sortedData,
+                          updateOrder
                         )
                       );
                     }}
@@ -268,7 +280,8 @@ const MTOTable = () => {
                           setIndexes,
                           moveRowDirection(1),
                           rowType,
-                          sortedData
+                          sortedData,
+                          updateOrder
                         )
                       );
                     }}
@@ -345,7 +358,13 @@ const MTOTable = () => {
             type="subcategory"
             moveRow={(dragIndex: number[], hoverIndex: number[]) =>
               setRearrangedData(
-                moveRow(dragIndex, hoverIndex, 'subcategory', sortedData)
+                moveRow(
+                  dragIndex,
+                  hoverIndex,
+                  'subcategory',
+                  sortedData,
+                  updateOrder
+                )
               )
             }
             id={`${categoryID}-${subCategory.id}`}
@@ -389,7 +408,13 @@ const MTOTable = () => {
             type="category"
             moveRow={(dragIndex: number[], hoverIndex: number[]) =>
               setRearrangedData(
-                moveRow(dragIndex, hoverIndex, 'category', sortedData)
+                moveRow(
+                  dragIndex,
+                  hoverIndex,
+                  'category',
+                  sortedData,
+                  updateOrder
+                )
               )
             }
             id={category.id}
@@ -608,15 +633,23 @@ export const moveRow = (
   dragIndex: number[],
   hoverIndex: number[],
   type: MTORowType,
-  sortedData: CategoryType[]
+  sortedData: CategoryType[],
+  updateOrder: any
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
 
   if (type === 'category') {
     // Handle Category reordering
-    const [draggedCategory] = updatedData.splice(Number(dragIndex), 1);
-    updatedData.splice(Number(hoverIndex), 0, draggedCategory);
+    const [draggedCategory] = updatedData.splice(dragIndex[0], 1);
+    updatedData.splice(hoverIndex[0], 0, draggedCategory);
+
+    updateOrder({
+      variables: {
+        id: draggedCategory.id,
+        newOrder: hoverIndex[0]
+      }
+    });
   } else if (type.includes('subcategory')) {
     const parentIndex = dragIndex[0];
     const hoverParentIndex = hoverIndex[0];
@@ -624,8 +657,10 @@ export const moveRow = (
     // Find the category that contains the dragged subcategory
     const parentCategory = updatedData[parentIndex];
     const hoverParentCategory = updatedData[hoverParentIndex];
+    const hoverParentCategoryID = hoverParentCategory.id;
 
     const subIndex = dragIndex[1];
+    const subCategoryId = parentCategory.subCategories[subIndex].id;
     let hoverSubIndex = hoverIndex[1];
 
     hoverSubIndex =
@@ -640,12 +675,18 @@ export const moveRow = (
     // Replace the modified subcategories array back to the parent category
     parentCategory.subCategories = subCategories;
 
-    // if (parentIndex !== hoverParentIndex) {
     const hoverSubCategories = [...hoverParentCategory.subCategories];
     hoverSubCategories.splice(hoverSubIndex, 0, draggedSub);
 
     hoverParentCategory.subCategories = hoverSubCategories;
-    // }
+
+    updateOrder({
+      variables: {
+        id: subCategoryId,
+        newOrder: hoverSubIndex,
+        parentId: hoverParentCategoryID
+      }
+    });
   } else if (type.includes('milestone')) {
     // TODO: if needed, implement milestone reordering
     // // Find the parent category
