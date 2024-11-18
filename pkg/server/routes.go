@@ -12,6 +12,7 @@ import (
 	mail "github.com/xhit/go-simple-mail/v2"
 
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
+	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -205,6 +206,12 @@ func (s *Server) routes(
 
 	s3Client := s3.NewS3Client(s3Config)
 	echimpS3Client := s3.NewS3Client(echimpS3config)
+
+	// On application startup, we should immediately try and populate the ECHIMP Cache
+	// We can do this by just calling GetECHIMPCrAndTDLCache and ignoring the actual cache return value
+	if _, err := echimpcache.GetECHIMPCrAndTDLCache(&echimpS3Client, s.Config, s.logger); err != nil {
+		s.logger.Error("failed to populate ECHIMP CR/TDL cache on application startup", zap.Error(err))
+	}
 
 	var lambdaClient *lambda.Lambda
 	var princeLambdaName string

@@ -22,11 +22,16 @@ func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper, logge
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
 	}
+
+	// If the cache is old, immediately return the old cache and start populating a new one
+	// This prevents requests from hanging while we fetch/parse the cache object
 	if CRAndTDLCache.IsOld(viperConfig) {
-		err := CRAndTDLCache.refreshCache(client, viperConfig, logger)
-		if err != nil {
-			return nil, err
-		}
+		go func(c *s3.S3Client, v *viper.Viper, l *zap.Logger) {
+			err := CRAndTDLCache.refreshCache(c, v, l)
+			if err != nil {
+				l.Error("error refreshing ECHIMP CR/TDL cache", zap.Error(err))
+			}
+		}(client, viperConfig, logger)
 	}
 	return CRAndTDLCache, nil
 }
