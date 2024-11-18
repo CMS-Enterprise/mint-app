@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Icon, Menu } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { MtoRiskIndicator, MtoStatus } from 'gql/generated/graphql';
+import {
+  MtoFacilitator,
+  MtoMilestoneStatus,
+  MtoRiskIndicator
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -19,18 +23,20 @@ export type ColumnSortType = {
 export type MTORowType = 'category' | 'subcategory' | 'milestone';
 
 export type MilestoneType = {
+  __typename: 'MTOMilestone';
   id: string;
   riskIndicator: MtoRiskIndicator;
   name: string;
-  facilitatedBy: string;
+  facilitatedBy: MtoFacilitator | null;
   solutions: string[];
-  needBy: string;
-  status: MtoStatus;
+  needBy: string | null;
+  status: MtoMilestoneStatus;
   actions: any;
   isUncategorized?: boolean;
 };
 
 export type SubCategoryType = {
+  __typename: 'MTOSubcategory';
   id: string;
   riskIndicator: undefined;
   name: string;
@@ -44,6 +50,7 @@ export type SubCategoryType = {
 };
 
 export type CategoryType = {
+  __typename: 'MTOCategory';
   id: string;
   riskIndicator: undefined;
   name: string;
@@ -182,7 +189,14 @@ export const columns: ColumnType[] = [
     width: '200px',
     sort: sortNested,
     Cell: ({ row, rowType, expanded }: RowProps) => {
-      return <>{row.facilitatedBy}</>;
+      if (!row.facilitatedBy) return <></>;
+      return (
+        <>
+          {i18next.t(
+            `modelToOperationsMisc.facilitatedBy.${row.facilitatedBy}`
+          )}
+        </>
+      );
     }
   },
   {
@@ -392,6 +406,7 @@ export const ActionMenu = ({
     );
   return (
     <div style={{ textAlign: 'right' }}>
+      {/* TODO: add link to edit milestone */}
       <UswdsReactLink to="#">
         {i18next.t('modelToOperationsMisc:table.editDetails')}
       </UswdsReactLink>

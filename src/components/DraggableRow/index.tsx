@@ -58,7 +58,7 @@ const DraggableRow = ({
     })
   });
 
-  setTimeout(() => drag(drop(ref)), 100);
+  drag(drop(ref));
 
   return (
     <tr

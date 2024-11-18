@@ -43,6 +43,27 @@ export const modelToOperationsMisc: Record<string, any> = {
       buttonText: 'Use this template'
     }
   },
+  facilitatedBy: {
+    MODEL_TEAM: 'Model team',
+    MODEL_LEAD: 'Model lead',
+    IT_LEAD: 'IT lead',
+    SOLUTION_ARCHITECT: 'Solution architect',
+    IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
+    PARTICIPANTS: 'Participants',
+    APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
+    IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
+    EVALUATION_CONTRACTOR: 'Evaluation contractor',
+    QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
+      'Quality measures development contractor',
+    LEARNING_CONTRACTOR: 'Learning contractor',
+    MONITORING_CONTRACTOR: 'Monitoring contractor',
+    CONTRACTING_OFFICERS_REPRESENTATIVE:
+      'Contracting Officer’s Representative (COR)',
+    LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
+    RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
+      'Research and Rapid Cycle Evaluation Group (RREG)',
+    OTHER: 'Other'
+  },
   table: {
     modelMilestone: 'Model milestone',
     facilitatedBy: 'Facilitated by',

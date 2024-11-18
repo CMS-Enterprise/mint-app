@@ -6,7 +6,10 @@ import { useParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixQuery,
+  useGetModelToOperationsMatrixQuery
+} from 'gql/generated/graphql';
 
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
@@ -27,119 +30,8 @@ import {
   SubCategoryType
 } from './columns';
 
-/**
- * Function to format Category and SubCategory data to mirror the structure of Milstone data
- * This is done to make the data homogenized and easier to work with in the table for drag, drop, sort and pagination
- * Each row can now be superficially treated as a Milestone row
- */
-const formatAndHomogenizeMilestoneData = (data: CategoryType[]) => {
-  const formatData: CategoryType[] = [];
-  data.forEach(category => {
-    const formattedCategory = {} as CategoryType;
-    formattedCategory.actions = undefined;
-    formattedCategory.riskIndicator = undefined;
-    formattedCategory.facilitatedBy = undefined;
-    formattedCategory.needBy = undefined;
-    formattedCategory.status = undefined;
-    formattedCategory.solutions = [];
-    formattedCategory.subCategories = [];
-
-    category.subCategories.forEach(subCategory => {
-      const formattedSubCategory = {} as SubCategoryType;
-      formattedSubCategory.actions = undefined;
-      formattedSubCategory.riskIndicator = undefined;
-      formattedSubCategory.facilitatedBy = undefined;
-      formattedSubCategory.needBy = undefined;
-      formattedSubCategory.status = undefined;
-      formattedSubCategory.solutions = [];
-      formattedSubCategory.milestones = [];
-
-      subCategory.milestones.forEach(milestone => {
-        const formattedMilestone = {} as MilestoneType;
-        formattedMilestone.actions = undefined;
-        formattedMilestone.solutions = [];
-        formattedSubCategory.milestones.push({
-          ...formattedMilestone,
-          ...milestone
-        });
-      });
-
-      const { milestones, ...subCategoryData } = subCategory;
-      formattedCategory.subCategories.push({
-        ...formattedSubCategory,
-        ...subCategoryData
-      });
-    });
-
-    const { subCategories, ...categoryData } = category;
-    formatData.push({ ...formattedCategory, ...categoryData });
-  });
-  return formatData;
-};
-
-/**
- * moveRow function
- * This function handles the reordering of categories, subcategories, and milestones within the sorted data.
- * It updates the data structure based on the drag-and-drop/menu moveup/down interactions.
- */
-const moveRow = (
-  dragIndex: number,
-  hoverIndex: number,
-  type: MTORowType,
-  sortedData: CategoryType[],
-  setRearrangedData: React.Dispatch<React.SetStateAction<CategoryType[]>>,
-  subcategoryID?: string,
-  milestoneID?: string
-) => {
-  // Clone the existing data
-  const updatedData = [...sortedData];
-
-  if (type === 'category') {
-    // Handle Category reordering
-    const [draggedCategory] = updatedData.splice(dragIndex, 1);
-    updatedData.splice(hoverIndex, 0, draggedCategory);
-  } else if (type.includes('subcategory')) {
-    // Find the category that contains the dragged subcategory
-    const parentCategory = updatedData.find(cat =>
-      cat.subCategories.some((sub: SubCategoryType) => sub.id === subcategoryID)
-    );
-
-    if (parentCategory?.subCategories) {
-      // Find the subcategories array and reorder within it
-      const subCategories = [...parentCategory.subCategories];
-      const draggedSub = subCategories.splice(dragIndex, 1)[0];
-      subCategories.splice(hoverIndex, 0, draggedSub);
-
-      // Replace the modified subcategories array back to the parent category
-      parentCategory.subCategories = subCategories;
-    }
-  } else if (type.includes('milestone')) {
-    // Find the parent category
-    const parentCategory = updatedData.find(cat =>
-      cat.subCategories.some(sub =>
-        sub.milestones.some(milestone => milestone.id === milestoneID)
-      )
-    );
-
-    // Find the parent sub-category
-    const parentSubCategory = parentCategory?.subCategories.find(sub =>
-      sub.milestones.some(milestone => milestone.id === milestoneID)
-    );
-
-    if (parentCategory && parentSubCategory) {
-      // Reorder milestones within the found sub-category
-      const milestones = [...parentSubCategory.milestones];
-      const draggedMilestone = milestones.splice(dragIndex, 1)[0];
-      milestones.splice(hoverIndex, 0, draggedMilestone);
-
-      // Update the sub-category with reordered milestones
-      parentSubCategory.milestones = milestones;
-    }
-  }
-
-  // Set the new data state
-  setRearrangedData(updatedData);
-};
+type GetModelToOperationsMatrixQueryType =
+  GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']['categories'];
 
 const MTOTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -160,7 +52,7 @@ const MTOTable = () => {
     () =>
       formatAndHomogenizeMilestoneData(
         (queryData?.modelPlan.mtoMatrix?.categories ||
-          []) as unknown as CategoryType[]
+          []) as unknown as GetModelToOperationsMatrixQueryType
       ),
     [queryData?.modelPlan.mtoMatrix]
   );
@@ -689,3 +581,119 @@ const MTOTable = () => {
 };
 
 export default MTOTable;
+
+/**
+ * Function to format Category and SubCategory data to mirror the structure of Milstone data
+ * This is done to make the data homogenized and easier to work with in the table for drag, drop, sort and pagination
+ * Each row can now be superficially treated as a Milestone row
+ */
+export const formatAndHomogenizeMilestoneData = (
+  data: GetModelToOperationsMatrixQueryType
+) => {
+  const formatData: CategoryType[] = [];
+  data.forEach(category => {
+    const formattedCategory = {} as CategoryType;
+    formattedCategory.actions = undefined;
+    formattedCategory.riskIndicator = undefined;
+    formattedCategory.facilitatedBy = undefined;
+    formattedCategory.needBy = undefined;
+    formattedCategory.status = undefined;
+    formattedCategory.solutions = [];
+    formattedCategory.subCategories = [];
+
+    category.subCategories.forEach(subCategory => {
+      const formattedSubCategory = {} as SubCategoryType;
+      formattedSubCategory.actions = undefined;
+      formattedSubCategory.riskIndicator = undefined;
+      formattedSubCategory.facilitatedBy = undefined;
+      formattedSubCategory.needBy = undefined;
+      formattedSubCategory.status = undefined;
+      formattedSubCategory.solutions = [];
+      formattedSubCategory.milestones = [];
+
+      subCategory.milestones.forEach(milestone => {
+        const formattedMilestone = {} as MilestoneType;
+        formattedMilestone.actions = undefined;
+        formattedMilestone.solutions = [];
+        formattedSubCategory.milestones.push({
+          ...formattedMilestone,
+          ...milestone
+        });
+      });
+
+      const { milestones, ...subCategoryData } = subCategory;
+      formattedCategory.subCategories.push({
+        ...formattedSubCategory,
+        ...subCategoryData
+      });
+    });
+
+    const { subCategories, ...categoryData } = category;
+    formatData.push({ ...formattedCategory, ...categoryData });
+  });
+  return formatData;
+};
+
+/**
+ * moveRow function
+ * This function handles the reordering of categories, subcategories, and milestones within the sorted data.
+ * It updates the data structure based on the drag-and-drop/menu moveup/down interactions.
+ */
+const moveRow = (
+  dragIndex: number,
+  hoverIndex: number,
+  type: MTORowType,
+  sortedData: CategoryType[],
+  setRearrangedData: React.Dispatch<React.SetStateAction<CategoryType[]>>,
+  subcategoryID?: string,
+  milestoneID?: string
+) => {
+  // Clone the existing data
+  const updatedData = [...sortedData];
+
+  if (type === 'category') {
+    // Handle Category reordering
+    const [draggedCategory] = updatedData.splice(dragIndex, 1);
+    updatedData.splice(hoverIndex, 0, draggedCategory);
+  } else if (type.includes('subcategory')) {
+    // Find the category that contains the dragged subcategory
+    const parentCategory = updatedData.find(cat =>
+      cat.subCategories.some((sub: SubCategoryType) => sub.id === subcategoryID)
+    );
+
+    if (parentCategory?.subCategories) {
+      // Find the subcategories array and reorder within it
+      const subCategories = [...parentCategory.subCategories];
+      const draggedSub = subCategories.splice(dragIndex, 1)[0];
+      subCategories.splice(hoverIndex, 0, draggedSub);
+
+      // Replace the modified subcategories array back to the parent category
+      parentCategory.subCategories = subCategories;
+    }
+  } else if (type.includes('milestone')) {
+    // Find the parent category
+    const parentCategory = updatedData.find(cat =>
+      cat.subCategories.some(sub =>
+        sub.milestones.some(milestone => milestone.id === milestoneID)
+      )
+    );
+
+    // Find the parent sub-category
+    const parentSubCategory = parentCategory?.subCategories.find(sub =>
+      sub.milestones.some(milestone => milestone.id === milestoneID)
+    );
+
+    if (parentCategory && parentSubCategory) {
+      // Reorder milestones within the found sub-category
+      const milestones = [...parentSubCategory.milestones];
+      const draggedMilestone = milestones.splice(dragIndex, 1)[0];
+      milestones.splice(hoverIndex, 0, draggedMilestone);
+
+      // Update the sub-category with reordered milestones
+      parentSubCategory.milestones = milestones;
+    }
+  }
+
+  // Set the new data state
+  setRearrangedData(updatedData);
+};
