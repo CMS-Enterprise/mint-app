@@ -108,6 +108,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     <FormProvider {...methods}>
       <Form
         className="maxw-none"
+        data-testid="custom-category-form"
         id="custom-category-form"
         onSubmit={handleSubmit(onSubmit)}
       >

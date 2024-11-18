@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MTO Modal - Custom Category Form > renders without errors 1`] = `<DocumentFragment />`;
