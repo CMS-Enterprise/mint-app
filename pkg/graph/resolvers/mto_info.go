@@ -8,12 +8,36 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // MTOInfoGetByIDOrModelPlanIDLOADER implements resolver logic to get all mto info records for an modelPlanID (which is the same as the id in this case)
 func MTOInfoGetByIDOrModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.MTOInfo, error) {
 	return loaders.MTOInfo.ByIDOrModelPlanID.Load(ctx, modelPlanID)
+}
+
+// MTOInfoUpdate takes a changes object and updates an MTO info object
+func MTOInfoUpdate(ctx context.Context, logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.MTOInfo, error) {
+	// Get existing record
+	existingRecord, err := MTOInfoGetByIDOrModelPlanIDLOADER(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	//TODO (mto) this is a bit of a departure, note this function will fail if a data loader  is not initiated
+
+	err = BaseStructPreUpdate(logger, existingRecord, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	returnedRecord, err := storage.MTOInfoUpdate(store, logger, existingRecord)
+	if err != nil {
+		return nil, err
+	}
+	return returnedRecord, err
 }
