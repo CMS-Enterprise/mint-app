@@ -10,10 +10,19 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// ReadyForReviewByUserAccount is the resolver for the readyForReviewByUserAccount field.
+func (r *mTOResolver) ReadyForReviewByUserAccount(ctx context.Context, obj *models.MTO) (*authentication.UserAccount, error) {
+	if obj.ReadyForReviewBy == nil {
+		return nil, nil
+	}
+	return UserAccountGetByIDLOADER(ctx, *obj.ReadyForReviewBy)
+}
 
 // Categories is the resolver for the categories field.
 func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCategory, error) {
@@ -55,7 +64,7 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 }
 
 // Mto is the resolver for the mto field.
-func (r *modelsToOperationMatrixResolver) Mto(ctx context.Context, obj *models.ModelsToOperationMatrix) (*model.Mto, error) {
+func (r *modelsToOperationMatrixResolver) Mto(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTO, error) {
 	panic(fmt.Errorf("not implemented: Mto - mto"))
 }
 
@@ -64,9 +73,13 @@ func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UU
 	panic(fmt.Errorf("not implemented: MarkMTOReadyForReview - markMTOReadyForReview"))
 }
 
+// MTO returns generated.MTOResolver implementation.
+func (r *Resolver) MTO() generated.MTOResolver { return &mTOResolver{r} }
+
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
 func (r *Resolver) ModelsToOperationMatrix() generated.ModelsToOperationMatrixResolver {
 	return &modelsToOperationMatrixResolver{r}
 }
 
+type mTOResolver struct{ *Resolver }
 type modelsToOperationMatrixResolver struct{ *Resolver }
