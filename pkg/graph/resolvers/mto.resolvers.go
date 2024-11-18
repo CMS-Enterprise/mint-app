@@ -10,19 +10,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// ReadyForReviewByUserAccount is the resolver for the readyForReviewByUserAccount field.
-func (r *mTOResolver) ReadyForReviewByUserAccount(ctx context.Context, obj *models.MTO) (*authentication.UserAccount, error) {
-	if obj.ReadyForReviewBy == nil {
-		return nil, nil
-	}
-	return UserAccountGetByIDLOADER(ctx, *obj.ReadyForReviewBy)
-}
 
 // Categories is the resolver for the categories field.
 func (r *modelsToOperationMatrixResolver) Categories(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOCategory, error) {
@@ -63,9 +54,9 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 	return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
 }
 
-// Mto is the resolver for the mto field.
-func (r *modelsToOperationMatrixResolver) Mto(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTO, error) {
-	panic(fmt.Errorf("not implemented: Mto - mto"))
+// Info is the resolver for the info field.
+func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
+	panic(fmt.Errorf("not implemented: Info - info"))
 }
 
 // MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
@@ -73,13 +64,19 @@ func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UU
 	panic(fmt.Errorf("not implemented: MarkMTOReadyForReview - markMTOReadyForReview"))
 }
 
-// MTO returns generated.MTOResolver implementation.
-func (r *Resolver) MTO() generated.MTOResolver { return &mTOResolver{r} }
-
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
 func (r *Resolver) ModelsToOperationMatrix() generated.ModelsToOperationMatrixResolver {
 	return &modelsToOperationMatrixResolver{r}
 }
 
-type mTOResolver struct{ *Resolver }
 type modelsToOperationMatrixResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *modelsToOperationMatrixResolver) Mto(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
+	panic(fmt.Errorf("not implemented: Mto - mto"))
+}

@@ -716,21 +716,6 @@ export type LockableSectionLockStatusChanged = {
   lockStatus: LockableSectionLockStatus;
 };
 
-export type Mto = {
-  __typename: 'MTO';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modelPlanID: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
-  readyForReviewByUserAccount?: Maybe<UserAccount>;
-  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
-};
-
 export type MtoCategory = {
   __typename: 'MTOCategory';
   id: Scalars['UUID']['output'];
@@ -792,6 +777,22 @@ export enum MtoFacilitator {
   RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP = 'RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP',
   SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
 }
+
+/** This holds information specific to a models to operation matrix */
+export type MtoInfo = {
+  __typename: 'MTOInfo';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
+};
 
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
@@ -1073,8 +1074,8 @@ export type ModelsToOperationMatrix = {
   categories: Array<MtoCategory>;
   commonMilestones: Array<MtoCommonMilestone>;
   commonSolutions: Array<MtoCommonSolution>;
+  info: MtoInfo;
   milestones: Array<MtoMilestone>;
-  mto: Mto;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
   status: MtoStatus;

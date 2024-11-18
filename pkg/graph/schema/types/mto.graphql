@@ -10,25 +10,10 @@ type ModelsToOperationMatrix {
   recentEdit: RecentModification #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
 
 
-  mto: MTO!
+  info: MTOInfo!
 
 }
 
-type MTO {
-  id: UUID!
-  modelPlanID: UUID!
-
-  readyForReviewBy: UUID
-  readyForReviewDTS: Time
-  readyForReviewByUserAccount: UserAccount
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
 
 type RecentModification {
   modifiedBy: UUID
