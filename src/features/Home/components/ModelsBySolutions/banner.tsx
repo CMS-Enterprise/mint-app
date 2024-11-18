@@ -62,26 +62,22 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus('total')}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker': selectedStatus === 'total'
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.total`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.total`)}</div>
                 <div data-testid="total-count">{solutionModels.length}</div>
               </Button>
               <Button
                 type="button"
                 onClick={() => setSelectedStatus(ModelBySolutionStatus.PLANNED)}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker':
                     selectedStatus === ModelBySolutionStatus.PLANNED
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.planned`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.planned`)}</div>
                 <div data-testid="planned-count">
                   {
                     solutionModels.filter(
@@ -95,14 +91,12 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus(ModelBySolutionStatus.ACTIVE)}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker':
                     selectedStatus === ModelBySolutionStatus.ACTIVE
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.active`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.active`)}</div>
                 <div data-testid="active-count">
                   {
                     solutionModels.filter(
@@ -116,14 +110,12 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus(ModelBySolutionStatus.ENDED)}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker':
                     selectedStatus === ModelBySolutionStatus.ENDED
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.ended`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.ended`)}</div>
                 <div data-testid="ended-count">
                   {
                     solutionModels.filter(

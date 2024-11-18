@@ -2,6 +2,7 @@ import React from 'react';
 import { HeaderGroup } from 'react-table';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { ColumnSortType } from 'features/Sandbox';
 import { DateTime } from 'luxon';
 
 export type sortColumnProps = null | string | number | DateTime;
@@ -23,7 +24,7 @@ export const getColumnSortStatus = <T extends {}>(
 
 // Returns header sort icon based on sort status
 export const getHeaderSortIcon = <T extends {}>(
-  column: HeaderGroup<T>,
+  column: HeaderGroup<T> | ColumnSortType,
   icon: boolean
 ) => {
   const sharedClassName = classNames('margin-left-05', {

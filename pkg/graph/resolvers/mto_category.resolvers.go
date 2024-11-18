@@ -43,12 +43,19 @@ func (r *mutationResolver) CreateMTOCategory(ctx context.Context, modelPlanID uu
 	return MTOCategoryCreate(ctx, logger, principal, r.store, name, modelPlanID, parentID)
 }
 
-// UpdateMTOCategory is the resolver for the updateMTOCategory field.
-func (r *mutationResolver) UpdateMTOCategory(ctx context.Context, id uuid.UUID, name string) (*models.MTOCategory, error) {
+// RenameMTOCategory is the resolver for the renameMTOCategory field.
+func (r *mutationResolver) RenameMTOCategory(ctx context.Context, id uuid.UUID, name string) (*models.MTOCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return MTOCategoryUpdate(ctx, logger, principal, r.store, id, name)
+	return MTOCategoryRename(ctx, logger, principal, r.store, id, name)
+}
+
+// ReorderMTOCategory is the resolver for the reorderMTOCategory field.
+func (r *mutationResolver) ReorderMTOCategory(ctx context.Context, id uuid.UUID, newOrder int) (*models.MTOCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOCategoryReorder(ctx, logger, principal, r.store, id, newOrder)
 }
 
 // MTOCategory returns generated.MTOCategoryResolver implementation.
