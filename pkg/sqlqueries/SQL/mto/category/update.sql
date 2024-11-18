@@ -2,6 +2,7 @@ UPDATE mto_category
 SET 
     name= :name,
     position= :position,
+    parent_id= :parent_id,
     modified_by= :modified_by,
     modified_dts= CURRENT_TIMESTAMP
 WHERE  mto_category.id = :id
