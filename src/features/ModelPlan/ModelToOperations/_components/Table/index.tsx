@@ -206,6 +206,13 @@ const MTOTable = () => {
             ? [categoryIndex, currentIndex]
             : [currentIndex];
 
+        const moveRowDirection = (num: number) => {
+          if (rowType === 'category') {
+            return [setIndexes[0] + num];
+          }
+          return [setIndexes[0], setIndexes[1] + num];
+        };
+
         return (
           <td
             className={classNames('padding-1 line-height-normal', {
@@ -230,7 +237,7 @@ const MTOTable = () => {
                       setRearrangedData(
                         moveRow(
                           setIndexes,
-                          [setIndexes[0], setIndexes[1] - 1],
+                          moveRowDirection(-1),
                           rowType,
                           sortedData
                         )
@@ -259,7 +266,7 @@ const MTOTable = () => {
                       setRearrangedData(
                         moveRow(
                           setIndexes,
-                          [setIndexes[0], setIndexes[1] + 1],
+                          moveRowDirection(1),
                           rowType,
                           sortedData
                         )
