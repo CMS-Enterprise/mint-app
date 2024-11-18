@@ -101,13 +101,29 @@ const MTOTable = () => {
     );
   };
 
-  // Update local storage when expanded rows change
+  // Load row length from local storage
+  let defaultRowLength: number = 10;
+  try {
+    if (window.localStorage[`mto-matrix-row-length-${modelID}`]) {
+      defaultRowLength = JSON.parse(
+        window.localStorage[`mto-matrix-row-length-${modelID}`]
+      );
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Error parsing local storage');
+  }
+
+  // Sets items per page
+  const [itemsPerPage, setItemsPerPage] = useState<number>(defaultRowLength);
+
+  // Update local storage when row length changes
   useEffect(() => {
     localStorage.setItem(
-      `mto-matrix-expanded-rows-${modelID}`,
-      JSON.stringify(expandedRows)
+      `mto-matrix-row-length-${modelID}`,
+      JSON.stringify(itemsPerPage)
     );
-  }, [expandedRows, modelID]);
+  }, [itemsPerPage, modelID]);
 
   // Sort states
   const [sortCount, setSortCount] = useState<number>(3);
@@ -120,8 +136,6 @@ const MTOTable = () => {
   );
   // Holds the current column that should be sorted
   const [currentColumn, setCurrentColumn] = useState<number>(0);
-
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   // State to hold the index of rows that should be rendered in conjunction with pagination
   const renderedRowIndexes = useRef<{
