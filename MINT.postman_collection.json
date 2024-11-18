@@ -3431,6 +3431,39 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Mark MTO Ready for Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation markMTOReadyForReview {\nmarkMTOReadyForReview(id: \"{{modelPlanID}}\",\nreadyForReview: true)\n    {\n        readyForReviewBy\n        readyForReviewDTS\n        readyForReviewByUserAccount{\n            id\n            username\n            givenName\n            email\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

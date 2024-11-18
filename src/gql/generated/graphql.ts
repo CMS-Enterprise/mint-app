@@ -716,6 +716,21 @@ export type LockableSectionLockStatusChanged = {
   lockStatus: LockableSectionLockStatus;
 };
 
+export type Mto = {
+  __typename: 'MTO';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
+};
+
 export type MtoCategory = {
   __typename: 'MTOCategory';
   id: Scalars['UUID']['output'];
@@ -1059,6 +1074,7 @@ export type ModelsToOperationMatrix = {
   commonMilestones: Array<MtoCommonMilestone>;
   commonSolutions: Array<MtoCommonSolution>;
   milestones: Array<MtoMilestone>;
+  mto: Mto;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
   status: MtoStatus;
@@ -1114,6 +1130,7 @@ export type Mutation = {
   lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
+  markMTOReadyForReview: ModelsToOperationMatrix;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
@@ -1303,6 +1320,13 @@ export type MutationLinkNewPlanDocumentArgs = {
 export type MutationLockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationMarkMtoReadyForReviewArgs = {
+  id: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
 };
 
 

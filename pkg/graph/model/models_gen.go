@@ -61,6 +61,20 @@ type LockableSectionLockStatusChanged struct {
 	ActionType ActionType                `json:"actionType"`
 }
 
+type Mto struct {
+	ID                          uuid.UUID                   `json:"id"`
+	ModelPlanID                 uuid.UUID                   `json:"modelPlanID"`
+	ReadyForReviewBy            *uuid.UUID                  `json:"readyForReviewBy,omitempty"`
+	ReadyForReviewDts           *time.Time                  `json:"readyForReviewDTS,omitempty"`
+	ReadyForReviewByUserAccount *authentication.UserAccount `json:"readyForReviewByUserAccount,omitempty"`
+	CreatedBy                   uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount        authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts                  time.Time                   `json:"createdDts"`
+	ModifiedBy                  *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount       *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts                 *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 type MTOSolution struct {
 	ID                       uuid.UUID                    `json:"id"`
 	Name                     string                       `json:"name"`

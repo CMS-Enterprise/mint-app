@@ -8,6 +8,26 @@ type ModelsToOperationMatrix {
   solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
   recentEdit: RecentModification #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
+
+
+  mto: MTO!
+
+}
+
+type MTO {
+  id: UUID!
+  modelPlanID: UUID!
+
+  readyForReviewBy: UUID
+  readyForReviewDTS: Time
+  readyForReviewByUserAccount: UserAccount
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
 type RecentModification {
@@ -45,4 +65,9 @@ enum MTORiskIndicator {
   ON_TRACK
   OFF_TRACK
   AT_RISK
+}
+
+extend type Mutation {
+  markMTOReadyForReview(id: UUID!, readyForReview: Boolean!): ModelsToOperationMatrix!
+  @hasRole(role: MINT_USER)
 }

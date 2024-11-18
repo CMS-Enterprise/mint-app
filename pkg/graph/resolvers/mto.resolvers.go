@@ -8,6 +8,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -50,6 +52,16 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 	// TODO re-visit when solutions are implemented
 	// TODO re-visit when change history is implemented for MTO
 	return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
+}
+
+// Mto is the resolver for the mto field.
+func (r *modelsToOperationMatrixResolver) Mto(ctx context.Context, obj *models.ModelsToOperationMatrix) (*model.Mto, error) {
+	panic(fmt.Errorf("not implemented: Mto - mto"))
+}
+
+// MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
+func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UUID, readyForReview bool) (*models.ModelsToOperationMatrix, error) {
+	panic(fmt.Errorf("not implemented: MarkMTOReadyForReview - markMTOReadyForReview"))
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
