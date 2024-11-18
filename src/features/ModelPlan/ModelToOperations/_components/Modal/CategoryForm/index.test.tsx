@@ -1,22 +1,25 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { GetMtoCategoriesDocument } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/general';
 
-import CategoryForm from './index';
+import MTOModal from '..';
 
 const mocks = [
   {
     request: {
       query: GetMtoCategoriesDocument,
-      variables: { id: modelID }
+      variables: {
+        id: modelID
+      }
     },
     result: {
       data: {
         modelPlan: {
           __typename: 'ModelPlan',
+          id: modelID,
           mtoMatrix: {
             __typename: 'MtoMatrix',
             categories: [
@@ -39,24 +42,29 @@ const mocks = [
 ];
 
 describe('MTO Modal - Custom Category Form', () => {
+  // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+  // eslint-disable-next-line
+  console.error = vi.fn();
+
   it('renders without errors', async () => {
-    const { getByTestId, asFragment } = render(
-      // <CategoryForm closeModal={() => {}} />
+    const {
+      getByText,
+      // getByTestId,
+      asFragment
+    } = render(
       <MemoryRouter
         initialEntries={[
-          `models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="models/:modelID/collaboration-area/model-to-operations/matrix?view=milestones">
-            <CategoryForm closeModal={() => {}} />
-          </Route>
+          <MTOModal isOpen closeModal={() => {}} />
         </MockedProvider>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(getByTestId('custom-category-form')).not.toBeDisabled();
+      expect(getByText('Add a new category')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
