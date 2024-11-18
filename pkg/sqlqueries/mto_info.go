@@ -14,13 +14,14 @@ var mtoInfoGetByIDLoaderSQL string
 type mtoInfoScripts struct {
 	Create string
 	Update string
-	// Holds the SQL to get a mto information by id. Note, in the schema, the id is the same as the model plan id
-	GetByIDLoader string
+	// Holds the SQL to get a mto information by id. Note, in the schema, the id is the same as the model plan id.
+	// The script expects that the parameter is called `model_plan_ids`
+	GetByIDOrModelPlanIDLoader string
 }
 
 // MTOInfo houses all the sql for getting data for mto info objects from the database
 var MTOInfo = mtoInfoScripts{
-	Create:        mtoInfoCreateSQL,
-	Update:        mtoInfoUpdateSQL,
-	GetByIDLoader: mtoInfoGetByIDLoaderSQL,
+	Create:                     mtoInfoCreateSQL,
+	Update:                     mtoInfoUpdateSQL,
+	GetByIDOrModelPlanIDLoader: mtoInfoGetByIDLoaderSQL,
 }
