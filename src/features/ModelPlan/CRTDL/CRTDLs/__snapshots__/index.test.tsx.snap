@@ -428,17 +428,17 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                 <option
                   value="6"
                 >
-                  Show 6
+                  Show 6 
                 </option>
                 <option
                   value="9"
                 >
-                  Show 9
+                  Show 9 
                 </option>
                 <option
                   value="100000"
                 >
-                  Show all
+                  Show all 
                 </option>
               </select>
             </div>

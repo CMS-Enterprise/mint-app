@@ -9,6 +9,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
+  ReorderMtoCategoryMutationVariables,
   useGetModelToOperationsMatrixQuery,
   useReorderMtoCategoryMutation
 } from 'gql/generated/graphql';
@@ -644,7 +645,11 @@ export const moveRow = (
   hoverIndex: number[],
   type: MTORowType,
   sortedData: CategoryType[],
-  updateOrder: any,
+  updateOrder: ({
+    variables
+  }: {
+    variables: ReorderMtoCategoryMutationVariables;
+  }) => Promise<any>,
   setError?: (error: string) => void
 ) => {
   // Clone the existing data
@@ -697,7 +702,7 @@ export const moveRow = (
         newOrder: hoverSubIndex,
         parentID: hoverParentCategoryID
       }
-    }).catch(() => {
+    })?.catch(() => {
       if (setError) {
         setError(i18next.t('modelToOperationsMisc:errorReorder'));
       }
