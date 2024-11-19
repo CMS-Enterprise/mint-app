@@ -3412,6 +3412,87 @@
 					]
 				},
 				{
+					"name": "Solutions",
+					"item": [
+						{
+							"name": "NewMTOSolution (Custom)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOSolutionCustom",
+											"",
+											"mtoSolutionID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoSolutionID\", mtoSolutionID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOSolution {\n    createMTOSolutionCustom(modelPlanID: \"{{modelPlanID}}\",\n    solutionType: IT_SYSTEM,\n    facilitatedBy: MODEL_TEAM,\n    name: \"test_name\",\n    pocName: \"test_poc_name\",\n    pocEmail: \"poc@test.email\"\n) {\n    id\n    name\n    facilitatedBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOSolution (Common)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOSolutionCommon",
+											"",
+											"mtoSolutionID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoSolutionID\", mtoSolutionID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    key: SOLUTION_A\n) {\n    id\n    name\n    facilitatedBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get All Model Plans And Get MTO data",
 					"request": {
 						"method": "POST",
@@ -3580,6 +3661,11 @@
 		{
 			"key": "mtoMilestoneID",
 			"value": ""
+		},
+		{
+			"key": "mtoSolutionID",
+			"value": "",
+			"type": "string"
 		},
 		{
 			"key": "mtoSeededModelPlanID",

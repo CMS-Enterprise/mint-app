@@ -6,12 +6,12 @@ type MTOSolution struct {
 	baseStruct
 	modelPlanRelation
 
-	Name          string                `json:"name" db:"name"`
+	Name          *string               `json:"name" db:"name"`
 	FacilitatedBy MTOFacilitator        `json:"facilitatedBy" db:"facilitated_by"`
 	Status        MTOSolutionStatus     `json:"status" db:"status"`
 	RiskIndicator MTORiskIndicator      `json:"riskIndicator" db:"risk_indicator"`
-	Key           *MTOCommonSolutionKey `json:"key" db:"key"`
-	Type          MTOSolutionType       `json:"type" db:"type"`
+	Key           *MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
+	Type          *MTOSolutionType      `json:"type" db:"type"`
 	PocName       string                `json:"pocName" db:"poc_name"`
 	PocEmail      string                `json:"pocEmail" db:"poc_email"`
 }
@@ -38,8 +38,8 @@ func (m *MTOSolution) AddedFromSolutionLibrary() bool {
 func NewMTOSolution(
 	modelPlanID uuid.UUID,
 	commonSolutionKey *MTOCommonSolutionKey,
-	name string,
-	solutionType MTOSolutionType,
+	name *string,
+	solutionType *MTOSolutionType,
 	facilitatedBy MTOFacilitator,
 	pocName string,
 	pocEmail string,

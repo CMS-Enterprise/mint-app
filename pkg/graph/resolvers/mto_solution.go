@@ -90,8 +90,8 @@ func MTOSolutionCreateCustom(
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
 		commonSolutionKey,
-		name,
-		solutionType,
+		&name,
+		&solutionType,
 		facilitatedBy,
 		pocName,
 		pocEmail,
@@ -110,6 +110,7 @@ func MTOSolutionCreateCommon(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
+	modelPlanID uuid.UUID,
 	commonSolutionKey *models.MTOCommonSolutionKey,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
@@ -118,13 +119,13 @@ func MTOSolutionCreateCommon(
 	}
 
 	mtoSolution := models.NewMTOSolution(
-		uuid.Nil, // modelPlanID, // TODO: ???
+		modelPlanID, // TODO: ???
 		commonSolutionKey,
-		"",                 // name, // TODO: ???
-		"",                 // solutionType, // TODO: ???git
-		"MINT_TEAM",        // facilitatedBy, // TODO: ???
-		"",                 // pocName, // TODO: ???
-		"empty@email.test", // pocEmail, // TODO: ???
+		nil,                        // name, // TODO: ???
+		nil,                        // solutionType, // TODO: ???git
+		models.MTOFacilitatorOther, // facilitatedBy, // TODO: ???
+		"test_poc_name_empty",      // pocName, // TODO: ???
+		"empty@email.test",         // pocEmail, // TODO: ???
 		principalAccount.ID,
 	)
 

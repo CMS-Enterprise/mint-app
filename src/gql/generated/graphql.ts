@@ -841,13 +841,13 @@ export type MtoSolution = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   pocEmail: Scalars['String']['output'];
   pocName: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
   status: MtoSolutionStatus;
-  type: MtoSolutionType;
+  type?: Maybe<MtoSolutionType>;
 };
 
 export type MtoSolutionChanges = {
@@ -1225,6 +1225,7 @@ export type MutationCreateMtoMilestoneCustomArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateMtoSolutionCommonArgs = {
   key?: InputMaybe<MtoCommonSolutionKey>;
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
