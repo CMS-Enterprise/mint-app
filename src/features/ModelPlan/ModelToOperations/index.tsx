@@ -5,12 +5,14 @@ import { Grid, Icon } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
+import useMessage from 'hooks/useMessage';
 
 import MTOStatusBanner from './_components/StatusBanner';
 import MTOHome from './Home';
@@ -30,6 +32,8 @@ const ModelToOperations = () => {
     }
   });
 
+  const { message } = useMessage();
+
   const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
 
   return (
@@ -44,6 +48,12 @@ const ModelToOperations = () => {
           BreadcrumbItemOptions.MODEL_TO_OPERATIONS
         ]}
       />
+
+      {message && (
+        <Alert type="error" slim>
+          {message}
+        </Alert>
+      )}
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
