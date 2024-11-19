@@ -5,10 +5,12 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -44,20 +46,45 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// TODO Build a query (loader? transaction?) to do the following
-	// 1) Find the Common Milestone object in the DB
-	// 2) Determine if a Category Exists for this Model Plan that has the same name as the one configured for the Common Milestone
-	// 3) If not, create that new category
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+		// First, fetch the Common Milestone object from the DB
+		commonMilestone, err := MTOCommonMilestoneGetByKeyLOADER(ctx, commonMilestoneKey)
+		if err != nil {
+			logger.Error("failed to fetch common milestone when creating milestone from library", zap.Error(err))
+			return nil, err
+		}
 
-	// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
-	// TODO: Update category ID based on query from above
-	milestone := models.NewMTOMilestone(principalAccount.ID, nil, &commonMilestoneKey, modelPlanID, nil)
+		// Next, attempt to insert a category with the same name as the configured category in the Common Milestone
+		// Here we use a special storage method that handles conflicts without returning an error
+		// to ensure that we create a cateogry if needed, otherwise we just return the existing one
 
-	err := BaseStructPreCreate(logger, milestone, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-	return storage.MTOMilestoneCreate(store, logger, milestone)
+		// Note, the position for the category & subcategory (coded as `0` here) is not respected when inserted, but is a required parameter in the constructor
+		// It will be have a position equal to the max of all other positions
+		parentCategoryToCreate := models.NewMTOCategory(uuid.Nil, commonMilestone.CategoryName, modelPlanID, nil, 0)
+		parentCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, parentCategoryToCreate)
+		if err != nil {
+			logger.Error("failed to create parent category when creating milestone from library", zap.Error(err))
+			return nil, err
+		}
+		finalCategoryID := parentCategory.ID       // track the eventual category ID that we will attach to the milestone
+		if commonMilestone.SubCategoryName != "" { // TODO replace with nil check when SubCategoryName becomes a pointer (MINT-3218)
+			subCategoryToCreate := models.NewMTOCategory(uuid.Nil, commonMilestone.SubCategoryName, modelPlanID, &parentCategory.ID, 0)
+			subCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, subCategoryToCreate)
+			if err != nil {
+				logger.Error("failed to create subcategory when creating milestone from library", zap.Error(err))
+				return nil, err
+			}
+			finalCategoryID = subCategory.ID
+		}
+
+		// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
+		milestone := models.NewMTOMilestone(principalAccount.ID, nil, &commonMilestoneKey, modelPlanID, &finalCategoryID)
+
+		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
+			return nil, err
+		}
+		return storage.MTOMilestoneCreate(tx, logger, milestone)
+	})
 }
 
 // MTOMilestoneUpdate updates the name of MTOMilestone or SubMilestone
