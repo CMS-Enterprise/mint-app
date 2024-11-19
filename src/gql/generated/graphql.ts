@@ -1332,7 +1332,7 @@ export type MutationLockLockableSectionArgs = {
 
 /** Mutations definition for the schema */
 export type MutationMarkMtoReadyForReviewArgs = {
-  id: Scalars['UUID']['input'];
+  modelPlanID: Scalars['UUID']['input'];
   readyForReview: Scalars['Boolean']['input'];
 };
 

@@ -76,13 +76,12 @@ func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.Rece
 }
 
 func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID, isReadyForReview bool) (*models.MTOInfo, error) {
-	mtoInfo, err := MTOInfoGetByIDOrModelPlanIDLOADER(ctx, modelPlanID)
+	mtoInfo, err := MTOInfoGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 	// Clear out ready for review if no
 	if !isReadyForReview {
-		//TODO handle all the logic for this, look at task list section logic. Maybe extract into helper?
 		mtoInfo.ReadyForReviewBy = nil
 		mtoInfo.ReadyForReviewDts = nil
 

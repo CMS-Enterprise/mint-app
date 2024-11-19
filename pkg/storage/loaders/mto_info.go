@@ -15,13 +15,13 @@ import (
 // mtoInfoLoaders is a struct that holds LoaderWrappers related to MTO Infos
 type mtoInfoLoaders struct {
 
-	// ByIDOrModelPlanID Gets a list of mto Info records associated with a model plan by the supplied model plan id (which is the same as the id).
-	ByIDOrModelPlanID LoaderWrapper[uuid.UUID, *models.MTOInfo]
+	// ByModelPlanID Gets a list of mto Info records associated with a model plan by the supplied model plan id (which is the same as the id).
+	ByModelPlanID LoaderWrapper[uuid.UUID, *models.MTOInfo]
 }
 
 // MTOInfo is the singleton instance of all LoaderWrappers related to MTO Infos
 var MTOInfo = &mtoInfoLoaders{
-	ByIDOrModelPlanID: NewLoaderWrapper(batchMTOInfoGetByModelPlanID),
+	ByModelPlanID: NewLoaderWrapper(batchMTOInfoGetByModelPlanID),
 }
 
 // batchMTOInfoGetByModelPlanID combines all provided keys and sorts and returns the results from the data loader
@@ -31,12 +31,12 @@ func batchMTOInfoGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOInfo](modelPlanIDs, err)
 	}
-	data, err := storage.MTOInfoGetByIDOrModelPlanIDLoader(loaders.DataReader.Store, logger, modelPlanIDs)
+	data, err := storage.MTOInfoGetByModelPlanIDLoader(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOInfo](modelPlanIDs, err)
 	}
 	getKeyFunc := func(data *models.MTOInfo) uuid.UUID {
-		return data.ID
+		return data.ModelPlanID
 	}
 
 	// sort and return the result

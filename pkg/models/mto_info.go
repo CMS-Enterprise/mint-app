@@ -20,7 +20,5 @@ func NewMTOInfo(createdBy uuid.UUID, modelPlanID uuid.UUID) *MTOInfo {
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 	}
-	// id should be the same as model plan id
-	info.ID = modelPlanID
 	return &info
 }

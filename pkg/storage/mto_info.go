@@ -12,13 +12,13 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// MTOInfoGetByIDOrModelPlanIDLoader returns all mto info records for a slice of model plan ids
-func MTOInfoGetByIDOrModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOInfo, error) {
+// MTOInfoGetByModelPlanIDLoader returns all mto info records for a slice of model plan ids
+func MTOInfoGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOInfo, error) {
 
 	args := map[string]interface{}{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOInfo](np, sqlqueries.MTOInfo.GetByIDOrModelPlanIDLoader, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOInfo](np, sqlqueries.MTOInfo.GetByModelPlanIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

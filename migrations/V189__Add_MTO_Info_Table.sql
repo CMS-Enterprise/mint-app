@@ -1,7 +1,6 @@
 CREATE TABLE mto_info (
-    id UUID PRIMARY KEY REFERENCES model_plan(id),
-    -- TODO (mto), can make the id and model_plan_id identical?
-    -- model_plan_id UUID NOT NULL REFERENCES model_plan(id) UNIQUE,
+    id UUID PRIMARY KEY,
+    model_plan_id UUID NOT NULL REFERENCES model_plan(id) UNIQUE,
 
     ready_for_review_by UUID REFERENCES user_account(id),
     ready_for_review_dts TIMESTAMP WITH TIME ZONE,

@@ -16,15 +16,15 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// MTOInfoGetByIDOrModelPlanIDLOADER implements resolver logic to get all mto info records for an modelPlanID (which is the same as the id in this case)
-func MTOInfoGetByIDOrModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.MTOInfo, error) {
-	return loaders.MTOInfo.ByIDOrModelPlanID.Load(ctx, modelPlanID)
+// MTOInfoGetByModelPlanIDLOADER implements resolver logic to get all mto info records for an modelPlanID (which is the same as the id in this case)
+func MTOInfoGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.MTOInfo, error) {
+	return loaders.MTOInfo.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
 // MTOInfoUpdate takes a changes object and updates an MTO info object
 func MTOInfoUpdate(ctx context.Context, logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.MTOInfo, error) {
 	// Get existing record
-	existingRecord, err := MTOInfoGetByIDOrModelPlanIDLOADER(ctx, id)
+	existingRecord, err := MTOInfoGetByModelPlanIDLOADER(ctx, id)
 	if err != nil {
 		return nil, err
 	}

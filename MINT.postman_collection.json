@@ -3485,7 +3485,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation markMTOReadyForReview {\nmarkMTOReadyForReview(id: \"{{modelPlanID}}\",\nreadyForReview: true)\n    {\n        readyForReviewBy\n        readyForReviewDTS\n        readyForReviewByUserAccount{\n            id\n            username\n            givenName\n            email\n        }\n    }\n}",
+								"query": "mutation markMTOReadyForReview {\nmarkMTOReadyForReview(modelPlanID: \"{{modelPlanID}}\",\nreadyForReview: true)\n    {\n        readyForReviewBy\n        readyForReviewDTS\n        readyForReviewByUserAccount{\n            id\n            username\n            givenName\n            email\n        }\n    }\n}",
 								"variables": ""
 							}
 						},

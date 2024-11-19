@@ -57,14 +57,14 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 
 // Info is the resolver for the info field.
 func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
-	return MTOInfoGetByIDOrModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
+	return MTOInfoGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
-func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, id uuid.UUID, readyForReview bool) (*models.MTOInfo, error) {
+func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, modelPlanID uuid.UUID, readyForReview bool) (*models.MTOInfo, error) {
 	princ := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOToggleReadyForReview(ctx, logger, princ, r.store, id, readyForReview)
+	return MTOToggleReadyForReview(ctx, logger, princ, r.store, modelPlanID, readyForReview)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
