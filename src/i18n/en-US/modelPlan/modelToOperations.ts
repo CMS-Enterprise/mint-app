@@ -1,3 +1,5 @@
+import { head } from 'lodash';
+
 export const modelToOperations: any = {};
 
 export const modelToOperationsMisc: Record<string, any> = {
@@ -42,6 +44,16 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '18 categories, 0 milestones, 0 solutions',
       buttonText: 'Use this template'
     }
+  },
+  readyForReview: {
+    heading: 'Set MTO status to ready for review?',
+    descriptionReady:
+      'The "ready for review" status indicates to others viewing your MTO that your milestones and chosen solutions are relatively well set, though you may continue to update content and statuses.',
+    descriptionInProgress:
+      'The "in progress" status indicates to others viewing your MTO that you are still extensively adding, removing, and reorganizing milestones and chosen solutions.',
+    markAsReady: 'Mark as ready for review',
+    markAsInProgress: 'Mark as in progress',
+    goBack: 'Go back to MTO'
   }
 };
 
