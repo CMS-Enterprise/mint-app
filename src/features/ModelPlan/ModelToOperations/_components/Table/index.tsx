@@ -12,10 +12,12 @@ import {
   useGetModelToOperationsMatrixQuery,
   useReorderMtoCategoryMutation
 } from 'gql/generated/graphql';
+import i18next from 'i18next';
 
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
+import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -39,6 +41,8 @@ const MTOTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const { showMessage: setError } = useMessage();
 
   const [updateOrder] = useReorderMtoCategoryMutation({
     refetchQueries: [
@@ -251,7 +255,8 @@ const MTOTable = () => {
                           moveRowDirection(-1),
                           rowType,
                           sortedData,
-                          updateOrder
+                          updateOrder,
+                          setError
                         )
                       );
                     }}
@@ -281,7 +286,8 @@ const MTOTable = () => {
                           moveRowDirection(1),
                           rowType,
                           sortedData,
-                          updateOrder
+                          updateOrder,
+                          setError
                         )
                       );
                     }}
@@ -363,7 +369,8 @@ const MTOTable = () => {
                   hoverIndex,
                   'subcategory',
                   sortedData,
-                  updateOrder
+                  updateOrder,
+                  setError
                 )
               )
             }
@@ -413,7 +420,8 @@ const MTOTable = () => {
                   hoverIndex,
                   'category',
                   sortedData,
-                  updateOrder
+                  updateOrder,
+                  setError
                 )
               )
             }
@@ -474,99 +482,101 @@ const MTOTable = () => {
   }
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div
-        className="display-block"
-        style={{
-          width: '100%',
-          minWidth: '100%',
-          overflow: 'auto',
-          borderBottom: '1px solid black',
-          marginBottom: '.75rem'
-        }}
-      >
-        <table
+    <>
+      <DndProvider backend={HTML5Backend}>
+        <div
+          className="display-block"
           style={{
             width: '100%',
-            borderCollapse: 'collapse'
+            minWidth: '100%',
+            overflow: 'auto',
+            borderBottom: '1px solid black',
+            marginBottom: '.75rem'
           }}
         >
-          <thead>
-            <tr>
-              {columns.map((column, index) => (
-                <th
-                  key={column.accessor}
-                  style={{
-                    borderBottom: '1px solid black',
-                    padding: '1rem',
-                    paddingLeft: index === 0 ? '.5rem' : '0px',
-                    paddingBottom: '.25rem',
-                    textAlign: 'left',
-                    width: column.width,
-                    minWidth: column.width,
-                    maxWidth: column.width
-                  }}
-                >
-                  {column.canSort !== false ? (
-                    <button
-                      className={classNames(
-                        'usa-button usa-button--unstyled position-relative'
-                      )}
-                      onClick={() => {
-                        const isSorted =
-                          sortCount % 3 === 1 || sortCount % 3 === 0;
-                        const isSortedDesc = sortCount % 3 === 1;
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse'
+            }}
+          >
+            <thead>
+              <tr>
+                {columns.map((column, index) => (
+                  <th
+                    key={column.accessor}
+                    style={{
+                      borderBottom: '1px solid black',
+                      padding: '1rem',
+                      paddingLeft: index === 0 ? '.5rem' : '0px',
+                      paddingBottom: '.25rem',
+                      textAlign: 'left',
+                      width: column.width,
+                      minWidth: column.width,
+                      maxWidth: column.width
+                    }}
+                  >
+                    {column.canSort !== false ? (
+                      <button
+                        className={classNames(
+                          'usa-button usa-button--unstyled position-relative'
+                        )}
+                        onClick={() => {
+                          const isSorted =
+                            sortCount % 3 === 1 || sortCount % 3 === 0;
+                          const isSortedDesc = sortCount % 3 === 1;
 
-                        setCurrentColumn(index);
-                        setSortCount(sortCount + 1);
-                        setColumnSort(prev => {
-                          const newColumnSort = [...prev];
-                          newColumnSort[index] = {
-                            isSorted,
-                            isSortedDesc,
-                            sortColumn: column.accessor
-                          };
-                          return newColumnSort;
-                        });
-                      }}
-                      type="button"
-                    >
-                      {column.Header}
-                      {getHeaderSortIcon(columnSort[index], false)}
-                    </button>
-                  ) : (
-                    <span
-                      className={classNames(
-                        'usa-button usa-button--unstyled position-relative',
-                        {
-                          'text-no-underline text-black':
-                            column.Header ===
-                            t('modelToOperationsMisc:table.actions')
-                        }
-                      )}
-                    >
-                      {column.Header}
-                    </span>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>{renderCategories()}</tbody>
-        </table>
-      </div>
-      <div className="display-flex">
-        {Pagination}
+                          setCurrentColumn(index);
+                          setSortCount(sortCount + 1);
+                          setColumnSort(prev => {
+                            const newColumnSort = [...prev];
+                            newColumnSort[index] = {
+                              isSorted,
+                              isSortedDesc,
+                              sortColumn: column.accessor
+                            };
+                            return newColumnSort;
+                          });
+                        }}
+                        type="button"
+                      >
+                        {column.Header}
+                        {getHeaderSortIcon(columnSort[index], false)}
+                      </button>
+                    ) : (
+                      <span
+                        className={classNames(
+                          'usa-button usa-button--unstyled position-relative',
+                          {
+                            'text-no-underline text-black':
+                              column.Header ===
+                              t('modelToOperationsMisc:table.actions')
+                          }
+                        )}
+                      >
+                        {column.Header}
+                      </span>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>{renderCategories()}</tbody>
+          </table>
+        </div>
+        <div className="display-flex">
+          {Pagination}
 
-        <TablePageSize
-          className="margin-left-auto desktop:grid-col-auto"
-          pageSize={itemsPerPage}
-          setPageSize={setItemsPerPage}
-          valueArray={[5, 10, 15, 20]}
-          suffix={t('modelToOperationsMisc:table.milestones')}
-        />
-      </div>
-    </DndProvider>
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={itemsPerPage}
+            setPageSize={setItemsPerPage}
+            valueArray={[5, 10, 15, 20]}
+            suffix={t('modelToOperationsMisc:table.milestones')}
+          />
+        </div>
+      </DndProvider>
+    </>
   );
 };
 
@@ -634,7 +644,8 @@ export const moveRow = (
   hoverIndex: number[],
   type: MTORowType,
   sortedData: CategoryType[],
-  updateOrder: any
+  updateOrder: any,
+  setError?: (error: string) => void
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
@@ -685,6 +696,10 @@ export const moveRow = (
         id: subCategoryId,
         newOrder: hoverSubIndex,
         parentId: hoverParentCategoryID
+      }
+    }).catch(() => {
+      if (setError) {
+        setError(i18next.t('modelToOperationsMisc:errorReorder'));
       }
     });
   } else if (type.includes('milestone')) {

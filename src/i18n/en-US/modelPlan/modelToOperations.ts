@@ -91,7 +91,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       removeCategory: 'Remove category',
       removeSubCategory: 'Remove sub-category'
     }
-  }
+  },
+  errorReorder: 'Failed to reorder the MTO matrix.  Please try again.'
 };
 
 export default modelToOperations;
