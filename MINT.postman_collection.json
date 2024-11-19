@@ -3065,45 +3065,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation ReorderMTOCategory {\nreorderMTOCategory(id: \"{{mtoCategoryID}}\",\nnewOrder: 0\n) {\n    position\n    id\n    name\n    isUncategorized\n    }\n}",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "RenameMTOSubcategory",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"let responseData = pm.response.json().data.createMTOCategory",
-											"",
-											"mtoCategoryID = responseData.id",
-											"",
-											"",
-											"pm.collectionVariables.set(\"mtoCategoryID\", mtoCategoryID);"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation RenameMTOSubcategory {\nrenameMTOCategory(id: \"{{mtoSubcategoryID}}\",\nname: \"Awesome renamed Sub Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"query": "mutation ReorderMTOCategory {\nreorderMTOCategory(id: \"{{mtoCategoryID}}\"\n,newOrder: 0\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    position\n    id\n    name\n    isUncategorized\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3142,6 +3104,77 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "mutation NewMTOCategory {\ncreateMTOCategory(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Sub Category 0\"\n,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    position\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reorder MTO Subcategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation ReorderMTOCategory {\nreorderMTOCategory(id: \"{{mtoSubcategoryID}}\"\n# ,newOrder: 0\n,parentID: \"{{mtoCategoryID}}\"\n) {\n    position\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RenameMTOSubcategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoCategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoCategoryID\", mtoCategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation RenameMTOSubcategory {\nrenameMTOCategory(id: \"{{mtoSubcategoryID}}\",\nname: \"Awesome renamed Sub Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
 										"variables": ""
 									}
 								},

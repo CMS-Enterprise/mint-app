@@ -1140,6 +1140,12 @@ export type Mutation = {
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
    */
   renameMTOCategory: MtoCategory;
+  /**
+   * Allows you to change the position and parent of an MTO category. Other categories will automatically
+   * have their positions changed to adjust to the new position of the new category.
+   * If only the parent is changed, the category will be placed as the last category in order for the group of subcategories
+   * Note, a subcategory can't become a subcategory and vice versa
+   */
   reorderMTOCategory: MtoCategory;
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
@@ -1354,7 +1360,8 @@ export type MutationRenameMtoCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationReorderMtoCategoryArgs = {
   id: Scalars['UUID']['input'];
-  newOrder: Scalars['Int']['input'];
+  newOrder?: InputMaybe<Scalars['Int']['input']>;
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
