@@ -158,6 +158,31 @@ describe('moveRow', () => {
               }
             ],
             isUncategorized: false
+          },
+          {
+            __typename: 'MTOSubcategory',
+            id: '45622',
+            riskIndicator: undefined,
+            name: 'Uncategorized Sub',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '78927',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 7',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: true
           }
         ],
         isUncategorized: false
@@ -178,7 +203,7 @@ describe('moveRow', () => {
   });
 
   it('should move a category', () => {
-    const result = moveRow([0], [1], 'category', mockData);
+    const result = moveRow([0], [1], 'category', mockData, vi.fn());
     expect(result).toEqual([
       {
         __typename: 'MTOCategory',
@@ -252,6 +277,31 @@ describe('moveRow', () => {
               }
             ],
             isUncategorized: false
+          },
+          {
+            __typename: 'MTOSubcategory',
+            id: '45622',
+            riskIndicator: undefined,
+            name: 'Uncategorized Sub',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '78927',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 7',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: true
           }
         ],
         isUncategorized: false
@@ -260,7 +310,8 @@ describe('moveRow', () => {
   });
 
   it('should move a subcategory', () => {
-    const result = moveRow([0, 0], [0, 1], 'subcategory', mockData);
+    const result = moveRow([0, 0], [0, 1], 'subcategory', mockData, vi.fn());
+
     expect(result).toEqual([
       {
         __typename: 'MTOCategory',
@@ -322,6 +373,31 @@ describe('moveRow', () => {
               }
             ],
             isUncategorized: false
+          },
+          {
+            __typename: 'MTOSubcategory',
+            id: '45622',
+            riskIndicator: undefined,
+            name: 'Uncategorized Sub',
+            facilitatedBy: undefined,
+            solutions: [],
+            needBy: undefined,
+            status: undefined,
+            actions: undefined,
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '78927',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 7',
+                facilitatedBy: MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR,
+                solutions: [],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                actions: undefined
+              }
+            ],
+            isUncategorized: true
           }
         ],
         isUncategorized: false
