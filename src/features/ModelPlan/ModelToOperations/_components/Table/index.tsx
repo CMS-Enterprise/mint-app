@@ -684,7 +684,7 @@ export const moveRow = (
       variables: {
         id: subCategoryId,
         newOrder: hoverSubIndex,
-        parentId: hoverParentCategoryID
+        parentID: hoverParentCategoryID
       }
     });
   } else if (type.includes('milestone')) {
