@@ -5,6 +5,8 @@ import { GetMtoCategoriesDocument } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
+import MessageProvider from 'contexts/MessageContext';
+
 import CategoryForm from './index';
 
 const mocks = [
@@ -45,11 +47,13 @@ describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <VerboseMockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/">
-            <CategoryForm closeModal={() => {}} />
-          </Route>
-        </VerboseMockedProvider>
+        <MessageProvider>
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <Route path="/models/:modelID/">
+              <CategoryForm closeModal={() => {}} />
+            </Route>
+          </VerboseMockedProvider>
+        </MessageProvider>
       </MemoryRouter>
     );
 
