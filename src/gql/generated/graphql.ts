@@ -794,6 +794,13 @@ export type MtoInfo = {
   readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
 };
 
+/** Represents mto info translation data */
+export type MtoInfoTranslation = {
+  __typename: 'MTOInfoTranslation';
+  readyForReviewBy: TranslationField;
+  readyForReviewDTS: TranslationField;
+};
+
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];

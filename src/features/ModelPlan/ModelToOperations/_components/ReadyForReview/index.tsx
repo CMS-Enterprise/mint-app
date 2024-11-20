@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
@@ -26,6 +26,8 @@ const MTOReadyForReview = ({
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const [error, setError] = useState<boolean>(false);
 
   const [update] = useUpdateMtoReadyForReviewMutation({
     variables: {
@@ -55,6 +57,12 @@ const MTOReadyForReview = ({
             : t('readyForReview.headingInProgress')}
         </PageHeading>
 
+        {error && (
+          <Alert type="error" slim>
+            {t('readyForReview.error')}
+          </Alert>
+        )}
+
         <p className="font-body-md line-height-sans-4 margin-top-2 margin-bottom-3">
           {status === MtoStatus.IN_PROGRESS
             ? t('readyForReview.descriptionReady')
@@ -67,10 +75,11 @@ const MTOReadyForReview = ({
             onClick={() => {
               update()
                 .then(() => {
+                  setError(false);
                   closeModal();
                 })
                 .catch(() => {
-                  console.error('Error updating MTO ready for review');
+                  setError(true);
                 });
             }}
           >
@@ -84,6 +93,7 @@ const MTOReadyForReview = ({
             className="margin-left-2"
             unstyled
             onClick={() => {
+              setError(false);
               closeModal();
             }}
           >

@@ -1,4 +1,30 @@
-export const modelToOperations: any = {};
+import {
+  TableName,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/generated/graphql';
+
+export const modelToOperations: any = {
+  readyForReviewBy: {
+    gqlField: 'readyForReviewBy',
+    goField: 'ReadyForReviewBy',
+    dbField: 'ready_for_review_by',
+    label: 'Ready for review by',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01,
+    tableReference: TableName.USER_ACCOUNT
+  },
+  readyForReviewDTS: {
+    gqlField: 'readyForReviewDTS',
+    goField: 'ReadyForReviewDTS',
+    dbField: 'ready_for_review_dts',
+    label: 'Ready for review by',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.02
+  }
+};
 
 export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
@@ -52,7 +78,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       'The "in progress" status indicates to others viewing your MTO that you are still extensively adding, removing, and reorganizing milestones and chosen solutions.',
     markAsReady: 'Mark as ready for review',
     markAsInProgress: 'Mark as in progress',
-    goBack: 'Go back to MTO'
+    goBack: 'Go back to MTO',
+    error: 'Failed to update MTO status'
   }
 };
 
