@@ -51,7 +51,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
-  const { showMessage, message } = useMessage();
+  const { message, showMessage, clearMessage } = useMessage();
 
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -257,6 +257,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
           className="usa-button usa-button--unstyled"
           onClick={() => {
             reset();
+            clearMessage();
             closeModal();
           }}
         >

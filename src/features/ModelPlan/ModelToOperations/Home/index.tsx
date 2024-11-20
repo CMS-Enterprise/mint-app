@@ -22,7 +22,7 @@ const MTOHome = () => {
 
   const location = useLocation();
 
-  const { message } = useMessage();
+  const { message, clearMessage } = useMessage();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -50,7 +50,7 @@ const MTOHome = () => {
 
   return (
     <div className="model-to-operations margin-y-6">
-      {message && <Expire delay={45000}>{message}</Expire>}
+      {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
       {/* TEMPORARY since WIP components are not finalized */}
       <MTOModal
@@ -70,6 +70,7 @@ const MTOHome = () => {
         <Button
           type="button"
           onClick={() => {
+            clearMessage();
             setModalType('category');
             setIsModalOpen(true);
           }}
