@@ -725,6 +725,12 @@ export type MtoCategory = {
   subCategories: Array<MtoSubcategory>;
 };
 
+/** Represents MTO Category translation data */
+export type MtoCategoryTranslation = {
+  __typename: 'MTOCategoryTranslation';
+  name: TranslationField;
+};
+
 /** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
 export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';

@@ -61,6 +61,11 @@ type LockableSectionLockStatusChanged struct {
 	ActionType ActionType                `json:"actionType"`
 }
 
+// Represents MTO Category translation data
+type MTOCategoryTranslation struct {
+	Name models.TranslationField `json:"name" db:"name"`
+}
+
 type MTOSolution struct {
 	ID                       uuid.UUID                    `json:"id"`
 	Name                     string                       `json:"name"`
