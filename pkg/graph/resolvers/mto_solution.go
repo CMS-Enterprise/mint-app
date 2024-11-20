@@ -96,7 +96,7 @@ func MTOSolutionCreateCommon(
 		modelPlanID, // TODO: ???
 		commonSolutionKey,
 		nil,                        // name, // TODO: ???
-		nil,                        // solutionType, // TODO: ???git
+		nil,                        // solutionType, // TODO: ???
 		models.MTOFacilitatorOther, // facilitatedBy, // TODO: ???
 		"test_poc_name_empty",      // pocName, // TODO: ???
 		"empty@email.test",         // pocEmail, // TODO: ???

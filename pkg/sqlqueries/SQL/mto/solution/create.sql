@@ -47,7 +47,7 @@ SELECT
     retVal.model_plan_id,
     retVal.mto_common_solution_key,
     COALESCE(retVal.name, mto_common_solution.name) AS "name",
-    retVal.type,
+    COALESCE(retVal.type, mto_common_solution.type) AS "type",
     retVal.facilitated_by,
     retVal.status,
     retVal.risk_indicator,

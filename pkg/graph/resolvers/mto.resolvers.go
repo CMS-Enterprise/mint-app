@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -34,7 +33,7 @@ func (r *modelsToOperationMatrixResolver) Milestones(ctx context.Context, obj *m
 
 // Solutions is the resolver for the solutions field.
 func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOSolution, error) {
-	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+	return MTOSolutionGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // Status is the resolver for the status field.

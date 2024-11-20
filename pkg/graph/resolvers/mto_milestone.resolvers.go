@@ -26,7 +26,7 @@ func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.
 
 // Solutions is the resolver for the solutions field.
 func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMilestone) ([]*models.MTOSolution, error) {
-	return MTOSolutionGetByModelPlanIDLOADER(ctx, obj.ModelPlanID)
+	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
 // Category is the resolver for the category field.
