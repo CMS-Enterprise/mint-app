@@ -50,7 +50,9 @@ const MTOReadyForReview = ({
     >
       <div className="margin-top-neg-3 padding-bottom-1">
         <PageHeading headingLevel="h3" className="margin-0">
-          {t('readyForReview.heading')}
+          {status === MtoStatus.IN_PROGRESS
+            ? t('readyForReview.headingInReview')
+            : t('readyForReview.headingInProgress')}
         </PageHeading>
 
         <p className="font-body-md line-height-sans-4 margin-top-2 margin-bottom-3">

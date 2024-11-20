@@ -1,5 +1,3 @@
-import { head } from 'lodash';
-
 export const modelToOperations: any = {};
 
 export const modelToOperationsMisc: Record<string, any> = {
@@ -46,7 +44,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     }
   },
   readyForReview: {
-    heading: 'Set MTO status to ready for review?',
+    headingInReview: 'Set MTO status to ready for review?',
+    headingInProgress: 'Set MTO status to in progress?',
     descriptionReady:
       'The "ready for review" status indicates to others viewing your MTO that your milestones and chosen solutions are relatively well set, though you may continue to update content and statuses.',
     descriptionInProgress:
