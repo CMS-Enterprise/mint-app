@@ -2,7 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
-import { MtoStatus } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixDocument,
+  MtoStatus,
+  useUpdateMtoReadyForReviewMutation
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import Modal from 'components/Modal';
@@ -22,6 +26,21 @@ const MTOReadyForReview = ({
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const [update] = useUpdateMtoReadyForReviewMutation({
+    variables: {
+      modelPlanID: modelID,
+      readyForReview: status === MtoStatus.IN_PROGRESS
+    },
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   return (
     <Modal
@@ -44,7 +63,13 @@ const MTOReadyForReview = ({
           <Button
             type="button"
             onClick={() => {
-              closeModal();
+              update()
+                .then(() => {
+                  closeModal();
+                })
+                .catch(() => {
+                  console.error('Error updating MTO ready for review');
+                });
             }}
           >
             {status === MtoStatus.IN_PROGRESS
