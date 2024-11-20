@@ -3,6 +3,9 @@ type PossibleOperationalNeed {
   possibleSolutions: [PossibleOperationalSolution!]!
   name: String!
   key: OperationalNeedKey!
+  """
+  Specifies the Task List Section that corresponds to suggesting this common milestone
+  """
   section: TaskListSection
 
   createdBy: UUID!

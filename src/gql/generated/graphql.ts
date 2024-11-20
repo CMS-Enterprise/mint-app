@@ -730,13 +730,13 @@ export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
   categoryName: Scalars['String']['output'];
   commonSolutions: Array<MtoCommonSolution>;
-  description: Scalars['String']['output'];
   facilitatedByRole: MtoFacilitator;
   isAdded: Scalars['Boolean']['output'];
   isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
   name: Scalars['String']['output'];
-  subCategoryName: Scalars['String']['output'];
+  section?: Maybe<TaskListSection>;
+  subCategoryName?: Maybe<Scalars['String']['output']>;
 };
 
 export enum MtoCommonMilestoneKey {
@@ -3519,6 +3519,7 @@ export type PossibleOperationalNeed = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   possibleSolutions: Array<PossibleOperationalSolution>;
+  /** Specifies the Task List Section that corresponds to suggesting this common milestone */
   section?: Maybe<TaskListSection>;
 };
 
