@@ -7,10 +7,6 @@ import (
 	"github.com/lib/pq"
 )
 
-// type EnumArray[enumType ~string] struct {
-// 	Values []enumType
-// }
-
 type EnumArray[enumType ~string] []enumType
 
 // Scan implements the Scanner interface to decode data from the database
@@ -41,7 +37,7 @@ func (e EnumArray[EnumType]) MarshalJSON() ([]byte, error) {
 	return json.Marshal([]EnumType(e))
 }
 
-// UnmarshalJSON unmarshals the EnumArray from JSON for GraphQL
+// UnmarshalJSON un marshals the EnumArray from JSON for GraphQL
 func (e *EnumArray[EnumType]) UnmarshalJSON(data []byte) error {
 	var stringArray []string
 	if err := json.Unmarshal(data, &stringArray); err != nil {
