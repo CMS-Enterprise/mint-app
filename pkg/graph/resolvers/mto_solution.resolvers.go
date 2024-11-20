@@ -27,7 +27,12 @@ func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MT
 		return nil, nil
 	}
 
-	return MTOSolutionGetCommonSolutionByKeyLoader(ctx, obj.Key)
+	commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, *obj.Key)
+	if err != nil {
+		return nil, err
+	}
+
+	return commonSolution, nil
 }
 
 // CreateMTOSolutionCustom is the resolver for the createMTOSolutionCustom field.

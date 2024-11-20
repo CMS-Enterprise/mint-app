@@ -4,41 +4,15 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
-
-// MTOSolutionGetByModelPlanIDLOADER implements resolver logic to get all MTO
-// solutions by a model plan ID using a data loader
-func MTOSolutionGetByModelPlanIDLOADER(
-	ctx context.Context,
-	modelPlanID uuid.UUID,
-) ([]*models.MTOCommonSolution, error) {
-
-	// Translate a nil key to UUID nil, as we need a primitive type for translating results later
-	return loaders.MTOCommonSolution.ByModelPlanID.Load(ctx, modelPlanID)
-}
-
-func MTOSolutionGetCommonSolutionByKeyLoader(
-	ctx context.Context,
-	key *models.MTOCommonSolutionKey,
-) (*models.MTOCommonSolution, error) {
-	commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, *key)
-	if err != nil {
-		return nil, err
-	}
-
-	if commonSolution == nil {
-		return nil, fmt.Errorf("common solution not found for key %s", *key)
-	}
-
-	return commonSolution, nil
-}
 
 // MTOSolutionUpdate updates the MTOSolution
 func MTOSolutionUpdate(
@@ -135,4 +109,13 @@ func MTOSolutionCreateCommon(
 	}
 
 	return storage.MTOSolutionCreate(store, logger, mtoSolution)
+}
+
+// MTOSolutionGetByModelPlanIDLOADER implements resolver logic to get all MTO solutions by a model plan ID using a data loader
+func MTOSolutionGetByModelPlanIDLOADER(
+	ctx context.Context,
+	modelPlanID uuid.UUID,
+) ([]*models.MTOSolution, error) {
+	// TODO look into expanding this to also take contextual model plan data to return is added etc
+	return loaders.MTOSolution.ByModelPlanID.Load(ctx, modelPlanID)
 }
