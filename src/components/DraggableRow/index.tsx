@@ -33,6 +33,7 @@ const DraggableRow = ({
       const dragIndex = item.index;
       const hoverIndex = index;
 
+      // dragIndex & hoverIndex is in format of [number, numeber] so we need to compare the two arrays with JSON.stringify
       if (JSON.stringify(dragIndex) === JSON.stringify(hoverIndex)) {
         return;
       }
@@ -67,6 +68,7 @@ const DraggableRow = ({
       onClick={() => toggleRow && toggleRow(id)}
       style={{
         ...style,
+        // TODO: This is a temporary style to highlight the row when dragging
         backgroundColor: isOver ? 'lightblue' : style.backgroundColor
       }}
       onKeyPress={e => {

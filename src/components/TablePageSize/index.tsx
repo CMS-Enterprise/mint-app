@@ -16,7 +16,7 @@ const Option = ({
   suffix
 }: {
   value: number | 'all';
-  suffix?: string;
+  suffix?: string; // Add word to end of page - ex: Show 10 milestones
 }) => {
   const { t } = useTranslation('systemProfile');
   return (
