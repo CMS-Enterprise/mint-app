@@ -59,6 +59,14 @@ export const modelToOperationsMisc: Record<string, any> = {
       sortOptions: {
         default: '- Select - ',
         none: 'None (this is a primary category)'
+      },
+      alert: {
+        success: {
+          parent: 'Your category (<b>{{category}}</b>) has been added.',
+          subcategory: 'Your sub-category (<b>{{category}}</b>) has been added.'
+        },
+        error:
+          'There was an error adding your category. Please try again. If the error persists, please try again another time.'
       }
     },
     addButton: 'Add {{type}}',
