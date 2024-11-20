@@ -22,6 +22,8 @@ import {
   useGetMtoCategoriesQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
+import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
@@ -49,6 +51,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
+  const { showMessage, message } = useMessage();
 
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -97,15 +100,74 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         parentID:
           formData.primaryCategory === 'none' ? null : formData.primaryCategory
       }
-    }).then(response => {
-      if (!response?.errors) {
-        closeModal();
-      }
-    });
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (formData.primaryCategory === 'none') {
+            // Parent Category Success Message
+            showMessage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="mandatory-fields-alert"
+                  className="margin-y-4"
+                >
+                  <span className="mandatory-fields-alert__text">
+                    <Trans
+                      i18nKey={t('modal.category.alert.success.parent')}
+                      components={{
+                        b: <span className="text-bold" />
+                      }}
+                      values={{ category: formData.name }}
+                    />
+                  </span>
+                </Alert>
+              </>
+            );
+          } else {
+            // Subcategory Success Message
+            showMessage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="mandatory-fields-alert"
+                  className="margin-y-4"
+                >
+                  <span className="mandatory-fields-alert__text">
+                    <Trans
+                      i18nKey={t('modal.category.alert.success.subcategory')}
+                      components={{
+                        b: <span className="text-bold" />
+                      }}
+                      values={{ category: formData.name }}
+                    />
+                  </span>
+                </Alert>
+              </>
+            );
+          }
+          closeModal();
+        }
+      })
+      .catch(() => {
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {t('modal.category.alert.error')}
+          </Alert>
+        );
+      });
   };
 
   return (
     <FormProvider {...methods}>
+      {message}
       <Form
         className="maxw-none"
         data-testid="custom-category-form"
