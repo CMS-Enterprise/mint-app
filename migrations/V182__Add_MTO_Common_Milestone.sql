@@ -1,7 +1,7 @@
 CREATE TYPE MTO_COMMON_MILESTONE_KEY AS ENUM (
-    'MILESTONE_A',
-    'MILESTONE_B'
+    'MANAGE_CD', 'REV_COL_BIDS', 'UPDATE_CONTRACT', 'SIGN_PARTICIPATION_AGREEMENTS', 'RECRUIT_PARTICIPANTS', 'REV_SCORE_APP', 'APP_SUPPORT_CON', 'COMM_W_PART', 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY', 'MANAGE_PROV_OVERLAP', 'MANAGE_BEN_OVERLAP', 'HELPDESK_SUPPORT', 'IDDOC_SUPPORT', 'ESTABLISH_BENCH', 'PROCESS_PART_APPEALS', 'ACQUIRE_AN_EVAL_CONT', 'DATA_TO_MONITOR', 'DATA_TO_SUPPORT_EVAL', 'CLAIMS_BASED_MEASURES', 'QUALITY_PERFORMANCE_SCORES', 'SEND_REPDATA_TO_PART', 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR', 'ACQUIRE_A_LEARN_CONT', 'PART_TO_PART_COLLAB', 'EDUCATE_BENEF', 'IT_PLATFORM_FOR_LEARNING', 'ADJUST_FFS_CLAIMS', 'MANAGE_FFS_EXCL_PAYMENTS', 'MAKE_NON_CLAIMS_BASED_PAYMENTS', 'COMPUTE_SHARED_SAVINGS_PAYMENT', 'RECOVER_PAYMENTS'
 );
+-- TODO audit these keys and update if the new names make another enum make more sense to use instead
 
 CREATE TABLE mto_common_milestone (
     key MTO_COMMON_MILESTONE_KEY NOT NULL PRIMARY KEY,
@@ -10,7 +10,7 @@ CREATE TABLE mto_common_milestone (
     category_name ZERO_STRING NOT NULL,
     sub_category_name ZERO_STRING,
 
-    facilitated_by_role MTO_FACILITATOR NOT NULL,
+    facilitated_by_role MTO_FACILITATOR[] NOT NULL,
     /* Configuration for suggesting milestone trigger logic */
     section TASK_LIST_SECTION NOT NULL,
     trigger_table TEXT NOT NULL,
@@ -19,25 +19,3 @@ CREATE TABLE mto_common_milestone (
     /**** end configuration***/
 );
 -- TODO (mto) add comments to these new fields
-
-
-INSERT INTO "public"."mto_common_milestone"(
-    "name",
-    "key",
-    "category_name",
-    "sub_category_name",
-    "facilitated_by_role",
-    "section",
-    "trigger_table",
-    "trigger_col",
-    "trigger_vals") VALUES(
-    'Place Holder Milestone',
-    'MILESTONE_A',
-    'placeholder category',
-    'placeholder sub category',
-    'MODEL_TEAM',
-    'BASICS',
-    'plan_basics',
-    '{should_any_providers_excluded_ffs_systems}',
-    '{t}'
-);
