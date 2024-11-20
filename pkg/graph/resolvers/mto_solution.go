@@ -92,14 +92,15 @@ func MTOSolutionCreateCommon(
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
+	// TODO: Populate data from mto common solution
 	mtoSolution := models.NewMTOSolution(
-		modelPlanID, // TODO: ???
+		modelPlanID,
 		commonSolutionKey,
-		nil,                        // name, // TODO: ???
-		nil,                        // solutionType, // TODO: ???
-		models.MTOFacilitatorOther, // facilitatedBy, // TODO: ???
-		"test_poc_name_empty",      // pocName, // TODO: ???
-		"empty@email.test",         // pocEmail, // TODO: ???
+		nil,
+		nil,
+		models.MTOFacilitatorOther,
+		"test_poc_name_empty",
+		"empty@email.test",
 		principalAccount.ID,
 	)
 
