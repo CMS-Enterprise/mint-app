@@ -182,7 +182,8 @@ const CollectingAndSendingData = () => {
                         }
                         options={composeMultiSelectOptions(
                           dataToCollectFromParticipantsConfig.options,
-                          dataToCollectFromParticipantsConfig.readonlyOptions
+                          dataToCollectFromParticipantsConfig.readonlyOptions,
+                          dataToCollectFromParticipantsConfig.optionsLabels
                         )}
                         selectedLabel={
                           dataToCollectFromParticipantsConfig.multiSelectLabel ||
