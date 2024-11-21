@@ -291,6 +291,20 @@ export const modelToOperationsMisc: Record<string, any> = {
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       }
     },
+    solution: {
+      label: {
+        solutionType: 'What type of solution is this? <s>*</s>',
+        solutionTitle: 'Please add a title for your solution <s>*</s>',
+        pocName: 'Point of contact name <s>*</s>',
+        pocEmail: 'Point of contact email address <s>*</s>'
+      },
+      pocHeading: 'Solution point of contact information',
+      pocSubheading:
+        'Add the name and contact information for the person or team who is the primary point of contact for this solution.',
+      alert: {
+        info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>."
+      }
+    },
     addButton: 'Add {{type}}',
     cancel: 'Cancel'
   },
