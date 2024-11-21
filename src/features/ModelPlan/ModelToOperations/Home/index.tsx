@@ -1,11 +1,23 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import {
+  Grid,
+  Header,
+  Icon,
+  PrimaryNav,
+  Select
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
+import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import UswdsReactLink from 'components/LinkWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
+import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable from '../_components/Table';
 
 export type MTOOption = 'milestones' | 'systems-and-solutions';
@@ -14,6 +26,18 @@ export const mtoOptions: MTOOption[] = ['milestones', 'systems-and-solutions'];
 
 const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const { modelID } = useParams<{ modelID: string }>();
+
+  const { modelName } = useContext(ModelInfoContext);
+
+  const { data } = useGetModelToOperationsMatrixQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
 
   const history = useHistory();
 
@@ -40,68 +64,115 @@ const MTOHome = () => {
   }, [viewparam, history, params]);
 
   return (
-    <div className="model-to-operations margin-y-6">
-      <Header
-        basic
-        extended={false}
-        className="margin-bottom-4 model-to-operations__nav-container"
-      >
-        <div className="usa-nav-container padding-0">
-          <PrimaryNav
-            items={mtoOptions.map(item => (
-              <button
-                type="button"
-                onClick={() => {
-                  params.set('view', item);
-                  history.push({ search: params.toString() });
-                }}
-                className={classNames(
-                  'usa-nav__link margin-left-neg-2 margin-right-2',
-                  {
-                    'usa-current': currentView === item
-                  }
-                )}
-              >
-                <span
-                  className={classNames({
-                    'text-primary': currentView === item
-                  })}
-                >
-                  {t(item)}
-                </span>
-              </button>
-            ))}
-            mobileExpanded={false}
-            className="flex-justify-start margin-0 padding-0"
-          />
-        </div>
-      </Header>
+    <>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.MODEL_TO_OPERATIONS
+        ]}
+      />
 
-      {isTablet && (
-        <div className="maxw-mobile-lg">
-          <Select
-            id="mto-navigation-select"
-            name="currentView"
-            value={currentView}
-            onChange={e => {
-              params.set('view', e.target.value);
-              history.push({ search: params.toString() });
-            }}
-            className="margin-bottom-4 text-primary text-bold"
-          >
-            {mtoOptions.map(item => {
-              return (
-                <option key={item} value={item}>
-                  {t(item)}
-                </option>
-              );
+      <Grid row className="margin-bottom-2">
+        <Grid desktop={{ col: 9 }}>
+          <h1 className="margin-bottom-0 margin-top-5 line-height-large">
+            {t('heading')}
+          </h1>
+
+          <p className="mint-body-large margin-bottom-2 margin-top-05">
+            {t('forModel', {
+              modelName
             })}
-          </Select>
-        </div>
-      )}
+          </p>
 
-      {currentView === 'milestones' && <MTOTable />}
-    </div>
+          <MTOStatusBanner
+            status={modelToOperationsMatrix?.status}
+            lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
+          />
+        </Grid>
+
+        <Grid desktop={{ col: 3 }}>
+          <AskAQuestion
+            modelID={modelID}
+            className="margin-top-6 margin-bottom-4"
+            renderTextFor="modelToOperations"
+          />
+        </Grid>
+      </Grid>
+
+      <UswdsReactLink
+        to={`/models/${modelID}/collaboration-area`}
+        data-testid="return-to-collaboration"
+      >
+        <span>
+          <Icon.ArrowBack className="top-3px margin-right-1" />
+          {t('returnToCollaboration')}
+        </span>
+      </UswdsReactLink>
+
+      <div className="model-to-operations margin-y-6">
+        <Header
+          basic
+          extended={false}
+          className="margin-bottom-4 model-to-operations__nav-container"
+        >
+          <div className="usa-nav-container padding-0">
+            <PrimaryNav
+              items={mtoOptions.map(item => (
+                <button
+                  type="button"
+                  onClick={() => {
+                    params.set('view', item);
+                    history.push({ search: params.toString() });
+                  }}
+                  className={classNames(
+                    'usa-nav__link margin-left-neg-2 margin-right-2',
+                    {
+                      'usa-current': currentView === item
+                    }
+                  )}
+                >
+                  <span
+                    className={classNames({
+                      'text-primary': currentView === item
+                    })}
+                  >
+                    {t(item)}
+                  </span>
+                </button>
+              ))}
+              mobileExpanded={false}
+              className="flex-justify-start margin-0 padding-0"
+            />
+          </div>
+        </Header>
+
+        {isTablet && (
+          <div className="maxw-mobile-lg">
+            <Select
+              id="mto-navigation-select"
+              name="currentView"
+              value={currentView}
+              onChange={e => {
+                params.set('view', e.target.value);
+                history.push({ search: params.toString() });
+              }}
+              className="margin-bottom-4 text-primary text-bold"
+            >
+              {mtoOptions.map(item => {
+                return (
+                  <option key={item} value={item}>
+                    {t(item)}
+                  </option>
+                );
+              })}
+            </Select>
+          </div>
+        )}
+
+        {currentView === 'milestones' && <MTOTable />}
+      </div>
+    </>
   );
 };
 
