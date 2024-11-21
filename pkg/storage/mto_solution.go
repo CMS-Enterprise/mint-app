@@ -13,13 +13,17 @@ import (
 )
 
 // MTOSolutionGetByIDLoader returns solutions by ID
-// TODO: This function is not technically loader specific, we will revisit this during a design pass before merging
 func MTOSolutionGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOSolution, error) {
 	args := map[string]interface{}{
-		"ids": ids,
+		"ids": pq.Array(ids),
 	}
 
-	return sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.GetByIDLoader, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.GetByIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+
+	return returned, nil
 }
 
 // MTOSolutionGetByModelPlanIDLoader returns all solutions, with the context of the model plan id to determine if it was added or not
