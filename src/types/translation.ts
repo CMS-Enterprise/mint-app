@@ -44,6 +44,7 @@ import {
   ModelType,
   ModelViewFilter,
   MonitoringFileType,
+  MtoCategoryTranslation,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
@@ -1219,6 +1220,24 @@ export type TranslationExistingModelLink = {
   [K in keyof TranslationExistingModelLinkGQL]: TranslationExistingModelLinkForm[K]; // FE form type
 };
 
+// Existing Model Link - Change History purposes only
+export type TranslationMTOCategoryForm = {
+  name: TranslationFieldProperties;
+};
+
+type TranslationMTOCategoryGQL = Omit<
+  MtoCategoryTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOCategory = {
+  [K in keyof TranslationMTOCategoryGQL]: TranslationMTOCategoryForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -1236,6 +1255,7 @@ export type TranslationPlan = {
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
   dataExchangeApproach: TranslationDataExchangeApproach;
+  modelToOperationsCategories: TranslationMTOCategory;
 };
 
 export type TranslationPlanSection =

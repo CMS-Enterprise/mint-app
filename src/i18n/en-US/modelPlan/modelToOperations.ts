@@ -1,4 +1,18 @@
-export const modelToOperations: any = {};
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/generated/graphql';
+
+export const modelToOperations: any = {
+  readyForReviewDTS: {
+    gqlField: 'name',
+    goField: 'Name',
+    dbField: 'name',
+    label: 'New category title',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
+  }
+};
 
 export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
