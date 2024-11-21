@@ -1255,7 +1255,7 @@ export type TranslationPlan = {
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
   dataExchangeApproach: TranslationDataExchangeApproach;
-  modelToOperationsCategories: TranslationMTOCategory;
+  mtoCategories: TranslationMTOCategory;
 };
 
 export type TranslationPlanSection =
@@ -1284,5 +1284,6 @@ export enum PlanSection {
   OPERATIONAL_NEEDS = 'operationalNeeds',
   OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
-  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach'
+  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
+  MTO_CATEGORIES = 'mtoCategories'
 }
