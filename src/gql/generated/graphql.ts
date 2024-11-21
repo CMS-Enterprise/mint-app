@@ -725,6 +725,12 @@ export type MtoCategory = {
   subCategories: Array<MtoSubcategory>;
 };
 
+/** Represents MTO Category translation data */
+export type MtoCategoryTranslation = {
+  __typename: 'MTOCategoryTranslation';
+  name: TranslationField;
+};
+
 /** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
 export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
@@ -5227,6 +5233,22 @@ export type UnlockModelPlanSectionMutationVariables = Exact<{
 
 
 export type UnlockModelPlanSectionMutation = { __typename: 'Mutation', unlockLockableSection: boolean };
+
+export type CreateMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type CreateMtoCategoryMutation = { __typename: 'Mutation', createMTOCategory: { __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean } };
+
+export type GetMtoCategoriesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoCategoriesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', mtoMatrix: { __typename: 'ModelsToOperationMatrix', categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string }> } } };
 
 export type GetModelToOperationsMatrixQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -10760,6 +10782,88 @@ export function useUnlockModelPlanSectionMutation(baseOptions?: Apollo.MutationH
 export type UnlockModelPlanSectionMutationHookResult = ReturnType<typeof useUnlockModelPlanSectionMutation>;
 export type UnlockModelPlanSectionMutationResult = Apollo.MutationResult<UnlockModelPlanSectionMutation>;
 export type UnlockModelPlanSectionMutationOptions = Apollo.BaseMutationOptions<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+export const CreateMtoCategoryDocument = gql`
+    mutation CreateMTOCategory($id: UUID!, $name: String!, $parentID: UUID) {
+  createMTOCategory(modelPlanID: $id, name: $name, parentID: $parentID) {
+    id
+    name
+    isUncategorized
+  }
+}
+    `;
+export type CreateMtoCategoryMutationFn = Apollo.MutationFunction<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+
+/**
+ * __useCreateMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoCategoryMutation, { data, loading, error }] = useCreateMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      parentID: // value for 'parentID'
+ *   },
+ * });
+ */
+export function useCreateMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>(CreateMtoCategoryDocument, options);
+      }
+export type CreateMtoCategoryMutationHookResult = ReturnType<typeof useCreateMtoCategoryMutation>;
+export type CreateMtoCategoryMutationResult = Apollo.MutationResult<CreateMtoCategoryMutation>;
+export type CreateMtoCategoryMutationOptions = Apollo.BaseMutationOptions<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+export const GetMtoCategoriesDocument = gql`
+    query GetMTOCategories($id: UUID!) {
+  modelPlan(id: $id) {
+    mtoMatrix {
+      categories {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoCategoriesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoCategoriesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables> & ({ variables: GetMtoCategoriesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+      }
+export function useGetMtoCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+        }
+export function useGetMtoCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+        }
+export type GetMtoCategoriesQueryHookResult = ReturnType<typeof useGetMtoCategoriesQuery>;
+export type GetMtoCategoriesLazyQueryHookResult = ReturnType<typeof useGetMtoCategoriesLazyQuery>;
+export type GetMtoCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetMtoCategoriesSuspenseQuery>;
+export type GetMtoCategoriesQueryResult = Apollo.QueryResult<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
 export const GetModelToOperationsMatrixDocument = gql`
     query GetModelToOperationsMatrix($id: UUID!) {
   modelPlan(id: $id) {
@@ -13669,6 +13773,8 @@ export const TypedGetLockedModelPlanSectionsDocument = {"kind":"Document","defin
 export const TypedLockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
 export const TypedModelPlanSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ModelPlanSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockLockableSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables>;
 export const TypedUnlockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+export const TypedCreateMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+export const TypedGetMtoCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
 export const TypedGetModelToOperationsMatrixDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelToOperationsMatrix"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>;
 export const TypedUpdateNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreeToNDA"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"agree"},"value":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedComplete"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedCompleteNotificationType"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
