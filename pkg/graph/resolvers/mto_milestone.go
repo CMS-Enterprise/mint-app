@@ -66,9 +66,9 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			logger.Error("failed to create parent category when creating milestone from library", zap.Error(err))
 			return nil, err
 		}
-		finalCategoryID := parentCategory.ID       // track the eventual category ID that we will attach to the milestone
-		if commonMilestone.SubCategoryName != "" { // TODO replace with nil check when SubCategoryName becomes a pointer (MINT-3218)
-			subCategoryToCreate := models.NewMTOCategory(uuid.Nil, commonMilestone.SubCategoryName, modelPlanID, &parentCategory.ID, 0)
+		finalCategoryID := parentCategory.ID        // track the eventual category ID that we will attach to the milestone
+		if commonMilestone.SubCategoryName != nil { // TODO replace with nil check when SubCategoryName becomes a pointer (MINT-3218)
+			subCategoryToCreate := models.NewMTOCategory(uuid.Nil, *commonMilestone.SubCategoryName, modelPlanID, &parentCategory.ID, 0)
 			subCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, subCategoryToCreate)
 			if err != nil {
 				logger.Error("failed to create subcategory when creating milestone from library", zap.Error(err))

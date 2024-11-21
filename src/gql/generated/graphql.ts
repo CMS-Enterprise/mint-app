@@ -736,18 +736,49 @@ export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
   categoryName: Scalars['String']['output'];
   commonSolutions: Array<MtoCommonSolution>;
-  description: Scalars['String']['output'];
-  facilitatedByRole: MtoFacilitator;
+  facilitatedByRole: Array<MtoFacilitator>;
   isAdded: Scalars['Boolean']['output'];
   isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
   name: Scalars['String']['output'];
-  subCategoryName: Scalars['String']['output'];
+  /** Specifies the Task List Section that corresponds to suggesting this common milestone */
+  section?: Maybe<TaskListSection>;
+  subCategoryName?: Maybe<Scalars['String']['output']>;
 };
 
+/** These are all the common milestone keys that we expect to for mto common milestones */
 export enum MtoCommonMilestoneKey {
-  MILESTONE_A = 'MILESTONE_A',
-  MILESTONE_B = 'MILESTONE_B'
+  ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
+  ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
+  ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
+  APP_SUPPORT_CON = 'APP_SUPPORT_CON',
+  CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
+  COMM_W_PART = 'COMM_W_PART',
+  COMPUTE_SHARED_SAVINGS_PAYMENT = 'COMPUTE_SHARED_SAVINGS_PAYMENT',
+  DATA_TO_MONITOR = 'DATA_TO_MONITOR',
+  DATA_TO_SUPPORT_EVAL = 'DATA_TO_SUPPORT_EVAL',
+  EDUCATE_BENEF = 'EDUCATE_BENEF',
+  ESTABLISH_BENCH = 'ESTABLISH_BENCH',
+  HELPDESK_SUPPORT = 'HELPDESK_SUPPORT',
+  IDDOC_SUPPORT = 'IDDOC_SUPPORT',
+  IT_PLATFORM_FOR_LEARNING = 'IT_PLATFORM_FOR_LEARNING',
+  MAKE_NON_CLAIMS_BASED_PAYMENTS = 'MAKE_NON_CLAIMS_BASED_PAYMENTS',
+  MANAGE_BEN_OVERLAP = 'MANAGE_BEN_OVERLAP',
+  MANAGE_CD = 'MANAGE_CD',
+  MANAGE_FFS_EXCL_PAYMENTS = 'MANAGE_FFS_EXCL_PAYMENTS',
+  MANAGE_PROV_OVERLAP = 'MANAGE_PROV_OVERLAP',
+  PART_TO_PART_COLLAB = 'PART_TO_PART_COLLAB',
+  PROCESS_PART_APPEALS = 'PROCESS_PART_APPEALS',
+  QUALITY_PERFORMANCE_SCORES = 'QUALITY_PERFORMANCE_SCORES',
+  RECOVER_PAYMENTS = 'RECOVER_PAYMENTS',
+  RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
+  REV_COL_BIDS = 'REV_COL_BIDS',
+  REV_SCORE_APP = 'REV_SCORE_APP',
+  SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
+  SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
+  UPDATE_CONTRACT = 'UPDATE_CONTRACT',
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
 }
 
 export type MtoCommonSolution = {
