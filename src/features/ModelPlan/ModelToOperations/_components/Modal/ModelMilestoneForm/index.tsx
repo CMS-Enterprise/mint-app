@@ -58,6 +58,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const methods = useForm<FormValues>({
     defaultValues: {
       primaryCategory: 'default',
+      subcategory: 'default',
       name: ''
     }
   });
@@ -105,9 +106,6 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                     }}
                   />
                 </Label>
-                <span className="usa-hint">
-                  {t('modal.milestone.selectPrimaryCategory.hint')}
-                </span>
 
                 <Select
                   {...field}
@@ -134,7 +132,8 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
             name="subcategory"
             control={control}
             rules={{
-              required: true
+              required: true,
+              validate: value => value !== 'default'
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
@@ -149,9 +148,6 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                     }}
                   />
                 </Label>
-                <span className="usa-hint">
-                  {t('modal.milestone.selectSubcategory.hint')}
-                </span>
 
                 <Select
                   {...field}
@@ -199,7 +195,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                   type="text"
                   {...field}
                   id={convertCamelCaseToKebabCase(field.name)}
-                  value=""
+                  value={field.value || ''}
                 />
               </FormGroup>
             )}
