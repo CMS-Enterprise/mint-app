@@ -45,6 +45,9 @@ type MTOCommonMilestone {
   categoryName: String!
   subCategoryName: String
   facilitatedByRole: [MTOFacilitator!]!
+  """
+  Specifies the Task List Section that corresponds to suggesting this common milestone
+  """
   section: TaskListSection
 
   # Custom Resolvers

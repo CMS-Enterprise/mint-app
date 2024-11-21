@@ -735,6 +735,7 @@ export type MtoCommonMilestone = {
   isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
   name: Scalars['String']['output'];
+  /** Specifies the Task List Section that corresponds to suggesting this common milestone */
   section?: Maybe<TaskListSection>;
   subCategoryName?: Maybe<Scalars['String']['output']>;
 };
@@ -3574,7 +3575,6 @@ export type PossibleOperationalNeed = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   possibleSolutions: Array<PossibleOperationalSolution>;
-  /** Specifies the Task List Section that corresponds to suggesting this common milestone */
   section?: Maybe<TaskListSection>;
 };
 
