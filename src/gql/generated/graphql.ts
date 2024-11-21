@@ -777,17 +777,21 @@ export enum MtoCommonMilestoneKey {
 
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
-  description: Scalars['String']['output'];
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
-  role: MtoFacilitator;
+  subject: Array<MtoCommonSolutionSubject>;
   type: MtoSolutionType;
 };
 
 export enum MtoCommonSolutionKey {
   SOLUTION_A = 'SOLUTION_A',
   SOLUTION_B = 'SOLUTION_B'
+}
+
+export enum MtoCommonSolutionSubject {
+  SUBJECT1 = 'SUBJECT1',
+  SUBJECT2 = 'SUBJECT2'
 }
 
 export enum MtoFacilitator {
