@@ -24,8 +24,17 @@ const (
 type MTOCommonSolutionSubject string
 
 const (
-	MTOCommonSolutionSubject1 MTOCommonSolutionSubject = "SUBJECT1"
-	MTOCommonSolutionSubject2 MTOCommonSolutionSubject = "SUBJECT2"
+	MTOCSSApplicationsAndParticipantInteractionAcoAndKidneyModels MTOCommonSolutionSubject = "APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
+	MTOCSSApplicationsAndParticipantInteractionNonAcoModels       MTOCommonSolutionSubject = "APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS"
+	MTOCSSMedicareFeeForService                                   MTOCommonSolutionSubject = "MEDICARE_FEE_FOR_SERVICE"
+	MTOCSSContractVehicles                                        MTOCommonSolutionSubject = "CONTRACT_VEHICLES"
+	MTOCSSLearning                                                MTOCommonSolutionSubject = "LEARNING"
+	MTOCSSQuality                                                 MTOCommonSolutionSubject = "QUALITY"
+	MTOCSSCommunicationToolsAndHelpDesk                           MTOCommonSolutionSubject = "COMMUNICATION_TOOLS_AND_HELP_DESK"
+	MTOCSSMedicareAdvantageAndPartD                               MTOCommonSolutionSubject = "MEDICARE_ADVANTAGE_AND_PART_D"
+	MTOCSSPaymentsAndFinancials                                   MTOCommonSolutionSubject = "PAYMENTS_AND_FINANCIALS"
+	MTOCSSData                                                    MTOCommonSolutionSubject = "DATA"
+	MTOCSSLegal                                                   MTOCommonSolutionSubject = "LEGAL"
 )
 
 type MTOSolutionType string
