@@ -166,12 +166,10 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     milestone: {
       selectPrimaryCategory: {
-        label: 'Select primary phase or category <s>*</s>',
-        hint: 'Selecting "None" will add this to an "Uncategorized" primary category.'
+        label: 'Select primary phase or category <s>*</s>'
       },
       selectSubcategory: {
-        label: 'Select sub-category <s>*</s>',
-        hint: 'Selecting "None" will add this to an "Uncategorized" sub-category.'
+        label: 'Select sub-category <s>*</s>'
       },
       milestoneTitle: 'Milestone title <s>*</s>',
       alert: {
