@@ -46,6 +46,7 @@ import {
   MonitoringFileType,
   MtoCategoryTranslation,
   MtoInfoTranslation,
+  MtoMilestoneTranslation,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
@@ -1258,6 +1259,24 @@ export type TranslationMTOCategory = {
   [K in keyof TranslationMTOCategoryGQL]: TranslationMTOCategoryForm[K]; // FE form type
 };
 
+// Existing Model Link - Change History purposes only
+export type TranslationMTOMilestoneCustomForm = {
+  name: TranslationFieldProperties;
+};
+
+type TranslationMTOMilestoneCustomGQL = Omit<
+  MtoMilestoneTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOMilestoneCustom = {
+  [K in keyof TranslationMTOMilestoneCustomGQL]: TranslationMTOMilestoneCustomForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -1277,6 +1296,7 @@ export type TranslationPlan = {
   dataExchangeApproach: TranslationDataExchangeApproach;
   modelToOperations: TranslationMTOInfo;
   mtoCategory: TranslationMTOCategory;
+  mtoMilestone: TranslationMTOMilestoneCustom;
 };
 
 export type TranslationPlanSection =
@@ -1307,5 +1327,6 @@ export enum PlanSection {
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
   DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
   MTO_INFO = 'modelToOperations',
-  MTO_CATEGORY = 'mtoCategory'
+  MTO_CATEGORY = 'mtoCategory',
+  MTO_MILESTONE = 'mtoMilestone'
 }

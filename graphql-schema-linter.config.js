@@ -51,7 +51,8 @@ module.exports = {
       'TranslationFieldWithParentAndChildren',
       'MTOInfoTranslation',
       'EnumTranslation',
-      'MTOCategoryTranslation'
+      'MTOCategoryTranslation',
+      'MTOMilestoneTranslation'
     ],
     'enum-values-all-caps': ['TableName']
   }

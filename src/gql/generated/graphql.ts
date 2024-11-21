@@ -931,6 +931,12 @@ export enum MtoMilestoneStatus {
   NOT_STARTED = 'NOT_STARTED'
 }
 
+/** Represents MTO Custom Milestone translation data */
+export type MtoMilestoneTranslation = {
+  __typename: 'MTOMilestoneTranslation';
+  name: TranslationField;
+};
+
 export enum MtoRiskIndicator {
   AT_RISK = 'AT_RISK',
   OFF_TRACK = 'OFF_TRACK',
