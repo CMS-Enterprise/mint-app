@@ -1,18 +1,40 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import {
+  Controller,
+  FormProvider,
+  SubmitHandler,
+  useForm
+} from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import {
+  Button,
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+  Select,
+  TextInput
+} from '@trussworks/react-uswds';
 import { useGetMtoCategoriesQuery } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-import { selectOptions } from '../CategoryForm';
+import { selectOptions, SelectProps } from '../CategoryForm';
+
+type FormValues = {
+  primaryCategory: string;
+  subcategory: string;
+  name: string;
+};
 
 const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const { message, clearMessage } = useMessage();
 
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -47,7 +69,164 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
-  return <div>ModelMilestoneForm</div>;
+  const onSubmit: SubmitHandler<FormValues> = formData => {
+    // eslint-disable-next-line no-console
+    console.log(formData);
+  };
+
+  return (
+    <FormProvider {...methods}>
+      {message}
+      <Form
+        className="maxw-none"
+        data-testid="custom-category-form"
+        id="custom-category-form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Fieldset disabled={loading}>
+          <Controller
+            name="primaryCategory"
+            control={control}
+            rules={{
+              required: true
+            }}
+            render={({ field: { ref, ...field } }) => (
+              <FormGroup className="margin-top-0 margin-bottom-2">
+                <Label
+                  htmlFor={convertCamelCaseToKebabCase(field.name)}
+                  className="mint-body-normal maxw-none margin-bottom-1"
+                >
+                  <Trans
+                    i18nKey={t('modal.milestone.selectPrimaryCategory.label')}
+                    components={{
+                      s: <span className="text-secondary-dark" />
+                    }}
+                  />
+                </Label>
+                <span className="usa-hint">
+                  {t('modal.milestone.selectPrimaryCategory.hint')}
+                </span>
+
+                <Select
+                  {...field}
+                  id={convertCamelCaseToKebabCase(field.name)}
+                  value={field.value || ''}
+                  defaultValue="default"
+                >
+                  {selectOptionsAndMappedCategories.map(option => {
+                    return (
+                      <option
+                        key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormGroup>
+            )}
+          />
+
+          <Controller
+            name="subcategory"
+            control={control}
+            rules={{
+              required: true
+            }}
+            render={({ field: { ref, ...field } }) => (
+              <FormGroup className="margin-top-0 margin-bottom-2">
+                <Label
+                  htmlFor={convertCamelCaseToKebabCase(field.name)}
+                  className="mint-body-normal maxw-none margin-bottom-1"
+                >
+                  <Trans
+                    i18nKey={t('modal.milestone.selectSubcategory.label')}
+                    components={{
+                      s: <span className="text-secondary-dark" />
+                    }}
+                  />
+                </Label>
+                <span className="usa-hint">
+                  {t('modal.milestone.selectSubcategory.hint')}
+                </span>
+
+                <Select
+                  {...field}
+                  id={convertCamelCaseToKebabCase(field.name)}
+                  value={field.value || ''}
+                  defaultValue="default"
+                >
+                  {selectOptionsAndMappedCategories.map(option => {
+                    return (
+                      <option
+                        key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormGroup>
+            )}
+          />
+
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              required: true
+            }}
+            render={({ field: { ref, ...field } }) => (
+              <FormGroup className="margin-top-0 margin-bottom-2">
+                <Label
+                  htmlFor={convertCamelCaseToKebabCase(field.name)}
+                  className="mint-body-normal maxw-none margin-bottom-1"
+                >
+                  <Trans
+                    i18nKey={t('modal.milestone.milestoneTitle')}
+                    components={{
+                      s: <span className="text-secondary-dark" />
+                    }}
+                  />
+                </Label>
+
+                <TextInput
+                  type="text"
+                  {...field}
+                  id={convertCamelCaseToKebabCase(field.name)}
+                  value=""
+                />
+              </FormGroup>
+            )}
+          />
+        </Fieldset>
+        <Alert type="info" slim className="margin-bottom-2">
+          <Trans
+            i18nKey={t('modal.milestone.alert.info')}
+            components={{
+              s: <span className="text-underline text-primary-light" />
+            }}
+          />
+        </Alert>
+        <Button type="submit" disabled={!isValid} className="margin-right-3">
+          {t('modal.addButton', { type: 'category' })}
+        </Button>
+        <Button
+          type="button"
+          className="usa-button usa-button--unstyled"
+          onClick={() => {
+            reset();
+            clearMessage();
+            closeModal();
+          }}
+        >
+          {t('modal.cancel')}
+        </Button>
+      </Form>
+    </FormProvider>
+  );
 };
 
 export default ModelMilestoneForm;

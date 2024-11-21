@@ -147,6 +147,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         sublabel:
           'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
       },
+
       categoryTitle: {
         label: 'New category title <s>*</s>'
       },
@@ -161,6 +162,23 @@ export const modelToOperationsMisc: Record<string, any> = {
         },
         error:
           'There was an error adding your category. Please try again. If the error persists, please try again another time.'
+      }
+    },
+    milestone: {
+      selectPrimaryCategory: {
+        label: 'Select primary phase or category <s>*</s>',
+        hint: 'Selecting "None" will add this to an "Uncategorized" primary category.'
+      },
+      selectSubcategory: {
+        label: 'Select sub-category <s>*</s>',
+        hint: 'Selecting "None" will add this to an "Uncategorized" sub-category.'
+      },
+      milestoneTitle: 'Milestone title <s>*</s>',
+      alert: {
+        info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
+        success: 'Your milestone ({{milestone}}) has been added.',
+        error:
+          'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       }
     },
     addButton: 'Add {{type}}',
