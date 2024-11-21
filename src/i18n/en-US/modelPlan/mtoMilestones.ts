@@ -1,11 +1,11 @@
-import { TranslationMTOCategory } from 'types/translation';
+import { TranslationMTOMilestoneCustom } from 'types/translation';
 
 import {
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
 
-export const mtoMilestones: TranslationMTOCategory = {
+export const mtoMilestones: TranslationMTOMilestoneCustom = {
   name: {
     gqlField: 'name',
     goField: 'Name',
