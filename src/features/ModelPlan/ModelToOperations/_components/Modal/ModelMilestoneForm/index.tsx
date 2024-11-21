@@ -50,7 +50,8 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
 
   // Combine sort options and mapped categories
   const selectOptionsAndMappedCategories: SelectProps[] = [
-    ...selectOptions,
+    // only get the default option of selectOptions
+    selectOptions[0],
     ...mappedCategories
   ];
 
@@ -76,6 +77,20 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     console.log(formData);
     // TODO: TEMPORARY
   };
+
+  //   create({
+  //     variables: {
+  //       id: modelID,
+  //       name: formData.name,
+  //       mtoCategoryID:
+  //         formData.subcategory !== null
+  //       then just return subcategory
+
+  //       else
+  //       formData.primaryCategory === 'none' ? null : formData.primaryCategory
+  //     }
+  //   });
+  // };
 
   return (
     <FormProvider {...methods}>

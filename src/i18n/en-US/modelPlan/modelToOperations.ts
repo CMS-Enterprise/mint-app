@@ -166,7 +166,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     milestone: {
       selectPrimaryCategory: {
-        label: 'Select primary phase or category <s>*</s>'
+        label: 'Select primary category <s>*</s>'
       },
       selectSubcategory: {
         label: 'Select sub-category <s>*</s>'
