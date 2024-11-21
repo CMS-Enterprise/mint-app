@@ -1,13 +1,13 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { GetMtoCategoriesDocument } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import CategoryForm from './index';
+import ModelMilestoneForm from './index';
 
 const mocks = [
   {
@@ -53,14 +53,14 @@ const mocks = [
   }
 ];
 
-describe('Custom Catergory form', () => {
+describe('Custom Milestone form', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { getAllByTestId, getByTestId, asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <Route path="/models/:modelID/">
-              <CategoryForm closeModal={() => {}} />
+              <ModelMilestoneForm closeModal={() => {}} />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
@@ -68,11 +68,16 @@ describe('Custom Catergory form', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByText(
-          'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
-        )
-      ).toBeInTheDocument();
+      expect(getByTestId('alert')).toBeInTheDocument();
+      const selectPrimaryCategory = getAllByTestId('Select')[0];
+      const primaryCategoryOptions =
+        selectPrimaryCategory.querySelectorAll('option');
+
+      expect(primaryCategoryOptions).toHaveLength(3);
+
+      expect(primaryCategoryOptions[0].value).toBe('default');
+      expect(primaryCategoryOptions[1].value).toBe('123');
+      expect(primaryCategoryOptions[2].value).toBe('456');
     });
 
     expect(asFragment()).toMatchSnapshot();
