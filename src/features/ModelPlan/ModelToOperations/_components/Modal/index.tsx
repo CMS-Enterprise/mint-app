@@ -26,7 +26,7 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
         closeModal();
       }}
       shouldCloseOnOverlayClick
-      className="width-mobile-lg mint-body-normal"
+      className="tablet:width-mobile-lg mint-body-normal"
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">

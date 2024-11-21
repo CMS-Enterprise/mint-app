@@ -23,6 +23,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
@@ -52,6 +53,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
+  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -254,7 +256,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         </Button>
         <Button
           type="button"
-          className="usa-button usa-button--unstyled"
+          className={`usa-button ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
           onClick={() => {
             reset();
             clearMessage();
