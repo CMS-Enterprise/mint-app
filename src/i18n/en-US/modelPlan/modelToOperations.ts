@@ -42,6 +42,35 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '18 categories, 0 milestones, 0 solutions',
       buttonText: 'Use this template'
     }
+  },
+  modal: {
+    title: 'Add a new {{type}}',
+    allFieldsRequired:
+      'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    category: {
+      selectPrimaryCategory: {
+        label: 'Select primary category <s>*</s>',
+        sublabel:
+          'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
+      },
+      categoryTitle: {
+        label: 'New category title <s>*</s>'
+      },
+      selectOptions: {
+        default: '- Select - ',
+        none: 'None (this is a primary category)'
+      },
+      alert: {
+        success: {
+          parent: 'Your category (<b>{{category}}</b>) has been added.',
+          subcategory: 'Your sub-category (<b>{{category}}</b>) has been added.'
+        },
+        error:
+          'There was an error adding your category. Please try again. If the error persists, please try again another time.'
+      }
+    },
+    addButton: 'Add {{type}}',
+    cancel: 'Cancel'
   }
 };
 

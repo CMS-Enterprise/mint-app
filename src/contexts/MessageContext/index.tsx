@@ -6,6 +6,7 @@ export const MessageContext = createContext<
       message: string | React.ReactNode | undefined;
       showMessage: (message: string | React.ReactNode) => void;
       showMessageOnNextPage: (message: string | React.ReactNode) => void;
+      clearMessage: () => void;
     }
   | undefined
 >(undefined);
@@ -21,6 +22,8 @@ const MessageProvider = ({ children }: { children: ReactNode }) => {
 
   const [lastPathname, setLastPathname] = useState(location.pathname);
 
+  const clearMessage = () => setMessage(undefined);
+
   useEffect(() => {
     if (lastPathname !== location.pathname) {
       setMessage(queuedMessage);
@@ -34,7 +37,8 @@ const MessageProvider = ({ children }: { children: ReactNode }) => {
       value={{
         message,
         showMessage: setMessage,
-        showMessageOnNextPage: setQueuedMessage
+        showMessageOnNextPage: setQueuedMessage,
+        clearMessage
       }}
     >
       {children}
