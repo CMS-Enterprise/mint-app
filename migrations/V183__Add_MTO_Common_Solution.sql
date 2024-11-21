@@ -13,7 +13,8 @@ CREATE TYPE MTO_SOLUTION_TYPE AS ENUM (
 CREATE TYPE MTO_COMMON_SOLUTION_SUBJECT AS ENUM (
     'SUBJECT1',
     'SUBJECT2'
-)
+);
+
 COMMENT ON TYPE MTO_SOLUTION_TYPE IS
 'Specifies the type of solution, such as IT system, contract, cross-cutting group, or other, to categorize solutions used within the model plan.';
 
@@ -24,6 +25,7 @@ CREATE TABLE mto_common_solution (
     name ZERO_STRING NOT NULL,
     type MTO_SOLUTION_TYPE NOT NULL,
     subject MTO_COMMON_SOLUTION_SUBJECT[] NOT NULL,
+    filter_view MODEL_VIEW_FILTER
 );
 
 

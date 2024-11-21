@@ -18,7 +18,9 @@ type MTOCommonSolution {
   name: String!
   key: MTOCommonSolutionKey!
   type: MTOSolutionType! 
-  subject : [MTOCommonSolutionSubject!]!
+  subject: [MTOCommonSolutionSubject!]!
+  filterView: ModelViewFilter
+
 
   #Custom Resolvers
   isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone) #TODO, do we need to compare to a need? Or specifically just to a model plan

@@ -777,6 +777,7 @@ export enum MtoCommonMilestoneKey {
 
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
+  filterView?: Maybe<ModelViewFilter>;
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
