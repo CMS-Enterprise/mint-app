@@ -31,19 +31,19 @@ type FormValues = {
   name: string;
 };
 
-type SortProps = {
+export type SelectProps = {
   value: string;
   label: string;
 };
 
-const sortOptions: SortProps[] = [
+const selectOptions: SelectProps[] = [
   {
     value: 'default',
-    label: i18n.t('modelToOperationsMisc:modal.category.sortOptions.default')
+    label: i18n.t('modelToOperationsMisc:modal.category.selectOptions.default')
   },
   {
     value: 'none',
-    label: i18n.t('modelToOperationsMisc:modal.category.sortOptions.none')
+    label: i18n.t('modelToOperationsMisc:modal.category.selectOptions.none')
   }
 ];
 
@@ -64,14 +64,14 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 
   // Map categories to sort options
-  const mappedCategories: SortProps[] = noUncategorized.map(category => ({
+  const mappedCategories: SelectProps[] = noUncategorized.map(category => ({
     value: category.id,
     label: category.name
   }));
 
   // Combine sort options and mapped categories
-  const sortOptionsAndMappedCategories: SortProps[] = [
-    ...sortOptions,
+  const selectOptionsAndMappedCategories: SelectProps[] = [
+    ...selectOptions,
     ...mappedCategories
   ];
 
@@ -204,7 +204,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                   value={field.value || ''}
                   defaultValue="default"
                 >
-                  {sortOptionsAndMappedCategories.map(option => {
+                  {selectOptionsAndMappedCategories.map(option => {
                     return (
                       <option
                         key={`sort-${convertCamelCaseToKebabCase(option.label)}`}

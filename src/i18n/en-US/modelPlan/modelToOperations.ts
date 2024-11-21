@@ -70,7 +70,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       categoryTitle: {
         label: 'New category title <s>*</s>'
       },
-      sortOptions: {
+      selectOptions: {
         default: '- Select - ',
         none: 'None (this is a primary category)'
       },
