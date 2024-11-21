@@ -47,6 +47,7 @@ import {
   MtoCategoryTranslation,
   MtoInfoTranslation,
   MtoMilestoneTranslation,
+  MtoMilestoneTranslation,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
