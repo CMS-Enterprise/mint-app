@@ -36,6 +36,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	mto_milestone,
 	mto_solution,
 	mto_milestone_solution_link,
+	mto_info,
     model_plan,
 	user_notification,
 	activity,

@@ -778,6 +778,22 @@ export enum MtoFacilitator {
   SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
 }
 
+/** This holds information specific to a models to operation matrix */
+export type MtoInfo = {
+  __typename: 'MTOInfo';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
+};
+
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
@@ -1072,6 +1088,7 @@ export type ModelsToOperationMatrix = {
   categories: Array<MtoCategory>;
   commonMilestones: Array<MtoCommonMilestone>;
   commonSolutions: Array<MtoCommonSolution>;
+  info: MtoInfo;
   milestones: Array<MtoMilestone>;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
@@ -1130,6 +1147,7 @@ export type Mutation = {
   lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
+  markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
@@ -1138,6 +1156,12 @@ export type Mutation = {
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
    */
   renameMTOCategory: MtoCategory;
+  /**
+   * Allows you to change the position and parent of an MTO category. Other categories will automatically
+   * have their positions changed to adjust to the new position of the new category.
+   * If only the parent is changed, the category will be placed as the last category in order for the group of subcategories
+   * Note, a subcategory can't become a subcategory and vice versa
+   */
   reorderMTOCategory: MtoCategory;
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
@@ -1342,6 +1366,13 @@ export type MutationLockLockableSectionArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMarkMtoReadyForReviewArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationMarkNotificationAsReadArgs = {
   notificationID: Scalars['UUID']['input'];
 };
@@ -1364,7 +1395,8 @@ export type MutationRenameMtoCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationReorderMtoCategoryArgs = {
   id: Scalars['UUID']['input'];
-  newOrder: Scalars['Int']['input'];
+  newOrder?: InputMaybe<Scalars['Int']['input']>;
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 

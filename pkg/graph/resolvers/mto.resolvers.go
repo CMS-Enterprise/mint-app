@@ -7,6 +7,9 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -48,6 +51,18 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 	// TODO re-visit when solutions are implemented
 	// TODO re-visit when change history is implemented for MTO
 	return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
+}
+
+// Info is the resolver for the info field.
+func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
+	return MTOInfoGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
+}
+
+// MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
+func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, modelPlanID uuid.UUID, readyForReview bool) (*models.MTOInfo, error) {
+	princ := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOToggleReadyForReview(ctx, logger, princ, r.store, modelPlanID, readyForReview)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
