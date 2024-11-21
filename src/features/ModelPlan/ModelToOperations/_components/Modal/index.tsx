@@ -6,7 +6,7 @@ import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
 import CategoryForm from './CategoryForm';
-import ModelMilestoneForm from './ModelMilestoneForm';
+import MilestoneForm from './MilestoneForm';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -58,9 +58,7 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
 
       {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
-      {modalType === 'milestone' && (
-        <ModelMilestoneForm closeModal={closeModal} />
-      )}
+      {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
     </Modal>
   );
 };
