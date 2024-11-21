@@ -1,6 +1,6 @@
 SELECT
     pos.id               AS possible_operational_solution_id,
-    pos.sol_key               AS sol_key,
+    pos.sol_key,
     mp.id               AS model_plan_id
 FROM
     model_plan AS mp

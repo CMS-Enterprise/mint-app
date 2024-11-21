@@ -12,9 +12,9 @@ SELECT
         WHERE collab.model_plan_id = plan.ID AND collab.team_roles @> '{"MODEL_LEAD"}' --noqa
     ) AS model_lead_names,
 
-    posNEED.need_name AS need_name,
+    posNEED.need_name,
     PLAN.ID AS model_id,
-    PLAN.Model_Name AS model_name,
+    PLAN.model_name,
     PLAN.abbreviation AS model_abbreviation,
     PLAN.status AS model_status,
     basics.performance_period_starts AS model_start_date --noqa
