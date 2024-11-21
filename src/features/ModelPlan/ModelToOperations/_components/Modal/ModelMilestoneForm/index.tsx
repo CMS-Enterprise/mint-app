@@ -45,18 +45,23 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   // Get categories from the data
   const categories = data?.modelPlan?.mtoMatrix?.categories || [];
 
-  // Map categories to sort options
+  // Map categories to select options
   const mappedCategories: SelectProps[] = categories.map(category => ({
     value: category.id,
     label: category.name
   }));
 
-  // Combine sort options and mapped categories
+  // Combine select options and mapped categories
   const selectOptionsAndMappedCategories: SelectProps[] = [
     // only get the default option of selectOptions
     selectOptions[0],
     ...mappedCategories
   ];
+
+  const getSubcategoryByPrimaryCategoryName = (id: string) => {
+    const result = categories.find(item => item.id === id);
+    return result ? result.subCategories : [];
+  };
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -74,6 +79,14 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     watch,
     formState: { isValid }
   } = methods;
+
+  const mappedSubcategories: SelectProps[] =
+    getSubcategoryByPrimaryCategoryName(watch('primaryCategory')).map(
+      subcategory => ({
+        value: subcategory.id,
+        label: subcategory.name
+      })
+    );
 
   const [create] = useCreateMtoMilestoneCustomMutation();
 
@@ -213,7 +226,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                   defaultValue="default"
                   disabled={watch('primaryCategory') === 'default'}
                 >
-                  {selectOptionsAndMappedCategories.map(option => {
+                  {[selectOptions[0], ...mappedSubcategories].map(option => {
                     return (
                       <option
                         key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
