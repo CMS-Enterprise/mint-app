@@ -67,7 +67,7 @@ func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, 
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return MTOSolutionUpdate(logger, principal, r.store, id, changes)
+	return MTOSolutionUpdate(ctx, logger, principal, r.store, id, changes)
 }
 
 // MTOSolution returns generated.MTOSolutionResolver implementation.

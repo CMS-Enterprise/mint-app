@@ -16,6 +16,7 @@ import (
 
 // MTOSolutionUpdate updates the MTOSolution
 func MTOSolutionUpdate(
+	ctx context.Context,
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
@@ -26,21 +27,17 @@ func MTOSolutionUpdate(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	existing, err := storage.MTOSolutionGetByIDLoader(store, logger, []uuid.UUID{id})
+	existing, err := loaders.MTOSolution.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Solution. Err %w", err)
 	}
 
-	if len(existing) == 0 {
-		return nil, fmt.Errorf("unable to update MTO Solution. ID %s not found", id)
-	}
-
 	// Check access and apply changes
-	err = BaseStructPreUpdate(logger, existing[0], changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOSolutionUpdate(store, logger, existing[0])
+	return storage.MTOSolutionUpdate(store, logger, existing)
 }
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
