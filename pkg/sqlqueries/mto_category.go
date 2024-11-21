@@ -5,6 +5,9 @@ import _ "embed"
 //go:embed SQL/mto/category/create.sql
 var mtoCategoryCreateSQL string
 
+//go:embed SQL/mto/category/create_allow_conflicts.sql
+var mtoCategoryCreateAllowConflictsSQL string
+
 //go:embed SQL/mto/category/update.sql
 var mtoCategoryUpdateSQL string
 
@@ -21,9 +24,10 @@ var mtoCategoryAndSubCategoriesGetByModelPlanIDLoaderSQL string
 var mtoCategoryGetByParentIDLoaderSQL string
 
 type mtoCategoryScripts struct {
-	Create  string
-	Update  string
-	GetByID string
+	Create               string
+	CreateAllowConflicts string
+	Update               string
+	GetByID              string
 	// returns all parent level categories by a model plan ID
 	GetByModelPlanIDLoader string
 	// returns all categories and sub categories by a model plan ID
@@ -36,6 +40,7 @@ type mtoCategoryScripts struct {
 // MTOCategory houses all the sql for getting data for mto category from the database
 var MTOCategory = mtoCategoryScripts{
 	Create:                                 mtoCategoryCreateSQL,
+	CreateAllowConflicts:                   mtoCategoryCreateAllowConflictsSQL,
 	Update:                                 mtoCategoryUpdateSQL,
 	GetByID:                                mtoCategoryGetByIDSQL,
 	GetByModelPlanIDLoader:                 mtoCategoryGetByModelPlanIDLoaderSQL,

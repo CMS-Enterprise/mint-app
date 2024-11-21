@@ -52,10 +52,10 @@ func (r *mutationResolver) RenameMTOCategory(ctx context.Context, id uuid.UUID, 
 }
 
 // ReorderMTOCategory is the resolver for the reorderMTOCategory field.
-func (r *mutationResolver) ReorderMTOCategory(ctx context.Context, id uuid.UUID, newOrder int) (*models.MTOCategory, error) {
+func (r *mutationResolver) ReorderMTOCategory(ctx context.Context, id uuid.UUID, newOrder *int, parentID *uuid.UUID) (*models.MTOCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOCategoryReorder(ctx, logger, principal, r.store, id, newOrder)
+	return MTOCategoryReorder(ctx, logger, principal, r.store, id, newOrder, parentID)
 }
 
 // MTOCategory returns generated.MTOCategoryResolver implementation.
