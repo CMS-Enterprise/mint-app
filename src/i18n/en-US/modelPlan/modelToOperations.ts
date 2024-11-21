@@ -134,7 +134,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     error: 'Failed to update MTO status'
   },
   modal: {
-    title: 'Add a new {{type}}',
+    title: {
+      category: 'Add a new category',
+      milestone: 'Add a new model milestone',
+      solution: 'Add a new solution'
+    },
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
     category: {

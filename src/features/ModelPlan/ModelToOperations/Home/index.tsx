@@ -35,7 +35,7 @@ const MTOHome = () => {
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<
-    'category' | 'system' | 'solution'
+    'category' | 'milestone' | 'solution'
   >('category');
 
   useEffect(() => {
@@ -77,6 +77,17 @@ const MTOHome = () => {
           className="margin-bottom-4"
         >
           Add custom category
+        </Button>
+        <Button
+          type="button"
+          onClick={() => {
+            clearMessage();
+            setModalType('milestone');
+            setIsModalOpen(true);
+          }}
+          className="margin-bottom-4"
+        >
+          Add custom milestone
         </Button>
       </div>
       {/* TEMPORARY since WIP components are not finalized */}
