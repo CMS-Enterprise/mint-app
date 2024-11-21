@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
@@ -50,6 +51,7 @@ func MTOSolutionCreateCustom(
 	name string,
 	solutionType models.MTOSolutionType,
 	facilitatedBy models.MTOFacilitator,
+	neededBy *time.Time,
 	pocName string,
 	pocEmail string,
 ) (*models.MTOSolution, error) {
@@ -64,6 +66,7 @@ func MTOSolutionCreateCustom(
 		&name,
 		&solutionType,
 		facilitatedBy,
+		neededBy,
 		pocName,
 		pocEmail,
 		principalAccount.ID,
@@ -96,6 +99,7 @@ func MTOSolutionCreateCommon(
 		nil,
 		nil,
 		models.MTOFacilitatorOther,
+		nil,
 		"test_poc_name_empty",
 		"empty@email.test",
 		principalAccount.ID,

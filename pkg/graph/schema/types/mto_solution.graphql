@@ -11,10 +11,10 @@ enum MTOSolutionStatus {
 
 # MTOSolution represents a Solution that has been added to a Model Plan's MTO
 type MTOSolution {
-  # DB Fields
   id: UUID!
   name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
   facilitatedBy: MTOFacilitator
+  neededBy: Time
   status: MTOSolutionStatus!
   riskIndicator: MTORiskIndicator
   key: MTOCommonSolutionKey
@@ -39,12 +39,9 @@ type MTOSolution {
 input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
   name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
   facilitatedBy: MTOFacilitator
+  neededBy: Time
   status: MTOSolutionStatus
   riskIndicator: MTORiskIndicator
-  key: MTOCommonSolutionKey
-  type: MTOSolutionType # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  pocName: String
-  pocEmail: String
 }
 
 extend type Mutation {

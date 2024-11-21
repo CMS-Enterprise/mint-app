@@ -1,9 +1,7 @@
 {
 	"info": {
-		"_postman_id": "29ca405a-aa92-406d-a466-28c37b31b18f",
 		"name": "MINT",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -3436,7 +3434,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation udpateMTOSolution {\nupdateMTOSolution(id: \"{{mtoSolutionID}}\",\nchanges: {\n    name: \"Postman MTO Solution\"\n    facilitatedBy: IT_LEAD,\n    status: IN_PROGRESS,\n    riskIndicator: AT_RISK,\n    type: IT_SYSTEM,\n    pocName: \"Postman POC\",\n    pocEmail: \"user@postman.test\"\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n}\n}",
+										"query": "mutation udpateMTOSolution {\nupdateMTOSolution(id: \"{{mtoSolutionID}}\",\nchanges: {\n    name: \"Postman MTO Solution\"\n    facilitatedBy: IT_LEAD,\n    neededBy: null,\n    status: IN_PROGRESS,\n    riskIndicator: AT_RISK,\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n}\n}",
 										"variables": ""
 									}
 								},
@@ -3512,7 +3510,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    key: SOLUTION_A\n) {\n    id\n    name\n    facilitatedBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    key: SOLUTION_A\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
 										"variables": ""
 									}
 								},

@@ -49,6 +49,7 @@ func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPla
 		name,
 		solutionType,
 		facilitatedBy,
+		nil,
 		pocName,
 		pocEmail,
 	)

@@ -858,6 +858,7 @@ export type MtoSolution = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  neededBy?: Maybe<Scalars['Time']['output']>;
   pocEmail: Scalars['String']['output'];
   pocName: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
@@ -868,13 +869,10 @@ export type MtoSolution = {
 
 export type MtoSolutionChanges = {
   facilitatedBy?: InputMaybe<MtoFacilitator>;
-  key?: InputMaybe<MtoCommonSolutionKey>;
   name?: InputMaybe<Scalars['String']['input']>;
-  pocEmail?: InputMaybe<Scalars['String']['input']>;
-  pocName?: InputMaybe<Scalars['String']['input']>;
+  neededBy?: InputMaybe<Scalars['Time']['input']>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
   status?: InputMaybe<MtoSolutionStatus>;
-  type?: InputMaybe<MtoSolutionType>;
 };
 
 export enum MtoSolutionStatus {

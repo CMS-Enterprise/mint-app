@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type MTOSolution struct {
 	baseStruct
@@ -8,6 +12,7 @@ type MTOSolution struct {
 
 	Name          *string               `json:"name" db:"name"`
 	FacilitatedBy MTOFacilitator        `json:"facilitatedBy" db:"facilitated_by"`
+	NeededBy      *time.Time            `json:"neededBy" db:"needed_by"`
 	Status        MTOSolutionStatus     `json:"status" db:"status"`
 	RiskIndicator MTORiskIndicator      `json:"riskIndicator" db:"risk_indicator"`
 	Key           *MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
@@ -41,6 +46,7 @@ func NewMTOSolution(
 	name *string,
 	solutionType *MTOSolutionType,
 	facilitatedBy MTOFacilitator,
+	neededBy *time.Time,
 	pocName string,
 	pocEmail string,
 	createdBy uuid.UUID,
@@ -52,6 +58,7 @@ func NewMTOSolution(
 		Name:              name,
 		Type:              solutionType,
 		FacilitatedBy:     facilitatedBy,
+		NeededBy:          neededBy,
 		Status:            MTOSolutionStatusNotStarted,
 		RiskIndicator:     MTORiskIndicatorOnTrack,
 		PocName:           pocName,

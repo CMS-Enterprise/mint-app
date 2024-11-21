@@ -6,6 +6,7 @@ WITH retVal AS (
         name= :name,
         type= :type,
         facilitated_by= :facilitated_by,
+        needed_by= :needed_by,
         status= :status,
         risk_indicator= :risk_indicator,
         poc_name= :poc_name,
@@ -20,6 +21,7 @@ WITH retVal AS (
     name,
     type,
     facilitated_by,
+    needed_by,
     status,
     risk_indicator,
     poc_name,
@@ -31,13 +33,13 @@ WITH retVal AS (
 )
 
 SELECT
-
     retVal.id,
     retVal.model_plan_id,
     retVal.mto_common_solution_key,
     COALESCE(retVal.name, mto_common_solution.name) AS "name",
     COALESCE(retVal.type, mto_common_solution.type) AS "type",
     retVal.facilitated_by,
+    retVal.needed_by,
     retVal.status,
     retVal.risk_indicator,
     retVal.poc_name,
