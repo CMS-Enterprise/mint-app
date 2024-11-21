@@ -276,6 +276,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
             i18nKey={t('modal.milestone.alert.info')}
             components={{
               s: <span className="text-underline text-primary-light" />
+              // TODO: Add a link to the documentation
             }}
           />
         </Alert>
