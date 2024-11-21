@@ -16,7 +16,10 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { useGetMtoCategoriesQuery } from 'gql/generated/graphql';
+import {
+  useCreateMtoMilestoneCustomMutation,
+  useGetMtoCategoriesQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
@@ -34,7 +37,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, clearMessage } = useMessage();
+  const { message, showMessage, clearMessage } = useMessage();
 
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -72,25 +75,64 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
+  const [create] = useCreateMtoMilestoneCustomMutation();
+
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    // eslint-disable-next-line no-console
-    console.log(formData);
-    // TODO: TEMPORARY
+    let mtoCategoryID;
+    const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
+    if (formData.subcategory !== uncategorizedCategoryID) {
+      mtoCategoryID = formData.subcategory;
+    } else if (formData.primaryCategory === uncategorizedCategoryID) {
+      mtoCategoryID = null;
+    } else {
+      mtoCategoryID = formData.primaryCategory;
+    }
+
+    create({
+      variables: {
+        id: modelID,
+        name: formData.name,
+        mtoCategoryID
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  <Trans
+                    i18nKey={t('modal.milestone.alert.success')}
+                    components={{
+                      b: <span className="text-bold" />
+                    }}
+                    values={{ milestone: formData.name }}
+                  />
+                </span>
+              </Alert>
+            </>
+          );
+          closeModal();
+        }
+      })
+      .catch(() => {
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {t('modal.milestone.alert.error')}
+          </Alert>
+        );
+      });
   };
-
-  //   create({
-  //     variables: {
-  //       id: modelID,
-  //       name: formData.name,
-  //       mtoCategoryID:
-  //         formData.subcategory !== null
-  //       then just return subcategory
-
-  //       else
-  //       formData.primaryCategory === 'none' ? null : formData.primaryCategory
-  //     }
-  //   });
-  // };
 
   return (
     <FormProvider {...methods}>
