@@ -10,8 +10,6 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
-import useMessage from 'hooks/useMessage';
-
 import './index.scss';
 
 type AlertProps = {
@@ -58,8 +56,6 @@ export const Alert = ({
     className
   );
 
-  const { clearMessage } = useMessage();
-
   const [isClosed, setClosed] = useState<boolean>(false);
 
   // closeAlert is a state setter passed down to conditionally render alert component from parent
@@ -90,7 +86,6 @@ export const Alert = ({
               aria-label="Close Button"
               onClick={() => {
                 setClosed(true);
-                clearMessage();
               }}
             >
               &#10005;

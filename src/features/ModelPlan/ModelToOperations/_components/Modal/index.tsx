@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import useMessage from 'hooks/useMessage';
 
 import CategoryForm from './CategoryForm';
 
@@ -15,10 +16,15 @@ type MTOModalProps = {
 const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const { clearMessage } = useMessage();
+
   return (
     <Modal
       isOpen={isOpen}
-      closeModal={closeModal}
+      closeModal={() => {
+        clearMessage();
+        closeModal();
+      }}
       shouldCloseOnOverlayClick
       className="width-mobile-lg mint-body-normal"
     >
