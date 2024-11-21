@@ -8,7 +8,6 @@ SELECT
     mto_common_milestone.key,
     mto_common_milestone.category_name,
     mto_common_milestone.sub_category_name,
-    mto_common_milestone.description,
     mto_common_milestone.facilitated_by_role,
     mto_common_milestone.section,
     -- These are fields in the table we may choose not to expose in the app
