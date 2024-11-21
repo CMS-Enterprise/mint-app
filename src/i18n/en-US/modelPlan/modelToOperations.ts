@@ -1,10 +1,12 @@
+import { TranslationMTOInfo } from 'types/translation';
+
 import {
   TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
 
-export const modelToOperations: any = {
+export const modelToOperations: TranslationMTOInfo = {
   readyForReviewBy: {
     gqlField: 'readyForReviewBy',
     goField: 'ReadyForReviewBy',

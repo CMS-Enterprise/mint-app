@@ -1220,7 +1220,7 @@ export type TranslationExistingModelLink = {
   [K in keyof TranslationExistingModelLinkGQL]: TranslationExistingModelLinkForm[K]; // FE form type
 };
 
-// Existing Model Link - Change History purposes only
+// MTO Info - Change History purposes only
 export type TranslationMTOInfoForm = {
   readyForReviewBy: TranslationFieldProperties;
   readyForReviewDTS: TranslationFieldProperties;
