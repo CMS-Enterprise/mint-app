@@ -66,12 +66,14 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { isValid }
   } = methods;
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     // eslint-disable-next-line no-console
     console.log(formData);
+    // TODO: TEMPORARY
   };
 
   return (
@@ -156,6 +158,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                   id={convertCamelCaseToKebabCase(field.name)}
                   value={field.value || ''}
                   defaultValue="default"
+                  disabled={watch('primaryCategory') === 'default'}
                 >
                   {selectOptionsAndMappedCategories.map(option => {
                     return (
