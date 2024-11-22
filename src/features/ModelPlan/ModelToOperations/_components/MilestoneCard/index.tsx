@@ -6,8 +6,7 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Icon
+  CardHeader
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 

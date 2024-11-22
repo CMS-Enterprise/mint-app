@@ -1,5 +1,5 @@
 # ModelsToOperationMatrix Notes:
-# - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones oustide the scope of a Category
+# - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones outside the scope of a Category
 type ModelsToOperationMatrix {
   categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [MTOCommonMilestone!]!

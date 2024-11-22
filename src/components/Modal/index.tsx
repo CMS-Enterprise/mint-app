@@ -55,16 +55,18 @@ const Modal = ({
               modalHeading ? 'border-bottom-1px border-base-lighter' : ''
             }`}
           >
-            <h4 className="margin-0 padding-left-4 padding-top-2">
-              {modalHeading}
-            </h4>
+            {modalHeading && (
+              <h4 className="margin-0 padding-left-4 padding-top-2">
+                {modalHeading}
+              </h4>
+            )}
             <button
               type="button"
               className="mint-modal__x-button text-base"
               aria-label="Close Modal"
               onClick={closeModal}
             >
-              <Icon.Close />
+              <Icon.Close size={4} />
             </button>
           </div>
 

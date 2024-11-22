@@ -1,7 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { Grid, Icon } from '@trussworks/react-uswds';
+import { useHistory, useParams } from 'react-router-dom';
+import {
+  CardGroup,
+  Grid,
+  Icon,
+  Label,
+  Pagination
+} from '@trussworks/react-uswds';
+import i18n from 'config/i18n';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoMilestonesQuery,
@@ -11,11 +18,15 @@ import {
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
+import GlobalClientFilter from 'components/TableFilter';
+import TablePageSize from 'components/TablePageSize';
+import TableResults from 'components/TableResults';
+import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MilestoneCard from '../_components/MilestoneCard';
 
 export type MilestoneCardType =
-  GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['milestones'][0];
+  GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0];
 
 const MilestoneLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -29,7 +40,7 @@ const MilestoneLibrary = () => {
   });
 
   const milestones =
-    data?.modelPlan?.mtoMatrix?.milestones || ([] as MilestoneCardType[]);
+    data?.modelPlan?.mtoMatrix?.commonMilestones || ([] as MilestoneCardType[]);
 
   if (error) {
     return <NotFoundPartial />;
@@ -67,11 +78,115 @@ const MilestoneLibrary = () => {
       {loading ? (
         <PageLoading />
       ) : (
-        milestones.map(milestone => (
-          <MilestoneCard key={milestone.id} milestone={milestone} />
-        ))
+        <MilstoneCardGroup milestones={milestones} />
       )}
     </>
+  );
+};
+
+type SortOptionsType = 'by-title-a-z' | 'by-title-z-a';
+
+// Sort options type for the select dropdown
+type SortProps = {
+  value: SortOptionsType;
+  label: string;
+};
+
+// Sort options for the select dropdown
+const sortOptions: SortProps[] = [
+  {
+    value: 'by-title-a-z',
+    label: i18n.t('helpAndKnowledge:sortAsc')
+  },
+  {
+    value: 'by-title-z-a',
+    label: i18n.t('helpAndKnowledge:sortDesc')
+  }
+];
+
+const MilstoneCardGroup = ({
+  milestones
+}: {
+  milestones: MilestoneCardType[];
+}) => {
+  const history = useHistory();
+
+  const { currentItems, pagination, search, pageSize } =
+    useSearchSortPagination<MilestoneCardType, any>({
+      items: milestones,
+      filterFunction: (query: string, items: MilestoneCardType[]) => items,
+      sortFunction: (items: MilestoneCardType[]) => items,
+      sortOptions
+    });
+
+  const { query, setQuery, rowLength } = search;
+
+  const { itemsPerPage, setItemsPerPage } = pageSize;
+
+  const {
+    currentPage,
+    handleNext,
+    handlePageNumber,
+    handlePrevious,
+    pageCount
+  } = pagination;
+
+  return (
+    <div className="help-card-group">
+      <div className="margin-top-2 margin-bottom-4">
+        <Grid row>
+          <Grid tablet={{ col: 6 }}>
+            {/* Search bar and results info */}
+            <GlobalClientFilter
+              globalFilter={query}
+              setGlobalFilter={setQuery}
+              tableID="help-articles"
+              tableName=""
+              className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
+            />
+          </Grid>
+
+          <Grid desktop={{ col: 12 }}>
+            <TableResults
+              globalFilter={query}
+              pageIndex={currentPage - 1}
+              pageSize={itemsPerPage}
+              filteredRowLength={currentItems.length}
+              rowLength={rowLength}
+            />
+          </Grid>
+        </Grid>
+      </div>
+
+      <CardGroup>
+        {currentItems.map(milestone => (
+          <MilestoneCard key={milestone.key} milestone={milestone} />
+        ))}
+      </CardGroup>
+
+      {/* Pagination */}
+
+      <div className="display-flex">
+        {milestones.length > itemsPerPage && pageCount > 1 && (
+          <Pagination
+            pathname={history.location.pathname}
+            currentPage={currentPage}
+            maxSlots={7}
+            onClickNext={handleNext}
+            onClickPageNumber={handlePageNumber}
+            onClickPrevious={handlePrevious}
+            totalPages={pageCount}
+          />
+        )}
+
+        <TablePageSize
+          className="margin-left-auto desktop:grid-col-auto"
+          pageSize={itemsPerPage}
+          setPageSize={setItemsPerPage}
+          valueArray={[6, 9, 'all']}
+        />
+      </div>
+    </div>
   );
 };
 

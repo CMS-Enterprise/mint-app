@@ -5,5 +5,5 @@ CREATE TABLE mto_common_milestone_solution_link (
     PRIMARY KEY  (mto_common_milestone_key, mto_common_solution_key)
 );
 
-INSERT INTO "public"."mto_common_milestone_solution_link"("mto_common_milestone_key", "mto_common_solution_key")
-VALUES('MILESTONE_A', 'SOLUTION_A');
+-- INSERT INTO "public"."mto_common_milestone_solution_link"("mto_common_milestone_key", "mto_common_solution_key")
+-- VALUES('MILESTONE_A', 'SOLUTION_A');

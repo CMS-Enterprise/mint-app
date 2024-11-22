@@ -47,6 +47,35 @@ export const modelToOperationsMisc: Record<string, any> = {
     heading: 'Milestone library',
     description:
       'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix. Some milestones are suggested for your model based on answers to questions in your Model Plan.'
+  },
+  modal: {
+    title: 'Add a new {{type}}',
+    allFieldsRequired:
+      'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    category: {
+      selectPrimaryCategory: {
+        label: 'Select primary category <s>*</s>',
+        sublabel:
+          'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
+      },
+      categoryTitle: {
+        label: 'New category title <s>*</s>'
+      },
+      selectOptions: {
+        default: '- Select - ',
+        none: 'None (this is a primary category)'
+      },
+      alert: {
+        success: {
+          parent: 'Your category (<b>{{category}}</b>) has been added.',
+          subcategory: 'Your sub-category (<b>{{category}}</b>) has been added.'
+        },
+        error:
+          'There was an error adding your category. Please try again. If the error persists, please try again another time.'
+      }
+    },
+    addButton: 'Add {{type}}',
+    cancel: 'Cancel'
   }
 };
 

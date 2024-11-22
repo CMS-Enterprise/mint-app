@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
+  Button,
   Grid,
   Header,
   Icon,
@@ -13,10 +14,13 @@ import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useMessage from 'hooks/useMessage';
 
+import MTOModal from '../_components/Modal';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable from '../_components/Table';
 
@@ -43,6 +47,8 @@ const MTOHome = () => {
 
   const location = useLocation();
 
+  const { message, clearMessage } = useMessage();
+
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search]);
@@ -52,6 +58,12 @@ const MTOHome = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [modalType, setModalType] = useState<
+    'category' | 'system' | 'solution'
+  >('category');
 
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
@@ -72,6 +84,73 @@ const MTOHome = () => {
           BreadcrumbItemOptions.MODEL_TO_OPERATIONS
         ]}
       />
+
+      {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
+
+      {/* TEMPORARY since WIP components are not finalized */}
+      {/* <MTOModal
+          isOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          modalType={modalType}
+        />
+        <div className="width-fit-content">
+          <div
+            style={{ paddingTop: '2px', paddingBottom: '2px' }}
+            className={classNames(
+              'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-secondary-dark'
+            )}
+          >
+            TEMPORARY
+          </div>
+          <Button
+            type="button"
+            onClick={() => {
+              clearMessage();
+              setModalType('category');
+              setIsModalOpen(true);
+            }}
+            className="margin-bottom-4"
+          >
+            Add custom category
+          </Button>
+        </div> */}
+      {/* TEMPORARY since WIP components are not finalized */}
+
+      {/* <Header
+          basic
+          extended={false}
+          className="margin-bottom-4 model-to-operations__nav-container"
+        >
+          <div className="usa-nav-container padding-0">
+            <PrimaryNav
+              items={mtoOptions.map(item => (
+                <button
+                  type="button"
+                  onClick={() => {
+                    params.set('view', item);
+                    history.push({ search: params.toString() });
+                  }}
+                  className={classNames(
+                    'usa-nav__link margin-left-neg-2 margin-right-2',
+                    {
+                      'usa-current': currentView === item
+                    }
+                  )}
+                >
+                  <span
+                    className={classNames({
+                      'text-primary': currentView === item
+                    })}
+                  >
+                    {t(item)}
+                  </span>
+                </button>
+              ))}
+              mobileExpanded={false}
+              className="flex-justify-start margin-0 padding-0"
+            />
+          </div>
+        </Header> */}
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
