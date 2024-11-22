@@ -7,7 +7,7 @@ rules = core
 
 # Ignoring capitalisation.identifiers because it seems to want to uppercase column names if there are capitalized enums defined before the table (like in V11__Add_Plan_General_Characteristics)
 # Ignoring layout.long_lines because we break line-length requirements in a few places with comments
-exclude_rules = capitalisation.identifiers, layout.long_lines, layout.spacing, layout.indent
+exclude_rules = capitalisation.identifiers, layout.long_lines, layout.spacing
 
 [sqlfluff:rules:capitalisation.keywords]
 # https://docs.sqlfluff.com/en/stable/rules.html#rule-capitalisation.keywords

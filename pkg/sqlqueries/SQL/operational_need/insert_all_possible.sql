@@ -17,15 +17,15 @@ WITH retVal AS (
     )
 
     RETURNING
-    id,
-    model_plan_id,
-    need_type,
-    name_other,
-    needed,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        need_type,
+        name_other,
+        needed,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

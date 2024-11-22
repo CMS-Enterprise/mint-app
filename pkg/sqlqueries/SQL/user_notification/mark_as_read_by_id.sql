@@ -6,13 +6,13 @@ SET
 WHERE
     id = :id AND user_id = :modified_by
 RETURNING
-id,
-activity_id,
-user_id,
-is_read,
-in_app_sent,
-email_sent,
-created_by,
-created_dts,
-modified_by,
-modified_dts;    
+    id,
+    activity_id,
+    user_id,
+    is_read,
+    in_app_sent,
+    email_sent,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;    

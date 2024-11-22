@@ -24,13 +24,13 @@ VALUES (
     :has_logged_in
 )
 RETURNING
-id,
-username,
-is_euaid,
-common_name,
-locale,
-email,
-given_name,
-family_name,
-zone_info,
-has_logged_in;
+    id,
+    username,
+    is_euaid,
+    common_name,
+    locale,
+    email,
+    given_name,
+    family_name,
+    zone_info,
+    has_logged_in;
