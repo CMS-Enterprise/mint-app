@@ -18,7 +18,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('SIGN_PARTICIPATION_AGREEMENTS', '{INNOVATION, CONTRACTOR}')
+    FROM link_key_and_array('SIGN_PARTICIPATION_AGREEMENTS', '{INNOVATION}')
     UNION
     SELECT
         "key",
@@ -58,7 +58,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('HELPDESK_SUPPORT', '{CBOSC, CONTRACTOR}')
+    FROM link_key_and_array('HELPDESK_SUPPORT', '{CBOSC}')
     UNION
     SELECT
         "key",
@@ -83,7 +83,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('DATA_TO_MONITOR', '{CDX, CCW, HDR, IDR, POST_PORTAL, CONTRACTOR}')
+    FROM link_key_and_array('DATA_TO_MONITOR', '{CDX, CCW, HDR, IDR, POST_PORTAL}')
     UNION
     SELECT
         "key",
@@ -98,12 +98,12 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('QUALITY_PERFORMANCE_SCORES', '{EXISTING_CMS_DATA_AND_PROCESS, HDR, OTHER_NEW_PROCESS}')
+    FROM link_key_and_array('QUALITY_PERFORMANCE_SCORES', '{EXISTING_CMS_DATA_AND_PROCESS, HDR}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('SEND_REPDATA_TO_PART', '{INNOVATION, BCDA, CDX, CMS_BOX, EFT, EDFR, RMADA, POST_PORTAL, INTERNAL_STAFF}')
+    FROM link_key_and_array('SEND_REPDATA_TO_PART', '{INNOVATION, BCDA, CDX, CMS_BOX, EFT, EDFR, RMADA, POST_PORTAL}')
     UNION
     SELECT
         "key",
@@ -113,7 +113,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('ACQUIRE_A_LEARN_CONT', '{RMADA, CROSS_MODEL_CONTRACT}')
+    FROM link_key_and_array('ACQUIRE_A_LEARN_CONT', '{RMADA}')
     UNION
     SELECT
         "key",
