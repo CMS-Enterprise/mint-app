@@ -6,7 +6,8 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -32,23 +33,29 @@ const MilestoneCard = ({
       }}
       className={classNames(className, 'margin-bottom-2')}
     >
-      <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full">
-        <CardHeader className="padding-0">
-          <h3 className="line-height-body-4 margin-bottom-1 margin-top-3">
-            {milestone.name}
-          </h3>
-        </CardHeader>
+      {/* <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full"> */}
+      <CardHeader className="padding-3 padding-bottom-0">
+        <div className="display-flex flex-justify">
+          <span className="text-base">Milestone</span>
+          <span className="bg-primary-lighter padding-right-1 text-primary">
+            <Icon.LightbulbOutline className="margin-left-1" /> Suggested
+          </span>
+        </div>
+        <h3 className="line-height-normal margin-top-1">{milestone.name}</h3>
+      </CardHeader>
 
-        <CardBody className="padding-x-0 padding-top-0">description</CardBody>
+      <CardBody className="padding-x-3">description</CardBody>
 
-        <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
-          <Button type="button">Add to matrix</Button>
+      <CardFooter className="padding-3">
+        <Button type="button" className="margin-right-2">
+          Add to matrix
+        </Button>
 
-          <Button type="button" unstyled>
-            About this milestone
-          </Button>
-        </CardFooter>
-      </div>
+        <Button type="button" unstyled>
+          About this milestone
+        </Button>
+      </CardFooter>
+      {/* </div> */}
     </Card>
   );
 };
