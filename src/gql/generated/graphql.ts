@@ -871,6 +871,8 @@ export type MtoSolutionChanges = {
   facilitatedBy?: InputMaybe<MtoFacilitator>;
   name?: InputMaybe<Scalars['String']['input']>;
   neededBy?: InputMaybe<Scalars['Time']['input']>;
+  pocEmail?: InputMaybe<Scalars['String']['input']>;
+  pocName?: InputMaybe<Scalars['String']['input']>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
   status?: InputMaybe<MtoSolutionStatus>;
 };

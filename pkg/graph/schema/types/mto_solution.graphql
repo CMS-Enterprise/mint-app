@@ -42,6 +42,8 @@ input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
   neededBy: Time
   status: MTOSolutionStatus
   riskIndicator: MTORiskIndicator
+  pocName: String
+  pocEmail: String
 }
 
 extend type Mutation {
