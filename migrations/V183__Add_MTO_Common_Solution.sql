@@ -20,7 +20,7 @@ CREATE TABLE mto_common_solution (
 
     type MTO_SOLUTION_TYPE NOT NULL,
     description ZERO_STRING NOT NULL,
-    role MTO_FACILITATOR NOT NULL
+    facilitated_by_role MTO_FACILITATOR[] NOT NULL
 );
 
 
@@ -31,18 +31,18 @@ CREATE TABLE mto_common_solution (
 
 
 
-INSERT INTO "public"."mto_common_solution"(
-    "name",
-    "key",
-    "type",
-    "description",
-    "role") VALUES(
-    'Place Holder Solution',
-    'SOLUTION_A',
-    'IT_SYSTEM',
-    'placeholder description',
-    'MODEL_TEAM'
-);
+-- INSERT INTO "public"."mto_common_solution"(
+--     "name",
+--     "key",
+--     "type",
+--     "description",
+--     "role") VALUES(
+--     'Place Holder Solution',
+--     'SOLUTION_A',
+--     'IT_SYSTEM',
+--     'placeholder description',
+--     'MODEL_TEAM'
+-- );
 
 /* End TODO
 

@@ -33,6 +33,7 @@ import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
 import modelToOperations, {
   modelToOperationsMisc
 } from './modelPlan/modelToOperations';
+import mtoCategory from './modelPlan/mtoCategory';
 import operationalNeeds from './modelPlan/operationalNeeds';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
@@ -110,6 +111,7 @@ const enUS = {
   paymentsMisc,
   modelToOperations,
   modelToOperationsMisc,
+  mtoCategory,
   operationalNeeds,
   solutions,
   operationalSolutionSubtasks,
