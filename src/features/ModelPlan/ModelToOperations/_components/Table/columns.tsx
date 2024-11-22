@@ -99,7 +99,7 @@ const sortNested = (
   copyData.forEach(category => {
     category.subCategories.forEach(subCategory => {
       subCategory.milestones.sort((a, b) =>
-        a[accessor].localeCompare(b[accessor])
+        a[accessor]?.localeCompare(b[accessor])
       );
       if (direction === 'DESC') {
         subCategory.milestones.reverse();
