@@ -101,7 +101,11 @@ const MTOOptionsPanel = () => {
 
       <Grid row gap={2} className="margin-top-4">
         {mtoOptions.map(option => (
-          <MTOOptionsCard mtoType={option} className="margin-top-2" />
+          <MTOOptionsCard
+            key={option}
+            mtoType={option}
+            className="margin-top-2"
+          />
         ))}
       </Grid>
 

@@ -1,5 +1,5 @@
 # ModelsToOperationMatrix Notes:
-# - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones oustide the scope of a Category
+# - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones outside the scope of a Category
 type ModelsToOperationMatrix {
   categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
   commonMilestones: [MTOCommonMilestone!]!
@@ -8,7 +8,12 @@ type ModelsToOperationMatrix {
   solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
   recentEdit: RecentModification #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
+
+
+  info: MTOInfo!
+
 }
+
 
 type RecentModification {
   modifiedBy: UUID
@@ -45,4 +50,10 @@ enum MTORiskIndicator {
   ON_TRACK
   OFF_TRACK
   AT_RISK
+}
+
+# TODO (mto) should this live in the mto info.graphql file?
+extend type Mutation {
+  markMTOReadyForReview(modelPlanID: UUID!, readyForReview: Boolean!): MTOInfo!
+  @hasRole(role: MINT_USER)
 }

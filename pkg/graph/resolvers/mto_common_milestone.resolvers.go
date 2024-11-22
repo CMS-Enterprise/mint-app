@@ -12,6 +12,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// FacilitatedByRole is the resolver for the facilitatedByRole field.
+func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj *models.MTOCommonMilestone) ([]models.MTOFacilitator, error) {
+	return obj.FacilitatedByRole, nil
+}
+
 // IsSuggested is the resolver for the isSuggested field.
 func (r *mTOCommonMilestoneResolver) IsSuggested(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
 	panic(fmt.Errorf("not implemented: IsSuggested - isSuggested"))

@@ -8,6 +8,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -40,9 +43,7 @@ func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *mo
 
 // Status is the resolver for the status field.
 func (r *modelsToOperationMatrixResolver) Status(ctx context.Context, obj *models.ModelsToOperationMatrix) (models.MTOStatus, error) {
-	//TODO (mto) Update when we have a methodology for Ready for Review
-	mtoMarkedReadyToReview := false
-	return MTOStatusGet(ctx, obj.ModelPlan.ID, mtoMarkedReadyToReview)
+	return MTOStatusGet(ctx, obj.ModelPlan.ID)
 }
 
 // RecentEdit is the resolver for the recentEdit field.
@@ -50,6 +51,18 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 	// TODO re-visit when solutions are implemented
 	// TODO re-visit when change history is implemented for MTO
 	return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
+}
+
+// Info is the resolver for the info field.
+func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
+	return MTOInfoGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
+}
+
+// MarkMTOReadyForReview is the resolver for the markMTOReadyForReview field.
+func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, modelPlanID uuid.UUID, readyForReview bool) (*models.MTOInfo, error) {
+	princ := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOToggleReadyForReview(ctx, logger, princ, r.store, modelPlanID, readyForReview)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
