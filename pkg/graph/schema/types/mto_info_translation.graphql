@@ -1,0 +1,8 @@
+"""
+Represents mto info translation data
+"""
+
+type MTOInfoTranslation {
+    readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+    readyForReviewDTS: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+}

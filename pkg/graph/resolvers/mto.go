@@ -15,13 +15,19 @@ import (
 )
 
 // MTOStatusGet returns the overall status of an MTO
-func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID, mtoMarkedReadyToReview bool) (models.MTOStatus, error) {
+func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus, error) {
 	//TODO (mto) Decide if this would be better as a DB query, if we should rely on other loaders
 
-	if mtoMarkedReadyToReview {
+	// Check if the mto has been marked as ready to review
+	mtoInfo, err := MTOInfoGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return models.MTOStatusReadyToStart, err
+	}
+	if mtoInfo.ReadyForReviewBy != nil {
 		return models.MTOStatusReadyForReview, nil
 	}
 
+	// Determine if the mto section has been started
 	lastUpdated, err := MTOLastUpdatedGet(ctx, modelPlanID)
 	if err != nil {
 		return models.MTOStatusReadyToStart, err

@@ -1,0 +1,21 @@
+{
+  "readyForReviewBy": {
+    "gqlField": "readyForReviewBy",
+    "goField": "ReadyForReviewBy",
+    "dbField": "ready_for_review_by",
+    "label": "Ready for review by",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.01,
+    "tableReference": "user_account"
+  },
+  "readyForReviewDTS": {
+    "gqlField": "readyForReviewDTS",
+    "goField": "ReadyForReviewDTS",
+    "dbField": "ready_for_review_dts",
+    "label": "Ready for review by",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 1.02
+  }
+}
