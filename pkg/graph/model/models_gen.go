@@ -66,6 +66,12 @@ type MTOCategoryTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`
 }
 
+// Represents mto info translation data
+type MTOInfoTranslation struct {
+	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts models.TranslationField `json:"readyForReviewDTS" db:"ready_for_review_dts"`
+}
+
 type MTOSolution struct {
 	ID                       uuid.UUID                    `json:"id"`
 	Name                     string                       `json:"name"`
