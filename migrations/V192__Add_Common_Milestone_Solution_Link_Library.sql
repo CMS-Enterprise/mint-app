@@ -1,3 +1,4 @@
+-- Do union selects to select needs and an array of keys
 WITH  links AS (
     SELECT
         "key",
@@ -154,6 +155,8 @@ WITH  links AS (
         "value"
     FROM link_key_and_array('RECOVER_PAYMENTS', '{APPS, IPC, SHARED_SYSTEMS}')
 )
+
+-- Insert into common milestone link from the union select that combines the keys
 
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
 SELECT
