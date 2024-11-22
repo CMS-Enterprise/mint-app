@@ -25,6 +25,8 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MilestoneCard from '../_components/MilestoneCard';
 
+import './index.scss';
+
 export type MilestoneCardType =
   GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0];
 
@@ -65,15 +67,17 @@ const MilestoneLibrary = () => {
         {t('milestoneLibrary.description')}
       </p>
 
-      <UswdsReactLink
-        to={`/models/${modelID}/collaboration-area`}
-        data-testid="return-to-collaboration"
-      >
-        <span>
-          <Icon.ArrowBack className="top-3px margin-right-1" />
-          {t('returnToCollaboration')}
-        </span>
-      </UswdsReactLink>
+      <div className="margin-bottom-6">
+        <UswdsReactLink
+          to={`/models/${modelID}/collaboration-area`}
+          data-testid="return-to-collaboration"
+        >
+          <span>
+            <Icon.ArrowBack className="top-3px margin-right-1" />
+            {t('returnToCollaboration')}
+          </span>
+        </UswdsReactLink>
+      </div>
 
       {loading ? (
         <PageLoading />
@@ -116,7 +120,8 @@ const MilstoneCardGroup = ({
       items: milestones,
       filterFunction: (query: string, items: MilestoneCardType[]) => items,
       sortFunction: (items: MilestoneCardType[]) => items,
-      sortOptions
+      sortOptions,
+      defaultItemsPerPage: 6
     });
 
   const { query, setQuery, rowLength } = search;
@@ -132,7 +137,7 @@ const MilstoneCardGroup = ({
   } = pagination;
 
   return (
-    <div className="help-card-group">
+    <div className="milestone-card-group">
       <div className="margin-top-2 margin-bottom-4">
         <Grid row>
           <Grid tablet={{ col: 6 }}>
@@ -159,9 +164,15 @@ const MilstoneCardGroup = ({
       </div>
 
       <CardGroup>
-        {currentItems.map(milestone => (
-          <MilestoneCard key={milestone.key} milestone={milestone} />
-        ))}
+        <Grid desktop={{ col: 12 }}>
+          <Grid row gap={2}>
+            {currentItems.map(milestone => (
+              <Grid desktop={{ col: 4 }}>
+                <MilestoneCard key={milestone.key} milestone={milestone} />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
       </CardGroup>
 
       {/* Pagination */}

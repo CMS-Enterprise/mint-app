@@ -28,9 +28,9 @@ const MilestoneCard = ({
   return (
     <Card
       containerProps={{
-        className: 'radius-lg shadow-2 minh-mobile padding-0 margin-0'
+        className: 'radius-md minh-mobile padding-0 margin-0'
       }}
-      className={classNames('desktop:grid-col-6', className)}
+      className={classNames(className, 'margin-bottom-2')}
     >
       <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full">
         <CardHeader className="padding-0">

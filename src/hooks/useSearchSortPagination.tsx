@@ -13,6 +13,7 @@ type SearchSortPaginationProps<T, K> = {
   sortOptions: SortProps<K>[];
   filterFunction: (query: string, items: T[]) => T[];
   sortFunction: (items: T[], sort: K) => T[];
+  defaultItemsPerPage?: number;
 } & JSX.IntrinsicElements['div'];
 
 /**
@@ -42,7 +43,8 @@ const useSearchSortPagination = <T, K extends string>({
   items,
   sortOptions,
   filterFunction,
-  sortFunction
+  sortFunction,
+  defaultItemsPerPage = 9
 }: SearchSortPaginationProps<T, K>) => {
   const history = useHistory();
 
@@ -65,7 +67,7 @@ const useSearchSortPagination = <T, K extends string>({
   const [query, setQuery] = useState<string>('');
 
   // Pagination Configuration
-  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(defaultItemsPerPage);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -108,7 +110,7 @@ const useSearchSortPagination = <T, K extends string>({
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
-  }, [query, searchChanges, setCurrentPage]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
