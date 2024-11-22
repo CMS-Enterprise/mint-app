@@ -786,8 +786,43 @@ export type MtoCommonSolution = {
 };
 
 export enum MtoCommonSolutionKey {
-  SOLUTION_A = 'SOLUTION_A',
-  SOLUTION_B = 'SOLUTION_B'
+  ACO_OS = 'ACO_OS',
+  APPS = 'APPS',
+  ARS = 'ARS',
+  BCDA = 'BCDA',
+  CBOSC = 'CBOSC',
+  CCW = 'CCW',
+  CDX = 'CDX',
+  CMS_BOX = 'CMS_BOX',
+  CMS_QUALTRICS = 'CMS_QUALTRICS',
+  CONNECT = 'CONNECT',
+  CPI_VETTING = 'CPI_VETTING',
+  EDFR = 'EDFR',
+  EFT = 'EFT',
+  EXISTING_CMS_DATA_AND_PROCESS = 'EXISTING_CMS_DATA_AND_PROCESS',
+  GOVDELIVERY = 'GOVDELIVERY',
+  GS = 'GS',
+  HDR = 'HDR',
+  HIGLAS = 'HIGLAS',
+  HPMS = 'HPMS',
+  IDR = 'IDR',
+  INNOVATION = 'INNOVATION',
+  IPC = 'IPC',
+  ISP = 'ISP',
+  LDG = 'LDG',
+  LOI = 'LOI',
+  LV = 'LV',
+  MARX = 'MARX',
+  MDM_NCBP = 'MDM_NCBP',
+  MDM_POR = 'MDM_POR',
+  MIDS = 'MIDS',
+  MODEL_SPACE = 'MODEL_SPACE',
+  OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
+  POST_PORTAL = 'POST_PORTAL',
+  QV = 'QV',
+  RFA = 'RFA',
+  RMADA = 'RMADA',
+  SHARED_SYSTEMS = 'SHARED_SYSTEMS'
 }
 
 export enum MtoCommonSolutionSubject {
