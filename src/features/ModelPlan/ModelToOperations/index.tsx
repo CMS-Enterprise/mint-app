@@ -51,16 +51,20 @@ const ModelToOperations = () => {
             {t('heading')}
           </h1>
 
-          <p className="mint-body-large margin-bottom-2 margin-top-05">
-            {t('forModel', {
-              modelName
-            })}
-          </p>
+          {modelToOperationsMatrix && (
+            <p className="mint-body-large margin-bottom-2 margin-top-05">
+              {t('forModel', {
+                modelName
+              })}
+            </p>
+          )}
 
-          <MTOStatusBanner
-            status={modelToOperationsMatrix?.status}
-            lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
-          />
+          {modelToOperationsMatrix && (
+            <MTOStatusBanner
+              status={modelToOperationsMatrix?.status}
+              lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
+            />
+          )}
         </Grid>
 
         <Grid desktop={{ col: 3 }}>

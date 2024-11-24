@@ -22,7 +22,7 @@ exports[`The Alert component > matches snapshot 1`] = `
         </span>
         <button
           aria-label="Close Button"
-          class="usa-button usa-button usa-button--unstyled text-no-underline text-black flex-align-end"
+          class="usa-button usa-button usa-button--unstyled text-no-underline text-black flex-align-start"
           data-testid="button"
           role="button"
           tabindex="0"

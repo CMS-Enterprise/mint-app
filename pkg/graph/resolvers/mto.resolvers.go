@@ -41,9 +41,7 @@ func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *mo
 
 // Status is the resolver for the status field.
 func (r *modelsToOperationMatrixResolver) Status(ctx context.Context, obj *models.ModelsToOperationMatrix) (models.MTOStatus, error) {
-	//TODO (mto) Update when we have a methodology for Ready for Review
-	mtoMarkedReadyToReview := false
-	return MTOStatusGet(ctx, obj.ModelPlan.ID, mtoMarkedReadyToReview)
+	return MTOStatusGet(ctx, obj.ModelPlan.ID)
 }
 
 // RecentEdit is the resolver for the recentEdit field.

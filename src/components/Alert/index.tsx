@@ -81,10 +81,12 @@ export const Alert = ({
             <Button
               type="button"
               role="button"
-              className="usa-button usa-button--unstyled text-no-underline text-black flex-align-end"
+              className="usa-button usa-button--unstyled text-no-underline text-black flex-align-start"
               tabIndex={0}
               aria-label="Close Button"
-              onClick={() => setClosed(true)}
+              onClick={() => {
+                setClosed(true);
+              }}
             >
               &#10005;
             </Button>

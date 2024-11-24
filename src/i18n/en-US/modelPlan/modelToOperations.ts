@@ -1,4 +1,32 @@
-export const modelToOperations: any = {};
+import { TranslationMTOInfo } from 'types/translation';
+
+import {
+  TableName,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/generated/graphql';
+
+export const modelToOperations: TranslationMTOInfo = {
+  readyForReviewBy: {
+    gqlField: 'readyForReviewBy',
+    goField: 'ReadyForReviewBy',
+    dbField: 'ready_for_review_by',
+    label: 'Ready for review by',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01,
+    tableReference: TableName.USER_ACCOUNT
+  },
+  readyForReviewDTS: {
+    gqlField: 'readyForReviewDTS',
+    goField: 'ReadyForReviewDTS',
+    dbField: 'ready_for_review_dts',
+    label: 'Ready for review by',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.02
+  }
+};
 
 export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
@@ -42,6 +70,18 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '18 categories, 0 milestones, 0 solutions',
       buttonText: 'Use this template'
     }
+  },
+  readyForReview: {
+    headingInReview: 'Set MTO status to ready for review?',
+    headingInProgress: 'Set MTO status to in progress?',
+    descriptionReady:
+      'The "ready for review" status indicates to others viewing your MTO that your milestones and chosen solutions are relatively well set, though you may continue to update content and statuses.',
+    descriptionInProgress:
+      'The "in progress" status indicates to others viewing your MTO that you are still extensively adding, removing, and reorganizing milestones and chosen solutions.',
+    markAsReady: 'Mark as ready for review',
+    markAsInProgress: 'Mark as in progress',
+    goBack: 'Go back to MTO',
+    error: 'Failed to update MTO status'
   }
 };
 
