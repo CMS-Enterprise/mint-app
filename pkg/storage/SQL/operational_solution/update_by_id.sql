@@ -13,22 +13,23 @@ WITH retVal AS (
         modified_by = :modified_by,
         modified_dts = CURRENT_TIMESTAMP
     WHERE operational_solution.id = :id
-    RETURNING id,
-    operational_need_id,
-    solution_type,
-    needed,
-    name_other,
-    poc_name,
-    poc_email,
-    must_start_dts,
-    must_finish_dts,
-    is_other,
-    other_header,
-    status,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+    RETURNING
+        id,
+        operational_need_id,
+        solution_type,
+        needed,
+        name_other,
+        poc_name,
+        poc_email,
+        must_start_dts,
+        must_finish_dts,
+        is_other,
+        other_header,
+        status,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

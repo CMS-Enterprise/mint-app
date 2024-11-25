@@ -13,11 +13,11 @@ VALUES (
     :created_by
 )
 RETURNING
-id,
-user_id,
-view_customization,
-possible_operational_solutions,
-created_by,
-created_dts,
-modified_by,
-modified_dts;
+    id,
+    user_id,
+    view_customization,
+    possible_operational_solutions,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

@@ -11,12 +11,12 @@ SET
     modified_dts= CURRENT_TIMESTAMP
 WHERE id =  :id
 RETURNING
-id,
-change_id,
-status,
-attempts,
-note,
-created_by,
-created_dts,
-modified_by,
-modified_dts;
+    id,
+    change_id,
+    status,
+    attempts,
+    note,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

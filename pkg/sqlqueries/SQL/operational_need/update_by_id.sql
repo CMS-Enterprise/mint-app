@@ -7,15 +7,16 @@ WITH retVal AS (
         modified_by = :modified_by,
         modified_dts = CURRENT_TIMESTAMP
     WHERE operational_need.id = :id
-    RETURNING id,
-    model_plan_id,
-    need_type,
-    name_other,
-    needed,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+    RETURNING
+        id,
+        model_plan_id,
+        need_type,
+        name_other,
+        needed,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

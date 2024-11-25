@@ -15,12 +15,12 @@ VALUES (
     :modified_by
 )
 RETURNING
-id,
-model_name,
-abbreviation,
-status,
-archived,
-created_by,
-created_dts,
-modified_by,
-modified_dts;
+    id,
+    model_name,
+    abbreviation,
+    status,
+    archived,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

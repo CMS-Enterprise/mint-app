@@ -18,13 +18,14 @@ VALUES(
     :created_by,
     :modified_by
 )
-RETURNING id,
-user_id,
-v1_agreed,
-v1_agreed_dts,
-v2_agreed,
-v2_agreed_dts,
-created_by,
-created_dts,
-modified_by,
-modified_dts;
+RETURNING
+    id,
+    user_id,
+    v1_agreed,
+    v1_agreed_dts,
+    v2_agreed,
+    v2_agreed_dts,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

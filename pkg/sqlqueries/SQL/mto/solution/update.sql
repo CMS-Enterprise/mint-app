@@ -15,21 +15,21 @@ WITH retVal AS (
         modified_dts=CURRENT_TIMESTAMP
     WHERE mto_solution.id= :id
     RETURNING
-    id,
-    model_plan_id,
-    mto_common_solution_key,
-    name,
-    type,
-    facilitated_by,
-    needed_by,
-    status,
-    risk_indicator,
-    poc_name,
-    poc_email,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        mto_common_solution_key,
+        name,
+        type,
+        facilitated_by,
+        needed_by,
+        status,
+        risk_indicator,
+        poc_name,
+        poc_email,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

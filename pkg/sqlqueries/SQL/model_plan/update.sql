@@ -9,13 +9,13 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE model_plan.id = :id
 RETURNING
-id,
-model_name,
-abbreviation,
-archived,
-status,
-previous_suggested_phase,
-created_by,
-created_dts,
-modified_by,
-modified_dts;
+    id,
+    model_name,
+    abbreviation,
+    archived,
+    status,
+    previous_suggested_phase,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;
