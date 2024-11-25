@@ -162,7 +162,8 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
             name="primaryCategory"
             control={control}
             rules={{
-              required: true
+              required: true,
+              validate: value => value !== 'default'
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
