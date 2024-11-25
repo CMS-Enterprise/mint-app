@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
+  Button,
+  ButtonGroup,
   CardGroup,
   Grid,
   Icon,
-  Label,
   Pagination
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
@@ -16,6 +17,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
@@ -113,11 +115,26 @@ const MilstoneCardGroup = ({
 }: {
   milestones: MilestoneCardType[];
 }) => {
+  const { t } = useTranslation('modelToOperationsMisc');
+
   const history = useHistory();
+
+  const [selectedType, setSelectedType] = useState<'suggested' | 'all'>('all');
+
+  const [addedMilestonesHidden, setAddedMilestonesHidden] = useState(false);
+
+  const filteredMilestones = addedMilestonesHidden
+    ? milestones.filter(milestone => milestone.isAdded)
+    : milestones;
+
+  const selectedMilestones =
+    selectedType === 'suggested'
+      ? filteredMilestones.filter(milestone => milestone.isSuggested)
+      : filteredMilestones;
 
   const { currentItems, pagination, search, pageSize } =
     useSearchSortPagination<MilestoneCardType, any>({
-      items: milestones,
+      items: selectedMilestones,
       filterFunction: (query: string, items: MilestoneCardType[]) => items,
       sortFunction: (items: MilestoneCardType[]) => items,
       sortOptions,
@@ -151,19 +168,57 @@ const MilstoneCardGroup = ({
             />
           </Grid>
 
-          <Grid desktop={{ col: 12 }}>
-            <TableResults
-              globalFilter={query}
-              pageIndex={currentPage - 1}
-              pageSize={itemsPerPage}
-              filteredRowLength={currentItems.length}
-              rowLength={rowLength}
+          {!!query && (
+            <Grid desktop={{ col: 12 }}>
+              <TableResults
+                globalFilter={query}
+                pageIndex={currentPage - 1}
+                pageSize={itemsPerPage}
+                filteredRowLength={currentItems.length}
+                rowLength={rowLength}
+              />
+            </Grid>
+          )}
+
+          <Grid desktop={{ col: 12 }} className="display-flex flex-wrap">
+            <ButtonGroup type="segmented" className="margin-right-3">
+              <Button
+                type="button"
+                outline={selectedType !== 'suggested'}
+                onClick={() => setSelectedType('suggested')}
+              >
+                {t('milestoneLibrary.suggestedMilestones', {
+                  count: milestones.filter(milestone => milestone.isSuggested)
+                    .length
+                })}
+              </Button>
+              <Button
+                type="button"
+                outline={selectedType !== 'all'}
+                onClick={() => setSelectedType('all')}
+              >
+                {t('milestoneLibrary.allMilestones', {
+                  count: milestones.length
+                })}
+              </Button>
+            </ButtonGroup>
+
+            <CheckboxField
+              id="hide-added-milestones"
+              name="hide-added-milestones"
+              label={t('milestoneLibrary.hideAdded')}
+              value="true"
+              checked={addedMilestonesHidden}
+              onBlur={() => null}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setAddedMilestonesHidden(!addedMilestonesHidden);
+              }}
             />
           </Grid>
         </Grid>
       </div>
 
-      <CardGroup>
+      <CardGroup className="padding-x-1">
         <Grid desktop={{ col: 12 }}>
           <Grid row gap={2}>
             {currentItems.map(milestone => (

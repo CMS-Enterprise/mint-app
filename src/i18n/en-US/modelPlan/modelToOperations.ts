@@ -1,3 +1,5 @@
+import { all } from 'axios';
+
 export const modelToOperations: any = {};
 
 export const modelToOperationsMisc: Record<string, any> = {
@@ -46,7 +48,10 @@ export const modelToOperationsMisc: Record<string, any> = {
   milestoneLibrary: {
     heading: 'Milestone library',
     description:
-      'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix. Some milestones are suggested for your model based on answers to questions in your Model Plan.'
+      'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix. Some milestones are suggested for your model based on answers to questions in your Model Plan.',
+    suggestedMilestones: 'Suggested milestones only ({{count}})',
+    allMilestones: 'All common milestones ({{count}})',
+    hideAdded: 'Hide added milestones'
   },
   modal: {
     title: 'Add a new {{type}}',
