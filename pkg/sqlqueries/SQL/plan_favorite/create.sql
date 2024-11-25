@@ -15,13 +15,13 @@ WITH addedFavorite AS (
     )
     ON CONFLICT (model_plan_id, user_id) DO NOTHING
     RETURNING
-    id,
-    model_plan_id,
-    user_id,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        user_id,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 
 )
 

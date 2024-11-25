@@ -17,12 +17,12 @@ VALUES (
     :modified_by
 )
 RETURNING
-id,
-model_plan_id,
-model_name,
-date,
-changes,
-created_by,
-created_dts,
-modified_by,
-modified_dts;
+    id,
+    model_plan_id,
+    model_name,
+    date,
+    changes,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

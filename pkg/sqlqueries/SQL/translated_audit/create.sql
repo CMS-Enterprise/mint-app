@@ -28,21 +28,21 @@ WITH retVal AS (
         :created_by
     )
     RETURNING
-    id,
-    model_plan_id,
-    actor_id,
-    change_id,
-    date,
-    table_id,
-    primary_key,
-    action,
-    restricted,
-    meta_data_type,
-    meta_data,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        actor_id,
+        change_id,
+        date,
+        table_id,
+        primary_key,
+        action,
+        restricted,
+        meta_data_type,
+        meta_data,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT 

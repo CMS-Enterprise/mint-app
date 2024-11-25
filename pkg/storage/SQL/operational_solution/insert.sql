@@ -31,22 +31,22 @@ WITH retVal AS (
             :created_by AS created_by
     )
     RETURNING
-    id,
-    operational_need_id,
-    solution_type,
-    needed,
-    name_other,
-    poc_name,
-    poc_email,
-    must_start_dts,
-    must_finish_dts,
-    is_other,
-    other_header,
-    status,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        operational_need_id,
+        solution_type,
+        needed,
+        name_other,
+        poc_name,
+        poc_email,
+        must_start_dts,
+        must_finish_dts,
+        is_other,
+        other_header,
+        status,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

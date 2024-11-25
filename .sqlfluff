@@ -3,20 +3,15 @@
 [sqlfluff]
 dialect = postgres
 ignore = parsing
+rules = core
 
 # Ignoring capitalisation.identifiers because it seems to want to uppercase column names if there are capitalized enums defined before the table (like in V11__Add_Plan_General_Characteristics)
 # Ignoring layout.long_lines because we break line-length requirements in a few places with comments
-# Ignoring aliasing.forbid so we can use table aliases
-# Ignoring structure.column_order becase we like to order SQL statements similarly across files
-exclude_rules = capitalisation.identifiers, layout.long_lines, aliasing.forbid, structure.column_order, layout.spacing
+exclude_rules = capitalisation.identifiers, layout.long_lines, layout.spacing
 
 [sqlfluff:rules:capitalisation.keywords]
 # https://docs.sqlfluff.com/en/stable/rules.html#rule-capitalisation.keywords
 capitalisation_policy = upper
-
-[sqlfluff:rules:aliasing.forbid]
-# https://docs.sqlfluff.com/en/stable/rules.html#rule-aliasing.forbid
-force_enable = False
 
 [sqlfluff:rules:capitalisation.literals]
 # https://docs.sqlfluff.com/en/stable/rules.html#rule-capitalisation.literals
