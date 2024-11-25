@@ -79,6 +79,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 		// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
 		milestone := models.NewMTOMilestone(principalAccount.ID, nil, &commonMilestoneKey, modelPlanID, &finalCategoryID)
+		// milestone.FacilitatedBy = commonMilestone.FacilitatedByRole
 
 		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
 			return nil, err

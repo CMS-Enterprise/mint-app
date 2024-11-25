@@ -41,7 +41,7 @@ func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MT
 }
 
 // CreateMTOSolutionCustom is the resolver for the createMTOSolutionCustom field.
-func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, facilitatedBy []models.MTOFacilitator, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
+func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	// models.EnumArray[models.MTOFacilitator]
@@ -54,7 +54,6 @@ func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPla
 		nil,
 		name,
 		solutionType,
-		facilitatedBy,
 		nil,
 		pocName,
 		pocEmail,
@@ -62,11 +61,11 @@ func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPla
 }
 
 // CreateMTOSolutionCommon is the resolver for the createMTOSolutionCommon field.
-func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPlanID uuid.UUID, key *models.MTOCommonSolutionKey) (*models.MTOSolution, error) {
+func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPlanID uuid.UUID, key models.MTOCommonSolutionKey) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return MTOSolutionCreateCommon(logger, principal, r.store, modelPlanID, key)
+	return MTOSolutionCreateCommon(ctx, logger, principal, r.store, modelPlanID, key)
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.

@@ -1341,14 +1341,13 @@ export type MutationCreateMtoMilestoneCustomArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateMtoSolutionCommonArgs = {
-  key?: InputMaybe<MtoCommonSolutionKey>;
+  key: MtoCommonSolutionKey;
   modelPlanID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationCreateMtoSolutionCustomArgs = {
-  facilitatedBy: Array<MtoFacilitator>;
   modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   pocEmail: Scalars['String']['input'];
