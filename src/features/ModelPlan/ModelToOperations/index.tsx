@@ -39,7 +39,7 @@ const ModelToOperations = () => {
   return (
     <MainContent
       className="grid-container mint-body-normal"
-      data-testid="model-payment"
+      data-testid="model-to-operations"
     >
       <Breadcrumbs
         items={[
