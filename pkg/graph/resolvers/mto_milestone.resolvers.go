@@ -17,7 +17,10 @@ import (
 
 // FacilitatedBy is the resolver for the facilitatedBy field.
 func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
-	panic(fmt.Errorf("not implemented: FacilitatedBy - facilitatedBy"))
+	if obj.FacilitatedBy == nil {
+		return nil, nil
+	}
+	return *obj.FacilitatedBy, nil
 }
 
 // CommonMilestone is the resolver for the commonMilestone field.

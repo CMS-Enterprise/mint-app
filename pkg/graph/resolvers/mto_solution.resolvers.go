@@ -17,7 +17,10 @@ import (
 
 // FacilitatedBy is the resolver for the facilitatedBy field.
 func (r *mTOSolutionResolver) FacilitatedBy(ctx context.Context, obj *models.MTOSolution) ([]models.MTOFacilitator, error) {
-	panic(fmt.Errorf("not implemented: FacilitatedBy - facilitatedBy"))
+	if obj.FacilitatedBy == nil {
+		return nil, nil
+	}
+	return *obj.FacilitatedBy, nil
 }
 
 // RelatedMilestones is the resolver for the relatedMilestones field.
