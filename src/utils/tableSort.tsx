@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderGroup } from 'react-table';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { ColumnSortType } from 'features/Sandbox';
+import { ColumnSortType } from 'features/ModelPlan/ModelToOperations/_components/Table/columns';
 import { DateTime } from 'luxon';
 
 export type sortColumnProps = null | string | number | DateTime;
