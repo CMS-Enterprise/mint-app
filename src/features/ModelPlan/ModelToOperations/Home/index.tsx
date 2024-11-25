@@ -4,7 +4,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Header, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import Expire from 'components/Expire';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
@@ -22,7 +21,7 @@ const MTOHome = () => {
 
   const location = useLocation();
 
-  const { message, clearMessage } = useMessage();
+  const { clearMessage } = useMessage();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -50,9 +49,7 @@ const MTOHome = () => {
 
   return (
     <div className="model-to-operations margin-y-6">
-      {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
-
-      {/* TEMPORARY since WIP components are not finalized */}
+      {/* // TODO: TEMPORARY since WIP components are not finalized */}
       <MTOModal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
