@@ -1,4 +1,4 @@
-INSERT INTO "public"."mto_common_solution"("key","name","type","subject","filter_view")
+INSERT INTO "public"."mto_common_solution"("key","name","type","subjects","filter_view")
 VALUES
 ('INNOVATION','4innovation (4i)','IT_SYSTEM','{APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS}','IDDOC'),
 ('ACO_OS','Accountable Care Organization - Operational System (ACO-OS)','IT_SYSTEM','{APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS}','IDDOC'),

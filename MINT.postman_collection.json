@@ -3408,7 +3408,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            section\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            commonSolutions {\n                name\n                key\n                type\n                subject\n                filterView\n                isAdded\n            }\n\n        }\n\n            \n        }\n        id\n        modelName\n    }\n}",
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            section\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            commonSolutions {\n                name\n                key\n                type\n                subjects\n                filterView\n                isAdded\n            }\n\n        }\n\n            \n        }\n        id\n        modelName\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3429,7 +3429,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        subject\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
 										"variables": ""
 									}
 								},

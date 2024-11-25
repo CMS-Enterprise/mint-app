@@ -787,7 +787,7 @@ export type MtoCommonSolution = {
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
-  subject: Array<MtoCommonSolutionSubject>;
+  subjects: Array<MtoCommonSolutionSubject>;
   type: MtoSolutionType;
 };
 

@@ -63,7 +63,7 @@ type MTOCommonSolution {
   name: String!
   key: MTOCommonSolutionKey!
   type: MTOSolutionType! 
-  subject: [MTOCommonSolutionSubject!]!
+  subjects: [MTOCommonSolutionSubject!]!
   filterView: ModelViewFilter
 
 
