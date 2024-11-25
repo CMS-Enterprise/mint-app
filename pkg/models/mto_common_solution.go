@@ -26,5 +26,6 @@ type MTOSolutionType string
 const (
 	MTOSolutionTypeItSystem   MTOSolutionType = "IT_SYSTEM"
 	MTOSolutionTypeContractor MTOSolutionType = "CONTRACTOR"
+	MTOCrossCuttingGroup      MTOSolutionType = "CROSS_CUTTING_GROUP"
 	MTOSolutionTypeOther      MTOSolutionType = "OTHER"
 )

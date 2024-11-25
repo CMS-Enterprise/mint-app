@@ -89,6 +89,7 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
         {status !== 'READY' && (
           <Button
             type="button"
+            outline
             onClick={() => {}} // TODO: Implement share/export functionality
             data-testid="to-model-to-operations"
           >

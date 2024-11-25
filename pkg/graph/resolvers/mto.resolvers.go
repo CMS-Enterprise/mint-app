@@ -6,13 +6,11 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -37,15 +35,13 @@ func (r *modelsToOperationMatrixResolver) Milestones(ctx context.Context, obj *m
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*model.MTOSolution, error) {
-	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOSolution, error) {
+	return MTOSolutionGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // Status is the resolver for the status field.
 func (r *modelsToOperationMatrixResolver) Status(ctx context.Context, obj *models.ModelsToOperationMatrix) (models.MTOStatus, error) {
-	//TODO (mto) Update when we have a methodology for Ready for Review
-	mtoMarkedReadyToReview := false
-	return MTOStatusGet(ctx, obj.ModelPlan.ID, mtoMarkedReadyToReview)
+	return MTOStatusGet(ctx, obj.ModelPlan.ID)
 }
 
 // RecentEdit is the resolver for the recentEdit field.

@@ -1,6 +1,32 @@
-import { all } from 'axios';
+import { TranslationMTOInfo } from 'types/translation';
 
-export const modelToOperations: any = {};
+import {
+  TableName,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/generated/graphql';
+
+export const modelToOperations: TranslationMTOInfo = {
+  readyForReviewBy: {
+    gqlField: 'readyForReviewBy',
+    goField: 'ReadyForReviewBy',
+    dbField: 'ready_for_review_by',
+    label: 'Ready for review by',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01,
+    tableReference: TableName.USER_ACCOUNT
+  },
+  readyForReviewDTS: {
+    gqlField: 'readyForReviewDTS',
+    goField: 'ReadyForReviewDTS',
+    dbField: 'ready_for_review_dts',
+    label: 'Ready for review by',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.02
+  }
+};
 
 export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
@@ -51,36 +77,99 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix. Some milestones are suggested for your model based on answers to questions in your Model Plan.',
     suggestedMilestones: 'Suggested milestones only ({{count}})',
     allMilestones: 'All common milestones ({{count}})',
-    hideAdded: 'Hide added milestones'
-  },
-  modal: {
-    title: 'Add a new {{type}}',
-    allFieldsRequired:
-      'Fields marked with an asterisk ( <s>*</s> ) are required.',
-    category: {
-      selectPrimaryCategory: {
-        label: 'Select primary category <s>*</s>',
-        sublabel:
-          'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
-      },
-      categoryTitle: {
-        label: 'New category title <s>*</s>'
-      },
-      selectOptions: {
-        default: '- Select - ',
-        none: 'None (this is a primary category)'
-      },
-      alert: {
-        success: {
-          parent: 'Your category (<b>{{category}}</b>) has been added.',
-          subcategory: 'Your sub-category (<b>{{category}}</b>) has been added.'
-        },
-        error:
-          'There was an error adding your category. Please try again. If the error persists, please try again another time.'
+    hideAdded: 'Hide added milestones',
+    facilitatedBy: {
+      MODEL_TEAM: 'Model team',
+      MODEL_LEAD: 'Model lead',
+      IT_LEAD: 'IT lead',
+      SOLUTION_ARCHITECT: 'Solution architect',
+      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
+      PARTICIPANTS: 'Participants',
+      APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
+      IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
+      EVALUATION_CONTRACTOR: 'Evaluation contractor',
+      QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
+        'Quality measures development contractor',
+      LEARNING_CONTRACTOR: 'Learning contractor',
+      MONITORING_CONTRACTOR: 'Monitoring contractor',
+      CONTRACTING_OFFICERS_REPRESENTATIVE:
+        'Contracting Officer’s Representative (COR)',
+      LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
+      RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
+        'Research and Rapid Cycle Evaluation Group (RREG)',
+      OTHER: 'Other'
+    },
+    table: {
+      modelMilestone: 'Model milestone',
+      facilitatedBy: 'Facilitated by',
+      solutions: 'Solutions',
+      needBy: 'Need by',
+      status: 'Status',
+      actions: 'Actions',
+      openActionMenu: 'Open action menu',
+      expandRow: 'Expand row',
+      collapseRow: 'Collapse row',
+      noneAdded: 'None added yet',
+      editDetails: 'Edit details',
+      milestones: 'milestones',
+      menu: {
+        close: 'Close menu',
+        moveCategoryUp: 'Move category up',
+        moveSubCategoryUp: 'Move sub-category up',
+        moveCategoryDown: 'Move category down',
+        moveSubCategoryDown: 'Move sub-category down',
+        addMilestone: 'Add model milestone',
+        moveToAnotherCategory: 'Move to another category',
+        addSubCategory: 'Add sub-category',
+        editCategoryTitle: 'Edit category title',
+        editSubCategoryTitle: 'Edit sub-category title',
+        removeCategory: 'Remove category',
+        removeSubCategory: 'Remove sub-category'
       }
     },
-    addButton: 'Add {{type}}',
-    cancel: 'Cancel'
+    errorReorder: 'Failed to reorder the MTO matrix.  Please try again.',
+    readyForReview: {
+      headingInReview: 'Set MTO status to ready for review?',
+      headingInProgress: 'Set MTO status to in progress?',
+      descriptionReady:
+        'The "ready for review" status indicates to others viewing your MTO that your milestones and chosen solutions are relatively well set, though you may continue to update content and statuses.',
+      descriptionInProgress:
+        'The "in progress" status indicates to others viewing your MTO that you are still extensively adding, removing, and reorganizing milestones and chosen solutions.',
+      markAsReady: 'Mark as ready for review',
+      markAsInProgress: 'Mark as in progress',
+      goBack: 'Go back to MTO',
+      error: 'Failed to update MTO status'
+    },
+    modal: {
+      title: 'Add a new {{type}}',
+      allFieldsRequired:
+        'Fields marked with an asterisk ( <s>*</s> ) are required.',
+      category: {
+        selectPrimaryCategory: {
+          label: 'Select primary category <s>*</s>',
+          sublabel:
+            'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
+        },
+        categoryTitle: {
+          label: 'New category title <s>*</s>'
+        },
+        selectOptions: {
+          default: '- Select - ',
+          none: 'None (this is a primary category)'
+        },
+        alert: {
+          success: {
+            parent: 'Your category (<b>{{category}}</b>) has been added.',
+            subcategory:
+              'Your sub-category (<b>{{category}}</b>) has been added.'
+          },
+          error:
+            'There was an error adding your category. Please try again. If the error persists, please try again another time.'
+        }
+      },
+      addButton: 'Add {{type}}',
+      cancel: 'Cancel'
+    }
   }
 };
 

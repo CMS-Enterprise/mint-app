@@ -66,23 +66,10 @@ type MTOCategoryTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`
 }
 
-type MTOSolution struct {
-	ID                       uuid.UUID                    `json:"id"`
-	Name                     string                       `json:"name"`
-	FacilitatedBy            *models.MTOFacilitator       `json:"facilitatedBy,omitempty"`
-	Status                   MTOSolutionStatus            `json:"status"`
-	RiskIndicator            *models.MTORiskIndicator     `json:"riskIndicator,omitempty"`
-	Key                      *models.MTOCommonSolutionKey `json:"key,omitempty"`
-	Type                     models.MTOSolutionType       `json:"type"`
-	CreatedBy                uuid.UUID                    `json:"createdBy"`
-	CreatedByUserAccount     authentication.UserAccount   `json:"createdByUserAccount"`
-	CreatedDts               time.Time                    `json:"createdDts"`
-	ModifiedBy               *uuid.UUID                   `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount    *authentication.UserAccount  `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts              *time.Time                   `json:"modifiedDts,omitempty"`
-	RelatedMilestones        []*models.MTOMilestone       `json:"relatedMilestones"`
-	AddedFromSolutionLibrary bool                         `json:"addedFromSolutionLibrary"`
-	CommonSolution           *models.MTOCommonSolution    `json:"commonSolution,omitempty"`
+// Represents mto info translation data
+type MTOInfoTranslation struct {
+	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts models.TranslationField `json:"readyForReviewDTS" db:"ready_for_review_dts"`
 }
 
 // Represents model plan base translation data
@@ -1615,53 +1602,6 @@ func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MTOSolutionStatus string
-
-const (
-	MTOSolutionStatusNotStarted MTOSolutionStatus = "NOT_STARTED"
-	MTOSolutionStatusOnboarding MTOSolutionStatus = "ONBOARDING"
-	MTOSolutionStatusBacklog    MTOSolutionStatus = "BACKLOG"
-	MTOSolutionStatusInProgress MTOSolutionStatus = "IN_PROGRESS"
-	MTOSolutionStatusCompleted  MTOSolutionStatus = "COMPLETED"
-)
-
-var AllMTOSolutionStatus = []MTOSolutionStatus{
-	MTOSolutionStatusNotStarted,
-	MTOSolutionStatusOnboarding,
-	MTOSolutionStatusBacklog,
-	MTOSolutionStatusInProgress,
-	MTOSolutionStatusCompleted,
-}
-
-func (e MTOSolutionStatus) IsValid() bool {
-	switch e {
-	case MTOSolutionStatusNotStarted, MTOSolutionStatusOnboarding, MTOSolutionStatusBacklog, MTOSolutionStatusInProgress, MTOSolutionStatusCompleted:
-		return true
-	}
-	return false
-}
-
-func (e MTOSolutionStatus) String() string {
-	return string(e)
-}
-
-func (e *MTOSolutionStatus) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MTOSolutionStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MTOSolutionStatus", str)
-	}
-	return nil
-}
-
-func (e MTOSolutionStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
