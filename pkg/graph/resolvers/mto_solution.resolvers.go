@@ -15,6 +15,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// FacilitatedBy is the resolver for the facilitatedBy field.
+func (r *mTOSolutionResolver) FacilitatedBy(ctx context.Context, obj *models.MTOSolution) ([]models.MTOFacilitator, error) {
+	panic(fmt.Errorf("not implemented: FacilitatedBy - facilitatedBy"))
+}
+
 // RelatedMilestones is the resolver for the relatedMilestones field.
 func (r *mTOSolutionResolver) RelatedMilestones(ctx context.Context, obj *models.MTOSolution) ([]*models.MTOMilestone, error) {
 	panic(fmt.Errorf("not implemented: RelatedMilestones - relatedMilestones"))
@@ -36,9 +41,10 @@ func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MT
 }
 
 // CreateMTOSolutionCustom is the resolver for the createMTOSolutionCustom field.
-func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, facilitatedBy models.MTOFacilitator, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
+func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, facilitatedBy []models.MTOFacilitator, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
+	// models.EnumArray[models.MTOFacilitator]
 
 	return MTOSolutionCreateCustom(
 		logger,

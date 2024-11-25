@@ -50,7 +50,7 @@ func MTOSolutionCreateCustom(
 	commonSolutionKey *models.MTOCommonSolutionKey,
 	name string,
 	solutionType models.MTOSolutionType,
-	facilitatedBy models.MTOFacilitator,
+	facilitatedBy []models.MTOFacilitator,
 	neededBy *time.Time,
 	pocName string,
 	pocEmail string,
@@ -59,7 +59,6 @@ func MTOSolutionCreateCustom(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
 		commonSolutionKey,
@@ -98,7 +97,7 @@ func MTOSolutionCreateCommon(
 		commonSolutionKey,
 		nil,
 		nil,
-		models.MTOFacilitatorOther,
+		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
 		nil,
 		"test_poc_name_empty",
 		"empty@email.test",

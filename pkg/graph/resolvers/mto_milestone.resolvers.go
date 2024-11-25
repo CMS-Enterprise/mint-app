@@ -15,6 +15,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// FacilitatedBy is the resolver for the facilitatedBy field.
+func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
+	panic(fmt.Errorf("not implemented: FacilitatedBy - facilitatedBy"))
+}
+
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
 	if obj.Key != nil {
@@ -65,3 +70,13 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 func (r *Resolver) MTOMilestone() generated.MTOMilestoneResolver { return &mTOMilestoneResolver{r} }
 
 type mTOMilestoneResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mTOMilestoneResolver) FacilitatedByRole(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
+	panic(fmt.Errorf("not implemented: FacilitatedByRole - facilitatedByRole"))
+}

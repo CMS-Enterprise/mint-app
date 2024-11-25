@@ -846,7 +846,7 @@ export type MtoMilestone = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  facilitatedBy?: Maybe<MtoFacilitator>;
+  facilitatedBy?: Maybe<Array<MtoFacilitator>>;
   id: Scalars['UUID']['output'];
   isDraft: Scalars['Boolean']['output'];
   key?: Maybe<MtoCommonMilestoneKey>;
@@ -867,7 +867,7 @@ export type MtoMilestone = {
 };
 
 export type MtoMilestoneChanges = {
-  facilitatedBy?: InputMaybe<MtoFacilitator>;
+  facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
   isDraft?: InputMaybe<Scalars['Boolean']['input']>;
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -895,7 +895,7 @@ export type MtoSolution = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  facilitatedBy?: Maybe<MtoFacilitator>;
+  facilitatedBy?: Maybe<Array<MtoFacilitator>>;
   id: Scalars['UUID']['output'];
   key?: Maybe<MtoCommonSolutionKey>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -912,7 +912,7 @@ export type MtoSolution = {
 };
 
 export type MtoSolutionChanges = {
-  facilitatedBy?: InputMaybe<MtoFacilitator>;
+  facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
   name?: InputMaybe<Scalars['String']['input']>;
   neededBy?: InputMaybe<Scalars['Time']['input']>;
   pocEmail?: InputMaybe<Scalars['String']['input']>;
@@ -1299,7 +1299,7 @@ export type MutationCreateMtoSolutionCommonArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateMtoSolutionCustomArgs = {
-  facilitatedBy: MtoFacilitator;
+  facilitatedBy: Array<MtoFacilitator>;
   modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   pocEmail: Scalars['String']['input'];
@@ -5335,7 +5335,7 @@ export type GetModelToOperationsMatrixQueryVariables = Exact<{
 }>;
 
 
-export type GetModelToOperationsMatrixQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean, subCategories: Array<{ __typename: 'MTOSubcategory', id: UUID, name: string, isUncategorized: boolean, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, facilitatedBy?: MtoFacilitator | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator }> }> }>, milestones: Array<{ __typename: 'MTOMilestone', id: UUID }>, recentEdit?: { __typename: 'RecentModification', modifiedDts?: Time | null, id?: UUID | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } | null } } };
+export type GetModelToOperationsMatrixQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean, subCategories: Array<{ __typename: 'MTOSubcategory', id: UUID, name: string, isUncategorized: boolean, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, facilitatedBy?: Array<MtoFacilitator> | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator }> }> }>, milestones: Array<{ __typename: 'MTOMilestone', id: UUID }>, recentEdit?: { __typename: 'RecentModification', modifiedDts?: Time | null, id?: UUID | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } | null } } };
 
 export type UpdateMtoReadyForReviewMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
