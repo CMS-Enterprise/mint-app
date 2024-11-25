@@ -49,4 +49,15 @@ CREATE TABLE mto_common_milestone (
     trigger_vals TEXT[] NOT NULL
     /**** end configuration***/
 );
--- TODO (mto) add comments to these new fields
+
+COMMENT ON TABLE mto_common_milestone IS 'Table for defining common milestones with attributes such as name, category, facilitation roles, and configuration for suggesting milestone trigger logic.';
+
+COMMENT ON COLUMN mto_common_milestone.key IS 'Primary key representing a unique identifier for the common milestone.';
+COMMENT ON COLUMN mto_common_milestone.name IS 'Name of the milestone; must be a non-empty string.';
+COMMENT ON COLUMN mto_common_milestone.category_name IS 'Name of the category associated with the milestone. This is used for auto creation of and categorization of milestones in the app.';
+COMMENT ON COLUMN mto_common_milestone.sub_category_name IS 'Optional subcategory name associated with the milestone. This is used for auto creation of and categorization of milestones in the app.';
+COMMENT ON COLUMN mto_common_milestone.facilitated_by_role IS 'Array of roles (MTO_FACILITATOR) responsible for facilitating this milestone.';
+COMMENT ON COLUMN mto_common_milestone.section IS 'Section of the task list where this milestone is relevant, represented as a TASK_LIST_SECTION.';
+COMMENT ON COLUMN mto_common_milestone.trigger_table IS 'Name of the table containing trigger data for this milestone.';
+COMMENT ON COLUMN mto_common_milestone.trigger_col IS 'Array of column names from the trigger table that are used to determine if this common milestone is suggested or not.';
+COMMENT ON COLUMN mto_common_milestone.trigger_vals IS 'Array of values that correspond to the answer in the trigger_col that will result in this common milestone being suggested';

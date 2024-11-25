@@ -75,3 +75,11 @@ CREATE TABLE mto_common_solution (
     subjects MTO_COMMON_SOLUTION_SUBJECT[] NOT NULL,
     filter_view MODEL_VIEW_FILTER
 );
+
+COMMENT ON TABLE mto_common_solution IS 'Table for storing common solutions configurations for the models to operations matrix';
+
+COMMENT ON COLUMN mto_common_solution.key IS 'Primary key representing a unique identifier for the common solution.';
+COMMENT ON COLUMN mto_common_solution.name IS 'Name of the common solution; must be a non-empty string.';
+COMMENT ON COLUMN mto_common_solution.type IS 'Type of the solution, represented as an MTO_SOLUTION_TYPE enum.';
+COMMENT ON COLUMN mto_common_solution.subjects IS 'Array of subjects associated with the solution, using the MTO_COMMON_SOLUTION_SUBJECT type.';
+COMMENT ON COLUMN mto_common_solution.filter_view IS 'Optional field defining a filter view, using the MODEL_VIEW_FILTER type. This is primarily used for sending notifications when a solution is selected';
