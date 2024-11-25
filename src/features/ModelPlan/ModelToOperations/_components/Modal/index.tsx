@@ -6,17 +6,31 @@ import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
 import CategoryForm from './CategoryForm';
+import MilestoneForm from './MilestoneForm';
 
 type MTOModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-  modalType: 'category' | 'system' | 'solution';
+  modalType: 'category' | 'milestone' | 'solution';
 };
 
 const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { clearMessage } = useMessage();
+
+  const modalTitle = (() => {
+    switch (modalType) {
+      case 'category':
+        return t('modal.title.category');
+      case 'milestone':
+        return t('modal.title.milestone');
+      case 'solution':
+        return t('modal.title.solution');
+      default:
+        return '';
+    }
+  })();
 
   return (
     <Modal
@@ -30,7 +44,7 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {t('modal.title', { type: modalType })}
+          {modalTitle}
         </PageHeading>
         <p className="margin-y-0 text-base">
           <Trans
@@ -44,6 +58,7 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
 
       {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
+      {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
     </Modal>
   );
 };

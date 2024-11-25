@@ -1,0 +1,8 @@
+
+"""
+Represents MTO Custom Milestone translation data
+"""
+
+type MTOMilestoneTranslation {
+  name: TranslationField! @goTag(key: "db", value: "name")
+}

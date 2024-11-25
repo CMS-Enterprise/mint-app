@@ -28,12 +28,22 @@ const mocks = [
               {
                 __typename: 'MtoCategory',
                 id: '123',
-                name: 'Category 1'
+                name: 'Category 1',
+                subCategories: {
+                  __typename: 'MtoSubCategory',
+                  id: '123',
+                  name: 'SubCategory 1'
+                }
               },
               {
                 __typename: 'MtoCategory',
                 id: '456',
-                name: 'Category 2'
+                name: 'Category 2',
+                subCategories: {
+                  __typename: 'MtoSubCategory',
+                  id: '123',
+                  name: 'SubCategory 2'
+                }
               }
             ]
           }

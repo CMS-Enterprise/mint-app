@@ -134,7 +134,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     error: 'Failed to update MTO status'
   },
   modal: {
-    title: 'Add a new {{type}}',
+    title: {
+      category: 'Add a new category',
+      milestone: 'Add a new model milestone',
+      solution: 'Add a new solution'
+    },
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
     category: {
@@ -143,6 +147,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         sublabel:
           'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
       },
+
       categoryTitle: {
         label: 'New category title <s>*</s>'
       },
@@ -157,6 +162,21 @@ export const modelToOperationsMisc: Record<string, any> = {
         },
         error:
           'There was an error adding your category. Please try again. If the error persists, please try again another time.'
+      }
+    },
+    milestone: {
+      selectPrimaryCategory: {
+        label: 'Select primary category <s>*</s>'
+      },
+      selectSubcategory: {
+        label: 'Select sub-category <s>*</s>'
+      },
+      milestoneTitle: 'Milestone title <s>*</s>',
+      alert: {
+        info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
+        success: 'Your milestone ({{milestone}}) has been added.',
+        error:
+          'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       }
     },
     addButton: 'Add {{type}}',
