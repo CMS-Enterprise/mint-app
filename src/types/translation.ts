@@ -1241,7 +1241,7 @@ export type TranslationMTOInfo = {
   [K in keyof TranslationMTOInfoGQL]: TranslationMTOInfoForm[K]; // FE form type
 };
 
-// Existing Model Link - Change History purposes only
+// MTO Category - Change History purposes only
 export type TranslationMTOCategoryForm = {
   name: TranslationFieldProperties;
 };
@@ -1259,7 +1259,7 @@ export type TranslationMTOCategory = {
   [K in keyof TranslationMTOCategoryGQL]: TranslationMTOCategoryForm[K]; // FE form type
 };
 
-// Existing Model Link - Change History purposes only
+// MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
 };
