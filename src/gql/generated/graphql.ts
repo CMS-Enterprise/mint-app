@@ -950,11 +950,24 @@ export type MtoSolution = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  neededBy?: Maybe<Scalars['Time']['output']>;
+  pocEmail: Scalars['String']['output'];
+  pocName: Scalars['String']['output'];
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
   status: MtoSolutionStatus;
-  type: MtoSolutionType;
+  type?: Maybe<MtoSolutionType>;
+};
+
+export type MtoSolutionChanges = {
+  facilitatedBy?: InputMaybe<MtoFacilitator>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  neededBy?: InputMaybe<Scalars['Time']['input']>;
+  pocEmail?: InputMaybe<Scalars['String']['input']>;
+  pocName?: InputMaybe<Scalars['String']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoSolutionStatus>;
 };
 
 export enum MtoSolutionStatus {
@@ -967,6 +980,7 @@ export enum MtoSolutionStatus {
 
 export enum MtoSolutionType {
   CONTRACTOR = 'CONTRACTOR',
+  CROSS_CUTTING_GROUP = 'CROSS_CUTTING_GROUP',
   IT_SYSTEM = 'IT_SYSTEM',
   OTHER = 'OTHER'
 }
@@ -1206,6 +1220,8 @@ export type Mutation = {
   createMTOCategory: MtoCategory;
   createMTOMilestoneCommon: MtoMilestone;
   createMTOMilestoneCustom: MtoMilestone;
+  createMTOSolutionCommon: MtoSolution;
+  createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1253,6 +1269,7 @@ export type Mutation = {
    */
   updateExistingModelLinks: ExistingModelLinks;
   updateMTOMilestone: MtoMilestone;
+  updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -1319,6 +1336,24 @@ export type MutationCreateMtoMilestoneCustomArgs = {
   modelPlanID: Scalars['UUID']['input'];
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCommonArgs = {
+  key?: InputMaybe<MtoCommonSolutionKey>;
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCustomArgs = {
+  facilitatedBy: MtoFacilitator;
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  solutionType: MtoSolutionType;
 };
 
 
@@ -1512,6 +1547,13 @@ export type MutationUpdateExistingModelLinksArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateMtoMilestoneArgs = {
   changes: MtoMilestoneChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoSolutionArgs = {
+  changes: MtoSolutionChanges;
   id: Scalars['UUID']['input'];
 };
 

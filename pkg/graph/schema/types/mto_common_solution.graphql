@@ -41,6 +41,7 @@ enum MTOCommonSolutionKey {
 enum MTOSolutionType {
   IT_SYSTEM
   CONTRACTOR
+  CROSS_CUTTING_GROUP
   OTHER
 }
 enum MTOCommonSolutionSubject {
@@ -68,6 +69,6 @@ type MTOCommonSolution {
 
   #Custom Resolvers
   isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone) #TODO, do we need to compare to a need? Or specifically just to a model plan
-  # isSuggested: Boolean! # TODO (mto) Is this needed? 
+  # isSuggested: Boolean! # TODO (mto) Is this needed?
 
 }
