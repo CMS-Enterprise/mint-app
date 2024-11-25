@@ -1,6 +1,41 @@
 enum MTOCommonSolutionKey {
-  SOLUTION_A,
-  SOLUTION_B,
+  INNOVATION
+  ACO_OS
+  APPS
+  CDX
+  CCW
+  CMS_BOX
+  CMS_QUALTRICS
+  CBOSC
+  CPI_VETTING
+  EFT
+  EXISTING_CMS_DATA_AND_PROCESS
+  EDFR
+  GOVDELIVERY
+  GS
+  HDR
+  HPMS
+  HIGLAS
+  IPC
+  IDR
+  LDG
+  LV
+  MDM_POR
+  MARX
+  OUTLOOK_MAILBOX
+  QV
+  RMADA
+  ARS
+  CONNECT
+  LOI
+  POST_PORTAL
+  RFA
+  SHARED_SYSTEMS
+  BCDA
+  ISP
+  MIDS
+  MDM_NCBP
+  MODEL_SPACE
 }
 
 enum MTOSolutionType {
@@ -9,14 +44,28 @@ enum MTOSolutionType {
   CROSS_CUTTING_GROUP
   OTHER
 }
+enum MTOCommonSolutionSubject {
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
+  MEDICARE_FEE_FOR_SERVICE
+  CONTRACT_VEHICLES
+  LEARNING
+  QUALITY
+  COMMUNICATION_TOOLS_AND_HELP_DESK
+  MEDICARE_ADVANTAGE_AND_PART_D
+  PAYMENTS_AND_FINANCIALS
+  DATA
+  LEGAL
+}
 
 type MTOCommonSolution {
   #DB Fields
   name: String!
   key: MTOCommonSolutionKey!
-  type: MTOSolutionType!
-  description: String! #TODO (mto) is this needed?
-  role: MTOFacilitator!
+  type: MTOSolutionType! 
+  subjects: [MTOCommonSolutionSubject!]!
+  filterView: ModelViewFilter
+
 
   #Custom Resolvers
   isAdded: Boolean! # To represent if this Common Solution is _already_ added of the Model Plan's MTO (to _any_ Milestone) #TODO, do we need to compare to a need? Or specifically just to a model plan

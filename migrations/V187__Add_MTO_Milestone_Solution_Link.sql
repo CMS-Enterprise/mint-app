@@ -15,3 +15,22 @@ COMMENT ON TABLE mto_milestone_solution_link IS 'Links solutions to milestones';
 CREATE UNIQUE INDEX idx_milestone_solution ON mto_milestone_solution_link (milestone_id, solution_id);
 
 COMMENT ON INDEX idx_milestone_solution IS 'Ensures uniqueness of milestone and solution combinations.';
+
+
+CREATE OR REPLACE FUNCTION link_key_and_array(
+    input_key TEXT,
+    "values" TEXT[]
+)
+RETURNS TABLE (
+    "key" TEXT,
+    "value" TEXT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        input_key as "key",
+        UNNEST(values) AS "value";
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION link_key_and_array IS 'Returns an unnested combination of keys and values in a tabular form.'

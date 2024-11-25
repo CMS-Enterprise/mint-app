@@ -84,7 +84,7 @@ exports[`MTO Card > matches snapshot 1`] = `
           Go to matrix
         </button>
         <button
-          class="usa-button"
+          class="usa-button usa-button--outline"
           data-testid="to-model-to-operations"
           type="button"
         >
