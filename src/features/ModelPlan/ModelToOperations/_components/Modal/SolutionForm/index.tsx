@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -16,28 +16,40 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import {
-  useCreateMtoMilestoneCustomMutation,
-  useGetMtoCategoriesQuery
-} from 'gql/generated/graphql';
 
+// import {
+//   useCreateMtoMilestoneCustomMutation,
+//   useGetMtoCategoriesQuery
+// } from 'gql/generated/graphql';
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 // import { selectOptions, SelectProps } from '../CategoryForm';
 
+type FormValues = {
+  solutionType: string;
+  solutionTitle: string;
+  pocName: string;
+  pocEmail: string;
+};
+
 const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   // const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const {
+    message,
+    // showMessage,
+    clearMessage
+  } = useMessage();
 
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: 'default',
-      subcategory: 'default',
-      name: ''
+      solutionType: 'default',
+      solutionTitle: '',
+      pocName: '',
+      pocEmail: ''
     }
   });
 
@@ -45,11 +57,12 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     control,
     handleSubmit,
     reset,
-    watch,
+    // watch,
     formState: { isValid }
   } = methods;
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
+    // eslint-disable-next-line no-console
     console.log(formData);
   };
 
