@@ -5,7 +5,6 @@ import { Grid, Icon } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -49,11 +48,7 @@ const ModelToOperations = () => {
         ]}
       />
 
-      {message && (
-        <Alert type="error" slim>
-          {message}
-        </Alert>
-      )}
+      {message}
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
