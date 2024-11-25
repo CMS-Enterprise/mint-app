@@ -2,9 +2,9 @@ SELECT
     OpNd.id,
     :model_plan_id AS model_plan_id, --use a variable here
     pOpNd.id AS need_type,
-    pOpNd.need_name AS need_name,
-    pOpNd.need_key AS need_key,
-    pOpNd.section AS section,
+    pOpNd.need_name,
+    pOpNd.need_key,
+    pOpNd.section,
     OpNd.name_other,
     COALESCE(OpNd.needed, FALSE) AS needed,
     COALESCE(OpNd.created_by, '00000000-0000-0000-0000-000000000000') AS created_by, -- This is UUID.NIL, the same as the UNKNOWN_USER account in the Db

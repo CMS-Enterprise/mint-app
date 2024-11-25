@@ -59,16 +59,16 @@ inserted AS (
     FROM matchedLinks
     WHERE
         matchedLinks.dontInsert = FALSE
-RETURNING
-id,
-model_plan_id,
-existing_model_id,
-current_model_plan_id,
-field_name,
-created_by,
-created_dts,
-modified_by,
-modified_dts
+    RETURNING
+        id,
+        model_plan_id,
+        existing_model_id,
+        current_model_plan_id,
+        field_name,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 ),
 
 /* deleteRows identified earlier */
@@ -77,15 +77,15 @@ deletedRows AS (
     existing_model_link
     WHERE existing_model_link.id IN ( SELECT existingToDelete.ID FROM existingToDelete WHERE existingToDelete.toDelete = TRUE)
     RETURNING
-    id,
-    model_plan_id,
-    existing_model_id,
-    current_model_plan_id,
-    field_name,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        existing_model_id,
+        current_model_plan_id,
+        field_name,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 /* return all inserted and existing links */
 

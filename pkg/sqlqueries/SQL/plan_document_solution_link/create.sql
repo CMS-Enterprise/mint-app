@@ -17,10 +17,11 @@ SELECT
     PlanDocumentSolutionLink.DocumentID AS document_id,
     PlanDocumentSolutionLink.CreatedBy AS created_by
 FROM PlanDocumentSolutionLink
-RETURNING id,
-  solution_id,
-  document_id,
-  created_by,
-  created_dts,
-  modified_by,
-  modified_dts
+RETURNING
+    id,
+    solution_id,
+    document_id,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts
