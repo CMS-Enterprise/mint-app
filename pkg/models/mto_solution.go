@@ -17,8 +17,8 @@ type MTOSolution struct {
 	RiskIndicator MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`
 	Key           *MTOCommonSolutionKey      `json:"key" db:"mto_common_solution_key"`
 	Type          *MTOSolutionType           `json:"type" db:"type"`
-	PocName       string                     `json:"pocName" db:"poc_name"`
-	PocEmail      string                     `json:"pocEmail" db:"poc_email"`
+	PocName       *string                    `json:"pocName" db:"poc_name"`
+	PocEmail      *string                    `json:"pocEmail" db:"poc_email"`
 }
 
 // MTOSolutionStatus represents the status of an MTO Solution

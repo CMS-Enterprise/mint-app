@@ -66,8 +66,8 @@ func MTOSolutionCreateCustom(
 		neededBy,
 		principalAccount.ID,
 	)
-	mtoSolution.PocName = pocName
-	mtoSolution.PocEmail = pocEmail
+	mtoSolution.PocName = &pocName
+	mtoSolution.PocEmail = &pocEmail
 
 	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
 	if err != nil {

@@ -19,8 +19,8 @@ type MTOSolution {
   riskIndicator: MTORiskIndicator
   key: MTOCommonSolutionKey
   type: MTOSolutionType # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  pocName: String!
-  pocEmail: String!
+  pocName: String
+  pocEmail: String
 
   #Meta Data
   createdBy: UUID!

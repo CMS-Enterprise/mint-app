@@ -952,8 +952,8 @@ export type MtoSolution = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   neededBy?: Maybe<Scalars['Time']['output']>;
-  pocEmail: Scalars['String']['output'];
-  pocName: Scalars['String']['output'];
+  pocEmail?: Maybe<Scalars['String']['output']>;
+  pocName?: Maybe<Scalars['String']['output']>;
   relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
   status: MtoSolutionStatus;
