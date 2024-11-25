@@ -783,17 +783,66 @@ export enum MtoCommonMilestoneKey {
 
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
-  description: Scalars['String']['output'];
+  filterView?: Maybe<ModelViewFilter>;
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
-  role: MtoFacilitator;
+  subjects: Array<MtoCommonSolutionSubject>;
   type: MtoSolutionType;
 };
 
 export enum MtoCommonSolutionKey {
-  SOLUTION_A = 'SOLUTION_A',
-  SOLUTION_B = 'SOLUTION_B'
+  ACO_OS = 'ACO_OS',
+  APPS = 'APPS',
+  ARS = 'ARS',
+  BCDA = 'BCDA',
+  CBOSC = 'CBOSC',
+  CCW = 'CCW',
+  CDX = 'CDX',
+  CMS_BOX = 'CMS_BOX',
+  CMS_QUALTRICS = 'CMS_QUALTRICS',
+  CONNECT = 'CONNECT',
+  CPI_VETTING = 'CPI_VETTING',
+  EDFR = 'EDFR',
+  EFT = 'EFT',
+  EXISTING_CMS_DATA_AND_PROCESS = 'EXISTING_CMS_DATA_AND_PROCESS',
+  GOVDELIVERY = 'GOVDELIVERY',
+  GS = 'GS',
+  HDR = 'HDR',
+  HIGLAS = 'HIGLAS',
+  HPMS = 'HPMS',
+  IDR = 'IDR',
+  INNOVATION = 'INNOVATION',
+  IPC = 'IPC',
+  ISP = 'ISP',
+  LDG = 'LDG',
+  LOI = 'LOI',
+  LV = 'LV',
+  MARX = 'MARX',
+  MDM_NCBP = 'MDM_NCBP',
+  MDM_POR = 'MDM_POR',
+  MIDS = 'MIDS',
+  MODEL_SPACE = 'MODEL_SPACE',
+  OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
+  POST_PORTAL = 'POST_PORTAL',
+  QV = 'QV',
+  RFA = 'RFA',
+  RMADA = 'RMADA',
+  SHARED_SYSTEMS = 'SHARED_SYSTEMS'
+}
+
+export enum MtoCommonSolutionSubject {
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS',
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS',
+  COMMUNICATION_TOOLS_AND_HELP_DESK = 'COMMUNICATION_TOOLS_AND_HELP_DESK',
+  CONTRACT_VEHICLES = 'CONTRACT_VEHICLES',
+  DATA = 'DATA',
+  LEARNING = 'LEARNING',
+  LEGAL = 'LEGAL',
+  MEDICARE_ADVANTAGE_AND_PART_D = 'MEDICARE_ADVANTAGE_AND_PART_D',
+  MEDICARE_FEE_FOR_SERVICE = 'MEDICARE_FEE_FOR_SERVICE',
+  PAYMENTS_AND_FINANCIALS = 'PAYMENTS_AND_FINANCIALS',
+  QUALITY = 'QUALITY'
 }
 
 export enum MtoFacilitator {
