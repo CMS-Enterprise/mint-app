@@ -118,11 +118,13 @@ exports[`Custom Milestone form > matches snapshot 1`] = `
         >
           <span>
             Before adding this milestone, consider checking the 
-            <span
-              class="text-underline text-primary-light"
+            <button
+              class="usa-button usa-button usa-button--unstyled margin-top-0"
+              data-testid="button"
+              type="button"
             >
               milestone library
-            </span>
+            </button>
              to see if MINT offers a similar preset milestone.
           </span>
         </p>
