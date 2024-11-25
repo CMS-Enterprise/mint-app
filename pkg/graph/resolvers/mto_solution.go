@@ -89,12 +89,6 @@ func MTOSolutionCreateCommon(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	// commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, commonSolutionKey)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// TODO, verify what to do with POC, I don't know if this gets populated
-
 	// TODO: Populate data from mto common solution
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
