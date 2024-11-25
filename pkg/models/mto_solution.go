@@ -46,8 +46,6 @@ func NewMTOSolution(
 	name *string,
 	solutionType *MTOSolutionType,
 	neededBy *time.Time,
-	pocName string,
-	pocEmail string,
 	createdBy uuid.UUID,
 ) *MTOSolution {
 	return &MTOSolution{
@@ -59,7 +57,5 @@ func NewMTOSolution(
 		NeededBy:          neededBy,
 		Status:            MTOSolutionStatusNotStarted,
 		RiskIndicator:     MTORiskIndicatorOnTrack,
-		PocName:           pocName,
-		PocEmail:          pocEmail,
 	}
 }

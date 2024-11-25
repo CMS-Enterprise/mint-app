@@ -22,8 +22,10 @@ CREATE TABLE mto_solution(
     needed_by TIMESTAMP WITH TIME ZONE,
     status MTO_SOLUTION_STATUS NOT NULL,
     risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
-    poc_name ZERO_STRING NOT NULL,
-    poc_email EMAIL NOT NULL,
+    -- we allow null because this is is only required for custom solutions
+    poc_name ZERO_STRING,
+    -- we allow null because this is is only required for custom solutions
+    poc_email EMAIL,
 
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

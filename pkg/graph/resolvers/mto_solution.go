@@ -64,10 +64,10 @@ func MTOSolutionCreateCustom(
 		&name,
 		&solutionType,
 		neededBy,
-		pocName,
-		pocEmail,
 		principalAccount.ID,
 	)
+	mtoSolution.PocName = pocName
+	mtoSolution.PocEmail = pocEmail
 
 	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
 	if err != nil {
@@ -89,10 +89,10 @@ func MTOSolutionCreateCommon(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, commonSolutionKey)
-	if err != nil {
-		return nil, err
-	}
+	// commonSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, commonSolutionKey)
+	// if err != nil {
+	// 	return nil, err
+	// }
 	// TODO, verify what to do with POC, I don't know if this gets populated
 
 	// TODO: Populate data from mto common solution
@@ -100,14 +100,12 @@ func MTOSolutionCreateCommon(
 		modelPlanID,
 		&commonSolutionKey,
 		nil,
-		&commonSolution.Type,
+		nil, // type is not stored for a solution from the common library
 		nil,
-		"test_poc_name_empty",
-		"empty@email.test",
 		principalAccount.ID,
 	)
 
-	err = BaseStructPreCreate(logger, mtoSolution, principal, store, true)
+	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
