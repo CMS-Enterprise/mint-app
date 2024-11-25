@@ -10,6 +10,8 @@ export default gql(/* GraphQL */ `
           key
           isAdded
           isSuggested
+          categoryName
+          subCategoryName
         }
       }
     }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -12,6 +11,7 @@ import {
 import classNames from 'classnames';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
+import SuggestedMilestoneToggle from '../SuggestedMilestoneToggle';
 
 import '../../index.scss';
 
@@ -24,8 +24,6 @@ const MilestoneCard = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
-
   return (
     <Card
       containerProps={{
@@ -33,29 +31,63 @@ const MilestoneCard = ({
       }}
       className={classNames(className, 'margin-bottom-2')}
     >
-      {/* <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full"> */}
       <CardHeader className="padding-3 padding-bottom-0">
         <div className="display-flex flex-justify">
-          <span className="text-base">Milestone</span>
-          <span className="bg-primary-lighter padding-right-1 text-primary">
-            <Icon.LightbulbOutline className="margin-left-1" /> Suggested
+          <span className="text-base-dark">
+            {t('milestoneLibrary.milestone')}
+          </span>
+          <span className="padding-right-1 model-to-operations__milestone-tag">
+            <Icon.LightbulbOutline
+              className="margin-left-1"
+              style={{ top: '2px' }}
+            />{' '}
+            {t('milestoneLibrary.suggested')}
           </span>
         </div>
         <h3 className="line-height-normal margin-top-1">{milestone.name}</h3>
       </CardHeader>
 
-      <CardBody className="padding-x-3">description</CardBody>
+      <CardBody className="padding-x-3 ">
+        <div className="text-base-dark">
+          {t('milestoneLibrary.category', {
+            category: milestone.categoryName
+          })}{' '}
+          {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
+        </div>
+
+        <SuggestedMilestoneToggle
+          milestone={milestone}
+          className="margin-top-2"
+        />
+      </CardBody>
 
       <CardFooter className="padding-3">
-        <Button type="button" className="margin-right-2">
-          Add to matrix
-        </Button>
+        {!milestone.isAdded ? (
+          <Button
+            type="button"
+            className="margin-right-2"
+            onClick={
+              () => null
+              // TODO: open modal
+            }
+          >
+            {t('milestoneLibrary.addToMatrix')}
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            disabled
+            className="margin-right-2 model-to-operations__milestone-added text-normal"
+          >
+            <Icon.Check />
+            {t('milestoneLibrary.added')}
+          </Button>
+        )}
 
         <Button type="button" unstyled>
-          About this milestone
+          {t('milestoneLibrary.aboutThisMilestone')}
         </Button>
       </CardFooter>
-      {/* </div> */}
     </Card>
   );
 };

@@ -110,6 +110,15 @@ const sortOptions: SortProps[] = [
   }
 ];
 
+const searchMilestones = (
+  query: string,
+  items: MilestoneCardType[]
+): MilestoneCardType[] => {
+  return items.filter(milestone =>
+    milestone.name.toLowerCase().includes(query.toLowerCase())
+  );
+};
+
 const MilstoneCardGroup = ({
   milestones
 }: {
@@ -135,7 +144,7 @@ const MilstoneCardGroup = ({
   const { currentItems, pagination, search, pageSize } =
     useSearchSortPagination<MilestoneCardType, any>({
       items: selectedMilestones,
-      filterFunction: (query: string, items: MilestoneCardType[]) => items,
+      filterFunction: searchMilestones,
       sortFunction: (items: MilestoneCardType[]) => items,
       sortOptions,
       defaultItemsPerPage: 6
@@ -206,7 +215,9 @@ const MilstoneCardGroup = ({
             <CheckboxField
               id="hide-added-milestones"
               name="hide-added-milestones"
-              label={t('milestoneLibrary.hideAdded')}
+              label={t('milestoneLibrary.hideAdded', {
+                count: milestones.filter(milestone => milestone.isAdded).length
+              })}
               value="true"
               checked={addedMilestonesHidden}
               onBlur={() => null}
@@ -222,7 +233,7 @@ const MilstoneCardGroup = ({
         <Grid desktop={{ col: 12 }}>
           <Grid row gap={2}>
             {currentItems.map(milestone => (
-              <Grid desktop={{ col: 4 }}>
+              <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
                 <MilestoneCard key={milestone.key} milestone={milestone} />
               </Grid>
             ))}
@@ -250,6 +261,7 @@ const MilstoneCardGroup = ({
           pageSize={itemsPerPage}
           setPageSize={setItemsPerPage}
           valueArray={[6, 9, 'all']}
+          suffix={t('milestones')}
         />
       </div>
     </div>
