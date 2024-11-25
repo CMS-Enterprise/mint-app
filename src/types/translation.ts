@@ -1296,7 +1296,7 @@ export type TranslationPlan = {
   dataExchangeApproach: TranslationDataExchangeApproach;
   modelToOperations: TranslationMTOInfo;
   mtoCategory: TranslationMTOCategory;
-  mtoMilestones: TranslationMTOMilestoneCustom;
+  mtoMilestone: TranslationMTOMilestoneCustom;
 };
 
 export type TranslationPlanSection =
@@ -1328,5 +1328,5 @@ export enum PlanSection {
   DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
-  MTO_MILESTONES = 'mtoMilestones'
+  MTO_MILESTONE = 'mtoMilestone'
 }

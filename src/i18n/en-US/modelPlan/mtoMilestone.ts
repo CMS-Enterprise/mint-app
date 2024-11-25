@@ -5,7 +5,7 @@ import {
   TranslationFormType
 } from '../../../gql/generated/graphql';
 
-export const mtoMilestones: TranslationMTOMilestoneCustom = {
+export const mtoMilestone: TranslationMTOMilestoneCustom = {
   name: {
     gqlField: 'name',
     goField: 'Name',
@@ -17,4 +17,4 @@ export const mtoMilestones: TranslationMTOMilestoneCustom = {
   }
 };
 
-export default mtoMilestones;
+export default mtoMilestone;
