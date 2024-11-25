@@ -20,10 +20,10 @@ require (
 	github.com/pquerna/otp v1.4.0
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
-	github.com/stretchr/testify v1.9.0
-	github.com/vektah/gqlparser/v2 v2.5.18
+	github.com/stretchr/testify v1.10.0
+	github.com/vektah/gqlparser/v2 v2.5.19
 	go.uber.org/zap v1.27.0
-	golang.org/x/sync v0.8.0
+	golang.org/x/sync v0.9.0
 )
 
 require github.com/gorilla/websocket v1.5.3
@@ -34,20 +34,19 @@ require (
 	github.com/contribsys/faktory v1.9.1
 	github.com/launchdarkly/go-sdk-common/v3 v3.2.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
-	github.com/parquet-go/parquet-go v0.23.0
-	golang.org/x/net v0.30.0
+	github.com/parquet-go/parquet-go v0.24.0
+	golang.org/x/net v0.31.0
 )
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
-	github.com/charmbracelet/x/ansi v0.4.2 // indirect
-	github.com/charmbracelet/x/term v0.2.0 // indirect
+	github.com/charmbracelet/x/ansi v0.4.5 // indirect
+	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/graph-gophers/dataloader/v7 v7.1.0
 	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
-	github.com/segmentio/encoding v0.4.0 // indirect
 )
 
 require (
@@ -71,7 +70,7 @@ require (
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
-	golang.org/x/term v0.25.0
+	golang.org/x/term v0.26.0
 )
 
 require (
@@ -90,7 +89,7 @@ require (
 require (
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
-	github.com/charmbracelet/bubbletea v1.1.2
+	github.com/charmbracelet/bubbletea v1.2.3
 	github.com/contribsys/faktory_worker_go v1.7.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -129,10 +128,10 @@ require (
 	github.com/urfave/cli/v2 v2.25.5 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
-	golang.org/x/crypto v0.28.0 // indirect
+	golang.org/x/crypto v0.29.0 // indirect
 	golang.org/x/mod v0.20.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.19.0 // indirect
+	golang.org/x/sys v0.27.0 // indirect
+	golang.org/x/text v0.20.0 // indirect
 	golang.org/x/tools v0.24.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
