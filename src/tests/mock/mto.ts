@@ -82,7 +82,6 @@ export const suggestedMilestonesMock = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          modelName: 'Empty Plan',
           opsEvalAndLearning: {
             __typename: 'PlanOpsEvalAndLearning',
             evaluationApproaches: ['CONTROL_INTERVENTION', 'COMPARISON_MATCH']

@@ -6,7 +6,7 @@ export interface MilestoneFieldType {
   parentField: string;
   question: string; // Translation function name to a milestone question
   multiPart?: boolean; // Used to idenfify if multiple question pertain to a single milestone
-  section: string;
+  section: string; // Translation namespace for the section
 }
 
 const milestoneMap: Record<MtoCommonMilestoneKey | string, MilestoneFieldType> =

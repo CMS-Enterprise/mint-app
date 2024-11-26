@@ -179,9 +179,13 @@ const SuggestedMilestoneToggle = ({
                           key={answer.toString()}
                           data-testid={answer.toString()}
                         >
-                          {i18next.t(
+                          {i18next.exists(
                             `${milestoneConfig.parentField}:${milestoneConfig.fieldName}.options.${answer}`
-                          )}
+                          )
+                            ? i18next.t(
+                                `${milestoneConfig.parentField}:${milestoneConfig.fieldName}.options.${answer}`
+                              )
+                            : 'No answer'}
                         </li>
                       ))}
 
@@ -192,9 +196,13 @@ const SuggestedMilestoneToggle = ({
                             `${milestoneConfig.parentField}:${answer.question}.label`
                           )}{' '}
                           -{' '}
-                          {i18next.t(
+                          {i18next.exists(
                             `${milestoneConfig.parentField}:${answer.question}.options.${answer.answer}`
-                          )}
+                          )
+                            ? i18next.t(
+                                `${milestoneConfig.parentField}:${answer.question}.options.${answer.answer}`
+                              )
+                            : 'No answer'}
                         </li>
                       ))}
                   </ul>

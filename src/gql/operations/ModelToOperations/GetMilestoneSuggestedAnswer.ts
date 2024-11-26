@@ -37,7 +37,6 @@ export default gql(/* GraphQL */ `
   ) {
     modelPlan(id: $id) {
       id
-      modelName
       generalCharacteristics @include(if: $generalCharacteristics) {
         managePartCDEnrollment @include(if: $managePartCDEnrollment)
         collectPlanBids @include(if: $collectPlanBids)

@@ -55,10 +55,12 @@ const MilestoneCard = ({
           {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
         </div>
 
-        <SuggestedMilestoneToggle
-          milestone={milestone}
-          className="margin-top-2"
-        />
+        {milestone.isSuggested && (
+          <SuggestedMilestoneToggle
+            milestone={milestone}
+            className="margin-top-2"
+          />
+        )}
       </CardBody>
 
       <CardFooter className="padding-3">
