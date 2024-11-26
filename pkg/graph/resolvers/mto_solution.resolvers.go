@@ -47,7 +47,6 @@ func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MT
 func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	// models.EnumArray[models.MTOFacilitator]
 
 	return MTOSolutionCreateCustom(
 		logger,
