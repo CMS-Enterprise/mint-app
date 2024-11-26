@@ -129,11 +129,9 @@ exports[`Notification Page > matches snapshot 1`] = `
                         id="mention-279ba41b-232a-49b2-9607-a3951d301218"
                       >
                         <div
-                          aria-label="Rich-Text Editor"
                           class="tiptap ProseMirror"
                           contenteditable="false"
                           id="mention-279ba41b-232a-49b2-9607-a3951d301218"
-                          role="textbox"
                           translate="no"
                         >
                           <p>
@@ -223,11 +221,9 @@ exports[`Notification Page > matches snapshot 1`] = `
                         id="mention-ccf6830b-5c20-4394-84d6-78e0c9f31ec5"
                       >
                         <div
-                          aria-label="Rich-Text Editor"
                           class="tiptap ProseMirror"
                           contenteditable="false"
                           id="mention-ccf6830b-5c20-4394-84d6-78e0c9f31ec5"
-                          role="textbox"
                           translate="no"
                         >
                           <p>
