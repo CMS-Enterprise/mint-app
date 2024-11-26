@@ -19,7 +19,7 @@ type MTOSolution {
   riskIndicator: MTORiskIndicator
   key: MTOCommonSolutionKey
   type: MTOSolutionType # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  pocName: String
+  pocName: String #TODO (mto) if there is a default value for ones sourced from common solutions, these can be reverted back to String! Otherwise, we should leave nullable
   pocEmail: String
 
   #Meta Data

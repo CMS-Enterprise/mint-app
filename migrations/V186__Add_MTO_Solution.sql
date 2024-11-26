@@ -26,6 +26,8 @@ CREATE TABLE mto_solution(
     poc_name ZERO_STRING,
     -- we allow null because this is is only required for custom solutions
     poc_email EMAIL,
+    -- TODO (mto) verify that poc information should be nullable. Also, confirm if a solution from a common solution will be allowed to edit POC info
+    -- if poc info is not editable for these cases, a constraint should be introduced to not allow these to be filled out
 
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
