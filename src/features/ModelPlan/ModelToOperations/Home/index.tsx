@@ -87,8 +87,7 @@ const MTOHome = () => {
 
       {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
-      <div className="model-to-operations margin-y-6">
-        {/* // TODO: TEMPORARY since WIP components are not finalized */}
+      {/* <div className="model-to-operations margin-y-6">
         <MTOModal
           isOpen={isModalOpen}
           closeModal={() => setIsModalOpen(false)}
@@ -126,7 +125,7 @@ const MTOHome = () => {
             Add custom milestone
           </Button>
         </div>
-      </div>
+      </div> */}
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>

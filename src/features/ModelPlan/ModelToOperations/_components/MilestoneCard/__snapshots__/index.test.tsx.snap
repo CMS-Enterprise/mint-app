@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card margin-bottom-2"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container radius-md minh-mobile padding-0 margin-0"
+    >
+      <header
+        class="usa-card__header padding-3 padding-bottom-0"
+        data-testid="CardHeader"
+      >
+        <div
+          class="display-flex flex-justify"
+        >
+          <span
+            class="text-base-dark"
+          >
+            Milestone
+          </span>
+          <span
+            class="padding-right-1 model-to-operations__milestone-tag"
+          >
+            <svg
+              class="usa-icon margin-left-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              style="top: 2px;"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2 11.7V16h-4v-2.3C8.48 12.63 7 11.53 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.49-1.51 3.65-3 4.7z"
+              />
+            </svg>
+             Suggested
+          </span>
+        </div>
+        <h3
+          class="line-height-normal margin-top-1"
+        >
+          Test Milestone
+        </h3>
+      </header>
+      <div
+        class="usa-card__body padding-x-3 "
+        data-testid="CardBody"
+      >
+        <div
+          class="text-base-dark"
+        >
+          Category: Test Category  (Test SubCategory)
+        </div>
+        <div
+          class="margin-top-2"
+        >
+          <button
+            class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-1"
+            data-testid="toggle-milestone-answer"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 needs-question__rotate"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+              />
+            </svg>
+            Why is this suggested?
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer padding-3"
+        data-testid="CardFooter"
+      >
+        <button
+          class="usa-button margin-right-2"
+          data-testid="button"
+          type="button"
+        >
+          Add to matrix
+        </button>
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          About this milestone
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
