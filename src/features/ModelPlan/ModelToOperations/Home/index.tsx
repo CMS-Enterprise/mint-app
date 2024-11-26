@@ -35,7 +35,7 @@ const MTOHome = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data } = useGetModelToOperationsMatrixQuery({
+  const { data, loading } = useGetModelToOperationsMatrixQuery({
     variables: {
       id: modelID
     }
@@ -87,7 +87,7 @@ const MTOHome = () => {
 
       {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
-      {/* <div className="model-to-operations margin-y-6">
+      <div className="model-to-operations margin-y-6 display-none">
         <MTOModal
           isOpen={isModalOpen}
           closeModal={() => setIsModalOpen(false)}
@@ -125,7 +125,7 @@ const MTOHome = () => {
             Add custom milestone
           </Button>
         </div>
-      </div> */}
+      </div>
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
@@ -133,16 +133,20 @@ const MTOHome = () => {
             {t('heading')}
           </h1>
 
-          <p className="mint-body-large margin-bottom-2 margin-top-05">
-            {t('forModel', {
-              modelName
-            })}
-          </p>
+          {!loading && (
+            <p className="mint-body-large margin-bottom-2 margin-top-05">
+              {t('forModel', {
+                modelName
+              })}
+            </p>
+          )}
 
-          <MTOStatusBanner
-            status={modelToOperationsMatrix?.status}
-            lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
-          />
+          {!loading && (
+            <MTOStatusBanner
+              status={modelToOperationsMatrix?.status}
+              lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
+            />
+          )}
         </Grid>
 
         <Grid desktop={{ col: 3 }}>

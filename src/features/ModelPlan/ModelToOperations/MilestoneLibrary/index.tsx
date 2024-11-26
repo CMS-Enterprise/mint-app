@@ -127,7 +127,12 @@ const MilstoneCardGroup = ({
       items: selectedMilestones,
       filterFunction: searchMilestones,
       sortFunction: (items: MilestoneCardType[]) => items,
-      sortOptions: [],
+      sortOptions: [
+        {
+          value: '',
+          label: ''
+        }
+      ],
       defaultItemsPerPage: 6
     });
 
