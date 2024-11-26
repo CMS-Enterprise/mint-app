@@ -10,22 +10,22 @@ WITH retVal AS (
         SELECT
             gen_random_uuid() AS id,
             :model_plan_id AS model_plan_id,
-            id,
+            id AS need_type,
             :created_by AS created_by,
             current_timestamp AS created_dts
         FROM possible_operational_need
     )
 
     RETURNING
-    id,
-    model_plan_id,
-    need_type,
-    name_other,
-    needed,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        need_type,
+        name_other,
+        needed,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

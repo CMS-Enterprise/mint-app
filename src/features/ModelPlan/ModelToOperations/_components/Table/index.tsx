@@ -15,6 +15,7 @@ import {
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
@@ -650,7 +651,7 @@ export const moveRow = (
   }: {
     variables: ReorderMtoCategoryMutationVariables;
   }) => Promise<any>,
-  setError?: (error: string) => void
+  setError?: (element: JSX.Element) => void
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
@@ -704,7 +705,16 @@ export const moveRow = (
       }
     })?.catch(() => {
       if (setError) {
-        setError(i18next.t('modelToOperationsMisc:errorReorder'));
+        setError(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {i18next.t('modelToOperationsMisc:errorReorder')}
+          </Alert>
+        );
       }
     });
   } else if (type.includes('milestone')) {

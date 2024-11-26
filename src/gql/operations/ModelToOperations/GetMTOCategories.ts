@@ -7,6 +7,10 @@ export default gql(/* GraphQL */ `
         categories {
           id
           name
+          subCategories {
+            id
+            name
+          }
         }
       }
     }

@@ -1,6 +1,6 @@
 WITH PLAN AS (
     SELECT 
-        id AS id,
+        id,
         id AS model_plan_id,
         'model_plan_id' AS fk_field
     FROM model_plan WHERE id = :model_plan_id
@@ -9,7 +9,7 @@ WITH PLAN AS (
 DISCUSSION AS ( 
     SELECT 
         PLAN.id AS model_plan_id,
-        discussion.id AS id,
+        discussion.id,
         'discussion_id' AS fk_field
     FROM PLAN
 
@@ -19,7 +19,7 @@ DISCUSSION AS (
 NEED AS ( 
     SELECT 
         PLAN.id AS model_plan_id,
-        OpNd.id AS id,
+        OpNd.id,
         'operational_need_id' AS fk_field
     FROM PLAN
 
@@ -28,8 +28,8 @@ NEED AS (
 
 SOLUTION AS (
     SELECT
-        NEED.model_plan_id AS model_plan_id,
-        OpSol.id AS id,
+        NEED.model_plan_id,
+        OpSol.id,
         'solution_id' AS fk_field
     FROM NEED	
     INNER JOIN operational_solution AS OpSol ON NEED.id = OpSol.operational_need_id 

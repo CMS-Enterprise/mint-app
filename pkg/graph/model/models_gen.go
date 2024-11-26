@@ -72,6 +72,11 @@ type MTOInfoTranslation struct {
 	ReadyForReviewDts models.TranslationField `json:"readyForReviewDTS" db:"ready_for_review_dts"`
 }
 
+// Represents MTO Custom Milestone translation data
+type MTOMilestoneTranslation struct {
+	Name models.TranslationField `json:"name" db:"name"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`

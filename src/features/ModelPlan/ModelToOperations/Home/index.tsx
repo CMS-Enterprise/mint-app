@@ -47,7 +47,7 @@ const MTOHome = () => {
 
   const location = useLocation();
 
-  const { message, clearMessage } = useMessage();
+  const { clearMessage, message } = useMessage();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -62,7 +62,7 @@ const MTOHome = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [modalType, setModalType] = useState<
-    'category' | 'system' | 'solution'
+    'category' | 'milestone' | 'solution'
   >('category');
 
   useEffect(() => {
@@ -87,8 +87,9 @@ const MTOHome = () => {
 
       {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
-      {/* TEMPORARY since WIP components are not finalized */}
-      {/* <MTOModal
+      <div className="model-to-operations margin-y-6">
+        {/* // TODO: TEMPORARY since WIP components are not finalized */}
+        <MTOModal
           isOpen={isModalOpen}
           closeModal={() => setIsModalOpen(false)}
           modalType={modalType}
@@ -113,44 +114,19 @@ const MTOHome = () => {
           >
             Add custom category
           </Button>
-        </div> */}
-      {/* TEMPORARY since WIP components are not finalized */}
-
-      {/* <Header
-          basic
-          extended={false}
-          className="margin-bottom-4 model-to-operations__nav-container"
-        >
-          <div className="usa-nav-container padding-0">
-            <PrimaryNav
-              items={mtoOptions.map(item => (
-                <button
-                  type="button"
-                  onClick={() => {
-                    params.set('view', item);
-                    history.push({ search: params.toString() });
-                  }}
-                  className={classNames(
-                    'usa-nav__link margin-left-neg-2 margin-right-2',
-                    {
-                      'usa-current': currentView === item
-                    }
-                  )}
-                >
-                  <span
-                    className={classNames({
-                      'text-primary': currentView === item
-                    })}
-                  >
-                    {t(item)}
-                  </span>
-                </button>
-              ))}
-              mobileExpanded={false}
-              className="flex-justify-start margin-0 padding-0"
-            />
-          </div>
-        </Header> */}
+          <Button
+            type="button"
+            onClick={() => {
+              clearMessage();
+              setModalType('milestone');
+              setIsModalOpen(true);
+            }}
+            className="margin-bottom-4"
+          >
+            Add custom milestone
+          </Button>
+        </div>
+      </div>
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>

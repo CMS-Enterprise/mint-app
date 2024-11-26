@@ -26,20 +26,20 @@ WITH retVal AS (
         :created_by
     )
     RETURNING
-    id,
-    model_plan_id,
-    mto_common_milestone_key,
-    mto_category_id,
-    name,
-    facilitated_by,
-    need_by,
-    status,
-    risk_indicator,
-    is_draft,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts
+        id,
+        model_plan_id,
+        mto_common_milestone_key,
+        mto_category_id,
+        name,
+        facilitated_by,
+        need_by,
+        status,
+        risk_indicator,
+        is_draft,
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
 )
 
 SELECT

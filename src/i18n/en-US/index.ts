@@ -34,6 +34,7 @@ import modelToOperations, {
   modelToOperationsMisc
 } from './modelPlan/modelToOperations';
 import mtoCategory from './modelPlan/mtoCategory';
+import mtoMilestone from './modelPlan/mtoMilestone';
 import operationalNeeds from './modelPlan/operationalNeeds';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
@@ -112,6 +113,7 @@ const enUS = {
   modelToOperations,
   modelToOperationsMisc,
   mtoCategory,
+  mtoMilestone,
   operationalNeeds,
   solutions,
   operationalSolutionSubtasks,
