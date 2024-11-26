@@ -1,6 +1,41 @@
-import { GetMilestoneSuggestedAnswerDocument } from 'gql/generated/graphql';
+import {
+  GetMilestoneSuggestedAnswerDocument,
+  GetMtoMilestonesDocument
+} from 'gql/generated/graphql';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
+export const commonMilestonesMock = [
+  {
+    request: {
+      query: GetMtoMilestonesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            commonMilestones: [
+              {
+                __typename: 'MTOCommonMilestone',
+                name: 'Test Milestone',
+                key: 'ACQUIRE_AN_EVAL_CONT',
+                isAdded: false,
+                isSuggested: true,
+                categoryName: 'Test Category',
+                subCategoryName: 'Test SubCategory'
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
 
 export const suggestedMilestonesMock = [
   {
@@ -58,6 +93,6 @@ export const suggestedMilestonesMock = [
   }
 ];
 
-const allMocks = [...suggestedMilestonesMock];
+const allMocks = [...suggestedMilestonesMock, ...commonMilestonesMock];
 
 export default allMocks;

@@ -9,7 +9,6 @@ import {
   Icon,
   Pagination
 } from '@trussworks/react-uswds';
-import i18n from 'config/i18n';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoMilestonesQuery,
@@ -90,26 +89,6 @@ const MilestoneLibrary = () => {
   );
 };
 
-type SortOptionsType = 'by-title-a-z' | 'by-title-z-a';
-
-// Sort options type for the select dropdown
-type SortProps = {
-  value: SortOptionsType;
-  label: string;
-};
-
-// Sort options for the select dropdown
-const sortOptions: SortProps[] = [
-  {
-    value: 'by-title-a-z',
-    label: i18n.t('helpAndKnowledge:sortAsc')
-  },
-  {
-    value: 'by-title-z-a',
-    label: i18n.t('helpAndKnowledge:sortDesc')
-  }
-];
-
 const searchMilestones = (
   query: string,
   items: MilestoneCardType[]
@@ -132,10 +111,12 @@ const MilstoneCardGroup = ({
 
   const [addedMilestonesHidden, setAddedMilestonesHidden] = useState(false);
 
+  // Filter the milestones based on the isAdded field value
   const filteredMilestones = addedMilestonesHidden
     ? milestones.filter(milestone => milestone.isAdded)
     : milestones;
 
+  // Filter the milestones based on the isSuggested field value
   const selectedMilestones =
     selectedType === 'suggested'
       ? filteredMilestones.filter(milestone => milestone.isSuggested)
@@ -146,7 +127,7 @@ const MilstoneCardGroup = ({
       items: selectedMilestones,
       filterFunction: searchMilestones,
       sortFunction: (items: MilestoneCardType[]) => items,
-      sortOptions,
+      sortOptions: [],
       defaultItemsPerPage: 6
     });
 
