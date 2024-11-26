@@ -37,7 +37,7 @@ export type SelectProps = {
   label: string;
 };
 
-const selectOptions: SelectProps[] = [
+export const selectOptions: SelectProps[] = [
   {
     value: 'default',
     label: i18n.t('modelToOperationsMisc:modal.category.selectOptions.default')
