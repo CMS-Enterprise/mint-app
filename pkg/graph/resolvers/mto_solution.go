@@ -89,13 +89,12 @@ func MTOSolutionCreateCommon(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	// TODO: Populate data from mto common solution
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
 		&commonSolutionKey,
-		nil,
+		nil, // name is not stored for a solution from the common library
 		nil, // type is not stored for a solution from the common library
-		nil,
+		nil, // needed by is not provided when creating a custom solution. It must be updated later
 		principalAccount.ID,
 	)
 
