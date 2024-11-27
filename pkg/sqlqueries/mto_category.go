@@ -14,7 +14,7 @@ var mtoCategoryUpdateSQL string
 //go:embed SQL/mto/category/get_by_id.sql
 var mtoCategoryGetByIDSQL string
 
-//go:embed SQL/mto/category/get_by_id_loader.sql
+//go:embed SQL/mto/category/get_by_id_LOADER.sql
 var mtoCategoryGetByIDLOADERSQL string
 
 //go:embed SQL/mto/category/get_by_model_plan_id_LOADER.sql
