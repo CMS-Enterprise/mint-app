@@ -37,7 +37,7 @@ const TableResults = ({
   const { t } = useTranslation('tableAndPagination');
 
   // Sets the max results to either the filtered dataset or default (depending on if filtering)
-  const rows: number = globalFilter ? filteredRowLength : rowLength;
+  const rows: number = rowLength || filteredRowLength;
 
   const currentPage: number = pageIndex * pageSize + 1;
 

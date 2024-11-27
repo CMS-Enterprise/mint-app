@@ -180,6 +180,7 @@ const useSearchSortPagination = <T, K extends string>({
   };
 
   return {
+    allItems: searchAndSortedItems,
     currentItems,
     pagination: {
       currentPage,

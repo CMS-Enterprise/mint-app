@@ -87,46 +87,6 @@ const MTOHome = () => {
 
       {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
-      <div className="model-to-operations margin-y-6 display-none">
-        <MTOModal
-          isOpen={isModalOpen}
-          closeModal={() => setIsModalOpen(false)}
-          modalType={modalType}
-        />
-        <div className="width-fit-content">
-          <div
-            style={{ paddingTop: '2px', paddingBottom: '2px' }}
-            className={classNames(
-              'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-secondary-dark'
-            )}
-          >
-            TEMPORARY
-          </div>
-          <Button
-            type="button"
-            onClick={() => {
-              clearMessage();
-              setModalType('category');
-              setIsModalOpen(true);
-            }}
-            className="margin-bottom-4"
-          >
-            Add custom category
-          </Button>
-          <Button
-            type="button"
-            onClick={() => {
-              clearMessage();
-              setModalType('milestone');
-              setIsModalOpen(true);
-            }}
-            className="margin-bottom-4"
-          >
-            Add custom milestone
-          </Button>
-        </div>
-      </div>
-
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
           <h1 className="margin-bottom-0 margin-top-5 line-height-large">
@@ -204,6 +164,44 @@ const MTOHome = () => {
             />
           </div>
         </Header>
+
+        <div className="display-none2 margin-top-4">
+          <MTOModal
+            isOpen={isModalOpen}
+            closeModal={() => setIsModalOpen(false)}
+            modalType={modalType}
+          />
+          <div className="width-fit-content">
+            {/* <div
+            style={{ paddingTop: '2px', paddingBottom: '2px' }}
+            className={classNames(
+              'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-secondary-dark'
+            )}
+          >
+            TEMPORARY
+          </div> */}
+            <Button
+              type="button"
+              onClick={() => {
+                clearMessage();
+                setModalType('category');
+                setIsModalOpen(true);
+              }}
+            >
+              Add custom category
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                clearMessage();
+                setModalType('milestone');
+                setIsModalOpen(true);
+              }}
+            >
+              Add custom milestone
+            </Button>
+          </div>
+        </div>
 
         {isTablet && (
           <div className="maxw-mobile-lg">

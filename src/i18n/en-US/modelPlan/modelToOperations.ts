@@ -311,6 +311,10 @@ export const modelToOperationsMisc: Record<string, any> = {
     changeAnswer: 'Want to change your answer?',
     goToQuestion: 'Go to the question',
     added: 'Added',
+    noSuggestedHeading:
+      'There are no suggested milestones that match your search.',
+    noSuggestedDescription:
+      'MINT hasn’t suggested any milestones for your model that match your search. You may also try checking <link1>all available milestones</link1>. As you and your team fill out more of your <link2>Model Plan</link2>, MINT may display suggested common milestones that match your search. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email1>MINTTeam@cms.hhs.gov</email1>.',
     facilitatedBy: {
       MODEL_TEAM: 'Model team',
       MODEL_LEAD: 'Model lead',

@@ -36,13 +36,15 @@ const MilestoneCard = ({
           <span className="text-base-dark">
             {t('milestoneLibrary.milestone')}
           </span>
-          <span className="padding-right-1 model-to-operations__milestone-tag">
-            <Icon.LightbulbOutline
-              className="margin-left-1"
-              style={{ top: '2px' }}
-            />{' '}
-            {t('milestoneLibrary.suggested')}
-          </span>
+          {milestone.isSuggested && (
+            <span className="padding-right-1 model-to-operations__milestone-tag">
+              <Icon.LightbulbOutline
+                className="margin-left-1"
+                style={{ top: '2px' }}
+              />{' '}
+              {t('milestoneLibrary.suggested')}
+            </span>
+          )}
         </div>
         <h3 className="line-height-normal margin-top-1">{milestone.name}</h3>
       </CardHeader>
@@ -67,6 +69,7 @@ const MilestoneCard = ({
         {!milestone.isAdded ? (
           <Button
             type="button"
+            outline
             className="margin-right-2"
             onClick={
               () => null

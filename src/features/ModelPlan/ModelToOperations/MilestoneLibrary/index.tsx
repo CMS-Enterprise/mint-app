@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -7,7 +7,7 @@ import {
   CardGroup,
   Grid,
   Icon,
-  Pagination
+  Link
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -15,6 +15,7 @@ import {
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -22,6 +23,7 @@ import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
 import TableResults from 'components/TableResults';
+import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MilestoneCard from '../_components/MilestoneCard';
@@ -42,8 +44,21 @@ const MilestoneLibrary = () => {
     }
   });
 
-  const milestones =
-    data?.modelPlan?.mtoMatrix?.commonMilestones || ([] as MilestoneCardType[]);
+  // TEMP only for demo
+  const milestones = useMemo(() => {
+    const ccc =
+      data?.modelPlan?.mtoMatrix?.commonMilestones ||
+      ([] as MilestoneCardType[]);
+
+    const abc = JSON.parse(JSON.stringify(ccc));
+
+    if (abc.length > 0) {
+      abc[0].isSuggested = true;
+      abc[0].isAdded = true;
+    }
+
+    return abc;
+  }, [data?.modelPlan?.mtoMatrix?.commonMilestones]);
 
   if (error) {
     return <NotFoundPartial />;
@@ -98,6 +113,8 @@ const searchMilestones = (
   );
 };
 
+type MilestoneViewType = 'suggested' | 'all';
+
 const MilstoneCardGroup = ({
   milestones
 }: {
@@ -105,48 +122,113 @@ const MilstoneCardGroup = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const { modelID } = useParams<{ modelID: string }>();
+
   const history = useHistory();
 
-  const [selectedType, setSelectedType] = useState<'suggested' | 'all'>('all');
+  // Query parameters
+  const params = new URLSearchParams(history.location.search);
+  const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
+  let viewParam: MilestoneViewType = 'suggested';
 
-  const [addedMilestonesHidden, setAddedMilestonesHidden] = useState(false);
+  if (params.get('view') && params.get('view') === 'all') {
+    viewParam = 'all';
+  }
 
-  // Filter the milestones based on the isAdded field value
-  const filteredMilestones = addedMilestonesHidden
-    ? milestones.filter(milestone => milestone.isAdded)
-    : milestones;
+  const addedMilestones = useMemo(
+    () => milestones.filter(milestone => milestone.isAdded),
+    [milestones]
+  );
+
+  const suggestedMilestones = useMemo(
+    () =>
+      milestones.filter(milestone => {
+        if (addedMilestonesHidden) {
+          return milestone.isSuggested && !milestone.isAdded;
+        }
+        return milestone.isSuggested;
+      }),
+    [milestones, addedMilestonesHidden]
+  );
+
+  // Filter the milestones based on the Hide added milestones checkbox
+  const milestonesNotAdded = useMemo(
+    () =>
+      milestones.filter(milestone => {
+        if (addedMilestonesHidden) {
+          return !milestone.isAdded;
+        }
+        return milestone;
+      }),
+    [milestones, addedMilestonesHidden]
+  );
+
+  const { allItems, search, pagination, pageSize } = useSearchSortPagination<
+    MilestoneCardType,
+    any
+  >({
+    items: milestones,
+    filterFunction: useMemo(() => searchMilestones, []),
+    sortFunction: (items: MilestoneCardType[], sort: any) => items,
+    sortOptions: [
+      {
+        value: '',
+        label: ''
+      }
+    ],
+    defaultItemsPerPage: 6
+  });
+
+  const currentSuggestedMilestones = useMemo(
+    () =>
+      allItems.filter(milestone => {
+        if (addedMilestonesHidden) {
+          return milestone.isSuggested && !milestone.isAdded;
+        }
+        return milestone.isSuggested;
+      }),
+    [allItems, addedMilestonesHidden]
+  );
+
+  const currentNotAddedMilestones = useMemo(
+    () =>
+      allItems.filter(milestone => {
+        if (addedMilestonesHidden) {
+          return !milestone.isAdded;
+        }
+        return milestone;
+      }),
+    [allItems, addedMilestonesHidden]
+  );
 
   // Filter the milestones based on the isSuggested field value
-  const selectedMilestones =
-    selectedType === 'suggested'
-      ? filteredMilestones.filter(milestone => milestone.isSuggested)
-      : filteredMilestones;
-
-  const { currentItems, pagination, search, pageSize } =
-    useSearchSortPagination<MilestoneCardType, any>({
-      items: selectedMilestones,
-      filterFunction: searchMilestones,
-      sortFunction: (items: MilestoneCardType[]) => items,
-      sortOptions: [
-        {
-          value: '',
-          label: ''
-        }
-      ],
-      defaultItemsPerPage: 6
-    });
+  const selectedMilestones = useMemo(
+    () =>
+      viewParam === 'suggested'
+        ? currentSuggestedMilestones
+        : currentNotAddedMilestones,
+    [currentNotAddedMilestones, currentSuggestedMilestones, viewParam]
+  );
 
   const { query, setQuery, rowLength } = search;
 
+  const { currentPage, pageCount } = pagination;
+
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
-  const {
-    currentPage,
-    handleNext,
-    handlePageNumber,
-    handlePrevious,
-    pageCount
-  } = pagination;
+  const { currentItems, Pagination: PaginationComponent } = usePagination<
+    MilestoneCardType[]
+  >({
+    items: selectedMilestones,
+    itemsPerPage,
+    withQueryParams: 'page',
+    showPageIfOne: true
+  });
+
+  useEffect(() => {
+    params.set('page', '1');
+    history.push({ search: params.toString() });
+  }, [viewParam]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="milestone-card-group">
@@ -179,21 +261,30 @@ const MilstoneCardGroup = ({
             <ButtonGroup type="segmented" className="margin-right-3">
               <Button
                 type="button"
-                outline={selectedType !== 'suggested'}
-                onClick={() => setSelectedType('suggested')}
+                outline={viewParam !== 'suggested'}
+                onClick={() => {
+                  params.set('view', 'suggested');
+                  history.push({ search: params.toString() });
+                }}
               >
                 {t('milestoneLibrary.suggestedMilestones', {
-                  count: milestones.filter(milestone => milestone.isSuggested)
-                    .length
+                  count: query
+                    ? currentSuggestedMilestones.length
+                    : suggestedMilestones.length
                 })}
               </Button>
               <Button
                 type="button"
-                outline={selectedType !== 'all'}
-                onClick={() => setSelectedType('all')}
+                outline={viewParam !== 'all'}
+                onClick={() => {
+                  params.set('view', 'all');
+                  history.push({ search: params.toString() });
+                }}
               >
                 {t('milestoneLibrary.allMilestones', {
-                  count: milestones.length
+                  count: query
+                    ? currentNotAddedMilestones.length
+                    : milestonesNotAdded.length
                 })}
               </Button>
             </ButtonGroup>
@@ -202,53 +293,81 @@ const MilstoneCardGroup = ({
               id="hide-added-milestones"
               name="hide-added-milestones"
               label={t('milestoneLibrary.hideAdded', {
-                count: milestones.filter(milestone => milestone.isAdded).length
+                count: addedMilestones.length
               })}
               value="true"
               checked={addedMilestonesHidden}
               onBlur={() => null}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setAddedMilestonesHidden(!addedMilestonesHidden);
+                params.set(
+                  'hide-added-milestones',
+                  addedMilestonesHidden ? 'false' : 'true'
+                );
+                history.push({ search: params.toString() });
               }}
             />
           </Grid>
         </Grid>
       </div>
 
-      <CardGroup className="padding-x-1">
-        <Grid desktop={{ col: 12 }}>
-          <Grid row gap={2}>
-            {currentItems.map(milestone => (
-              <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
-                <MilestoneCard key={milestone.key} milestone={milestone} />
-              </Grid>
-            ))}
+      {viewParam === 'suggested' && suggestedMilestones.length === 0 ? (
+        <Alert
+          type="info"
+          heading={t('milestoneLibrary.noSuggestedHeading')}
+          className="mint-body-normal"
+        >
+          <Trans
+            t={t}
+            i18nKey="milestoneLibrary.noSuggestedDescription"
+            components={{
+              link1: (
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
+                >
+                  {' '}
+                </UswdsReactLink>
+              ),
+              link2: (
+                <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
+                  {' '}
+                </UswdsReactLink>
+              ),
+              email1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+            }}
+          />
+        </Alert>
+      ) : (
+        <CardGroup className="padding-x-1">
+          <Grid desktop={{ col: 12 }}>
+            <Grid row gap={2}>
+              {currentItems.map(milestone => (
+                <Grid
+                  desktop={{ col: 4 }}
+                  tablet={{ col: 6 }}
+                  key={milestone.key}
+                >
+                  <MilestoneCard milestone={milestone} />
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
-      </CardGroup>
+        </CardGroup>
+      )}
 
       {/* Pagination */}
 
       <div className="display-flex">
-        {milestones.length > itemsPerPage && pageCount > 1 && (
-          <Pagination
-            pathname={history.location.pathname}
-            currentPage={currentPage}
-            maxSlots={7}
-            onClickNext={handleNext}
-            onClickPageNumber={handlePageNumber}
-            onClickPrevious={handlePrevious}
-            totalPages={pageCount}
+        {currentItems.length > 0 && pageCount > 0 && <>{PaginationComponent}</>}
+
+        {currentItems.length > 0 && (
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={itemsPerPage}
+            setPageSize={setItemsPerPage}
+            valueArray={[6, 9, 'all']}
+            suffix={t('milestones')}
           />
         )}
-
-        <TablePageSize
-          className="margin-left-auto desktop:grid-col-auto"
-          pageSize={itemsPerPage}
-          setPageSize={setItemsPerPage}
-          valueArray={[6, 9, 'all']}
-          suffix={t('milestones')}
-        />
       </div>
     </div>
   );
