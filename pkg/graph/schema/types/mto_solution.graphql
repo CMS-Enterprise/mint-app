@@ -13,14 +13,14 @@ enum MTOSolutionStatus {
 type MTOSolution {
   id: UUID!
   name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  facilitatedBy: MTOFacilitator
+  facilitatedBy:  [MTOFacilitator!]
   neededBy: Time
   status: MTOSolutionStatus!
   riskIndicator: MTORiskIndicator
   key: MTOCommonSolutionKey
   type: MTOSolutionType # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  pocName: String!
-  pocEmail: String!
+  pocName: String #TODO (mto) if there is a default value for ones sourced from common solutions, these can be reverted back to String! Otherwise, we should leave nullable
+  pocEmail: String
 
   #Meta Data
   createdBy: UUID!
@@ -38,7 +38,7 @@ type MTOSolution {
 
 input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
   name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  facilitatedBy: MTOFacilitator
+  facilitatedBy:  [MTOFacilitator!]
   neededBy: Time
   status: MTOSolutionStatus
   riskIndicator: MTORiskIndicator
@@ -47,9 +47,9 @@ input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Mutation {
-  createMTOSolutionCustom(modelPlanID: UUID!, solutionType: MTOSolutionType!, facilitatedBy: MTOFacilitator!, name: String!, pocName: String!, pocEmail: String!): MTOSolution!
+  createMTOSolutionCustom(modelPlanID: UUID!, solutionType: MTOSolutionType!,  name: String!, pocName: String!, pocEmail: String!): MTOSolution!
   @hasRole(role: MINT_USER)
-  createMTOSolutionCommon(modelPlanID: UUID!, key: MTOCommonSolutionKey): MTOSolution!
+  createMTOSolutionCommon(modelPlanID: UUID!, key: MTOCommonSolutionKey!): MTOSolution!
   @hasRole(role: MINT_USER)
   updateMTOSolution(id: UUID!, changes: MTOSolutionChanges!): MTOSolution!
   @hasRole(role: MINT_USER)
