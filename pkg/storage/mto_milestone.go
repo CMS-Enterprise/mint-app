@@ -12,6 +12,20 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
+// MTOMilestoneGetByIDsLoader returns all milestones by the provided ids
+func MTOMilestoneGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOMilestone, error) {
+
+	args := map[string]interface{}{
+		"ids": pq.Array(ids),
+	}
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+
+}
+
 // MTOMilestoneGetByModelPlanIDLoader returns all top level categories for a slice of model plan ids
 func MTOMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOMilestone, error) {
 

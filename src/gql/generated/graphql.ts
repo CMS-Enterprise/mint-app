@@ -3781,6 +3781,7 @@ export type Query = {
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoMilestone: MtoMilestone;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3846,6 +3847,12 @@ export type QueryModelPlanCollectionArgs = {
 /** Query definition for the schema */
 export type QueryModelPlansByOperationalSolutionKeyArgs = {
   operationalSolutionKey: OperationalSolutionKey;
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 

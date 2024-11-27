@@ -63,3 +63,9 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
   #TODO (mto) will we need any other mutations here? Can we ever delete?
 }
+
+extend type Query {
+  mtoMilestone(id: UUID!): MTOMilestone!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+}
+

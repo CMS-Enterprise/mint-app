@@ -19,13 +19,31 @@ type mtoMilestoneLoaders struct {
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
 	// ByModelPlanIDAndMTOCategoryID Gets a list of mto Milestone records associated with a model plan a specific category
 	ByModelPlanIDAndMTOCategoryID LoaderWrapper[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone]
-	// TODO: (mto) do we need to get by ID ever? By anything else?
+	// By ID returns an MTOCategory by it's id. Note, it could actually be a subcategory as well, but it is returned as a regular category
+	ByID LoaderWrapper[uuid.UUID, *models.MTOMilestone]
 }
 
 // MTOMilestone is the singleton instance of all LoaderWrappers related to MTO Milestones
 var MTOMilestone = &mtoMilestoneLoaders{
 	ByModelPlanID:                 NewLoaderWrapper(batchMTOMilestoneGetByModelPlanID),
 	ByModelPlanIDAndMTOCategoryID: NewLoaderWrapper(batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID),
+	ByID:                          NewLoaderWrapper(batchMTOMilestoneGetByID),
+}
+
+func batchMTOMilestoneGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOMilestone] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOMilestone](ids, err)
+	}
+	data, err := storage.MTOMilestoneGetByIDsLoader(loaders.DataReader.Store, logger, ids)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOMilestone](ids, err)
+	}
+	getKeyFunc := func(data *models.MTOMilestone) uuid.UUID {
+		return data.ID
+	}
+	return oneToOneDataLoader(ids, data, getKeyFunc)
 }
 
 func batchMTOMilestoneGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOMilestone] {

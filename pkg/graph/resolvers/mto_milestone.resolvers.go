@@ -64,6 +64,11 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes)
 }
 
+// MtoMilestone is the resolver for the mtoMilestone field.
+func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
+	return MTOMilestoneGetByIDLOADER(ctx, id)
+}
+
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.
 func (r *Resolver) MTOMilestone() generated.MTOMilestoneResolver { return &mTOMilestoneResolver{r} }
 
