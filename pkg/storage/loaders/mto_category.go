@@ -19,6 +19,8 @@ type mtoCategoryLoaders struct {
 	AndSubCategoriesByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCategory]
 	// ByModelPlanID Gets a list of mto category records at the parent level associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCategory]
+	// By ID returns an MTOCategory by it's id. Note, it could actually be a subcategory as well, but it is returned as a regular category
+	ByID LoaderWrapper[uuid.UUID, *models.MTOCategory]
 }
 
 // mtoSubcategoryLoaders is a struct that holds LoaderWrappers related to MTO Subcategories
@@ -31,11 +33,28 @@ type mtoSubcategoryLoaders struct {
 var MTOCategory = &mtoCategoryLoaders{
 	ByModelPlanID:                 NewLoaderWrapper(batchMTOCategoryGetByModelPlanID),
 	AndSubCategoriesByModelPlanID: NewLoaderWrapper(batchMTOCategoryAndSubCategoriesByModelPlanID),
+	ByID:                          NewLoaderWrapper(batchMTOCategoryGetByID),
 }
 
 // MTOSubcategory is the singleton instance of all LoaderWrappers related to MTO Categories
 var MTOSubcategory = &mtoSubcategoryLoaders{
 	ByParentID: NewLoaderWrapper(batchMTOSubcategoryGetByModelPlanID),
+}
+
+func batchMTOCategoryGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCategory] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOCategory](ids, err)
+	}
+	data, err := storage.MTOCategoryGetByIDsLoader(loaders.DataReader.Store, logger, ids)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOCategory](ids, err)
+	}
+	getKeyFunc := func(data *models.MTOCategory) uuid.UUID {
+		return data.ID
+	}
+	return oneToOneDataLoader(ids, data, getKeyFunc)
 }
 
 func batchMTOCategoryGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOCategory] {

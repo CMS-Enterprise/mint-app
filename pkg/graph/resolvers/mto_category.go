@@ -140,17 +140,38 @@ func MTOSubcategoryGetByParentIDLoader(ctx context.Context, modelPlanID uuid.UUI
 	return append(dbSubcategories, models.MTOUncategorizedSubcategoryFromArray(modelPlanID, &parentID, dbSubcategories)), nil
 }
 
+func MTOCategoryGetByID(ctx context.Context, id uuid.UUID) (*models.MTOCategory, error) {
+	return loaders.MTOCategory.ByID.Load(ctx, id)
+}
+
 // MTOCategoriesGetByID returns the subcategory and parent category information given an mto category id
 // It will return uncategorized for nil values
 // We are not doing a larger SQL call that would return both objects, as that
 func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.UUID) (*models.MTOCategories, error) {
-	if id == nil {
-		return &models.MTOCategories{
-			Category:    *models.MTOUncategorized(modelPlanID, nil, 0),
-			SubCategory: *models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
-		}, nil
+	Categories := &models.MTOCategories{
+		Category:    *models.MTOUncategorized(modelPlanID, nil, 0),
+		SubCategory: *models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
 	}
-	// call loader to return this. It will take an id
+	if id == nil {
+		return Categories, nil
+	}
+	immediateCategory, err := MTOCategoryGetByID(ctx, *id)
+	if err != nil {
+		return nil, err
+	}
+	// Check if it is a parent category, if so early return without fetching parent
+	if immediateCategory.ParentID == nil {
+		Categories.Category = *immediateCategory
+		return Categories, nil
+	}
 
-	return nil, nil
+	// fetch the parent category
+	parentCategory, err := MTOCategoryGetByID(ctx, *immediateCategory.ParentID)
+	if err != nil {
+		return nil, err
+	}
+	Categories.SubCategory = *immediateCategory.ToSubcategory()
+	Categories.Category = *parentCategory
+
+	return Categories, nil
 }
