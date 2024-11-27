@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -137,4 +138,19 @@ func MTOSubcategoryGetByParentIDLoader(ctx context.Context, modelPlanID uuid.UUI
 	}
 	// return while adding an uncategorized record as well
 	return append(dbSubcategories, models.MTOUncategorizedSubcategoryFromArray(modelPlanID, &parentID, dbSubcategories)), nil
+}
+
+// MTOCategoriesGetByID returns the subcategory and parent category information given an mto category id
+// It will return uncategorized for nil values
+// We are not doing a larger SQL call that would return both objects, as that
+func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.UUID) (*models.MTOCategories, error) {
+	if id == nil {
+		return &models.MTOCategories{
+			Category:    *models.MTOUncategorized(modelPlanID, nil, 0),
+			SubCategory: *models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
+		}, nil
+	}
+	// call loader to return this. It will take an id
+
+	return nil, nil
 }

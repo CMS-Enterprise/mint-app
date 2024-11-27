@@ -1,8 +1,7 @@
 
-# TODO: Add a way to determine order of Categories and subcategories
 type MTOCategory {
   # DB Fields
-  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
+  id: UUID!
   name: String!
   position: Int!
 
@@ -14,13 +13,22 @@ type MTOCategory {
 
 type MTOSubcategory {
   # DB Fields
-  id: UUID! # TODO: If we handle "Uncategorized" as a real category, maybe it won't actually have an ID?
+  id: UUID!
   name: String!
   position: Int!
 
   # Custom Resolvers
   isUncategorized: Boolean!
   milestones: [MTOMilestone!]!
+}
+
+"""
+MTOCategories combines the concept of Category and Subcategory
+This allows it to be fetched mor conveniently in one resolver
+"""
+type MTOCategories {
+  category: MTOCategory!
+  subCategory: MTOSubcategory!
 }
 
 extend type Mutation {

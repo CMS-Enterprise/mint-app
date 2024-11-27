@@ -22,6 +22,12 @@ type MTOCategory struct {
 	ParentID *uuid.UUID `json:"parent_id" db:"parent_id"`
 }
 
+type MTOCategories struct {
+	// TODO (mto) should these fields be pointers? Technically they should never be null
+	Category    MTOCategory    `json:"category,omitempty"`
+	SubCategory MTOSubcategory `json:"subCategory,omitempty"`
+}
+
 func (m MTOCategory) GetPosition() int {
 	return m.Position
 }

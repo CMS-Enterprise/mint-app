@@ -716,6 +716,16 @@ export type LockableSectionLockStatusChanged = {
   lockStatus: LockableSectionLockStatus;
 };
 
+/**
+ * MTOCategories combines the concept of Category and Subcategory
+ * This allows it to be fetched mor conveniently in one resolver
+ */
+export type MtoCategories = {
+  __typename: 'MTOCategories';
+  category: MtoCategory;
+  subCategory: MtoSubcategory;
+};
+
 export type MtoCategory = {
   __typename: 'MTOCategory';
   id: Scalars['UUID']['output'];
@@ -890,7 +900,12 @@ export type MtoInfoTranslation = {
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
-  category: MtoCategory;
+  /**
+   * Category resolves relational category information.
+   * if a milestone is uncategorized, this struct will still return
+   * it will have a null value for both
+   */
+  categories: MtoCategories;
   commonMilestone?: Maybe<MtoCommonMilestone>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -912,7 +927,6 @@ export type MtoMilestone = {
   riskIndicator: MtoRiskIndicator;
   solutions: Array<MtoSolution>;
   status: MtoMilestoneStatus;
-  subCategory: MtoSubcategory;
 };
 
 export type MtoMilestoneChanges = {
