@@ -42,7 +42,7 @@ type MTOMilestone {
   #   Category: MTOCategory
   #   subCategory: MTOSubcategory
   # }
-  # TODO (mto) do we need to resolve category? Should we need to resolve it here? Also, 
+  # TODO (mto) do we need to resolve category? Should we need to resolve it here? Also,
   # category: UNION MTOCategory | MTOSubcategory ?
   category: MTOCategory!
   subCategory: MTOSubcategory!
@@ -53,7 +53,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   mtoCategoryID: UUID
   facilitatedBy: MTOFacilitator
   needBy: Time
-  status: MTOMilestoneStatus 
+  status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator
   isDraft: Boolean
 }
@@ -61,7 +61,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
 extend type Mutation {
   createMTOMilestoneCustom(modelPlanID: UUID!, name: String!, mtoCategoryID: UUID): MTOMilestone!
   @hasRole(role: MINT_USER)
-  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!): MTOMilestone!
+  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!, commonSolutions: [MTOCommonSolutionKey!]): MTOMilestone!
   @hasRole(role: MINT_USER)
   updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!): MTOMilestone!
   @hasRole(role: MINT_USER)

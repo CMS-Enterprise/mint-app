@@ -88,3 +88,18 @@ func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID)
 
 	return returned, nil
 }
+
+// MTOMilestoneSolutionLinkCreate creates a new MTO Milestone-Solution link in the database
+func MTOMilestoneSolutionLinkCreate(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	mtoMilestoneSolutionLink models.MTOMilestoneSolutionLink,
+) (*uuid.UUID, error) {
+
+	linkId, procErr := sqlutils.GetProcedure[uuid.UUID](np, sqlqueries.MTOMilestone.CreateMilestoneSolutionLink, mtoMilestoneSolutionLink)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue creating new MTO Milestone-Solution link: %w", procErr)
+	}
+
+	return linkId, nil
+}

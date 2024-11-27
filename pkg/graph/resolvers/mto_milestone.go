@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -37,9 +39,14 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 }
 
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
-func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOMilestoneCreateCommon(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonSolutions []models.MTOCommonSolutionKey,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -78,7 +85,50 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		}
 
 		// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
-		milestone := models.NewMTOMilestone(principalAccount.ID, nil, &commonMilestoneKey, modelPlanID, &finalCategoryID)
+		milestone := models.NewMTOMilestone(
+			principalAccount.ID,
+			nil,
+			&commonMilestoneKey,
+			modelPlanID,
+			&finalCategoryID,
+		)
+
+		keys := lo.Map(commonSolutions, func(commonSolutionKey models.MTOCommonSolutionKey, _ int) storage.MTOSolutionGetByModelPlanIDAndCommonSolutionKey {
+			return storage.MTOSolutionGetByModelPlanIDAndCommonSolutionKey{
+				ModelPlanID:          modelPlanID,
+				MTOCommonSolutionKey: commonSolutionKey,
+			}
+		})
+
+		solutions, err := storage.MTOSolutionGetByModelPlanIDAndCommonSolutionKeyLoader(tx, logger, keys)
+
+		for i, solution := range solutions {
+			if solution == nil {
+				// TODO: Can this be moved upstream as part of the loader?
+				// TODO: Is there another more proper way to do this?
+				// TODO: Are non-existent solutions returned as nil? Can they be?
+				solution, err = MTOSolutionCreateCustom(
+					logger,
+					principal,
+					store, // TODO: Respect the sql transaction
+					modelPlanID,
+					&keys[i].MTOCommonSolutionKey,
+					"",
+					models.MTOSolutionTypeOther,
+					models.MTOFacilitatorOther,
+					nil,
+					"",              // TODO: Merge in nillable PR and set nil
+					"tmp@tmp.email", // TODO: Merge in nillable PR and set nil
+				)
+			}
+
+			mtoMilestoneSolutionLink := models.NewMTOMilestoneSolutionLink(principal.Account().ID, milestone.ID, solution.ID)
+			_, milestoneSolutionLinkErr := storage.MTOMilestoneSolutionLinkCreate(tx, logger, *mtoMilestoneSolutionLink)
+			if milestoneSolutionLinkErr != nil {
+				logger.Error("failed to create milestone solution link when creating milestone from library", zap.Error(err))
+				return nil, milestoneSolutionLinkErr
+			}
+		}
 
 		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
 			return nil, err

@@ -101,3 +101,30 @@ func MTOSolutionUpdate(
 	}
 	return returned, nil
 }
+
+// MTOSolutionGetByModelPlanIDAndCommonSolutionKeyLoader returns all solutions for a slice of model plan ids and common solution keys
+func MTOSolutionGetByModelPlanIDAndCommonSolutionKeyLoader(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	keys []MTOSolutionGetByModelPlanIDAndCommonSolutionKey,
+) ([]*models.MTOSolution, error) {
+
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+
+	returned, err := sqlutils.SelectProcedure[models.MTOSolution](
+		np,
+		sqlqueries.MTOSolution.GetByModelPlanIDAndCommonSolutionKeyLoader,
+		arg,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}

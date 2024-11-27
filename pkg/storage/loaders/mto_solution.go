@@ -18,12 +18,16 @@ type mtoSolutionLoaders struct {
 	ByID LoaderWrapper[uuid.UUID, *models.MTOSolution]
 	// ByModelPlanID Gets a list of mto Solution records associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOSolution]
+
+	// ByModelPlanIDAndCommonKeys Gets a list of mto Solution records associated with a model plan by the supplied model plan id and common keys.
+	ByModelPlanIDAndCommonKeys LoaderWrapper[uuid.UUID, []*models.MTOSolution]
 }
 
 // MTOSolution is the singleton instance of all LoaderWrappers related to MTO Solutions
 var MTOSolution = &mtoSolutionLoaders{
 	ByID:          NewLoaderWrapper(batchMTOSolutionGetByID),
 	ByModelPlanID: NewLoaderWrapper(batchMTOSolutionGetByModelPlanID),
+	// ByModelPlanIDAndCommonKeys: NewLoaderWrapper(batchMTOSolutionGetByModelPlanIDAndCommonKeys),
 }
 
 func batchMTOSolutionGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOSolution] {
@@ -63,3 +67,22 @@ func batchMTOSolutionGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 	// implement one to many
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 }
+
+/*func batchMTOSolutionGetByModelPlanIDAndCommonKeys(ctx context.Context, modelPlanID uuid.UUID, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[*models.MTOSolution] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[models.MTOCommonSolutionKey, *models.MTOSolution](commonSolutionKeys, err)
+	}
+
+	data, err := storage.MTOSolutionGetByModelPlanIDAndCommonKeysLoader(loaders.DataReader.Store, logger, modelPlanID, commonSolutionKeys)
+	if err != nil {
+		return errorPerEachKey[models.MTOCommonSolutionKey, *models.MTOSolution](commonSolutionKeys, err)
+	}
+	getKeyFunc := func(data *models.MTOSolution) models.MTOCommonSolutionKey {
+		return data.CommonSolutionKey
+	}
+
+	// implement one to many
+	return oneToManyDataLoader(commonSolutionKeys, data, getKeyFunc)
+}*/

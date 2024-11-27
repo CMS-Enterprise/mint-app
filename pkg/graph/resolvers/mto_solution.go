@@ -121,3 +121,14 @@ func MTOSolutionGetByModelPlanIDLOADER(
 	// TODO look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOSolution.ByModelPlanID.Load(ctx, modelPlanID)
 }
+
+/*func MTOSolutionGetByModelPlanIDAndCommonKeysLOADER(
+	ctx context.Context,
+	modelPlanID uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+) ([]*models.MTOSolution, error) {
+	return loaders.MTOSolution.ByModelPlanIDAndCommonKeys.Load(ctx, storage.MTOSolutionByModelPlanAndCommonKeys{
+		ModelPlanID:        modelPlanID,
+		CommonSolutionKeys: commonSolutionKeys,
+	})
+}*/
