@@ -50,7 +50,6 @@ func MTOSolutionCreateCustom(
 	commonSolutionKey *models.MTOCommonSolutionKey,
 	name string,
 	solutionType models.MTOSolutionType,
-	facilitatedBy models.MTOFacilitator,
 	neededBy *time.Time,
 	pocName string,
 	pocEmail string,
@@ -59,18 +58,16 @@ func MTOSolutionCreateCustom(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
 		commonSolutionKey,
 		&name,
 		&solutionType,
-		facilitatedBy,
 		neededBy,
-		pocName,
-		pocEmail,
 		principalAccount.ID,
 	)
+	mtoSolution.PocName = &pocName
+	mtoSolution.PocEmail = &pocEmail
 
 	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
 	if err != nil {
@@ -81,27 +78,23 @@ func MTOSolutionCreateCustom(
 }
 
 func MTOSolutionCreateCommon(
+	ctx context.Context,
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
 	modelPlanID uuid.UUID,
-	commonSolutionKey *models.MTOCommonSolutionKey,
+	commonSolutionKey models.MTOCommonSolutionKey,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-
-	// TODO: Populate data from mto common solution
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
-		commonSolutionKey,
-		nil,
-		nil,
-		models.MTOFacilitatorOther,
-		nil,
-		"test_poc_name_empty",
-		"empty@email.test",
+		&commonSolutionKey,
+		nil, // name is not stored for a solution from the common library
+		nil, // type is not stored for a solution from the common library
+		nil, // needed by is not provided when creating a custom solution. It must be updated later
 		principalAccount.ID,
 	)
 

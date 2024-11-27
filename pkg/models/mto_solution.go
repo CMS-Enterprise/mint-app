@@ -10,15 +10,15 @@ type MTOSolution struct {
 	baseStruct
 	modelPlanRelation
 
-	Name          *string               `json:"name" db:"name"`
-	FacilitatedBy MTOFacilitator        `json:"facilitatedBy" db:"facilitated_by"`
-	NeededBy      *time.Time            `json:"neededBy" db:"needed_by"`
-	Status        MTOSolutionStatus     `json:"status" db:"status"`
-	RiskIndicator MTORiskIndicator      `json:"riskIndicator" db:"risk_indicator"`
-	Key           *MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
-	Type          *MTOSolutionType      `json:"type" db:"type"`
-	PocName       string                `json:"pocName" db:"poc_name"`
-	PocEmail      string                `json:"pocEmail" db:"poc_email"`
+	Name          *string                    `json:"name" db:"name"`
+	FacilitatedBy *EnumArray[MTOFacilitator] `json:"facilitatedBy" db:"facilitated_by"`
+	NeededBy      *time.Time                 `json:"neededBy" db:"needed_by"`
+	Status        MTOSolutionStatus          `json:"status" db:"status"`
+	RiskIndicator MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`
+	Key           *MTOCommonSolutionKey      `json:"key" db:"mto_common_solution_key"`
+	Type          *MTOSolutionType           `json:"type" db:"type"`
+	PocName       *string                    `json:"pocName" db:"poc_name"`
+	PocEmail      *string                    `json:"pocEmail" db:"poc_email"`
 }
 
 // MTOSolutionStatus represents the status of an MTO Solution
@@ -45,10 +45,7 @@ func NewMTOSolution(
 	commonSolutionKey *MTOCommonSolutionKey,
 	name *string,
 	solutionType *MTOSolutionType,
-	facilitatedBy MTOFacilitator,
 	neededBy *time.Time,
-	pocName string,
-	pocEmail string,
 	createdBy uuid.UUID,
 ) *MTOSolution {
 	return &MTOSolution{
@@ -57,11 +54,8 @@ func NewMTOSolution(
 		Key:               commonSolutionKey,
 		Name:              name,
 		Type:              solutionType,
-		FacilitatedBy:     facilitatedBy,
 		NeededBy:          neededBy,
 		Status:            MTOSolutionStatusNotStarted,
 		RiskIndicator:     MTORiskIndicatorOnTrack,
-		PocName:           pocName,
-		PocEmail:          pocEmail,
 	}
 }

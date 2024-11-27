@@ -18,12 +18,16 @@ CREATE TABLE mto_solution(
     name ZERO_STRING,
     -- we allow null because this is will be from the commonSolution table if it exists
     type MTO_SOLUTION_TYPE,
-    facilitated_by MTO_FACILITATOR,
+    facilitated_by MTO_FACILITATOR[],
     needed_by TIMESTAMP WITH TIME ZONE,
     status MTO_SOLUTION_STATUS NOT NULL,
     risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
-    poc_name ZERO_STRING NOT NULL,
-    poc_email EMAIL NOT NULL,
+    -- we allow null because this is is only required for custom solutions
+    poc_name ZERO_STRING,
+    -- we allow null because this is is only required for custom solutions
+    poc_email EMAIL,
+    -- TODO (mto) verify that poc information should be nullable. Also, confirm if a solution from a common solution will be allowed to edit POC info
+    -- if poc info is not editable for these cases, a constraint should be introduced to not allow these to be filled out
 
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

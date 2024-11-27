@@ -27,7 +27,7 @@ export type MilestoneType = {
   id: string;
   riskIndicator: MtoRiskIndicator;
   name: string;
-  facilitatedBy: MtoFacilitator | null;
+  facilitatedBy: MtoFacilitator[] | null;
   solutions: string[];
   needBy: string | null;
   status: MtoMilestoneStatus;
@@ -192,9 +192,11 @@ export const columns: ColumnType[] = [
       if (!row.facilitatedBy) return <></>;
       return (
         <>
-          {i18next.t(
-            `modelToOperationsMisc.facilitatedBy.${row.facilitatedBy}`
-          )}
+          {row.facilitatedBy
+            .map(facilitator =>
+              i18next.t(`modelToOperationsMisc:facilitatedBy.${facilitator}`)
+            )
+            .join(', ')}
         </>
       );
     }

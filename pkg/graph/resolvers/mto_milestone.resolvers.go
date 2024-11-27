@@ -15,6 +15,14 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// FacilitatedBy is the resolver for the facilitatedBy field.
+func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
+	if obj.FacilitatedBy == nil {
+		return nil, nil
+	}
+	return *obj.FacilitatedBy, nil
+}
+
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
 	if obj.Key != nil {
