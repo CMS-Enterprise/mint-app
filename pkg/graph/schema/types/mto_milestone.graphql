@@ -18,7 +18,7 @@ type MTOMilestone {
   This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
   """
   mtoCategoryID: UUID
-  facilitatedBy: MTOFacilitator
+  facilitatedBy: [MTOFacilitator!]
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
@@ -51,7 +51,7 @@ type MTOMilestone {
 input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   name: String # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
   mtoCategoryID: UUID
-  facilitatedBy: MTOFacilitator
+  facilitatedBy: [MTOFacilitator!]
   needBy: Time
   status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator

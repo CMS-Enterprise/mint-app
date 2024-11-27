@@ -39,11 +39,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 }
 
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
-func MTOMilestoneCreateCommon(
-	ctx context.Context,
-	logger *zap.Logger,
-	principal authentication.Principal,
-	store *storage.Store,
+func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
 	commonSolutions []models.MTOCommonSolutionKey,
@@ -92,6 +88,7 @@ func MTOMilestoneCreateCommon(
 			modelPlanID,
 			&finalCategoryID,
 		)
+		milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
 
 		keys := lo.Map(commonSolutions, func(commonSolutionKey models.MTOCommonSolutionKey, _ int) storage.MTOSolutionGetByModelPlanIDAndCommonSolutionKey {
 			return storage.MTOSolutionGetByModelPlanIDAndCommonSolutionKey{
@@ -115,7 +112,6 @@ func MTOMilestoneCreateCommon(
 					&keys[i].MTOCommonSolutionKey,
 					"",
 					models.MTOSolutionTypeOther,
-					models.MTOFacilitatorOther,
 					nil,
 					"",              // TODO: Merge in nillable PR and set nil
 					"tmp@tmp.email", // TODO: Merge in nillable PR and set nil
