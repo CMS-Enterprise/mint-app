@@ -45,20 +45,12 @@ const MilestoneLibrary = () => {
   });
 
   // TEMP only for demo
-  const milestones = useMemo(() => {
-    const ccc =
+  const milestones = useMemo(
+    () =>
       data?.modelPlan?.mtoMatrix?.commonMilestones ||
-      ([] as MilestoneCardType[]);
-
-    const abc = JSON.parse(JSON.stringify(ccc));
-
-    if (abc.length > 0) {
-      abc[0].isSuggested = true;
-      abc[0].isAdded = true;
-    }
-
-    return abc;
-  }, [data?.modelPlan?.mtoMatrix?.commonMilestones]);
+      ([] as MilestoneCardType[]),
+    [data?.modelPlan?.mtoMatrix?.commonMilestones]
+  );
 
   if (error) {
     return <NotFoundPartial />;
@@ -375,38 +367,42 @@ const MilstoneCardGroup = ({
           />
         </Alert>
       ) : (
-        <CardGroup className="padding-x-1">
-          <Grid desktop={{ col: 12 }}>
-            <Grid row gap={2}>
-              {currentItems.map(milestone => (
-                <Grid
-                  desktop={{ col: 4 }}
-                  tablet={{ col: 6 }}
-                  key={milestone.key}
-                >
-                  <MilestoneCard milestone={milestone} />
-                </Grid>
-              ))}
+        <>
+          <CardGroup className="padding-x-1">
+            <Grid desktop={{ col: 12 }}>
+              <Grid row gap={2}>
+                {currentItems.map(milestone => (
+                  <Grid
+                    desktop={{ col: 4 }}
+                    tablet={{ col: 6 }}
+                    key={milestone.key}
+                  >
+                    <MilestoneCard milestone={milestone} />
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
-          </Grid>
-        </CardGroup>
+          </CardGroup>
+
+          {/* Pagination */}
+
+          <div className="display-flex flex-wrap">
+            {currentItems.length > 0 && pageCount > 0 && (
+              <>{PaginationComponent}</>
+            )}
+
+            {currentItems.length > 0 && (
+              <TablePageSize
+                className="margin-left-auto desktop:grid-col-auto"
+                pageSize={itemsPerPage}
+                setPageSize={setItemsPerPage}
+                valueArray={[6, 9, 'all']}
+                suffix={t('milestones')}
+              />
+            )}
+          </div>
+        </>
       )}
-
-      {/* Pagination */}
-
-      <div className="display-flex flex-wrap">
-        {currentItems.length > 0 && pageCount > 0 && <>{PaginationComponent}</>}
-
-        {currentItems.length > 0 && (
-          <TablePageSize
-            className="margin-left-auto desktop:grid-col-auto"
-            pageSize={itemsPerPage}
-            setPageSize={setItemsPerPage}
-            valueArray={[6, 9, 'all']}
-            suffix={t('milestones')}
-          />
-        )}
-      </div>
     </div>
   );
 };
