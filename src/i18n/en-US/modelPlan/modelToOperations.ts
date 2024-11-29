@@ -172,6 +172,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOdescription: 'Choose an option below to get started.',
   returnToCollaboration: 'Return to model collaboration area',
+  returnToMTO: 'Return to model-to-operations matrix',
   startWithCategories: 'Start with categories or templates',
   aboutTemplates: 'About templates',
   aboutTemplatesDescription:
@@ -315,6 +316,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       'There are no suggested milestones that match your search.',
     noSuggestedDescription:
       'MINT hasn’t suggested any milestones for your model that match your search. You may also try checking <link1>all available milestones</link1>. As you and your team fill out more of your <link2>Model Plan</link2>, MINT may display suggested common milestones that match your search. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email1>MINTTeam@cms.hhs.gov</email1>.',
+    dontSeeMilestone: 'Don’t see a milestone you need?',
+    checkMilestones:
+      'Check <link1>all available milestones</link1> or <button1>add a custom milestone</button1>.',
+    addCustomMilestone: 'Add a custom milestone',
     facilitatedBy: {
       MODEL_TEAM: 'Model team',
       MODEL_LEAD: 'Model lead',

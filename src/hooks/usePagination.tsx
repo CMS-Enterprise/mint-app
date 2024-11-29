@@ -17,6 +17,11 @@ type PaginationProps = {
   showPageIfOne?: boolean; // Show page component even if there is only one page
 } & JSX.IntrinsicElements['div'];
 
+type PaginationState = {
+  currentPage: number;
+  pageCount: number;
+};
+
 // Takes in default props for Truss' Pagination component, items to paginates and returns the current items and the Pagination component
 const usePagination = <T extends any[]>({
   className,
@@ -30,6 +35,7 @@ const usePagination = <T extends any[]>({
   showPageIfOne
 }: PaginationProps): {
   currentItems: T;
+  pagination: PaginationState;
   Pagination: JSX.Element;
   Results: JSX.Element;
 } => {
@@ -132,6 +138,10 @@ const usePagination = <T extends any[]>({
 
   return {
     currentItems: currentItems as T,
+    pagination: {
+      currentPage: currentPageNum,
+      pageCount
+    },
     Pagination: (
       <div className={classNames(className)}>
         {(pageCount > 1 || (pageCount === 1 && showPageIfOne)) && (

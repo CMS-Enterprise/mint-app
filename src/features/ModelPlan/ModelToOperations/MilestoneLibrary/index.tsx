@@ -85,12 +85,12 @@ const MilestoneLibrary = () => {
 
       <div className="margin-bottom-6">
         <UswdsReactLink
-          to={`/models/${modelID}/collaboration-area`}
-          data-testid="return-to-collaboration"
+          to={`/models/${modelID}/collaboration-area/model-to-operations/matrix`}
+          data-testid="return-to-mto"
         >
           <span>
             <Icon.ArrowBack className="top-3px margin-right-1" />
-            {t('returnToCollaboration')}
+            {t('returnToMTO')}
           </span>
         </UswdsReactLink>
       </div>
@@ -163,7 +163,7 @@ const MilstoneCardGroup = ({
     [milestones, addedMilestonesHidden]
   );
 
-  const { allItems, search, pagination, pageSize } = useSearchSortPagination<
+  const { allItems, search, pageSize } = useSearchSortPagination<
     MilestoneCardType,
     any
   >({
@@ -212,13 +212,13 @@ const MilstoneCardGroup = ({
 
   const { query, setQuery, rowLength } = search;
 
-  const { currentPage, pageCount } = pagination;
-
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
-  const { currentItems, Pagination: PaginationComponent } = usePagination<
-    MilestoneCardType[]
-  >({
+  const {
+    currentItems,
+    Pagination: PaginationComponent,
+    pagination: { currentPage, pageCount }
+  } = usePagination<MilestoneCardType[]>({
     items: selectedMilestones,
     itemsPerPage,
     withQueryParams: 'page',
@@ -251,13 +251,16 @@ const MilstoneCardGroup = ({
                 globalFilter={query}
                 pageIndex={currentPage - 1}
                 pageSize={itemsPerPage}
-                filteredRowLength={currentItems.length}
-                rowLength={rowLength}
+                filteredRowLength={rowLength}
+                rowLength={allItems.length}
               />
             </Grid>
           )}
 
-          <Grid desktop={{ col: 12 }} className="display-flex flex-wrap">
+          <Grid
+            desktop={{ col: 12 }}
+            className="display-flex flex-wrap margin-bottom-2"
+          >
             <ButtonGroup type="segmented" className="margin-right-3">
               <Button
                 type="button"
@@ -306,6 +309,41 @@ const MilstoneCardGroup = ({
                 history.push({ search: params.toString() });
               }}
             />
+          </Grid>
+
+          <Grid
+            desktop={{ col: 12 }}
+            className="display-flex flex-wrap bg-primary-lighter padding-x-2 padding-y-1"
+          >
+            <span className="text-bold margin-x-05">
+              {t('milestoneLibrary.dontSeeMilestone')}
+            </span>
+
+            {viewParam === 'suggested' ? (
+              <Trans
+                t={t}
+                i18nKey="milestoneLibrary.checkMilestones"
+                components={{
+                  link1: (
+                    <UswdsReactLink
+                      to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
+                      className="margin-x-05"
+                    >
+                      {' '}
+                    </UswdsReactLink>
+                  ),
+                  button1: (
+                    <Button unstyled type="button" className="margin-x-05">
+                      {' '}
+                    </Button>
+                  )
+                }}
+              />
+            ) : (
+              <Button unstyled type="button" className="margin-x-05">
+                {t('milestoneLibrary.addCustomMilestone')}{' '}
+              </Button>
+            )}
           </Grid>
         </Grid>
       </div>
@@ -356,7 +394,7 @@ const MilstoneCardGroup = ({
 
       {/* Pagination */}
 
-      <div className="display-flex">
+      <div className="display-flex flex-wrap">
         {currentItems.length > 0 && pageCount > 0 && <>{PaginationComponent}</>}
 
         {currentItems.length > 0 && (

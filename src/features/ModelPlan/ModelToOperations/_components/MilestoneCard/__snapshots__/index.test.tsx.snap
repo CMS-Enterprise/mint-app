@@ -90,7 +90,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
         data-testid="CardFooter"
       >
         <button
-          class="usa-button margin-right-2"
+          class="usa-button usa-button--outline margin-right-2"
           data-testid="button"
           type="button"
         >
