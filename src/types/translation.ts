@@ -47,6 +47,8 @@ import {
   MtoCategoryTranslation,
   MtoInfoTranslation,
   MtoMilestoneTranslation,
+  MtoSolutionTranslation,
+  MtoSolutionType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
@@ -1275,6 +1277,27 @@ type TranslationMTOMilestoneCustomGQL = Omit<
 */
 export type TranslationMTOMilestoneCustom = {
   [K in keyof TranslationMTOMilestoneCustomGQL]: TranslationMTOMilestoneCustomForm[K]; // FE form type
+};
+
+// MTO Solution - Change History purposes only
+export type TranslationMTOSolutionCustomForm = {
+  name: TranslationFieldProperties;
+  pocName: TranslationFieldProperties;
+  pocEmail: TranslationFieldProperties;
+  solutionType: TranslationFieldPropertiesWithOptions<MtoSolutionType>;
+};
+
+type TranslationMTOSolutionCustomGQL = Omit<
+  MtoSolutionTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOSolutionCustom = {
+  [K in keyof TranslationMTOSolutionCustomGQL]: TranslationMTOSolutionCustomForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

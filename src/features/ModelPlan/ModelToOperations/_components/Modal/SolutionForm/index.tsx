@@ -16,12 +16,11 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { useCreateMtoSolutionCustomMutation } from 'gql/generated/graphql';
+import {
+  MtoSolutionType,
+  useCreateMtoSolutionCustomMutation
+} from 'gql/generated/graphql';
 
-// import {
-//   useCreateMtoMilestoneCustomMutation,
-//   useGetMtoCategoriesQuery
-// } from 'gql/generated/graphql';
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -29,7 +28,7 @@ import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 // import { selectOptions, SelectProps } from '../CategoryForm';
 
 type FormValues = {
-  solutionType: string;
+  solutionType: MtoSolutionType | 'default';
   solutionTitle: string;
   pocName: string;
   pocEmail: string;
@@ -70,7 +69,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     create({
       variables: {
         modelPlanID: modelID,
-        solutionType: formData.solutionType,
+        solutionType: formData.solutionType as MtoSolutionType,
         name: formData.solutionTitle,
         pocName: formData.pocName,
         pocEmail: formData.pocEmail

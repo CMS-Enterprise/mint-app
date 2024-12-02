@@ -984,6 +984,15 @@ export enum MtoSolutionStatus {
   ONBOARDING = 'ONBOARDING'
 }
 
+/** Represents MTO Custom Solution translation data */
+export type MtoSolutionTranslation = {
+  __typename: 'MTOSolutionTranslation';
+  name: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  solutionType: TranslationFieldWithOptions;
+};
+
 export enum MtoSolutionType {
   CONTRACTOR = 'CONTRACTOR',
   CROSS_CUTTING_GROUP = 'CROSS_CUTTING_GROUP',
