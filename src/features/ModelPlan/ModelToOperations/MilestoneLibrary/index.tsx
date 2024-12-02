@@ -219,7 +219,7 @@ const MilstoneCardGroup = ({
   useEffect(() => {
     params.set('page', '1');
     history.push({ search: params.toString() });
-  }, [viewParam]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [viewParam, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="milestone-card-group">
