@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -16,6 +16,10 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
+import {
+  MtoSolutionType,
+  useCreateMtoSolutionCustomMutation
+} from 'gql/generated/graphql';
 
 // import {
 //   useCreateMtoMilestoneCustomMutation,
@@ -36,7 +40,7 @@ type FormValues = {
 
 const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  // const { modelID } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const {
     message,
     // showMessage,
@@ -61,9 +65,20 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
+  const [create] = useCreateMtoSolutionCustomMutation();
+
   const onSubmit: SubmitHandler<FormValues> = formData => {
     // eslint-disable-next-line no-console
     console.log(formData);
+    create({
+      variables: {
+        modelPlanID: modelID,
+        solutionType: formData.solutionType,
+        name: formData.solutionTitle,
+        pocName: formData.pocName,
+        pocEmail: formData.pocEmail
+      }
+    });
   };
 
   return (
