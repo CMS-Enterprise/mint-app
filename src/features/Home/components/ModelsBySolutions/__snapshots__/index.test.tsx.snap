@@ -160,6 +160,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
         <span>
           <div
             aria-live="polite"
+            class="margin-bottom-2"
             role="status"
           >
             Showing 1-3 of 7 results 

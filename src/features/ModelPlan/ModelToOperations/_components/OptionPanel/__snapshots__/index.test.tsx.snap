@@ -72,7 +72,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               <a
                 aria-label="Browse common milestones"
                 class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none"
-                href="/models/123/collaboration-area/model-to-operations?view=milestones"
+                href="/models/123/collaboration-area/model-to-operations/milestone-library"
               >
                 Browse common milestones
               </a>
@@ -140,7 +140,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               <a
                 aria-label="Browse common solutions"
                 class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none"
-                href="/models/123/collaboration-area/model-to-operations?view=systems-and-solutions"
+                href="/models/123/collaboration-area/model-to-operations/systems-and-solutions"
               >
                 Browse common solutions
               </a>

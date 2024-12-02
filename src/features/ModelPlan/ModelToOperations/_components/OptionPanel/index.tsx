@@ -70,7 +70,7 @@ const MTOOptionsCard = ({
           <UswdsReactLink
             className="usa-button usa-button--outline display-block width-fit-content text-decoration-none"
             aria-label={t(`optionsCard.${mtoType}.buttonText`)}
-            to={`/models/${modelID}/collaboration-area/model-to-operations?view=${mtoType}`}
+            to={`/models/${modelID}/collaboration-area/model-to-operations/${mtoType === 'milestones' ? 'milestone-library' : 'systems-and-solutions'}`}
           >
             {t(`optionsCard.${mtoType}.buttonText`)}
           </UswdsReactLink>

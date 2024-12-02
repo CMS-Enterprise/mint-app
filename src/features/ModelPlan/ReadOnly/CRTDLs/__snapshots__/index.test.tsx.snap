@@ -161,6 +161,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
             <span>
               <div
                 aria-live="polite"
+                class="margin-bottom-2"
                 role="status"
               >
                 Showing 1-2 of 2 results 

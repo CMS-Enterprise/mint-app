@@ -479,7 +479,7 @@ const MTOTable = () => {
     return <NotFoundPartial />;
   }
 
-  if ((queryData?.modelPlan.mtoMatrix.categories.length || 0) < 2) {
+  if ((queryData?.modelPlan.mtoMatrix.milestones.length || 0) === 0) {
     return <MTOOptionsPanel />;
   }
 
