@@ -56,7 +56,6 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     control,
     handleSubmit,
     reset,
-    // watch,
     formState: { isValid }
   } = methods;
 
@@ -99,7 +98,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
           closeModal();
         }
       })
-      .catch(error => {
+      .catch(() => {
         showMessage(
           <Alert
             type="error"
