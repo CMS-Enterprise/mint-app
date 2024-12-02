@@ -27,8 +27,6 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-// import { selectOptions, SelectProps } from '../CategoryForm';
-
 type FormValues = {
   solutionType: MtoSolutionType | 'default';
   solutionTitle: string;
@@ -42,11 +40,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     usePlanTranslation('mtoSolution');
 
   const { modelID } = useParams<{ modelID: string }>();
-  const {
-    message,
-    // showMessage,
-    clearMessage
-  } = useMessage();
+  const { message, showMessage, clearMessage } = useMessage();
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -69,17 +63,54 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
   const [create] = useCreateMtoSolutionCustomMutation();
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    // eslint-disable-next-line no-console
-    console.log(formData);
+    if (formData.solutionType === 'default') return;
+
     create({
       variables: {
         modelPlanID: modelID,
-        solutionType: formData.solutionType as MtoSolutionType,
+        solutionType: formData.solutionType,
         name: formData.solutionTitle,
         pocName: formData.pocName,
         pocEmail: formData.pocEmail
       }
-    });
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  <Trans
+                    i18nKey={t('modal.solution.alert.success')}
+                    components={{
+                      b: <span className="text-bold" />
+                    }}
+                    values={{ soltuion: formData.solutionTitle }}
+                  />
+                </span>
+              </Alert>
+            </>
+          );
+          closeModal();
+        }
+      })
+      .catch(error => {
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {t('modal.solution.alert.error')}
+          </Alert>
+        );
+      });
   };
 
   return (
@@ -91,9 +122,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
         id="custom-solution-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Fieldset
-        // disabled={loading}
-        >
+        <Fieldset>
           <Controller
             name="solutionType"
             control={control}
@@ -132,16 +161,6 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                       </option>
                     );
                   })}
-                  {/* {selectOptionsAndMappedCategories.map(option => {
-                    return (
-                      <option
-                        key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
-                        value={option.value}
-                      >
-                        {option.label}
-                      </option>
-                    );
-                  })} */}
                 </Select>
               </FormGroup>
             )}

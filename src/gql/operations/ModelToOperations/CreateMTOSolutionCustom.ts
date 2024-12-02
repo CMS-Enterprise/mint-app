@@ -20,6 +20,7 @@ export default gql(/* GraphQL */ `
       status
       pocName
       pocEmail
+      type
     }
   }
 `);

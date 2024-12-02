@@ -302,7 +302,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       pocSubheading:
         'Add the name and contact information for the person or team who is the primary point of contact for this solution.',
       alert: {
-        info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>."
+        info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       }
     },
     addButton: 'Add {{type}}',
