@@ -44,7 +44,6 @@ const MilestoneLibrary = () => {
     }
   });
 
-  // TEMP only for demo
   const milestones = useMemo(
     () =>
       data?.modelPlan?.mtoMatrix?.commonMilestones ||
