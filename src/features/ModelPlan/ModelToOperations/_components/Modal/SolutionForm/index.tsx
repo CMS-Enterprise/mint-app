@@ -16,10 +16,7 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import {
-  MtoSolutionType,
-  useCreateMtoSolutionCustomMutation
-} from 'gql/generated/graphql';
+import { useCreateMtoSolutionCustomMutation } from 'gql/generated/graphql';
 
 // import {
 //   useCreateMtoMilestoneCustomMutation,
