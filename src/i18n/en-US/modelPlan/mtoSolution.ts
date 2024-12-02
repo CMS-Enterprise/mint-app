@@ -14,9 +14,9 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
+      IT_SYSTEM: 'IT System',
       CONTRACTOR: 'Contract vehicle, contractor, or other contract',
       CROSS_CUTTING_GROUP: 'Cross-cutting group',
-      IT_SYSTEM: 'IT System',
       OTHER: 'Other'
     },
     order: 1.0
