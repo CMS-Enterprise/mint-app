@@ -23,6 +23,8 @@ import {
 
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 // import { selectOptions, SelectProps } from '../CategoryForm';
@@ -36,6 +38,9 @@ type FormValues = {
 
 const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { solutionType: solutionTypeConfig } =
+    usePlanTranslation('mtoSolution');
+
   const { modelID } = useParams<{ modelID: string }>();
   const {
     message,
@@ -117,6 +122,16 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                   defaultValue="default"
                 >
                   <option value="default">- Select - </option>
+                  {getKeys(solutionTypeConfig.options).map(option => {
+                    return (
+                      <option
+                        key={`select-${convertCamelCaseToKebabCase(option)}`}
+                        value={option}
+                      >
+                        {solutionTypeConfig.options[option]}
+                      </option>
+                    );
+                  })}
                   {/* {selectOptionsAndMappedCategories.map(option => {
                     return (
                       <option
