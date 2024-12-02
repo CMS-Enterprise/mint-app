@@ -90,7 +90,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                     components={{
                       b: <span className="text-bold" />
                     }}
-                    values={{ soltuion: formData.solutionTitle }}
+                    values={{ solution: formData.solutionTitle }}
                   />
                 </span>
               </Alert>
@@ -239,7 +239,11 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
             name="pocEmail"
             control={control}
             rules={{
-              required: true
+              required: true,
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Entered value does not match email format'
+              }
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">

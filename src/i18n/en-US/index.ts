@@ -35,7 +35,7 @@ import modelToOperations, {
 } from './modelPlan/modelToOperations';
 import mtoCategory from './modelPlan/mtoCategory';
 import mtoMilestone from './modelPlan/mtoMilestone';
-import mtoSolution from './modelPlan/mtoSolutions';
+import mtoSolution from './modelPlan/mtoSolution';
 import operationalNeeds from './modelPlan/operationalNeeds';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
