@@ -14,7 +14,13 @@ type PaginationProps = {
   withQueryParams?: string; // Query parameter to use for pagination - ex: withQueryParams: 'page' -> ?page=1'
   sliceFn?: (items: any[], start: number, end: number) => any[];
   itemLength?: number;
+  showPageIfOne?: boolean; // Show page component even if there is only one page
 } & JSX.IntrinsicElements['div'];
+
+type PaginationState = {
+  currentPage: number;
+  pageCount: number;
+};
 
 // Takes in default props for Truss' Pagination component, items to paginates and returns the current items and the Pagination component
 const usePagination = <T extends any[]>({
@@ -25,9 +31,11 @@ const usePagination = <T extends any[]>({
   query = '',
   withQueryParams,
   sliceFn,
-  itemLength
+  itemLength,
+  showPageIfOne
 }: PaginationProps): {
   currentItems: T;
+  pagination: PaginationState;
   Pagination: JSX.Element;
   Results: JSX.Element;
 } => {
@@ -130,9 +138,13 @@ const usePagination = <T extends any[]>({
 
   return {
     currentItems: currentItems as T,
+    pagination: {
+      currentPage: currentPageNum,
+      pageCount
+    },
     Pagination: (
       <div className={classNames(className)}>
-        {pageCount > 1 && (
+        {(pageCount > 1 || (pageCount === 1 && showPageIfOne)) && (
           <TrussPagination
             className="mint-pagination"
             pathname={location.pathname}

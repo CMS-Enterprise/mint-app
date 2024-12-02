@@ -34,6 +34,7 @@ const TablePageSize = ({
   suffix
 }: TablePageSizeProps) => {
   const classNames = classnames('desktop:margin-top-2', className);
+
   return (
     <div className={classNames}>
       <Select
@@ -42,7 +43,7 @@ const TablePageSize = ({
         data-testid="table-page-size"
         name="tablePageSize"
         onChange={(e: any) => {
-          setPageSize(e.target.value);
+          setPageSize(Number(e.target.value));
         }}
         value={pageSize}
       >

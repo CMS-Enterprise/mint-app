@@ -10560,6 +10560,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 <span>
                   <div
                     aria-live="polite"
+                    class="margin-bottom-2"
                     role="status"
                   >
                     Showing 1-1 of 1 results 
