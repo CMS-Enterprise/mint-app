@@ -115,6 +115,11 @@ func MTOMilestoneGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UU
 	return loaders.MTOMilestone.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
+// MTOMilestoneGetByIDLOADER returns a mto milestone by it's provided ID
+func MTOMilestoneGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
+	return loaders.MTOMilestone.ByID.Load(ctx, id)
+}
+
 // MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER implements resolver logic to get all MTO milestones by a model plan ID and MTO category ID using a data loader
 func MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx context.Context, modelPlanID uuid.UUID, mtoCategoryID uuid.UUID) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.ByModelPlanIDAndMTOCategoryID.Load(ctx,

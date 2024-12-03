@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -137,4 +138,42 @@ func MTOSubcategoryGetByParentIDLoader(ctx context.Context, modelPlanID uuid.UUI
 	}
 	// return while adding an uncategorized record as well
 	return append(dbSubcategories, models.MTOUncategorizedSubcategoryFromArray(modelPlanID, &parentID, dbSubcategories)), nil
+}
+
+func MTOCategoryGetByID(ctx context.Context, id uuid.UUID) (*models.MTOCategory, error) {
+	return loaders.MTOCategory.ByID.Load(ctx, id)
+}
+
+// MTOCategoriesGetByID returns the subcategory and parent category information given an mto category id
+// This function first fetches the category by the provided ID.
+// Then, if that category is a parent category (and we have nothing else to fetch), returns that category.
+// However, if the supplied ID points to a subcategory (i.e. it has a parent ID), then it also fetches the parent category information so both category AND subcategory are returned as part of this resolver.
+// We are not doing a larger SQL call that would return both objects, as that would result in less maintainable code
+func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.UUID) (*models.MTOCategories, error) {
+	Categories := &models.MTOCategories{
+		Category:    models.MTOUncategorized(modelPlanID, nil, 0),
+		SubCategory: models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
+	}
+	if id == nil {
+		return Categories, nil
+	}
+	immediateCategory, err := MTOCategoryGetByID(ctx, *id)
+	if err != nil {
+		return nil, err
+	}
+	// Check if it is a parent category, if so early return without fetching parent
+	if immediateCategory.ParentID == nil {
+		Categories.Category = immediateCategory
+		return Categories, nil
+	}
+
+	// fetch the parent category
+	parentCategory, err := MTOCategoryGetByID(ctx, *immediateCategory.ParentID)
+	if err != nil {
+		return nil, err
+	}
+	Categories.SubCategory = immediateCategory.ToSubcategory()
+	Categories.Category = parentCategory
+
+	return Categories, nil
 }

@@ -36,16 +36,10 @@ type MTOMilestone {
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
   commonMilestone: MTOCommonMilestone
   solutions: [MTOSolution!]!
-  # Category: {
-  #   mtoCategoryID: UUID
-  #   subcategoryID: UUID
-  #   Category: MTOCategory
-  #   subCategory: MTOSubcategory
-  # }
-  # TODO (mto) do we need to resolve category? Should we need to resolve it here? Also, 
-  # category: UNION MTOCategory | MTOSubcategory ?
-  category: MTOCategory!
-  subCategory: MTOSubcategory!
+  """
+  Category resolves relational category information.
+  """
+  categories: MTOCategories!
 }
 
 input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
@@ -67,3 +61,9 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
   #TODO (mto) will we need any other mutations here? Can we ever delete?
 }
+
+extend type Query {
+  mtoMilestone(id: UUID!): MTOMilestone!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+}
+
