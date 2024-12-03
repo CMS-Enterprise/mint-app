@@ -293,10 +293,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     solution: {
       label: {
-        solutionType: 'What type of solution is this? <s>*</s>',
-        solutionTitle: 'Please add a title for your solution <s>*</s>',
-        pocName: 'Point of contact name <s>*</s>',
-        pocEmail: 'Point of contact email address <s>*</s>'
+        solutionType: 'What type of solution is this?',
+        solutionTitle: 'Please add a title for your solution',
+        pocName: 'Point of contact name',
+        pocEmail: 'Point of contact email address',
+        emailError: 'Please use a valid email address format.'
       },
       pocHeading: 'Solution point of contact information',
       pocSubheading:
