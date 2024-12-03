@@ -88,7 +88,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 	})
 }
 
-// MTOMilestoneUpdate updates the name of MTOMilestone or SubMilestone
+// MTOMilestoneUpdate updates the fields of an MTOMilestone
 func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
@@ -108,6 +108,33 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 		return nil, err
 	}
 	return storage.MTOMilestoneUpdate(store, logger, existing)
+}
+
+// MTOMilestoneDelete deletes an MTOMilestone
+// It returns an error if the principal is invalid, the milestone doesn't exist, user doesn't have permissions to delete, or the delete call itself fails
+func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// First, fetch the existing milestone so we can check permissions
+	existing, err := storage.MTOMilestoneGetByID(store, logger, id)
+	if err != nil {
+		return fmt.Errorf("error fetching mto milestone during deletion: %s", err)
+	}
+
+	// Check permissions
+	if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+		return fmt.Errorf("error deleting mto milestone. user doesnt have permissions. %s", err)
+	}
+
+	// Finally, delete the milestone
+	if err := storage.MTOMilestoneDelete(store, logger, id); err != nil {
+		return fmt.Errorf("unable to delete mto milestone. Err %w", err)
+	}
+
+	return nil
 }
 
 // MTOMilestoneGetByModelPlanIDLOADER implements resolver logic to get all MTO milestones by a model plan ID using a data loader

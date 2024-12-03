@@ -76,6 +76,16 @@ func MTOMilestoneUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *
 	return returned, nil
 }
 
+// MTOMilestoneDelete deletes an MTOMilestone in the database
+func MTOMilestoneDelete(np sqlutils.NamedPreparer, _ *zap.Logger, milestoneID uuid.UUID) error {
+	arg := map[string]interface{}{"id": milestoneID}
+	procErr := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestone.Delete, arg)
+	if procErr != nil {
+		return fmt.Errorf("issue deleting MTOMilestone object: %w", procErr)
+	}
+	return nil
+}
+
 // MTOMilestoneGetByID returns an existing MTOMilestone from the database
 func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOMilestone, error) {
 

@@ -1236,6 +1236,7 @@ export type Mutation = {
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
   createPlanTDL: PlanTdl;
+  deleteMTOMilestone: Scalars['Boolean']['output'];
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
@@ -1411,6 +1412,12 @@ export type MutationCreatePlanDocumentSolutionLinksArgs = {
 /** Mutations definition for the schema */
 export type MutationCreatePlanTdlArgs = {
   input: PlanTdlCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
