@@ -3255,7 +3255,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD,\n    commonSolutions: [CCW, CPI_VETTING]\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
 										"variables": ""
 									}
 								},

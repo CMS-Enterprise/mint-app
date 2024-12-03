@@ -27,7 +27,6 @@ type mtoSolutionLoaders struct {
 var MTOSolution = &mtoSolutionLoaders{
 	ByID:          NewLoaderWrapper(batchMTOSolutionGetByID),
 	ByModelPlanID: NewLoaderWrapper(batchMTOSolutionGetByModelPlanID),
-	// ByModelPlanIDAndCommonKeys: NewLoaderWrapper(batchMTOSolutionGetByModelPlanIDAndCommonKeys),
 }
 
 func batchMTOSolutionGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOSolution] {
