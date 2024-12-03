@@ -77,6 +77,14 @@ type MTOMilestoneTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`
 }
 
+// Represents MTO Custom Solution translation data
+type MTOSolutionTranslation struct {
+	Name         models.TranslationField            `json:"name" db:"name"`
+	PocName      models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail     models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	SolutionType models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`

@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -19,7 +18,7 @@ func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj 
 
 // IsSuggested is the resolver for the isSuggested field.
 func (r *mTOCommonMilestoneResolver) IsSuggested(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
-	panic(fmt.Errorf("not implemented: IsSuggested - isSuggested"))
+	return false, nil
 }
 
 // CommonSolutions is the resolver for the commonSolutions field.

@@ -74,7 +74,7 @@ export const commonBreadCrumbs = (
   },
   MODEL_TO_OPERATIONS: {
     text: 'modelToOperationsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-to-operation`
+    url: `/models/${modelID}/collaboration-area/model-to-operations`
   },
   NOTIFICATIONS: {
     text: 'notifications:breadcrumb',

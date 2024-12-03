@@ -1,10 +1,142 @@
 import { TranslationMTOInfo } from 'types/translation';
 
 import {
+  MtoCommonMilestoneKey,
   TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
+
+type MilestoneCardType = {
+  description: string;
+};
+
+const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
+  [MtoCommonMilestoneKey.MANAGE_CD]: {
+    description:
+      'Identify the Part D and Parts C/D beneficiaries based on their enrollment in a participating MAPD or PDP plan.'
+  },
+  [MtoCommonMilestoneKey.REV_COL_BIDS]: {
+    description:
+      'Receive bids from interested plans regarding a particular pilot or demonstration.'
+  },
+  [MtoCommonMilestoneKey.UPDATE_CONTRACT]: {
+    description:
+      'Update the contract between CMS and the plan regarding the product that is being offered to beneficiaries.'
+  },
+  [MtoCommonMilestoneKey.SIGN_PARTICIPATION_AGREEMENTS]: {
+    description:
+      'Support the signing of Participation Agreements between CMS and each participant. There would be a unique document for each participant with signatures from both CMS and the participant.'
+  },
+  [MtoCommonMilestoneKey.RECRUIT_PARTICIPANTS]: {
+    description:
+      'Enable interested parties to communicate their interest to CMS. Support interested parties providing information about their organization and about their experience or interest in the model or demonstration.'
+  },
+  [MtoCommonMilestoneKey.REV_SCORE_APP]: {
+    description:
+      'Receive applications from interested parties and support panel reviews using standard evaluation criteria.'
+  },
+  [MtoCommonMilestoneKey.APP_SUPPORT_CON]: {
+    description:
+      'Advertise the opportunity to bid on work related to managing applications to a model, review the bids and select the application support contractor.'
+  },
+  [MtoCommonMilestoneKey.COMM_W_PART]: {
+    description:
+      'Offer one or more mechanisms to send information to participants (individually and/or as a group) and to receive information from participants.'
+  },
+  [MtoCommonMilestoneKey.VET_PROVIDERS_FOR_PROGRAM_INTEGRITY]: {
+    description:
+      'Screen potential participants or providers in a model for significant program integrity concerns, such as convictions of fraud or abuse or pending fraud or abuse cases.'
+  },
+  [MtoCommonMilestoneKey.MANAGE_PROV_OVERLAP]: {
+    description:
+      'Check for non-permitted provider overlaps between models (same provider in two models at the same time when that particular overlap is prohibited).'
+  },
+  [MtoCommonMilestoneKey.MANAGE_BEN_OVERLAP]: {
+    description:
+      'Check for non-permitted beneficiary overlaps between models (same beneficiary in two models at the same time when that particular overlap is prohibited).'
+  },
+  [MtoCommonMilestoneKey.HELPDESK_SUPPORT]: {
+    description:
+      'Offer mechanisms for participants to share questions and receive answers from CMS.'
+  },
+  [MtoCommonMilestoneKey.IDDOC_SUPPORT]: {
+    description:
+      'For a kidney or ACO model, get set up in the 4i/ACO-OS systems for various aspects of model operations.'
+  },
+  [MtoCommonMilestoneKey.ESTABLISH_BENCH]: {
+    description:
+      'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.'
+  },
+  [MtoCommonMilestoneKey.PROCESS_PART_APPEALS]: {
+    description:
+      'Offer mechanisms for participants to appeal decisions or performance results to CMS.'
+  },
+  [MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT]: {
+    description:
+      'Advertise the opportunity to bid on work related to evaluating a model, review the bids and select evaluation contractor.'
+  },
+  [MtoCommonMilestoneKey.DATA_TO_MONITOR]: {
+    description:
+      'Gather information from participants, intermediaries, or both, to help monitor the model. Monitoring may include detecting any side effects associated with the model changes and may include checking to ensure compliance with model requirements. Note: some of this information may also be shared with the model evaluation.'
+  },
+  [MtoCommonMilestoneKey.DATA_TO_SUPPORT_EVAL]: {
+    description:
+      'Gather information from participants, intermediaries, or both, to help support model evaluation.'
+  },
+  [MtoCommonMilestoneKey.CLAIMS_BASED_MEASURES]: {
+    description:
+      'Analyze claims information to calculate a claims-based measure. This measure may be part of a broader quality strategy or methodology for the model.'
+  },
+  [MtoCommonMilestoneKey.QUALITY_PERFORMANCE_SCORES]: {
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper fusce urna pharetra id orci. Feugiat in ac ornare lobortis. Vulputate nisi et sem magna id consequat scelerisque sed sed. Facilisi id porttitor vulputate donec purus enim turpis. Viverra porttitor ut eget ante adipiscing. Id etiam commodo porta facilisi. Lectus vulputate id pretium ut neque magna aliquam cras.'
+  },
+  [MtoCommonMilestoneKey.SEND_REPDATA_TO_PART]: {
+    description:
+      'Share information with participants. Information may include reports, dashboards, raw data, or written materials.'
+  },
+  [MtoCommonMilestoneKey.UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR]: {
+    description:
+      'Execute a task order on the existing quality measures development contract or solicit a new contract. Solicitation involves advertising the opportunity to bid on work related to quality measures development for a model, reviewing the bids, and selecting a quality measures development contractor.'
+  },
+  [MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT]: {
+    description:
+      'Select from cross-model learning contractors or solicit a new contract. Solicitation involves advertising the opportunity to bid on work related to the learning system of a model, reviewing the bids, and selecting a learning contractor.'
+  },
+  [MtoCommonMilestoneKey.PART_TO_PART_COLLAB]: {
+    description:
+      'Support participants sharing ideas and experiences with each other. This can help participants learn from the successes and challenges of others involved with the same model.'
+  },
+  [MtoCommonMilestoneKey.EDUCATE_BENEF]: {
+    description:
+      'Share information with beneficairies, either directly or via participants. This information may educate beneficiaries about their involvement in a model, about their health condition, or something else.'
+  },
+  [MtoCommonMilestoneKey.IT_PLATFORM_FOR_LEARNING]: {
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper fusce urna pharetra id orci. Feugiat in ac ornare lobortis. Vulputate nisi et sem magna id consequat scelerisque sed sed. Facilisi id porttitor vulputate donec purus enim turpis. Viverra porttitor ut eget ante adipiscing. Id etiam commodo porta facilisi. Lectus vulputate id pretium ut neque magna aliquam cras.'
+  },
+  [MtoCommonMilestoneKey.ADJUST_FFS_CLAIMS]: {
+    description:
+      'Make payment changes to the Fee-For-Service payment system for Medicare-enrolled providers or suppliers. This may involve updating payment rates to existing payments or may involve paying for things the Fee-for-Service System has not typically paid for (or no longer paying for things it typically does pay for).'
+  },
+  [MtoCommonMilestoneKey.MANAGE_FFS_EXCL_PAYMENTS]: {
+    description:
+      'Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper fusce urna pharetra id orci. Feugiat in ac ornare lobortis. Vulputate nisi et sem magna id consequat scelerisque sed sed. Facilisi id porttitor vulputate donec purus enim turpis. Viverra porttitor ut eget ante adipiscing. Id etiam commodo porta facilisi. Lectus vulputate id pretium ut neque magna aliquam cras.'
+  },
+  [MtoCommonMilestoneKey.MAKE_NON_CLAIMS_BASED_PAYMENTS]: {
+    description:
+      'Make payments outside of the Fee-for-Service payment system. This may include payments to participants, providers, beneficiaries, or other parties.'
+  },
+  [MtoCommonMilestoneKey.COMPUTE_SHARED_SAVINGS_PAYMENT]: {
+    description:
+      'Calculate the performance of participants relative to the benchmark. This calculation may take into account the quality performance score and other factors. Positive results could result in shared savings and negative results could result in shared losses.'
+  },
+  [MtoCommonMilestoneKey.RECOVER_PAYMENTS]: {
+    description:
+      'When needed, recover payments from participants or providers. Payments may have been errors and may need to be recovered, or participants may have incurred losses and CMS may be recovering that money.'
+  }
+};
 
 export const modelToOperations: TranslationMTOInfo = {
   readyForReviewBy: {
@@ -40,6 +172,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOdescription: 'Choose an option below to get started.',
   returnToCollaboration: 'Return to model collaboration area',
+  returnToMTO: 'Return to model-to-operations matrix',
   startWithCategories: 'Start with categories or templates',
   aboutTemplates: 'About templates',
   aboutTemplatesDescription:
@@ -70,27 +203,6 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '18 categories, 0 milestones, 0 solutions',
       buttonText: 'Use this template'
     }
-  },
-  facilitatedBy: {
-    MODEL_TEAM: 'Model team',
-    MODEL_LEAD: 'Model lead',
-    IT_LEAD: 'IT lead',
-    SOLUTION_ARCHITECT: 'Solution architect',
-    IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
-    PARTICIPANTS: 'Participants',
-    APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
-    IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
-    EVALUATION_CONTRACTOR: 'Evaluation contractor',
-    QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
-      'Quality measures development contractor',
-    LEARNING_CONTRACTOR: 'Learning contractor',
-    MONITORING_CONTRACTOR: 'Monitoring contractor',
-    CONTRACTING_OFFICERS_REPRESENTATIVE:
-      'Contracting Officer’s Representative (COR)',
-    LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
-    RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
-      'Research and Rapid Cycle Evaluation Group (RREG)',
-    OTHER: 'Other'
   },
   table: {
     modelMilestone: 'Model milestone',
@@ -179,8 +291,73 @@ export const modelToOperationsMisc: Record<string, any> = {
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       }
     },
+    solution: {
+      label: {
+        solutionType: 'What type of solution is this? <s>*</s>',
+        solutionTitle: 'Please add a title for your solution <s>*</s>',
+        pocName: 'Point of contact name <s>*</s>',
+        pocEmail: 'Point of contact email address <s>*</s>'
+      },
+      pocHeading: 'Solution point of contact information',
+      pocSubheading:
+        'Add the name and contact information for the person or team who is the primary point of contact for this solution.',
+      alert: {
+        info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      }
+    },
     addButton: 'Add {{type}}',
     cancel: 'Cancel'
+  },
+  milestoneLibrary: {
+    heading: 'Milestone library',
+    description:
+      'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix. Some milestones are suggested for your model based on answers to questions in your Model Plan.',
+    milestoneMap,
+    suggestedMilestones: 'Suggested milestones only ({{count}})',
+    allMilestones: 'All common milestones ({{count}})',
+    hideAdded: 'Hide added milestones ({{count}})',
+    milestone: 'Milestone',
+    suggested: 'Suggested',
+    category: 'Category: {{category}}',
+    addToMatrix: 'Add to matrix',
+    aboutThisMilestone: 'About this milestone',
+    whySuggested: 'Why is this suggested?',
+    youAnswered: 'In the Model Plan, you answered:',
+    changeAnswer: 'Want to change your answer?',
+    goToQuestion: 'Go to the question',
+    added: 'Added',
+    noSuggestedHeading:
+      'There are no suggested milestones that match your search.',
+    noSuggestedDescription:
+      'MINT hasn’t suggested any milestones for your model that match your search. You may also try checking <link1>all available milestones</link1>. As you and your team fill out more of your <link2>Model Plan</link2>, MINT may display suggested common milestones that match your search. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email1>MINTTeam@cms.hhs.gov</email1>.',
+    dontSeeMilestone: 'Don’t see a milestone you need?',
+    checkMilestones:
+      'Check <link1>all available milestones</link1> or <button1>add a custom milestone</button1>.',
+    addCustomMilestone: 'Add a custom milestone',
+    facilitatedBy: {
+      MODEL_TEAM: 'Model team',
+      MODEL_LEAD: 'Model lead',
+      IT_LEAD: 'IT lead',
+      SOLUTION_ARCHITECT: 'Solution architect',
+      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
+      PARTICIPANTS: 'Participants',
+      APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
+      IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
+      EVALUATION_CONTRACTOR: 'Evaluation contractor',
+      QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
+        'Quality measures development contractor',
+      LEARNING_CONTRACTOR: 'Learning contractor',
+      MONITORING_CONTRACTOR: 'Monitoring contractor',
+      CONTRACTING_OFFICERS_REPRESENTATIVE:
+        'Contracting Officer’s Representative (COR)',
+      LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
+      RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
+        'Research and Rapid Cycle Evaluation Group (RREG)',
+      OTHER: 'Other'
+    }
   }
 };
 

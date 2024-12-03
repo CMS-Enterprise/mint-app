@@ -7,6 +7,7 @@ import useMessage from 'hooks/useMessage';
 
 import CategoryForm from './CategoryForm';
 import MilestoneForm from './MilestoneForm';
+import SolutionForm from './SolutionForm';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -59,6 +60,7 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
       {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
       {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
+      {modalType === 'solution' && <SolutionForm closeModal={closeModal} />}
     </Modal>
   );
 };
