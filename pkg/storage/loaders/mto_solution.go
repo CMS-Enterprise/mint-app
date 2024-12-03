@@ -67,22 +67,3 @@ func batchMTOSolutionGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 	// implement one to many
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 }
-
-/*func batchMTOSolutionGetByModelPlanIDAndCommonKeys(ctx context.Context, modelPlanID uuid.UUID, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[*models.MTOSolution] {
-	loaders, err := Loaders(ctx)
-	logger := appcontext.ZLogger(ctx)
-	if err != nil {
-		return errorPerEachKey[models.MTOCommonSolutionKey, *models.MTOSolution](commonSolutionKeys, err)
-	}
-
-	data, err := storage.MTOSolutionGetByModelPlanIDAndCommonKeysLoader(loaders.DataReader.Store, logger, modelPlanID, commonSolutionKeys)
-	if err != nil {
-		return errorPerEachKey[models.MTOCommonSolutionKey, *models.MTOSolution](commonSolutionKeys, err)
-	}
-	getKeyFunc := func(data *models.MTOSolution) models.MTOCommonSolutionKey {
-		return data.CommonSolutionKey
-	}
-
-	// implement one to many
-	return oneToManyDataLoader(commonSolutionKeys, data, getKeyFunc)
-}*/

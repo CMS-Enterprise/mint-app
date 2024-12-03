@@ -92,7 +92,7 @@ require (
 	github.com/charmbracelet/bubbletea v1.2.3
 	github.com/contribsys/faktory_worker_go v1.7.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-test/deep v1.0.8 // indirect

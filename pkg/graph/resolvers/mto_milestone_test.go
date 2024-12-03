@@ -3,7 +3,6 @@ package resolvers
 import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/samber/lo"
 )
 
 func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
@@ -11,23 +10,21 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	commonMilestoneKey := models.MTOCommonMilestoneKeyAppSupportCon
 
 	// create a milestone
-	_ = suite.createMilestoneCommon(plan.ID, commonMilestoneKey, []models.MTOCommonSolutionKey{
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestoneKey, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
 
 	// validate the created solutions
-	solutions, err := storage.MTOCommonSolutionGetByCommonMilestoneKeyLoader(
-		suite.testConfigs.Store,
-		suite.testConfigs.Logger,
-		[]models.MTOCommonMilestoneKey{commonMilestoneKey},
-	)
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	// select the common solution keys from the common solutions using lo map
-	commonSolutionKeys := lo.Map(solutions, func(s *models.MTOCommonSolution, index int) models.MTOCommonSolutionKey {
-		return s.Key
-	})
+	var commonSolutionKeys []models.MTOCommonSolutionKey
+	for _, solution := range solutions {
+		if solution.Key != nil {
+			commonSolutionKeys = append(commonSolutionKeys, *solution.Key)
+		}
+	}
 
 	// validate that the common solution keys are created
 	suite.Len(commonSolutionKeys, 2)
@@ -38,7 +35,7 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	milestoneSolutionLinks, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		plan.ID,
+		milestone.ID,
 	)
 
 	suite.NoError(err)
