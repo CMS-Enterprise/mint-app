@@ -32,6 +32,11 @@ func MTOSolutionUpdate(
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Solution. Err %w", err)
 	}
+	// Clear out the name and type returned from the database for convenience so we don't try to set the custom name  or type fields
+	if existing.AddedFromSolutionLibrary() {
+		existing.Name = nil
+		existing.Type = nil
+	}
 
 	// Check access and apply changes
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)

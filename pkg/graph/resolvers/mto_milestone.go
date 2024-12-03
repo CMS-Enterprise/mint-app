@@ -101,6 +101,10 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
+	// Clear out the name returned from the database for convenience so we don't try to set the custom name field
+	if existing.AddedFromMilestoneLibrary() {
+		existing.Name = nil
+	}
 
 	// Check access and apply changes
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
