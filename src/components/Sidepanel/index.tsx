@@ -10,6 +10,7 @@ type SidepanelProps = {
   ariaLabel: string;
   children: React.ReactNode | React.ReactNodeArray;
   classname?: string;
+  overlayClassName?: string;
   closeModal: () => void;
   isOpen: boolean;
   modalHeading: string;
@@ -21,6 +22,7 @@ const Sidepanel = ({
   ariaLabel,
   children,
   classname,
+  overlayClassName,
   closeModal,
   isOpen,
   modalHeading,
@@ -37,7 +39,10 @@ const Sidepanel = ({
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-sidepanel__overlay overflow-y-scroll"
+      overlayClassName={classNames(
+        'mint-sidepanel__overlay overflow-y-scroll',
+        overlayClassName
+      )}
       className={classNames('mint-sidepanel__content', classname)}
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}

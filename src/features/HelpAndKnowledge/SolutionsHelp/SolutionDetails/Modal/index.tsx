@@ -70,6 +70,8 @@ const SolutionDetailsModal = ({
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
+  const milestoneParam = params.get('milestone');
+  const solutionParam = params.get('solution');
   const section = params.get('section') || 'about';
 
   const { t } = useTranslation('helpAndKnowledge');
@@ -114,6 +116,9 @@ const SolutionDetailsModal = ({
         closeModal={closeModal}
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
+        overlayClassName={
+          milestoneParam && solutionParam ? 'bg-transparent' : ''
+        }
       >
         <Header solution={solution} />
 

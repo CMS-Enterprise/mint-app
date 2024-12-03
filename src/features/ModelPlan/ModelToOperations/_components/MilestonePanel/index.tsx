@@ -130,11 +130,13 @@ const SolutionCard = ({
   params.set('solution', solution.route);
   params.set('section', 'about');
 
-  const { prevPathname, selectedSolution } = useModalSolutionState();
+  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
+    solution.enum!
+  );
 
   return (
     <Grid desktop={{ col: 9 }} className="display-flex">
-      {selectedSolution && (
+      {renderModal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
