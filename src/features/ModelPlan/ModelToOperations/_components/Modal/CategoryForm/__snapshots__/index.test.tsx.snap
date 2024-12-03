@@ -21,11 +21,12 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
           for="primary-category"
         >
           Select primary category 
-          <span
-            class="text-secondary-dark"
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
           >
             *
-          </span>
+          </abbr>
         </label>
         <span
           class="usa-hint"
@@ -70,11 +71,12 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
           for="name"
         >
           New category title 
-          <span
-            class="text-secondary-dark"
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
           >
             *
-          </span>
+          </abbr>
         </label>
         <input
           class="usa-input"
