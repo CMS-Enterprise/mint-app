@@ -320,6 +320,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     checkMilestones:
       'Check <link1>all available milestones</link1> or <button1>add a custom milestone</button1>.',
     addCustomMilestone: 'Add a custom milestone',
+    aboutSolution: 'About this solution',
     facilitatedBy: {
       MODEL_TEAM: 'Model team',
       MODEL_LEAD: 'Model lead',

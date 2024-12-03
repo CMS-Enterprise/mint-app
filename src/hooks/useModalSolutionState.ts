@@ -13,13 +13,10 @@ import useHelpSolution from './useHelpSolutions';
 type SolutionModalState = {
   prevPathname: string;
   selectedSolution: HelpSolutionType | undefined;
-  renderModal: boolean;
   loading: boolean;
 };
 
-const useModalSolutionState = (
-  solutionKey: string | null
-): SolutionModalState => {
+const useModalSolutionState = (): SolutionModalState => {
   const location = useLocation();
 
   const { helpSolutions, loading } = useHelpSolution();
@@ -36,9 +33,7 @@ const useModalSolutionState = (
     helpSolutions
   );
 
-  const renderModal = selectedSolution?.enum === solutionKey;
-
-  return { prevPathname, selectedSolution, renderModal, loading };
+  return { prevPathname, selectedSolution, loading };
 };
 
 export default useModalSolutionState;

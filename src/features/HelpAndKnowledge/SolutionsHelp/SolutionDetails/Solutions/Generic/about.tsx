@@ -67,13 +67,23 @@ Used with <link1>, <link2>, etc embedded tags in translation file
 */
 export const getTransLinkComponents = (links?: LinkType[]) => {
   const linkObj: Record<string, React.ReactNode> = {};
+
+  const { pathname, search } = window.location;
+
+  const params = new URLSearchParams(search);
+
   if (links) {
     links.forEach((link, index) => {
-      linkObj[`link${index + 1}`] = link.external ? (
-        <ExternalLink href={link.link}>link</ExternalLink>
-      ) : (
-        <UswdsReactLink to={link.link}>link</UswdsReactLink>
-      );
+      if (link.external) {
+        linkObj[`link${index + 1}`] = (
+          <ExternalLink href={link.link}>link</ExternalLink>
+        );
+      } else {
+        params.set('solution', link.link);
+        linkObj[`link${index + 1}`] = (
+          <UswdsReactLink to={`${pathname}?${params}`}>link</UswdsReactLink>
+        );
+      }
     });
   }
   return linkObj;

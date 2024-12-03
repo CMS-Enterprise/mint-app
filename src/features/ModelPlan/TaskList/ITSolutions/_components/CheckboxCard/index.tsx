@@ -74,9 +74,8 @@ const CheckboxCard = ({
   const {
     prevPathname,
     selectedSolution,
-    renderModal,
     loading: modalLoading
-  } = useModalSolutionState(solution.key!);
+  } = useModalSolutionState();
 
   const { helpSolutions, loading } = useHelpSolution();
 
@@ -164,7 +163,7 @@ const CheckboxCard = ({
 
   return (
     <Grid tablet={{ col: 6 }} desktop={{ col: 4 }} className="display-flex">
-      {renderModal && selectedSolution && (
+      {selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}

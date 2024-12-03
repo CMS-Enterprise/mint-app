@@ -132,7 +132,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link: 'innovation-payment-contract',
           external: false
         },
         {
@@ -238,7 +238,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link: 'innovation-payment-contract',
           external: false
         },
         {
@@ -328,7 +328,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-payment-contract`
         }
       ],
       components: [
@@ -603,7 +603,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-payment-contract`
         }
       ],
       components: [
@@ -768,7 +768,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-payment-contract`
         }
       ],
       components: [
@@ -986,19 +986,19 @@ The Model team will receive an implementation milestone schedule that identifies
           items: [],
           links: [
             {
-              link: '/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
+              link: 'centralized-data-exchange',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
+              link: 'health-data-reporting',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
+              link: 'expanded-data-feedback-reporting',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=model-space&section=about',
+              link: 'model-space',
               external: false
             }
           ],
@@ -1846,7 +1846,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link: 'innovation-payment-contract',
           external: false
         },
         {
@@ -1983,7 +1983,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-payment-contract`
         }
       ],
       components: [

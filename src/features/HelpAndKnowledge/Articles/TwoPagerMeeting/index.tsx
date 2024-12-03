@@ -53,8 +53,7 @@ const TwoPagerMeeting = () => {
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { prevPathname, selectedSolution, renderModal, loading } =
-    useModalSolutionState(OperationalSolutionKey.LDG);
+  const { prevPathname, selectedSolution, loading } = useModalSolutionState();
 
   const ldgRoute = `${initLocation}${location.search}${
     location.search ? '&' : '?'
@@ -110,7 +109,7 @@ const TwoPagerMeeting = () => {
 
   return (
     <>
-      {renderModal && selectedSolution && (
+      {selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}

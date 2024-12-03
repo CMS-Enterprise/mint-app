@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -126,7 +126,7 @@ const MilstoneCardGroup = ({
 
   const milestoneParam: string = params.get('milestone') || '';
 
-  const [isSidepanelOpen, setIsSidepanelOpen] = useState(false);
+  const [, setIsSidepanelOpen] = useState(false);
 
   if (params.get('view') && params.get('view') === 'all') {
     viewParam = 'all';
@@ -234,7 +234,7 @@ const MilstoneCardGroup = ({
   return (
     <>
       <Sidepanel
-        isOpen={isSidepanelOpen && !!selectedMilestone}
+        isOpen={!!selectedMilestone}
         closeModal={() => {
           params.delete('milestone');
           history.push({ search: params.toString() });
