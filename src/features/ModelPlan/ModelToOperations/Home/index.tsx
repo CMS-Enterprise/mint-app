@@ -200,6 +200,17 @@ const MTOHome = () => {
             >
               Add custom milestone
             </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                clearMessage();
+                setModalType('solution');
+                setIsModalOpen(true);
+              }}
+              className="margin-bottom-4"
+            >
+              Add custom solution
+            </Button>
           </div>
         </div>
 

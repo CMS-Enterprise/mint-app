@@ -7,7 +7,7 @@ import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import ModelMilestoneForm from './index';
+import MilestoneForm from './index';
 
 const mocks = [
   {
@@ -60,7 +60,7 @@ describe('Custom Milestone form', () => {
         <MessageProvider>
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <Route path="/models/:modelID/">
-              <ModelMilestoneForm closeModal={() => {}} />
+              <MilestoneForm closeModal={() => {}} />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
