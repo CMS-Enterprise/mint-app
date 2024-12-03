@@ -37,14 +37,9 @@ func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMil
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
-// Category is the resolver for the category field.
-func (r *mTOMilestoneResolver) Category(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCategory, error) {
-	panic(fmt.Errorf("not implemented: Category - category"))
-}
-
-// SubCategory is the resolver for the subCategory field.
-func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOMilestone) (*models.MTOSubcategory, error) {
-	panic(fmt.Errorf("not implemented: SubCategory - subCategory"))
+// Categories is the resolver for the categories field.
+func (r *mTOMilestoneResolver) Categories(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCategories, error) {
+	return MTOCategoriesGetByID(ctx, obj.MTOCategoryID, obj.ModelPlanID)
 }
 
 // CreateMTOMilestoneCustom is the resolver for the createMTOMilestoneCustom field.
@@ -67,6 +62,11 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 	logger := appcontext.ZLogger(ctx)
 
 	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes)
+}
+
+// MtoMilestone is the resolver for the mtoMilestone field.
+func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
+	return MTOMilestoneGetByIDLOADER(ctx, id)
 }
 
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.
