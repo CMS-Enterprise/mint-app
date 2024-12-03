@@ -52,7 +52,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
             </div>
           )}
 
-          <h2 className="margin-y-2">{milestone.name}</h2>
+          <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
 
           <p className="text-base-dark margin-top-0 margin-bottom-2">
             {t('milestoneLibrary.category', {
@@ -133,6 +133,8 @@ const SolutionCard = ({
   const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
     solution.enum!
   );
+
+  // console.log(history.location.search);
 
   return (
     <Grid desktop={{ col: 9 }} className="display-flex">

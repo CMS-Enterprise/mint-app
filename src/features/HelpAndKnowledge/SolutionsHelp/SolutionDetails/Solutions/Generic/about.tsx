@@ -1,5 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
@@ -68,7 +70,7 @@ Used with <link1>, <link2>, etc embedded tags in translation file
 export const getTransLinkComponents = (links?: LinkType[]) => {
   const linkObj: Record<string, React.ReactNode> = {};
 
-  const { pathname, search } = window.location;
+  const { search } = window.location;
 
   const params = new URLSearchParams(search);
 
@@ -81,12 +83,38 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
       } else {
         params.set('solution', link.link);
         linkObj[`link${index + 1}`] = (
-          <UswdsReactLink to={`${pathname}?${params}`}>link</UswdsReactLink>
+          <InternalSolutionButton params={params}>link</InternalSolutionButton>
         );
       }
     });
   }
   return linkObj;
+};
+
+const InternalSolutionButton = ({
+  params,
+  children
+}: {
+  params: URLSearchParams;
+  children: React.ReactChild;
+}) => {
+  const history = useHistory();
+
+  return (
+    <Button
+      type="button"
+      unstyled
+      onClick={() => {
+        const modalCon = document?.getElementsByClassName(
+          'ReactModal__Overlay'
+        )?.[1];
+        modalCon.scrollTo(0, 0);
+        history.push({ search: params.toString() });
+      }}
+    >
+      {children}
+    </Button>
+  );
 };
 
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
