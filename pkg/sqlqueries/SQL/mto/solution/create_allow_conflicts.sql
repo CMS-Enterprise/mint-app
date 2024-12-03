@@ -28,7 +28,7 @@ WITH insert_attempt AS (
         :created_by
     )
     ON CONFLICT DO NOTHING
-    RETURNING * -- "RETURNING *" is fine here since we have to manually select the columns from the CTE later in this query anyways
+    RETURNING *
 )
 
 SELECT
@@ -47,20 +47,21 @@ SELECT
 FROM insert_attempt
 UNION ALL
 SELECT
-    id,
-    model_plan_id,
-    mto_common_solution_key,
-    COALESCE(mto_solution.name, mto_solution.name) AS "name",
-    COALESCE(mto_solution.type, mto_solution.type) AS "type",
-    facilitated_by,
-    needed_by,
-    status,
-    risk_indicator,
-    poc_name,
-    poc_email,
-    created_by
+    mto_solution.id,
+    mto_solution.model_plan_id,
+    mto_solution.mto_common_solution_key,
+    COALESCE(mto_solution.name, mto_common_solution.name) AS "name",
+    COALESCE(mto_solution.type, mto_common_solution.type) AS "type",
+    mto_solution.facilitated_by,
+    mto_solution.needed_by,
+    mto_solution.status,
+    mto_solution.risk_indicator,
+    mto_solution.poc_name,
+    mto_solution.poc_email,
+    mto_solution.created_by
 FROM mto_solution
+LEFT JOIN mto_common_solution ON mto_solution.mto_common_solution_key = mto_common_solution.key
 WHERE
-    model_plan_id = :model_plan_id
-    AND mto_common_solution_key = :mto_common_solution_key
+    mto_solution.model_plan_id = :model_plan_id
+    AND mto_solution.mto_common_solution_key = :mto_common_solution_key
 LIMIT 1;
