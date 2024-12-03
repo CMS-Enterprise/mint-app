@@ -718,7 +718,7 @@ export type LockableSectionLockStatusChanged = {
 
 /**
  * MTOCategories combines the concept of Category and Subcategory
- * This allows it to be fetched mor conveniently in one resolver
+ * This allows it to be fetched more conveniently in one resolver
  */
 export type MtoCategories = {
   __typename: 'MTOCategories';

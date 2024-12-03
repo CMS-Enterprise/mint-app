@@ -145,8 +145,10 @@ func MTOCategoryGetByID(ctx context.Context, id uuid.UUID) (*models.MTOCategory,
 }
 
 // MTOCategoriesGetByID returns the subcategory and parent category information given an mto category id
-// It will return uncategorized for nil values
-// We are not doing a larger SQL call that would return both objects, as that
+// This function first fetches the category by the provided ID.
+// Then, if that category is a parent category (and we have nothing else to fetch), returns that category.
+// However, if the supplied ID points to a subcategory (i.e. it has a parent ID), then it also fetches the parent category information so both category AND subcategory are returned as part of this resolver.
+// We are not doing a larger SQL call that would return both objects, as that would result in less maintainable code
 func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.UUID) (*models.MTOCategories, error) {
 	Categories := &models.MTOCategories{
 		Category:    *models.MTOUncategorized(modelPlanID, nil, 0),
