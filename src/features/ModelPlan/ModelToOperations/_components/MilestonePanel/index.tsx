@@ -1,7 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button, Card, Grid, GridContainer } from '@trussworks/react-uswds';
+import {
+  Button,
+  Card,
+  Grid,
+  GridContainer,
+  Icon
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import {
@@ -13,6 +19,8 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
+import '../../index.scss';
+
 type MilestonePanelProps = {
   milestone: MilestoneCardType;
 };
@@ -20,17 +28,79 @@ type MilestonePanelProps = {
 const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const mappedMilestones = milestone.commonSolutions.map(solution => {
+  const mappedSolutions = milestone.commonSolutions.map(solution => {
     return helpSolutions.find(s => s.enum === solution.key);
   });
 
+  const facilitatedByUsers = milestone.facilitatedByRole
+    .map(role => t(`milestoneLibrary.facilitatedBy.${role}`))
+    .join(', ');
+
   return (
-    <GridContainer className="padding-8 side-panel--cr-and-tdl">
+    <GridContainer className="padding-8">
       <Grid row>
         <Grid col={12}>
-          <h1>{milestone.name}</h1>
+          {milestone.isSuggested && (
+            <div className="margin-bottom-4">
+              <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
+                <Icon.LightbulbOutline
+                  className="margin-left-1"
+                  style={{ top: '2px' }}
+                />{' '}
+                {t('milestoneLibrary.suggested')}
+              </span>
+            </div>
+          )}
 
-          {mappedMilestones.map(solution =>
+          <h2 className="margin-y-2">{milestone.name}</h2>
+
+          <p className="text-base-dark margin-top-0 margin-bottom-2">
+            {t('milestoneLibrary.category', {
+              category: milestone.categoryName
+            })}{' '}
+            {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
+          </p>
+
+          <p>
+            {t(`milestoneLibrary.milestoneMap.${milestone.key}.description`)}
+          </p>
+
+          <p className="text-base-dark margin-top-0 margin-bottom-4">
+            {t('milestoneLibrary.facilitatedByArray', {
+              facilitatedBy: facilitatedByUsers
+            })}
+          </p>
+
+          <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+            {!milestone.isAdded ? (
+              <Button
+                type="button"
+                outline
+                className="margin-right-2"
+                onClick={
+                  () => null
+                  // TODO: open modal
+                }
+              >
+                {t('milestoneLibrary.addToMatrix')}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                disabled
+                className="margin-right-2 model-to-operations__milestone-added text-normal"
+              >
+                <Icon.Check />
+                {t('milestoneLibrary.added')}
+              </Button>
+            )}
+          </div>
+
+          <h3 className="margin-y-2">
+            {t('milestoneLibrary.commonSolutions')}
+          </h3>
+
+          {mappedSolutions.map(solution =>
             solution ? (
               <SolutionCard key={solution.key} solution={solution} />
             ) : (
@@ -75,7 +145,9 @@ const SolutionCard = ({
       <Card
         className={classNames('width-full', className)}
         containerProps={{
-          className: classNames('padding-3 flex-justify radius-md')
+          className: classNames(
+            'padding-3 flex-justify radius-md shadow-2 margin-0'
+          )
         }}
       >
         <p className="margin-top-0 margin-bottom-05 text-base-dark">
