@@ -38,8 +38,6 @@ type MTOMilestone {
   solutions: [MTOSolution!]!
   """
   Category resolves relational category information.
-  if a milestone is uncategorized, this struct will still return
-  it will have a null value for both
   """
   categories: MTOCategories!
 }

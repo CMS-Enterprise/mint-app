@@ -151,8 +151,8 @@ func MTOCategoryGetByID(ctx context.Context, id uuid.UUID) (*models.MTOCategory,
 // We are not doing a larger SQL call that would return both objects, as that would result in less maintainable code
 func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.UUID) (*models.MTOCategories, error) {
 	Categories := &models.MTOCategories{
-		Category:    *models.MTOUncategorized(modelPlanID, nil, 0),
-		SubCategory: *models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
+		Category:    models.MTOUncategorized(modelPlanID, nil, 0),
+		SubCategory: models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
 	}
 	if id == nil {
 		return Categories, nil
@@ -163,7 +163,7 @@ func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.U
 	}
 	// Check if it is a parent category, if so early return without fetching parent
 	if immediateCategory.ParentID == nil {
-		Categories.Category = *immediateCategory
+		Categories.Category = immediateCategory
 		return Categories, nil
 	}
 
@@ -172,8 +172,8 @@ func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.U
 	if err != nil {
 		return nil, err
 	}
-	Categories.SubCategory = *immediateCategory.ToSubcategory()
-	Categories.Category = *parentCategory
+	Categories.SubCategory = immediateCategory.ToSubcategory()
+	Categories.Category = parentCategory
 
 	return Categories, nil
 }

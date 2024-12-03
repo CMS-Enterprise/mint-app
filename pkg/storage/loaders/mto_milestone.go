@@ -36,7 +36,7 @@ func batchMTOMilestoneGetByID(ctx context.Context, ids []uuid.UUID) []*dataloade
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOMilestone](ids, err)
 	}
-	data, err := storage.MTOMilestoneGetByIDsLoader(loaders.DataReader.Store, logger, ids)
+	data, err := storage.MTOMilestoneGetByIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOMilestone](ids, err)
 	}

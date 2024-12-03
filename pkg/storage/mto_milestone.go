@@ -12,8 +12,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// MTOMilestoneGetByIDsLoader returns all milestones by the provided ids
-func MTOMilestoneGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOMilestone, error) {
+// MTOMilestoneGetByIDLoader returns all milestones by the provided ids
+func MTOMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOMilestone, error) {
 
 	args := map[string]interface{}{
 		"ids": pq.Array(ids),

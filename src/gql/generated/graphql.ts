@@ -900,11 +900,7 @@ export type MtoInfoTranslation = {
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
-  /**
-   * Category resolves relational category information.
-   * if a milestone is uncategorized, this struct will still return
-   * it will have a null value for both
-   */
+  /** Category resolves relational category information. */
   categories: MtoCategories;
   commonMilestone?: Maybe<MtoCommonMilestone>;
   createdBy: Scalars['UUID']['output'];

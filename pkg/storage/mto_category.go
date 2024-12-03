@@ -12,8 +12,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// MTOCategoryGetByIDsLoader returns all categories by the provided
-func MTOCategoryGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCategory, error) {
+// MTOCategoryGetByIDLoader returns all categories by the provided
+func MTOCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCategory, error) {
 
 	args := map[string]interface{}{
 		"ids": pq.Array(ids),

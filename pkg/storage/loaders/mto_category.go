@@ -47,7 +47,7 @@ func batchMTOCategoryGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCategory](ids, err)
 	}
-	data, err := storage.MTOCategoryGetByIDsLoader(loaders.DataReader.Store, logger, ids)
+	data, err := storage.MTOCategoryGetByIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCategory](ids, err)
 	}
