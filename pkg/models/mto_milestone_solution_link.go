@@ -7,15 +7,15 @@ import (
 type MTOMilestoneSolutionLink struct {
 	baseStruct
 
-	MTOMilestoneID uuid.UUID `json:"mtoMilestoneID" db:"mto_milestone_id"`
-	MTOSolutionID  uuid.UUID `json:"mtoSolutionID" db:"mto_solution_id"`
+	MilestoneID uuid.UUID `json:"milestoneID" db:"milestone_id"`
+	SolutionID  uuid.UUID `json:"solutionID" db:"solution_id"`
 }
 
 // NewMTOMilestoneSolutionLink returns a new mtoMilestoneSolutionLink object
-func NewMTOMilestoneSolutionLink(createdBy uuid.UUID, mtoMilestoneID uuid.UUID, mtoSolutionID uuid.UUID) *MTOMilestoneSolutionLink {
+func NewMTOMilestoneSolutionLink(createdBy uuid.UUID, milestoneID uuid.UUID, solutionID uuid.UUID) *MTOMilestoneSolutionLink {
 	return &MTOMilestoneSolutionLink{
-		baseStruct:     NewBaseStruct(createdBy),
-		MTOMilestoneID: mtoMilestoneID,
-		MTOSolutionID:  mtoSolutionID,
+		baseStruct:  NewBaseStruct(createdBy),
+		MilestoneID: milestoneID,
+		SolutionID:  solutionID,
 	}
 }

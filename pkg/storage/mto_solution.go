@@ -89,6 +89,28 @@ func MTOSolutionCreate(
 	return returned, nil
 }
 
+// MTOSolutionCreateAllowConflicts creates a new MTOSolution in the database, but
+// in the case of a conflict, instead just returns the conflicting row (and doesn't return an error)
+func MTOSolutionCreateAllowConflicts(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	mtoSolution *models.MTOSolution,
+) (*models.MTOSolution, error) {
+	if mtoSolution.ID == uuid.Nil {
+		mtoSolution.ID = uuid.New()
+	}
+
+	returned, procErr := sqlutils.GetProcedure[models.MTOSolution](
+		np,
+		sqlqueries.MTOSolution.CreateAllowConflicts,
+		mtoSolution,
+	)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue creating new MTOSolution object (MTOSolutionCreateAllowConflicts): %w", procErr)
+	}
+	return returned, nil
+}
+
 // MTOSolutionUpdate updates a new MTOSolution in the database
 func MTOSolutionUpdate(
 	np sqlutils.NamedPreparer,
@@ -98,33 +120,6 @@ func MTOSolutionUpdate(
 	returned, procErr := sqlutils.GetProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.Update, mtoSolution)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating MTOSolution object: %w", procErr)
-	}
-	return returned, nil
-}
-
-// MTOSolutionGetByModelPlanIDAndCommonSolutionKeyLoader returns all solutions for a slice of model plan ids and common solution keys
-func MTOSolutionGetByModelPlanIDAndCommonSolutionKeyLoader(
-	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	keys []MTOSolutionGetByModelPlanIDAndCommonSolutionKey,
-) ([]*models.MTOSolution, error) {
-
-	jsonParam, err := models.StructArrayToJSONArray(keys)
-	if err != nil {
-		return nil, err
-	}
-
-	arg := map[string]interface{}{
-		"paramTableJSON": jsonParam,
-	}
-
-	returned, err := sqlutils.SelectProcedure[models.MTOSolution](
-		np,
-		sqlqueries.MTOSolution.GetByModelPlanIDAndCommonSolutionKeyLoader,
-		arg,
-	)
-	if err != nil {
-		return nil, err
 	}
 	return returned, nil
 }

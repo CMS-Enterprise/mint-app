@@ -3,6 +3,8 @@ package storage
 import (
 	"fmt"
 
+	"github.com/davecgh/go-spew/spew"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -93,13 +95,20 @@ func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID)
 func MTOMilestoneSolutionLinkCreate(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
-	mtoMilestoneSolutionLink models.MTOMilestoneSolutionLink,
-) (*uuid.UUID, error) {
+	mtoMilestoneSolutionLink *models.MTOMilestoneSolutionLink,
+) (*models.MTOMilestoneSolutionLink, error) {
 
-	linkId, procErr := sqlutils.GetProcedure[uuid.UUID](np, sqlqueries.MTOMilestone.CreateMilestoneSolutionLink, mtoMilestoneSolutionLink)
+	if mtoMilestoneSolutionLink.ID == uuid.Nil {
+		mtoMilestoneSolutionLink.ID = uuid.New()
+	}
+
+	println("--- CREATING MTO MILESTONE SOLUTION LINK ---")
+	spew.Dump(mtoMilestoneSolutionLink)
+
+	link, procErr := sqlutils.GetProcedure[models.MTOMilestoneSolutionLink](np, sqlqueries.MTOMilestone.CreateMilestoneSolutionLink, mtoMilestoneSolutionLink)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new MTO Milestone-Solution link: %w", procErr)
 	}
 
-	return linkId, nil
+	return link, nil
 }
