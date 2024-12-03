@@ -31,6 +31,8 @@ type mtoMilestoneScripts struct {
 	GetByModelPlanIDLoader string
 	// returns all Milestones by a model plan and category
 	GetByModelPlanIDAndCategoryIDLoader string
+
+	// TODO: Consider moving link queries to a separate file
 	// creates a link between a milestone and a solution and returns the link ID
 	CreateMilestoneSolutionLink string
 	// returns all milestone-solution links for a given milestone by ID

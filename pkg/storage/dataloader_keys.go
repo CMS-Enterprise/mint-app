@@ -2,8 +2,6 @@ package storage
 
 import (
 	"github.com/google/uuid"
-
-	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
@@ -20,11 +18,4 @@ type MTOMilestoneByModelPlanAndCategoryKey struct {
 	ModelPlanID uuid.UUID `json:"model_plan_id"`
 	// MTOCategoryID is the category the milestone is associated with. Note, this can be null
 	MTOCategoryID uuid.UUID `json:"mto_category_id"`
-}
-
-type MTOSolutionGetByModelPlanIDAndCommonSolutionKey struct {
-	// ModelPlanID is the model plan the solution is in reference to
-	ModelPlanID uuid.UUID `json:"model_plan_id"`
-	// CommonSolutionKey is the key of the common solution
-	models.MTOCommonSolutionKey `json:"common_solution_key"`
 }

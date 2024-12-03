@@ -18,9 +18,6 @@ type mtoSolutionLoaders struct {
 	ByID LoaderWrapper[uuid.UUID, *models.MTOSolution]
 	// ByModelPlanID Gets a list of mto Solution records associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOSolution]
-
-	// ByModelPlanIDAndCommonKeys Gets a list of mto Solution records associated with a model plan by the supplied model plan id and common keys.
-	ByModelPlanIDAndCommonKeys LoaderWrapper[uuid.UUID, []*models.MTOSolution]
 }
 
 // MTOSolution is the singleton instance of all LoaderWrappers related to MTO Solutions
