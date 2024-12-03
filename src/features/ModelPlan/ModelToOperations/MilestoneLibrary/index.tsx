@@ -243,6 +243,7 @@ const MilstoneCardGroup = ({
         ariaLabel={t('milestoneLibrary.aboutThisMilestone')}
         testid="milestone-sidepanel"
         modalHeading={t('milestoneLibrary.aboutThisMilestone')}
+        noScrollable
       >
         {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
       </Sidepanel>
