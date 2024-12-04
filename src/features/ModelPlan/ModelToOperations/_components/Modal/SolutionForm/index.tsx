@@ -49,14 +49,15 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
       solutionTitle: '',
       pocName: '',
       pocEmail: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { isValid }
+    formState: { isValid, errors }
   } = methods;
 
   const [create] = useCreateMtoSolutionCustomMutation();
@@ -134,13 +135,9 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.solution.label.solutionType')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.solution.label.solutionType')}
                 </Label>
 
                 <Select
@@ -176,13 +173,9 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.solution.label.solutionTitle')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.solution.label.solutionTitle')}
                 </Label>
 
                 <TextInput
@@ -215,13 +208,9 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.solution.label.pocName')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.solution.label.pocName')}
                 </Label>
 
                 <TextInput
@@ -241,7 +230,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
               required: true,
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: 'Entered value does not match email format'
+                message: `${t('modal.solution.label.emailError')}`
               }
             }}
             render={({ field: { ref, ...field } }) => (
@@ -249,14 +238,15 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.solution.label.pocEmail')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.solution.label.pocEmail')}
                 </Label>
+                {errors.pocEmail && (
+                  <span className="usa-error-message" role="alert">
+                    {errors.pocEmail.message}
+                  </span>
+                )}
 
                 <TextInput
                   type="text"
