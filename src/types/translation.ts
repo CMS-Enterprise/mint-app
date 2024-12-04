@@ -47,6 +47,8 @@ import {
   MtoCategoryTranslation,
   MtoInfoTranslation,
   MtoMilestoneTranslation,
+  MtoSolutionTranslation,
+  MtoSolutionType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
@@ -1277,6 +1279,27 @@ export type TranslationMTOMilestoneCustom = {
   [K in keyof TranslationMTOMilestoneCustomGQL]: TranslationMTOMilestoneCustomForm[K]; // FE form type
 };
 
+// MTO Solution - Change History purposes only
+export type TranslationMTOSolutionCustomForm = {
+  name: TranslationFieldProperties;
+  pocName: TranslationFieldProperties;
+  pocEmail: TranslationFieldProperties;
+  solutionType: TranslationFieldPropertiesWithOptions<MtoSolutionType>;
+};
+
+type TranslationMTOSolutionCustomGQL = Omit<
+  MtoSolutionTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOSolutionCustom = {
+  [K in keyof TranslationMTOSolutionCustomGQL]: TranslationMTOSolutionCustomForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -1297,6 +1320,7 @@ export type TranslationPlan = {
   modelToOperations: TranslationMTOInfo;
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
+  mtoSolution: TranslationMTOSolutionCustom;
 };
 
 export type TranslationPlanSection =
@@ -1328,5 +1352,6 @@ export enum PlanSection {
   DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
-  MTO_MILESTONE = 'mtoMilestone'
+  MTO_MILESTONE = 'mtoMilestone',
+  MTO_SOLUTION = 'mtoSolution'
 }

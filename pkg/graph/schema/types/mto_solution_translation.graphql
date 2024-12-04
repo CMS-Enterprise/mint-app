@@ -1,0 +1,11 @@
+
+"""
+Represents MTO Custom Solution translation data
+"""
+
+type MTOSolutionTranslation {
+  name: TranslationField! @goTag(key: "db", value: "name")
+  pocName: TranslationField! @goTag(key: "db", value: "poc_name")
+  pocEmail: TranslationField! @goTag(key: "db", value: "poc_email")
+  solutionType: TranslationFieldWithOptions! @goTag(key: "db", value: "type")
+}
