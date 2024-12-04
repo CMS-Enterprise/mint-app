@@ -101,6 +101,12 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
+	// Since storage.MTOMilestoneGetByID will return a `Name` property when
+	// fetching milestones sourced from the common milestone library, we need to clear out that field
+	// or else storage.MTOMilestoneUpdate will attempt to update the name (which won't be allowed, since this is a Milestone sourced from the common milestone library
+	if existing.AddedFromMilestoneLibrary() {
+		existing.Name = nil
+	}
 
 	// Check access and apply changes
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
