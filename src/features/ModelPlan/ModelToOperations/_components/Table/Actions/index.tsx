@@ -96,6 +96,95 @@ const MTOTableActions = () => {
                 {t('optionsCard.milestones.linkText')}
               </Button>
             </div>
+
+            <div className="width-fit-content">
+              <div className="display-flex flex-align-center">
+                <Icon.Flag
+                  className="margin-right-1 bg-green-5"
+                  style={{
+                    height: '20px',
+                    width: '20px',
+                    fill: '#607F35'
+                  }}
+                />
+                <p className="margin-y-0 text-bold">
+                  {t('table.tableActions.milestones')}
+                </p>
+              </div>
+              <p className="margin-top-0">
+                {t('table.tableActions.commonSolutions', { number: 31 })}
+              </p>
+
+              <Button
+                type="button"
+                className="display-block margin-bottom-1"
+                outline
+                onClick={() => {
+                  clearMessage();
+                  setModalType('category');
+                  setIsModalOpen(true);
+                }}
+              >
+                {t('table.tableActions.browseSolutionLibrary')}
+              </Button>
+              <Button
+                type="button"
+                className="display-block"
+                unstyled
+                onClick={() => {
+                  clearMessage();
+                  setModalType('category');
+                  setIsModalOpen(true);
+                }}
+              >
+                {t('optionsCard.systems-and-solutions.linkText')}
+              </Button>
+            </div>
+
+            <div className="width-fit-content">
+              <div className="display-flex flex-align-center">
+                <Icon.Flag
+                  className="margin-right-1 bg-green-5"
+                  style={{
+                    height: '20px',
+                    width: '20px',
+                    fill: '#607F35'
+                  }}
+                />
+                <p className="margin-y-0 text-bold">
+                  {t('table.tableActions.milestones')}
+                </p>
+              </div>
+              <p className="margin-top-0">
+                {t('table.tableActions.commonSolutions', { number: 31 })}
+              </p>
+
+              <Button
+                type="button"
+                className="display-block margin-bottom-1"
+                outline
+                onClick={() => {
+                  clearMessage();
+                  setModalType('category');
+                  setIsModalOpen(true);
+                }}
+              >
+                {t('table.tableActions.browseSolutionLibrary')}
+              </Button>
+              <Button
+                type="button"
+                className="display-block"
+                unstyled
+                onClick={() => {
+                  clearMessage();
+                  setModalType('category');
+                  setIsModalOpen(true);
+                }}
+              >
+                {t('optionsCard.systems-and-solutions.linkText')}
+              </Button>
+            </div>
+
             {/* <Button
               type="button"
               onClick={() => {

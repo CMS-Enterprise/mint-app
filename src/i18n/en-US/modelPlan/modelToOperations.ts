@@ -240,6 +240,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       browseMilestoneLibrary: 'Browse milestone library',
       operationalSolutions: 'Operational solutions',
       commonSolutions: '{{number}} common solutions and IT systems',
+      browseSolutionLibrary: 'Browse solution library',
       templateAndCategories: 'Templates and categories',
       availableTemplates: '1 available template',
       standardCategories: 'standard categories',
