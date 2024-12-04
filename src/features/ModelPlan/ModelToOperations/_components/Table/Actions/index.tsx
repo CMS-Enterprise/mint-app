@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 
 import useMessage from 'hooks/useMessage';
@@ -8,6 +9,9 @@ import MTOModal from '../../Modal';
 
 const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const history = useHistory();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { clearMessage } = useMessage();
 
@@ -82,9 +86,9 @@ const MTOTableActions = () => {
                 className="display-block margin-bottom-1"
                 outline
                 onClick={() => {
-                  clearMessage();
-                  setModalType('milestone');
-                  setIsModalOpen(true);
+                  history.push(
+                    `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
+                  );
                 }}
               >
                 {t('table.tableActions.browseMilestoneLibrary')}
@@ -133,9 +137,9 @@ const MTOTableActions = () => {
                 className="display-block margin-bottom-1"
                 outline
                 onClick={() => {
-                  clearMessage();
-                  setModalType('solution');
-                  setIsModalOpen(true);
+                  history.push(
+                    `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
+                  );
                 }}
               >
                 {t('table.tableActions.browseSolutionLibrary')}
