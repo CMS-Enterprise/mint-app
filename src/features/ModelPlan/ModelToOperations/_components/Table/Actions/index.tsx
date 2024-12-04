@@ -175,6 +175,22 @@ const MTOTableActions = () => {
               <p className="margin-top-0">
                 {t('table.tableActions.availableTemplates')}
               </p>
+              <div
+                className="display-flex flex-justify bg-base-lightest border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
+                style={{ gap: '24px' }}
+              >
+                <span className="text-bold">
+                  {t('table.tableActions.standardCategories')}
+                </span>
+                <Button
+                  type="button"
+                  className="display-block"
+                  unstyled
+                  onClick={() => {}}
+                >
+                  {t('table.tableActions.addThisTemplate')}
+                </Button>
+              </div>
 
               <Button
                 type="button"

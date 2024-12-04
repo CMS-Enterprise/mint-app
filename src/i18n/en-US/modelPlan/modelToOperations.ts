@@ -243,7 +243,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       browseSolutionLibrary: 'Browse solution library',
       templateAndCategories: 'Templates and categories',
       availableTemplates: '1 available template',
-      standardCategories: 'standard categories',
+      standardCategories: 'Standard categories',
       addThisTemplate: 'Add this template',
       addCustomCategory: 'or, add a custom category'
     }
