@@ -6,7 +6,10 @@ import { useLocation } from 'react-router-dom';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
-import { OperationalSolutionKey } from 'gql/generated/graphql';
+import {
+  MtoCommonSolutionKey,
+  OperationalSolutionKey
+} from 'gql/generated/graphql';
 
 import usePrevLocation from 'hooks/usePrevious';
 
@@ -20,7 +23,7 @@ type SolutionModalState = {
 };
 
 const useModalSolutionState = (
-  solutionKey?: OperationalSolutionKey
+  solutionKey?: OperationalSolutionKey | MtoCommonSolutionKey
 ): SolutionModalState => {
   const location = useLocation();
 

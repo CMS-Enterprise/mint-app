@@ -77,10 +77,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                 type="button"
                 outline
                 className="margin-right-2"
-                onClick={
-                  () => null
-                  // TODO: open modal
-                }
+                onClick={() => null}
               >
                 {t('milestoneLibrary.addToMatrix')}
               </Button>
@@ -111,7 +108,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   );
 };
 
-const SolutionCard = ({
+export const SolutionCard = ({
   solution,
   className
 }: {
@@ -131,8 +128,6 @@ const SolutionCard = ({
   const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
     solution.enum!
   );
-
-  // console.log(history.location.search);
 
   return (
     <Grid desktop={{ col: 9 }} className="display-flex">
@@ -166,7 +161,7 @@ const SolutionCard = ({
           <Button
             type="button"
             unstyled
-            onClick={() => history.push({ search: params.toString() })}
+            onClick={() => history.replace({ search: params.toString() })}
           >
             {t('milestoneLibrary.aboutSolution')}
           </Button>

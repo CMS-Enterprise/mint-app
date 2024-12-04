@@ -99,6 +99,7 @@ const MilestoneCard = ({
         <Button
           unstyled
           type="button"
+          className="margin-top-2"
           onClick={() => {
             setIsSidepanelOpen(true);
             params.set('milestone', milestone.key);

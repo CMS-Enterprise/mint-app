@@ -22,9 +22,10 @@
   }
 
   &__x-button {
-    display: block;
-    margin: 5px 5px 5px auto;
-    padding: 0;
+    display: flex;
+    padding: .5rem;
+    margin: auto;
+    margin-right: 0;
     background: none;
     border: 0;
     font-size: 1.5rem;

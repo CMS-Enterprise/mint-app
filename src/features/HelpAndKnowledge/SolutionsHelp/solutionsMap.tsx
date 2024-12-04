@@ -279,8 +279,8 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
     subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
+    type: 'IT System',
     components: {
-      type: 'IT System',
       timeline: (props: SolutionDetailProps) => (
         <CMSQualtricsTimeline {...props} />
       )

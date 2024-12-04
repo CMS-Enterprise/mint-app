@@ -18,17 +18,20 @@ import {
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
+import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
 import TableResults from 'components/TableResults';
+import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
+import MTOModal from '../_components/Modal';
 
 import './index.scss';
 
@@ -118,6 +121,10 @@ const MilstoneCardGroup = ({
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
+
+  const { clearMessage, message } = useMessage();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Query parameters
   const params = new URLSearchParams(history.location.search);
@@ -228,7 +235,7 @@ const MilstoneCardGroup = ({
 
   useEffect(() => {
     params.set('page', '1');
-    history.push({ search: params.toString() });
+    history.replace({ search: params.toString() });
   }, [viewParam, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -237,7 +244,7 @@ const MilstoneCardGroup = ({
         isOpen={!!selectedMilestone}
         closeModal={() => {
           params.delete('milestone');
-          history.push({ search: params.toString() });
+          history.replace({ search: params.toString() });
           setIsSidepanelOpen(false);
         }}
         ariaLabel={t('milestoneLibrary.aboutThisMilestone')}
@@ -247,6 +254,14 @@ const MilstoneCardGroup = ({
       >
         {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
       </Sidepanel>
+
+      <MTOModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        modalType="milestone"
+      />
+
+      {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
       <div className="milestone-card-group">
         <div className="margin-top-2 margin-bottom-4">
@@ -284,7 +299,7 @@ const MilstoneCardGroup = ({
                   outline={viewParam !== 'suggested'}
                   onClick={() => {
                     params.set('view', 'suggested');
-                    history.push({ search: params.toString() });
+                    history.replace({ search: params.toString() });
                   }}
                 >
                   {t('milestoneLibrary.suggestedMilestones', {
@@ -298,7 +313,7 @@ const MilstoneCardGroup = ({
                   outline={viewParam !== 'all'}
                   onClick={() => {
                     params.set('view', 'all');
-                    history.push({ search: params.toString() });
+                    history.replace({ search: params.toString() });
                   }}
                 >
                   {t('milestoneLibrary.allMilestones', {
@@ -323,7 +338,7 @@ const MilstoneCardGroup = ({
                     'hide-added-milestones',
                     addedMilestonesHidden ? 'false' : 'true'
                   );
-                  history.push({ search: params.toString() });
+                  history.replace({ search: params.toString() });
                 }}
               />
             </Grid>
@@ -350,14 +365,30 @@ const MilstoneCardGroup = ({
                       </UswdsReactLink>
                     ),
                     button1: (
-                      <Button unstyled type="button" className="margin-x-05">
+                      <Button
+                        unstyled
+                        type="button"
+                        className="margin-x-05"
+                        onClick={() => {
+                          clearMessage();
+                          setIsModalOpen(true);
+                        }}
+                      >
                         {' '}
                       </Button>
                     )
                   }}
                 />
               ) : (
-                <Button unstyled type="button" className="margin-x-05">
+                <Button
+                  unstyled
+                  type="button"
+                  className="margin-x-05"
+                  onClick={() => {
+                    clearMessage();
+                    setIsModalOpen(true);
+                  }}
+                >
                   {t('milestoneLibrary.addCustomMilestone')}{' '}
                 </Button>
               )}

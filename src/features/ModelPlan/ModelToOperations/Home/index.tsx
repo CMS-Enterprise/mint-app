@@ -71,7 +71,7 @@ const MTOHome = () => {
     } else {
       // Default to milestones if no view param present
       params.set('view', 'milestones');
-      history.push({ search: params.toString() });
+      history.replace({ search: params.toString() });
     }
   }, [viewparam, history, params]);
 
