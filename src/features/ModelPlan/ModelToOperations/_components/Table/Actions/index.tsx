@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
+import {
+  useGetMtoCommonSolutionsQuery,
+  useGetMtoMilestonesQuery
+} from 'gql/generated/graphql';
 
 import useMessage from 'hooks/useMessage';
 
@@ -16,11 +20,19 @@ const MTOTableActions = () => {
   const { clearMessage } = useMessage();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(true);
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
 
   const [modalType, setModalType] = useState<
     'category' | 'milestone' | 'solution'
   >('category');
+
+  const { data: milestoneData } = useGetMtoMilestonesQuery({
+    variables: { id: modelID }
+  });
+
+  const { data: solutionData } = useGetMtoCommonSolutionsQuery({
+    variables: { id: modelID }
+  });
 
   return (
     <>
@@ -78,7 +90,11 @@ const MTOTableActions = () => {
                 </p>
               </div>
               <p className="margin-top-0">
-                {t('table.tableActions.commonMilestones', { number: 31 })}
+                {t('table.tableActions.commonMilestones', {
+                  number:
+                    milestoneData?.modelPlan?.mtoMatrix?.commonMilestones
+                      ?.length
+                })}
               </p>
 
               <Button
@@ -129,7 +145,10 @@ const MTOTableActions = () => {
                 </p>
               </div>
               <p className="margin-top-0">
-                {t('table.tableActions.commonSolutions', { number: 31 })}
+                {t('table.tableActions.commonSolutions', {
+                  number:
+                    solutionData?.modelPlan?.mtoMatrix?.commonSolutions?.length
+                })}
               </p>
 
               <Button
