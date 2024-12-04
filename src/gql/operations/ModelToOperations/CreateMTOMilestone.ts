@@ -12,6 +12,7 @@ export default gql(/* GraphQL */ `
       commonSolutions: $commonSolutions
     ) {
       id
+      name
     }
   }
 `);

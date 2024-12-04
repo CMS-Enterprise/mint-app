@@ -6,31 +6,32 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
   Form,
   FormGroup,
-  Label,
-  Select,
-  TextInput
+  Label
 } from '@trussworks/react-uswds';
 import {
+  GetModelToOperationsMatrixDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
-  MtoSolutionType,
-  useCreateMtoSolutionCustomMutation
+  useCreateMtoMilestoneMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import HelpText from 'components/HelpText';
+import MultiSelect from 'components/MultiSelect';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
+import {
+  composeMultiSelectOptions,
+  convertCamelCaseToKebabCase
+} from 'utils/modelPlan';
 
 type FormValues = {
-  commonMilestoneKey: MtoCommonMilestoneKey | null;
   commonSolutions: MtoCommonSolutionKey[] | undefined;
 };
 
@@ -44,6 +45,11 @@ const AddSolutionToMilestoneForm = ({
   const { commonSolutions: commonSolutionsConfig } =
     usePlanTranslation('mtoMilestone');
 
+  const history = useHistory();
+
+  const params = new URLSearchParams(history.location.search);
+  const milestoneKey = params.get('milestone') as MtoCommonMilestoneKey;
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const { message, showMessage, clearMessage } = useMessage();
@@ -51,7 +57,6 @@ const AddSolutionToMilestoneForm = ({
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      commonMilestoneKey: null,
       commonSolutions: []
     },
     mode: 'onBlur'
@@ -61,18 +66,26 @@ const AddSolutionToMilestoneForm = ({
     control,
     handleSubmit,
     reset,
-    formState: { isValid, errors }
+    watch,
+    formState: { isValid }
   } = methods;
 
-  const [create] = useCreateMtoSolutionCustomMutation();
+  const [create] = useCreateMtoMilestoneMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: { id: modelID }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    // if (formData.solutionType === 'default') return;
+    if (!milestoneKey) return;
 
     create({
       variables: {
         modelPlanID: modelID,
-        commonMilestoneKey: formData.commonMilestoneKey,
+        commonMilestoneKey: milestoneKey,
         commonSolutions: formData.commonSolutions
       }
     })
@@ -88,11 +101,13 @@ const AddSolutionToMilestoneForm = ({
               >
                 <span className="mandatory-fields-alert__text">
                   <Trans
-                    i18nKey={t('modal.solution.alert.success')}
+                    i18nKey={t('modal.milestone.alert.success')}
                     components={{
                       b: <span className="text-bold" />
                     }}
-                    values={{ solution: formData.solutionTitle }}
+                    values={{
+                      milestone: response.data?.createMTOMilestoneCommon.name
+                    }}
                   />
                 </span>
               </Alert>
@@ -116,175 +131,70 @@ const AddSolutionToMilestoneForm = ({
   };
 
   return (
-    <FormProvider {...methods}>
-      {message}
-      <Form
-        className="maxw-none"
-        data-testid="custom-solution-form"
-        id="custom-solution-form"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Fieldset>
-          <Controller
-            name="solutionType"
-            control={control}
-            rules={{
-              required: true,
-              validate: value => value !== 'default'
-            }}
-            render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
-                <Label
-                  htmlFor={convertCamelCaseToKebabCase(field.name)}
-                  className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
-                >
-                  {t('modal.solution.label.solutionType')}
-                </Label>
+    <>
+      <p className="mint-body-normal">
+        {t('modal.solutionToMilestone.description')}
+      </p>
 
-                <Select
-                  {...field}
-                  id={convertCamelCaseToKebabCase(field.name)}
-                  value={field.value || ''}
-                  defaultValue="default"
-                >
-                  <option value="default">- Select - </option>
-                  {getKeys(solutionTypeConfig.options).map(option => {
-                    return (
-                      <option
-                        key={`select-${convertCamelCaseToKebabCase(option)}`}
-                        value={option}
-                      >
-                        {solutionTypeConfig.options[option]}
-                      </option>
-                    );
-                  })}
-                </Select>
-              </FormGroup>
-            )}
-          />
-
-          <Controller
-            name="solutionTitle"
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
-                <Label
-                  htmlFor={convertCamelCaseToKebabCase(field.name)}
-                  className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
-                >
-                  {t('modal.solution.label.solutionTitle')}
-                </Label>
-
-                <TextInput
-                  type="text"
-                  {...field}
-                  id={convertCamelCaseToKebabCase(field.name)}
-                  value={field.value || ''}
-                />
-              </FormGroup>
-            )}
-          />
-
-          <div className="margin-top-0 padding-top-1 margin-bottom-2">
-            <p className="text-bold margin-y-0">
-              {t('modal.solution.pocHeading')}
-            </p>
-            <p className="text-base margin-y-0">
-              {t('modal.solution.pocSubheading')}
-            </p>
-          </div>
-
-          <Controller
-            name="pocName"
-            control={control}
-            rules={{
-              required: true
-            }}
-            render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
-                <Label
-                  htmlFor={convertCamelCaseToKebabCase(field.name)}
-                  className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
-                >
-                  {t('modal.solution.label.pocName')}
-                </Label>
-
-                <TextInput
-                  type="text"
-                  {...field}
-                  id={convertCamelCaseToKebabCase(field.name)}
-                  value={field.value || ''}
-                />
-              </FormGroup>
-            )}
-          />
-
-          <Controller
-            name="pocEmail"
-            control={control}
-            rules={{
-              required: true,
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: `${t('modal.solution.label.emailError')}`
-              }
-            }}
-            render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
-                <Label
-                  htmlFor={convertCamelCaseToKebabCase(field.name)}
-                  className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
-                >
-                  {t('modal.solution.label.pocEmail')}
-                </Label>
-                {errors.pocEmail && (
-                  <span className="usa-error-message" role="alert">
-                    {errors.pocEmail.message}
-                  </span>
-                )}
-
-                <TextInput
-                  type="text"
-                  {...field}
-                  id={convertCamelCaseToKebabCase(field.name)}
-                  value={field.value || ''}
-                />
-              </FormGroup>
-            )}
-          />
-        </Fieldset>
-        <Alert type="info" slim className="margin-bottom-2">
-          <Trans
-            i18nKey={t('modal.solution.alert.info')}
-            components={{
-              s: <span className="text-underline text-primary-light" />
-              // TODO: Add a link to the documentation
-            }}
-          />
-        </Alert>
-        <Button type="submit" disabled={!isValid} className="margin-right-3">
-          {t('modal.addButton', { type: 'solution' })}
-        </Button>
-        <Button
-          type="button"
-          className="usa-button usa-button--unstyled"
-          onClick={() => {
-            reset();
-            clearMessage();
-            closeModal();
-          }}
+      <FormProvider {...methods}>
+        {message}
+        <Form
+          className="maxw-none"
+          id="milestone-form"
+          onSubmit={handleSubmit(onSubmit)}
         >
-          {t('modal.cancel')}
-        </Button>
-      </Form>
-    </FormProvider>
+          <Fieldset>
+            <Controller
+              name="commonSolutions"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-0">
+                  <Label
+                    htmlFor={convertCamelCaseToKebabCase('commonSolutions')}
+                  >
+                    {commonSolutionsConfig.label}
+                  </Label>
+
+                  <HelpText className="margin-top-1">
+                    {commonSolutionsConfig.sublabel}
+                  </HelpText>
+
+                  <MultiSelect
+                    {...field}
+                    id={convertCamelCaseToKebabCase('multiSourceDataToCollect')}
+                    inputId={convertCamelCaseToKebabCase('commonSolutions')}
+                    ariaLabel={convertCamelCaseToKebabCase('commonSolutions')}
+                    ariaLabelText={commonSolutionsConfig.label}
+                    options={composeMultiSelectOptions(
+                      commonSolutionsConfig.options,
+                      commonSolutionsConfig.readonlyOptions
+                    )}
+                    selectedLabel={commonSolutionsConfig.multiSelectLabel || ''}
+                    initialValues={watch('commonSolutions')}
+                  />
+                </FormGroup>
+              )}
+            />
+          </Fieldset>
+
+          <Button type="submit" disabled={!isValid} className="margin-right-3">
+            {t('modal.addButton', { type: 'solution' })}
+          </Button>
+
+          <Button
+            type="button"
+            className="usa-button usa-button--unstyled"
+            onClick={() => {
+              reset();
+              clearMessage();
+              closeModal();
+            }}
+          >
+            {t('modal.cancel')}
+          </Button>
+        </Form>
+      </FormProvider>
+    </>
   );
 };
 

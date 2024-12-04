@@ -20,12 +20,15 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'CommonSolutions',
     dbField: 'common_solutions',
     label: 'Solutions',
+    sublabel:
+      'Select from all operational solutions and IT systems included in MINT. Select all that apply. If you choose not to add solutions now, you may add them later via the solution library or by adding a custom solution.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     order: 2.0,
+    multiSelectLabel: 'Selected solutions',
     options: {
       INNOVATION: '4innovation',
-      ACO_OS: 'ACO_OS',
+      ACO_OS: 'Accountable Care Organization - Operational System',
       APPS: 'Accountable Care Organization - Operational System',
       CDX: 'Centralized Data Exchange',
       CCW: 'Chronic Conditions Warehouse',
@@ -61,6 +64,9 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       MIDS: 'Measure and Instrument Development and Support',
       MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
       MODEL_SPACE: 'Model Space'
+    },
+    readonlyOptions: {
+      INNOVATION: '4i'
     }
   }
 };

@@ -194,7 +194,9 @@ export const columns: ColumnType[] = [
         <>
           {row.facilitatedBy
             .map(facilitator =>
-              i18next.t(`modelToOperationsMisc:facilitatedBy.${facilitator}`)
+              i18next.t(
+                `modelToOperationsMisc:milestoneLibrary.facilitatedBy.${facilitator}`
+              )
             )
             .join(', ')}
         </>
