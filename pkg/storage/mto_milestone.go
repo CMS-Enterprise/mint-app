@@ -88,39 +88,3 @@ func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID)
 
 	return returned, nil
 }
-
-// MTOMilestoneSolutionLinkCreate creates a new MTO Milestone-Solution link in the database
-func MTOMilestoneSolutionLinkCreate(
-	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	mtoMilestoneSolutionLink *models.MTOMilestoneSolutionLink,
-) (*models.MTOMilestoneSolutionLink, error) {
-
-	if mtoMilestoneSolutionLink.ID == uuid.Nil {
-		mtoMilestoneSolutionLink.ID = uuid.New()
-	}
-
-	link, procErr := sqlutils.GetProcedure[models.MTOMilestoneSolutionLink](np, sqlqueries.MTOMilestone.CreateMilestoneSolutionLink, mtoMilestoneSolutionLink)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue creating new MTO Milestone-Solution link: %w", procErr)
-	}
-
-	return link, nil
-}
-
-// MTOMilestoneSolutionLinkGetByMilestoneID returns all MTO Milestone-Solution links for a given Milestone ID
-func MTOMilestoneSolutionLinkGetByMilestoneID(
-	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	milestoneID uuid.UUID,
-) ([]*models.MTOMilestoneSolutionLink, error) {
-
-	arg := map[string]interface{}{"milestone_id": milestoneID}
-
-	returned, procErr := sqlutils.SelectProcedure[models.MTOMilestoneSolutionLink](np, sqlqueries.MTOMilestone.GetMilestoneSolutionLinksByMilestoneID, arg)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue retrieving MTO Milestone-Solution links: %w", procErr)
-	}
-
-	return returned, nil
-}

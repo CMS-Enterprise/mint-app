@@ -41,3 +41,26 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	suite.NoError(err)
 	suite.Len(milestoneSolutionLinks, 2)
 }
+
+func (suite *ResolverSuite) TestCreateMilestoneSolutionLinksNoCommonSolutions() {
+	plan := suite.createModelPlan("plan for testing MTO create milestone solution links")
+	commonMilestoneKey := models.MTOCommonMilestoneKeyAppSupportCon
+
+	// create a milestone
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestoneKey, []models.MTOCommonSolutionKey{})
+
+	// validate the created solutions
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Len(solutions, 0)
+
+	// validate that the milestone links are created
+	milestoneSolutionLinks, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		milestone.ID,
+	)
+
+	suite.NoError(err)
+	suite.Len(milestoneSolutionLinks, 0)
+}

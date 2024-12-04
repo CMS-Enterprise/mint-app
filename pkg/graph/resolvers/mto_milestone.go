@@ -93,6 +93,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		}
 		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
 
+		// TODO: Batch insert these solutions
 		var solutions []*models.MTOSolution
 		for _, commonSolutionKey := range commonSolutions {
 			solution := models.NewMTOSolution(modelPlanID,
@@ -111,6 +112,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			solutions = append(solutions, mtoSolution)
 		}
 
+		// TODO: Batch insert these links
 		for _, solution := range solutions {
 			mtoMilestoneSolutionLink := models.NewMTOMilestoneSolutionLink(
 				principal.Account().ID,

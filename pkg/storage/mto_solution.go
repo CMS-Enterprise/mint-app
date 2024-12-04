@@ -91,6 +91,7 @@ func MTOSolutionCreate(
 
 // MTOSolutionCreateAllowConflicts creates a new MTOSolution in the database, but
 // in the case of a conflict, instead just returns the conflicting row (and doesn't return an error)
+// TODO: Batch insert these solutions
 func MTOSolutionCreateAllowConflicts(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,

@@ -1,8 +1,6 @@
 package storage
 
-import (
-	"github.com/google/uuid"
-)
+import "github.com/google/uuid"
 
 // SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
 type SolutionAndPossibleKey struct {
