@@ -28,10 +28,12 @@ type MilestonePanelProps = {
 const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  // Map the common solutions to the FE help solutions
   const mappedSolutions = milestone.commonSolutions.map(solution => {
     return helpSolutions.find(s => s.enum === solution.key);
   });
 
+  // Map the translated text for facilitated by roles into a joined string
   const facilitatedByUsers = milestone.facilitatedByRole
     .map(role => t(`milestoneLibrary.facilitatedBy.${role}`))
     .join(', ');
@@ -122,11 +124,12 @@ export const SolutionCard = ({
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
+  // Set the solution route params
   params.set('solution', solution.route);
   params.set('section', 'about');
 
   const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.enum!
+    solution.enum
   );
 
   return (

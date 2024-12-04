@@ -16,7 +16,7 @@ exports[`Sidepanel > matches snapshot 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay mint-sidepanel__overlay overflow-y-scroll"
+      class="ReactModal__Overlay mint-sidepanel__overlay overflow-y-auto"
     >
       <div
         aria-label="ariaLabel"

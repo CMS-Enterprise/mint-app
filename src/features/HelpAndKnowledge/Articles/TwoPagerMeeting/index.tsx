@@ -12,7 +12,6 @@ import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpB
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';

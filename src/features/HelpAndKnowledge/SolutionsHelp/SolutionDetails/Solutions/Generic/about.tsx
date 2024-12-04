@@ -7,7 +7,6 @@ import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/soluti
 import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import ExternalLink from 'components/ExternalLink';
-import UswdsReactLink from 'components/LinkWrapper';
 
 import '../index.scss';
 
@@ -91,6 +90,7 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
   return linkObj;
 };
 
+// Button to link to another solution panel and scroll to the top
 const InternalSolutionButton = ({
   params,
   children
