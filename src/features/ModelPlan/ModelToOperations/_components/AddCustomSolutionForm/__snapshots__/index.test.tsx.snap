@@ -166,11 +166,13 @@ exports[`Custom Solution form > matches snapshot 1`] = `
         >
           <span>
             Please double-check that you aren't creating an operational solution or IT system that already exists in the 
-            <span
-              class="text-underline text-primary-light"
+            <button
+              class="usa-button usa-button usa-button--unstyled margin-top-0"
+              data-testid="button"
+              type="button"
             >
               solution library
-            </span>
+            </button>
             .
           </span>
         </p>
