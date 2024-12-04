@@ -5,4 +5,5 @@ Represents MTO Custom Milestone translation data
 
 type MTOMilestoneTranslation {
   name: TranslationField! @goTag(key: "db", value: "name")
+  commonSolutions: TranslationFieldWithOptions! @goTag(key: "db", value: "common_solutions")  
 }

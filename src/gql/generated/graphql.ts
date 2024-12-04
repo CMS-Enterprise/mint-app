@@ -944,6 +944,7 @@ export enum MtoMilestoneStatus {
 /** Represents MTO Custom Milestone translation data */
 export type MtoMilestoneTranslation = {
   __typename: 'MTOMilestoneTranslation';
+  commonSolutions: TranslationFieldWithOptions;
   name: TranslationField;
 };
 

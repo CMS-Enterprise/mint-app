@@ -5,6 +5,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
+import AddSolutionToMilestoneForm from './AddSolutionToMilestoneForm';
 import CategoryForm from './CategoryForm';
 import MilestoneForm from './MilestoneForm';
 import SolutionForm from './SolutionForm';
@@ -12,10 +13,16 @@ import SolutionForm from './SolutionForm';
 type MTOModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-  modalType: 'category' | 'milestone' | 'solution';
+  modalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone';
+  isRequired?: boolean;
 };
 
-const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
+const MTOModal = ({
+  isOpen,
+  closeModal,
+  modalType,
+  isRequired = true
+}: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { clearMessage } = useMessage();
@@ -28,6 +35,8 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
         return t('modal.title.milestone');
       case 'solution':
         return t('modal.title.solution');
+      case 'solutionToMilestone':
+        return t('modal.title.solutionToMilestone');
       default:
         return '';
     }
@@ -47,20 +56,26 @@ const MTOModal = ({ isOpen, closeModal, modalType }: MTOModalProps) => {
         <PageHeading headingLevel="h3" className="margin-y-0">
           {modalTitle}
         </PageHeading>
-        <p className="margin-y-0 text-base">
-          <Trans
-            i18nKey={t('modal.allFieldsRequired')}
-            components={{
-              s: <span className="text-secondary-dark" />
-            }}
-          />
-        </p>
+
+        {isRequired && (
+          <p className="margin-y-0 text-base">
+            <Trans
+              i18nKey={t('modal.allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        )}
       </div>
 
       {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
       {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
       {modalType === 'solution' && <SolutionForm closeModal={closeModal} />}
+      {modalType === 'solutionToMilestone' && (
+        <AddSolutionToMilestoneForm closeModal={closeModal} />
+      )}
     </Modal>
   );
 };
