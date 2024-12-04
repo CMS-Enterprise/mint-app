@@ -1,9 +1,10 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
+  GetMtoCommonSolutionsDocument,
   GetMtoMilestonesDocument
 } from 'gql/generated/graphql';
 
-const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 export const commonMilestonesMock = [
   {
@@ -19,6 +20,7 @@ export const commonMilestonesMock = [
           __typename: 'ModelPlan',
           id: modelID,
           mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
             commonMilestones: [
               {
                 __typename: 'MTOCommonMilestone',
@@ -28,6 +30,38 @@ export const commonMilestonesMock = [
                 isSuggested: true,
                 categoryName: 'Test Category',
                 subCategoryName: 'Test SubCategory'
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+export const commonSolutionsMock = [
+  {
+    request: {
+      query: GetMtoCommonSolutionsDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            commonSolutions: [
+              {
+                __typename: 'MTOCommonSolution',
+                name: 'common solution 1'
+              },
+              {
+                __typename: 'MTOCommonSolution',
+                name: 'common solution 2'
               }
             ]
           }
