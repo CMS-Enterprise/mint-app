@@ -390,6 +390,24 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 
 }
 
+func (suite *ResolverSuite) createMilestoneCommon(
+	planID uuid.UUID,
+	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonSolutions []models.MTOCommonSolutionKey,
+) *models.MTOMilestone {
+	milestone, err := MTOMilestoneCreateCommon(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		planID,
+		commonMilestoneKey,
+		commonSolutions,
+	)
+	suite.NoError(err)
+	return milestone
+}
+
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)

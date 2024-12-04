@@ -40,6 +40,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonSolutions []models.MTOCommonSolutionKey,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -78,13 +79,63 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		}
 
 		// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
-		milestone := models.NewMTOMilestone(principalAccount.ID, nil, &commonMilestoneKey, modelPlanID, &finalCategoryID)
+		milestone := models.NewMTOMilestone(
+			principalAccount.ID,
+			nil,
+			&commonMilestoneKey,
+			modelPlanID,
+			&finalCategoryID,
+		)
 		milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
 
 		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
 			return nil, err
 		}
-		return storage.MTOMilestoneCreate(tx, logger, milestone)
+		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
+
+		// TODO: Batch insert these solutions
+		var solutions []*models.MTOSolution
+		for _, commonSolutionKey := range commonSolutions {
+			solution := models.NewMTOSolution(modelPlanID,
+				&commonSolutionKey,
+				nil,
+				nil,
+				nil,
+				principal.Account().ID)
+
+			mtoSolution, createMTOSolutionErr := storage.MTOSolutionCreateAllowConflicts(tx, logger, solution)
+			if createMTOSolutionErr != nil {
+				logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+				return nil, createMTOSolutionErr
+			}
+
+			solutions = append(solutions, mtoSolution)
+		}
+
+		// TODO: Batch insert these links
+		for _, solution := range solutions {
+			mtoMilestoneSolutionLink := models.NewMTOMilestoneSolutionLink(
+				principal.Account().ID,
+				createdMilestone.ID,
+				solution.ID,
+			)
+
+			_, milestoneSolutionLinkErr := storage.MTOMilestoneSolutionLinkCreate(
+				tx,
+				logger,
+				mtoMilestoneSolutionLink,
+			)
+
+			if milestoneSolutionLinkErr != nil {
+				logger.Error(
+					"failed to create milestone solution link when creating milestone from library",
+					zap.Error(err),
+				)
+				return nil, milestoneSolutionLinkErr
+			}
+		}
+
+		return createdMilestone, err
 	})
 }
 
