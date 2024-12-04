@@ -52,7 +52,7 @@ const MTOTableActions = () => {
           </Button>
         </div>
         {actionsMenuOpen && (
-          <div className="action-buttons margin-top-3 display-flex">
+          <div className="action-buttons margin-top-3 display-flex flex-justify">
             <div className="width-fit-content">
               <div className="display-flex flex-align-center">
                 <Icon.Flag
@@ -108,7 +108,7 @@ const MTOTableActions = () => {
                   }}
                 />
                 <p className="margin-y-0 text-bold">
-                  {t('table.tableActions.milestones')}
+                  {t('table.tableActions.operationalSolutions')}
                 </p>
               </div>
               <p className="margin-top-0">
@@ -152,25 +152,13 @@ const MTOTableActions = () => {
                   }}
                 />
                 <p className="margin-y-0 text-bold">
-                  {t('table.tableActions.milestones')}
+                  {t('table.tableActions.templateAndCategories')}
                 </p>
               </div>
               <p className="margin-top-0">
-                {t('table.tableActions.commonSolutions', { number: 31 })}
+                {t('table.tableActions.availableTemplates')}
               </p>
 
-              <Button
-                type="button"
-                className="display-block margin-bottom-1"
-                outline
-                onClick={() => {
-                  clearMessage();
-                  setModalType('category');
-                  setIsModalOpen(true);
-                }}
-              >
-                {t('table.tableActions.browseSolutionLibrary')}
-              </Button>
               <Button
                 type="button"
                 className="display-block"
@@ -181,7 +169,7 @@ const MTOTableActions = () => {
                   setIsModalOpen(true);
                 }}
               >
-                {t('optionsCard.systems-and-solutions.linkText')}
+                {t('table.tableActions.addCustomCategory')}
               </Button>
             </div>
 
