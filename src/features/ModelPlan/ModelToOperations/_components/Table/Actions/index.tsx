@@ -52,7 +52,10 @@ const MTOTableActions = () => {
           </Button>
         </div>
         {actionsMenuOpen && (
-          <div className="action-buttons margin-top-3 display-flex flex-justify">
+          <div
+            className="action-buttons margin-top-3 display-flex flex-justify flex-wrap"
+            style={{ gap: '24px' }}
+          >
             {/* Milestone Buttons */}
             <div className="width-fit-content">
               <div className="display-flex flex-align-center">
@@ -131,7 +134,7 @@ const MTOTableActions = () => {
                 outline
                 onClick={() => {
                   clearMessage();
-                  setModalType('category');
+                  setModalType('solution');
                   setIsModalOpen(true);
                 }}
               >
@@ -143,7 +146,7 @@ const MTOTableActions = () => {
                 unstyled
                 onClick={() => {
                   clearMessage();
-                  setModalType('category');
+                  setModalType('solution');
                   setIsModalOpen(true);
                 }}
               >
