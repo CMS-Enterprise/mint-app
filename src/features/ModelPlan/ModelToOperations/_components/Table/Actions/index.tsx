@@ -53,16 +53,19 @@ const MTOTableActions = () => {
         </div>
         {actionsMenuOpen && (
           <div className="action-buttons margin-top-3 display-flex flex-justify">
+            {/* Milestone Buttons */}
             <div className="width-fit-content">
               <div className="display-flex flex-align-center">
-                <Icon.Flag
-                  className="margin-right-1 bg-green-5"
-                  style={{
-                    height: '20px',
-                    width: '20px',
-                    fill: '#607F35'
-                  }}
-                />
+                <div
+                  style={{ height: '20px', width: '20px' }}
+                  className="margin-right-1 bg-green-5 radius-sm display-flex flex-align-center flex-justify-center"
+                >
+                  <Icon.Flag
+                    style={{
+                      fill: '#607F35'
+                    }}
+                  />
+                </div>
                 <p className="margin-y-0 text-bold">
                   {t('table.tableActions.milestones')}
                 </p>
@@ -97,16 +100,23 @@ const MTOTableActions = () => {
               </Button>
             </div>
 
+            {/* Operational Solution Buttons */}
             <div className="width-fit-content">
               <div className="display-flex flex-align-center">
-                <Icon.Flag
-                  className="margin-right-1 bg-green-5"
+                <div
+                  className="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
                   style={{
                     height: '20px',
                     width: '20px',
-                    fill: '#607F35'
+                    backgroundColor: '#E1E6F9'
                   }}
-                />
+                >
+                  <Icon.Build
+                    style={{
+                      fill: '#3F57A6'
+                    }}
+                  />
+                </div>
                 <p className="margin-y-0 text-bold">
                   {t('table.tableActions.operationalSolutions')}
                 </p>
@@ -141,16 +151,23 @@ const MTOTableActions = () => {
               </Button>
             </div>
 
+            {/* Template and Categories Buttons */}
             <div className="width-fit-content">
               <div className="display-flex flex-align-center">
-                <Icon.Flag
-                  className="margin-right-1 bg-green-5"
+                <div
+                  className="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
                   style={{
                     height: '20px',
                     width: '20px',
-                    fill: '#607F35'
+                    backgroundColor: '#DFE1E2'
                   }}
-                />
+                >
+                  <Icon.GridView
+                    style={{
+                      fill: '#565C65'
+                    }}
+                  />
+                </div>
                 <p className="margin-y-0 text-bold">
                   {t('table.tableActions.templateAndCategories')}
                 </p>
