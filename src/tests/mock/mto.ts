@@ -1,7 +1,8 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetMtoCommonSolutionsDocument,
-  GetMtoMilestonesDocument
+  GetMtoMilestonesDocument,
+  MtoCommonMilestoneKey
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -25,7 +26,7 @@ export const commonMilestonesMock = [
               {
                 __typename: 'MTOCommonMilestone',
                 name: 'Test Milestone',
-                key: 'ACQUIRE_AN_EVAL_CONT',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                 isAdded: false,
                 isSuggested: true,
                 categoryName: 'Test Category',
