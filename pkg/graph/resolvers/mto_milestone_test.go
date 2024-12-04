@@ -89,6 +89,10 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	suite.Nil(milestone.ModifiedBy)
 	suite.Nil(milestone.ModifiedDts)
 
+	// We could potentially validate/check names of Categories on the Milestone object using MTOCategoriesGetByID,
+	// but we already want to fetch the entire list of categories later to make sure the right number show up,
+	// and we can just check for the right names to show up while we fetch them.
+
 	// Check and see if the categories came along as expected
 	// You can check which we expect to get created with migrations/V190__Add_Common_Milestone_Library.sql (or future similar migrations that edit the library)
 	// In this case MTOCommonMilestoneKeyManageCd should create 2 categories (parent, subcategory) of ('Operations','Participant and beneficiary tracking')
