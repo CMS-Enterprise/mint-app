@@ -211,6 +211,7 @@ const MultiSelect = ({
   name,
   selectedLabel,
   options,
+  groupedOptions,
   onChange,
   initialValues,
   className,
@@ -227,6 +228,7 @@ const MultiSelect = ({
   name: string;
   selectedLabel?: string;
   options: MultiSelectOptionProps[];
+  groupedOptions?: GroupBase<MultiSelectOptionProps>[];
   onChange: (values: string[]) => void;
   initialValues?: string[];
   className?: string;
@@ -237,14 +239,21 @@ const MultiSelect = ({
   disabledOption?: boolean;
   disabledLabel?: string;
 }) => {
+  let condensedOptions = options;
+
+  if (groupedOptions) {
+    condensedOptions = [];
+    groupedOptions.forEach(option => condensedOptions.push(...option.options));
+  }
+
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues
-      ? options.filter(option => initialValues.includes(option.value))
+      ? condensedOptions.filter(option => initialValues.includes(option.value))
       : []
   );
 
   const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
-    ...options
+    ...condensedOptions
   ]);
 
   useEffect(() => {
@@ -289,7 +298,7 @@ const MultiSelect = ({
           className
         )}
         isClearable={!disabledOption}
-        options={options}
+        options={groupedOptions || options}
         components={{ ClearIndicator, Option }}
         isMulti
         hideSelectedOptions={false}

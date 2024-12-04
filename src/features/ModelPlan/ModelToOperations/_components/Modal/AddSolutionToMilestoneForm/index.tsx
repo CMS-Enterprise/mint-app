@@ -165,10 +165,16 @@ const AddSolutionToMilestoneForm = ({
                     inputId={convertCamelCaseToKebabCase('commonSolutions')}
                     ariaLabel={convertCamelCaseToKebabCase('commonSolutions')}
                     ariaLabelText={commonSolutionsConfig.label}
-                    options={composeMultiSelectOptions(
-                      commonSolutionsConfig.options,
-                      commonSolutionsConfig.readonlyOptions
-                    )}
+                    options={[]}
+                    groupedOptions={[
+                      {
+                        label: 'Solutions',
+                        options: composeMultiSelectOptions(
+                          commonSolutionsConfig.options,
+                          commonSolutionsConfig.readonlyOptions
+                        )
+                      }
+                    ]}
                     selectedLabel={commonSolutionsConfig.multiSelectLabel || ''}
                     initialValues={watch('commonSolutions')}
                   />
