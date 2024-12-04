@@ -25,6 +25,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import MTOOptionsPanel from '../OptionPanel';
 
+import MTOTableActions from './Actions';
 import {
   ActionMenu,
   CategoryType,
@@ -492,6 +493,7 @@ const MTOTable = () => {
 
   return (
     <>
+      <MTOTableActions />
       <DndProvider backend={HTML5Backend}>
         <div
           className="display-block"
