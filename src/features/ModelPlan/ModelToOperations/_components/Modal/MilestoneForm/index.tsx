@@ -170,13 +170,9 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.milestone.selectPrimaryCategory.label')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.milestone.selectPrimaryCategory.label')}
                 </Label>
 
                 <Select
@@ -212,13 +208,9 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.milestone.selectSubcategory.label')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.milestone.selectSubcategory.label')}
                 </Label>
 
                 <Select
@@ -254,13 +246,9 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.milestone.milestoneTitle')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.milestone.milestoneTitle')}
                 </Label>
 
                 <TextInput
@@ -290,7 +278,6 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
                   {' '}
                 </Button>
               )
-              // TODO: Add a link to the documentation
             }}
           />
         </Alert>

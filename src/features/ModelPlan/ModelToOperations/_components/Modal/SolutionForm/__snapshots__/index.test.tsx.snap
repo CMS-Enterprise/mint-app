@@ -21,11 +21,12 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           for="solution-type"
         >
           What type of solution is this? 
-          <span
-            class="text-secondary-dark"
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
           >
             *
-          </span>
+          </abbr>
         </label>
         <select
           class="usa-select"
@@ -70,11 +71,12 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           for="solution-title"
         >
           Please add a title for your solution 
-          <span
-            class="text-secondary-dark"
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
           >
             *
-          </span>
+          </abbr>
         </label>
         <input
           class="usa-input"
@@ -109,11 +111,12 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           for="poc-name"
         >
           Point of contact name 
-          <span
-            class="text-secondary-dark"
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
           >
             *
-          </span>
+          </abbr>
         </label>
         <input
           class="usa-input"
@@ -134,11 +137,12 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           for="poc-email"
         >
           Point of contact email address 
-          <span
-            class="text-secondary-dark"
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
           >
             *
-          </span>
+          </abbr>
         </label>
         <input
           class="usa-input"

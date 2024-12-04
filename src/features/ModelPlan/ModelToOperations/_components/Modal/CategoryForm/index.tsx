@@ -189,13 +189,9 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.category.selectPrimaryCategory.label')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.category.selectPrimaryCategory.label')}
                 </Label>
                 <span className="usa-hint">
                   {t('modal.category.selectPrimaryCategory.sublabel')}
@@ -233,13 +229,9 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none"
+                  requiredMarker
                 >
-                  <Trans
-                    i18nKey={t('modal.category.categoryTitle.label')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
+                  {t('modal.category.categoryTitle.label')}
                 </Label>
 
                 <TextInput

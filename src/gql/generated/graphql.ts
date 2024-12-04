@@ -1352,6 +1352,7 @@ export type MutationCreateMtoCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateMtoMilestoneCommonArgs = {
   commonMilestoneKey: MtoCommonMilestoneKey;
+  commonSolutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
   modelPlanID: Scalars['UUID']['input'];
 };
 
