@@ -32,7 +32,9 @@ func MTOSolutionUpdate(
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Solution. Err %w", err)
 	}
-	// Clear out the name and type returned from the database for convenience so we don't try to set the custom name  or type fields
+	// Since the above dataloader will return `Name` and `Type` properties when
+	// fetching solutions sourced from the common solution library, we need to clear out those fields
+	// or else storage.MTOSolutionUpdate will attempt to update them (which won't be allowed, since this is a Solution sourced from the common solution library
 	if existing.AddedFromSolutionLibrary() {
 		existing.Name = nil
 		existing.Type = nil
