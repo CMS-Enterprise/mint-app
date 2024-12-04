@@ -167,6 +167,10 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 	suite.Nil(milestoneDupe)
 }
 
+// TODO We might also want to test deleting a category and making sure it's re-created
+
+// TODO We might also want to test making sure sub-categories also fail silently a category and making sure it's re-created
+
 // TODO (mto) Write tests for MTOMilestoneUpdate
 
 // TODO (mto) Maybe(?) write MTOMilestoneGetByModelPlanIDLOADER
