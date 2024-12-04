@@ -231,29 +231,6 @@ const MTOTableActions = () => {
                 {t('table.tableActions.addCustomCategory')}
               </Button>
             </div>
-
-            {/* <Button
-              type="button"
-              onClick={() => {
-                clearMessage();
-                setModalType('category');
-                setIsModalOpen(true);
-              }}
-            >
-              Add custom category
-            </Button>
-
-            <Button
-              type="button"
-              onClick={() => {
-                clearMessage();
-                setModalType('solution');
-                setIsModalOpen(true);
-              }}
-              className="margin-bottom-4"
-            >
-              Add custom solution
-            </Button> */}
           </div>
         )}
       </div>
