@@ -3217,7 +3217,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCustom(modelPlanID: \"{{modelPlanID}}\",\n    name: \"Uncategorized milestone 2\"\n    # mtoCategoryID: \"\"\n) {\n    id\n    name\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    key\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCustom(modelPlanID: \"{{modelPlanID}}\",\n    name: \"Uncategorized milestone 2\"\n    # mtoCategoryID: \"\"\n) {\n    id\n    name\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }    \n    key\n\n    # commonMilestone\n    # solutions\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3255,7 +3255,40 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD,\n    commonSolutions: [CCW, CPI_VETTING]\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }        \n\n    # commonMilestone\n    # solutions\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMTOMilestone {\n    mtoMilestone(id: \"{{mtoMilestoneID}}\") {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }    \n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3288,7 +3321,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n    facilitatedBy: [IT_LEAD,OTHER],\n    riskIndicator: AT_RISK,\n    status: IN_PROGRESS\n    needBy: \"2024-10-31T17:20:21.959953Z\"\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n    facilitatedBy: [IT_LEAD,OTHER],\n    riskIndicator: AT_RISK,\n    status: IN_PROGRESS\n    needBy: \"2024-10-31T17:20:21.959953Z\"\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n        }\n        subCategory{\n            name\n        }\n    }\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    # solutions\n    }\n}",
 										"variables": ""
 									}
 								},

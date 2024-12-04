@@ -716,6 +716,16 @@ export type LockableSectionLockStatusChanged = {
   lockStatus: LockableSectionLockStatus;
 };
 
+/**
+ * MTOCategories combines the concept of Category and Subcategory
+ * This allows it to be fetched more conveniently in one resolver
+ */
+export type MtoCategories = {
+  __typename: 'MTOCategories';
+  category: MtoCategory;
+  subCategory: MtoSubcategory;
+};
+
 export type MtoCategory = {
   __typename: 'MTOCategory';
   id: Scalars['UUID']['output'];
@@ -890,7 +900,8 @@ export type MtoInfoTranslation = {
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
-  category: MtoCategory;
+  /** Category resolves relational category information. */
+  categories: MtoCategories;
   commonMilestone?: Maybe<MtoCommonMilestone>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -912,7 +923,6 @@ export type MtoMilestone = {
   riskIndicator: MtoRiskIndicator;
   solutions: Array<MtoSolution>;
   status: MtoMilestoneStatus;
-  subCategory: MtoSubcategory;
 };
 
 export type MtoMilestoneChanges = {
@@ -3777,6 +3787,7 @@ export type Query = {
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoMilestone: MtoMilestone;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3842,6 +3853,12 @@ export type QueryModelPlanCollectionArgs = {
 /** Query definition for the schema */
 export type QueryModelPlansByOperationalSolutionKeyArgs = {
   operationalSolutionKey: OperationalSolutionKey;
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 

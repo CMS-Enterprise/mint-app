@@ -22,6 +22,13 @@ type MTOCategory struct {
 	ParentID *uuid.UUID `json:"parent_id" db:"parent_id"`
 }
 
+// MTOCategories is a struct meant to represent the Category and Subcategory associated with a given MTO Milestone.
+// This struct exists to allow us to resolve/fetch both Category and Subcategory at the same time and return them together in a single resolver.
+type MTOCategories struct {
+	Category    *MTOCategory    `json:"category,omitempty"`
+	SubCategory *MTOSubcategory `json:"subCategory,omitempty"`
+}
+
 func (m MTOCategory) GetPosition() int {
 	return m.Position
 }
