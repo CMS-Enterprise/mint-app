@@ -103,9 +103,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
           {mappedSolutions.map(solution =>
             solution ? (
               <SolutionCard key={solution.key} solution={solution} />
-            ) : (
-              <></>
-            )
+            ) : null
           )}
         </Grid>
       </Grid>
