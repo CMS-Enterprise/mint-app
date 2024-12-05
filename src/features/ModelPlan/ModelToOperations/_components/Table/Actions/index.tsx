@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
+  useCreateStandardCategoriesMutation,
   useGetMtoCommonSolutionsQuery,
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
@@ -24,6 +25,10 @@ const MTOTableActions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
 
+  const [create] = useCreateStandardCategoriesMutation({
+    variables: { modelPlanID: modelID }
+  });
+
   const [modalType, setModalType] = useState<
     'category' | 'milestone' | 'solution'
   >('category');
@@ -35,6 +40,14 @@ const MTOTableActions = () => {
   const { data: solutionData } = useGetMtoCommonSolutionsQuery({
     variables: { id: modelID }
   });
+
+  const handleCreate = () => {
+    create().then(response => {
+      if (!response?.errors) {
+        alert('Standard categories created successfully');
+      }
+    });
+  };
 
   return (
     <>
@@ -216,7 +229,9 @@ const MTOTableActions = () => {
                   type="button"
                   className="display-block"
                   unstyled
-                  onClick={() => {}}
+                  onClick={() => {
+                    handleCreate();
+                  }}
                 >
                   {t('table.tableActions.addThisTemplate')}
                 </Button>
