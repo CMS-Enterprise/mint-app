@@ -317,7 +317,10 @@ export const modelToOperationsMisc: Record<string, any> = {
         success: 'Your solution ({{solution}}) has been added.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
-      }
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions'
     },
     addButton: 'Add {{type}}',
     cancel: 'Cancel'

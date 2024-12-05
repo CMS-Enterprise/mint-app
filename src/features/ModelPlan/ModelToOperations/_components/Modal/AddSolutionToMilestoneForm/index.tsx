@@ -261,7 +261,9 @@ const AddSolutionToMilestoneForm = ({
           </Fieldset>
 
           <Button type="submit" disabled={!isValid} className="margin-right-3">
-            {t('modal.addButton', { type: 'solution' })}
+            {t('modal.solutionToMilestone.add', {
+              count: watch('commonSolutions')?.length || 0
+            })}
           </Button>
 
           <Button
