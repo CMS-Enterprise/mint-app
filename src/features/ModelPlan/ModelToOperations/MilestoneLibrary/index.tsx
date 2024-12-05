@@ -216,11 +216,6 @@ const MilstoneCardGroup = ({
     showPageIfOne: true
   });
 
-  useEffect(() => {
-    params.set('page', '1');
-    history.push({ search: params.toString() });
-  }, [viewParam, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <div className="milestone-card-group">
       <div className="margin-top-2 margin-bottom-4">
@@ -258,6 +253,7 @@ const MilstoneCardGroup = ({
                 outline={viewParam !== 'suggested'}
                 onClick={() => {
                   params.set('view', 'suggested');
+                  params.set('page', '1');
                   history.push({ search: params.toString() });
                 }}
               >
@@ -272,6 +268,7 @@ const MilstoneCardGroup = ({
                 outline={viewParam !== 'all'}
                 onClick={() => {
                   params.set('view', 'all');
+                  params.set('page', '1');
                   history.push({ search: params.toString() });
                 }}
               >
