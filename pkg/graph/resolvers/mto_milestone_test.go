@@ -177,6 +177,8 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 
 // TODO (mto) Maybe(?) write MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER
 
+// TODO (mto) more dedicated tests for MTOMilestoneDelete
+
 func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	plan := suite.createModelPlan("plan for testing MTO create milestone solution links")
 	commonMilestoneKey := models.MTOCommonMilestoneKeyAppSupportCon
