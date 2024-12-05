@@ -82,7 +82,27 @@
 
 
 .width-fit-content {
-  width: fit-content;
+  width: fit-content !important;
+}
+@media (min-width: $mobile) {
+  .mobile\:width-fit-content {
+    width: fit-content !important;
+  }
+}
+@media (min-width: $tablet) {
+  .tablet\:width-fit-content {
+    width: fit-content !important;
+  }
+}
+@media (min-width: $tablet-lg) {
+  .tablet-lg\:width-fit-content {
+    width: fit-content !important;
+  }
+}
+@media (min-width: $desktop) {
+  .desktop\:width-fit-content {
+    width: fit-content !important;
+  }
 }
 
 .usa-date-picker__calendar {

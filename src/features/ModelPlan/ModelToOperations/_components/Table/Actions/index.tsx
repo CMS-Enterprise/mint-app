@@ -73,112 +73,117 @@ const MTOTableActions = () => {
             style={{ gap: '24px' }}
           >
             {/* Milestone Buttons */}
-            <div className="width-fit-content">
-              <div className="display-flex flex-align-center">
-                <div
-                  style={{ height: '20px', width: '20px' }}
-                  className="margin-right-1 bg-green-5 radius-sm display-flex flex-align-center flex-justify-center"
-                >
-                  <Icon.Flag
-                    style={{
-                      fill: '#607F35'
-                    }}
-                  />
+            <div className="width-full padding-bottom-3 border-bottom border-base-light">
+              <div className="width-fit-content">
+                <div className="display-flex flex-align-center">
+                  <div
+                    style={{ height: '20px', width: '20px' }}
+                    className="margin-right-1 bg-green-5 radius-sm display-flex flex-align-center flex-justify-center"
+                  >
+                    <Icon.Flag
+                      style={{
+                        fill: '#607F35'
+                      }}
+                    />
+                  </div>
+                  <p className="margin-y-0 text-bold">
+                    {t('table.tableActions.milestones')}
+                  </p>
                 </div>
-                <p className="margin-y-0 text-bold">
-                  {t('table.tableActions.milestones')}
+                <p className="margin-top-0">
+                  {t('table.tableActions.commonMilestones', {
+                    number:
+                      milestoneData?.modelPlan?.mtoMatrix?.commonMilestones
+                        ?.length
+                  })}
                 </p>
-              </div>
-              <p className="margin-top-0">
-                {t('table.tableActions.commonMilestones', {
-                  number:
-                    milestoneData?.modelPlan?.mtoMatrix?.commonMilestones
-                      ?.length
-                })}
-              </p>
 
-              <Button
-                type="button"
-                className="display-block margin-bottom-1"
-                outline
-                onClick={() => {
-                  history.push(
-                    `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
-                  );
-                }}
-              >
-                {t('table.tableActions.browseMilestoneLibrary')}
-              </Button>
-              <Button
-                type="button"
-                className="display-block"
-                unstyled
-                onClick={() => {
-                  clearMessage();
-                  setModalType('milestone');
-                  setIsModalOpen(true);
-                }}
-              >
-                {t('optionsCard.milestones.linkText')}
-              </Button>
+                <Button
+                  type="button"
+                  className="display-block margin-bottom-1"
+                  outline
+                  onClick={() => {
+                    history.push(
+                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
+                    );
+                  }}
+                >
+                  {t('table.tableActions.browseMilestoneLibrary')}
+                </Button>
+                <Button
+                  type="button"
+                  className="display-block"
+                  unstyled
+                  onClick={() => {
+                    clearMessage();
+                    setModalType('milestone');
+                    setIsModalOpen(true);
+                  }}
+                >
+                  {t('optionsCard.milestones.linkText')}
+                </Button>
+              </div>
             </div>
 
             {/* Operational Solution Buttons */}
-            <div className="width-fit-content">
-              <div className="display-flex flex-align-center">
-                <div
-                  className="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
-                  style={{
-                    height: '20px',
-                    width: '20px',
-                    backgroundColor: '#E1E6F9'
+            <div className="width-full padding-bottom-3 border-bottom border-base-light">
+              <div className="width-fit-content">
+                <div className="display-flex flex-align-center">
+                  <div
+                    className="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
+                    style={{
+                      height: '20px',
+                      width: '20px',
+                      backgroundColor: '#E1E6F9'
+                    }}
+                  >
+                    <Icon.Build
+                      style={{
+                        fill: '#3F57A6'
+                      }}
+                    />
+                  </div>
+                  <p className="margin-y-0 text-bold">
+                    {t('table.tableActions.operationalSolutions')}
+                  </p>
+                </div>
+                <p className="margin-top-0">
+                  {t('table.tableActions.commonSolutions', {
+                    number:
+                      solutionData?.modelPlan?.mtoMatrix?.commonSolutions
+                        ?.length
+                  })}
+                </p>
+
+                <Button
+                  type="button"
+                  className="display-block margin-bottom-1"
+                  outline
+                  onClick={() => {
+                    history.push(
+                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
+                    );
                   }}
                 >
-                  <Icon.Build
-                    style={{
-                      fill: '#3F57A6'
-                    }}
-                  />
-                </div>
-                <p className="margin-y-0 text-bold">
-                  {t('table.tableActions.operationalSolutions')}
-                </p>
+                  {t('table.tableActions.browseSolutionLibrary')}
+                </Button>
+                <Button
+                  type="button"
+                  className="display-block"
+                  unstyled
+                  onClick={() => {
+                    clearMessage();
+                    setModalType('solution');
+                    setIsModalOpen(true);
+                  }}
+                >
+                  {t('optionsCard.systems-and-solutions.linkText')}
+                </Button>
               </div>
-              <p className="margin-top-0">
-                {t('table.tableActions.commonSolutions', {
-                  number:
-                    solutionData?.modelPlan?.mtoMatrix?.commonSolutions?.length
-                })}
-              </p>
-
-              <Button
-                type="button"
-                className="display-block margin-bottom-1"
-                outline
-                onClick={() => {
-                  history.push(
-                    `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
-                  );
-                }}
-              >
-                {t('table.tableActions.browseSolutionLibrary')}
-              </Button>
-              <Button
-                type="button"
-                className="display-block"
-                unstyled
-                onClick={() => {
-                  clearMessage();
-                  setModalType('solution');
-                  setIsModalOpen(true);
-                }}
-              >
-                {t('optionsCard.systems-and-solutions.linkText')}
-              </Button>
             </div>
 
             {/* Template and Categories Buttons */}
-            <div className="width-fit-content">
+            <div className="tablet-lg:width-fit-content width-full">
               <div className="display-flex flex-align-center">
                 <div
                   className="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
@@ -202,7 +207,7 @@ const MTOTableActions = () => {
                 {t('table.tableActions.availableTemplates')}
               </p>
               <div
-                className="display-flex flex-justify bg-base-lightest border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
+                className="display-flex flex-justify bg-base-lightest border border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
                 style={{ gap: '24px' }}
               >
                 <span className="text-bold">
