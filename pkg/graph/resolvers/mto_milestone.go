@@ -169,29 +169,32 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 
 // MTOMilestoneDelete deletes an MTOMilestone
 // It returns an error if the principal is invalid, the milestone doesn't exist, user doesn't have permissions to delete, or the delete call itself fails
+// TODO - Consider returning a *models.MTOMilestone here if we want to ever access the returned data on what was deleted
 func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// First, fetch the existing milestone so we can check permissions
-	existing, err := storage.MTOMilestoneGetByID(store, logger, id)
-	if err != nil {
-		return fmt.Errorf("error fetching mto milestone during deletion: %s", err)
-	}
+	// Write up a transaction since storage.MTOMilestoneDelete needs one for setting `delete` session user variables
+	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		// First, fetch the existing milestone so we can check permissions
+		existing, err := storage.MTOMilestoneGetByID(tx, logger, id)
+		if err != nil {
+			return fmt.Errorf("error fetching mto milestone during deletion: %s", err)
+		}
 
-	// Check permissions
-	if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
-		return fmt.Errorf("error deleting mto milestone. user doesnt have permissions. %s", err)
-	}
+		// Check permissions
+		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+			return fmt.Errorf("error deleting mto milestone. user doesnt have permissions. %s", err)
+		}
 
-	// Finally, delete the milestone
-	if err := storage.MTOMilestoneDelete(store, logger, id); err != nil {
-		return fmt.Errorf("unable to delete mto milestone. Err %w", err)
-	}
-
-	return nil
+		// Finally, delete the milestone
+		if err := storage.MTOMilestoneDelete(tx, principalAccount.ID, logger, id); err != nil {
+			return fmt.Errorf("unable to delete mto milestone. Err %w", err)
+		}
+		return nil
+	})
 }
 
 // MTOMilestoneGetByModelPlanIDLOADER implements resolver logic to get all MTO milestones by a model plan ID using a data loader

@@ -5,11 +5,13 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -107,7 +109,51 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	return storage.MTOCategoryUpdate(store, logger, existing)
 }
 
-// MTOCategoryGetByModelPlanIDLOADER implements resolver logic to get all parent level MTO Categories by a model plan ID using a data loader
+type mtoStandardCategory struct {
+	name          string
+	subcategories []string
+}
+
+var mtoStandardCategories []mtoStandardCategory = []mtoStandardCategory{
+	{name: "Participants", subcategories: []string{"Application and Selection", "Participant Support"}},
+	{name: "Operations", subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking", "Benchmarks", "Monitoring", "Internal functions", "Fee-for-service (FFS)"}},
+	{name: "Payment", subcategories: []string{}},
+	{name: "Payers", subcategories: []string{}},
+	{name: "Learning", subcategories: []string{}},
+	{name: "Quality", subcategories: []string{}},
+	{name: "Evaluation", subcategories: []string{}},
+	{name: "Model closeout or extension", subcategories: []string{}},
+}
+
+// MTOCreateStandardCategories attempts to create a bunch of categories (some with subcategories) that represent a "standard" set of categories that might
+// be useful / expected in a standard MTO
+//
+// TODO Refactor to do a bulk insert instead of having to loop over the standard categories struct and repeatedly call storage methods in a `tx“
+func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+	if err := sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		for _, c := range mtoStandardCategories {
+			categoryToAdd := models.NewMTOCategory(principal.Account().ID, c.name, modelPlanID, nil, 0)
+			createdCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, categoryToAdd)
+			if err != nil {
+				return err
+			}
+
+			for _, sc := range c.subcategories {
+				subcategoryToAdd := models.NewMTOCategory(principal.Account().ID, sc, modelPlanID, &createdCategory.ID, 0)
+				_, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, subcategoryToAdd)
+				if err != nil {
+					return err
+				}
+			}
+		}
+
+		return nil
+	}); err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
 func MTOCategoryGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOCategory, error) {
 	dbCategories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
