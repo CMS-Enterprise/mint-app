@@ -2,9 +2,11 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 func (suite *ResolverSuite) createMTOCategory(catName string, modelPlanID uuid.UUID, parentID *uuid.UUID) *models.MTOCategory {
@@ -608,4 +610,65 @@ func (suite *ResolverSuite) TestMTOCantMakeParentCategorySubCategory() {
 	_, err2 := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2.ID, nil, nil)
 	suite.Error(err2, "we expect that you can't reorder without specifying both order and parent . There should be an error for this operation.")
 
+}
+
+// TestMTOCreateStandardCategories validates expectations around the MTOCreateStandardCategories resolver
+func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
+	plan := suite.createModelPlan("Plan with standard MTO Categories")
+
+	// Call the storage method directly here since it doesn't append any `Uncategorized`, making it more useful for direct testing & validation
+	initialCategories, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	suite.NoError(err)
+	suite.Len(initialCategories, 0) // No categories to start
+
+	// Create the standard categories
+	_, err = MTOCreateStandardCategories(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+
+	// Check all the categories again
+	updatedCategories, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	suite.NoError(err)
+
+	// Make sure it's the expected split of categories and subcategories
+	numCategories := lo.CountBy(updatedCategories, func(c *models.MTOCategory) bool {
+		return c.ParentID == nil
+	})
+	numSubcategories := lo.CountBy(updatedCategories, func(c *models.MTOCategory) bool {
+		return c.ParentID != nil
+	})
+	suite.Len(updatedCategories, 18)  // total
+	suite.Equal(8, numCategories)     // just top-level categories
+	suite.Equal(10, numSubcategories) // just subcategories
+
+	// Finally, we'll:
+	// 1) rename one of the standard categories that has subcategories (i.e. "Participants")
+	// 2) re-call the MTOCreateStandardCategories method
+	// 3) assert we have +3 categories, since the resolver will create an entirely new "Participants", PLUS the 2 new subcategories to go under it
+
+	// 1) Find and rename
+	participantsCategory, found := lo.Find[*models.MTOCategory](updatedCategories, func(item *models.MTOCategory) bool {
+		return item.Name == "Participants"
+	})
+	suite.True(found)
+	_, err = MTOCategoryRename(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, participantsCategory.ID, "Participants (NEW AND IMPROVED)")
+	suite.NoError(err)
+
+	// 2) re-call MTOCreateStandardCategories resolver
+	_, err = MTOCreateStandardCategories(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+
+	// 3) Assert proper length
+	categoriesAfterRename, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	suite.NoError(err)
+
+	numCategories = lo.CountBy(categoriesAfterRename, func(c *models.MTOCategory) bool {
+		return c.ParentID == nil
+	})
+	numSubcategories = lo.CountBy(categoriesAfterRename, func(c *models.MTOCategory) bool {
+		return c.ParentID != nil
+	})
+
+	suite.Len(categoriesAfterRename, 21) // total
+	suite.Equal(9, numCategories)        // just top-level categories (one more than before)
+	suite.Equal(12, numSubcategories)    // just subcategories (two more than before)
 }
