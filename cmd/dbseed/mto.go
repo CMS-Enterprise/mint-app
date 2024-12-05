@@ -19,7 +19,7 @@ func (s *Seeder) seedModelPlanWithMTOData(
 
 	// Make uncategorized Milestone from Common milestone library
 	// TODO: This likely won't be uncategorized anymore once common milestones also create categories as needed
-	_, err := resolvers.MTOMilestoneCreateCommon(s.Config.Context, s.Config.Logger, princ, s.Config.Store, plan.ID, models.MTOCommonMilestoneKeyAcquireALearnCont)
+	_, err := resolvers.MTOMilestoneCreateCommon(s.Config.Context, s.Config.Logger, princ, s.Config.Store, plan.ID, models.MTOCommonMilestoneKeyAcquireALearnCont, []models.MTOCommonSolutionKey{})
 	if err != nil {
 		panic(err)
 	}

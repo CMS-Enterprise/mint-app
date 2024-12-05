@@ -50,10 +50,11 @@ func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPl
 }
 
 // CreateMTOMilestoneCommon is the resolver for the createMTOMilestoneCommon field.
-func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneKey models.MTOCommonMilestoneKey) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneKey models.MTOCommonMilestoneKey, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, modelPlanID, commonMilestoneKey)
+
+	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, modelPlanID, commonMilestoneKey, commonSolutions)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.

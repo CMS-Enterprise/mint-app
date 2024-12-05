@@ -5,6 +5,9 @@ import _ "embed"
 //go:embed SQL/mto/solution/create.sql
 var mtoSolutionCreateSQL string
 
+//go:embed SQL/mto/solution/create_allow_conflicts.sql
+var mtoSolutionCreateAllowConflictsSQL string
+
 //go:embed SQL/mto/solution/update.sql
 var mtoSolutionUpdateSQL string
 
@@ -16,6 +19,7 @@ var mtoSolutionGetByModelPlanIDLoaderSQL string
 
 type mtoSolutionScripts struct {
 	Create                 string
+	CreateAllowConflicts   string
 	Update                 string
 	GetByIDLoader          string
 	GetByModelPlanIDLoader string
@@ -23,6 +27,7 @@ type mtoSolutionScripts struct {
 
 var MTOSolution = mtoSolutionScripts{
 	Create:                 mtoSolutionCreateSQL,
+	CreateAllowConflicts:   mtoSolutionCreateAllowConflictsSQL,
 	Update:                 mtoSolutionUpdateSQL,
 	GetByIDLoader:          mtoSolutionGetByIDLoaderSQL,
 	GetByModelPlanIDLoader: mtoSolutionGetByModelPlanIDLoaderSQL,
