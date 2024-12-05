@@ -668,7 +668,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 		return c.ParentID != nil
 	})
 
-	suite.Len(categoriesAfterRename, 21) // total
+	suite.Len(categoriesAfterRename, 21) // total (three more than before)
 	suite.Equal(9, numCategories)        // just top-level categories (one more than before)
 	suite.Equal(12, numSubcategories)    // just subcategories (two more than before)
 }
