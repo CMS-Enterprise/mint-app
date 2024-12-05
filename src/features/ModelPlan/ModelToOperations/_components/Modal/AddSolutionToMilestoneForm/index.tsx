@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -16,12 +16,12 @@ import {
 } from '@trussworks/react-uswds';
 import { MilestoneCardType } from 'features/ModelPlan/ModelToOperations/MilestoneLibrary';
 import {
-  GetCustomMtoSolutionsQuery,
+  // GetCustomMtoSolutionsQuery,
   GetModelToOperationsMatrixDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
-  useCreateMtoMilestoneMutation,
-  useGetCustomMtoSolutionsQuery
+  useCreateMtoMilestoneMutation
+  // useGetCustomMtoSolutionsQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -39,8 +39,8 @@ type FormValues = {
   commonSolutions: MtoCommonSolutionKey[] | undefined;
 };
 
-type CustomMTOSolutionType =
-  GetCustomMtoSolutionsQuery['modelPlan']['mtoMatrix']['solutions'][0];
+// type CustomMTOSolutionType =
+//   GetCustomMtoSolutionsQuery['modelPlan']['mtoMatrix']['solutions'][0];
 
 const AddSolutionToMilestoneForm = ({
   closeModal,
@@ -79,16 +79,16 @@ const AddSolutionToMilestoneForm = ({
     formState: { isValid }
   } = methods;
 
-  const { data, loading } = useGetCustomMtoSolutionsQuery({
-    variables: {
-      id: modelID
-    }
-  });
+  // const { data, loading } = useGetCustomMtoSolutionsQuery({
+  //   variables: {
+  //     id: modelID
+  //   }
+  // });
 
-  const customSolutions = useMemo(
-    () => data?.modelPlan?.mtoMatrix?.solutions || [],
-    [data?.modelPlan?.mtoMatrix?.solutions]
-  );
+  // const customSolutions = useMemo(
+  //   () => data?.modelPlan?.mtoMatrix?.solutions || [],
+  //   [data?.modelPlan?.mtoMatrix?.solutions]
+  // );
 
   const formatSolutions = useCallback(
     (solutions: MilestoneCardType['commonSolutions']) => {
@@ -102,17 +102,19 @@ const AddSolutionToMilestoneForm = ({
     [commonSolutionsConfig.options]
   );
 
-  const formatCustomSolutions = useCallback(
-    (solutions: CustomMTOSolutionType[]) => {
-      return solutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.id
-        };
-      });
-    },
-    []
-  );
+  // const formatCustomSolutions = useCallback(
+  //   (solutions: CustomMTOSolutionType[]) => {
+  //     return solutions
+  //       .filter(solution => !solution.addedFromSolutionLibrary)
+  //       .map(solution => {
+  //         return {
+  //           label: solution.name || '',
+  //           value: solution.id
+  //         };
+  //       });
+  //   },
+  //   []
+  // );
 
   const removeCommonSolutionsFromList = useCallback(
     (options: Record<MtoCommonSolutionKey, string>) => {
@@ -134,10 +136,10 @@ const AddSolutionToMilestoneForm = ({
       label: 'Suggested solutions for this milestone',
       options: formatSolutions(milestone.commonSolutions)
     },
-    {
-      label: 'Custom solutions added to this MTO',
-      options: formatCustomSolutions(customSolutions)
-    },
+    // {
+    //   label: 'Custom solutions added to this MTO',
+    //   options: formatCustomSolutions(customSolutions)
+    // },
     {
       label: 'Other available solutions',
       options: composeMultiSelectOptions(
@@ -153,10 +155,10 @@ const AddSolutionToMilestoneForm = ({
         label: 'Suggested solutions for this milestone',
         options: formatSolutions(milestone.commonSolutions)
       },
-      {
-        label: 'Custom solutions added to this MTO',
-        options: formatCustomSolutions(customSolutions)
-      },
+      // {
+      //   label: 'Custom solutions added to this MTO',
+      //   options: formatCustomSolutions(customSolutions)
+      // },
       {
         label: 'Other available solutions',
         options: composeMultiSelectOptions(
@@ -167,11 +169,11 @@ const AddSolutionToMilestoneForm = ({
     ]);
   }, [
     milestone.commonSolutions,
-    customSolutions,
+    // customSolutions,
     commonSolutionsConfig.options,
     commonSolutionsConfig.readonlyOptions,
     formatSolutions,
-    formatCustomSolutions,
+    // formatCustomSolutions,
     removeCommonSolutionsFromList
   ]);
 
@@ -196,28 +198,6 @@ const AddSolutionToMilestoneForm = ({
     })
       .then(response => {
         if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.milestone.alert.success')}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    values={{
-                      milestone: response.data?.createMTOMilestoneCommon.name
-                    }}
-                  />
-                </span>
-              </Alert>
-            </>
-          );
           closeModal();
         }
       })

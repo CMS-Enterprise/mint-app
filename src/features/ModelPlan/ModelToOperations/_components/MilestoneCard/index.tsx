@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -28,9 +28,22 @@ const MilestoneCard = ({
 
   const history = useHistory();
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history]
+  );
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const milestoneParam = params.get('milestone');
+
+  const [isModalOpen, setIsModalOpen] = useState(
+    milestoneParam === milestone.key
+  );
+
+  useEffect(() => {
+    if (milestoneParam === milestone.key) {
+      setIsModalOpen(true);
+    }
+  }, [milestoneParam, milestone.key, setIsModalOpen]);
 
   return (
     <>

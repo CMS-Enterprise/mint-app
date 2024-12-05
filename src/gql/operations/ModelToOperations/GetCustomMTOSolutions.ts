@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
         solutions {
           id
           name
+          addedFromSolutionLibrary
         }
       }
     }

@@ -29,7 +29,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     options: {
       INNOVATION: '4innovation',
       ACO_OS: 'Accountable Care Organization - Operational System',
-      APPS: 'Accountable Care Organization - Operational System',
+      APPS: 'Automated Plan Payment System',
+      BCDA: 'Beneficiary Claims Data API',
       CDX: 'Centralized Data Exchange',
       CCW: 'Chronic Conditions Warehouse',
       CMS_BOX: 'CMS Box',
@@ -45,10 +46,14 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       HPMS: 'Health Plan Management System',
       HIGLAS: 'Healthcare Integrated General Ledger Accounting System',
       IPC: 'Innovation Payment Contractor',
+      ISP: 'Innovation Support Platform',
       IDR: 'Integrated Data Repository',
       LDG: 'Learning and Diffusion Group',
       LV: 'Legal Vertical',
+      MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
       MDM_POR: 'Master Data Management Program-Organization Relationship',
+      MIDS: 'Measure and Instrument Development and Support',
+      MODEL_SPACE: 'Model Space',
       MARX: 'Medicare Advantage Prescription Drug System',
       OUTLOOK_MAILBOX: 'Outlook Mailbox',
       QV: 'Quality Vertical',
@@ -58,12 +63,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       LOI: 'Salesforce Letter of Intent',
       POST_PORTAL: 'Salesforce Project Officer Support Tool / Portal',
       RFA: 'Salesforce Request for Application',
-      SHARED_SYSTEMS: 'Shared Systems',
-      BCDA: 'Beneficiary Claims Data API',
-      ISP: 'Innovation Support Platform',
-      MIDS: 'Measure and Instrument Development and Support',
-      MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
-      MODEL_SPACE: 'Model Space'
+      SHARED_SYSTEMS: 'Shared Systems'
     },
     readonlyOptions: {
       INNOVATION: '4i'

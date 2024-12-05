@@ -77,7 +77,7 @@ const MTOModal = ({
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
       {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
       {modalType === 'solution' && <SolutionForm closeModal={closeModal} />}
-      {modalType === 'solutionToMilestone' && (
+      {modalType === 'solutionToMilestone' && milestone && (
         <AddSolutionToMilestoneForm
           closeModal={closeModal}
           milestone={milestone}

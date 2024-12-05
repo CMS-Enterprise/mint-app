@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import Select, {
   ClearIndicatorProps,
   components,
@@ -246,12 +246,16 @@ const MultiSelect = ({
   disabledOption?: boolean;
   disabledLabel?: string;
 }) => {
-  let condensedOptions = options;
-
-  if (groupedOptions) {
-    condensedOptions = [];
-    groupedOptions.forEach(option => condensedOptions.push(...option.options));
-  }
+  const condensedOptions = useMemo(() => {
+    if (groupedOptions) {
+      const groupedOptionsArray: MultiSelectOptionProps[] = [];
+      groupedOptions.forEach(option =>
+        groupedOptionsArray.push(...option.options)
+      );
+      return [...groupedOptionsArray];
+    }
+    return [...options];
+  }, [options, groupedOptions]);
 
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues
@@ -259,9 +263,13 @@ const MultiSelect = ({
       : []
   );
 
-  const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
-    ...condensedOptions
-  ]);
+  const [originalOptions, setOriginalOptions] = useState<
+    MultiValue<MultiSelectOptionProps>
+  >([...condensedOptions]);
+
+  useEffect(() => {
+    setOriginalOptions([...condensedOptions]);
+  }, [condensedOptions]);
 
   useEffect(() => {
     setSelected(
@@ -269,7 +277,7 @@ const MultiSelect = ({
         ? originalOptions.filter(option => initialValues.includes(option.value))
         : []
     );
-  }, [initialValues, originalOptions]);
+  }, [initialValues, originalOptions, condensedOptions]);
 
   const sortSelectedTags = (order: 'asc' | 'desc' | string) => {
     switch (order) {
