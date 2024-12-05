@@ -11,6 +11,8 @@ import useMessage from 'hooks/useMessage';
 
 import MTOModal from '../../Modal';
 
+import './index.scss';
+
 const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -73,7 +75,7 @@ const MTOTableActions = () => {
             style={{ gap: '24px' }}
           >
             {/* Milestone Buttons */}
-            <div className="width-full padding-bottom-3 border-bottom border-base-light">
+            <div className="tablet-lg:width-fit-content width-full   padding-bottom-3 border-bottom border-base-light desktop:border-0">
               <div className="width-fit-content">
                 <div className="display-flex flex-align-center">
                   <div
@@ -126,7 +128,7 @@ const MTOTableActions = () => {
             </div>
 
             {/* Operational Solution Buttons */}
-            <div className="width-full padding-bottom-3 border-bottom border-base-light">
+            <div className="tablet-lg:width-fit-content width-full   padding-bottom-3 border-bottom border-base-light desktop:border-0">
               <div className="width-fit-content">
                 <div className="display-flex flex-align-center">
                   <div
