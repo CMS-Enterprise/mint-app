@@ -53,4 +53,11 @@ extend type Mutation {
   """
   reorderMTOCategory(id: UUID!, newOrder: Int, parentID: UUID): MTOCategory!
   @hasRole(role: MINT_USER)
+
+  """
+  Automatically attempts to create a series of categories and subcategories by name. If any specific category/subcategory already exists, it will
+  still create the others
+  """
+  createStandardCategories(modelPlanID: UUID!): Boolean!
+  @hasRole(role: MINT_USER)
 }
