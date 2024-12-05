@@ -43,6 +43,7 @@ const MilestoneCard = ({
         }}
         modalType="solutionToMilestone"
         isRequired={false}
+        milestone={milestone}
       />
 
       <Card

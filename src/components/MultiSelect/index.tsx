@@ -59,6 +59,13 @@ export const Option = (
   );
 };
 
+export const GroupLabel = ({
+  label,
+  options
+}: GroupBase<MultiSelectOptionProps>) => (
+  <span className="text-primary-dark text-bold text-no-uppercase">{label}</span>
+);
+
 export const ClearIndicator = (
   props: ClearIndicatorProps<MultiSelectOptionProps, true>
 ) => {
@@ -299,6 +306,7 @@ const MultiSelect = ({
         )}
         isClearable={!disabledOption}
         options={groupedOptions || options}
+        formatGroupLabel={GroupLabel}
         components={{ ClearIndicator, Option }}
         isMulti
         hideSelectedOptions={false}

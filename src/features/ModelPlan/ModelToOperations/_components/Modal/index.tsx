@@ -5,6 +5,8 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
+import { MilestoneCardType } from '../../MilestoneLibrary';
+
 import AddSolutionToMilestoneForm from './AddSolutionToMilestoneForm';
 import CategoryForm from './CategoryForm';
 import MilestoneForm from './MilestoneForm';
@@ -15,13 +17,15 @@ type MTOModalProps = {
   closeModal: () => void;
   modalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone';
   isRequired?: boolean;
+  milestone?: MilestoneCardType;
 };
 
 const MTOModal = ({
   isOpen,
   closeModal,
   modalType,
-  isRequired = true
+  isRequired = true,
+  milestone
 }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -74,7 +78,10 @@ const MTOModal = ({
       {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
       {modalType === 'solution' && <SolutionForm closeModal={closeModal} />}
       {modalType === 'solutionToMilestone' && (
-        <AddSolutionToMilestoneForm closeModal={closeModal} />
+        <AddSolutionToMilestoneForm
+          closeModal={closeModal}
+          milestone={milestone}
+        />
       )}
     </Modal>
   );

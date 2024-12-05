@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -14,11 +14,14 @@ import {
   FormGroup,
   Label
 } from '@trussworks/react-uswds';
+import { MilestoneCardType } from 'features/ModelPlan/ModelToOperations/MilestoneLibrary';
 import {
+  GetCustomMtoSolutionsQuery,
   GetModelToOperationsMatrixDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
-  useCreateMtoMilestoneMutation
+  useCreateMtoMilestoneMutation,
+  useGetCustomMtoSolutionsQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -26,6 +29,7 @@ import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
 import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
@@ -35,10 +39,15 @@ type FormValues = {
   commonSolutions: MtoCommonSolutionKey[] | undefined;
 };
 
+type CustomMTOSolutionType =
+  GetCustomMtoSolutionsQuery['modelPlan']['mtoMatrix']['solutions'][0];
+
 const AddSolutionToMilestoneForm = ({
-  closeModal
+  closeModal,
+  milestone
 }: {
   closeModal: () => void;
+  milestone: MilestoneCardType;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -69,6 +78,102 @@ const AddSolutionToMilestoneForm = ({
     watch,
     formState: { isValid }
   } = methods;
+
+  const { data, loading } = useGetCustomMtoSolutionsQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const customSolutions = useMemo(
+    () => data?.modelPlan?.mtoMatrix?.solutions || [],
+    [data?.modelPlan?.mtoMatrix?.solutions]
+  );
+
+  const formatSolutions = useCallback(
+    (solutions: MilestoneCardType['commonSolutions']) => {
+      return solutions.map(solution => {
+        return {
+          label: commonSolutionsConfig.options[solution.key] || '',
+          value: solution.key
+        };
+      });
+    },
+    [commonSolutionsConfig.options]
+  );
+
+  const formatCustomSolutions = useCallback(
+    (solutions: CustomMTOSolutionType[]) => {
+      return solutions.map(solution => {
+        return {
+          label: solution.name || '',
+          value: solution.id
+        };
+      });
+    },
+    []
+  );
+
+  const removeCommonSolutionsFromList = useCallback(
+    (options: Record<MtoCommonSolutionKey, string>) => {
+      const filteredSolutionOptions: Partial<
+        Record<MtoCommonSolutionKey, string>
+      > = {};
+      getKeys(options).forEach(key => {
+        if (!milestone.commonSolutions.find(s => s.key === key)) {
+          filteredSolutionOptions[key] = commonSolutionsConfig.options[key];
+        }
+      });
+      return filteredSolutionOptions;
+    },
+    [commonSolutionsConfig.options, milestone.commonSolutions]
+  );
+
+  const [groupedOptions, setGroupedOptions] = useState([
+    {
+      label: 'Suggested solutions for this milestone',
+      options: formatSolutions(milestone.commonSolutions)
+    },
+    {
+      label: 'Custom solutions added to this MTO',
+      options: formatCustomSolutions(customSolutions)
+    },
+    {
+      label: 'Other available solutions',
+      options: composeMultiSelectOptions(
+        removeCommonSolutionsFromList(commonSolutionsConfig.options),
+        commonSolutionsConfig.readonlyOptions
+      )
+    }
+  ]);
+
+  useEffect(() => {
+    setGroupedOptions([
+      {
+        label: 'Suggested solutions for this milestone',
+        options: formatSolutions(milestone.commonSolutions)
+      },
+      {
+        label: 'Custom solutions added to this MTO',
+        options: formatCustomSolutions(customSolutions)
+      },
+      {
+        label: 'Other available solutions',
+        options: composeMultiSelectOptions(
+          removeCommonSolutionsFromList(commonSolutionsConfig.options),
+          commonSolutionsConfig.readonlyOptions
+        )
+      }
+    ]);
+  }, [
+    milestone.commonSolutions,
+    customSolutions,
+    commonSolutionsConfig.options,
+    commonSolutionsConfig.readonlyOptions,
+    formatSolutions,
+    formatCustomSolutions,
+    removeCommonSolutionsFromList
+  ]);
 
   const [create] = useCreateMtoMilestoneMutation({
     refetchQueries: [
@@ -166,15 +271,7 @@ const AddSolutionToMilestoneForm = ({
                     ariaLabel={convertCamelCaseToKebabCase('commonSolutions')}
                     ariaLabelText={commonSolutionsConfig.label}
                     options={[]}
-                    groupedOptions={[
-                      {
-                        label: 'Solutions',
-                        options: composeMultiSelectOptions(
-                          commonSolutionsConfig.options,
-                          commonSolutionsConfig.readonlyOptions
-                        )
-                      }
-                    ]}
+                    groupedOptions={groupedOptions}
                     selectedLabel={commonSolutionsConfig.multiSelectLabel || ''}
                     initialValues={watch('commonSolutions')}
                   />
