@@ -70,12 +70,9 @@ const MTOTableActions = () => {
           </Button>
         </div>
         {actionsMenuOpen && (
-          <div
-            className="action-buttons margin-top-3 display-flex flex-justify flex-wrap"
-            style={{ gap: '24px' }}
-          >
+          <div className="action-buttons margin-top-3">
             {/* Milestone Buttons */}
-            <div className="tablet-lg:width-fit-content width-full   padding-bottom-3 border-bottom border-base-light desktop:border-0">
+            <div className="action-button--milestone">
               <div className="width-fit-content">
                 <div className="display-flex flex-align-center">
                   <div
@@ -128,7 +125,7 @@ const MTOTableActions = () => {
             </div>
 
             {/* Operational Solution Buttons */}
-            <div className="tablet-lg:width-fit-content width-full   padding-bottom-3 border-bottom border-base-light desktop:border-0">
+            <div className="action-button--solution">
               <div className="width-fit-content">
                 <div className="display-flex flex-align-center">
                   <div
@@ -185,7 +182,7 @@ const MTOTableActions = () => {
             </div>
 
             {/* Template and Categories Buttons */}
-            <div className="tablet-lg:width-fit-content width-full">
+            <div className="action-button--category">
               <div className="display-flex flex-align-center">
                 <div
                   className="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
