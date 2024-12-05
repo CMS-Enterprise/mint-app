@@ -1,3 +1,4 @@
+CREATE FUNCTION public.SET_SUGGESTED_MTO_MILESTONE() RETURNS TRIGGER AS $body$
 DECLARE
     h_old hstore;
     h_new hstore;
@@ -43,3 +44,4 @@ WHEN NOT MATCHED AND source.suggested = TRUE THEN
 
 
 END;
+$body$ LANGUAGE plpgsql;
