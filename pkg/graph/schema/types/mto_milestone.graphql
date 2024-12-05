@@ -36,16 +36,10 @@ type MTOMilestone {
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
   commonMilestone: MTOCommonMilestone
   solutions: [MTOSolution!]!
-  # Category: {
-  #   mtoCategoryID: UUID
-  #   subcategoryID: UUID
-  #   Category: MTOCategory
-  #   subCategory: MTOSubcategory
-  # }
-  # TODO (mto) do we need to resolve category? Should we need to resolve it here? Also, 
-  # category: UNION MTOCategory | MTOSubcategory ?
-  category: MTOCategory!
-  subCategory: MTOSubcategory!
+  """
+  Category resolves relational category information.
+  """
+  categories: MTOCategories!
 }
 
 input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
@@ -53,7 +47,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   mtoCategoryID: UUID
   facilitatedBy: [MTOFacilitator!]
   needBy: Time
-  status: MTOMilestoneStatus 
+  status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator
   isDraft: Boolean
 }
@@ -61,10 +55,16 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
 extend type Mutation {
   createMTOMilestoneCustom(modelPlanID: UUID!, name: String!, mtoCategoryID: UUID): MTOMilestone!
   @hasRole(role: MINT_USER)
-  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!): MTOMilestone!
+  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!, commonSolutions: [MTOCommonSolutionKey!]): MTOMilestone!
   @hasRole(role: MINT_USER)
   updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!): MTOMilestone!
   @hasRole(role: MINT_USER)
   deleteMTOMilestone(id: UUID!): Boolean!
   @hasRole(role: MINT_USER)
 }
+
+extend type Query {
+  mtoMilestone(id: UUID!): MTOMilestone!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+}
+

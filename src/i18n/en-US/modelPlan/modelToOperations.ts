@@ -255,13 +255,13 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
     category: {
       selectPrimaryCategory: {
-        label: 'Select primary category <s>*</s>',
+        label: 'Select primary category',
         sublabel:
           'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
       },
 
       categoryTitle: {
-        label: 'New category title <s>*</s>'
+        label: 'New category title'
       },
       selectOptions: {
         default: '- Select - ',
@@ -278,17 +278,35 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     milestone: {
       selectPrimaryCategory: {
-        label: 'Select primary category <s>*</s>'
+        label: 'Select primary category'
       },
       selectSubcategory: {
-        label: 'Select sub-category <s>*</s>'
+        label: 'Select sub-category'
       },
-      milestoneTitle: 'Milestone title <s>*</s>',
+      milestoneTitle: 'Milestone title',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
         success: 'Your milestone ({{milestone}}) has been added.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
+      }
+    },
+    solution: {
+      label: {
+        solutionType: 'What type of solution is this?',
+        solutionTitle: 'Please add a title for your solution',
+        pocName: 'Point of contact name',
+        pocEmail: 'Point of contact email address',
+        emailError: 'Please use a valid email address format.'
+      },
+      pocHeading: 'Solution point of contact information',
+      pocSubheading:
+        'Add the name and contact information for the person or team who is the primary point of contact for this solution.',
+      alert: {
+        info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       }
     },
     addButton: 'Add {{type}}',

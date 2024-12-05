@@ -37,14 +37,9 @@ func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMil
 	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
-// Category is the resolver for the category field.
-func (r *mTOMilestoneResolver) Category(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCategory, error) {
-	panic(fmt.Errorf("not implemented: Category - category"))
-}
-
-// SubCategory is the resolver for the subCategory field.
-func (r *mTOMilestoneResolver) SubCategory(ctx context.Context, obj *models.MTOMilestone) (*models.MTOSubcategory, error) {
-	panic(fmt.Errorf("not implemented: SubCategory - subCategory"))
+// Categories is the resolver for the categories field.
+func (r *mTOMilestoneResolver) Categories(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCategories, error) {
+	return MTOCategoriesGetByID(ctx, obj.MTOCategoryID, obj.ModelPlanID)
 }
 
 // CreateMTOMilestoneCustom is the resolver for the createMTOMilestoneCustom field.
@@ -55,10 +50,11 @@ func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPl
 }
 
 // CreateMTOMilestoneCommon is the resolver for the createMTOMilestoneCommon field.
-func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneKey models.MTOCommonMilestoneKey) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneKey models.MTOCommonMilestoneKey, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, modelPlanID, commonMilestoneKey)
+
+	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, modelPlanID, commonMilestoneKey, commonSolutions)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.
@@ -75,6 +71,11 @@ func (r *mutationResolver) DeleteMTOMilestone(ctx context.Context, id uuid.UUID)
 	logger := appcontext.ZLogger(ctx)
 
 	return true, MTOMilestoneDelete(ctx, logger, principal, r.store, id)
+}
+
+// MtoMilestone is the resolver for the mtoMilestone field.
+func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
+	return MTOMilestoneGetByIDLOADER(ctx, id)
 }
 
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.
