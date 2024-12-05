@@ -5,7 +5,7 @@ RETURNS TABLE (
     trigger_vals TEXT[],
     retVals TEXT[],
     model_plan_id UUID,
-    needed BOOLEAN
+    suggested BOOLEAN
 )
 AS $$
 	BEGIN 
@@ -61,10 +61,10 @@ AS $$
 		vals,
 		Combined.model_plan_id,
 		CASE
-			WHEN vals::TEXT[] = '{NULL}' THEN NULL --distinguish if vals are null, means not answered yet
+			WHEN vals::TEXT[] = '{NULL}' THEN NULL --distinguish if vals are null, means not answered yet, or it was unset
 			ELSE(vals && Combined.trigger_vals)
 		END
-		AS needed
+		AS suggested
 		FROM Combined
     )
 	
@@ -74,7 +74,7 @@ AS $$
 	MilestoneSuggestion.trigger_vals,
 	MilestoneSuggestion.vals,
 	MilestoneSuggestion.model_plan_id,
-	MilestoneSuggestion.needed
+	MilestoneSuggestion.suggested
 	from MilestoneSuggestion
 	ORDER BY MilestoneSuggestion.key;
 
