@@ -6,13 +6,11 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
-
-	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 // FacilitatedBy is the resolver for the facilitatedBy field.
@@ -34,7 +32,7 @@ func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.
 
 // Solutions is the resolver for the solutions field.
 func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMilestone) ([]*models.MTOSolution, error) {
-	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+	return MTOSolutionGetByMilestoneIDLOADER(ctx, obj.ID)
 }
 
 // Categories is the resolver for the categories field.

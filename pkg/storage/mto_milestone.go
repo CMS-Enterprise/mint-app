@@ -102,3 +102,14 @@ func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID)
 
 	return returned, nil
 }
+
+func MTOMilestoneGetBySolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, solutionIDs []uuid.UUID) ([]*models.MTOMilestone, error) {
+
+	arg := map[string]interface{}{"solution_ids": solutionIDs}
+
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetBySolutionIDLoader, arg)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}

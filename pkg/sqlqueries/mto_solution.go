@@ -17,12 +17,16 @@ var mtoSolutionGetByIDLoaderSQL string
 //go:embed SQL/mto/solution/get_by_model_plan_id_LOADER.sql
 var mtoSolutionGetByModelPlanIDLoaderSQL string
 
+//go:embed SQL/mto/solution/get_by_milestone_id_LOADER.sql
+var mtoSolutionGetByMilestoneIDLoaderSQL string
+
 type mtoSolutionScripts struct {
 	Create                 string
 	CreateAllowConflicts   string
 	Update                 string
 	GetByIDLoader          string
 	GetByModelPlanIDLoader string
+	GetByMilestoneIDLoader string
 }
 
 var MTOSolution = mtoSolutionScripts{
@@ -31,4 +35,5 @@ var MTOSolution = mtoSolutionScripts{
 	Update:                 mtoSolutionUpdateSQL,
 	GetByIDLoader:          mtoSolutionGetByIDLoaderSQL,
 	GetByModelPlanIDLoader: mtoSolutionGetByModelPlanIDLoaderSQL,
+	GetByMilestoneIDLoader: mtoSolutionGetByMilestoneIDLoaderSQL,
 }

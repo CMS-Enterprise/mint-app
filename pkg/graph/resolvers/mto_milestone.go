@@ -185,3 +185,10 @@ func MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER(ctx context.Context, modelP
 			MTOCategoryID: mtoCategoryID,
 		})
 }
+
+func MTOSolutionGetByMilestoneIDLOADER(
+	ctx context.Context,
+	milestoneID uuid.UUID,
+) ([]*models.MTOSolution, error) {
+	return loaders.MTOSolution.ByMilestoneID.Load(ctx, milestoneID)
+}
