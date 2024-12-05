@@ -177,6 +177,8 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 
 // TODO (mto) Maybe(?) write MTOMilestoneGetByModelPlanIDAndCategoryIDLOADER
 
+// TODO (mto) more dedicated tests for MTOMilestoneDelete
+
 func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	plan := suite.createModelPlan("plan for testing MTO create milestone solution links")
 	commonMilestoneKey := models.MTOCommonMilestoneKeyAppSupportCon
@@ -212,6 +214,17 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 
 	suite.NoError(err)
 	suite.Len(milestoneSolutionLinks, 2)
+
+	// finally, delete the milestone and ensure the links are removed (due to the `ON CASCADE DELETE`)
+	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID)
+	suite.NoError(err)
+	milestoneSolutionLinksAfterDelete, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		milestone.ID,
+	)
+	suite.NoError(err)
+	suite.Len(milestoneSolutionLinksAfterDelete, 0)
 }
 
 func (suite *ResolverSuite) TestCreateMilestoneSolutionLinksNoCommonSolutions() {
