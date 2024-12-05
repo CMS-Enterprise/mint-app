@@ -1255,6 +1255,11 @@ export type Mutation = {
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
   createPlanTDL: PlanTdl;
+  /**
+   * Automatically attempts to create a series of categories and subcategories by name. If any specific category/subcategory already exists, it will
+   * still create the others
+   */
+  createStandardCategories: Scalars['Boolean']['output'];
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
@@ -1431,6 +1436,12 @@ export type MutationCreatePlanDocumentSolutionLinksArgs = {
 /** Mutations definition for the schema */
 export type MutationCreatePlanTdlArgs = {
   input: PlanTdlCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateStandardCategoriesArgs = {
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 

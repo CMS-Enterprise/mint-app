@@ -58,6 +58,13 @@ func (r *mutationResolver) ReorderMTOCategory(ctx context.Context, id uuid.UUID,
 	return MTOCategoryReorder(ctx, logger, principal, r.store, id, newOrder, parentID)
 }
 
+// CreateStandardCategories is the resolver for the createStandardCategories field.
+func (r *mutationResolver) CreateStandardCategories(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return MTOCreateStandardCategories(ctx, logger, principal, r.store, modelPlanID)
+}
+
 // MTOCategory returns generated.MTOCategoryResolver implementation.
 func (r *Resolver) MTOCategory() generated.MTOCategoryResolver { return &mTOCategoryResolver{r} }
 
