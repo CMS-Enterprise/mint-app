@@ -268,7 +268,7 @@ const MultiSelect = ({
 
   useEffect(() => {
     setOriginalOptions([...condensedOptions]);
-  }, [condensedOptions]);
+  }, [groupedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setSelected(
@@ -276,7 +276,7 @@ const MultiSelect = ({
         ? originalOptions.filter(option => initialValues.includes(option.value))
         : []
     );
-  }, [initialValues, originalOptions, condensedOptions]);
+  }, [initialValues, originalOptions]);
 
   const sortSelectedTags = (order: 'asc' | 'desc' | string) => {
     switch (order) {
