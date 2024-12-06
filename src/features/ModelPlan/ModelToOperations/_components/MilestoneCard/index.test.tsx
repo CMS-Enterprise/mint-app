@@ -5,6 +5,8 @@ import { render } from '@testing-library/react';
 import { MtoCommonMilestoneKey } from 'gql/generated/graphql';
 import { suggestedMilestonesMock } from 'tests/mock/mto';
 
+import MessageProvider from 'contexts/MessageContext';
+
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
 import MilestoneCard from './index';
@@ -30,7 +32,9 @@ describe('MilestoneCard Component', () => {
           ]}
         >
           <Route path="/models/:modelID/collaboration-area/model-to-operations/milestone-library">
-            <MilestoneCard milestone={mockMilestone} />
+            <MessageProvider>
+              <MilestoneCard milestone={mockMilestone} />
+            </MessageProvider>
           </Route>
         </MemoryRouter>
       </MockedProvider>
