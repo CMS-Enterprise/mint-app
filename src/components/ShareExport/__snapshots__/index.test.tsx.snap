@@ -10886,7 +10886,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
       </button>
       <button
         aria-label="Close Modal"
-        class="mint-modal__x-button text-base margin-right-0 margin-y-1 right-neg-1 position-relative"
+        class="mint-modal__x-button text-base right-neg-2 position-relative"
         type="button"
       >
         <svg

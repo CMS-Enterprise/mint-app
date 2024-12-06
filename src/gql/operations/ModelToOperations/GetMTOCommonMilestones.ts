@@ -12,6 +12,10 @@ export default gql(/* GraphQL */ `
           isSuggested
           categoryName
           subCategoryName
+          facilitatedByRole
+          commonSolutions {
+            key
+          }
         }
       }
     }

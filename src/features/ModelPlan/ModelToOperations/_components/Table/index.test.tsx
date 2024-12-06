@@ -2,13 +2,16 @@ import {
   GetModelToOperationsMatrixQuery,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  MtoStatus
 } from 'gql/generated/graphql';
 
 import { CategoryType } from './columns';
 import {
   formatAndHomogenizeMilestoneData,
+  GetModelToOperationsMatrixQueryType,
   getRenderedRowIndexes,
+  isMatrixStartedFc,
   moveRow
 } from '.';
 
@@ -520,5 +523,112 @@ describe('getRenderedRowIndexes', () => {
 
     const result = getRenderedRowIndexes(rows, rowsPerPage, currentPage);
     expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe('isMatrixStartedFc', () => {
+  const mock: GetModelToOperationsMatrixQueryType = {
+    __typename: 'ModelsToOperationMatrix',
+    status: MtoStatus.IN_PROGRESS,
+    milestones: [],
+    recentEdit: null,
+    categories: [
+      {
+        __typename: 'MTOCategory',
+        id: '123',
+        name: 'Milestone 1',
+        subCategories: [
+          {
+            __typename: 'MTOSubcategory',
+            id: '456',
+            name: 'Subcategory 1',
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '789',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 1',
+                // solutions: [],
+                facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS
+              }
+            ],
+            isUncategorized: false
+          }
+        ],
+        isUncategorized: false
+      }
+    ]
+  };
+
+  it('should return true when the matrix is started', () => {
+    const result = isMatrixStartedFc({ ...mock });
+    expect(result).toBe(true);
+  });
+
+  it('should return false when the matrix is not started/ no categories/subcategories/milestones added', () => {
+    const mockData = { ...mock };
+    mockData.categories = [
+      {
+        __typename: 'MTOCategory',
+        id: '123',
+        name: 'Milestone 1',
+        subCategories: [
+          {
+            __typename: 'MTOSubcategory',
+            id: '456',
+            name: 'Subcategory 1',
+            milestones: [],
+            isUncategorized: true
+          }
+        ],
+        isUncategorized: true
+      }
+    ];
+
+    const result = isMatrixStartedFc(mockData);
+    expect(result).toBe(false);
+  });
+
+  it('should return true when a milestone is added to only uncategorized', () => {
+    const mockData = { ...mock };
+    mockData.milestones = [
+      {
+        __typename: 'MTOMilestone',
+        id: '789'
+      }
+    ];
+    mockData.categories = [
+      {
+        __typename: 'MTOCategory',
+        id: '123',
+        name: 'Milestone 1',
+        subCategories: [
+          {
+            __typename: 'MTOSubcategory',
+            id: '456',
+            name: 'Subcategory 1',
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '789',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                name: 'Milestone 1',
+                // solutions: [],
+                facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
+                needBy: '2022-01-01',
+                status: MtoMilestoneStatus.IN_PROGRESS
+              }
+            ],
+            isUncategorized: true
+          }
+        ],
+        isUncategorized: true
+      }
+    ];
+
+    const result = isMatrixStartedFc(mockData);
+    expect(result).toBe(true);
   });
 });
