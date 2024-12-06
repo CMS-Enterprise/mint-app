@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -8,15 +9,16 @@ import (
 )
 
 func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
-	plan := suite.createModelPlan("plan for need")
+	planID := uuid.MustParse("fd4b089f-b608-4b58-bb1b-074573f39c65")
+	plan := suite.createModelPlanWithID("plan for milestone suggestions", &planID)
 
 	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"managePartCDEnrollment": false, // NEED 1, MANAGE_CD
-		// "collectPlanBids":        true, // NEED 2, MANAGE_CD
-		// "planContractUpdated":        false, // NEED 3 UPDATE_CONTRACT
+		"managePartCDEnrollment": false, // Milestone 1, MANAGE_CD
+		// "collectPlanBids":        true, // Milestone 2, MANAGE_CD
+		// "planContractUpdated":        false, // Milestone 3 UPDATE_CONTRACT
 	}
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -28,21 +30,23 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
 	manageCD := findCommonMilestone(opNeeds, models.MTOCommonMilestoneKeyManageCd)
 
 	if suite.NotNil(manageCD) {
+		// There is no entry for this in the suggested milestone table.
 		suite.False(manageCD.IsSuggested)
 	}
 
 	updateContract := findCommonMilestone(opNeeds, models.MTOCommonMilestoneKeyUpdateContract)
-	suite.NotNil(updateContract)
+	if suite.NotNil(updateContract) {
+		suite.False(updateContract.IsSuggested)
+	}
 	revColBids := findCommonMilestone(opNeeds, models.MTOCommonMilestoneKeyRevColBids)
-	suite.NotNil(revColBids)
-
-	suite.Nil(updateContract.IsSuggested)
-	suite.Nil(revColBids.IsSuggested)
+	if suite.NotNil(revColBids) {
+		suite.False(revColBids.IsSuggested)
+	}
 
 	changes = map[string]interface{}{
-		"managePartCDEnrollment": true,  // NEED 1, MANAGE_CD
-		"collectPlanBids":        false, // NEED 2, MANAGE_CD
-		"planContractUpdated":    false, // NEED 3 UPDATE_CONTRACT
+		"managePartCDEnrollment": true,  // Milestone 1, MANAGE_CD
+		"collectPlanBids":        false, // Milestone 2, MANAGE_CD
+		"planContractUpdated":    false, // Milestone 3 UPDATE_CONTRACT
 	}
 
 	updatedGeneralCharacteristics, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -68,7 +72,7 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	suite.NoError(err)
 	suite.NotNil(oelExisting)
 
-	changes := map[string]interface{}{ // NEED 13, PROCESS_PART_APPEALS
+	changes := map[string]interface{}{ // Milestone 13, PROCESS_PART_APPEALS
 
 		"appealNote": "we are testing appeal statements",
 	}
@@ -81,7 +85,7 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 
 	processPart := findCommonMilestone(opNeeds, models.MTOCommonMilestoneKeyProcessPartAppeals)
 	suite.NotNil(processPart)
-	suite.Nil(processPart.IsSuggested) // Un-Answered
+	suite.False(processPart.IsSuggested) // Un-Answered, so the milestone is not suggested
 
 	changes = map[string]interface{}{
 		"appealFeedback": true,
@@ -158,7 +162,7 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 
 	manageProvOverlap := findCommonMilestone(opNeeds, models.MTOCommonMilestoneKeyManageProvOverlap)
 	suite.NotNil(manageProvOverlap)
-	suite.Nil(manageProvOverlap.IsSuggested)
+	suite.False(manageProvOverlap.IsSuggested)
 
 	changes["providerOverlap"] = string(models.OverlapNo) //not needed
 	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
