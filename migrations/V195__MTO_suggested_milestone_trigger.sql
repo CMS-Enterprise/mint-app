@@ -45,3 +45,6 @@ WHEN NOT MATCHED AND source.suggested = TRUE THEN
 
 END;
 $body$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION SET_SUGGESTED_MTO_MILESTONE IS ' This trigger calls DETERMINE_MTO_MILESTONE_SUGGESTIONS to figure out if the changes made in a specific table
+indicate that a milestone would be suggested for a model plan. It does a merge statement to conditionally insert or delete records as they are suggested.';

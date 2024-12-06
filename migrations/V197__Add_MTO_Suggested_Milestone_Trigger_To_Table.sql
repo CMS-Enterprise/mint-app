@@ -12,3 +12,6 @@ BEGIN
 
 END
 $body$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION ADD_MTO_SUGGESTED_MILESTONE_SUGGESTION_TRIGGER IS 'This is a convenience function that stores the logic to add the SET_SUGGESTED_MTO_MILESTONE trigger on a table.
+The created trigger will be called mto_suggested_milestone_trigger';
