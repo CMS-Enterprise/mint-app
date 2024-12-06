@@ -475,6 +475,69 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PlanParticipantsAndProvidersUpdate And make 6 suggested milestones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: true\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NEED_POLICIES\n    # providerOverlapHierarchy:\n    # providerOverlapNote:\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PlanParticipantsAndProvidersUpdate OverlapNotApplicable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: null\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to null makes the hierarchy question not apply.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PlanParticipantsAndProvidersUpdateGainshareNotApplicable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NO_ISSUES\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to Yes_No_Issues doesn't make the hierarchy question not apply. Make it null if you want to do that instead.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -3322,6 +3385,39 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n    facilitatedBy: [IT_LEAD,OTHER],\n    riskIndicator: AT_RISK,\n    status: IN_PROGRESS\n    needBy: \"2024-10-31T17:20:21.959953Z\"\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n        }\n        subCategory{\n            name\n        }\n    }\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    # solutions\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation deleteMTOMilestone {\n    deleteMTOMilestone(id: \"{{mtoMilestoneID}}\")\n}",
 										"variables": ""
 									}
 								},
