@@ -44,7 +44,8 @@ const MTOTableActions = () => {
   const handleCreate = () => {
     create().then(response => {
       if (!response?.errors) {
-        alert('Standard categories created successfully');
+        // TODO: Add success message
+        // alert('Standard categories created successfully');
       }
     });
   };
