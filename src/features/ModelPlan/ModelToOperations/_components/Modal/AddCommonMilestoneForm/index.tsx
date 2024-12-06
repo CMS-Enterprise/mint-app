@@ -5,7 +5,7 @@ import {
   SubmitHandler,
   useForm
 } from 'react-hook-form';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -39,10 +39,12 @@ type FormValues = {
   commonSolutions: MtoCommonSolutionKey[] | undefined;
 };
 
+// TODO: Uncomment all instances once the custom solutions are available as mutation input
+
 // type CustomMTOSolutionType =
 //   GetCustomMtoSolutionsQuery['modelPlan']['mtoMatrix']['solutions'][0];
 
-const AddSolutionToMilestoneForm = ({
+const AddCommonMilestoneForm = ({
   closeModal,
   milestone
 }: {
@@ -283,4 +285,4 @@ const AddSolutionToMilestoneForm = ({
   );
 };
 
-export default AddSolutionToMilestoneForm;
+export default AddCommonMilestoneForm;

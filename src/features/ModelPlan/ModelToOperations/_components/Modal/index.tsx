@@ -7,7 +7,7 @@ import useMessage from 'hooks/useMessage';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
-import AddSolutionToMilestoneForm from './AddSolutionToMilestoneForm';
+import AddSolutionToMilestoneForm from './AddCommonMilestoneForm';
 import CategoryForm from './CategoryForm';
 import MilestoneForm from './MilestoneForm';
 import SolutionForm from './SolutionForm';
