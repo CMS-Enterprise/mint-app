@@ -8,6 +8,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// Currently, these tests do not exhaustively validate _every_ possible trigger for suggested common milestones.
+// It mainly focuses on testing the different types/styles of answers that can cause a milestone to become suggested.
+//
+// TODO We could refactor this to be more exhaustive (e.g. a test for each), and if we did this we'd probably want to do a more table-driven-testing approach,
+// but it's probably just not worth it at this time.
+
 func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
 	planID := uuid.MustParse("fd4b089f-b608-4b58-bb1b-074573f39c65")
 	plan := suite.createModelPlanWithID("plan for milestone suggestions", &planID)
@@ -27,21 +33,13 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
 	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NotNil(commonMilestones)
 	suite.NoError(err)
-	manageCD := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyManageCd)
 
-	if suite.NotNil(manageCD) {
-		// There is no entry for this in the suggested milestone table.
-		suite.False(manageCD.IsSuggested)
-	}
-
-	updateContract := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyUpdateContract)
-	if suite.NotNil(updateContract) {
-		suite.False(updateContract.IsSuggested)
-	}
-	revColBids := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyRevColBids)
-	if suite.NotNil(revColBids) {
-		suite.False(revColBids.IsSuggested)
-	}
+	// Check the suggestion status of a few common milestones
+	// No changes have been made yet that would cause a milestone to be created
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 0) // there shouldn't be any suggested milestones prior to any changes that would create them
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyManageCd, false)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyUpdateContract, false)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyRevColBids, false)
 
 	changes = map[string]interface{}{
 		"managePartCDEnrollment": true,  // Milestone 1, MANAGE_CD
@@ -56,14 +54,10 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	manageCD = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyManageCd)
-	updateContract = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyUpdateContract)
-	revColBids = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyRevColBids)
-
-	suite.True(manageCD.IsSuggested)
-	suite.False(updateContract.IsSuggested)
-	suite.False(revColBids.IsSuggested)
-
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 1)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyManageCd, true) // is now suggested!
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyUpdateContract, false)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyRevColBids, false)
 }
 func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	plan := suite.createModelPlan("plan for complex milestone suggestion logic")
@@ -83,9 +77,9 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	processPart := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals)
-	suite.NotNil(processPart)
-	suite.False(processPart.IsSuggested) // Un-Answered, so the milestone is not suggested
+	// We shouldn't have any suggested milestones just yet
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 0)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals, false) // Un-Answered, so the milestone is not suggested
 
 	changes = map[string]interface{}{
 		"appealFeedback": true,
@@ -101,10 +95,10 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	processPart = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals) // true for any {appeal_performance,appeal_feedback,appeal_payments,appeal_other}
-	suite.NotNil(processPart)
-	suite.True(processPart.IsSuggested)
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 1)                                                 // should only have 1
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals, true) // true for any {appeal_performance,appeal_feedback,appeal_payments,appeal_other}
 
+	// Change some other appeal-related answers, but still leaving the `appealFeedback` and `appealPerformance` answered (as true -- so this shouldn't undo the suggestion yet!)
 	changes = map[string]interface{}{
 		// "appealFeedback": true,
 		"appealPayments": false,
@@ -118,10 +112,10 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	processPart = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals)
-	suite.NotNil(processPart)
-	suite.True(processPart.IsSuggested) // Still suggested because the other appeal values are set to true, even though the only changed columsn are false
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 1)                                                 // should still only have 1
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals, true) // Still suggested because the other appeal values are set to true, even though the only changed columsn are false
 
+	// Finally, undo the initial answers that suggested this milestone in the first place
 	changes = map[string]interface{}{
 		"appealFeedback": false,
 		// "appealPayments": false,
@@ -135,10 +129,8 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	processPart = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals)
-	suite.NotNil(processPart)
-	suite.False(processPart.IsSuggested) // Now, no composite column has  a true value, so it is not suggested
-
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 0)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyProcessPartAppeals, false) // Now, no composite column has  a true value, so it is not suggested
 }
 
 func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
@@ -160,9 +152,8 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	manageProvOverlap := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap)
-	suite.NotNil(manageProvOverlap)
-	suite.False(manageProvOverlap.IsSuggested)
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 0)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap, false)
 
 	changes["providerOverlap"] = string(models.OverlapNo) //not suggested
 	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -172,9 +163,8 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	manageProvOverlap = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap)
-	suite.NotNil(manageProvOverlap)
-	suite.False(manageProvOverlap.IsSuggested)
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 0)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap, false)
 
 	changes["providerOverlap"] = string(models.OverlapYesNeedPolicies) //suggested
 	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -184,9 +174,8 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	manageProvOverlap = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap)
-	suite.NotNil(manageProvOverlap)
-	suite.True(manageProvOverlap.IsSuggested)
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 1)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap, true)
 
 	changes["providerOverlap"] = string(models.OverlapYesNoIssues) // still suggested with diff answer
 	updatedPP, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -196,9 +185,8 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
 
-	manageProvOverlap = findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap)
-	suite.NotNil(manageProvOverlap)
-	suite.True(manageProvOverlap.IsSuggested)
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 1)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyManageProvOverlap, true)
 
 	//multi-select test
 	changes["selectionMethod"] = []string{model.ParticipantSelectionTypeApplicationReviewAndScoringTool.String(), model.ParticipantSelectionTypeApplicationSupportContractor.String()}
@@ -208,19 +196,29 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 
 	commonMilestones, err = MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
-	revScoreApp := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyRevScoreApp) // TRUE for {LOI,NOFO,APPLICATION_COLLECTION_TOOL} on column selection method
-	suite.NotNil(revScoreApp)
-	appSuppCont := findCommonMilestone(commonMilestones, models.MTOCommonMilestoneKeyAppSupportCon) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
-	suite.NotNil(appSuppCont)
 
-	suite.True(revScoreApp.IsSuggested)
-	suite.True(appSuppCont.IsSuggested)
-
+	suite.assertNumCommonMilestonesSuggested(commonMilestones, 3)
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyRevScoreApp, true)   // TRUE for {LOI,NOFO,APPLICATION_COLLECTION_TOOL} on column selection method
+	suite.assertCommonMilestoneSuggestion(commonMilestones, models.MTOCommonMilestoneKeyAppSupportCon, true) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
 }
 
-func findCommonMilestone(collection []*models.MTOCommonMilestone, key models.MTOCommonMilestoneKey) *models.MTOCommonMilestone {
-	milestone, _ := lo.Find[*models.MTOCommonMilestone](collection, func(cm *models.MTOCommonMilestone) bool {
-		return cm.Key == key
+// assertCommonMilestoneSuggestion is a helper method to help simplify tests that often are looking through a list of common milestones,
+// finding a specific milestone from the list, and making sure that its `.isSuggested` property is what we expect it to be
+func (suite *ResolverSuite) assertCommonMilestoneSuggestion(commonMilestones []*models.MTOCommonMilestone, keyToFind models.MTOCommonMilestoneKey, expectedSuggested bool) {
+	milestone, _ := lo.Find(commonMilestones, func(cm *models.MTOCommonMilestone) bool {
+		return cm.Key == keyToFind
 	})
-	return milestone
+
+	if suite.NotNil(milestone) {
+		suite.Equal(expectedSuggested, milestone.IsSuggested)
+	}
+}
+
+// assertNumCommonMilestonesSuggested is a helper method used to assert the number of Common Milestones that have the `.isSuggested` property.
+func (suite *ResolverSuite) assertNumCommonMilestonesSuggested(commonMilestones []*models.MTOCommonMilestone, expectedNumSuggested int) {
+	actualNumSuggested := lo.CountBy(commonMilestones, func(cm *models.MTOCommonMilestone) bool {
+		return cm.IsSuggested
+	})
+
+	suite.Equal(expectedNumSuggested, actualNumSuggested)
 }
