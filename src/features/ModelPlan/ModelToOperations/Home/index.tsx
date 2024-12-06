@@ -22,6 +22,7 @@ import useMessage from 'hooks/useMessage';
 import MTOModal from '../_components/FormModal';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable from '../_components/Table';
+import MTOTableActions from '../_components/Table/Actions';
 
 export type MTOOption = 'milestones' | 'systems-and-solutions';
 
@@ -78,10 +79,7 @@ const MTOHome = () => {
         ]}
       />
 
-      {
-        // !isModalOpen &&
-        message && <Expire delay={45000}>{message}</Expire>
-      }
+      {message && <Expire delay={45000}>{message}</Expire>}
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
@@ -184,7 +182,12 @@ const MTOHome = () => {
           </div>
         )}
 
-        {currentView === 'milestones' && <MTOTable />}
+        {currentView === 'milestones' && (
+          <>
+            <MTOTableActions />
+            <MTOTable />
+          </>
+        )}
       </div>
     </>
   );
