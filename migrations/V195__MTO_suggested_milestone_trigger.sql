@@ -32,7 +32,7 @@ USING SuggestedMilestones AS source
 ON target.mto_common_milestone_key = source.key
    AND target.model_plan_id = source.model_plan_id
 
-WHEN MATCHED AND COALESCE(source.suggested, FALSE) <> TRUE THEN --Delete if it is not true. We use the COALESCE to also convert NULL to false
+WHEN MATCHED AND COALESCE(source.suggested, FALSE) <> TRUE THEN --Delete if it is not suggested (true). We use the COALESCE to also convert NULL to false
     DELETE
 
 -- insert records that are now not suggested

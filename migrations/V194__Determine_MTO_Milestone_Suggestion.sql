@@ -12,15 +12,17 @@ AS $$
 	-- RAISE NOTICE 'DETERMINE_MTO_MILESTONE_SUGGESTIONS called.  table_name % and  hstore = %', table_name,h_new;
 	RETURN QUERY
     WITH SuggestionConditions AS
+	-- First query the suggestion conditions from the common milestone table, based on the changed table_name
     (
         SELECT 
 	    mto_common_milestone.key,
         mto_common_milestone.trigger_col,
         mto_common_milestone.trigger_vals
     FROM public.mto_common_milestone
-    WHERE mto_common_milestone.trigger_table = table_name AND ((changedKeys && mto_common_milestone.trigger_col) OR changedKeys = '{*}'::TEXT[])-- Only get needs where the column has changes (eg there is overlap in these values)
+    WHERE mto_common_milestone.trigger_table = table_name AND ((changedKeys && mto_common_milestone.trigger_col) OR changedKeys = '{*}'::TEXT[])-- Only get milestones where the column has changes (eg there is overlap in these values)
     ),
 	singleMilestones AS
+	-- Isolate Milestones that are suggested based on a single column value vs nested, 
     (
     SELECT
     SuggestionConditions.key,
@@ -53,6 +55,7 @@ AS $$
 		singleMilestones WHERE nested = false OR nested IS null --false and null
 	),
     MilestoneSuggestion AS
+	-- Do the final suggestion on the milestone. An unanswered question is distinguished with null instead of making it false
     (
         SELECT
 		Combined.key,
@@ -67,7 +70,7 @@ AS $$
 		AS suggested
 		FROM Combined
     )
-	
+	-- Return the data
 	SELECT 
 	MilestoneSuggestion.key,
 	MilestoneSuggestion.trigger_col,
@@ -85,7 +88,6 @@ COMMENT ON FUNCTION DETERMINE_MTO_MILESTONE_SUGGESTIONS IS
 'This function analyzes a change set to see if a milestone should be suggested or not
 It first casts the rows at h_stores and compares which fields have changed. If any of the changed fields match (?|) a value from trigger_cols it gets inserted in SuggestionConditions CTE.
 From there, it checks all the current values (NEW) for the trigger col, and checks if any of them satisfy the trigger_vals (&&). 
-If it does, the need is set to needed = true, else needed = false.';
--- TODO --> update this comment
+If it does, the milestone is set to suggested = true, else suggested = false.';
 -- SELECT 	* FROM	DETERMINE_MTO_MILESTONE_SUGGESTIONS('plan_participants_and_providers',
 -- 						(SELECT hstore(PPP) FROM plan_participants_and_providers AS ppp WHERE ppp.model_plan_id = 'f8f4a93a-bf67-41f7-860e-da44ecd38fc9'))
