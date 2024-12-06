@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
@@ -88,6 +89,24 @@ func MTOMilestoneUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *
 		return nil, fmt.Errorf("issue updating MTOMilestone object: %w", procErr)
 	}
 	return returned, nil
+}
+
+// MTOMilestoneDelete deletes an MTOMilestone in the database
+func MTOMilestoneDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, milestoneID uuid.UUID) error {
+	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	err := setCurrentSessionUserVariable(tx, actorUserID)
+	if err != nil {
+		return err
+	}
+
+	// Delete the milestone!
+	// `ON CASCADE` functionality will delete any Milestone<->Solution links, if present
+	arg := map[string]interface{}{"id": milestoneID}
+	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOMilestone.Delete, arg)
+	if procErr != nil {
+		return fmt.Errorf("issue deleting MTOMilestone object: %w", procErr)
+	}
+	return nil
 }
 
 // MTOMilestoneGetByID returns an existing MTOMilestone from the database
