@@ -19,10 +19,12 @@ import '../../index.scss';
 
 const MilestoneCard = ({
   className,
-  milestone
+  milestone,
+  setIsSidepanelOpen
 }: {
   className?: string;
   milestone: MilestoneCardType;
+  setIsSidepanelOpen: (isOpen: boolean) => void;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -33,7 +35,7 @@ const MilestoneCard = ({
     [history]
   );
 
-  const milestoneParam = params.get('milestone');
+  const milestoneParam = params.get('add-milestone');
 
   const [isModalOpen, setIsModalOpen] = useState(
     milestoneParam === milestone.key
@@ -50,6 +52,7 @@ const MilestoneCard = ({
       <MTOModal
         isOpen={isModalOpen}
         closeModal={() => {
+          params.delete('add-milestone', milestone.key);
           params.delete('milestone', milestone.key);
           history.replace({ search: params.toString() });
           setIsModalOpen(false);
@@ -106,7 +109,8 @@ const MilestoneCard = ({
               outline
               className="margin-right-2"
               onClick={() => {
-                params.set('milestone', milestone.key);
+                params.delete('milestone');
+                params.set('add-milestone', milestone.key);
                 history.replace({ search: params.toString() });
                 setIsModalOpen(true);
               }}
@@ -124,7 +128,16 @@ const MilestoneCard = ({
             </Button>
           )}
 
-          <Button type="button" unstyled>
+          <Button
+            unstyled
+            type="button"
+            className="margin-top-2"
+            onClick={() => {
+              setIsSidepanelOpen(true);
+              params.set('milestone', milestone.key);
+              history.push({ search: params.toString() });
+            }}
+          >
             {t('milestoneLibrary.aboutThisMilestone')}
           </Button>
         </CardFooter>

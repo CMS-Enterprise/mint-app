@@ -36,8 +36,11 @@ import {
   SubCategoryType
 } from './columns';
 
-type GetModelToOperationsMatrixQueryType =
-  GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']['categories'];
+export type GetModelToOperationsMatrixQueryType =
+  GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix'];
+
+type GetModelToOperationsMatrixCategoryType =
+  GetModelToOperationsMatrixQueryType['categories'];
 
 const MTOTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -69,7 +72,7 @@ const MTOTable = () => {
     () =>
       formatAndHomogenizeMilestoneData(
         (queryData?.modelPlan.mtoMatrix?.categories ||
-          []) as unknown as GetModelToOperationsMatrixQueryType
+          []) as unknown as GetModelToOperationsMatrixCategoryType
       ),
     [queryData?.modelPlan.mtoMatrix]
   );
@@ -471,6 +474,10 @@ const MTOTable = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentColumn, columnSort, formattedData]);
 
+  const isMatrixStarted: boolean = useMemo(() => {
+    return isMatrixStartedFc(queryData?.modelPlan.mtoMatrix);
+  }, [queryData?.modelPlan.mtoMatrix]);
+
   if (loading) {
     return <PageLoading />;
   }
@@ -479,7 +486,7 @@ const MTOTable = () => {
     return <NotFoundPartial />;
   }
 
-  if ((queryData?.modelPlan.mtoMatrix.milestones.length || 0) === 0) {
+  if (!isMatrixStarted) {
     return <MTOOptionsPanel />;
   }
 
@@ -584,13 +591,38 @@ const MTOTable = () => {
 
 export default MTOTable;
 
+export const isMatrixStartedFc = (
+  data: GetModelToOperationsMatrixQueryType | undefined
+): boolean => {
+  if (!data) {
+    return false;
+  }
+
+  const hasCategories = (data.categories || []).filter(
+    category => !category.isUncategorized
+  );
+
+  const hasSubcategories = hasCategories.filter(
+    subcategory => !subcategory.isUncategorized
+  );
+
+  if (
+    hasCategories.length ||
+    hasSubcategories.length ||
+    data.milestones.length
+  ) {
+    return true;
+  }
+  return false;
+};
+
 /**
  * Function to format Category and SubCategory data to mirror the structure of Milstone data
  * This is done to make the data homogenized and easier to work with in the table for drag, drop, sort and pagination
  * Each row can now be superficially treated as a Milestone row
  */
 export const formatAndHomogenizeMilestoneData = (
-  data: GetModelToOperationsMatrixQueryType
+  data: GetModelToOperationsMatrixCategoryType
 ) => {
   const formatData: CategoryType[] = [];
   data.forEach(category => {
@@ -775,6 +807,10 @@ export const getRenderedRowIndexes = (
 
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
+      if (subCategory.milestones.length === 0) {
+        shownIndexes.category.push(catIndex);
+        shownIndexes.subCategory[catIndex].push(subIndex);
+      }
       subCategory.milestones.forEach((milestone, milIndex) => {
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
           shownIndexes.category.push(catIndex);

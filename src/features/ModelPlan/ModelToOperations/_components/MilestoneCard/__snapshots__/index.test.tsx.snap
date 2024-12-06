@@ -97,7 +97,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
           Add to matrix
         </button>
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled margin-top-2"
           data-testid="button"
           type="button"
         >

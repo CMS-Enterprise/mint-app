@@ -29,6 +29,7 @@ describe('Add common milestone form', () => {
                   isSuggested: false,
                   categoryName: 'Category 1',
                   subCategoryName: 'SubCategory 1',
+                  facilitatedByRole: [],
                   commonSolutions: []
                 }}
                 closeModal={() => {}}

@@ -482,6 +482,8 @@ func (s *Seeder) SeedData() {
 
 	s.seedModelPlanWithMTOData("Model Plan for MTO testing", "MINT", &mtoModelPlanUUID)
 
+	s.seedModelPlanWithMTOStandardCategories("Model Plan for with MTO categories", "MINT", &mtoModelPlanWithCategoriesUUID)
+
 	// Send a notification for Data Exchange Approach Completed
 	dataExchangeApproach := models.NewPlanDataExchangeApproach(
 		planWithDocuments.CreatedBy,
