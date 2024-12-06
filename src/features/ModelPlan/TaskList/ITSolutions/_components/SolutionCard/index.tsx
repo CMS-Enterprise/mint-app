@@ -69,9 +69,8 @@ const SolutionCard = ({
   const {
     prevPathname,
     selectedSolution,
-    renderModal,
     loading: modalLoading
-  } = useModalSolutionState(solution.key!);
+  } = useModalSolutionState();
 
   const { helpSolutions, loading } = useHelpSolution();
 
@@ -100,7 +99,7 @@ const SolutionCard = ({
 
   return (
     <>
-      {renderModal && selectedSolution && (
+      {selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}

@@ -12,6 +12,7 @@ import {
 import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
+  OperationalSolutionKey,
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
@@ -91,7 +92,11 @@ const SettingsOrder = () => {
       data?.userViewCustomization.possibleOperationalSolutions || [];
 
     return [...helpSolutions]
-      .filter(solution => possibleOperationalSolutions.includes(solution.enum))
+      .filter(solution =>
+        possibleOperationalSolutions.includes(
+          solution.enum as OperationalSolutionKey
+        )
+      )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
 

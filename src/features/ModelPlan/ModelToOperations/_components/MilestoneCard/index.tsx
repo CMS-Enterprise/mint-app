@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -17,12 +18,18 @@ import '../../index.scss';
 
 const MilestoneCard = ({
   className,
-  milestone
+  milestone,
+  setIsSidepanelOpen
 }: {
   className?: string;
   milestone: MilestoneCardType;
+  setIsSidepanelOpen: (isOpen: boolean) => void;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const history = useHistory();
+
+  const params = new URLSearchParams(history.location.search);
 
   return (
     <Card
@@ -89,7 +96,16 @@ const MilestoneCard = ({
           </Button>
         )}
 
-        <Button type="button" unstyled>
+        <Button
+          unstyled
+          type="button"
+          className="margin-top-2"
+          onClick={() => {
+            setIsSidepanelOpen(true);
+            params.set('milestone', milestone.key);
+            history.push({ search: params.toString() });
+          }}
+        >
           {t('milestoneLibrary.aboutThisMilestone')}
         </Button>
       </CardFooter>
