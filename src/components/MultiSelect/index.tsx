@@ -59,11 +59,10 @@ export const Option = (
   );
 };
 
-export const GroupLabel = ({
-  label,
-  options
-}: GroupBase<MultiSelectOptionProps>) => (
-  <span className="text-primary-dark text-bold text-no-uppercase">{label}</span>
+export const GroupLabel = ({ label }: GroupBase<MultiSelectOptionProps>) => (
+  <span className="text-primary-dark text-bold text-no-uppercase mint-text-normal">
+    {label}
+  </span>
 );
 
 export const ClearIndicator = (
@@ -310,7 +309,10 @@ const MultiSelect = ({
         name={name}
         className={classNames(
           'easi-multiselect usa-combo-box margin-top-1',
-          className
+          className,
+          {
+            'grouped-options': !!groupedOptions
+          }
         )}
         isClearable={!disabledOption}
         options={groupedOptions || options}

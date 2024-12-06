@@ -40,7 +40,7 @@ const Modal = ({
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-modal__overlay"
+      overlayClassName="mint-modal__overlay overflow-y-scroll"
       className={classNames('mint-modal__content', className)}
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}

@@ -17,7 +17,8 @@ describe('MilestoneCard Component', () => {
     subCategoryName: 'Test SubCategory',
     isSuggested: true,
     isAdded: false,
-    key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+    key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+    commonSolutions: []
   };
 
   it('renders correctly and matches snapshot', () => {

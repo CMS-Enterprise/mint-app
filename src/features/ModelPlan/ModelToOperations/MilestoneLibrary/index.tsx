@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -294,6 +294,7 @@ const MilstoneCardGroup = ({
                   'hide-added-milestones',
                   addedMilestonesHidden ? 'false' : 'true'
                 );
+                params.set('page', '1');
                 history.push({ search: params.toString() });
               }}
             />
