@@ -128,7 +128,7 @@ const client = new ApolloClient({
         keyFields: ['key', 'nameOther', 'id']
       },
       MTOSubcategory: {
-        keyFields: ['milestones']
+        keyFields: false
       },
       LockableSectionLockStatus: {
         keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
