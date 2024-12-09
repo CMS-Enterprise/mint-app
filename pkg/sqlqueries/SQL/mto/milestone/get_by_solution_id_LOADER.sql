@@ -1,6 +1,6 @@
 WITH QUERIED_IDS AS (
     /*Translate the input to a table */
-    SELECT UNNEST(CAST(:mto_solution_ids AS UUID[])) AS mto_solution_id
+    SELECT UNNEST(CAST(:solution_ids AS UUID[])) AS mto_solution_id
 )
 
 SELECT

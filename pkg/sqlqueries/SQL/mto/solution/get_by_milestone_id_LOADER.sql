@@ -1,6 +1,6 @@
 WITH QUERIED_IDS AS (
     /*Translate the input to a table */
-    SELECT UNNEST(CAST(:ids AS UUID[]))  AS id
+    SELECT UNNEST(CAST(:milestone_ids AS UUID[]))  AS milestone_id
 )
 
 SELECT
@@ -25,5 +25,4 @@ LEFT JOIN mto_common_solution ON mto_solution.mto_common_solution_key = mto_comm
 INNER JOIN mto_milestone_solution_link AS link
     ON mto_solution.id = link.solution_id
 INNER JOIN QUERIED_IDS AS qIDs
-    ON mto_solution.id = qIDs.id
-WHERE link.milestone_id = qIDs.id;
+    ON link.milestone_id = qIDs.milestone_id;
