@@ -747,7 +747,15 @@ export type MtoCommonMilestone = {
   categoryName: Scalars['String']['output'];
   commonSolutions: Array<MtoCommonSolution>;
   facilitatedByRole: Array<MtoFacilitator>;
+  /**
+   * To represent if this Common Milestone is _already_ part of the Model Plan's MTO.
+   * This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+   */
   isAdded: Scalars['Boolean']['output'];
+  /**
+   * To represent if this Common Milestone is suggested to be part of the Model Plan's MTO, according to answers provided elsewhere in the app.
+   * This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+   */
   isSuggested: Scalars['Boolean']['output'];
   key: MtoCommonMilestoneKey;
   name: Scalars['String']['output'];

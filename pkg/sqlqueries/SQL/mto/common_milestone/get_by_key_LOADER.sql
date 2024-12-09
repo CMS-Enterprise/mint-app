@@ -14,6 +14,7 @@ SELECT
     -- mto_common_milestone.trigger_table,
     -- mto_common_milestone.trigger_col,
     -- mto_common_milestone.trigger_vals
-    FALSE AS is_added
+    FALSE AS is_added,
+    FALSE AS is_suggested
 FROM mto_common_milestone
 INNER JOIN QUERIED_IDS AS qIDs ON mto_common_milestone.key = qIDs.key
