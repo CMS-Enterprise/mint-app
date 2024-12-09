@@ -78,11 +78,23 @@ func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.U
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.MTOSolution](milestoneIDs, err)
 	}
-	getKeyFunc := func(data *models.MTOSolution) uuid.UUID {
-		return data.ID
-		//TODO, update this after implementing for milestone
+
+	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOSolutionWithMilestoneID) ([]*models.MTOSolution, bool) {
+		// TODO: (mto) see if we can genericize this so we only have to call mtoWith.ToMTOMilestone() instead of iterating too
+		res, ok := resMap[key]
+		converted := make([]*models.MTOSolution, len(res))
+
+		for i, mtoWith := range res {
+			converted[i] = mtoWith.ToMTOSolution()
+		}
+		//iterate through and convert each
+		return converted, ok
+	}
+	getKeyFunc := func(data *models.MTOSolutionWithMilestoneID) uuid.UUID {
+		return data.MilestoneID
 	}
 
+	return oneToManyWithCustomKeyAndMapDataLoader(milestoneIDs, data, getKeyFunc, getResFunc)
 	// implement one to many
-	return oneToManyDataLoader(milestoneIDs, data, getKeyFunc)
+	// return oneToManyDataLoader(milestoneIDs, data, getKeyFunc)
 }

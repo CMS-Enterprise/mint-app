@@ -12,6 +12,10 @@ type MTOSolutionWithMilestoneID struct {
 	MilestoneID uuid.UUID `json:"milestoneID" db:"milestone_id"`
 }
 
+func (mto *MTOSolutionWithMilestoneID) ToMTOSolution() *MTOSolution {
+	return &mto.MTOSolution
+}
+
 type MTOSolution struct {
 	baseStruct
 	modelPlanRelation
