@@ -75,7 +75,13 @@ type MTOInfoTranslation struct {
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
 	Name            models.TranslationField            `json:"name" db:"name"`
+	IsDraft         models.TranslationField            `json:"isDraft" db:"is_draft"`
+	MtoCategoryID   models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+	FacilitatedBy   models.TranslationField            `json:"facilitatedBy" db:"facilitated_by"`
+	NeedBy          models.TranslationField            `json:"needBy" db:"need_by"`
+	RiskIndicator   models.TranslationField            `json:"riskIndicator" db:"risk_indicator"`
 	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
+	Status          models.TranslationField            `json:"status" db:"status"`
 }
 
 // Represents MTO Custom Solution translation data

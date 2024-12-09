@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Icon, Menu } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
+  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator
@@ -10,7 +12,12 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+
+import EditMilestoneForm from '../EditMilestoneForm';
+import EditMilestonePanel from '../EditMilestoneForm/modal';
+import MTOModal from '../FormModal';
 
 import './index.scss';
 
@@ -33,6 +40,7 @@ export type MilestoneType = {
   status: MtoMilestoneStatus;
   actions: any;
   isUncategorized?: boolean;
+  key: MtoCommonMilestoneKey | null;
 };
 
 export type SubCategoryType = {
@@ -47,6 +55,7 @@ export type SubCategoryType = {
   actions: any;
   milestones: MilestoneType[];
   isUncategorized?: boolean;
+  key: undefined;
 };
 
 export type CategoryType = {
@@ -61,6 +70,7 @@ export type CategoryType = {
   actions: any;
   subCategories: SubCategoryType[];
   isUncategorized?: boolean;
+  key: undefined;
 };
 
 export type RowType = CategoryType | SubCategoryType | MilestoneType;
@@ -202,9 +212,7 @@ export const columns: ColumnType[] = [
         <>
           {row.facilitatedBy
             .map(facilitator =>
-              i18next.t(
-                `modelToOperationsMisc:milestoneLibrary.facilitatedBy.${facilitator}`
-              )
+              i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
             )
             .join(', ')}
         </>
@@ -281,13 +289,34 @@ export const columns: ColumnType[] = [
 export const ActionMenu = ({
   rowType,
   MoveUp,
-  MoveDown
+  MoveDown,
+  milestoneKeyOrID
 }: {
   rowType: MTORowType;
   MoveUp: React.ReactChild;
   MoveDown: React.ReactChild;
+  milestoneKeyOrID: MtoCommonMilestoneKey | string;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const history = useHistory();
+
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history]
+  );
+
+  const milestoneParam = params.get('edit-milestone');
+
+  const [isModalOpen, setIsModalOpen] = useState(
+    milestoneParam === milestoneKeyOrID
+  );
+
+  useEffect(() => {
+    if (milestoneParam === milestoneKeyOrID) {
+      setIsModalOpen(true);
+    }
+  }, [milestoneParam, milestoneKeyOrID, setIsModalOpen]);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -418,10 +447,43 @@ export const ActionMenu = ({
     );
   return (
     <div style={{ textAlign: 'right' }}>
-      {/* TODO: add link to edit milestone */}
-      <UswdsReactLink to="#">
+      <Sidepanel
+        isOpen={isModalOpen}
+        closeModal={() => {
+          params.delete('edit-milestone');
+          history.replace({ search: params.toString() });
+          setIsModalOpen(false);
+        }}
+        ariaLabel={i18next.t(
+          'modelToOperationsMisc:milestoneLibrary.aboutThisMilestone'
+        )}
+        testid="edit-milestone-sidepanel"
+        modalHeading={i18next.t(
+          'modelToOperationsMisc:milestoneLibrary.aboutThisMilestone'
+        )}
+        noScrollable
+      >
+        <EditMilestoneForm
+          closeModal={() => {
+            params.delete('edit-milestone');
+            history.replace({ search: params.toString() });
+            setIsModalOpen(false);
+          }}
+        />
+      </Sidepanel>
+
+      <Button
+        type="button"
+        unstyled
+        className="margin-right-2"
+        onClick={() => {
+          params.set('edit-milestone', milestoneKeyOrID);
+          history.replace({ search: params.toString() });
+          setIsModalOpen(true);
+        }}
+      >
         {i18next.t('modelToOperationsMisc:table.editDetails')}
-      </UswdsReactLink>
+      </Button>
     </div>
   );
 };

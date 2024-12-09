@@ -10,9 +10,6 @@ import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
-import EditMilestoneForm, {
-  MTOMatrixMilestoneType
-} from '../EditMilestoneForm';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -25,7 +22,6 @@ type MTOModalProps = {
     | 'editMilestone';
   isRequired?: boolean;
   milestone?: MilestoneCardType;
-  milestoneEdit?: MTOMatrixMilestoneType;
 };
 
 const MTOModal = ({
@@ -33,8 +29,7 @@ const MTOModal = ({
   closeModal,
   modalType,
   isRequired = true,
-  milestone,
-  milestoneEdit
+  milestone
 }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -50,8 +45,6 @@ const MTOModal = ({
         return t('modal.title.solution');
       case 'solutionToMilestone':
         return t('modal.title.solutionToMilestone');
-      case 'editMilestone':
-        return t('modal.title.editMilestone');
       default:
         return '';
     }
@@ -93,9 +86,6 @@ const MTOModal = ({
           closeModal={closeModal}
           milestone={milestone}
         />
-      )}
-      {modalType === 'editMilestone' && milestoneEdit && (
-        <EditMilestoneForm closeModal={closeModal} milestone={milestoneEdit} />
       )}
     </Modal>
   );

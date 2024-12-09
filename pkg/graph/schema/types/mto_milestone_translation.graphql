@@ -5,5 +5,10 @@ Represents MTO Custom Milestone translation data
 
 type MTOMilestoneTranslation {
   name: TranslationField! @goTag(key: "db", value: "name")
-  commonSolutions: TranslationFieldWithOptions! @goTag(key: "db", value: "common_solutions")  
+  isDraft: TranslationFieldPropertiesWithOptions! @goTag(key: "db", value: "is_draft")
+  facilitatedBy: TranslationFieldPropertiesWithOptions! @goTag(key: "db", value: "facilitated_by")
+  needBy: TranslationField! @goTag(key: "db", value: "need_by")
+  riskIndicator: TranslationFieldPropertiesWithOptions! @goTag(key: "db", value: "risk_indicator")
+  commonSolutions: TranslationFieldWithOptions! @goTag(key: "db", value: "common_solutions")
+  status: TranslationFieldPropertiesWithOptions! @goTag(key: "db", value: "status")
 }

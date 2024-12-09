@@ -15,6 +15,105 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.0
   },
+  isDraft: {
+    gqlField: 'isDraft',
+    goField: 'IsDraft',
+    dbField: 'is_draft',
+    label: 'Check if this milestone is a draft milestone',
+    sublabel:
+      'The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.01,
+    options: {
+      true: 'Draft',
+      false: ''
+    }
+  },
+  mtoCategoryID: {
+    gqlField: 'mtoCategoryID',
+    goField: 'MtoCategoryID',
+    dbField: 'mto_category_id',
+    label: 'Category',
+    sublabel:
+      'If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.SELECT,
+    order: 1.02
+  },
+  facilitatedBy: {
+    gqlField: 'facilitatedBy',
+    goField: 'FacilitatedBy',
+    dbField: 'facilitated_by',
+    label: 'Facilitated by',
+    sublabel: 'Choose the role or group responsible for this work.',
+    multiSelectLabel: 'Selected roles',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.MULTISELECT,
+    order: 1.03,
+    options: {
+      MODEL_TEAM: 'Model team',
+      MODEL_LEAD: 'Model lead',
+      IT_LEAD: 'IT lead',
+      SOLUTION_ARCHITECT: 'Solution architect',
+      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
+      PARTICIPANTS: 'Participants',
+      APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
+      IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
+      EVALUATION_CONTRACTOR: 'Evaluation contractor',
+      QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
+        'Quality measures development contractor',
+      LEARNING_CONTRACTOR: 'Learning contractor',
+      MONITORING_CONTRACTOR: 'Monitoring contractor',
+      CONTRACTING_OFFICERS_REPRESENTATIVE:
+        'Contracting Officer’s Representative (COR)',
+      LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
+      RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
+        'Research and Rapid Cycle Evaluation Group (RREG)',
+      OTHER: 'Other'
+    }
+  },
+  needBy: {
+    gqlField: 'needBy',
+    goField: 'NeedBy',
+    dbField: 'need_by',
+    label: 'Need by',
+    sublabel:
+      'Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.04
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.05,
+    options: {
+      NOT_STARTED: 'Not started',
+      IN_PROGRESS: 'In progress',
+      COMPLETED: 'Completed'
+    }
+  },
+  riskIndicator: {
+    gqlField: 'riskIndicator',
+    goField: 'RiskIndicator',
+    dbField: 'risk_indicator',
+    label: 'Risk indicator',
+    sublabel:
+      'Select the risk level for this milestone. This will help you and your team identify potential risks and plan accordingly.',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.06,
+    options: {
+      ON_TRACK: 'No risk (on track)',
+      OFF_TRACK: 'Some risk (off track)',
+      AT_RISK: 'Significantly at risk'
+    }
+  },
   commonSolutions: {
     gqlField: 'commonSolutions',
     goField: 'CommonSolutions',

@@ -245,6 +245,7 @@ const MTOTable = () => {
             {column.accessor === 'actions' ? (
               <ActionMenu
                 rowType={rowType}
+                milestoneKeyOrID={row.key || row.id}
                 MoveUp={
                   <Button
                     type="button"

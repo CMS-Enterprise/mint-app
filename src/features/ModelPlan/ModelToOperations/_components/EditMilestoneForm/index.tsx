@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -16,9 +16,11 @@ import {
   helpSolutions
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
+  GetModelToOperationsMatrixDocument,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -28,15 +30,14 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 import { GetModelToOperationsMatrixQueryType } from '../Table';
+import { MilestoneType } from '../Table/columns';
 
 import '../../index.scss';
 
-export type MTOMatrixMilestoneType =
-  GetModelToOperationsMatrixQueryType['categories'][0]['subCategories'][0]['milestones'][0];
-
 type FormValues = {
   name: string;
-  mtoCategoryID: string;
+  primaryCategory: string;
+  subcategory: string;
   facilitatedBy: MtoFacilitator[];
   needBy: string;
   status: MtoMilestoneStatus;
@@ -46,13 +47,9 @@ type FormValues = {
 
 type EditMilestoneFormProps = {
   closeModal: () => void;
-  milestone: MTOMatrixMilestoneType;
 };
 
-const EditMilestoneForm = ({
-  closeModal,
-  milestone
-}: EditMilestoneFormProps) => {
+const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
@@ -85,12 +82,25 @@ const EditMilestoneForm = ({
     loading
   } = useFormatMTOCategories({
     modelID,
-    primaryCategory: watch('mtoCategoryID')
+    primaryCategory: watch('primaryCategory')
+  });
+
+  const [updateMilestone] = useUpdateMtoMilestoneMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
   });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     let mtoCategoryID;
+
     const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
+
     if (formData.subcategory !== uncategorizedCategoryID) {
       mtoCategoryID = formData.subcategory;
     } else if (formData.primaryCategory === uncategorizedCategoryID) {
@@ -99,11 +109,15 @@ const EditMilestoneForm = ({
       mtoCategoryID = formData.primaryCategory;
     }
 
-    create({
+    const { primaryCategory, subcategory, ...formChanges } = formData;
+
+    updateMilestone({
       variables: {
         id: modelID,
-        name: formData.name,
-        mtoCategoryID
+        changes: {
+          ...formChanges,
+          mtoCategoryID
+        }
       }
     })
       .then(response => {
@@ -150,7 +164,7 @@ const EditMilestoneForm = ({
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={12}>
-            {!milestone.addedFromMilestoneLibrary && (
+            {/* {!milestone.addedFromMilestoneLibrary && (
               <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
                 <Icon.LightbulbOutline
                   className="margin-left-1"
@@ -170,18 +184,18 @@ const EditMilestoneForm = ({
               </span>
             )}
 
-            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
+            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2> */}
 
-            <p className="text-base-dark margin-top-0 margin-bottom-2">
+            {/* <p className="text-base-dark margin-top-0 margin-bottom-2">
               {t('milestoneLibrary.category', {
                 category: milestone.categoryName
               })}{' '}
               {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
-            </p>
+            </p> */}
 
-            <p>
+            {/* <p>
               {t(`milestoneLibrary.milestoneMap.${milestone.key}.description`)}
-            </p>
+            </p> */}
 
             <h3 className="margin-y-2">
               {t('milestoneLibrary.commonSolutions')}
