@@ -110,15 +110,23 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 	}
 
 	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOMilestoneWithSolutionID) ([]*models.MTOMilestone, bool) {
+		// TODO: (mto) see if we can genericize this so we only have to call mtoWith.ToMTOMilestone() instead of iterating too
 		res, ok := resMap[key]
-		return res., ok
+		converted := make([]*models.MTOMilestone, len(res))
+
+		for i, mtoWith := range res {
+			converted[i] = mtoWith.ToMTOMilestone()
+		}
+		//iterate through and convert each
+		return converted, ok
 	}
 
-	getKeyFunc := func(data *models.MTOMilestone) uuid.UUID {
+	getKeyFunc := func(data *models.MTOMilestoneWithSolutionID) uuid.UUID {
 		return data.SolutionID
 	}
 
-	return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
+	return oneToManyWithCustomKeyAndMapDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
+	// return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
 	// implement one to many
-	return oneToManyDataLoader(solutionIDs, data, getKeyFunc)
+	// return oneToManyDataLoader(solutionIDs, data, getKeyFunc)
 }

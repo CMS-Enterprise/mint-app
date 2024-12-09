@@ -79,7 +79,8 @@ func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.U
 		return errorPerEachKey[uuid.UUID, []*models.MTOSolution](milestoneIDs, err)
 	}
 	getKeyFunc := func(data *models.MTOSolution) uuid.UUID {
-		return data.MilestoneID
+		return data.ID
+		//TODO, update this after implementing for milestone
 	}
 
 	// implement one to many
