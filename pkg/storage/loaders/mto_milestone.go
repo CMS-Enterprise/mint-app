@@ -108,10 +108,17 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
 	}
+
+	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOMilestoneWithSolutionID) ([]*models.MTOMilestone, bool) {
+		res, ok := resMap[key]
+		return res., ok
+	}
+
 	getKeyFunc := func(data *models.MTOMilestone) uuid.UUID {
 		return data.SolutionID
 	}
 
+	return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
 	// implement one to many
 	return oneToManyDataLoader(solutionIDs, data, getKeyFunc)
 }

@@ -17,7 +17,8 @@ SELECT
     mto_milestone.created_by,
     mto_milestone.created_dts,
     mto_milestone.modified_by,
-    mto_milestone.modified_dts
+    mto_milestone.modified_dts,
+    link.solution_id
 FROM mto_milestone_solution_link AS link
 INNER JOIN QUERIED_IDS AS qIDs
     ON link.solution_id = qIDs.mto_solution_id

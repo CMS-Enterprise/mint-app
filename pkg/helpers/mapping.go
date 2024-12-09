@@ -109,6 +109,27 @@ func OneToManyWithCustomKey[K comparable, V any, mapKey comparable, Output any](
 	return output
 }
 
+func OneToManyWithCustomKeyAndMap[K comparable, V any, mapType any, mapKey comparable, Output any](keys []K, vals []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey][]mapType) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
+	// create a map to store values grouped by key (of type K)
+	// each key will map to a slice of values (of type V)
+	store := map[mapKey][]mapType{}
+
+	for _, val := range vals {
+		id := getKey(val)
+		if _, ok := store[id]; !ok {
+			store[id] = []mapType{}
+		}
+		store[id] = append(store[id], val)
+	}
+	output := make([]Output, len(keys))
+	for index, key := range keys {
+		data, ok := getRes(key, store)
+		output[index] = transformOutput(data, ok)
+	}
+
+	return output
+}
+
 // // func getResSimplified
 // func getResultSimplified[K comparable, V any, mapKey comparable](key K, resultMap map[mapKey][]V) ([]V, bool) {
 // 	res, ok := resultMap[key]
