@@ -64,6 +64,14 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes)
 }
 
+// DeleteMTOMilestone is the resolver for the deleteMTOMilestone field.
+func (r *mutationResolver) DeleteMTOMilestone(ctx context.Context, id uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return true, MTOMilestoneDelete(ctx, logger, principal, r.store, id)
+}
+
 // MtoMilestone is the resolver for the mtoMilestone field.
 func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
 	return MTOMilestoneGetByIDLOADER(ctx, id)

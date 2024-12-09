@@ -8,6 +8,7 @@ import (
 )
 
 var mtoModelPlanUUID = uuid.MustParse("00000000-0000-0000-0000-000000000005")
+var mtoModelPlanWithCategoriesUUID = uuid.MustParse("00000000-0000-0000-0000-000000000006")
 
 func (s *Seeder) seedModelPlanWithMTOData(
 	modelName string,
@@ -103,4 +104,19 @@ func (s *Seeder) seedModelPlanWithMTOData(
 
 	return plan
 
+}
+
+func (s *Seeder) seedModelPlanWithMTOStandardCategories(
+	modelName string,
+	euaID string,
+	id *uuid.UUID) *models.ModelPlan {
+	plan := s.createModelPlan(modelName, euaID, id)
+
+	princ := s.getTestPrincipalByUsername(euaID)
+
+	if _, err := resolvers.MTOCreateStandardCategories(s.Config.Context, s.Config.Logger, princ, s.Config.Store, plan.ID); err != nil {
+		panic(err)
+	}
+
+	return plan
 }

@@ -133,6 +133,14 @@ export const columns: ColumnType[] = [
     Cell: ({ row, rowType, expanded }: RowProps) => {
       const { riskIndicator } = row;
 
+      if ('subCategories' in row) {
+        if (row.subCategories.length === 0) return <></>;
+      }
+
+      if ('milestones' in row) {
+        if (row.milestones.length === 0) return <></>;
+      }
+
       if (rowType !== 'milestone')
         return (
           <span style={{ fontSize: '1.25rem' }} className="margin-left-05">
@@ -194,7 +202,9 @@ export const columns: ColumnType[] = [
         <>
           {row.facilitatedBy
             .map(facilitator =>
-              i18next.t(`modelToOperationsMisc:facilitatedBy.${facilitator}`)
+              i18next.t(
+                `modelToOperationsMisc:milestoneLibrary.facilitatedBy.${facilitator}`
+              )
             )
             .join(', ')}
         </>

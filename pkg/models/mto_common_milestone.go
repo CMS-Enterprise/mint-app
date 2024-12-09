@@ -13,7 +13,8 @@ type MTOCommonMilestone struct {
 	Section TaskListSection `json:"section" db:"section"`
 
 	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"` //TODO (mto) verify this, this would facilitate queries and is_added. This is not an actual database column
-	IsAdded     bool       `json:"isAdded" db:"is_added"`          //TODO (mto) verify this
+	IsAdded     bool       `json:"isAdded" db:"is_added"`
+	IsSuggested bool       `json:"IsSuggested" db:"is_suggested"`
 }
 
 type MTOCommonMilestoneKey string

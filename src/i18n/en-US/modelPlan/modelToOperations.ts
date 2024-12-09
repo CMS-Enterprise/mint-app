@@ -249,7 +249,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     title: {
       category: 'Add a new category',
       milestone: 'Add a new model milestone',
-      solution: 'Add a new solution'
+      solution: 'Add a new solution',
+      solutionToMilestone: 'Add a solution for this milestone?'
     },
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
@@ -309,6 +310,18 @@ export const modelToOperationsMisc: Record<string, any> = {
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       }
     },
+    solutionToMilestone: {
+      description:
+        'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
+      alert: {
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions'
+    },
     addButton: 'Add {{type}}',
     cancel: 'Cancel'
   },
@@ -323,6 +336,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     milestone: 'Milestone',
     suggested: 'Suggested',
     category: 'Category: {{category}}',
+    facilitatedByArray: 'Facilitated by: {{facilitatedBy}}',
     addToMatrix: 'Add to matrix',
     aboutThisMilestone: 'About this milestone',
     whySuggested: 'Why is this suggested?',
@@ -338,6 +352,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     checkMilestones:
       'Check <link1>all available milestones</link1> or <button1>add a custom milestone</button1>.',
     addCustomMilestone: 'Add a custom milestone',
+    aboutSolution: 'About this solution',
+    commonSolutions: 'Common solutions',
     facilitatedBy: {
       MODEL_TEAM: 'Model team',
       MODEL_LEAD: 'Model lead',

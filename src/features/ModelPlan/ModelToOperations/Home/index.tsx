@@ -20,7 +20,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../_components/Modal';
+import MTOModal from '../_components/FormModal';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable from '../_components/Table';
 
@@ -71,7 +71,7 @@ const MTOHome = () => {
     } else {
       // Default to milestones if no view param present
       params.set('view', 'milestones');
-      history.push({ search: params.toString() });
+      history.replace({ search: params.toString() });
     }
   }, [viewparam, history, params]);
 

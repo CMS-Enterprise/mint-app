@@ -2,8 +2,14 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { MtoCommonMilestoneKey } from 'gql/generated/graphql';
+import {
+  MtoCommonMilestoneKey,
+  MtoCommonSolutionKey,
+  MtoFacilitator
+} from 'gql/generated/graphql';
 import { suggestedMilestonesMock } from 'tests/mock/mto';
+
+import MessageProvider from 'contexts/MessageContext';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
@@ -17,7 +23,14 @@ describe('MilestoneCard Component', () => {
     subCategoryName: 'Test SubCategory',
     isSuggested: true,
     isAdded: false,
-    key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+    key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+    facilitatedByRole: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
+    commonSolutions: [
+      {
+        __typename: 'MTOCommonSolution',
+        key: MtoCommonSolutionKey.ACO_OS
+      }
+    ]
   };
 
   it('renders correctly and matches snapshot', () => {
@@ -29,7 +42,12 @@ describe('MilestoneCard Component', () => {
           ]}
         >
           <Route path="/models/:modelID/collaboration-area/model-to-operations/milestone-library">
-            <MilestoneCard milestone={mockMilestone} />
+            <MessageProvider>
+              <MilestoneCard
+                milestone={mockMilestone}
+                setIsSidepanelOpen={() => null}
+              />
+            </MessageProvider>
           </Route>
         </MemoryRouter>
       </MockedProvider>
