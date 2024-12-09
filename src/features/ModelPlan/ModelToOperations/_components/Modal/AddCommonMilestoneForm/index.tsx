@@ -17,7 +17,7 @@ import {
 import { MilestoneCardType } from 'features/ModelPlan/ModelToOperations/MilestoneLibrary';
 import {
   // GetCustomMtoSolutionsQuery,
-  GetModelToOperationsMatrixDocument,
+  GetMtoMilestonesDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   useCreateMtoMilestoneMutation
@@ -182,7 +182,7 @@ const AddCommonMilestoneForm = ({
   const [create] = useCreateMtoMilestoneMutation({
     refetchQueries: [
       {
-        query: GetModelToOperationsMatrixDocument,
+        query: GetMtoMilestonesDocument,
         variables: { id: modelID }
       }
     ]
