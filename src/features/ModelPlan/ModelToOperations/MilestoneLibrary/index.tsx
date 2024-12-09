@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -29,9 +29,9 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
+import MTOModal from '../_components/FormModal';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
-import MTOModal from '../_components/Modal';
 
 import './index.scss';
 
@@ -232,11 +232,6 @@ const MilstoneCardGroup = ({
     withQueryParams: 'page',
     showPageIfOne: true
   });
-
-  useEffect(() => {
-    params.set('page', '1');
-    history.replace({ search: params.toString() });
-  }, [viewParam, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

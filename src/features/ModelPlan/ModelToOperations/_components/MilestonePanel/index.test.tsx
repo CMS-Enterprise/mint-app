@@ -10,6 +10,8 @@ import {
 } from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/solutions';
 
+import MessageProvider from 'contexts/MessageContext';
+
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
 import MilestonePanel, { SolutionCard } from './index';
@@ -36,7 +38,9 @@ describe('MilestonePanel Component', () => {
     const { asFragment, getByText } = render(
       <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
         <MemoryRouter>
-          <MilestonePanel milestone={mockMilestone} />
+          <MessageProvider>
+            <MilestonePanel milestone={mockMilestone} />
+          </MessageProvider>
         </MemoryRouter>
       </MockedProvider>
     );
@@ -61,7 +65,9 @@ describe('MTO SolutionCard Component', () => {
     const { asFragment, getByText } = render(
       <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
         <MemoryRouter>
-          <SolutionCard solution={helpSolutions[0]} />
+          <MessageProvider>
+            <SolutionCard solution={helpSolutions[0]} />
+          </MessageProvider>
         </MemoryRouter>
       </MockedProvider>
     );

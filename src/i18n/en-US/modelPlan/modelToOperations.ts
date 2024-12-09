@@ -249,7 +249,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     title: {
       category: 'Add a new category',
       milestone: 'Add a new model milestone',
-      solution: 'Add a new solution'
+      solution: 'Add a new solution',
+      solutionToMilestone: 'Add a solution for this milestone?'
     },
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
@@ -308,6 +309,18 @@ export const modelToOperationsMisc: Record<string, any> = {
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       }
+    },
+    solutionToMilestone: {
+      description:
+        'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
+      alert: {
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions'
     },
     addButton: 'Add {{type}}',
     cancel: 'Cancel'
