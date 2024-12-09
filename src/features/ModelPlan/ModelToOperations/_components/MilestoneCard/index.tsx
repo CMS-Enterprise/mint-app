@@ -12,7 +12,7 @@ import {
 import classNames from 'classnames';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
-import MTOModal from '../Modal';
+import MTOModal from '../FormModal';
 import SuggestedMilestoneToggle from '../SuggestedMilestoneToggle';
 
 import '../../index.scss';

@@ -18,7 +18,7 @@ import {
 import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
-import MTOModal from '../Modal';
+import MTOModal from '../FormModal';
 
 import '../../index.scss';
 

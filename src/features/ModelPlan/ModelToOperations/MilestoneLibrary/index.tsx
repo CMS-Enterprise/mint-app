@@ -29,9 +29,9 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
+import MTOModal from '../_components/FormModal';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
-import MTOModal from '../_components/Modal';
 
 import './index.scss';
 

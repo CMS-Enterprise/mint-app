@@ -25,7 +25,7 @@ import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-import { selectOptions, SelectProps } from '../CategoryForm';
+import { selectOptions, SelectProps } from '../AddCustomCategoryForm';
 
 type FormValues = {
   primaryCategory: string;

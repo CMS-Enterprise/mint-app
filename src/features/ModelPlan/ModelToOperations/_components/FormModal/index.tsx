@@ -6,11 +6,10 @@ import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
-
-import AddSolutionToMilestoneForm from './AddCommonMilestoneForm';
-import CategoryForm from './CategoryForm';
-import MilestoneForm from './MilestoneForm';
-import SolutionForm from './SolutionForm';
+import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
+import CategoryForm from '../AddCustomCategoryForm';
+import MilestoneForm from '../AddCustomMilestoneForm';
+import SolutionForm from '../AddCustomSolutionForm';
 
 type MTOModalProps = {
   isOpen: boolean;

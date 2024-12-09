@@ -20,7 +20,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../_components/Modal';
+import MTOModal from '../_components/FormModal';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable from '../_components/Table';
 
