@@ -125,8 +125,6 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 		return data.SolutionID
 	}
 
-	return oneToManyWithCustomKeyAndMapDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
-	// return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
-	// implement one to many
-	// return oneToManyDataLoader(solutionIDs, data, getKeyFunc)
+	return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
+
 }

@@ -94,7 +94,6 @@ func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.U
 		return data.MilestoneID
 	}
 
-	return oneToManyWithCustomKeyAndMapDataLoader(milestoneIDs, data, getKeyFunc, getResFunc)
-	// implement one to many
-	// return oneToManyDataLoader(milestoneIDs, data, getKeyFunc)
+	return oneToManyWithCustomKeyDataLoader(milestoneIDs, data, getKeyFunc, getResFunc)
+
 }

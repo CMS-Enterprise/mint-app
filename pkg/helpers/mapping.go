@@ -88,30 +88,10 @@ data := []*models.OperationalSolution {lots of operational solutions}
 
 
 */
-func OneToManyWithCustomKey[K comparable, V any, mapKey comparable, Output any](keys []K, vals []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
+func OneToManyWithCustomKey[K comparable, V any, mapType any, mapKey comparable, Output any](keys []K, vals []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey][]mapType) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
+
 	// create a map to store values grouped by key (of type K)
-	// each key will map to a slice of values (of type V)
-	store := map[mapKey][]V{}
-
-	for _, val := range vals {
-		id := getKey(val)
-		if _, ok := store[id]; !ok {
-			store[id] = []V{}
-		}
-		store[id] = append(store[id], val)
-	}
-	output := make([]Output, len(keys))
-	for index, key := range keys {
-		data, ok := getRes(key, store)
-		output[index] = transformOutput(data, ok)
-	}
-
-	return output
-}
-
-func OneToManyWithCustomKeyAndMap[K comparable, V any, mapType any, mapKey comparable, Output any](keys []K, vals []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey][]mapType) ([]V, bool), transformOutput func([]V, bool) Output) []Output {
-	// create a map to store values grouped by key (of type K)
-	// each key will map to a slice of values (of type V)
+	// each key will map to a slice of mapType (of type mapType)
 	store := map[mapKey][]mapType{}
 
 	for _, val := range vals {
@@ -145,8 +125,6 @@ func getResultSimplified[K comparable, V any](key K, resultMap map[K][]V) ([]V, 
 }
 
 // OneToMany uses the standard OneToManyFunc, but assumes that the mapKey is the same as the dataloaderkey K.
-func OneToMany[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func([]V, bool) Output) []Output {
-
-	return OneToManyWithCustomKey(keys, vals, getKey, getResultSimplified[K, V], transformOutput)
-
+func OneToMany[K comparable, V any, mapType any, Output any](keys []K, vals []mapType, getKey func(mapType) K, transformOutput func([]mapType, bool) Output) []Output {
+	return OneToManyWithCustomKey(keys, vals, getKey, getResultSimplified[K, mapType], transformOutput)
 }

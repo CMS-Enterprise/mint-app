@@ -25,14 +25,11 @@ func oneToOneDataLoader[K comparable, V any](keys []K, values []V, getKey func(V
 
 	return helpers.OneToOne(keys, values, getKey, transformToDataLoaderResult)
 }
-func oneToManyWithCustomKeyDataLoader[K comparable, V any, mapKey comparable](keys []K, values []V, getKey func(V) mapKey, getRes func(K, map[mapKey][]V) ([]V, bool)) []*dataloader.Result[[]V] {
+func oneToManyWithCustomKeyDataLoader[K comparable, V any, mapKey comparable, mapType any](keys []K, values []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey][]mapType) ([]V, bool)) []*dataloader.Result[[]V] {
 	return helpers.OneToManyWithCustomKey(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
 }
-func oneToManyWithCustomKeyAndMapDataLoader[K comparable, V any, mapKey comparable, mapType any](keys []K, values []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey][]mapType) ([]V, bool)) []*dataloader.Result[[]V] {
-	return helpers.OneToManyWithCustomKeyAndMap(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
-}
 func oneToManyDataLoader[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[[]V] {
-	return helpers.OneToMany(keys, values, getKey, transformToDataLoaderResultAllowNils)
+	return helpers.OneToMany[K, V, V](keys, values, getKey, transformToDataLoaderResultAllowNils)
 }
 
 func errorPerEachKey[K comparable, V any](keys []K, err error) []*dataloader.Result[V] {
