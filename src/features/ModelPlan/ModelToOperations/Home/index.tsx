@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
-  Button,
   Grid,
   Header,
   Icon,
@@ -20,9 +19,9 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../_components/FormModal';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable from '../_components/Table';
+import MTOTableActions from '../_components/Table/Actions';
 
 export type MTOOption = 'milestones' | 'systems-and-solutions';
 
@@ -35,7 +34,7 @@ const MTOHome = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading } = useGetModelToOperationsMatrixQuery({
+  const { data, loading, error, refetch } = useGetModelToOperationsMatrixQuery({
     variables: {
       id: modelID
     }
@@ -47,7 +46,7 @@ const MTOHome = () => {
 
   const location = useLocation();
 
-  const { clearMessage, message } = useMessage();
+  const { message } = useMessage();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -58,12 +57,6 @@ const MTOHome = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [modalType, setModalType] = useState<
-    'category' | 'milestone' | 'solution'
-  >('category');
 
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
@@ -85,7 +78,7 @@ const MTOHome = () => {
         ]}
       />
 
-      {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
+      {message && <Expire delay={45000}>{message}</Expire>}
 
       <Grid row className="margin-bottom-2">
         <Grid desktop={{ col: 9 }}>
@@ -165,55 +158,6 @@ const MTOHome = () => {
           </div>
         </Header>
 
-        <div className="display-none2 margin-top-4">
-          <MTOModal
-            isOpen={isModalOpen}
-            closeModal={() => setIsModalOpen(false)}
-            modalType={modalType}
-          />
-          <div className="width-fit-content">
-            {/* <div
-            style={{ paddingTop: '2px', paddingBottom: '2px' }}
-            className={classNames(
-              'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-secondary-dark'
-            )}
-          >
-            TEMPORARY
-          </div> */}
-            <Button
-              type="button"
-              onClick={() => {
-                clearMessage();
-                setModalType('category');
-                setIsModalOpen(true);
-              }}
-            >
-              Add custom category
-            </Button>
-            <Button
-              type="button"
-              onClick={() => {
-                clearMessage();
-                setModalType('milestone');
-                setIsModalOpen(true);
-              }}
-            >
-              Add custom milestone
-            </Button>
-            <Button
-              type="button"
-              onClick={() => {
-                clearMessage();
-                setModalType('solution');
-                setIsModalOpen(true);
-              }}
-              className="margin-bottom-4"
-            >
-              Add custom solution
-            </Button>
-          </div>
-        </div>
-
         {isTablet && (
           <div className="maxw-mobile-lg">
             <Select
@@ -237,7 +181,12 @@ const MTOHome = () => {
           </div>
         )}
 
-        {currentView === 'milestones' && <MTOTable />}
+        {currentView === 'milestones' && (
+          <>
+            <MTOTableActions refetch={() => refetch({ id: modelID })} />
+            <MTOTable queryData={data} loading={loading} error={error} />
+          </>
+        )}
       </div>
     </>
   );
