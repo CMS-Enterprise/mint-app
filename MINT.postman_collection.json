@@ -2881,39 +2881,6 @@
 					"name": "Categories",
 					"item": [
 						{
-							"name": "Create Standard Categories",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation CreateStandardCategories {\n    createStandardCategories(modelPlanID: \"{{modelPlanID}}\")\n}",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "GetMTOCategories",
 							"request": {
 								"method": "POST",
@@ -3471,7 +3438,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        solutions {\n                            name\n                        }\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        solutions {\n                            name\n                            key\n                            type\n                            milestones {\n                                name\n                                type\n                            }\n                        }\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
 										"variables": ""
 									}
 								},
