@@ -1269,7 +1269,6 @@ export type TranslationMTOCategory = {
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
   isDraft: TranslationFieldPropertiesWithOptions<Bool>;
-  mtoCategoryID: TranslationFieldProperties;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
   needBy: TranslationFieldProperties;
   riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;

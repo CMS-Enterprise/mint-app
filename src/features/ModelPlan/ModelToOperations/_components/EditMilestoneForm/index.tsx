@@ -11,6 +11,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
+  Checkbox,
   Fieldset,
   FormGroup,
   Grid,
@@ -36,6 +37,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
@@ -70,7 +72,8 @@ type EditMilestoneFormProps = {
 };
 
 const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
-  const { t } = useTranslation('modelToOperationsMisc');
+  const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const { facilitatedBy: facilitatedByConfig } =
     usePlanTranslation('mtoMilestone');
@@ -171,7 +174,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
               >
                 <span className="mandatory-fields-alert__text">
                   <Trans
-                    i18nKey={t('modal.milestone.alert.success')}
+                    i18nKey={modelToOperationsMiscT(
+                      'modal.milestone.alert.success'
+                    )}
                     components={{
                       b: <span className="text-bold" />
                     }}
@@ -192,7 +197,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
             data-testid="error-alert"
             className="margin-y-4"
           >
-            {t('modal.milestone.alert.error')}
+            {modelToOperationsMiscT('modal.milestone.alert.error')}
           </Alert>
         );
       });
@@ -217,7 +222,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                   className="margin-left-1"
                   style={{ top: '2px' }}
                 />{' '}
-                {t('milestoneLibrary.suggested')}
+                {modelToOperationsMiscT('milestoneLibrary.suggested')}
               </span>
             )}
 
@@ -227,7 +232,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                   className="margin-left-1"
                   style={{ top: '2px' }}
                 />{' '}
-                {t('milestoneLibrary.isDraft')}
+                {modelToOperationsMiscT('milestoneLibrary.isDraft')}
               </span>
             )}
 
@@ -244,7 +249,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
                 <p className="margin-top-0 margin-bottom-3 text-base">
                   <Trans
-                    i18nKey={t('modal.allFieldsRequired')}
+                    i18nKey={modelToOperationsMiscT('modal.allFieldsRequired')}
                     components={{
                       s: <span className="text-secondary-dark" />
                     }}
@@ -253,6 +258,24 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
                 <Fieldset disabled={loading}>
                   <Controller
+                    name="isDraft"
+                    control={control}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-3">
+                        <CheckboxField
+                          id="nda-check"
+                          name="isDraft"
+                          label={mtoMilestoneT('isDraft.label')}
+                          subLabel={mtoMilestoneT('isDraft.sublabel')}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          value="true"
+                        />
+                      </FormGroup>
+                    )}
+                  />
+
+                  <Controller
                     name="primaryCategory"
                     control={control}
                     rules={{
@@ -260,14 +283,22 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                       validate: value => value !== 'default'
                     }}
                     render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-2">
+                      <FormGroup className="margin-top-0 margin-bottom-3">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="mint-body-normal maxw-none margin-bottom-1"
+                          className="maxw-none text-bold"
                           requiredMarker
                         >
-                          {t('modal.milestone.selectPrimaryCategory.label')}
+                          {modelToOperationsMiscT(
+                            'modal.milestone.milestoneCategory.label'
+                          )}
                         </Label>
+
+                        <HelpText className="margin-top-05">
+                          {modelToOperationsMiscT(
+                            'modal.milestone.milestoneCategory.sublabel'
+                          )}
+                        </HelpText>
 
                         <Select
                           {...field}
@@ -298,14 +329,22 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                       validate: value => value !== 'default'
                     }}
                     render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-2">
+                      <FormGroup className="margin-top-0 margin-bottom-3">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="mint-body-normal maxw-none margin-bottom-1"
+                          className="maxw-none text-bold"
                           requiredMarker
                         >
-                          {t('modal.milestone.selectSubcategory.label')}
+                          {modelToOperationsMiscT(
+                            'modal.milestone.milestoneSubcategory.label'
+                          )}
                         </Label>
+
+                        <HelpText className="margin-top-05">
+                          {modelToOperationsMiscT(
+                            'modal.milestone.milestoneSubcategory.sublabel'
+                          )}
+                        </HelpText>
 
                         <Select
                           {...field}

@@ -284,6 +284,16 @@ export const modelToOperationsMisc: Record<string, any> = {
       selectSubcategory: {
         label: 'Select sub-category'
       },
+      milestoneCategory: {
+        label: 'Category',
+        sublabel:
+          'If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.'
+      },
+      milestoneSubcategory: {
+        label: 'Sub-category',
+        sublabel:
+          'If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.'
+      },
       milestoneTitle: 'Milestone title',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',

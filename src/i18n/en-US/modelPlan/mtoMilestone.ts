@@ -30,17 +30,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       false: ''
     }
   },
-  mtoCategoryID: {
-    gqlField: 'mtoCategoryID',
-    goField: 'MtoCategoryID',
-    dbField: 'mto_category_id',
-    label: 'Category',
-    sublabel:
-      'If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.',
-    dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.SELECT,
-    order: 1.02
-  },
   facilitatedBy: {
     gqlField: 'facilitatedBy',
     goField: 'FacilitatedBy',
