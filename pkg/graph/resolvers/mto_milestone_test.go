@@ -1,10 +1,12 @@
 package resolvers
 
 import (
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // This test ensures that we can properly create a Custom milestone with preset category information
@@ -248,4 +250,42 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinksNoCommonSolutions() 
 
 	suite.NoError(err)
 	suite.Len(milestoneSolutionLinks, 0)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
+	plan1 := suite.createModelPlan("model plan 1")
+	commonMilestoneKey1 := models.MTOCommonMilestoneKeyAppSupportCon
+	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey1, []models.MTOCommonSolutionKey{
+		models.MTOCSKCcw,
+		models.MTOCSKApps,
+	})
+
+	// validate the created solutions
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan1.ID)
+	suite.NoError(err)
+	suite.Len(solutions, 2)
+	sol1 := solutions[0]
+	sol2 := solutions[1]
+
+	commonMilestoneKey2 := models.MTOCommonMilestoneKeyCommWPart
+	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey2, []models.MTOCommonSolutionKey{
+		models.MTOCSKCcw,
+		models.MTOCSKApps,
+	})
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, []uuid.UUID]{
+		{Key: sol1.ID, Expected: []uuid.UUID{milestone1.ID, milestone2.ID}},
+		{Key: sol2.ID, Expected: []uuid.UUID{milestone1.ID, milestone2.ID}},
+	}
+
+	verifyFunc := func(data []*models.MTOMilestone, expected []uuid.UUID) bool {
+		// Map the IDs from the milestones, assert they match the expected returned result
+		dataIDs := lo.Map(data, func(item *models.MTOMilestone, _ int) uuid.UUID {
+			return item.ID
+		})
+		return suite.ElementsMatch(dataIDs, expected)
+	}
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOMilestone.BySolutionID,
+		expectedResults, verifyFunc)
+
 }
