@@ -314,7 +314,9 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>Not started</bold>: No work has started on any part of this milestone or any solution associated with it',
         '<bold>In progress</bold>: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)',
         '<bold>Completed</bold>: Work for this milestone and all of its selected solutions is finished'
-      ]
+      ],
+      saveChanges: 'Save changes',
+      removeMilestone: 'Remove milestone'
     },
     solution: {
       label: {

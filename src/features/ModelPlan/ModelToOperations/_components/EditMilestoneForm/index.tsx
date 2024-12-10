@@ -19,6 +19,7 @@ import {
   GridContainer,
   Icon,
   Label,
+  Radio,
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -47,6 +48,7 @@ import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
 import {
   composeMultiSelectOptions,
@@ -87,8 +89,11 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
-  const { facilitatedBy: facilitatedByConfig } =
-    usePlanTranslation('mtoMilestone');
+  const {
+    facilitatedBy: facilitatedByConfig,
+    status: stausConfig,
+    riskIndicator: riskIndicatorConfig
+  } = usePlanTranslation('mtoMilestone');
 
   const history = useHistory();
 
@@ -101,7 +106,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
   const editMilestoneID = params.get('edit-milestone');
 
-  const { message, showMessage, clearMessage } = useMessage();
+  const [mutationError, setMutationError] = useState<React.ReactNode | null>();
+
+  const { showMessage } = useMessage();
 
   const { data, loading, error } = useGetMtoMilestoneQuery({
     variables: {
@@ -113,32 +120,36 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     return data?.mtoMilestone;
   }, [data]);
 
-  // Variables for the form
-  const methods = useForm<FormValues>({
-    defaultValues: {
-      categories: {
-        category: {
-          id: milestone?.categories.category.id || 'default'
+  const defaultValues = useMemo(() => {
+    return {
+      defaultValues: {
+        categories: {
+          category: {
+            id: milestone?.categories.category.id || 'default'
+          },
+          subcategory: {
+            id: milestone?.categories.subCategory.id || 'default'
+          }
         },
-        subcategory: {
-          id: milestone?.categories.subCategory.id || 'default'
-        }
-      },
-      name: milestone?.name || '',
-      facilitatedBy: milestone?.facilitatedBy || [],
-      needBy: milestone?.needBy || '',
-      status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
-      riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
-      isDraft: milestone?.isDraft || false
-    }
-  });
+        name: milestone?.name || '',
+        facilitatedBy: milestone?.facilitatedBy || [],
+        needBy: milestone?.needBy || '',
+        status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
+        riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
+        isDraft: milestone?.isDraft || false
+      }
+    };
+  }, [milestone]);
+
+  // Variables for the form
+  const methods = useForm<FormValues>(defaultValues);
 
   const {
     control,
     handleSubmit,
     reset,
     watch,
-    formState: { isValid }
+    formState: { isValid, isSubmitting }
   } = methods;
 
   const {
@@ -149,6 +160,10 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     modelID,
     primaryCategory: watch('categories.category.id')
   });
+
+  useEffect(() => {
+    reset(defaultValues.defaultValues);
+  }, [defaultValues, reset]);
 
   const [updateMilestone] = useUpdateMtoMilestoneMutation({
     refetchQueries: [
@@ -174,14 +189,16 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
       mtoCategoryID = formData.categories.category.id;
     }
 
-    const { categories, ...formChanges } = formData;
+    const { categories, needBy, name, ...formChanges } = formData;
 
     updateMilestone({
       variables: {
-        id: modelID,
+        id: editMilestoneID || '',
         changes: {
           ...formChanges,
-          mtoCategoryID
+          mtoCategoryID,
+          needBy: new Date(needBy).toISOString(),
+          ...(!milestone?.addedFromMilestoneLibrary && { name })
         }
       }
     })
@@ -213,7 +230,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
         }
       })
       .catch(() => {
-        showMessage(
+        setMutationError(
           <Alert
             type="error"
             slim
@@ -259,12 +276,13 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
               </span>
             )}
 
+            {mutationError && mutationError}
+
             <FormProvider {...methods}>
-              {message}
               <Form
                 className="maxw-none"
                 id="edit-milestone-form"
-                // onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
               >
                 <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
                   {milestone.name}
@@ -329,10 +347,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                         >
                           {selectOptionsAndMappedCategories.map(option => {
                             return (
-                              <option
-                                key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
-                                value={option.value}
-                              >
+                              <option key={option.value} value={option.value}>
                                 {option.label}
                               </option>
                             );
@@ -379,10 +394,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                           {[selectOptions[0], ...mappedSubcategories].map(
                             option => {
                               return (
-                                <option
-                                  key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
-                                  value={option.value}
-                                >
+                                <option key={option.value} value={option.value}>
                                   {option.label}
                                 </option>
                               );
@@ -434,7 +446,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                     name="needBy"
                     control={control}
                     render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-0">
+                      <FormGroup className="margin-0 margin-bottom-3">
                         <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
                           {mtoMilestoneT('needBy.label')}
                         </Label>
@@ -444,17 +456,19 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                         </HelpText>
 
                         <div className="position-relative">
-                          <DatePicker
-                            {...field}
-                            aria-labelledby={convertCamelCaseToKebabCase(
-                              'needBy'
-                            )}
-                            id="milestone-need-by"
-                            maxLength={50}
-                            name={field.name}
-                            defaultValue={field.value}
-                            onChange={e => field.onChange(e || undefined)}
-                          />
+                          {!loading && (
+                            <DatePicker
+                              {...field}
+                              aria-labelledby={convertCamelCaseToKebabCase(
+                                'needBy'
+                              )}
+                              id="milestone-need-by"
+                              maxLength={50}
+                              name={field.name}
+                              defaultValue={field.value}
+                              onChange={e => field.onChange(e || undefined)}
+                            />
+                          )}
 
                           {isDateInPast(watch('needBy')) && (
                             <DatePickerWarning
@@ -476,7 +490,78 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                       </FormGroup>
                     )}
                   />
+
+                  <Controller
+                    name="status"
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-3">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(field.name)}
+                          className="maxw-none text-bold"
+                          requiredMarker
+                        >
+                          {mtoMilestoneT('status.label')}
+                        </Label>
+
+                        <Select
+                          {...field}
+                          id={convertCamelCaseToKebabCase(field.name)}
+                          value={field.value || ''}
+                        >
+                          {getKeys(stausConfig.options).map(option => {
+                            return (
+                              <option key={option} value={option}>
+                                {stausConfig.options[option]}
+                              </option>
+                            );
+                          })}
+                        </Select>
+                      </FormGroup>
+                    )}
+                  />
+
+                  <Controller
+                    name="riskIndicator"
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-3">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(field.name)}
+                          className="maxw-none text-bold"
+                          requiredMarker
+                        >
+                          {mtoMilestoneT('riskIndicator.label')}
+                        </Label>
+
+                        <HelpText className="margin-top-1">
+                          {mtoMilestoneT('riskIndicator.sublabel')}
+                        </HelpText>
+
+                        {getKeys(riskIndicatorConfig.options).map(value => (
+                          <Radio
+                            {...field}
+                            key={value}
+                            id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
+                            value={value}
+                            label={riskIndicatorConfig.options[value]}
+                            checked={field.value === value}
+                          />
+                        ))}
+                      </FormGroup>
+                    )}
+                  />
                 </Fieldset>
+
+                <Button type="submit" disabled={isSubmitting}>
+                  {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+                </Button>
               </Form>
             </FormProvider>
           </Grid>

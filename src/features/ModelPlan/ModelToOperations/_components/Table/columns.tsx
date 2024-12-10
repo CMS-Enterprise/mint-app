@@ -13,6 +13,7 @@ import i18next from 'i18next';
 import UswdsReactLink from 'components/LinkWrapper';
 import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { formatDateUtc } from 'utils/date';
 
 import EditMilestoneForm from '../EditMilestoneForm';
 
@@ -256,7 +257,7 @@ export const columns: ColumnType[] = [
             {i18next.t('modelToOperationsMisc:table.noneAdded')}
           </span>
         );
-      return <>{row.needBy}</>;
+      return <>{formatDateUtc(row.needBy, 'MM/dd/yyyy')}</>;
     }
   },
   {
