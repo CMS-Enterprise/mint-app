@@ -40,6 +40,7 @@ import {
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
@@ -456,19 +457,17 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                         </HelpText>
 
                         <div className="position-relative">
-                          {!loading && (
-                            <DatePicker
-                              {...field}
-                              aria-labelledby={convertCamelCaseToKebabCase(
-                                'needBy'
-                              )}
-                              id="milestone-need-by"
-                              maxLength={50}
-                              name={field.name}
-                              defaultValue={field.value}
-                              onChange={e => field.onChange(e || undefined)}
-                            />
-                          )}
+                          <DatePickerFormatted
+                            {...field}
+                            aria-labelledby={convertCamelCaseToKebabCase(
+                              'needBy'
+                            )}
+                            id="milestone-need-by"
+                            maxLength={50}
+                            name={field.name}
+                            defaultValue={field.value}
+                            onChange={e => field.onChange(e || undefined)}
+                          />
 
                           {isDateInPast(watch('needBy')) && (
                             <DatePickerWarning
@@ -559,9 +558,11 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                   />
                 </Fieldset>
 
-                <Button type="submit" disabled={isSubmitting}>
-                  {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
-                </Button>
+                <div className="border-top-1px border-base-lighter padding-y-4">
+                  <Button type="submit" disabled={isSubmitting}>
+                    {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+                  </Button>
+                </div>
               </Form>
             </FormProvider>
           </Grid>
