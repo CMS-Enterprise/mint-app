@@ -290,12 +290,12 @@ export const ActionMenu = ({
   rowType,
   MoveUp,
   MoveDown,
-  milestoneKeyOrID
+  milestoneID
 }: {
   rowType: MTORowType;
   MoveUp: React.ReactChild;
   MoveDown: React.ReactChild;
-  milestoneKeyOrID: MtoCommonMilestoneKey | string;
+  milestoneID: string;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -309,14 +309,14 @@ export const ActionMenu = ({
   const milestoneParam = params.get('edit-milestone');
 
   const [isModalOpen, setIsModalOpen] = useState(
-    milestoneParam === milestoneKeyOrID
+    milestoneParam === milestoneID
   );
 
   useEffect(() => {
-    if (milestoneParam === milestoneKeyOrID) {
+    if (milestoneParam === milestoneID) {
       setIsModalOpen(true);
     }
-  }, [milestoneParam, milestoneKeyOrID, setIsModalOpen]);
+  }, [milestoneParam, milestoneID, setIsModalOpen]);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -477,7 +477,7 @@ export const ActionMenu = ({
         unstyled
         className="margin-right-2"
         onClick={() => {
-          params.set('edit-milestone', milestoneKeyOrID);
+          params.set('edit-milestone', milestoneID);
           history.replace({ search: params.toString() });
           setIsModalOpen(true);
         }}

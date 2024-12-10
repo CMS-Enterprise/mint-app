@@ -20,10 +20,13 @@ import {
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
+  useGetModelToOperationsMatrixQuery,
+  useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import PageLoading from 'components/PageLoading';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -56,7 +59,24 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history]
+  );
+
+  const editMilestoneID = params.get('edit-milestone');
+
   const { message, showMessage, clearMessage } = useMessage();
+
+  const { data, loading, error } = useGetMtoMilestoneQuery({
+    variables: {
+      id: editMilestoneID || ''
+    }
+  });
+
+  const milestone = useMemo(() => {
+    return data?.mtoMilestone;
+  }, [data]);
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -78,8 +98,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   const {
     selectOptionsAndMappedCategories,
     mappedSubcategories,
-    selectOptions,
-    loading
+    selectOptions
   } = useFormatMTOCategories({
     modelID,
     primaryCategory: watch('primaryCategory')
@@ -159,12 +178,20 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
       });
   };
 
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (!milestone || error) {
+    return null;
+  }
+
   return (
     <>
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={12}>
-            {/* {!milestone.addedFromMilestoneLibrary && (
+            {!milestone.addedFromMilestoneLibrary && (
               <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
                 <Icon.LightbulbOutline
                   className="margin-left-1"
@@ -184,7 +211,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
               </span>
             )}
 
-            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2> */}
+            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
 
             {/* <p className="text-base-dark margin-top-0 margin-bottom-2">
               {t('milestoneLibrary.category', {
@@ -193,9 +220,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
               {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
             </p> */}
 
-            {/* <p>
+            <p>
               {t(`milestoneLibrary.milestoneMap.${milestone.key}.description`)}
-            </p> */}
+            </p>
 
             <h3 className="margin-y-2">
               {t('milestoneLibrary.commonSolutions')}
