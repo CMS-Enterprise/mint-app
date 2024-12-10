@@ -10,7 +10,7 @@ import {
 
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../../Modal';
+import MTOModal from '../../FormModal';
 
 import './index.scss';
 
