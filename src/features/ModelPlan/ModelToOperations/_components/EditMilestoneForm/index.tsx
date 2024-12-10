@@ -12,6 +12,7 @@ import {
   Button,
   Card,
   Checkbox,
+  DatePicker,
   Fieldset,
   FormGroup,
   Grid,
@@ -38,6 +39,7 @@ import {
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import DatePickerWarning from 'components/DatePickerWarning';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
@@ -45,6 +47,7 @@ import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { isDateInPast } from 'utils/date';
 import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
@@ -58,8 +61,16 @@ import '../../index.scss';
 
 type FormValues = {
   name: string;
-  primaryCategory: string;
-  subcategory: string;
+  categories: {
+    category: {
+      id: string;
+      name: string;
+    };
+    subcategory: {
+      id: string;
+      name: string;
+    };
+  };
   facilitatedBy: MtoFacilitator[];
   needBy: string;
   status: MtoMilestoneStatus;
@@ -74,6 +85,7 @@ type EditMilestoneFormProps = {
 const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
+  const { t: generalT } = useTranslation('general');
 
   const { facilitatedBy: facilitatedByConfig } =
     usePlanTranslation('mtoMilestone');
@@ -104,9 +116,20 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: 'default',
-      subcategory: 'default',
-      name: ''
+      categories: {
+        category: {
+          id: milestone?.categories.category.id || 'default'
+        },
+        subcategory: {
+          id: milestone?.categories.subCategory.id || 'default'
+        }
+      },
+      name: milestone?.name || '',
+      facilitatedBy: milestone?.facilitatedBy || [],
+      needBy: milestone?.needBy || '',
+      status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
+      riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
+      isDraft: milestone?.isDraft || false
     }
   });
 
@@ -124,7 +147,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     selectOptions
   } = useFormatMTOCategories({
     modelID,
-    primaryCategory: watch('primaryCategory')
+    primaryCategory: watch('categories.category.id')
   });
 
   const [updateMilestone] = useUpdateMtoMilestoneMutation({
@@ -143,15 +166,15 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
     const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
 
-    if (formData.subcategory !== uncategorizedCategoryID) {
-      mtoCategoryID = formData.subcategory;
-    } else if (formData.primaryCategory === uncategorizedCategoryID) {
+    if (formData.categories.subcategory.id !== uncategorizedCategoryID) {
+      mtoCategoryID = formData.categories.subcategory.id;
+    } else if (formData.categories.category.id === uncategorizedCategoryID) {
       mtoCategoryID = null;
     } else {
-      mtoCategoryID = formData.primaryCategory;
+      mtoCategoryID = formData.categories.category.id;
     }
 
-    const { primaryCategory, subcategory, ...formChanges } = formData;
+    const { categories, ...formChanges } = formData;
 
     updateMilestone({
       variables: {
@@ -263,20 +286,18 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                     render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-top-0 margin-bottom-3">
                         <CheckboxField
-                          id="nda-check"
-                          name="isDraft"
+                          {...field}
+                          id={field.name}
+                          value={field.name}
+                          checked={field.value}
                           label={mtoMilestoneT('isDraft.label')}
-                          subLabel={mtoMilestoneT('isDraft.sublabel')}
-                          onChange={field.onChange}
-                          onBlur={field.onBlur}
-                          value="true"
                         />
                       </FormGroup>
                     )}
                   />
 
                   <Controller
-                    name="primaryCategory"
+                    name="categories.category.id"
                     control={control}
                     rules={{
                       required: true,
@@ -322,7 +343,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                   />
 
                   <Controller
-                    name="subcategory"
+                    name="categories.subcategory.id"
                     control={control}
                     rules={{
                       required: true,
@@ -351,7 +372,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                           id={convertCamelCaseToKebabCase(field.name)}
                           value={field.value || ''}
                           defaultValue="default"
-                          disabled={watch('primaryCategory') === 'default'}
+                          disabled={
+                            watch('categories.category.id') === 'default'
+                          }
                         >
                           {[selectOptions[0], ...mappedSubcategories].map(
                             option => {
@@ -374,11 +397,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                     name="facilitatedBy"
                     control={control}
                     render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-0">
+                      <FormGroup className="margin-0 margin-bottom-3">
                         <Label
-                          htmlFor={convertCamelCaseToKebabCase(
-                            'commonSolutions'
-                          )}
+                          htmlFor={convertCamelCaseToKebabCase('facilitatedBy')}
                         >
                           {facilitatedByConfig.label}
                         </Label>
@@ -392,11 +413,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                           id={convertCamelCaseToKebabCase(
                             'multiSourceDataToCollect'
                           )}
-                          inputId={convertCamelCaseToKebabCase(
-                            'commonSolutions'
-                          )}
+                          inputId={convertCamelCaseToKebabCase('facilitatedBy')}
                           ariaLabel={convertCamelCaseToKebabCase(
-                            'commonSolutions'
+                            'facilitatedBy'
                           )}
                           ariaLabelText={facilitatedByConfig.label}
                           options={composeMultiSelectOptions(
@@ -407,6 +426,53 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                           }
                           initialValues={watch('facilitatedBy')}
                         />
+                      </FormGroup>
+                    )}
+                  />
+
+                  <Controller
+                    name="needBy"
+                    control={control}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-0">
+                        <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
+                          {mtoMilestoneT('needBy.label')}
+                        </Label>
+
+                        <HelpText className="margin-top-1">
+                          {mtoMilestoneT('needBy.sublabel')}
+                        </HelpText>
+
+                        <div className="position-relative">
+                          <DatePicker
+                            {...field}
+                            aria-labelledby={convertCamelCaseToKebabCase(
+                              'needBy'
+                            )}
+                            id="milestone-need-by"
+                            maxLength={50}
+                            name={field.name}
+                            defaultValue={field.value}
+                            onChange={e => field.onChange(e || undefined)}
+                          />
+
+                          {isDateInPast(watch('needBy')) && (
+                            <DatePickerWarning
+                              label={generalT('dateWarning')}
+                            />
+                          )}
+                        </div>
+
+                        {isDateInPast(watch('needBy')) && (
+                          <Alert
+                            type="warning"
+                            className="margin-top-2"
+                            headingLevel="h4"
+                            slim
+                          >
+                            {generalT('dateWarning')}
+                          </Alert>
+                        )}
                       </FormGroup>
                     )}
                   />
