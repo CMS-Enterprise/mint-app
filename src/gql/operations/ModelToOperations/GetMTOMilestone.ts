@@ -12,11 +12,11 @@ export default gql(/* GraphQL */ `
       riskIndicator
       addedFromMilestoneLibrary
       isDraft
-      solutions {
-        id
-        name
-        key
-      }
+      # solutions {
+      #   id
+      #   name
+      #   key
+      # }
     }
   }
 `);

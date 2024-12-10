@@ -479,7 +479,7 @@ const MTOTable = () => {
     return isMatrixStartedFc(queryData?.modelPlan.mtoMatrix);
   }, [queryData?.modelPlan.mtoMatrix]);
 
-  if (loading) {
+  if (loading && !queryData) {
     return <PageLoading />;
   }
 

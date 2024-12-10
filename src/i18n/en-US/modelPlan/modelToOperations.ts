@@ -349,6 +349,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     hideAdded: 'Hide added milestones ({{count}})',
     milestone: 'Milestone',
     suggested: 'Suggested',
+    isDraft: 'Draft',
     category: 'Category: {{category}}',
     facilitatedByArray: 'Facilitated by: {{facilitatedBy}}',
     addToMatrix: 'Add to matrix',

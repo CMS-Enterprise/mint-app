@@ -62,7 +62,7 @@ const Sidepanel = ({
           <button
             type="button"
             data-testid="close-discussions"
-            className="mint-sidepanel__x-button margin-right-2"
+            className="mint-sidepanel__x-button margin-right-1"
             aria-label="Close Modal"
             onClick={closeModal}
           >

@@ -1,13 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Controller,
+  Form,
+  FormProvider,
+  SubmitHandler,
+  useForm
+} from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
+  Fieldset,
+  FormGroup,
   Grid,
   GridContainer,
-  Icon
+  Icon,
+  Label,
+  Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -26,10 +36,17 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import HelpText from 'components/HelpText';
+import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import {
+  composeMultiSelectOptions,
+  convertCamelCaseToKebabCase
+} from 'utils/modelPlan';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 import { GetModelToOperationsMatrixQueryType } from '../Table';
@@ -54,6 +71,9 @@ type EditMilestoneFormProps = {
 
 const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const { facilitatedBy: facilitatedByConfig } =
+    usePlanTranslation('mtoMilestone');
 
   const history = useHistory();
 
@@ -178,7 +198,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
       });
   };
 
-  if (loading) {
+  if (loading && !milestone) {
     return <PageLoading />;
   }
 
@@ -190,7 +210,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     <>
       <GridContainer className="padding-8">
         <Grid row>
-          <Grid col={12}>
+          <Grid col={10}>
             {!milestone.addedFromMilestoneLibrary && (
               <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
                 <Icon.LightbulbOutline
@@ -211,22 +231,149 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
               </span>
             )}
 
-            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
+            <FormProvider {...methods}>
+              {message}
+              <Form
+                className="maxw-none"
+                id="edit-milestone-form"
+                // onSubmit={handleSubmit(onSubmit)}
+              >
+                <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
+                  {milestone.name}
+                </h2>
 
-            {/* <p className="text-base-dark margin-top-0 margin-bottom-2">
-              {t('milestoneLibrary.category', {
-                category: milestone.categoryName
-              })}{' '}
-              {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
-            </p> */}
+                <p className="margin-top-0 margin-bottom-3 text-base">
+                  <Trans
+                    i18nKey={t('modal.allFieldsRequired')}
+                    components={{
+                      s: <span className="text-secondary-dark" />
+                    }}
+                  />
+                </p>
 
-            <p>
-              {t(`milestoneLibrary.milestoneMap.${milestone.key}.description`)}
-            </p>
+                <Fieldset disabled={loading}>
+                  <Controller
+                    name="primaryCategory"
+                    control={control}
+                    rules={{
+                      required: true,
+                      validate: value => value !== 'default'
+                    }}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-2">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(field.name)}
+                          className="mint-body-normal maxw-none margin-bottom-1"
+                          requiredMarker
+                        >
+                          {t('modal.milestone.selectPrimaryCategory.label')}
+                        </Label>
 
-            <h3 className="margin-y-2">
-              {t('milestoneLibrary.commonSolutions')}
-            </h3>
+                        <Select
+                          {...field}
+                          id={convertCamelCaseToKebabCase(field.name)}
+                          value={field.value || ''}
+                          defaultValue="default"
+                        >
+                          {selectOptionsAndMappedCategories.map(option => {
+                            return (
+                              <option
+                                key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
+                                value={option.value}
+                              >
+                                {option.label}
+                              </option>
+                            );
+                          })}
+                        </Select>
+                      </FormGroup>
+                    )}
+                  />
+
+                  <Controller
+                    name="subcategory"
+                    control={control}
+                    rules={{
+                      required: true,
+                      validate: value => value !== 'default'
+                    }}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-2">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(field.name)}
+                          className="mint-body-normal maxw-none margin-bottom-1"
+                          requiredMarker
+                        >
+                          {t('modal.milestone.selectSubcategory.label')}
+                        </Label>
+
+                        <Select
+                          {...field}
+                          id={convertCamelCaseToKebabCase(field.name)}
+                          value={field.value || ''}
+                          defaultValue="default"
+                          disabled={watch('primaryCategory') === 'default'}
+                        >
+                          {[selectOptions[0], ...mappedSubcategories].map(
+                            option => {
+                              return (
+                                <option
+                                  key={`sort-${convertCamelCaseToKebabCase(option.label)}`}
+                                  value={option.value}
+                                >
+                                  {option.label}
+                                </option>
+                              );
+                            }
+                          )}
+                        </Select>
+                      </FormGroup>
+                    )}
+                  />
+
+                  <Controller
+                    name="facilitatedBy"
+                    control={control}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-0">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(
+                            'commonSolutions'
+                          )}
+                        >
+                          {facilitatedByConfig.label}
+                        </Label>
+
+                        <HelpText className="margin-top-1">
+                          {facilitatedByConfig.sublabel}
+                        </HelpText>
+
+                        <MultiSelect
+                          {...field}
+                          id={convertCamelCaseToKebabCase(
+                            'multiSourceDataToCollect'
+                          )}
+                          inputId={convertCamelCaseToKebabCase(
+                            'commonSolutions'
+                          )}
+                          ariaLabel={convertCamelCaseToKebabCase(
+                            'commonSolutions'
+                          )}
+                          ariaLabelText={facilitatedByConfig.label}
+                          options={composeMultiSelectOptions(
+                            facilitatedByConfig.options
+                          )}
+                          selectedLabel={
+                            facilitatedByConfig.multiSelectLabel || ''
+                          }
+                          initialValues={watch('facilitatedBy')}
+                        />
+                      </FormGroup>
+                    )}
+                  />
+                </Fieldset>
+              </Form>
+            </FormProvider>
           </Grid>
         </Grid>
       </GridContainer>

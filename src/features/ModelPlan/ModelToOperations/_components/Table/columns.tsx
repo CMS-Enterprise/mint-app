@@ -4,7 +4,6 @@ import { Button, Icon, Menu } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
-  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator
@@ -16,8 +15,6 @@ import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import EditMilestoneForm from '../EditMilestoneForm';
-import EditMilestonePanel from '../EditMilestoneForm/modal';
-import MTOModal from '../FormModal';
 
 import './index.scss';
 
@@ -40,7 +37,6 @@ export type MilestoneType = {
   status: MtoMilestoneStatus;
   actions: any;
   isUncategorized?: boolean;
-  key: MtoCommonMilestoneKey | null;
 };
 
 export type SubCategoryType = {
@@ -55,7 +51,6 @@ export type SubCategoryType = {
   actions: any;
   milestones: MilestoneType[];
   isUncategorized?: boolean;
-  key: undefined;
 };
 
 export type CategoryType = {
@@ -70,7 +65,6 @@ export type CategoryType = {
   actions: any;
   subCategories: SubCategoryType[];
   isUncategorized?: boolean;
-  key: undefined;
 };
 
 export type RowType = CategoryType | SubCategoryType | MilestoneType;
