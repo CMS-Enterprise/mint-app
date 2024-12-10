@@ -10,9 +10,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
-  Card,
-  Checkbox,
-  DatePicker,
   Fieldset,
   FormGroup,
   Grid,
@@ -22,18 +19,11 @@ import {
   Radio,
   Select
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import {
-  HelpSolutionBaseType,
-  helpSolutions
-} from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
-  useGetModelToOperationsMatrixQuery,
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
@@ -47,7 +37,6 @@ import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
-import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
@@ -55,10 +44,6 @@ import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
-
-import { MilestoneCardType } from '../../MilestoneLibrary';
-import { GetModelToOperationsMatrixQueryType } from '../Table';
-import { MilestoneType } from '../Table/columns';
 
 import '../../index.scss';
 
