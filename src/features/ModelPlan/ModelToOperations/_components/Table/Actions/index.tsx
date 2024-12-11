@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { ApolloQueryResult } from '@apollo/client';
@@ -11,6 +11,7 @@ import {
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
 import MTOModal from '../../FormModal';
@@ -33,16 +34,18 @@ const MTOTableActions = ({
 
   const { clearMessage } = useMessage();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+
+  const {
+    isMTOModalOpen: isModalOpen,
+    setMTOModalOpen: setIsModalOpen,
+    mtoModalType: modalType,
+    setMTOModalType: setModalType
+  } = useContext(MTOModalContext);
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID }
   });
-
-  const [modalType, setModalType] = useState<
-    'category' | 'milestone' | 'solution'
-  >('category');
 
   const { data: milestoneData } = useGetMtoMilestonesQuery({
     variables: { id: modelID }

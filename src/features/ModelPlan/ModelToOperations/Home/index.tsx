@@ -16,6 +16,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
+import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
@@ -182,10 +183,10 @@ const MTOHome = () => {
         )}
 
         {currentView === 'milestones' && (
-          <>
+          <MTOModalProvider>
             <MTOTableActions refetch={() => refetch({ id: modelID })} />
             <MTOTable queryData={data} loading={loading} error={error} />
-          </>
+          </MTOModalProvider>
         )}
       </div>
     </>
