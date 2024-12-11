@@ -74,7 +74,8 @@ type MTOInfoTranslation struct {
 
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
-	Name models.TranslationField `json:"name" db:"name"`
+	Name            models.TranslationField            `json:"name" db:"name"`
+	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
 }
 
 // Represents MTO Custom Solution translation data

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import Select, {
   ClearIndicatorProps,
   components,
@@ -58,6 +58,12 @@ export const Option = (
     </div>
   );
 };
+
+export const GroupLabel = ({ label }: GroupBase<MultiSelectOptionProps>) => (
+  <span className="text-primary-dark text-bold text-no-uppercase mint-text-normal">
+    {label}
+  </span>
+);
 
 export const ClearIndicator = (
   props: ClearIndicatorProps<MultiSelectOptionProps, true>
@@ -211,6 +217,7 @@ const MultiSelect = ({
   name,
   selectedLabel,
   options,
+  groupedOptions,
   onChange,
   initialValues,
   className,
@@ -227,6 +234,7 @@ const MultiSelect = ({
   name: string;
   selectedLabel?: string;
   options: MultiSelectOptionProps[];
+  groupedOptions?: GroupBase<MultiSelectOptionProps>[];
   onChange: (values: string[]) => void;
   initialValues?: string[];
   className?: string;
@@ -237,15 +245,30 @@ const MultiSelect = ({
   disabledOption?: boolean;
   disabledLabel?: string;
 }) => {
+  const condensedOptions = useMemo(() => {
+    if (groupedOptions) {
+      const groupedOptionsArray: MultiSelectOptionProps[] = [];
+      groupedOptions.forEach(option =>
+        groupedOptionsArray.push(...option.options)
+      );
+      return [...groupedOptionsArray];
+    }
+    return [...options];
+  }, [options, groupedOptions]);
+
   const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
     initialValues
-      ? options.filter(option => initialValues.includes(option.value))
+      ? condensedOptions.filter(option => initialValues.includes(option.value))
       : []
   );
 
-  const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
-    ...options
-  ]);
+  const [originalOptions, setOriginalOptions] = useState<
+    MultiValue<MultiSelectOptionProps>
+  >([...condensedOptions]);
+
+  useEffect(() => {
+    setOriginalOptions([...condensedOptions]);
+  }, [groupedOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setSelected(
@@ -286,10 +309,14 @@ const MultiSelect = ({
         name={name}
         className={classNames(
           'easi-multiselect usa-combo-box margin-top-1',
-          className
+          className,
+          {
+            'grouped-options': !!groupedOptions
+          }
         )}
         isClearable={!disabledOption}
-        options={options}
+        options={groupedOptions || options}
+        formatGroupLabel={GroupLabel}
         components={{ ClearIndicator, Option }}
         isMulti
         hideSelectedOptions={false}

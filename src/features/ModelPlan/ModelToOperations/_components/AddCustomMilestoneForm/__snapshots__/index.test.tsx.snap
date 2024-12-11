@@ -1,0 +1,153 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Custom Milestone form > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none"
+    data-testid="custom-category-form"
+    id="custom-category-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="primary-category"
+        >
+          Select primary category 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <select
+          class="usa-select"
+          data-testid="Select"
+          id="primary-category"
+          name="primaryCategory"
+        >
+          <option
+            value="default"
+          >
+            - Select - 
+          </option>
+          <option
+            value="123"
+          >
+            Category 1
+          </option>
+          <option
+            value="456"
+          >
+            Category 2
+          </option>
+        </select>
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="subcategory"
+        >
+          Select sub-category 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <select
+          class="usa-select"
+          data-testid="Select"
+          disabled=""
+          id="subcategory"
+          name="subcategory"
+        >
+          <option
+            value="default"
+          >
+            - Select - 
+          </option>
+        </select>
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="name"
+        >
+          Milestone title 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <input
+          class="usa-input"
+          data-testid="textInput"
+          id="name"
+          name="name"
+          type="text"
+          value=""
+        />
+      </div>
+    </fieldset>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-2"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            Before adding this milestone, consider checking the 
+            <button
+              class="usa-button usa-button usa-button--unstyled margin-top-0"
+              data-testid="button"
+              type="button"
+            >
+              milestone library
+            </button>
+             to see if MINT offers a similar preset milestone.
+          </span>
+        </p>
+      </div>
+    </div>
+    <button
+      class="usa-button margin-right-3"
+      data-testid="button"
+      disabled=""
+      type="submit"
+    >
+      Add category
+    </button>
+    <button
+      class="usa-button usa-button usa-button--unstyled"
+      data-testid="button"
+      type="button"
+    >
+      Cancel
+    </button>
+  </form>
+</DocumentFragment>
+`;

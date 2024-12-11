@@ -45,6 +45,7 @@ import {
   ModelViewFilter,
   MonitoringFileType,
   MtoCategoryTranslation,
+  MtoCommonSolutionKey,
   MtoInfoTranslation,
   MtoMilestoneTranslation,
   MtoSolutionTranslation,
@@ -1264,6 +1265,7 @@ export type TranslationMTOCategory = {
 // MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
+  commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
 };
 
 type TranslationMTOMilestoneCustomGQL = Omit<

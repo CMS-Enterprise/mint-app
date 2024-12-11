@@ -16,11 +16,6 @@ func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj 
 	return obj.FacilitatedByRole, nil
 }
 
-// IsSuggested is the resolver for the isSuggested field.
-func (r *mTOCommonMilestoneResolver) IsSuggested(ctx context.Context, obj *models.MTOCommonMilestone) (bool, error) {
-	return false, nil
-}
-
 // CommonSolutions is the resolver for the commonSolutions field.
 func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *models.MTOCommonMilestone) ([]*models.MTOCommonSolution, error) {
 	return MTOCommonSolutionGetByCommonMilestoneKeyLOADER(ctx, obj.Key)

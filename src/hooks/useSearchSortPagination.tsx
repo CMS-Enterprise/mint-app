@@ -99,13 +99,14 @@ const useSearchSortPagination = <T, K extends string>({
     }
 
     // Update the URL's query parameters
-    if (query) {
+    if (query.trim()) {
       params.set('query', query);
+      params.set('page', '1');
     } else {
       // Delete the 'query' parameter
       params.delete('query');
     }
-    params.delete('page');
+
     history.push({ search: params.toString() });
 
     // Return the page to the first page when the query changes

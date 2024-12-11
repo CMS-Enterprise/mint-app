@@ -33,6 +33,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     analyzed_audit,
 	existing_model_link,
 	mto_category,
+	mto_suggested_milestone,
 	mto_milestone,
 	mto_solution,
 	mto_milestone_solution_link,
