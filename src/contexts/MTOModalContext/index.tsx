@@ -7,6 +7,8 @@ interface MTOModalContextType {
   setMTOModalType: (
     type: 'category' | 'milestone' | 'solution' | 'solutionToMilestone'
   ) => void;
+  categoryID: string;
+  setCategoryID: (id: string) => void;
 }
 
 const MTOModalContext = createContext<MTOModalContextType>({
@@ -16,7 +18,9 @@ const MTOModalContext = createContext<MTOModalContextType>({
   mtoModalType: 'category',
   setMTOModalType: (
     mtoModalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone'
-  ) => {}
+  ) => {},
+  categoryID: '',
+  setCategoryID: (id: string) => {}
 });
 
 const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
@@ -24,6 +28,7 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [mtoModalType, setMTOModalType] = useState<
     'category' | 'milestone' | 'solution' | 'solutionToMilestone'
   >('category');
+  const [categoryID, setCategoryID] = useState('');
 
   return (
     <MTOModalContext.Provider
@@ -31,7 +36,9 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
         isMTOModalOpen,
         setMTOModalOpen,
         mtoModalType,
-        setMTOModalType
+        setMTOModalType,
+        categoryID,
+        setCategoryID
       }}
     >
       {children}
