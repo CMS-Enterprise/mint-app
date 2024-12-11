@@ -280,17 +280,20 @@ export const columns: ColumnType[] = [
 ];
 
 export const ActionMenu = ({
+  primaryCategoryID,
   rowType,
   MoveUp,
   MoveDown
 }: {
+  primaryCategoryID: string;
   rowType: MTORowType;
   MoveUp: React.ReactChild;
   MoveDown: React.ReactChild;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const { setMTOModalOpen, setMTOModalType } = useContext(MTOModalContext);
+  const { setMTOModalOpen, setMTOModalType, setCategoryID } =
+    useContext(MTOModalContext);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -359,7 +362,7 @@ export const ActionMenu = ({
                 e.stopPropagation();
                 setMTOModalOpen(true);
                 setMTOModalType('milestone');
-                setIsMenuOpen(false);
+                setCategoryID(primaryCategoryID);
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -375,6 +378,7 @@ export const ActionMenu = ({
                 setIsMenuOpen(false);
                 setMTOModalOpen(true);
                 setMTOModalType('category');
+                setCategoryID(primaryCategoryID);
               }}
               onKeyPress={e => {
                 e.stopPropagation();
