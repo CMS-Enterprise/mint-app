@@ -2910,6 +2910,27 @@
 							"response": []
 						},
 						{
+							"name": "DeleteMTOCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation {\n  deleteMTOCategory(id: \"{{mtoCategoryID}}\")\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "4 MTO Categories",
 							"event": [
 								{

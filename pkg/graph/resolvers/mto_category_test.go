@@ -672,3 +672,114 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	suite.Equal(9, numCategories)        // just top-level categories (one more than before)
 	suite.Equal(12, numSubcategories)    // just subcategories (two more than before)
 }
+
+func (suite *ResolverSuite) TestMTOCategoryDelete_NullID() {
+	// Attempt to delete a category using a null (uuid.Nil) ID
+	// Expectation: This should return an error indicating the category does not exist or invalid input.
+
+	invalidID := uuid.Nil
+	err := MTOCategoryDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, invalidID)
+	suite.Error(err, "Deleting a category with a null (uuid.Nil) ID should result in an error")
+}
+
+func (suite *ResolverSuite) TestMTOCategoryDelete_NoMilestones() {
+	// Create a top-level category with no subcategories and no milestones.
+	// Deleting it should work cleanly and simply remove the category.
+	// Expectation: No error on deletion, and the category should no longer be retrievable.
+
+	plan := suite.createModelPlan("Test Deletion Without Milestones")
+	category := suite.createMTOCategory("No Milestones Category", plan.ID, nil)
+
+	// Confirm category is retrievable before deletion
+	catBeforeDelete, err := MTOCategoryGetByID(suite.testConfigs.Context, category.ID)
+	suite.NoError(err)
+	suite.Equal(category.ID, catBeforeDelete.ID, "Category should exist before deletion")
+
+	// Delete the category
+	err = MTOCategoryDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, category.ID)
+	suite.NoError(err, "Deleting a category with no milestones should succeed")
+
+	// Confirm category no longer exists
+	catAfterDelete, err := MTOCategoryGetByID(suite.testConfigs.Context, category.ID)
+	suite.Error(err, "Category should not be found after deletion")
+	suite.Nil(catAfterDelete, "Category should be nil after deletion")
+}
+
+func (suite *ResolverSuite) TestMTOCategoryDelete_TopLevelCategory() {
+	// Create a top-level category with subcategories and milestones.
+	// On delete:
+	//   - All milestones referencing this top-level category and its subcategories should be uncategorized (mto_category_id = NULL).
+	//   - All direct subcategories should be deleted.
+	// Expectation:
+	//   - No error on deletion.
+	//   - Check milestones are now uncategorized.
+	//   - Check subcategories are deleted.
+
+	plan := suite.createModelPlan("Test Top-Level Deletion")
+	topCategory := suite.createMTOCategory("Top Category To Delete", plan.ID, nil)
+
+	// Create subcategories
+	subCatNames := []string{"SubCat A", "SubCat B"}
+	subCategories := suite.createMultipleMTOcategories(subCatNames, plan.ID, &topCategory.ID)
+
+	// Create a milestone in the top-level category
+	milestoneTop, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Top", plan.ID, &topCategory.ID)
+	suite.NoError(err)
+
+	// Create a milestone in a subcategory
+	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Sub", plan.ID, &subCategories[0].ID)
+	suite.NoError(err)
+
+	// Delete the top-level category
+	err = MTOCategoryDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, topCategory.ID)
+	suite.NoError(err, "Deleting a top-level category should succeed")
+
+	// Verify top-level category and its subcategories no longer exist
+	_, err = MTOCategoryGetByID(suite.testConfigs.Context, topCategory.ID)
+	suite.Error(err, "Top-level category should not exist after deletion")
+
+	for _, sc := range subCategories {
+		_, err := MTOCategoryGetByID(suite.testConfigs.Context, sc.ID)
+		suite.Error(err, "Subcategory should not exist after top-level category deletion")
+	}
+
+	// Verify milestones are now uncategorized
+	milestoneTopAfter, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneTop.ID)
+	suite.NoError(err)
+	suite.Nil(milestoneTopAfter.MTOCategoryID, "Milestone that was in the top-level category should now be uncategorized")
+
+	milestoneSubAfter, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneSub.ID)
+	suite.NoError(err)
+	suite.Nil(milestoneSubAfter.MTOCategoryID, "Milestone that was in a subcategory should now be uncategorized")
+}
+
+func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
+	// Create a top-level category and a single subcategory with milestones.
+	// On deleting the subcategory:
+	//   - All milestones referencing that subcategory should be reassigned to the parent category.
+	// Expectation:
+	//   - No error on deletion.
+	//   - Subcategory is deleted.
+	//   - Milestones previously in the subcategory now reference the parent category.
+
+	plan := suite.createModelPlan("Test Subcategory Deletion")
+	parentCategory := suite.createMTOCategory("Parent Category", plan.ID, nil)
+	subCategory := suite.createMTOCategory("SubCategory To Delete", plan.ID, &parentCategory.ID)
+
+	// Create a milestone in the subcategory
+	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "SubCategory Milestone", plan.ID, &subCategory.ID)
+	suite.NoError(err)
+
+	// Delete the subcategory
+	err = MTOCategoryDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, subCategory.ID)
+	suite.NoError(err, "Deleting a subcategory should succeed")
+
+	// Verify subcategory no longer exists
+	_, err = MTOCategoryGetByID(suite.testConfigs.Context, subCategory.ID)
+	suite.Error(err, "Subcategory should not exist after deletion")
+
+	// Verify milestone has been reassigned to parent category
+	milestoneSubAfter, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneSub.ID)
+	suite.NoError(err)
+	suite.Equal(parentCategory.ID, *milestoneSubAfter.MTOCategoryID, "Milestone should now reference the parent category after subcategory deletion")
+}
