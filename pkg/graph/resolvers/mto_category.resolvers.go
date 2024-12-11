@@ -65,6 +65,16 @@ func (r *mutationResolver) CreateStandardCategories(ctx context.Context, modelPl
 	return MTOCreateStandardCategories(ctx, logger, principal, r.store, modelPlanID)
 }
 
+// DeleteMTOCategory is the resolver for the deleteMTOCategory field.
+func (r *mutationResolver) DeleteMTOCategory(ctx context.Context, id uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	err := MTOCategoryDelete(ctx, logger, principal, r.store, id)
+
+	success := err == nil
+	return success, err
+}
+
 // MTOCategory returns generated.MTOCategoryResolver implementation.
 func (r *Resolver) MTOCategory() generated.MTOCategoryResolver { return &mTOCategoryResolver{r} }
 

@@ -82,6 +82,17 @@ func MTOCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *mo
 	return returned, nil
 }
 
+// MTOCategoryDelete deletes an existing MTOCategory from the database
+func MTOCategoryDelete(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) error {
+	arg := map[string]interface{}{"id": id}
+
+	_, procErr := sqlutils.GetProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.Delete, arg)
+	if procErr != nil {
+		return fmt.Errorf("issue deleting MTOCategory object: %w", procErr)
+	}
+	return nil
+}
+
 // MTOCategoryCreateAllowConflicts creates a new MTOCategory in the database, but in the case of a conflict, instead just
 // returns the conflicting row (and doesn't return an error)
 // In all other ways, it is effectively equivalent to MTOCategoryCreate

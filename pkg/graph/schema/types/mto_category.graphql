@@ -33,7 +33,7 @@ type MTOCategories {
 
 extend type Mutation {
   """
-  Allows you to create an MTOCategory or Subcategory if you provide a parent ID. 
+  Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
   Note, the parent must belong to the same model plan, or this will return an error
   """
   createMTOCategory(modelPlanID: UUID!, name: String!, parentID: UUID): MTOCategory!
@@ -59,5 +59,13 @@ extend type Mutation {
   still create the others
   """
   createStandardCategories(modelPlanID: UUID!): Boolean!
+  @hasRole(role: MINT_USER)
+
+  """
+  Deletes an MTO category. If the category has subcategories, it will delete them as well.
+  If the target category is a subcategory, it will only delete the subcategory and redirect
+  references to the parent category.
+  """
+  deleteMTOCategory(id: UUID!): Boolean!
   @hasRole(role: MINT_USER)
 }

@@ -1260,6 +1260,12 @@ export type Mutation = {
    * still create the others
    */
   createStandardCategories: Scalars['Boolean']['output'];
+  /**
+   * Deletes an MTO category. If the category has subcategories, it will delete them as well.
+   * If the target category is a subcategory, it will only delete the subcategory and redirect
+   * references to the parent category.
+   */
+  deleteMTOCategory: Scalars['Boolean']['output'];
   deleteMTOMilestone: Scalars['Boolean']['output'];
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCR: PlanCr;
@@ -1443,6 +1449,12 @@ export type MutationCreatePlanTdlArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateStandardCategoriesArgs = {
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
