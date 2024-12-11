@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Icon, Menu } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
@@ -10,6 +10,7 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import './index.scss';
@@ -289,6 +290,8 @@ export const ActionMenu = ({
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
+  const { setMTOModalOpen, setMTOModalType } = useContext(MTOModalContext);
+
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -354,6 +357,8 @@ export const ActionMenu = ({
               type="button"
               onClick={e => {
                 e.stopPropagation();
+                setMTOModalOpen(true);
+                setMTOModalType('milestone');
                 setIsMenuOpen(false);
               }}
               onKeyPress={e => {
@@ -368,6 +373,8 @@ export const ActionMenu = ({
               type="button"
               onClick={e => {
                 setIsMenuOpen(false);
+                setMTOModalOpen(true);
+                setMTOModalType('category');
               }}
               onKeyPress={e => {
                 e.stopPropagation();
