@@ -1,10 +1,12 @@
 package resolvers
 
 import (
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // This test ensures that we can properly create a Custom milestone with preset category information
@@ -248,4 +250,84 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinksNoCommonSolutions() 
 
 	suite.NoError(err)
 	suite.Len(milestoneSolutionLinks, 0)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
+	plan1 := suite.createModelPlan("model plan 1")
+	commonMilestoneKey1 := models.MTOCommonMilestoneKeyAppSupportCon
+	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey1, []models.MTOCommonSolutionKey{
+		models.MTOCSKCcw,
+		models.MTOCSKApps,
+	})
+
+	commonMilestoneKey2 := models.MTOCommonMilestoneKeyCommWPart
+	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey2, []models.MTOCommonSolutionKey{
+		models.MTOCSKCcw,
+		models.MTOCSKApps,
+	})
+	commonMilestoneKey3 := models.MTOCommonMilestoneKeyAcquireALearnCont
+	milestone3 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey3, []models.MTOCommonSolutionKey{
+		models.MTOCSKBcda,
+		models.MTOCSKCmsBox,
+		models.MTOCSKCcw,
+	})
+	/***
+	Validate the created solutions and assign them by key
+	***/
+
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan1.ID)
+	suite.NoError(err)
+	suite.Len(solutions, 4)
+
+	solMTOCSKCcw, ok := lo.Find(solutions, func(solution *models.MTOSolution) bool {
+		if solution.Key != nil {
+			return *solution.Key == models.MTOCSKCcw
+		}
+		return false
+	})
+	suite.True(ok)
+	solMTOCSKApps, ok := lo.Find(solutions, func(solution *models.MTOSolution) bool {
+		if solution.Key != nil {
+			return *solution.Key == models.MTOCSKApps
+		}
+		return false
+	})
+	suite.True(ok)
+	solMTOCSKBcda, ok := lo.Find(solutions, func(solution *models.MTOSolution) bool {
+		if solution.Key != nil {
+			return *solution.Key == models.MTOCSKBcda
+		}
+		return false
+	})
+	suite.True(ok)
+	solMTOCSKCmsBox, ok := lo.Find(solutions, func(solution *models.MTOSolution) bool {
+		if solution.Key != nil {
+			return *solution.Key == models.MTOCSKCmsBox
+		}
+		return false
+	})
+	suite.True(ok)
+	/***
+	end select solutions
+	***/
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, []uuid.UUID]{
+		// All three milestones use this solution
+		{Key: solMTOCSKCcw.ID, Expected: []uuid.UUID{milestone1.ID, milestone2.ID, milestone3.ID}},
+		{Key: solMTOCSKApps.ID, Expected: []uuid.UUID{milestone1.ID, milestone2.ID}},
+		{Key: solMTOCSKBcda.ID, Expected: []uuid.UUID{milestone3.ID}},
+		{Key: solMTOCSKCmsBox.ID, Expected: []uuid.UUID{milestone3.ID}},
+	}
+
+	verifyFunc := func(data []*models.MTOMilestone, expected []uuid.UUID) bool {
+		// Map the IDs from the milestones, assert they match the expected returned result
+		dataIDs := lo.Map(data, func(item *models.MTOMilestone, _ int) uuid.UUID {
+			return item.ID
+		})
+		return suite.ElementsMatch(dataIDs, expected)
+	}
+	// Call the helper method to validate all results
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOMilestone.BySolutionID,
+		expectedResults, verifyFunc)
+
 }

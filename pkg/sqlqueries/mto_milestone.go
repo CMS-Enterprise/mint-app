@@ -23,6 +23,9 @@ var mtoMilestoneGetByModelPlanIDLoaderSQL string
 //go:embed SQL/mto/milestone/get_by_model_plan_id_and_category_id_LOADER.sql
 var mtoMilestoneGetByModelPlanIDAndCategoryIDLoaderSQL string
 
+//go:embed SQL/mto/milestone/get_by_solution_id_LOADER.sql
+var mtoMilestoneGetBySolutionIDLoaderSQL string
+
 type mtoMilestoneScripts struct {
 	Create        string
 	Update        string
@@ -33,6 +36,8 @@ type mtoMilestoneScripts struct {
 	GetByModelPlanIDLoader string
 	// returns all Milestones by a model plan and category
 	GetByModelPlanIDAndCategoryIDLoader string
+	// returns all Milestones by a solution ID
+	GetBySolutionIDLoader string
 }
 
 var MTOMilestone = mtoMilestoneScripts{
@@ -43,4 +48,5 @@ var MTOMilestone = mtoMilestoneScripts{
 	GetByIDLoader:                       mtoMilestoneGetByIDLoaderSQL,
 	GetByModelPlanIDLoader:              mtoMilestoneGetByModelPlanIDLoaderSQL,
 	GetByModelPlanIDAndCategoryIDLoader: mtoMilestoneGetByModelPlanIDAndCategoryIDLoaderSQL,
+	GetBySolutionIDLoader:               mtoMilestoneGetBySolutionIDLoaderSQL,
 }
