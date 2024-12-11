@@ -230,6 +230,22 @@ export const modelToOperationsMisc: Record<string, any> = {
       editSubCategoryTitle: 'Edit sub-category title',
       removeCategory: 'Remove category',
       removeSubCategory: 'Remove sub-category'
+    },
+    tableActions: {
+      tableActions: 'Table actions',
+      showActions: 'Show actions',
+      hideActions: 'Hide actions',
+      milestones: 'Milestones',
+      commonMilestones: '{{number}} common milestones',
+      browseMilestoneLibrary: 'Browse milestone library',
+      operationalSolutions: 'Operational solutions',
+      commonSolutions: '{{number}} common solutions and IT systems',
+      browseSolutionLibrary: 'Browse solution library',
+      templateAndCategories: 'Templates and categories',
+      availableTemplates: '1 available template',
+      standardCategories: 'Standard categories',
+      addThisTemplate: 'Add this template',
+      addCustomCategory: 'or, add a custom category'
     }
   },
   errorReorder: 'Failed to reorder the MTO matrix.  Please try again.',

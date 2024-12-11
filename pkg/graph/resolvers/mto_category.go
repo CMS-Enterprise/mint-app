@@ -115,7 +115,7 @@ type mtoStandardCategory struct {
 }
 
 var mtoStandardCategories []mtoStandardCategory = []mtoStandardCategory{
-	{name: "Participants", subcategories: []string{"Application and Selection", "Participant Support"}},
+	{name: "Participants", subcategories: []string{"Application and selection", "Participant support"}},
 	{name: "Operations", subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking", "Benchmarks", "Monitoring", "Internal functions", "Fee-for-service (FFS)"}},
 	{name: "Payment", subcategories: []string{}},
 	{name: "Payers", subcategories: []string{}},

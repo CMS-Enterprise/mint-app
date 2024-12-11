@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -39,6 +39,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
   const { solutionType: solutionTypeConfig } =
     usePlanTranslation('mtoSolution');
 
+  const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
 
@@ -262,8 +263,19 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
           <Trans
             i18nKey={t('modal.solution.alert.info')}
             components={{
-              s: <span className="text-underline text-primary-light" />
-              // TODO: Add a link to the documentation
+              s: (
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled margin-top-0"
+                  onClick={() => {
+                    history.push(
+                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
+                    );
+                  }}
+                >
+                  {' '}
+                </Button>
+              )
             }}
           />
         </Alert>
