@@ -12,7 +12,6 @@ import {
 } from 'gql/generated/graphql';
 
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 
 import MTOModal from '../../FormModal';
 
@@ -31,8 +30,6 @@ const MTOTableActions = ({
 
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
-
-  const { clearMessage } = useMessage();
 
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
 
@@ -145,7 +142,6 @@ const MTOTableActions = ({
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    clearMessage();
                     setModalType('milestone');
                     setIsModalOpen(true);
                   }}
@@ -202,7 +198,6 @@ const MTOTableActions = ({
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    clearMessage();
                     setModalType('solution');
                     setIsModalOpen(true);
                   }}
@@ -260,7 +255,6 @@ const MTOTableActions = ({
                 className="display-block"
                 unstyled
                 onClick={() => {
-                  clearMessage();
                   setModalType('category');
                   setIsModalOpen(true);
                 }}
