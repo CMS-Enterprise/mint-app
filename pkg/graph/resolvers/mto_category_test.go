@@ -757,21 +757,35 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
 	// Create a top-level category and a single subcategory with milestones.
 	// On deleting the subcategory:
 	//   - All milestones referencing that subcategory should be reassigned to the parent category.
-	// Expectation:
+	// Expectations:
 	//   - No error on deletion.
 	//   - Subcategory is deleted.
-	//   - Milestones previously in the subcategory now reference the parent category.
+	//   - Milestones previously in the subcategory now reference the parent category (not nil).
 
 	plan := suite.createModelPlan("Test Subcategory Deletion")
 	parentCategory := suite.createMTOCategory("Parent Category", plan.ID, nil)
 	subCategory := suite.createMTOCategory("SubCategory To Delete", plan.ID, &parentCategory.ID)
 
 	// Create a milestone in the subcategory
-	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "SubCategory Milestone", plan.ID, &subCategory.ID)
-	suite.NoError(err)
+	milestoneSub, err := MTOMilestoneCreateCustom(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		"SubCategory Milestone",
+		plan.ID,
+		&subCategory.ID,
+	)
+	suite.NoError(err, "Creating a milestone in the subcategory should succeed")
 
 	// Delete the subcategory
-	err = MTOCategoryDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, subCategory.ID)
+	err = MTOCategoryDelete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		subCategory.ID,
+	)
 	suite.NoError(err, "Deleting a subcategory should succeed")
 
 	// Verify subcategory no longer exists
@@ -780,6 +794,70 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
 
 	// Verify milestone has been reassigned to parent category
 	milestoneSubAfter, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneSub.ID)
+	suite.NoError(err, "Retrieving milestone after reassignment should not error")
+	suite.NotNil(milestoneSubAfter, "Retrieved milestone should not be nil after reassignment")
+	suite.NotNil(milestoneSubAfter.MTOCategoryID, "Milestone's MTOCategoryID should not be nil after reassignment")
+
+	suite.Equal(parentCategory.ID, *milestoneSubAfter.MTOCategoryID,
+		"Milestone should now reference the parent category after subcategory deletion")
+}
+
+func (suite *ResolverSuite) TestMTOCategoryDelete_RecursiveSubCategory() {
+	// This test validates that when deleting a top-level category with multiple levels of subcategories,
+	// all descendants are deleted and all milestones in the subtree are reassigned or uncategorized as expected.
+
+	plan := suite.createModelPlan("Test Recursive Subcategory Deletion")
+
+	// Create a top-level category
+	topCategory := suite.createMTOCategory("Top Category", plan.ID, nil)
+
+	// Create a first-level subcategory under the top category
+	subCategory1 := suite.createMTOCategory("SubCategory Level 1", plan.ID, &topCategory.ID)
+
+	// Create a second-level subcategory under subCategory1
+	subCategory2 := suite.createMTOCategory("SubCategory Level 2", plan.ID, &subCategory1.ID)
+
+	// Create milestones at various levels
+	milestoneTop, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Top", plan.ID, &topCategory.ID)
 	suite.NoError(err)
-	suite.Equal(parentCategory.ID, *milestoneSubAfter.MTOCategoryID, "Milestone should now reference the parent category after subcategory deletion")
+
+	milestoneSub1, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in SubCategory 1", plan.ID, &subCategory1.ID)
+	suite.NoError(err)
+
+	milestoneSub2, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in SubCategory 2", plan.ID, &subCategory2.ID)
+	suite.NoError(err)
+
+	// Delete the top-level category, which should recursively delete subcategories
+	// and reassign or uncategorize all milestones.
+	err = MTOCategoryDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, topCategory.ID)
+	suite.NoError(err, "Deleting a top-level category with nested subcategories should succeed")
+
+	// Verify top-level category no longer exists
+	_, err = MTOCategoryGetByID(suite.testConfigs.Context, topCategory.ID)
+	suite.Error(err, "Top-level category should not exist after deletion")
+
+	// Verify first-level subcategory no longer exists
+	_, err = MTOCategoryGetByID(suite.testConfigs.Context, subCategory1.ID)
+	suite.Error(err, "First-level subcategory should not exist after recursive deletion")
+
+	// Verify second-level subcategory no longer exists
+	_, err = MTOCategoryGetByID(suite.testConfigs.Context, subCategory2.ID)
+	suite.Error(err, "Second-level subcategory should not exist after recursive deletion")
+
+	// Since the top-level category had a nil parent_id, all milestones should now be uncategorized (mto_category_id = NULL).
+
+	// Check milestone that was in the top-level category
+	milestoneTopAfter, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneTop.ID)
+	suite.NoError(err)
+	suite.Nil(milestoneTopAfter.MTOCategoryID, "Milestone originally in top-level category should now be uncategorized")
+
+	// Check milestone that was in the first-level subcategory
+	milestoneSub1After, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneSub1.ID)
+	suite.NoError(err)
+	suite.Nil(milestoneSub1After.MTOCategoryID, "Milestone originally in first-level subcategory should now be uncategorized")
+
+	// Check milestone that was in the second-level subcategory
+	milestoneSub2After, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestoneSub2.ID)
+	suite.NoError(err)
+	suite.Nil(milestoneSub2After.MTOCategoryID, "Milestone originally in second-level subcategory should now be uncategorized")
 }
