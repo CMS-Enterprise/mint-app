@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -23,6 +23,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -51,6 +52,7 @@ export const selectOptions: SelectProps[] = [
 const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const { categoryID, setCategoryID } = useContext(MTOModalContext);
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -80,7 +82,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: 'default',
+      primaryCategory: categoryID ?? 'default',
       name: ''
     }
   });
@@ -151,6 +153,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
             );
           }
           closeModal();
+          setCategoryID(''); // Reset category ID
         }
       })
       .catch(() => {

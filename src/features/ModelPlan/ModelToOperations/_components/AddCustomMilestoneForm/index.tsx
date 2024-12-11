@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -22,6 +22,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
@@ -39,6 +40,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
+  const { categoryID, setCategoryID } = useContext(MTOModalContext);
 
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -67,7 +69,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: 'default',
+      primaryCategory: categoryID ?? 'default',
       subcategory: 'default',
       name: ''
     }
@@ -132,6 +134,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
             </>
           );
           closeModal();
+          setCategoryID(''); // Reset category ID
         }
       })
       .catch(() => {
