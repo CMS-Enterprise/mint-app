@@ -1,6 +1,10 @@
+CREATE COLLATION case_insensitive (PROVIDER = ICU, LOCALE = 'und-u-ks-level2', DETERMINISTIC = FALSE);
+
+COMMENT ON COLLATION case_insensitive IS 'a collation to enforce case insensitivity';
+
 CREATE TABLE mto_category (
     id UUID PRIMARY KEY,
-    name ZERO_STRING NOT NULL,
+    name ZERO_STRING NOT NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the name column,
     parent_id UUID REFERENCES mto_category(id),
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     position INT NOT NULL,
@@ -49,3 +53,4 @@ COMMENT ON CONSTRAINT fk_parent_model_plan ON mto_category IS
 
 COMMENT ON COLUMN mto_category.parent_id IS 'References the parent category. If set, the model_plan_id must match the parent category''s model_plan_id.';
 COMMENT ON COLUMN mto_category.model_plan_id IS 'References the model plan associated with this category.';
+COMMENT ON COLUMN mto_category.name IS 'The name of the category. We use a collation "case_insensitive" to ensure that it is case insensitive';
