@@ -23,8 +23,6 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
-import MTOOptionsPanel from '../OptionPanel';
-
 import {
   ActionMenu,
   CategoryType,
@@ -473,20 +471,12 @@ const MTOTable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentColumn, columnSort, formattedData]);
 
-  const isMatrixStarted: boolean = useMemo(() => {
-    return isMatrixStartedFc(queryData?.modelPlan.mtoMatrix);
-  }, [queryData?.modelPlan.mtoMatrix]);
-
   if (loading && !queryData) {
     return <PageLoading />;
   }
 
   if (error) {
     return <NotFoundPartial />;
-  }
-
-  if (!isMatrixStarted) {
-    return <MTOOptionsPanel />;
   }
 
   return (

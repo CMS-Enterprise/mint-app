@@ -8,6 +8,7 @@ import {
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   Fieldset,
@@ -28,11 +29,13 @@ import {
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
+import * as Yup from 'yup';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
+import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
@@ -43,12 +46,26 @@ import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
+import dirtyInput from 'utils/formUtil';
 import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
 import '../../index.scss';
+
+// const milestoneSchema = Yup.object().shape({
+//   // name: Yup.string().trim().required('Enter the Model Name'),
+//   categories: Yup.object().shape({
+//     category: Yup.object().shape({
+//       id: Yup.string().trim().required('Enter category')
+//     }),
+//     subCategory: Yup.object().shape({
+//       id: Yup.string().trim().required('Enter sub-category')
+//     })
+//   }),
+//   riskIndicator: Yup.string().trim().required('Enter risk indicator')
+// });
 
 type FormValues = {
   name: string;
@@ -57,7 +74,7 @@ type FormValues = {
       id: string;
       name: string;
     };
-    subcategory: {
+    subCategory: {
       id: string;
       name: string;
     };
@@ -111,14 +128,15 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     return data?.mtoMilestone;
   }, [data]);
 
-  const defaultValues = useMemo(() => {
+  const formConfig = useMemo(() => {
     return {
+      // resolver: yupResolver(milestoneSchema),
       defaultValues: {
         categories: {
           category: {
             id: milestone?.categories.category.id || 'default'
           },
-          subcategory: {
+          subCategory: {
             id: milestone?.categories.subCategory.id || 'default'
           }
         },
@@ -132,15 +150,14 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     };
   }, [milestone]);
 
-  // Variables for the form
-  const methods = useForm<FormValues>(defaultValues);
+  const methods = useForm<FormValues>(formConfig);
 
   const {
     control,
     handleSubmit,
     reset,
     watch,
-    formState: { isValid, isSubmitting }
+    formState: { isSubmitting, isDirty, isValid }
   } = methods;
 
   const {
@@ -153,8 +170,8 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   });
 
   useEffect(() => {
-    reset(defaultValues.defaultValues);
-  }, [defaultValues, reset]);
+    reset(formConfig.defaultValues);
+  }, [formConfig, reset]);
 
   const [updateMilestone] = useUpdateMtoMilestoneMutation({
     refetchQueries: [
@@ -174,24 +191,36 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
     const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
 
-    if (formData.categories.subcategory.id !== uncategorizedCategoryID) {
-      mtoCategoryID = formData.categories.subcategory.id;
+    if (formData.categories.subCategory.id !== uncategorizedCategoryID) {
+      mtoCategoryID = formData.categories.subCategory.id;
     } else if (formData.categories.category.id === uncategorizedCategoryID) {
       mtoCategoryID = null;
     } else {
       mtoCategoryID = formData.categories.category.id;
     }
 
-    const { categories, needBy, name, ...formChanges } = formData;
+    const { categories, needBy, name, ...formChanges } = dirtyInput(
+      milestone,
+      formData
+    );
+
+    let isCategoryDirty: boolean = false;
+    if (
+      formData.categories.category.id !== milestone?.categories.category.id ||
+      formData.categories.subCategory.id !==
+        milestone?.categories.subCategory.id
+    ) {
+      isCategoryDirty = true;
+    }
 
     updateMilestone({
       variables: {
         id: editMilestoneID || '',
         changes: {
           ...formChanges,
-          mtoCategoryID,
+          ...(isCategoryDirty && { mtoCategoryID }),
           ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
-          ...(!milestone?.addedFromMilestoneLibrary && { name })
+          ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
         }
       }
     })
@@ -428,7 +457,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                   />
 
                   <Controller
-                    name="categories.subcategory.id"
+                    name="categories.subCategory.id"
                     control={control}
                     rules={{
                       required: true,
@@ -628,7 +657,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                 </Fieldset>
 
                 <div className="border-top-1px border-base-lighter padding-y-4">
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button type="submit" disabled={isSubmitting || !isDirty}>
                     {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
                   </Button>
 
