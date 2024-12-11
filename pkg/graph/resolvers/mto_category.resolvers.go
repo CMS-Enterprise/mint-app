@@ -69,7 +69,7 @@ func (r *mutationResolver) CreateStandardCategories(ctx context.Context, modelPl
 func (r *mutationResolver) DeleteMTOCategory(ctx context.Context, id uuid.UUID) (bool, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	err := MTOCategoryDelete(ctx, logger, principal, r.store, id)
+	err := MTOCategoryDelete(logger, principal, r.store, id)
 
 	success := err == nil
 	return success, err

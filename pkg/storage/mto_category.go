@@ -3,6 +3,8 @@ package storage
 import (
 	"fmt"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -83,10 +85,19 @@ func MTOCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *mo
 }
 
 // MTOCategoryDelete deletes an existing MTOCategory from the database
-func MTOCategoryDelete(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) error {
+func MTOCategoryDelete(tx *sqlx.Tx, actorUserID uuid.UUID, id uuid.UUID) error {
+	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	err := setCurrentSessionUserVariable(tx, actorUserID)
+	if err != nil {
+		return err
+	}
+
+	// Delete the MTOCategory
+	// Note: Child subcategories are deleted by the database. If this category is assigned, the reference will be set
+	// to the parent category or NULL if this is a top-level category
 	arg := map[string]interface{}{"id": id}
 
-	_, procErr := sqlutils.GetProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.Delete, arg)
+	_, procErr := sqlutils.GetProcedure[models.MTOCategory](tx, sqlqueries.MTOCategory.Delete, arg)
 	if procErr != nil {
 		return fmt.Errorf("issue deleting MTOCategory object: %w", procErr)
 	}

@@ -10,30 +10,22 @@ BEGIN
     RETURN OLD;
   END IF;
 
-  -- Recursively gather all descendant categories, including OLD.id
-  WITH RECURSIVE cat_tree AS (
-    SELECT id, parent_id
-    FROM mto_category
-    WHERE id = OLD.id
-    UNION ALL
-    SELECT c.id, c.parent_id
-    FROM mto_category c
-           JOIN cat_tree t ON t.id = c.parent_id
-  )
-  SELECT array_agg(id) INTO cat_ids FROM cat_tree;
+  -- Since we only have one level of depth, we can simply select the current category and its direct children
+  SELECT array_agg(id) INTO cat_ids
+  FROM mto_category
+  WHERE parent_id = OLD.id OR id = OLD.id;
 
-  -- Always assign milestones to OLD.parent_id
-  -- If OLD.parent_id is NULL, they become uncategorized.
+  -- Reassign all milestones that referenced these categories to OLD.parent_id
   UPDATE mto_milestone
   SET mto_category_id = OLD.parent_id
   WHERE mto_category_id = ANY(cat_ids);
 
-  -- Delete all descendant categories except the current one
+  -- Delete all subcategories (direct children), excluding the category currently being deleted
   DELETE FROM mto_category
   WHERE id != OLD.id
     AND id = ANY(cat_ids);
 
-  RETURN OLD;
+  RETURN OLD; -- Allow the original DELETE to proceed, removing the OLD.id category
 END;
 $$ LANGUAGE plpgsql;
 
