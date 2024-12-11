@@ -242,6 +242,7 @@ const MTOTable = ({
             {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
             {column.accessor === 'actions' ? (
               <ActionMenu
+                primaryCategoryID={row.id}
                 rowType={rowType}
                 MoveUp={
                   <Button
