@@ -16,6 +16,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
 
 import EditMilestoneForm from '../EditMilestoneForm';
+import MilestoneStatusTag from '../MilestoneStatusTag';
 
 import './index.scss';
 
@@ -267,9 +268,9 @@ export const columns: ColumnType[] = [
     sort: sortNested,
     Cell: ({ row, rowType, expanded }: RowProps) => {
       const { status } = row;
-      if (rowType !== 'milestone') return <></>;
+      if (rowType !== 'milestone' || !status) return <></>;
       return (
-        <TaskListStatusTag status={status} classname="width-fit-content" />
+        <MilestoneStatusTag status={status} classname="width-fit-content" />
       );
     }
   },

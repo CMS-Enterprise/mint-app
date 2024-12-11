@@ -24,6 +24,7 @@ import {
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
+  useDeleteMtoMilestoneMutation,
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
@@ -33,7 +34,9 @@ import CheckboxField from 'components/CheckboxField';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
 import HelpText from 'components/HelpText';
+import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
+import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
@@ -93,6 +96,8 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   const editMilestoneID = params.get('edit-milestone');
 
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { showMessage } = useMessage();
 
@@ -162,6 +167,8 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     ]
   });
 
+  const [deleteMilestone] = useDeleteMtoMilestoneMutation();
+
   const onSubmit: SubmitHandler<FormValues> = formData => {
     let mtoCategoryID;
 
@@ -183,7 +190,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
         changes: {
           ...formChanges,
           mtoCategoryID,
-          needBy: new Date(needBy).toISOString(),
+          ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
           ...(!milestone?.addedFromMilestoneLibrary && { name })
         }
       }
@@ -201,7 +208,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                 <span className="mandatory-fields-alert__text">
                   <Trans
                     i18nKey={modelToOperationsMiscT(
-                      'modal.milestone.alert.success'
+                      'modal.editMilestone.successUpdated'
                     )}
                     components={{
                       b: <span className="text-bold" />
@@ -223,9 +230,57 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
             data-testid="error-alert"
             className="margin-y-4"
           >
-            {modelToOperationsMiscT('modal.milestone.alert.error')}
+            {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
           </Alert>
         );
+      });
+  };
+
+  const handleRemove = () => {
+    deleteMilestone({
+      variables: {
+        id: editMilestoneID || ''
+      },
+      refetchQueries: [
+        {
+          query: GetModelToOperationsMatrixDocument,
+          variables: {
+            id: modelID
+          }
+        }
+      ]
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
+                  milestone: milestone?.name
+                })}
+              </Alert>
+            </>
+          );
+          setIsModalOpen(false);
+        }
+      })
+      .catch(errors => {
+        setMutationError(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {modelToOperationsMiscT('modal.editMilestone.errorRemoved')}
+          </Alert>
+        );
+        setIsModalOpen(false);
       });
   };
 
@@ -239,6 +294,35 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
+          {modelToOperationsMiscT('modal.editMilestone.areYouSure')}
+        </PageHeading>
+
+        <p className="margin-top-2 margin-bottom-3">
+          {modelToOperationsMiscT('modal.editMilestone.removeDescription')}
+        </p>
+
+        <Button
+          type="button"
+          className="margin-right-4 bg-error"
+          onClick={() => handleRemove()}
+        >
+          {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
+        </Button>
+
+        <Button type="button" unstyled onClick={() => setIsModalOpen(false)}>
+          {modelToOperationsMiscT('modal.editMilestone.goBack')}
+        </Button>
+      </Modal>
+
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={10}>
@@ -546,6 +630,17 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                 <div className="border-top-1px border-base-lighter padding-y-4">
                   <Button type="submit" disabled={isSubmitting}>
                     {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+                  </Button>
+
+                  <Button
+                    type="button"
+                    disabled={isSubmitting}
+                    className="bg-error"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.removeMilestone'
+                    )}
                   </Button>
                 </div>
               </Form>

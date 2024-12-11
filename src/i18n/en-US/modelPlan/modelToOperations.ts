@@ -332,7 +332,20 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>Completed</bold>: Work for this milestone and all of its selected solutions is finished'
       ],
       saveChanges: 'Save changes',
-      removeMilestone: 'Remove milestone'
+      removeMilestone: 'Remove milestone',
+      areYouSure: 'Are you sure you want to remove this milestone?',
+      removeDescription:
+        'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
+      goBack: 'Go back',
+      leave: 'Are you sure you want to leave ?',
+      leaveDescription:
+        'You have made {{count}} changes that will not be saved if you navigate away from this view.',
+      successUpdated: 'Your milestone ({{milestone}}) has been updated.',
+      errorUpdated:
+        'There was an error updating your milestone. Please try again. If the error persists, please try again another time.',
+      successRemoved: 'Your milestone ({{milestone}}) has been removed.',
+      errorRemoved:
+        'There was an error removing your milestone. Please try again. If the error persists, please try again another time.'
     },
     solution: {
       label: {
