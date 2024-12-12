@@ -4,8 +4,6 @@ import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import noScroll from 'no-scroll';
 
-import useMessage from 'hooks/useMessage';
-
 import './index.scss';
 
 type ModalProps = {
@@ -33,10 +31,7 @@ const Modal = ({
   closeModal,
   fireAfterOpening
 }: ModalProps) => {
-  const { clearMessage } = useMessage();
-
   const handleOpenModal = () => {
-    clearMessage();
     if (!scroll) noScroll.on();
 
     if (openModal) {
