@@ -1,8 +1,3 @@
-// # What to do next
-
-// - Edit sub/category titles
-// - if subcategory, deal with the move to another category
-
 import React, { createContext, useState } from 'react';
 
 interface MTOModalContextType {
