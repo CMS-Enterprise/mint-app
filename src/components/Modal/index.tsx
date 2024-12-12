@@ -18,6 +18,7 @@ type ModalProps = {
   modalHeading?: string;
   openModal?: () => void;
   closeModal: () => void;
+  fireAfterOpening?: () => void;
 };
 
 const Modal = ({
@@ -29,7 +30,8 @@ const Modal = ({
   shouldCloseOnOverlayClick = false,
   modalHeading,
   openModal,
-  closeModal
+  closeModal,
+  fireAfterOpening
 }: ModalProps) => {
   const { clearMessage } = useMessage();
 
@@ -39,6 +41,10 @@ const Modal = ({
 
     if (openModal) {
       openModal();
+    }
+
+    if (fireAfterOpening) {
+      fireAfterOpening();
     }
   };
 
