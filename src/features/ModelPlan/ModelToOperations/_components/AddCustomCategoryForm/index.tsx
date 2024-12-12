@@ -52,7 +52,8 @@ export const selectOptions: SelectProps[] = [
 const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { categoryID, setCategoryID } = useContext(MTOModalContext);
+  const { categoryID, resetCategoryAndSubCategoryID } =
+    useContext(MTOModalContext);
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -153,7 +154,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
             );
           }
           closeModal();
-          setCategoryID(''); // Reset category ID
+          resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
         }
       })
       .catch(() => {

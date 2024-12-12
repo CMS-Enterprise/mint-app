@@ -40,7 +40,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
-  const { categoryID, setCategoryID, subCategoryID, setSubCategoryID } =
+  const { categoryID, subCategoryID, resetCategoryAndSubCategoryID } =
     useContext(MTOModalContext);
 
   const { data, loading } = useGetMtoCategoriesQuery({
@@ -135,8 +135,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
             </>
           );
           closeModal();
-          setCategoryID(''); // Reset category ID
-          setSubCategoryID(''); // Reset subcategory ID
+          resetCategoryAndSubCategoryID(); // Reset category subcategory ID
         }
       })
       .catch(() => {
@@ -295,6 +294,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
           onClick={() => {
             reset();
             clearMessage();
+            resetCategoryAndSubCategoryID();
             closeModal();
           }}
         >
