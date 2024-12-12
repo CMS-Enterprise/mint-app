@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Controller,
   Form,
@@ -195,11 +195,18 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
   // Needed to address bug in datepicker that counts async default needBy as a change and affecting dirty count
   useEffect(() => {
     const { needBy, ...rest } = dirtyFields;
+    let fieldsToCountSaved = { ...rest };
     if (touchedFields.needBy) {
-      setUnsavedChanges(Object.keys(dirtyFields).length);
-    } else {
-      setUnsavedChanges(Object.keys(rest).length);
+      fieldsToCountSaved = { ...dirtyFields };
     }
+    // Flatten categories to accurately count keys of dirty fields
+    const { categories, ...dirt } = fieldsToCountSaved;
+    const flattenedDir = {
+      ...dirt,
+      ...(categories?.category && { categories: categories?.category }),
+      ...(categories?.subCategory && { subCategory: categories?.subCategory })
+    };
+    setUnsavedChanges(Object.keys(flattenedDir).length);
   }, [dirtyFields, touchedFields.needBy, values]);
 
   const {
