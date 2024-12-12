@@ -348,7 +348,7 @@ const MTOTable = ({
     categoryIndex: number
   ) =>
     subCategories.map((subCategory, index) => {
-      const isExpanded = expandedRows.includes(
+      const isExpanded = !expandedRows.includes(
         `${categoryID}-${subCategory.id}`
       );
 
@@ -408,7 +408,7 @@ const MTOTable = ({
         return null;
       }
 
-      const isExpanded = expandedRows.includes(category.id);
+      const isExpanded = !expandedRows.includes(category.id);
 
       return (
         <div style={{ display: 'contents' }} key={category.id}>

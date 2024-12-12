@@ -9,7 +9,8 @@ const scrollBlackList: string[] = [
   '?add-milestone=',
   '&add-milestone=',
   '?edit-milestone=',
-  '&edit-milestone='
+  '&edit-milestone=',
+  '&hide-added-milestones'
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {
