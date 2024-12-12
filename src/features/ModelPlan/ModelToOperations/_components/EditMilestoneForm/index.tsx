@@ -11,6 +11,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
+  DatePicker,
   Fieldset,
   FormGroup,
   Grid,
@@ -20,6 +21,7 @@ import {
   Radio,
   Select
 } from '@trussworks/react-uswds';
+import { dir } from 'console';
 import {
   GetModelToOperationsMatrixDocument,
   MtoFacilitator,
@@ -30,7 +32,6 @@ import {
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
-import { set } from 'lodash';
 import * as Yup from 'yup';
 
 import Alert from 'components/Alert';
@@ -54,6 +55,7 @@ import {
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
+import './index.scss';
 import '../../index.scss';
 
 const milestoneSchema = Yup.object().shape({
@@ -152,22 +154,25 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     return data?.mtoMilestone;
   }, [data]);
 
-  const formValues = {
-    categories: {
-      category: {
-        id: milestone?.categories.category.id || 'default'
+  const formValues = useMemo(
+    () => ({
+      categories: {
+        category: {
+          id: milestone?.categories.category.id || 'default'
+        },
+        subCategory: {
+          id: milestone?.categories.subCategory.id || 'default'
+        }
       },
-      subCategory: {
-        id: milestone?.categories.subCategory.id || 'default'
-      }
-    },
-    name: milestone?.name || '',
-    facilitatedBy: milestone?.facilitatedBy || [],
-    needBy: milestone?.needBy || '',
-    status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
-    riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
-    isDraft: milestone?.isDraft || false
-  };
+      name: milestone?.name || '',
+      facilitatedBy: milestone?.facilitatedBy || [],
+      needBy: milestone?.needBy || '',
+      status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
+      riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
+      isDraft: milestone?.isDraft || false
+    }),
+    [milestone]
+  );
 
   const methods = useForm<FormValues>({
     defaultValues: formValues,
@@ -180,8 +185,19 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     handleSubmit,
     watch,
     setValue,
-    formState: { isSubmitting, isDirty }
+    reset,
+    formState: { isSubmitting, isDirty, dirtyFields }
   } = methods;
+
+  // const [key, setKey] = useState(0);
+
+  // useEffect(() => {
+  //   // Update the key whenever the defaultValue changes
+  //   // setKey(prevKey => prevKey + 1);
+  //   reset(formValues);
+  // }, [formValues, reset]);
+
+  // console.log(dirtyFields);
 
   const {
     selectOptionsAndMappedCategories,
@@ -370,6 +386,29 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
           {modelToOperationsMiscT('modal.editMilestone.goBack')}
         </Button>
       </Modal>
+
+      {Object.keys(dirtyFields).length > 0 && (
+        <div className="save-tag">
+          <div className="bg-warning-lighter padding-y-05 padding-x-1">
+            <Icon.Warning className="margin-right-1 top-2px text-warning" />
+            <p className="margin-0 display-inline margin-right-1">
+              {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
+                count: Object.keys(dirtyFields).length
+              })}
+            </p>
+            -
+            <Button
+              type="button"
+              onClick={handleSubmit(onSubmit)}
+              disabled={isSubmitting || !isDirty}
+              className="margin-x-1"
+              unstyled
+            >
+              {modelToOperationsMiscT('modal.editMilestone.save')}
+            </Button>
+          </div>
+        </div>
+      )}
 
       <GridContainer className="padding-8">
         <Grid row>
@@ -601,10 +640,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                               'needBy'
                             )}
                             id="milestone-need-by"
-                            maxLength={50}
-                            name={field.name}
                             defaultValue={field.value}
-                            onChange={e => field.onChange(e || undefined)}
                           />
 
                           {isDateInPast(watch('needBy')) && (
@@ -697,7 +733,11 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                 </Fieldset>
 
                 <div className="border-top-1px border-base-lighter padding-y-4">
-                  <Button type="submit" disabled={isSubmitting || !isDirty}>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || !isDirty}
+                    className="margin-bottom-2"
+                  >
                     {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
                   </Button>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { ApolloQueryResult } from '@apollo/client';
@@ -33,8 +33,21 @@ const MTOTableActions = ({
 
   const { clearMessage } = useMessage();
 
+  // Load expanded table toggle from local storage
+  let defaultExpandedTable: boolean = true;
+  try {
+    if (window.localStorage[`mto-table-toggle`]) {
+      defaultExpandedTable = JSON.parse(
+        window.localStorage[`mto-table-toggle`]
+      );
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Error parsing local storage');
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(defaultExpandedTable);
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID }
@@ -60,6 +73,10 @@ const MTOTableActions = ({
       }
     });
   };
+
+  useEffect(() => {
+    localStorage.setItem(`mto-table-toggle`, JSON.stringify(actionsMenuOpen));
+  }, [actionsMenuOpen]);
 
   return (
     <>

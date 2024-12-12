@@ -332,6 +332,9 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>Completed</bold>: Work for this milestone and all of its selected solutions is finished'
       ],
       saveChanges: 'Save changes',
+      save: 'Save',
+      unsavedChanges: '{{count}} unsaved change',
+      unsavedChanges_other: '{{count}} unsaved changes',
       removeMilestone: 'Remove milestone',
       areYouSure: 'Are you sure you want to remove this milestone?',
       removeDescription:
