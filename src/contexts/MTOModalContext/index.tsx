@@ -1,3 +1,7 @@
+// # What to do next
+
+// - need to reset categoryID in MTOModalContext when the modal closes
+
 import React, { createContext, useState } from 'react';
 
 interface MTOModalContextType {
@@ -9,6 +13,8 @@ interface MTOModalContextType {
   ) => void;
   categoryID: string;
   setCategoryID: (id: string) => void;
+  subCategoryID: string;
+  setSubCategoryID: (id: string) => void;
 }
 
 const MTOModalContext = createContext<MTOModalContextType>({
@@ -20,7 +26,9 @@ const MTOModalContext = createContext<MTOModalContextType>({
     mtoModalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone'
   ) => {},
   categoryID: '',
-  setCategoryID: (id: string) => {}
+  setCategoryID: (id: string) => {},
+  subCategoryID: '',
+  setSubCategoryID: (id: string) => {}
 });
 
 const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +37,7 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
     'category' | 'milestone' | 'solution' | 'solutionToMilestone'
   >('category');
   const [categoryID, setCategoryID] = useState('');
+  const [subCategoryID, setSubCategoryID] = useState('');
 
   return (
     <MTOModalContext.Provider
@@ -38,7 +47,9 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
         mtoModalType,
         setMTOModalType,
         categoryID,
-        setCategoryID
+        setCategoryID,
+        subCategoryID,
+        setSubCategoryID
       }}
     >
       {children}

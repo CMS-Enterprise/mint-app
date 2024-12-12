@@ -294,7 +294,7 @@ export const ActionMenu = ({
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const { setMTOModalOpen, setMTOModalType, setCategoryID } =
+  const { setMTOModalOpen, setMTOModalType, setCategoryID, setSubCategoryID } =
     useContext(MTOModalContext);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -366,6 +366,7 @@ export const ActionMenu = ({
                 setMTOModalOpen(true);
                 setMTOModalType('milestone');
                 setCategoryID(primaryCategoryID);
+                if (subCategoryID) setSubCategoryID(subCategoryID);
               }}
               onKeyPress={e => {
                 e.stopPropagation();
