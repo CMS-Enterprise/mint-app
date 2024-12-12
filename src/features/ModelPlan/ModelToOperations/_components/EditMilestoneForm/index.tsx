@@ -180,24 +180,27 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     resolver: yupResolver(milestoneSchema)
   });
 
+  const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
+
   const {
     control,
     handleSubmit,
     watch,
     setValue,
-    reset,
-    formState: { isSubmitting, isDirty, dirtyFields }
+    formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
   } = methods;
 
-  // const [key, setKey] = useState(0);
+  const values = watch();
 
-  // useEffect(() => {
-  //   // Update the key whenever the defaultValue changes
-  //   // setKey(prevKey => prevKey + 1);
-  //   reset(formValues);
-  // }, [formValues, reset]);
-
-  // console.log(dirtyFields);
+  // Needed to address bug in datepicker that counts async default needBy as a change and affecting dirty count
+  useEffect(() => {
+    const { needBy, ...rest } = dirtyFields;
+    if (touchedFields.needBy) {
+      setUnsavedChanges(Object.keys(dirtyFields).length);
+    } else {
+      setUnsavedChanges(Object.keys(rest).length);
+    }
+  }, [dirtyFields, touchedFields.needBy, values]);
 
   const {
     selectOptionsAndMappedCategories,
@@ -387,13 +390,13 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
         </Button>
       </Modal>
 
-      {Object.keys(dirtyFields).length > 0 && (
+      {unsavedChanges > 0 && (
         <div className="save-tag">
           <div className="bg-warning-lighter padding-y-05 padding-x-1">
             <Icon.Warning className="margin-right-1 top-2px text-warning" />
             <p className="margin-0 display-inline margin-right-1">
               {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
-                count: Object.keys(dirtyFields).length
+                count: unsavedChanges
               })}
             </p>
             -
