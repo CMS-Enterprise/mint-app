@@ -213,8 +213,18 @@ const EditMilestoneForm = ({
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
     setUnsavedChanges(Object.keys(flattenedDir).length);
-    setIsDirty(!!Object.keys(flattenedDir).length);
-  }, [dirtyFields, touchedFields.needBy, values, setIsDirty]);
+    setIsDirty(
+      values.needBy !== formValues.needBy
+        ? true
+        : !!Object.keys(flattenedDir).length
+    );
+  }, [
+    dirtyFields,
+    touchedFields.needBy,
+    values,
+    setIsDirty,
+    formValues.needBy
+  ]);
 
   const {
     selectOptionsAndMappedCategories,
