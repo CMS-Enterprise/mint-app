@@ -281,11 +281,13 @@ export const columns: ColumnType[] = [
 
 export const ActionMenu = ({
   primaryCategoryID,
+  subCategoryID,
   rowType,
   MoveUp,
   MoveDown
 }: {
   primaryCategoryID: string;
+  subCategoryID?: string;
   rowType: MTORowType;
   MoveUp: React.ReactChild;
   MoveDown: React.ReactChild;
@@ -360,6 +362,7 @@ export const ActionMenu = ({
               type="button"
               onClick={e => {
                 e.stopPropagation();
+                setIsMenuOpen(false);
                 setMTOModalOpen(true);
                 setMTOModalType('milestone');
                 setCategoryID(primaryCategoryID);
@@ -375,6 +378,7 @@ export const ActionMenu = ({
             <Button
               type="button"
               onClick={e => {
+                e.stopPropagation();
                 setIsMenuOpen(false);
                 setMTOModalOpen(true);
                 setMTOModalType('category');
