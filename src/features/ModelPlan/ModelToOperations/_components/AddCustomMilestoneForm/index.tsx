@@ -40,8 +40,10 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
-  const { categoryID, setCategoryID } = useContext(MTOModalContext);
+  const { categoryID, setCategoryID, subCategoryID, setSubCategoryID } =
+    useContext(MTOModalContext);
 
+  console.log(subCategoryID === '' ? 'subCategoryID is empty' : subCategoryID);
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
   });
@@ -70,7 +72,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const methods = useForm<FormValues>({
     defaultValues: {
       primaryCategory: categoryID ?? 'default',
-      subcategory: 'default',
+      subcategory: subCategoryID ?? 'default',
       name: ''
     }
   });
@@ -135,6 +137,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
           );
           closeModal();
           setCategoryID(''); // Reset category ID
+          setSubCategoryID(''); // Reset subcategory ID
         }
       })
       .catch(() => {
