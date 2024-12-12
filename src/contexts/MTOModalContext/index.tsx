@@ -1,6 +1,7 @@
 // # What to do next
 
-// - need to reset categoryID in MTOModalContext when the modal closes
+// - Edit sub/category titles
+// - if subcategory, deal with the move to another category
 
 import React, { createContext, useState } from 'react';
 

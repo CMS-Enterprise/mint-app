@@ -381,9 +381,11 @@ export const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
-                setMTOModalOpen(true);
-                setMTOModalType('category');
-                setCategoryID(primaryCategoryID);
+                if (rowType === 'category') {
+                  setMTOModalOpen(true);
+                  setMTOModalType('category');
+                  setCategoryID(primaryCategoryID);
+                }
               }}
               onKeyPress={e => {
                 e.stopPropagation();
