@@ -2,7 +2,9 @@ import {
   GetMilestoneSuggestedAnswerDocument,
   GetMtoCommonSolutionsDocument,
   GetMtoMilestonesDocument,
-  MtoCommonMilestoneKey
+  MtoCommonMilestoneKey,
+  MtoCommonSolutionSubject,
+  MtoFacilitator
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -30,7 +32,24 @@ export const commonMilestonesMock = [
                 isAdded: false,
                 isSuggested: true,
                 categoryName: 'Test Category',
-                subCategoryName: 'Test SubCategory'
+                subCategoryName: 'Test SubCategory',
+                facilitatedByRole: [
+                  MtoFacilitator.MODEL_TEAM,
+                  MtoFacilitator.MODEL_LEAD,
+                  MtoFacilitator.IT_LEAD
+                ],
+                commonSolutions: [
+                  {
+                    name: 'Health Plan Management System (HPMS)',
+                    key: 'HPMS',
+                    type: 'IT_SYSTEM',
+                    subjects: [
+                      MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D
+                    ],
+                    filterView: null,
+                    isAdded: false
+                  }
+                ]
               }
             ]
           }
