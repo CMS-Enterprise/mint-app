@@ -222,7 +222,7 @@ const MTOTable = ({
     expanded: boolean;
     currentIndex: number;
     rowLength: number;
-    categoryID: string;
+    categoryID?: string;
     subCategoryID?: string;
     categoryIndex?: number;
   }) => {
@@ -254,8 +254,8 @@ const MTOTable = ({
               {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
               {column.accessor === 'actions' ? (
                 <ActionMenu
-                  primaryCategoryID={categoryID}
-                  subCategoryID={subCategoryID}
+                  primaryCategoryID={categoryID ?? ''}
+                  subCategoryID={subCategoryID ?? ''}
                   rowType={rowType}
                   MoveUp={
                     <Button
@@ -461,9 +461,7 @@ const MTOTable = ({
   const renderMilestones = (
     milestones: MilestoneType[],
     categoryIndex: number,
-    subcategoryIndex: number,
-    categoryID: string,
-    subCategoryID: string
+    subcategoryIndex: number
   ) =>
     milestones.map((milestone, index) => {
       // Don't render if the milestone is not in the rendered indexes
@@ -483,8 +481,6 @@ const MTOTable = ({
             expanded={false}
             currentIndex={0}
             rowLength={0}
-            categoryID={categoryID}
-            subCategoryID={subCategoryID}
           />
         </tr>
       );
@@ -541,17 +537,12 @@ const MTOTable = ({
               currentIndex={index}
               rowLength={subCategories.length}
               categoryID={categoryID}
+              subCategoryID={subCategory.id}
               categoryIndex={categoryIndex}
             />
           </DraggableRow>
           {isExpanded &&
-            renderMilestones(
-              subCategory.milestones,
-              categoryIndex,
-              index,
-              categoryID,
-              subCategory.id
-            )}
+            renderMilestones(subCategory.milestones, categoryIndex, index)}
         </div>
       );
     });

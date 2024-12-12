@@ -43,7 +43,6 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const { categoryID, setCategoryID, subCategoryID, setSubCategoryID } =
     useContext(MTOModalContext);
 
-  console.log(subCategoryID === '' ? 'subCategoryID is empty' : subCategoryID);
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
   });
