@@ -212,7 +212,12 @@ const EditMilestoneForm = ({
       ...(categories?.category && { categories: categories?.category }),
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
-    setUnsavedChanges(Object.keys(flattenedDir).length);
+    if (values.needBy !== formValues.needBy) {
+      setUnsavedChanges(Object.keys(flattenedDir).length + 1);
+    } else {
+      setUnsavedChanges(Object.keys(flattenedDir).length);
+    }
+
     setIsDirty(
       values.needBy !== formValues.needBy
         ? true
