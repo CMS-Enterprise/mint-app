@@ -55,6 +55,7 @@ const MTOModal = ({
         closeModal();
       }}
       fireAfterOpening={() => {
+        clearMessage();
         resetCategoryAndSubCategoryID();
       }}
       shouldCloseOnOverlayClick
