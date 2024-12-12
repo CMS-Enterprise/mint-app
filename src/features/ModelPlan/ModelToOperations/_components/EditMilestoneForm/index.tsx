@@ -29,6 +29,8 @@ import {
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
+import i18next from 'i18next';
+import { set } from 'lodash';
 import * as Yup from 'yup';
 
 import Alert from 'components/Alert';
@@ -54,29 +56,47 @@ import {
 
 import '../../index.scss';
 
-// const milestoneSchema = Yup.object().shape({
-//   // name: Yup.string().trim().required('Enter the Model Name'),
-//   categories: Yup.object().shape({
-//     category: Yup.object().shape({
-//       id: Yup.string().trim().required('Enter category')
-//     }),
-//     subCategory: Yup.object().shape({
-//       id: Yup.string().trim().required('Enter sub-category')
-//     })
-//   }),
-//   riskIndicator: Yup.string().trim().required('Enter risk indicator')
-// });
+const milestoneSchema = Yup.object().shape({
+  categories: Yup.object().shape({
+    category: Yup.object().shape({
+      id: Yup.string()
+        .trim()
+        .required()
+        .notOneOf(
+          ['default'],
+          i18next.t('modelToOperationsMisc:validation.fillOut')
+        )
+    }),
+    subCategory: Yup.object().shape({
+      id: Yup.string()
+        .trim()
+        .required()
+        .notOneOf(
+          ['default'],
+          i18next.t('modelToOperationsMisc:validation.fillOut')
+        )
+    })
+  }),
+  riskIndicator: Yup.string()
+    .trim()
+    .required(i18next.t('modelToOperationsMisc:validation.fillOut')),
+  name: Yup.string(),
+  needBy: Yup.string().nullable(),
+  status: Yup.string()
+    .trim()
+    .required(i18next.t('modelToOperationsMisc:validation.fillOut')),
+  facilitatedBy: Yup.array().of(Yup.string().trim()),
+  isDraft: Yup.boolean()
+});
 
 type FormValues = {
   name: string;
   categories: {
     category: {
       id: string;
-      name: string;
     };
     subCategory: {
       id: string;
-      name: string;
     };
   };
   facilitatedBy: MtoFacilitator[];
@@ -118,7 +138,11 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
 
   const { showMessage } = useMessage();
 
-  const { data, loading, error } = useGetMtoMilestoneQuery({
+  const {
+    data,
+    loading,
+    error: queryError
+  } = useGetMtoMilestoneQuery({
     variables: {
       id: editMilestoneID || ''
     }
@@ -128,36 +152,35 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     return data?.mtoMilestone;
   }, [data]);
 
-  const formConfig = useMemo(() => {
-    return {
-      // resolver: yupResolver(milestoneSchema),
-      defaultValues: {
-        categories: {
-          category: {
-            id: milestone?.categories.category.id || 'default'
-          },
-          subCategory: {
-            id: milestone?.categories.subCategory.id || 'default'
-          }
-        },
-        name: milestone?.name || '',
-        facilitatedBy: milestone?.facilitatedBy || [],
-        needBy: milestone?.needBy || '',
-        status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
-        riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
-        isDraft: milestone?.isDraft || false
+  const formValues = {
+    categories: {
+      category: {
+        id: milestone?.categories.category.id || 'default'
+      },
+      subCategory: {
+        id: milestone?.categories.subCategory.id || 'default'
       }
-    };
-  }, [milestone]);
+    },
+    name: milestone?.name || '',
+    facilitatedBy: milestone?.facilitatedBy || [],
+    needBy: milestone?.needBy || '',
+    status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
+    riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
+    isDraft: milestone?.isDraft || false
+  };
 
-  const methods = useForm<FormValues>(formConfig);
+  const methods = useForm<FormValues>({
+    defaultValues: formValues,
+    values: formValues,
+    resolver: yupResolver(milestoneSchema)
+  });
 
   const {
     control,
     handleSubmit,
-    reset,
     watch,
-    formState: { isSubmitting, isDirty, isValid }
+    setValue,
+    formState: { isSubmitting, isDirty }
   } = methods;
 
   const {
@@ -168,10 +191,6 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     modelID,
     primaryCategory: watch('categories.category.id')
   });
-
-  useEffect(() => {
-    reset(formConfig.defaultValues);
-  }, [formConfig, reset]);
 
   const [updateMilestone] = useUpdateMtoMilestoneMutation({
     refetchQueries: [
@@ -317,7 +336,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     return <PageLoading />;
   }
 
-  if (!milestone || error) {
+  if (!milestone || queryError) {
     return null;
   }
 
@@ -416,12 +435,14 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                   <Controller
                     name="categories.category.id"
                     control={control}
-                    rules={{
-                      required: true,
-                      validate: value => value !== 'default'
-                    }}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
+                    render={({
+                      field: { ref, ...field },
+                      fieldState: { error }
+                    }) => (
+                      <FormGroup
+                        error={!!error}
+                        className="margin-top-0 margin-bottom-3"
+                      >
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
                           className="maxw-none text-bold"
@@ -438,11 +459,20 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                           )}
                         </HelpText>
 
+                        {!!error && (
+                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                        )}
+
                         <Select
                           {...field}
                           id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || ''}
+                          value={field.value || 'default'}
                           defaultValue="default"
+                          onChange={e => {
+                            field.onChange(e);
+                            // Reset subcategory when category changes
+                            setValue('categories.subCategory.id', 'default');
+                          }}
                         >
                           {selectOptionsAndMappedCategories.map(option => {
                             return (
@@ -463,8 +493,14 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                       required: true,
                       validate: value => value !== 'default'
                     }}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
+                    render={({
+                      field: { ref, ...field },
+                      fieldState: { error }
+                    }) => (
+                      <FormGroup
+                        error={!!error}
+                        className="margin-top-0 margin-bottom-3"
+                      >
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
                           className="maxw-none text-bold"
@@ -481,10 +517,14 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                           )}
                         </HelpText>
 
+                        {!!error && (
+                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                        )}
+
                         <Select
                           {...field}
                           id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || ''}
+                          value={field.value || 'default'}
                           defaultValue="default"
                           disabled={
                             watch('categories.category.id') === 'default'

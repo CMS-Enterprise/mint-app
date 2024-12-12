@@ -410,6 +410,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     addCustomMilestone: 'Add a custom milestone',
     aboutSolution: 'About this solution',
     commonSolutions: 'Common solutions'
+  },
+  validation: {
+    fillOut: 'Please fill out the required field.'
   }
 };
 
