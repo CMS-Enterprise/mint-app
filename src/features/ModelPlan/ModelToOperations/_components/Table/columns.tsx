@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Icon, Menu } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
   MtoFacilitator,
   MtoMilestoneStatus,
@@ -11,6 +11,8 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
@@ -293,6 +295,8 @@ export const ActionMenu = ({
   MoveDown: React.ReactChild;
   milestoneID: string;
 }) => {
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
+
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const history = useHistory();
@@ -307,6 +311,11 @@ export const ActionMenu = ({
   const [isModalOpen, setIsModalOpen] = useState(
     milestoneParam === milestoneID
   );
+
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+  // const [submitted, setSubmitted] = useState<boolean>(false);
+  const submitted = useRef(false);
+  const [leavePage, setLeavePage] = useState<boolean>(false);
 
   useEffect(() => {
     if (milestoneParam === milestoneID) {
@@ -441,15 +450,24 @@ export const ActionMenu = ({
         />
       </div>
     );
+
+  const closeModal = () => {
+    if (isDirty && !submitted.current) {
+      setLeavePage(true);
+    } else if (!isDirty || submitted.current) {
+      params.delete('edit-milestone');
+      history.replace({ search: params.toString() });
+      setLeavePage(false);
+      setIsModalOpen(false);
+      submitted.current = false;
+    }
+  };
+
   return (
     <div style={{ textAlign: 'right' }}>
       <Sidepanel
         isOpen={isModalOpen}
-        closeModal={() => {
-          params.delete('edit-milestone');
-          history.replace({ search: params.toString() });
-          setIsModalOpen(false);
-        }}
+        closeModal={closeModal}
         ariaLabel={i18next.t(
           'modelToOperationsMisc:milestoneLibrary.aboutThisMilestone'
         )}
@@ -460,13 +478,54 @@ export const ActionMenu = ({
         noScrollable
       >
         <EditMilestoneForm
-          closeModal={() => {
+          closeModal={closeModal}
+          setIsDirty={setIsDirty}
+          submitted={submitted}
+        />
+      </Sidepanel>
+
+      <Modal
+        isOpen={leavePage && !submitted.current}
+        closeModal={() => setLeavePage(false)}
+        className="confirmation-modal"
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
+          {modelToOperationsMiscT('modal.editMilestone.leaveConfim.heading')}
+        </PageHeading>
+
+        <p className="margin-top-2 margin-bottom-3">
+          {modelToOperationsMiscT(
+            'modal.editMilestone.leaveConfim.description'
+          )}
+        </p>
+
+        <Button
+          type="button"
+          className="margin-right-4 bg-error"
+          onClick={() => {
             params.delete('edit-milestone');
             history.replace({ search: params.toString() });
             setIsModalOpen(false);
+            setIsDirty(false);
+            setLeavePage(false);
           }}
-        />
-      </Sidepanel>
+        >
+          {modelToOperationsMiscT('modal.editMilestone.leaveConfim.confirm')}
+        </Button>
+
+        <Button
+          type="button"
+          unstyled
+          onClick={() => {
+            setLeavePage(false);
+          }}
+        >
+          {modelToOperationsMiscT('modal.editMilestone.leaveConfim.dontLeave')}
+        </Button>
+      </Modal>
 
       <Button
         type="button"

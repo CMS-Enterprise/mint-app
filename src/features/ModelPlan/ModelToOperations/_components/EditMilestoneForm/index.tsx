@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   Form,
@@ -11,7 +11,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
-  DatePicker,
   Fieldset,
   FormGroup,
   Grid,
@@ -21,7 +20,6 @@ import {
   Radio,
   Select
 } from '@trussworks/react-uswds';
-import { dir } from 'console';
 import {
   GetModelToOperationsMatrixDocument,
   MtoFacilitator,
@@ -36,6 +34,7 @@ import * as Yup from 'yup';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
 import FieldErrorMsg from 'components/FieldErrorMsg';
@@ -110,9 +109,15 @@ type FormValues = {
 
 type EditMilestoneFormProps = {
   closeModal: () => void;
+  setIsDirty: (isDirty: boolean) => void;
+  submitted: any;
 };
 
-const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
+const EditMilestoneForm = ({
+  closeModal,
+  setIsDirty,
+  submitted
+}: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
@@ -187,6 +192,7 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
   } = methods;
 
@@ -207,7 +213,8 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
     setUnsavedChanges(Object.keys(flattenedDir).length);
-  }, [dirtyFields, touchedFields.needBy, values]);
+    setIsDirty(!!Object.keys(flattenedDir).length);
+  }, [dirtyFields, touchedFields.needBy, values, setIsDirty]);
 
   const {
     selectOptionsAndMappedCategories,
@@ -293,6 +300,9 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
               </Alert>
             </>
           );
+          // eslint-disable-next-line no-param-reassign
+          submitted.current = true;
+          setIsDirty(false);
           closeModal();
         }
       })
@@ -451,6 +461,8 @@ const EditMilestoneForm = ({ closeModal }: EditMilestoneFormProps) => {
                 id="edit-milestone-form"
                 onSubmit={handleSubmit(onSubmit)}
               >
+                <ConfirmLeaveRHF />
+
                 <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
                   {milestone.name}
                 </h2>

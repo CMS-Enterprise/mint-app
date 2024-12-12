@@ -348,7 +348,14 @@ export const modelToOperationsMisc: Record<string, any> = {
         'There was an error updating your milestone. Please try again. If the error persists, please try again another time.',
       successRemoved: 'Your milestone ({{milestone}}) has been removed.',
       errorRemoved:
-        'There was an error removing your milestone. Please try again. If the error persists, please try again another time.'
+        'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
+      leaveConfim: {
+        heading: 'Are you sure you want to leave?',
+        description:
+          'You have made changes that will not be saved if you navigate away from this view.',
+        confirm: 'Leave without saving',
+        dontLeave: 'Don’t leave'
+      }
     },
     solution: {
       label: {
