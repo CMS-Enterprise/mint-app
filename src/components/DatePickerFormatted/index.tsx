@@ -4,7 +4,7 @@ import { DatePicker } from '@trussworks/react-uswds';
 import { DatePickerProps } from '@trussworks/react-uswds/lib/components/forms/DatePicker/DatePicker';
 import { DateTime } from 'luxon';
 
-function defaultFormat(dt: DateTime): string | null {
+export function defaultFormat(dt: DateTime): string | null {
   return dt.toUTC().toISO();
 }
 

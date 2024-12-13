@@ -192,36 +192,38 @@ const EditMilestoneForm = ({
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
   } = methods;
 
   const values = watch();
 
+  // Hacky hook to reset form values after loading due to DatePicker needing to use the onchange handler to update the default value
+  // This is needed to prevent the form from being dirty on load
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => {
+        reset(formValues);
+      }, 0);
+    }
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Needed to address bug in datepicker that counts async default needBy as a change and affecting dirty count
   useEffect(() => {
-    const { needBy, ...rest } = dirtyFields;
-    let fieldsToCountSaved = { ...rest };
-    if (touchedFields.needBy) {
-      fieldsToCountSaved = { ...dirtyFields };
-    }
+    const fieldsToCountSaved = { ...dirtyFields };
+
     // Flatten categories to accurately count keys of dirty fields
     const { categories, ...dirt } = fieldsToCountSaved;
+
     const flattenedDir = {
       ...dirt,
       ...(categories?.category && { categories: categories?.category }),
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
-    if (values.needBy !== formValues.needBy) {
-      setUnsavedChanges(Object.keys(flattenedDir).length + 1);
-    } else {
-      setUnsavedChanges(Object.keys(flattenedDir).length);
-    }
 
-    setIsDirty(
-      values.needBy !== formValues.needBy
-        ? true
-        : !!Object.keys(flattenedDir).length
-    );
+    setUnsavedChanges(Object.keys(flattenedDir).length);
+
+    setIsDirty(!!Object.keys(flattenedDir).length);
   }, [
     dirtyFields,
     touchedFields.needBy,

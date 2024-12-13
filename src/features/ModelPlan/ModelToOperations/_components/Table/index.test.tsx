@@ -1,5 +1,6 @@
 import {
   GetModelToOperationsMatrixQuery,
+  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
@@ -39,7 +40,10 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 // solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
-                status: MtoMilestoneStatus.IN_PROGRESS
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                addedFromMilestoneLibrary: false,
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -551,7 +555,10 @@ describe('isMatrixStartedFc', () => {
                 // solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
-                status: MtoMilestoneStatus.IN_PROGRESS
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                addedFromMilestoneLibrary: false,
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -618,7 +625,10 @@ describe('isMatrixStartedFc', () => {
                 // solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
-                status: MtoMilestoneStatus.IN_PROGRESS
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                addedFromMilestoneLibrary: false,
+                isDraft: false
               }
             ],
             isUncategorized: true
