@@ -3351,7 +3351,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }        \n\n    # commonMilestone\n    # solutions\n    }\n}",
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD,\n    commonSolutions: [INNOVATION, ACO_OS]\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }        \n\n    # commonMilestone\n    # solutions\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3471,7 +3471,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        solutions {\n                            name\n                            key\n                            type\n                            milestones {\n                                name\n                                type\n                            }\n                        }\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
 										"variables": ""
 									}
 								},

@@ -121,3 +121,10 @@ func MTOSolutionGetByModelPlanIDLOADER(
 	// TODO look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOSolution.ByModelPlanID.Load(ctx, modelPlanID)
 }
+
+func MTOSolutionGetByMilestoneIDLOADER(
+	ctx context.Context,
+	milestoneID uuid.UUID,
+) ([]*models.MTOSolution, error) {
+	return loaders.MTOSolution.ByMilestoneID.Load(ctx, milestoneID)
+}

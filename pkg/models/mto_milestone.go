@@ -14,6 +14,16 @@ const (
 	MTMCompleted  MTOMilestoneStatus = "COMPLETED"
 )
 
+// MTOMilestoneWithSolutionID wraps an MTOMilestone with a solution id. It is useful for referring to milestones that are linked to specific solutions
+type MTOMilestoneWithSolutionID struct {
+	MTOMilestone
+	SolutionID uuid.UUID `json:"solutionID" db:"solution_id"`
+}
+
+func (mto *MTOMilestoneWithSolutionID) ToMTOMilestone() *MTOMilestone {
+	return &mto.MTOMilestone
+}
+
 type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation

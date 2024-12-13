@@ -31,7 +31,7 @@ type MTOSolution {
   modifiedDts: Time
 
   # Custom Resolvers
-  relatedMilestones: [MTOMilestone!]! # Can be empty, since you can have a solution with no milestones
+  milestones: [MTOMilestone!]! # Can be empty, since you can have a solution with no milestones
   addedFromSolutionLibrary: Boolean!
   commonSolution: MTOCommonSolution
 }
