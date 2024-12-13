@@ -312,9 +312,10 @@ export const ActionMenu = ({
     milestoneParam === milestoneID
   );
 
+  const submitted = useRef<boolean>(false);
+
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  // const [submitted, setSubmitted] = useState<boolean>(false);
-  const submitted = useRef(false);
+
   const [leavePage, setLeavePage] = useState<boolean>(false);
 
   useEffect(() => {

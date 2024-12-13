@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Controller,
-  Form,
   FormProvider,
   SubmitHandler,
   useForm
@@ -12,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   Fieldset,
+  Form,
   FormGroup,
   Grid,
   GridContainer,
@@ -58,6 +58,8 @@ import './index.scss';
 import '../../index.scss';
 
 const milestoneSchema = Yup.object().shape({
+  isDraft: Yup.boolean().required(),
+  name: Yup.string().required(),
   categories: Yup.object().shape({
     category: Yup.object().shape({
       id: Yup.string()
@@ -78,19 +80,18 @@ const milestoneSchema = Yup.object().shape({
         )
     })
   }),
-  riskIndicator: Yup.string()
-    .trim()
-    .required(i18next.t('modelToOperationsMisc:validation.fillOut')),
-  name: Yup.string(),
-  needBy: Yup.string().nullable(),
-  status: Yup.string()
-    .trim()
-    .required(i18next.t('modelToOperationsMisc:validation.fillOut')),
-  facilitatedBy: Yup.array().of(Yup.string().trim()),
-  isDraft: Yup.boolean()
+  facilitatedBy: Yup.array().of(Yup.mixed<MtoFacilitator>().required()),
+  needBy: Yup.string().optional(),
+  status: Yup.mixed<MtoMilestoneStatus>().required(
+    i18next.t('modelToOperationsMisc:validation.fillOut')
+  ),
+  riskIndicator: Yup.mixed<MtoRiskIndicator>().required(
+    i18next.t('modelToOperationsMisc:validation.fillOut')
+  )
 });
 
 type FormValues = {
+  isDraft: boolean;
   name: string;
   categories: {
     category: {
@@ -100,11 +101,10 @@ type FormValues = {
       id: string;
     };
   };
-  facilitatedBy: MtoFacilitator[];
-  needBy: string;
+  facilitatedBy?: MtoFacilitator[];
+  needBy?: string;
   status: MtoMilestoneStatus;
   riskIndicator: MtoRiskIndicator;
-  isDraft: boolean;
 };
 
 type EditMilestoneFormProps = {
@@ -142,6 +142,8 @@ const EditMilestoneForm = ({
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
   const { showMessage } = useMessage();
 
@@ -185,14 +187,11 @@ const EditMilestoneForm = ({
     resolver: yupResolver(milestoneSchema)
   });
 
-  const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
-
   const {
     control,
     handleSubmit,
     watch,
     setValue,
-    reset,
     formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
   } = methods;
 
