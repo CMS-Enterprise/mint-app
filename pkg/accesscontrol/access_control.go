@@ -1,6 +1,7 @@
 package accesscontrol
 
 import (
+	"errors"
 	"fmt"
 
 	"go.uber.org/zap"
@@ -32,7 +33,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 
 			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanRelation.GetModelPlanID().String()))
 			return apperrors.NotCollaboratorError{
-				Err: fmt.Errorf("ModelPlanID: " + modelPlanRelation.GetModelPlanID().String()),
+				Err: fmt.Errorf("ModelPlanID: %s", modelPlanRelation.GetModelPlanID().String()),
 			}
 			// return fmt.Errorf("user %s is not a collaborator on model plan %s", principal, modelPlanRelation.GetModelPlanID().String())
 		}
@@ -44,7 +45,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 		if !isCollaborator {
 			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
 			return apperrors.NotCollaboratorError{
-				Err: fmt.Errorf("DiscussionID: " + discussionRelation.GetDiscussionID().String()),
+				Err: fmt.Errorf("DiscussionID: %s", discussionRelation.GetDiscussionID().String()),
 			}
 		}
 	} else if hasOperationalNeedRelation {
@@ -55,7 +56,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 		if !isCollaborator {
 			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedRelation.GetOperationalNeedID().String()))
 			return apperrors.NotCollaboratorError{
-				Err: fmt.Errorf("OperationalNeedID: " + operationalNeedRelation.GetOperationalNeedID().String()),
+				Err: fmt.Errorf("OperationalNeedID: %s", operationalNeedRelation.GetOperationalNeedID().String()),
 			}
 		}
 	} else if hasSolutionRelation {
@@ -66,7 +67,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 		if !isCollaborator {
 			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("SolutionID", solutionRelation.GetSolutionID().String()))
 			return apperrors.NotCollaboratorError{
-				Err: fmt.Errorf("SolutionID: " + solutionRelation.GetSolutionID().String()),
+				Err: fmt.Errorf("SolutionID: %s", solutionRelation.GetSolutionID().String()),
 			}
 		}
 	} else {
@@ -94,7 +95,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 
 	errString := "user has no roles"
 	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
-	return false, fmt.Errorf(errString)
+	return false, errors.New(errString)
 }
 
 // IsCollaboratorSolutionID handles the logic to assess if a user has permission to update an object by virtue of being
@@ -123,7 +124,7 @@ func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Princ
 			solutionID.String(),
 		),
 	)
-	return false, fmt.Errorf(errString)
+	return false, errors.New(errString)
 
 }
 
@@ -146,7 +147,7 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 
 	errString := "user has no roles"
 	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
-	return false, fmt.Errorf(errString)
+	return false, errors.New(errString)
 
 }
 
@@ -169,7 +170,7 @@ func IsCollaboratorByOperationalNeedID(logger *zap.Logger, principal authenticat
 
 	errString := "user has no roles"
 	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedID.String()))
-	return false, fmt.Errorf(errString)
+	return false, errors.New(errString)
 
 }
 
