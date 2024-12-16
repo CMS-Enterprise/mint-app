@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
@@ -30,7 +29,6 @@ const MTOModal = ({
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { clearMessage } = useMessage();
-  const { resetCategoryAndSubCategoryID } = useContext(MTOModalContext);
 
   const modalTitle = (() => {
     switch (modalType) {
@@ -52,7 +50,6 @@ const MTOModal = ({
       isOpen={isOpen}
       closeModal={() => {
         clearMessage();
-        resetCategoryAndSubCategoryID();
         closeModal();
       }}
       shouldCloseOnOverlayClick

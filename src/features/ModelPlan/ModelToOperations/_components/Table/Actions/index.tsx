@@ -37,7 +37,8 @@ const MTOTableActions = ({
     isMTOModalOpen: isModalOpen,
     setMTOModalOpen: setIsModalOpen,
     mtoModalType: modalType,
-    setMTOModalType: setModalType
+    setMTOModalType: setModalType,
+    resetCategoryAndSubCategoryID
   } = useContext(MTOModalContext);
 
   const [create] = useCreateStandardCategoriesMutation({
@@ -144,6 +145,7 @@ const MTOTableActions = ({
                   onClick={() => {
                     setModalType('milestone');
                     setIsModalOpen(true);
+                    resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
                   }}
                 >
                   {t('optionsCard.milestones.linkText')}
