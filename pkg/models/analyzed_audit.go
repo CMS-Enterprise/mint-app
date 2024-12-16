@@ -90,7 +90,7 @@ func (a AnalyzedAuditChange) HumanizedSubset(size int) []string {
 	humanizedAuditChangesCount := len(humanizedAuditChanges)
 
 	if humanizedAuditChangesCount > 5 {
-		humanizedAuditChanges = lo.Subset(humanizedAuditChanges, 0, uint(size))
+		humanizedAuditChanges = lo.Subset(humanizedAuditChanges, 0, uint(size)) // nolint:gosec
 		humanizedAuditChanges = append(humanizedAuditChanges,
 			fmt.Sprintf(AnalyzedAuditChangeMoreChanges, humanizedAuditChangesCount-size))
 	}
