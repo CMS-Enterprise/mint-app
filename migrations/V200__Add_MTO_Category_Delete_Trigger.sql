@@ -2,7 +2,7 @@ DROP TRIGGER IF EXISTS mto_category_before_delete ON mto_category;
 DROP FUNCTION IF EXISTS rebalance_milestones_before_category_delete();
 
 CREATE OR REPLACE FUNCTION rebalance_milestones_before_category_delete()
-  RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $$
 DECLARE
   cat_ids UUID[];
   extra_levels INT;
@@ -41,6 +41,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER mto_category_before_delete
-  BEFORE DELETE ON mto_category
-  FOR EACH ROW
+BEFORE DELETE ON mto_category
+FOR EACH ROW
 EXECUTE FUNCTION rebalance_milestones_before_category_delete();
