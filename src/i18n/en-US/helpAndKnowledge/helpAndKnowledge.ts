@@ -1300,7 +1300,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'CMMI/BSG will reach out',
           description:
-            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Celia Shaunessy.'
+            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Sara Fontaine.'
         },
         {
           header: 'Discussion with the model team',
@@ -1365,7 +1365,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'CMMI/BSG will reach out',
           description:
-            'When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Celia Shaunessy.'
+            'When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Sara Fontaine.'
         },
         {
           header: 'Discussion with the model team',
