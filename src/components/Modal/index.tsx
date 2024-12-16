@@ -16,7 +16,6 @@ type ModalProps = {
   modalHeading?: string;
   openModal?: () => void;
   closeModal: () => void;
-  fireAfterOpening?: () => void;
 };
 
 const Modal = ({
@@ -28,18 +27,13 @@ const Modal = ({
   shouldCloseOnOverlayClick = false,
   modalHeading,
   openModal,
-  closeModal,
-  fireAfterOpening
+  closeModal
 }: ModalProps) => {
   const handleOpenModal = () => {
     if (!scroll) noScroll.on();
 
     if (openModal) {
       openModal();
-    }
-
-    if (fireAfterOpening) {
-      fireAfterOpening();
     }
   };
 

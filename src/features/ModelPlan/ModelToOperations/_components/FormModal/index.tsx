@@ -52,11 +52,8 @@ const MTOModal = ({
       isOpen={isOpen}
       closeModal={() => {
         clearMessage();
-        closeModal();
-      }}
-      fireAfterOpening={() => {
-        clearMessage();
         resetCategoryAndSubCategoryID();
+        closeModal();
       }}
       shouldCloseOnOverlayClick
       className="tablet:width-mobile-lg mint-body-normal"
