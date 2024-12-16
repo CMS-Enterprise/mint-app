@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="text-align: right;"
+  >
+    <button
+      class="usa-button usa-button--unstyled margin-right-2"
+      data-testid="button"
+      type="button"
+    >
+      Edit details
+    </button>
+  </div>
+</DocumentFragment>
+`;
