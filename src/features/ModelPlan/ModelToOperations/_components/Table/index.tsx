@@ -23,8 +23,9 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import ActionMenu from '../ActionMenu';
+
 import {
-  ActionMenu,
   CategoryType,
   columns,
   ColumnSortType,
