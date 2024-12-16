@@ -50,12 +50,15 @@ func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, s
 		}
 
 		// Just check access, don't apply changes here
-		err = BaseStructPreDelete(logger, existing, principal, store, true)
-		if err != nil {
+		if err = BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
 			return fmt.Errorf("unable to delete MTO category. Err %w", err)
 		}
 
-		return storage.MTOCategoryDelete(tx, principalAccount.ID, id)
+		if err = storage.MTOCategoryDelete(tx, principalAccount.ID, id); err != nil {
+			return fmt.Errorf("unable to delete MTO category. Err %w", err)
+		}
+
+		return nil
 	})
 }
 
