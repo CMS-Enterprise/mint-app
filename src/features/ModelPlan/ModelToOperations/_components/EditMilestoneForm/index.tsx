@@ -29,8 +29,6 @@ import {
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
-import i18next from 'i18next';
-import * as Yup from 'yup';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
@@ -53,42 +51,10 @@ import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
+import mtoMilestoneSchema from 'validations/mtoMilestoneSchema';
 
 import './index.scss';
 import '../../index.scss';
-
-const milestoneSchema = Yup.object().shape({
-  isDraft: Yup.boolean().required(),
-  name: Yup.string().required(),
-  categories: Yup.object().shape({
-    category: Yup.object().shape({
-      id: Yup.string()
-        .trim()
-        .required()
-        .notOneOf(
-          ['default'],
-          i18next.t('modelToOperationsMisc:validation.fillOut')
-        )
-    }),
-    subCategory: Yup.object().shape({
-      id: Yup.string()
-        .trim()
-        .required()
-        .notOneOf(
-          ['default'],
-          i18next.t('modelToOperationsMisc:validation.fillOut')
-        )
-    })
-  }),
-  facilitatedBy: Yup.array().of(Yup.mixed<MtoFacilitator>().required()),
-  needBy: Yup.string().optional(),
-  status: Yup.mixed<MtoMilestoneStatus>().required(
-    i18next.t('modelToOperationsMisc:validation.fillOut')
-  ),
-  riskIndicator: Yup.mixed<MtoRiskIndicator>().required(
-    i18next.t('modelToOperationsMisc:validation.fillOut')
-  )
-});
 
 type FormValues = {
   isDraft: boolean;
@@ -109,8 +75,8 @@ type FormValues = {
 
 type EditMilestoneFormProps = {
   closeModal: () => void;
-  setIsDirty: (isDirty: boolean) => void;
-  submitted: any;
+  setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
+  submitted: { current: boolean }; // Ref to track if form has been submitted
 };
 
 const EditMilestoneForm = ({
@@ -161,6 +127,7 @@ const EditMilestoneForm = ({
     return data?.mtoMilestone;
   }, [data]);
 
+  // Set default values for form
   const formValues = useMemo(
     () => ({
       categories: {
@@ -184,7 +151,7 @@ const EditMilestoneForm = ({
   const methods = useForm<FormValues>({
     defaultValues: formValues,
     values: formValues,
-    resolver: yupResolver(milestoneSchema)
+    resolver: yupResolver(mtoMilestoneSchema)
   });
 
   const {
@@ -215,21 +182,36 @@ const EditMilestoneForm = ({
     // Flatten categories to accurately count keys of dirty fields
     const { categories, ...dirt } = fieldsToCountSaved;
 
+    // Flatten categories to accurately count keys of dirty fields
     const flattenedDir = {
       ...dirt,
       ...(categories?.category && { categories: categories?.category }),
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
 
-    setUnsavedChanges(Object.keys(flattenedDir).length);
+    const { facilitatedBy, ...rest } = flattenedDir;
 
-    setIsDirty(!!Object.keys(flattenedDir).length);
+    // Counts amount of changes in facilitatedBy array
+    let facilitatedByChangeCount: number = 0;
+    if (facilitatedBy) {
+      facilitatedByChangeCount = Math.abs(
+        (values.facilitatedBy?.length || 0) -
+          (formValues.facilitatedBy.length || 0)
+      );
+    }
+
+    const totalChanges = facilitatedByChangeCount + Object.keys(rest).length;
+
+    setUnsavedChanges(totalChanges);
+
+    setIsDirty(!!totalChanges);
   }, [
     dirtyFields,
     touchedFields.needBy,
     values,
     setIsDirty,
-    formValues.needBy
+    formValues.needBy,
+    formValues.facilitatedBy.length
   ]);
 
   const {
@@ -259,6 +241,7 @@ const EditMilestoneForm = ({
 
     const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
 
+    // Sets the mtoCategoryID based on the change of either category or subcategory
     if (formData.categories.subCategory.id !== uncategorizedCategoryID) {
       mtoCategoryID = formData.categories.subCategory.id;
     } else if (formData.categories.category.id === uncategorizedCategoryID) {
@@ -272,6 +255,7 @@ const EditMilestoneForm = ({
       formData
     );
 
+    // Check if category has changed to determine if the category is dirty to add to payload
     let isCategoryDirty: boolean = false;
     if (
       formData.categories.category.id !== milestone?.categories.category.id ||
@@ -449,8 +433,8 @@ const EditMilestoneForm = ({
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={10}>
-            {!milestone.addedFromMilestoneLibrary && (
-              <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
+            {milestone.addedFromMilestoneLibrary && (
+              <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05 margin-right-2">
                 <Icon.LightbulbOutline
                   className="margin-left-1"
                   style={{ top: '2px' }}
