@@ -6,6 +6,16 @@ import (
 	"github.com/google/uuid"
 )
 
+// MTOSolutionWithMilestoneID wraps an MTOSolution with a milestone id. It is useful for referring to solutions that are linked to specific milestone
+type MTOSolutionWithMilestoneID struct {
+	MTOSolution
+	MilestoneID uuid.UUID `json:"milestoneID" db:"milestone_id"`
+}
+
+func (mto *MTOSolutionWithMilestoneID) ToMTOSolution() *MTOSolution {
+	return &mto.MTOSolution
+}
+
 type MTOSolution struct {
 	baseStruct
 	modelPlanRelation

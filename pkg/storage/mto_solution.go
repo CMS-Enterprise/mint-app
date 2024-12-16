@@ -124,3 +124,18 @@ func MTOSolutionUpdate(
 	}
 	return returned, nil
 }
+
+func MTOSolutionGetByMilestoneIDLoader(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	milestoneIDs []uuid.UUID,
+) ([]*models.MTOSolutionWithMilestoneID, error) {
+	args := map[string]interface{}{
+		"milestone_ids": pq.Array(milestoneIDs),
+	}
+	returned, err := sqlutils.SelectProcedure[models.MTOSolutionWithMilestoneID](np, sqlqueries.MTOSolution.GetByMilestoneIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}

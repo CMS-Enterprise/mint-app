@@ -21,6 +21,8 @@ type mtoMilestoneLoaders struct {
 	ByModelPlanIDAndMTOCategoryID LoaderWrapper[storage.MTOMilestoneByModelPlanAndCategoryKey, []*models.MTOMilestone]
 	// By ID returns an MTOCategory by it's id. Note, it could actually be a subcategory as well, but it is returned as a regular category
 	ByID LoaderWrapper[uuid.UUID, *models.MTOMilestone]
+	// BySolutionID Gets a list of mto Milestone records associated with a solution by the supplied solution id.
+	BySolutionID LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
 }
 
 // MTOMilestone is the singleton instance of all LoaderWrappers related to MTO Milestones
@@ -28,6 +30,7 @@ var MTOMilestone = &mtoMilestoneLoaders{
 	ByModelPlanID:                 NewLoaderWrapper(batchMTOMilestoneGetByModelPlanID),
 	ByModelPlanIDAndMTOCategoryID: NewLoaderWrapper(batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID),
 	ByID:                          NewLoaderWrapper(batchMTOMilestoneGetByID),
+	BySolutionID:                  NewLoaderWrapper(batchMTOMilestoneGetBySolutionID),
 }
 
 func batchMTOMilestoneGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOMilestone] {
@@ -92,5 +95,36 @@ func batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID(ctx context.Context, keys
 
 	// implement one to many
 	return oneToManyDataLoader(keys, data, getKeyFunc)
+}
+
+func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOMilestone] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
+	}
+
+	data, err := storage.MTOMilestoneGetBySolutionIDLoader(loaders.DataReader.Store, logger, solutionIDs)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
+	}
+
+	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOMilestoneWithSolutionID) ([]*models.MTOMilestone, bool) {
+		// TODO: (mto) see if we can genericize this so we only have to call mtoWith.ToMTOMilestone() instead of iterating too
+		res, ok := resMap[key]
+		converted := make([]*models.MTOMilestone, len(res))
+
+		for i, mtoWith := range res {
+			converted[i] = mtoWith.ToMTOMilestone()
+		}
+		//iterate through and convert each
+		return converted, ok
+	}
+
+	getKeyFunc := func(data *models.MTOMilestoneWithSolutionID) uuid.UUID {
+		return data.SolutionID
+	}
+
+	return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
 
 }

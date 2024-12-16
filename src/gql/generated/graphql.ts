@@ -972,6 +972,7 @@ export type MtoSolution = {
   facilitatedBy?: Maybe<Array<MtoFacilitator>>;
   id: Scalars['UUID']['output'];
   key?: Maybe<MtoCommonSolutionKey>;
+  milestones: Array<MtoMilestone>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -979,7 +980,6 @@ export type MtoSolution = {
   neededBy?: Maybe<Scalars['Time']['output']>;
   pocEmail?: Maybe<Scalars['String']['output']>;
   pocName?: Maybe<Scalars['String']['output']>;
-  relatedMilestones: Array<MtoMilestone>;
   riskIndicator?: Maybe<MtoRiskIndicator>;
   status: MtoSolutionStatus;
   type?: Maybe<MtoSolutionType>;

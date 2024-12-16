@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -23,9 +22,9 @@ func (r *mTOSolutionResolver) FacilitatedBy(ctx context.Context, obj *models.MTO
 	return *obj.FacilitatedBy, nil
 }
 
-// RelatedMilestones is the resolver for the relatedMilestones field.
-func (r *mTOSolutionResolver) RelatedMilestones(ctx context.Context, obj *models.MTOSolution) ([]*models.MTOMilestone, error) {
-	panic(fmt.Errorf("not implemented: RelatedMilestones - relatedMilestones"))
+// Milestones is the resolver for the milestones field.
+func (r *mTOSolutionResolver) Milestones(ctx context.Context, obj *models.MTOSolution) ([]*models.MTOMilestone, error) {
+	return MTOMilestoneGetBySolutionIDLOADER(ctx, obj.ID)
 }
 
 // CommonSolution is the resolver for the commonSolution field.

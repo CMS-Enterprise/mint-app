@@ -106,9 +106,13 @@ repos:
     rev: 3.2.5
     hooks:
       - id: sqlfluff-fix
-        exclude: ^migrations/
+        # Exclude SQL files in the migrations folder with version numbers V0 to V180. 
+        # Matches single-digit (e.g., V0), two-digit (e.g., V99), and three-digit (e.g., V180) versions.
+        exclude: 'migrations/V([0-9]{1,2}|1[0-7][0-9]|180)__'
       - id: sqlfluff-lint
-        exclude: ^migrations/
+        # Exclude SQL files in the migrations folder with version numbers V0 to V180. 
+        # Matches single-digit (e.g., V0), two-digit (e.g., V99), and three-digit (e.g., V180) versions.
+        exclude: 'migrations/V([0-9]{1,2}|1[0-7][0-9]|180)__'
 
   - repo: local
     hooks:
