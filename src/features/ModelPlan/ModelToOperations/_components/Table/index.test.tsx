@@ -64,6 +64,9 @@ describe('formatAndHomogenizeMilestoneData', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -75,6 +78,9 @@ describe('formatAndHomogenizeMilestoneData', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -90,11 +96,9 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 isDraft: false,
                 key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
-            ],
-            isUncategorized: false
+            ]
           }
-        ],
-        isUncategorized: false
+        ]
       }
     ];
 
@@ -118,6 +122,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -129,6 +136,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -157,6 +167,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -185,6 +198,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -216,6 +232,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       }
     ];
@@ -234,6 +253,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       },
       {
@@ -246,6 +268,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -257,6 +282,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -285,6 +313,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -313,6 +344,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -351,6 +385,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -362,6 +399,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -390,6 +430,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -418,6 +461,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -449,6 +495,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       }
     ]);
@@ -468,6 +517,9 @@ describe('getRenderedRowIndexes', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -479,6 +531,9 @@ describe('getRenderedRowIndexes', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -521,6 +576,9 @@ describe('getRenderedRowIndexes', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -552,6 +610,9 @@ describe('getRenderedRowIndexes', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       }
     ];
