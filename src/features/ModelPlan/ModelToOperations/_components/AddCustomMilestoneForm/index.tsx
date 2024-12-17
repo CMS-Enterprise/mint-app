@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -19,6 +19,7 @@ import {
 import { useCreateMtoMilestoneCustomMutation } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -35,12 +36,13 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
+  const { categoryID, subCategoryID } = useContext(MTOModalContext);
 
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: 'default',
-      subcategory: 'default',
+      primaryCategory: categoryID ?? 'default',
+      subcategory: subCategoryID ?? 'default',
       name: ''
     }
   });

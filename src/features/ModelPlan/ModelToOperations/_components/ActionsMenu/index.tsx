@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Menu } from '@trussworks/react-uswds';
@@ -8,7 +8,9 @@ import i18next from 'i18next';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useMessage from 'hooks/useMessage';
 
 import EditMilestoneForm from '../EditMilestoneForm';
 import { MTORowType } from '../Table/columns';
@@ -17,18 +19,27 @@ const ActionMenu = ({
   rowType,
   MoveUp,
   MoveDown,
-  milestoneID
+  milestoneID,
+  primaryCategoryID,
+  subCategoryID
 }: {
   rowType: MTORowType;
   MoveUp: React.ReactChild;
   MoveDown: React.ReactChild;
   milestoneID: string;
+  primaryCategoryID: string;
+  subCategoryID?: string;
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
+  const { clearMessage } = useMessage();
+
   const history = useHistory();
+
+  const { setMTOModalOpen, setMTOModalType, setCategoryID, setSubCategoryID } =
+    useContext(MTOModalContext);
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
@@ -119,6 +130,11 @@ const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalType('milestone');
+                setCategoryID(primaryCategoryID);
+                if (subCategoryID) setSubCategoryID(subCategoryID);
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -131,7 +147,14 @@ const ActionMenu = ({
             <Button
               type="button"
               onClick={e => {
+                e.stopPropagation();
                 setIsMenuOpen(false);
+                if (rowType === 'category') {
+                  clearMessage();
+                  setMTOModalOpen(true);
+                  setMTOModalType('category');
+                  setCategoryID(primaryCategoryID);
+                }
               }}
               onKeyPress={e => {
                 e.stopPropagation();

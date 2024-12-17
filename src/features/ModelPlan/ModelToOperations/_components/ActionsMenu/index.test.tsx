@@ -20,6 +20,8 @@ describe('Component', () => {
           <ActionMenu
             rowType="milestone"
             milestoneID="123"
+            subCategoryID="1234"
+            primaryCategoryID="12345"
             MoveDown={<></>}
             MoveUp={<></>}
           />
@@ -46,6 +48,8 @@ describe('Component', () => {
               <ActionMenu
                 rowType="milestone"
                 milestoneID="123"
+                subCategoryID="1234"
+                primaryCategoryID="12345"
                 MoveDown={<></>}
                 MoveUp={<></>}
               />

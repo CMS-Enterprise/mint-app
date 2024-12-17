@@ -423,6 +423,9 @@ describe('Notification Center', () => {
       'Save and return to model collaboration area'
     ).click();
 
+    cy.url().should('include', '/collaboration-area');
+    cy.get('h1').contains('Model collaboration area');
+
     cy.get('[data-testid="navmenu__notification"]').click();
     cy.url().should('include', '/notifications');
     cy.get('[data-testid="spinner"]').should('not.exist');

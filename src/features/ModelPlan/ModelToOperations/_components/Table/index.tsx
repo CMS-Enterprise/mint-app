@@ -206,120 +206,139 @@ const MTOTable = ({
     itemLength
   });
 
-  const renderCells = (
-    row: RowType,
-    rowType: MTORowType,
-    expanded: boolean,
-    currentIndex: number,
-    rowLength: number,
-    categoryIndex?: number
-  ) => (
-    <>
-      {columns.map((column, index) => {
-        const RenderCell = column?.Cell ?? '';
+  const RenderCells = ({
+    row,
+    rowType,
+    expanded,
+    currentIndex,
+    rowLength,
+    categoryID,
+    subCategoryID,
+    categoryIndex
+  }: {
+    row: RowType;
+    rowType: MTORowType;
+    expanded: boolean;
+    currentIndex: number;
+    rowLength: number;
+    categoryID?: string;
+    subCategoryID?: string;
+    categoryIndex?: number;
+  }) => {
+    return (
+      <>
+        {columns.map((column, index) => {
+          const RenderCell = column?.Cell ?? '';
 
-        const setIndexes =
-          rowType === 'subcategory' && categoryIndex !== undefined
-            ? [categoryIndex, currentIndex]
-            : [currentIndex];
+          const setIndexes =
+            rowType === 'subcategory' && categoryIndex !== undefined
+              ? [categoryIndex, currentIndex]
+              : [currentIndex];
 
-        const moveRowDirection = (num: number) => {
-          if (rowType === 'category') {
-            return [setIndexes[0] + num];
-          }
-          return [setIndexes[0], setIndexes[1] + num];
-        };
+          const moveRowDirection = (num: number) => {
+            if (rowType === 'category') {
+              return [setIndexes[0] + num];
+            }
+            return [setIndexes[0], setIndexes[1] + num];
+          };
 
-        return (
-          <td
-            className={classNames('padding-1 line-height-normal', {
-              'padding-left-05': index === 0,
-              'padding-left-0': index !== 0
-            })}
-            key={column.accessor}
-          >
-            {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
-            {column.accessor === 'actions' ? (
-              <ActionMenu
-                rowType={rowType}
-                milestoneID={row.id}
-                MoveUp={
-                  <Button
-                    type="button"
-                    disabled={
-                      currentIndex === 0 ||
-                      currentIndex === (rowLength || 0) - 1
-                    }
-                    onClick={e => {
-                      e.stopPropagation();
-                      setRearrangedData(
-                        moveRow(
-                          setIndexes,
-                          moveRowDirection(-1),
-                          rowType,
-                          sortedData,
-                          updateOrder,
-                          setError
-                        )
-                      );
-                    }}
-                    onKeyPress={e => {
-                      e.stopPropagation();
-                    }}
-                    className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-                    unstyled
-                  >
-                    {t(
-                      `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryUp' : 'moveSubCategoryUp'}`
-                    )}
-                  </Button>
-                }
-                MoveDown={
-                  <Button
-                    type="button"
-                    disabled={
-                      currentIndex === (rowLength || 0) - 1 ||
-                      currentIndex === (rowLength || 0) - 2
-                    }
-                    onClick={e => {
-                      e.stopPropagation();
-                      setRearrangedData(
-                        moveRow(
-                          setIndexes,
-                          moveRowDirection(1),
-                          rowType,
-                          sortedData,
-                          updateOrder,
-                          setError
-                        )
-                      );
-                    }}
-                    onKeyPress={e => {
-                      e.stopPropagation();
-                    }}
-                    className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-                    unstyled
-                  >
-                    {t(
-                      `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryDown' : 'moveSubCategoryDown'}`
-                    )}
-                  </Button>
-                }
-              />
-            ) : (
-              <>
-                {RenderCell ? (
-                  <RenderCell row={row} rowType={rowType} expanded={expanded} />
-                ) : (
-                  row[column.accessor as keyof MilestoneType]
-                )}
-              </>
-            )}
-          </td>
-        );
-      })}
-    </>
-  );
+          return (
+            <td
+              className={classNames('padding-1 line-height-normal', {
+                'padding-left-05': index === 0,
+                'padding-left-0': index !== 0
+              })}
+              key={column.accessor}
+            >
+              {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
+              {column.accessor === 'actions' ? (
+                <ActionMenu
+                  primaryCategoryID={categoryID ?? ''}
+                  subCategoryID={subCategoryID ?? ''}
+                  milestoneID={row.id}
+                  rowType={rowType}
+                  MoveUp={
+                    <Button
+                      type="button"
+                      disabled={
+                        currentIndex === 0 ||
+                        currentIndex === (rowLength || 0) - 1
+                      }
+                      onClick={e => {
+                        e.stopPropagation();
+                        setRearrangedData(
+                          moveRow(
+                            setIndexes,
+                            moveRowDirection(-1),
+                            rowType,
+                            sortedData,
+                            updateOrder,
+                            setError
+                          )
+                        );
+                      }}
+                      onKeyPress={e => {
+                        e.stopPropagation();
+                      }}
+                      className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      unstyled
+                    >
+                      {t(
+                        `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryUp' : 'moveSubCategoryUp'}`
+                      )}
+                    </Button>
+                  }
+                  MoveDown={
+                    <Button
+                      type="button"
+                      disabled={
+                        currentIndex === (rowLength || 0) - 1 ||
+                        currentIndex === (rowLength || 0) - 2
+                      }
+                      onClick={e => {
+                        e.stopPropagation();
+                        setRearrangedData(
+                          moveRow(
+                            setIndexes,
+                            moveRowDirection(1),
+                            rowType,
+                            sortedData,
+                            updateOrder,
+                            setError
+                          )
+                        );
+                      }}
+                      onKeyPress={e => {
+                        e.stopPropagation();
+                      }}
+                      className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      unstyled
+                    >
+                      {t(
+                        `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryDown' : 'moveSubCategoryDown'}`
+                      )}
+                    </Button>
+                  }
+                />
+              ) : (
+                <>
+                  {RenderCell ? (
+                    <RenderCell
+                      row={row}
+                      rowType={rowType}
+                      expanded={expanded}
+                    />
+                  ) : (
+                    row[column.accessor as keyof MilestoneType]
+                  )}
+                </>
+              )}
+            </td>
+          );
+        })}
+      </>
+    );
+  };
 
   const renderMilestones = (
     milestones: MilestoneType[],
@@ -338,7 +357,13 @@ const MTOTable = ({
 
       return (
         <tr id={milestone.id} key={milestone.id}>
-          {renderCells(milestone, 'milestone', false, 0, 0)}
+          <RenderCells
+            row={milestone}
+            rowType="milestone"
+            expanded={false}
+            currentIndex={0}
+            rowLength={0}
+          />
         </tr>
       );
     });
@@ -387,14 +412,16 @@ const MTOTable = ({
             }}
             isDraggable={!subCategory.isUncategorized}
           >
-            {renderCells(
-              subCategory,
-              'subcategory',
-              isExpanded,
-              index,
-              subCategories.length,
-              categoryIndex
-            )}
+            <RenderCells
+              row={subCategory}
+              rowType="subcategory"
+              expanded={isExpanded}
+              currentIndex={index}
+              rowLength={subCategories.length}
+              categoryID={categoryID}
+              subCategoryID={subCategory.id}
+              categoryIndex={categoryIndex}
+            />
           </DraggableRow>
           {isExpanded &&
             renderMilestones(subCategory.milestones, categoryIndex, index)}
@@ -439,14 +466,15 @@ const MTOTable = ({
             }}
             isDraggable={!category.isUncategorized}
           >
-            {renderCells(
-              category,
-              'category',
-              isExpanded,
-              index,
-              sortedData.length,
-              index
-            )}
+            <RenderCells
+              row={category}
+              rowType="category"
+              expanded={isExpanded}
+              currentIndex={index}
+              rowLength={sortedData.length}
+              categoryID={category.id}
+              categoryIndex={index}
+            />
           </DraggableRow>
 
           {isExpanded &&
