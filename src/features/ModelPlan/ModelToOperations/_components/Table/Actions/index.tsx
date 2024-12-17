@@ -12,6 +12,7 @@ import {
 } from 'gql/generated/graphql';
 
 import { MTOModalContext } from 'contexts/MTOModalContext';
+import useMessage from 'hooks/useMessage';
 
 import MTOModal from '../../FormModal';
 
@@ -40,6 +41,8 @@ const MTOTableActions = ({
     setMTOModalType: setModalType,
     resetCategoryAndSubCategoryID
   } = useContext(MTOModalContext);
+
+  const { clearMessage } = useMessage();
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID }
@@ -143,6 +146,7 @@ const MTOTableActions = ({
                   className="display-block"
                   unstyled
                   onClick={() => {
+                    clearMessage();
                     setModalType('milestone');
                     setIsModalOpen(true);
                     resetCategoryAndSubCategoryID(); // Reset category and subcategory ID

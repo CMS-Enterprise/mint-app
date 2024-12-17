@@ -12,6 +12,7 @@ import i18next from 'i18next';
 import UswdsReactLink from 'components/LinkWrapper';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useMessage from 'hooks/useMessage';
 
 import './index.scss';
 
@@ -293,6 +294,7 @@ export const ActionMenu = ({
   MoveDown: React.ReactChild;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const { clearMessage } = useMessage();
 
   const { setMTOModalOpen, setMTOModalType, setCategoryID, setSubCategoryID } =
     useContext(MTOModalContext);
@@ -363,6 +365,7 @@ export const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
                 setMTOModalOpen(true);
                 setMTOModalType('milestone');
                 setCategoryID(primaryCategoryID);
@@ -382,6 +385,7 @@ export const ActionMenu = ({
                 e.stopPropagation();
                 setIsMenuOpen(false);
                 if (rowType === 'category') {
+                  clearMessage();
                   setMTOModalOpen(true);
                   setMTOModalType('category');
                   setCategoryID(primaryCategoryID);
