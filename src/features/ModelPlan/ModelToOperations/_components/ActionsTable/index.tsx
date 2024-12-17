@@ -14,7 +14,7 @@ import {
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../../FormModal';
+import MTOModal from '../FormModal';
 
 import './index.scss';
 

@@ -21,10 +21,10 @@ import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
+import MTOTableActions from '../_components/ActionsTable';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable, { isMatrixStartedFc } from '../_components/Table';
-import MTOTableActions from '../_components/Table/Actions';
 
 export type MTOOption = 'milestones' | 'systems-and-solutions';
 

@@ -20,6 +20,7 @@ import {
   Radio,
   Select
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
   GetModelToOperationsMatrixDocument,
   MtoFacilitator,
@@ -41,6 +42,7 @@ import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -87,6 +89,9 @@ const EditMilestoneForm = ({
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
+
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
     facilitatedBy: facilitatedByConfig,
@@ -408,7 +413,11 @@ const EditMilestoneForm = ({
       </Modal>
 
       {unsavedChanges > 0 && (
-        <div className="save-tag">
+        <div
+          className={classNames('save-tag', {
+            'margin-top-4': isMobile
+          })}
+        >
           <div className="bg-warning-lighter padding-y-05 padding-x-1">
             <Icon.Warning className="margin-right-1 top-2px text-warning" />
             <p className="margin-0 display-inline margin-right-1">
@@ -430,7 +439,12 @@ const EditMilestoneForm = ({
         </div>
       )}
 
-      <GridContainer className="padding-8">
+      <GridContainer
+        className={classNames({
+          'padding-8': !isTablet,
+          'padding-4': isTablet
+        })}
+      >
         <Grid row>
           <Grid col={10}>
             {milestone.addedFromMilestoneLibrary && (
