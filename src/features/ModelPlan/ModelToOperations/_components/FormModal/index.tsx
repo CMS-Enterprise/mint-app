@@ -10,6 +10,7 @@ import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
+import EditCategoryTitleForm from '../EditCategoryTitleForm';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -19,7 +20,8 @@ type MTOModalProps = {
     | 'milestone'
     | 'solution'
     | 'solutionToMilestone'
-    | 'editMilestone';
+    | 'editMilestone'
+    | 'editCategoryTitle';
   isRequired?: boolean;
   milestone?: MilestoneCardType;
 };
@@ -86,6 +88,9 @@ const MTOModal = ({
           closeModal={closeModal}
           milestone={milestone}
         />
+      )}
+      {modalType === 'editCategoryTitle' && (
+        <EditCategoryTitleForm closeModal={closeModal} />
       )}
     </Modal>
   );
