@@ -622,6 +622,10 @@ export const formatAndHomogenizeMilestoneData = (
     formattedCategory.facilitatedBy = undefined;
     formattedCategory.needBy = undefined;
     formattedCategory.status = undefined;
+    formattedCategory.addedFromMilestoneLibrary = undefined;
+    formattedCategory.isDraft = undefined;
+    formattedCategory.isUncategorized = undefined;
+    formattedCategory.key = undefined;
     formattedCategory.solutions = [];
     formattedCategory.subCategories = [];
 
@@ -632,6 +636,10 @@ export const formatAndHomogenizeMilestoneData = (
       formattedSubCategory.facilitatedBy = undefined;
       formattedSubCategory.needBy = undefined;
       formattedSubCategory.status = undefined;
+      formattedSubCategory.addedFromMilestoneLibrary = undefined;
+      formattedSubCategory.isDraft = undefined;
+      formattedSubCategory.isUncategorized = undefined;
+      formattedSubCategory.key = undefined;
       formattedSubCategory.solutions = [];
       formattedSubCategory.milestones = [];
 
@@ -646,14 +654,16 @@ export const formatAndHomogenizeMilestoneData = (
       });
 
       const { milestones, ...subCategoryData } = subCategory;
+      const { isUncategorized, ...restSubCategoryData } = subCategoryData;
       formattedCategory.subCategories.push({
         ...formattedSubCategory,
-        ...subCategoryData
+        ...restSubCategoryData
       });
     });
 
     const { subCategories, ...categoryData } = category;
-    formatData.push({ ...formattedCategory, ...categoryData });
+    const { isUncategorized, ...restCategoryData } = categoryData;
+    formatData.push({ ...formattedCategory, ...restCategoryData });
   });
   return formatData;
 };

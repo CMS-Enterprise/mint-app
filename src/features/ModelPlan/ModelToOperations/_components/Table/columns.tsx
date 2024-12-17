@@ -33,10 +33,10 @@ export type MilestoneType = {
   needBy: string | null;
   status: MtoMilestoneStatus;
   actions: any;
-  addedFromMilestoneLibrary: boolean;
-  isDraft: boolean;
+  addedFromMilestoneLibrary?: boolean;
+  isDraft?: boolean;
   isUncategorized?: boolean;
-  key?: MtoCommonMilestoneKey;
+  key?: MtoCommonMilestoneKey | null;
 };
 
 export type SubCategoryType = {
@@ -50,7 +50,10 @@ export type SubCategoryType = {
   status: undefined;
   actions: any;
   milestones: MilestoneType[];
+  addedFromMilestoneLibrary?: undefined;
+  isDraft?: undefined;
   isUncategorized?: boolean;
+  key?: undefined;
 };
 
 export type CategoryType = {
@@ -64,7 +67,10 @@ export type CategoryType = {
   status: undefined;
   actions: any;
   subCategories: SubCategoryType[];
+  addedFromMilestoneLibrary?: undefined;
+  isDraft?: undefined;
   isUncategorized?: boolean;
+  key?: undefined;
 };
 
 export type RowType = CategoryType | SubCategoryType | MilestoneType;
