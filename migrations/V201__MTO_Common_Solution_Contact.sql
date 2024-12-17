@@ -15,8 +15,11 @@ CREATE TABLE mto_common_solution_contact (
     modified_dts TIMESTAMP WITH TIME ZONE
 );
 
+COMMENT ON TABLE mto_common_solution_contact IS 'Table for storing contact information related to MTO common solutions, including team and individual contacts.';
+
 ALTER TABLE mto_common_solution_contact
 ADD CONSTRAINT role_required_when_is_team_false CHECK ( (is_team AND role IS NULL) OR (NOT is_team AND role IS NOT NULL));
+COMMENT ON CONSTRAINT role_required_when_is_team_false ON mto_common_solution_contact IS 'Ensures that role is required when is_team is false and disallowed when is_team is true.';
 
 
 
@@ -53,32 +56,44 @@ SELECT
     modified_dts
 FROM CURRENT_POCS;
 
--- -- TODO (mto) transfer the primary constraints from possible operational solution contacts as well
 
--- -- Partial Unique Index ensuring only one contact is set at a time
--- CREATE UNIQUE INDEX idx_unique_primary_contact_per_solution
--- ON mto_common_solution_contact (mto_common_solution_key)
--- WHERE is_primary = TRUE;
+-- Partial Unique Index ensuring only one contact is set at a time
+CREATE UNIQUE INDEX idx_unique_primary_contact_per_mto_common_solution
+ON mto_common_solution_contact (mto_common_solution_key)
+WHERE is_primary = TRUE;
+COMMENT ON INDEX idx_unique_primary_contact_per_mto_common_solution IS 'Ensures that only one primary contact is set per MTO common solution.';
 
--- --TODO (mto) make this work on insert as well
--- -- Trigger Constraint ensuring a primary contact is always set for mto common solutions
--- CREATE OR REPLACE FUNCTION ENSURE_PRIMARY_CONTACT_MTO()
--- RETURNS TRIGGER AS $$
--- BEGIN
---   -- Check if there is at least one primary contact for the solution
---   IF NOT EXISTS (
---     SELECT 1
---     FROM mto_common_solution_contact
---     WHERE mto_common_solution_contact = OLD.mto_common_solution_key
---       AND is_primary = TRUE
---   ) THEN
---     RAISE EXCEPTION 'At least one primary contact must be assigned for each common solution.';
---   END IF;
---   RETURN NEW;
--- END;
--- $$ LANGUAGE plpgsql;
+-- Trigger Constraint ensuring a primary contact is always set for mto common solutions
+CREATE OR REPLACE FUNCTION ENSURE_PRIMARY_CONTACT_MTO()
+RETURNS TRIGGER AS $$
+DECLARE
+  mto_common_solution_key MTO_COMMON_SOLUTION_KEY;
+BEGIN
 
--- CREATE TRIGGER trg_ensure_primary_contact_MTO
--- AFTER UPDATE OR DELETE ON mto_common_solution_contact
--- FOR EACH ROW
--- EXECUTE FUNCTION ENSURE_PRIMARY_CONTACT_MTO();
+  -- Determine the appropriate key based on the trigger event
+  IF TG_OP = 'DELETE' THEN
+    mto_common_solution_key := OLD.mto_common_solution_key;
+  ELSE
+    mto_common_solution_key := NEW.mto_common_solution_key;
+  END IF;
+  
+  -- Check if there is at least one primary contact for the solution
+  IF NOT EXISTS (
+    SELECT 1
+    FROM mto_common_solution_contact
+    WHERE mto_common_solution_contact = OLD.mto_common_solution_key
+      AND is_primary = TRUE
+  ) THEN
+    RAISE EXCEPTION 'At least one primary contact must be assigned for each mto common solution.';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION ENSURE_PRIMARY_CONTACT_MTO IS 'Trigger function to ensure that at least one primary contact is assigned for each MTO common solution.';
+
+CREATE TRIGGER trg_ensure_primary_contact_MTO
+AFTER INSERT OR UPDATE OR DELETE ON mto_common_solution_contact
+FOR EACH ROW
+EXECUTE FUNCTION ENSURE_PRIMARY_CONTACT_MTO();
+COMMENT ON TRIGGER trg_ensure_primary_contact_MTO ON mto_common_solution_contact IS 'Trigger to enforce primary contact assignment rules for MTO common solutions. Note, this requires that a contact for a new solution is first the primary contact, and then subsequent contacts can be added';
