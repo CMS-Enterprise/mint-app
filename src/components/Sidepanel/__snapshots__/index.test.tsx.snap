@@ -33,7 +33,7 @@ exports[`Sidepanel > matches snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="mint-sidepanel__x-button margin-right-2"
+              class="mint-sidepanel__x-button margin-right-1"
               data-testid="close-discussions"
               type="button"
             >

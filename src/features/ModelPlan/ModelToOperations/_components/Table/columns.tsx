@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from '@trussworks/react-uswds';
 import {
+  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator
@@ -32,7 +33,10 @@ export type MilestoneType = {
   needBy: string | null;
   status: MtoMilestoneStatus;
   actions: any;
+  addedFromMilestoneLibrary: boolean;
+  isDraft: boolean;
   isUncategorized?: boolean;
+  key?: MtoCommonMilestoneKey;
 };
 
 export type SubCategoryType = {

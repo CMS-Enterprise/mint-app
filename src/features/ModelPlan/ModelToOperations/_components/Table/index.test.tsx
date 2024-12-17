@@ -85,7 +85,10 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -136,7 +139,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -161,7 +167,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -186,7 +195,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: true
@@ -255,7 +267,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -280,7 +295,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -305,7 +323,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: true
@@ -351,7 +372,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -376,7 +400,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -401,7 +428,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: true
@@ -459,7 +489,10 @@ describe('getRenderedRowIndexes', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               },
               {
                 __typename: 'MTOMilestone',
@@ -470,7 +503,10 @@ describe('getRenderedRowIndexes', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -495,7 +531,10 @@ describe('getRenderedRowIndexes', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
