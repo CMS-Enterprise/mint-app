@@ -23,10 +23,9 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
-import MTOOptionsPanel from '../OptionPanel';
+import ActionMenu from '../ActionsMenu';
 
 import {
-  ActionMenu,
   CategoryType,
   columns,
   ColumnSortType,
@@ -256,6 +255,7 @@ const MTOTable = ({
                 <ActionMenu
                   primaryCategoryID={categoryID ?? ''}
                   subCategoryID={subCategoryID ?? ''}
+                  milestoneID={row.id}
                   rowType={rowType}
                   MoveUp={
                     <Button
@@ -374,7 +374,7 @@ const MTOTable = ({
     categoryIndex: number
   ) =>
     subCategories.map((subCategory, index) => {
-      const isExpanded = expandedRows.includes(
+      const isExpanded = !expandedRows.includes(
         `${categoryID}-${subCategory.id}`
       );
 
@@ -436,7 +436,7 @@ const MTOTable = ({
         return null;
       }
 
-      const isExpanded = expandedRows.includes(category.id);
+      const isExpanded = !expandedRows.includes(category.id);
 
       return (
         <div style={{ display: 'contents' }} key={category.id}>
@@ -500,20 +500,12 @@ const MTOTable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentColumn, columnSort, formattedData]);
 
-  const isMatrixStarted: boolean = useMemo(() => {
-    return isMatrixStartedFc(queryData?.modelPlan.mtoMatrix);
-  }, [queryData?.modelPlan.mtoMatrix]);
-
-  if (loading) {
+  if (loading && !queryData) {
     return <PageLoading />;
   }
 
   if (error) {
     return <NotFoundPartial />;
-  }
-
-  if (!isMatrixStarted) {
-    return <MTOOptionsPanel />;
   }
 
   return (
@@ -658,6 +650,10 @@ export const formatAndHomogenizeMilestoneData = (
     formattedCategory.facilitatedBy = undefined;
     formattedCategory.needBy = undefined;
     formattedCategory.status = undefined;
+    formattedCategory.addedFromMilestoneLibrary = undefined;
+    formattedCategory.isDraft = undefined;
+    formattedCategory.isUncategorized = undefined;
+    formattedCategory.key = undefined;
     formattedCategory.solutions = [];
     formattedCategory.subCategories = [];
 
@@ -668,6 +664,10 @@ export const formatAndHomogenizeMilestoneData = (
       formattedSubCategory.facilitatedBy = undefined;
       formattedSubCategory.needBy = undefined;
       formattedSubCategory.status = undefined;
+      formattedSubCategory.addedFromMilestoneLibrary = undefined;
+      formattedSubCategory.isDraft = undefined;
+      formattedSubCategory.isUncategorized = undefined;
+      formattedSubCategory.key = undefined;
       formattedSubCategory.solutions = [];
       formattedSubCategory.milestones = [];
 
@@ -682,14 +682,16 @@ export const formatAndHomogenizeMilestoneData = (
       });
 
       const { milestones, ...subCategoryData } = subCategory;
+      const { isUncategorized, ...restSubCategoryData } = subCategoryData;
       formattedCategory.subCategories.push({
         ...formattedSubCategory,
-        ...subCategoryData
+        ...restSubCategoryData
       });
     });
 
     const { subCategories, ...categoryData } = category;
-    formatData.push({ ...formattedCategory, ...categoryData });
+    const { isUncategorized, ...restCategoryData } = categoryData;
+    formatData.push({ ...formattedCategory, ...restCategoryData });
   });
   return formatData;
 };

@@ -15,14 +15,16 @@ import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
+import MTOTableActions from '../_components/ActionsTable';
+import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
-import MTOTable from '../_components/Table';
-import MTOTableActions from '../_components/Table/Actions';
+import MTOTable, { isMatrixStartedFc } from '../_components/Table';
 
 export type MTOOption = 'milestones' | 'systems-and-solutions';
 
@@ -68,6 +70,10 @@ const MTOHome = () => {
       history.replace({ search: params.toString() });
     }
   }, [viewparam, history, params]);
+
+  const isMatrixStarted: boolean = useMemo(() => {
+    return isMatrixStartedFc(data?.modelPlan.mtoMatrix);
+  }, [data?.modelPlan.mtoMatrix]);
 
   return (
     <>
@@ -183,10 +189,26 @@ const MTOHome = () => {
         )}
 
         {currentView === 'milestones' && (
-          <MTOModalProvider>
-            <MTOTableActions refetch={() => refetch({ id: modelID })} />
-            <MTOTable queryData={data} loading={loading} error={error} />
-          </MTOModalProvider>
+          <>
+            {loading ? (
+              <PageLoading />
+            ) : (
+              <>
+                {isMatrixStarted ? (
+                  <MTOModalProvider>
+                    <MTOTableActions refetch={() => refetch({ id: modelID })} />
+                    <MTOTable
+                      queryData={data}
+                      loading={loading}
+                      error={error}
+                    />
+                  </MTOModalProvider>
+                ) : (
+                  <MTOOptionsPanel />
+                )}
+              </>
+            )}
+          </>
         )}
       </div>
     </>

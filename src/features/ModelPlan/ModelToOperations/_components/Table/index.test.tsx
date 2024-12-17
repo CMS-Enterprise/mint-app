@@ -1,5 +1,6 @@
 import {
   GetModelToOperationsMatrixQuery,
+  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
@@ -39,7 +40,10 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 // solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
-                status: MtoMilestoneStatus.IN_PROGRESS
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                addedFromMilestoneLibrary: false,
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -60,6 +64,9 @@ describe('formatAndHomogenizeMilestoneData', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -71,6 +78,9 @@ describe('formatAndHomogenizeMilestoneData', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -81,13 +91,14 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
-            ],
-            isUncategorized: false
+            ]
           }
-        ],
-        isUncategorized: false
+        ]
       }
     ];
 
@@ -111,6 +122,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -122,6 +136,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -132,7 +149,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -147,6 +167,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -157,7 +180,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -172,6 +198,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -182,7 +211,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: true
@@ -200,6 +232,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       }
     ];
@@ -218,6 +253,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       },
       {
@@ -230,6 +268,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -241,6 +282,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -251,7 +295,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -266,6 +313,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -276,7 +326,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -291,6 +344,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -301,7 +357,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: true
@@ -326,6 +385,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -337,6 +399,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -347,7 +412,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -362,6 +430,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -372,7 +443,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -387,6 +461,9 @@ describe('moveRow', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -397,7 +474,10 @@ describe('moveRow', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: true
@@ -415,6 +495,9 @@ describe('moveRow', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       }
     ]);
@@ -434,6 +517,9 @@ describe('getRenderedRowIndexes', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -445,6 +531,9 @@ describe('getRenderedRowIndexes', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -455,7 +544,10 @@ describe('getRenderedRowIndexes', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               },
               {
                 __typename: 'MTOMilestone',
@@ -466,7 +558,10 @@ describe('getRenderedRowIndexes', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -481,6 +576,9 @@ describe('getRenderedRowIndexes', () => {
             needBy: undefined,
             status: undefined,
             actions: undefined,
+            isDraft: undefined,
+            addedFromMilestoneLibrary: undefined,
+            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -491,7 +589,10 @@ describe('getRenderedRowIndexes', () => {
                 solutions: [],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                actions: undefined
+                actions: undefined,
+                addedFromMilestoneLibrary: false,
+                isDraft: false,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
               }
             ],
             isUncategorized: false
@@ -509,6 +610,9 @@ describe('getRenderedRowIndexes', () => {
         needBy: undefined,
         status: undefined,
         actions: undefined,
+        isDraft: undefined,
+        addedFromMilestoneLibrary: undefined,
+        key: undefined,
         subCategories: []
       }
     ];
@@ -551,7 +655,10 @@ describe('isMatrixStartedFc', () => {
                 // solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
-                status: MtoMilestoneStatus.IN_PROGRESS
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                addedFromMilestoneLibrary: false,
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -618,7 +725,10 @@ describe('isMatrixStartedFc', () => {
                 // solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
-                status: MtoMilestoneStatus.IN_PROGRESS
+                status: MtoMilestoneStatus.IN_PROGRESS,
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                addedFromMilestoneLibrary: false,
+                isDraft: false
               }
             ],
             isUncategorized: true

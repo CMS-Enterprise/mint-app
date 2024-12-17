@@ -5,6 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.12.3",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@hookform/resolvers": "^3.9.1",
     "@json2csv/formatters": "^7.0.6",
     "@json2csv/plainjs": "^7.0.6",
     "@json2csv/transforms": "^7.0.6",
@@ -42,6 +43,7 @@
     "@types/redux-saga-routines": "^3.1.8",
     "@types/sinon": "^10.0.16",
     "@types/text-encoding": "^0.0.40",
+    "@types/yup": "^0.32.0",
     "@uswds/uswds": "^3.10.0",
     "apollo-upload-client": "^17.0.0",
     "axios": "^1.7.9",
