@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { ApolloQueryResult } from '@apollo/client';
@@ -11,6 +11,7 @@ import {
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
 import MTOModal from '../../FormModal';
@@ -31,18 +32,21 @@ const MTOTableActions = ({
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { clearMessage } = useMessage();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+
+  const {
+    isMTOModalOpen: isModalOpen,
+    setMTOModalOpen: setIsModalOpen,
+    mtoModalType: modalType,
+    setMTOModalType: setModalType,
+    resetCategoryAndSubCategoryID
+  } = useContext(MTOModalContext);
+
+  const { clearMessage } = useMessage();
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID }
   });
-
-  const [modalType, setModalType] = useState<
-    'category' | 'milestone' | 'solution'
-  >('category');
 
   const { data: milestoneData } = useGetMtoMilestonesQuery({
     variables: { id: modelID }
@@ -145,6 +149,7 @@ const MTOTableActions = ({
                     clearMessage();
                     setModalType('milestone');
                     setIsModalOpen(true);
+                    resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
                   }}
                 >
                   {t('optionsCard.milestones.linkText')}
@@ -199,7 +204,6 @@ const MTOTableActions = ({
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    clearMessage();
                     setModalType('solution');
                     setIsModalOpen(true);
                   }}
@@ -257,7 +261,6 @@ const MTOTableActions = ({
                 className="display-block"
                 unstyled
                 onClick={() => {
-                  clearMessage();
                   setModalType('category');
                   setIsModalOpen(true);
                 }}

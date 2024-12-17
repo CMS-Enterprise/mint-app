@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Icon, Menu } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
@@ -10,7 +10,9 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useMessage from 'hooks/useMessage';
 
 import './index.scss';
 
@@ -279,15 +281,23 @@ export const columns: ColumnType[] = [
 ];
 
 export const ActionMenu = ({
+  primaryCategoryID,
+  subCategoryID,
   rowType,
   MoveUp,
   MoveDown
 }: {
+  primaryCategoryID: string;
+  subCategoryID?: string;
   rowType: MTORowType;
   MoveUp: React.ReactChild;
   MoveDown: React.ReactChild;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const { clearMessage } = useMessage();
+
+  const { setMTOModalOpen, setMTOModalType, setCategoryID, setSubCategoryID } =
+    useContext(MTOModalContext);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -355,6 +365,11 @@ export const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalType('milestone');
+                setCategoryID(primaryCategoryID);
+                if (subCategoryID) setSubCategoryID(subCategoryID);
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -367,7 +382,14 @@ export const ActionMenu = ({
             <Button
               type="button"
               onClick={e => {
+                e.stopPropagation();
                 setIsMenuOpen(false);
+                if (rowType === 'category') {
+                  clearMessage();
+                  setMTOModalOpen(true);
+                  setMTOModalType('category');
+                  setCategoryID(primaryCategoryID);
+                }
               }}
               onKeyPress={e => {
                 e.stopPropagation();
