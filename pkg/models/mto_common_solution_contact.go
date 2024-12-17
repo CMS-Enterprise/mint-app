@@ -13,10 +13,10 @@ type MTOCommonSolutionContactInformation struct {
 
 func (mtoCSC *MTOCommonSolutionContactInformation) PrimaryContact() (*MTOCommonSolutionContact, error) {
 	if mtoCSC == nil {
-		return nil, fmt.Errorf("contact information is not populatied as expected")
+		return nil, fmt.Errorf("contact information is not populated as expected")
 	}
 	if len(mtoCSC.PointsOfContact) < 1 {
-		return nil, fmt.Errorf("points of contact are not listed for the  is not populatied as expected")
+		return nil, fmt.Errorf("points of contact are not listed for this solution")
 	}
 	contact, found := lo.Find(mtoCSC.PointsOfContact, func(contact *MTOCommonSolutionContact) bool {
 		return contact.IsPrimary
