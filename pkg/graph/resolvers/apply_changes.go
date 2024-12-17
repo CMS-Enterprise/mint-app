@@ -71,7 +71,7 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 			}
 
 			// If the desination implements graphql.Unmarshaler
-			if reflect.PtrTo(b).Implements(reflect.TypeOf((*graphql.Unmarshaler)(nil)).Elem()) {
+			if reflect.PointerTo(b).Implements(reflect.TypeOf((*graphql.Unmarshaler)(nil)).Elem()) {
 				resultType := reflect.New(b)
 				result := resultType.MethodByName("UnmarshalGQL").Call([]reflect.Value{reflect.ValueOf(v)})
 				err, _ := result[0].Interface().(error)
