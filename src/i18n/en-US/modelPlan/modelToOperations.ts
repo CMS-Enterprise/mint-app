@@ -266,8 +266,11 @@ export const modelToOperationsMisc: Record<string, any> = {
       category: 'Add a new category',
       milestone: 'Add a new model milestone',
       solution: 'Add a new solution',
-      solutionToMilestone: 'Add a solution for this milestone?'
+      solutionToMilestone: 'Add a solution for this milestone?',
+      editCategoryTitle: 'Edit category title'
     },
+    addButton: 'Add {{type}}',
+    cancel: 'Cancel',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
     category: {
@@ -388,8 +391,16 @@ export const modelToOperationsMisc: Record<string, any> = {
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
     },
-    addButton: 'Add {{type}}',
-    cancel: 'Cancel'
+    editCategoryTitle: {
+      label: 'Current title',
+      newTitle: 'New title',
+      saveChanges: 'Save changes',
+      alert: {
+        success: 'Your category title (<b>{{title}}</b>) has been updated.',
+        error:
+          'There was an error editing the title. Please try again. If the error persists, please try again another time.'
+      }
+    }
   },
   milestoneLibrary: {
     heading: 'Milestone library',

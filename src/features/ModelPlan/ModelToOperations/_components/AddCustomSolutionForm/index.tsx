@@ -41,7 +41,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -101,12 +101,12 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
         }
       })
       .catch(() => {
-        showMessage(
+        showErrorMessageInModal(
           <Alert
             type="error"
             slim
             data-testid="error-alert"
-            className="margin-y-4"
+            className="margin-bottom-2"
           >
             {t('modal.solution.alert.error')}
           </Alert>
@@ -116,7 +116,6 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {message}
       <Form
         className="maxw-none"
         data-testid="custom-solution-form"

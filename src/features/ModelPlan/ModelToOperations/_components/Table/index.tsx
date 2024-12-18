@@ -253,6 +253,7 @@ const MTOTable = ({
               {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
               {column.accessor === 'actions' ? (
                 <ActionMenu
+                  name={row.name}
                   primaryCategoryID={categoryID ?? ''}
                   subCategoryID={subCategoryID ?? ''}
                   milestoneID={row.id}
