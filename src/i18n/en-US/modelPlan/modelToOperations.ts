@@ -331,6 +331,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>In progress</bold>: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)',
         '<bold>Completed</bold>: Work for this milestone and all of its selected solutions is finished'
       ],
+      custom: 'Custom',
       saveChanges: 'Save changes',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',

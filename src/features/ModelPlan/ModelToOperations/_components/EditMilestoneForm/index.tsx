@@ -18,7 +18,8 @@ import {
   Icon,
   Label,
   Radio,
-  Select
+  Select,
+  TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
@@ -447,23 +448,23 @@ const EditMilestoneForm = ({
       >
         <Grid row>
           <Grid col={10}>
-            {milestone.addedFromMilestoneLibrary && (
-              <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05 margin-right-2">
-                <Icon.LightbulbOutline
-                  className="margin-left-1"
-                  style={{ top: '2px' }}
-                />{' '}
-                {modelToOperationsMiscT('milestoneLibrary.suggested')}
-              </span>
-            )}
-
             {milestone.isDraft && (
-              <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05">
+              <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
                 <Icon.Science
                   className="margin-left-1"
                   style={{ top: '2px' }}
                 />{' '}
                 {modelToOperationsMiscT('milestoneLibrary.isDraft')}
+              </span>
+            )}
+
+            {!milestone.addedFromMilestoneLibrary && (
+              <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
+                <Icon.Construction
+                  className="margin-left-1"
+                  style={{ top: '2px' }}
+                />{' '}
+                {modelToOperationsMiscT('modal.editMilestone.custom')}
               </span>
             )}
 
@@ -481,16 +482,46 @@ const EditMilestoneForm = ({
                   {milestone.name}
                 </h2>
 
-                <p className="margin-top-0 margin-bottom-3 text-base">
-                  <Trans
-                    i18nKey={modelToOperationsMiscT('modal.allFieldsRequired')}
-                    components={{
-                      s: <span className="text-secondary-dark" />
-                    }}
-                  />
-                </p>
-
                 <Fieldset disabled={loading}>
+                  <p className="margin-top-0 margin-bottom-3 text-base">
+                    <Trans
+                      i18nKey={modelToOperationsMiscT(
+                        'modal.allFieldsRequired'
+                      )}
+                      components={{
+                        s: <span className="text-secondary-dark" />
+                      }}
+                    />
+                  </p>
+
+                  {!milestone.addedFromMilestoneLibrary && (
+                    <Controller
+                      name="name"
+                      control={control}
+                      render={({
+                        field: { ref, ...field },
+                        fieldState: { error }
+                      }) => (
+                        <FormGroup className="margin-bottom-3">
+                          <Label requiredMarker htmlFor="name">
+                            {mtoMilestoneT('name.label')}
+                          </Label>
+
+                          {!!error && (
+                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                          )}
+
+                          <TextInput
+                            {...field}
+                            ref={null}
+                            id="name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      )}
+                    />
+                  )}
+
                   <Controller
                     name="isDraft"
                     control={control}
@@ -502,6 +533,7 @@ const EditMilestoneForm = ({
                           value={field.name}
                           checked={field.value}
                           label={mtoMilestoneT('isDraft.label')}
+                          subLabel={mtoMilestoneT('isDraft.sublabel')}
                         />
                       </FormGroup>
                     )}

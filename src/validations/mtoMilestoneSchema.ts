@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 const mtoMilestoneSchema = Yup.object().shape({
   isDraft: Yup.boolean().required(),
-  name: Yup.string().required(),
+  name: Yup.string().required('Please fill out the milestone name'),
   categories: Yup.object().shape({
     category: Yup.object().shape({
       id: Yup.string()
