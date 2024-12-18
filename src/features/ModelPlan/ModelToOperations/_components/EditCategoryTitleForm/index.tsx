@@ -67,24 +67,22 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
       .then(response => {
         if (!response?.errors) {
           showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.editCategoryTitle.alert.success')}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    values={{ title: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+            >
+              <span className="mandatory-fields-alert__text">
+                <Trans
+                  i18nKey={t('modal.editCategoryTitle.alert.success')}
+                  components={{
+                    b: <span className="text-bold" />
+                  }}
+                  values={{ title: formData.name }}
+                />
+              </span>
+            </Alert>
           );
         }
         resetCategoryAndSubCategoryID();
