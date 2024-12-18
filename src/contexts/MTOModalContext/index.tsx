@@ -8,8 +8,10 @@ interface MTOModalContextType {
   setMTOModalType: (type: MTOModalType) => void;
   categoryID: string;
   setCategoryID: (id: string) => void;
-  subCategoryID: string;
-  setSubCategoryID: (id: string) => void;
+  subCategoryID?: string;
+  setSubCategoryID: (id?: string | undefined) => void;
+  categoryName: string;
+  setCategoryName: (id: string) => void;
   resetCategoryAndSubCategoryID: () => void;
 }
 
@@ -21,8 +23,10 @@ const MTOModalContext = createContext<MTOModalContextType>({
   setMTOModalType: () => {},
   categoryID: '',
   setCategoryID: () => {},
-  subCategoryID: '',
+  subCategoryID: undefined,
   setSubCategoryID: () => {},
+  categoryName: '',
+  setCategoryName: () => {},
   resetCategoryAndSubCategoryID: () => {}
 });
 
@@ -30,11 +34,14 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMTOModalOpen, setMTOModalOpen] = useState(false);
   const [mtoModalType, setMTOModalType] = useState<MTOModalType>('category');
   const [categoryID, setCategoryID] = useState('');
-  const [subCategoryID, setSubCategoryID] = useState('');
+  const [subCategoryID, setSubCategoryID] = useState<string | undefined>(
+    undefined
+  );
+  const [categoryName, setCategoryName] = useState('');
 
   const resetCategoryAndSubCategoryID = () => {
     setCategoryID('');
-    setSubCategoryID('');
+    setSubCategoryID(undefined);
   };
 
   return (
@@ -48,6 +55,8 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
         setCategoryID,
         subCategoryID,
         setSubCategoryID,
+        categoryName,
+        setCategoryName,
         resetCategoryAndSubCategoryID
       }}
     >

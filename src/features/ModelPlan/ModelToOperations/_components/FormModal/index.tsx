@@ -11,6 +11,7 @@ import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
 import MoveSubCategoryForm from '../MoveSubCategoryForm';
+import EditCategoryTitleForm from '../EditCategoryTitleForm';
 
 export type MTOModalType =
   | 'category'
@@ -18,7 +19,8 @@ export type MTOModalType =
   | 'solution'
   | 'solutionToMilestone'
   | 'editMilestone'
-  | 'moveSubCategory';
+  | 'moveSubCategory' |
+  'editCategoryTitle';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -37,7 +39,7 @@ const MTOModal = ({
 }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { clearMessage } = useMessage();
+  const { errorMessageInModal, clearMessage } = useMessage();
 
   const modalTitle = (() => {
     switch (modalType) {
@@ -51,6 +53,8 @@ const MTOModal = ({
         return t('modal.title.solutionToMilestone');
       case 'moveSubCategory':
         return t('modal.title.moveSubCategory');
+      case 'editCategoryTitle':
+        return t('modal.title.editCategoryTitle');
       default:
         return '';
     }
@@ -83,6 +87,8 @@ const MTOModal = ({
         )}
       </div>
 
+      {errorMessageInModal}
+
       {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
       {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
@@ -95,6 +101,8 @@ const MTOModal = ({
       )}
       {modalType === 'moveSubCategory' && (
         <MoveSubCategoryForm closeModal={closeModal} />
+      {modalType === 'editCategoryTitle' && (
+        <EditCategoryTitleForm closeModal={closeModal} />
       )}
     </Modal>
   );

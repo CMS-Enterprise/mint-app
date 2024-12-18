@@ -5,6 +5,9 @@ import _ "embed"
 //go:embed SQL/mto/category/create.sql
 var mtoCategoryCreateSQL string
 
+//go:embed SQL/mto/category/delete.sql
+var mtoCategoryDeleteSQL string
+
 //go:embed SQL/mto/category/create_allow_conflicts.sql
 var mtoCategoryCreateAllowConflictsSQL string
 
@@ -28,6 +31,7 @@ var mtoCategoryGetByParentIDLoaderSQL string
 
 type mtoCategoryScripts struct {
 	Create               string
+	Delete               string
 	CreateAllowConflicts string
 	Update               string
 	GetByID              string
@@ -44,6 +48,7 @@ type mtoCategoryScripts struct {
 // MTOCategory houses all the sql for getting data for mto category from the database
 var MTOCategory = mtoCategoryScripts{
 	Create:                                 mtoCategoryCreateSQL,
+	Delete:                                 mtoCategoryDeleteSQL,
 	CreateAllowConflicts:                   mtoCategoryCreateAllowConflictsSQL,
 	Update:                                 mtoCategoryUpdateSQL,
 	GetByID:                                mtoCategoryGetByIDSQL,

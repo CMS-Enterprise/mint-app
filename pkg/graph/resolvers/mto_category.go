@@ -36,6 +36,32 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	return storage.MTOCategoryCreate(store, logger, category)
 }
 
+// MTOCategoryDelete removes an MTOCategory or SubCategory
+func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		existing, err := storage.MTOCategoryGetByID(store, logger, id)
+		if err != nil {
+			return fmt.Errorf("unable to delete MTO category. Err %w", err)
+		}
+
+		// Just check access, don't apply changes here
+		if err = BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+			return fmt.Errorf("unable to delete MTO category. Err %w", err)
+		}
+
+		if err = storage.MTOCategoryDelete(tx, principalAccount.ID, id); err != nil {
+			return fmt.Errorf("unable to delete MTO category. Err %w", err)
+		}
+
+		return nil
+	})
+}
+
 // MTOCategoryRename updates the name of MTOCategory or SubCategory
 func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
