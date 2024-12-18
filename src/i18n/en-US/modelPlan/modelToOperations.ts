@@ -393,7 +393,12 @@ export const modelToOperationsMisc: Record<string, any> = {
     editCategoryTitle: {
       label: 'Current title',
       newTitle: 'New title',
-      saveChanges: 'Save changes'
+      saveChanges: 'Save changes',
+      alert: {
+        success: 'Your category title (<b>{{title}}</b>) has been updated.',
+        error:
+          'There was an error editing the title. Please try again. If the error persists, please try again another time.'
+      }
     }
   },
   milestoneLibrary: {

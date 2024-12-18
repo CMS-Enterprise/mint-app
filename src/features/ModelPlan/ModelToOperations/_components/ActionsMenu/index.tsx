@@ -182,7 +182,11 @@ const ActionMenu = ({
                 setMTOModalOpen(true);
                 setMTOModalType('editCategoryTitle');
                 setCategoryName(name || '');
-                setCategoryID(primaryCategoryID);
+                if (rowType === 'category') {
+                  setCategoryID(primaryCategoryID);
+                } else {
+                  setSubCategoryID(subCategoryID);
+                }
               }}
               onKeyPress={e => {
                 e.stopPropagation();
