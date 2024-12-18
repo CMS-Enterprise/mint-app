@@ -66,5 +66,8 @@ extend type Mutation {
 extend type Query {
   mtoMilestone(id: UUID!): MTOMilestone!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+
+  mtoMilestoneUpdateLinkedSolutions(id: UUID!, solutionIDs: [UUID!], commonSolutionKeys: [MTOCommonSolutionKey!]): MTOMilestone!
+  @hasRole(role: MINT_USER)
 }
 

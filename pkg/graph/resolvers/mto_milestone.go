@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -221,4 +223,27 @@ func MTOMilestoneGetBySolutionIDLOADER(
 	solutionID uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.BySolutionID.Load(ctx, solutionID)
+}
+
+// MTOMilestoneUpdateLinkedSolutions updates the linked solutions for a milestone
+func MTOMilestoneUpdateLinkedSolutions(
+	ctx context.Context,
+	store *storage.Store,
+	id uuid.UUID,
+	solutionIDs []uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+) (*models.MTOMilestone, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+		return storage.MTOMilestoneUpdateLinkedSolutions(
+			tx,
+			logger,
+			id,
+			solutionIDs,
+			commonSolutionKeys,
+			principal.Account().ID,
+		)
+	})
 }

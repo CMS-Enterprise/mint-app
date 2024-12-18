@@ -132,3 +132,26 @@ func MTOMilestoneGetBySolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 	}
 	return returned, nil
 }
+
+// MTOMilestoneUpdateLinkedSolutions updates the linked solutions for an MTOMilestone
+func MTOMilestoneUpdateLinkedSolutions(
+	tx *sqlx.Tx,
+	_ *zap.Logger,
+	milestoneID uuid.UUID,
+	solutionIDs []uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+	createdBy uuid.UUID,
+) (*models.MTOMilestone, error) {
+	arg := map[string]interface{}{
+		"milestone_id":         milestoneID,
+		"solution_ids":         pq.Array(solutionIDs),
+		"common_solution_keys": pq.Array(commonSolutionKeys),
+		"created_by":           createdBy,
+	}
+	returned, procErr := sqlutils.GetProcedure[models.MTOMilestone](tx, sqlqueries.MTOMilestone.SetSolutionLinks, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue updating MTOMilestone linked solutions: %w", procErr)
+	}
+
+	return returned, nil
+}

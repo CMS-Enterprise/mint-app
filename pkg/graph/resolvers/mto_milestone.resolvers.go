@@ -77,6 +77,11 @@ func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models
 	return MTOMilestoneGetByIDLOADER(ctx, id)
 }
 
+// MtoMilestoneUpdateLinkedSolutions is the resolver for the mtoMilestoneUpdateLinkedSolutions field.
+func (r *queryResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context, id uuid.UUID, solutionIDs []uuid.UUID, commonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOMilestone, error) {
+	return MTOMilestoneUpdateLinkedSolutions(ctx, r.store, id, solutionIDs, commonSolutionKeys)
+}
+
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.
 func (r *Resolver) MTOMilestone() generated.MTOMilestoneResolver { return &mTOMilestoneResolver{r} }
 
