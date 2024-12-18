@@ -17,6 +17,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import {
+  GetModelToOperationsMatrixDocument,
   MtoSolutionType,
   useCreateMtoSolutionCustomMutation
 } from 'gql/generated/graphql';
@@ -61,7 +62,16 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid, errors }
   } = methods;
 
-  const [create] = useCreateMtoSolutionCustomMutation();
+  const [create] = useCreateMtoSolutionCustomMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     if (formData.solutionType === 'default') return;
