@@ -278,13 +278,18 @@ export const modelToOperationsMisc: Record<string, any> = {
     remove: {
       category: {
         copy: 'This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.',
-        button: 'Remove category'
+        button: 'Remove category',
+        errorAlert:
+          'There was an error removing this category. Please try again. If the error persists, please try again another time.'
       },
       subcategory: {
         copy: 'This action cannot be undone. Any milestones will move to the “Uncategorized” sub-category in this primary category.',
-        button: 'Remove sub-category'
+        button: 'Remove sub-category',
+        errorAlert:
+          'There was an error removing this sub-category. Please try again. If the error persists, please try again another time.'
       },
-      goBack: 'Go back'
+      goBack: 'Go back',
+      successAlert: 'Your category has been removed.'
     },
     category: {
       selectPrimaryCategory: {
