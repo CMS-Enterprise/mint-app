@@ -16,7 +16,10 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { useCreateMtoMilestoneCustomMutation } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixDocument,
+  useCreateMtoMilestoneCustomMutation
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -65,7 +68,16 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     primaryCategory: watch('primaryCategory')
   });
 
-  const [create] = useCreateMtoMilestoneCustomMutation();
+  const [create] = useCreateMtoMilestoneCustomMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     let mtoCategoryID;

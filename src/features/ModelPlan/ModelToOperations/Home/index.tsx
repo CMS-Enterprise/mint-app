@@ -37,7 +37,7 @@ const MTOHome = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error, refetch } = useGetModelToOperationsMatrixQuery({
+  const { data, loading, error } = useGetModelToOperationsMatrixQuery({
     variables: {
       id: modelID
     }
@@ -196,7 +196,7 @@ const MTOHome = () => {
               <>
                 {isMatrixStarted ? (
                   <MTOModalProvider>
-                    <MTOTableActions refetch={() => refetch({ id: modelID })} />
+                    <MTOTableActions />
                     <MTOTable
                       queryData={data}
                       loading={loading}

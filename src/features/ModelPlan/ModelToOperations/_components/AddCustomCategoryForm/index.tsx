@@ -18,6 +18,7 @@ import {
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import {
+  GetModelToOperationsMatrixDocument,
   useCreateMtoCategoryMutation,
   useGetMtoCategoriesQuery
 } from 'gql/generated/graphql';
@@ -94,7 +95,16 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
-  const [create] = useCreateMtoCategoryMutation();
+  const [create] = useCreateMtoCategoryMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     create({

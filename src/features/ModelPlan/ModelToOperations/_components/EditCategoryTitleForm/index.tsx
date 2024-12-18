@@ -6,6 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -14,7 +15,10 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { useRenameMtoCategoryMutation } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixDocument,
+  useRenameMtoCategoryMutation
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -27,6 +31,7 @@ type FormValues = {
 };
 
 const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
+  const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
   const {
     categoryID,
@@ -50,7 +55,16 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
-  const [rename] = useRenameMtoCategoryMutation();
+  const [rename] = useRenameMtoCategoryMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     rename({

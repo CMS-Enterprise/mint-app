@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { ApolloQueryResult } from '@apollo/client';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
-  GetModelToOperationsMatrixQuery,
-  GetModelToOperationsMatrixQueryVariables,
   useCreateStandardCategoriesMutation,
   useGetMtoCommonSolutionsQuery,
   useGetMtoMilestonesQuery
@@ -18,15 +15,7 @@ import MTOModal from '../FormModal';
 
 import './index.scss';
 
-const MTOTableActions = ({
-  refetch
-}: {
-  refetch: ({
-    variables
-  }: {
-    variables?: GetModelToOperationsMatrixQueryVariables;
-  }) => Promise<ApolloQueryResult<GetModelToOperationsMatrixQuery>>;
-}) => {
+const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
@@ -88,7 +77,6 @@ const MTOTableActions = ({
         isOpen={isModalOpen}
         closeModal={() => {
           setIsModalOpen(false);
-          refetch({ variables: { id: modelID } });
         }}
         modalType={modalType}
       />
