@@ -11,6 +11,7 @@ import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
+import RemoveCategoryForm from '../RemoveCategoryForm';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -21,7 +22,9 @@ type MTOModalProps = {
     | 'solution'
     | 'solutionToMilestone'
     | 'editMilestone'
-    | 'editCategoryTitle';
+    | 'editCategoryTitle'
+    | 'removeCategory'
+    | 'removeSubcategory';
   isRequired?: boolean;
   milestone?: MilestoneCardType;
 };
@@ -49,6 +52,10 @@ const MTOModal = ({
         return t('modal.title.solutionToMilestone');
       case 'editCategoryTitle':
         return t('modal.title.editCategoryTitle');
+      case 'removeCategory':
+        return t('modal.title.removeCategory');
+      case 'removeSubcategory':
+        return t('modal.title.removeSubcategory');
       default:
         return '';
     }
@@ -69,16 +76,18 @@ const MTOModal = ({
           {modalTitle}
         </PageHeading>
 
-        {isRequired && (
-          <p className="margin-y-0 text-base">
-            <Trans
-              i18nKey={t('modal.allFieldsRequired')}
-              components={{
-                s: <span className="text-secondary-dark" />
-              }}
-            />
-          </p>
-        )}
+        {isRequired &&
+          modalType !== 'removeCategory' &&
+          modalType !== 'removeSubcategory' && (
+            <p className="margin-y-0 text-base">
+              <Trans
+                i18nKey={t('modal.allFieldsRequired')}
+                components={{
+                  s: <span className="text-secondary-dark" />
+                }}
+              />
+            </p>
+          )}
       </div>
 
       {errorMessageInModal}
@@ -96,6 +105,8 @@ const MTOModal = ({
       {modalType === 'editCategoryTitle' && (
         <EditCategoryTitleForm closeModal={closeModal} />
       )}
+      {(modalType === 'removeCategory' ||
+        modalType === 'removeSubcategory') && <RemoveCategoryForm />}
     </Modal>
   );
 };

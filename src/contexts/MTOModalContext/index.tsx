@@ -8,14 +8,20 @@ interface MTOModalContextType {
     | 'milestone'
     | 'solution'
     | 'solutionToMilestone'
-    | 'editCategoryTitle';
+    | 'editMilestone'
+    | 'editCategoryTitle'
+    | 'removeCategory'
+    | 'removeSubcategory';
   setMTOModalType: (
     type:
       | 'category'
       | 'milestone'
       | 'solution'
       | 'solutionToMilestone'
+      | 'editMilestone'
       | 'editCategoryTitle'
+      | 'removeCategory'
+      | 'removeSubcategory'
   ) => void;
   categoryID: string;
   setCategoryID: (id: string) => void;
@@ -48,7 +54,10 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
     | 'milestone'
     | 'solution'
     | 'solutionToMilestone'
+    | 'editMilestone'
     | 'editCategoryTitle'
+    | 'removeCategory'
+    | 'removeSubcategory'
   >('category');
   const [categoryID, setCategoryID] = useState('');
   const [subCategoryID, setSubCategoryID] = useState<string | undefined>(

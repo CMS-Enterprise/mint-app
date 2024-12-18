@@ -267,12 +267,25 @@ export const modelToOperationsMisc: Record<string, any> = {
       milestone: 'Add a new model milestone',
       solution: 'Add a new solution',
       solutionToMilestone: 'Add a solution for this milestone?',
-      editCategoryTitle: 'Edit category title'
+      editCategoryTitle: 'Edit category title',
+      removeCategory: 'Are you sure you want to remove this category?',
+      removeSubcategory: 'Are you sure you want to remove this sub-category?'
     },
     addButton: 'Add {{type}}',
     cancel: 'Cancel',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    remove: {
+      category: {
+        copy: 'This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.',
+        button: 'Remove category'
+      },
+      subcategory: {
+        copy: 'This action cannot be undone. Any milestones will move to the “Uncategorized” sub-category in this primary category.',
+        button: 'Remove sub-category'
+      },
+      goBack: 'Go back'
+    },
     category: {
       selectPrimaryCategory: {
         label: 'Select primary category',

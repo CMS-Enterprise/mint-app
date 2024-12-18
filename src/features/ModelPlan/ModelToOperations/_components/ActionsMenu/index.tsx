@@ -203,6 +203,13 @@ const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalType(
+                  rowType === 'category'
+                    ? 'removeCategory'
+                    : 'removeSubcategory'
+                );
               }}
               onKeyPress={e => {
                 e.stopPropagation();
