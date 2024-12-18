@@ -7,7 +7,7 @@ export const MessageContext = createContext<
       errorMessageInModal: string | React.ReactNode | undefined;
       showMessage: (message: string | React.ReactNode) => void;
       showMessageOnNextPage: (message: string | React.ReactNode) => void;
-      setErrorMessageInModal: (message: string | React.ReactNode) => void;
+      showErrorMessageInModal: (message: string | React.ReactNode) => void;
       clearMessage: () => void;
     }
   | undefined
@@ -45,7 +45,7 @@ const MessageProvider = ({ children }: { children: ReactNode }) => {
         showMessageOnNextPage: setQueuedMessage,
         clearMessage,
         errorMessageInModal,
-        setErrorMessageInModal
+        showErrorMessageInModal: setErrorMessageInModal
       }}
     >
       {children}
