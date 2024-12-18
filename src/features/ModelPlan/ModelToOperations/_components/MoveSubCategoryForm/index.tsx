@@ -120,8 +120,14 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
       {mutationError && mutationError}
 
       <p className="margin-top-2 margin-bottom-3">
-        {modelToOperationsMiscT('modal.editMilestone.removeDescription')}
+        {modelToOperationsMiscT('modal.moveSubCategory.description')}
       </p>
+
+      <dt className="text-bold">
+        {modelToOperationsMiscT('modal.moveSubCategory.currentCategory')}
+      </dt>
+
+      <dd className="margin-0 margin-bottom-2">MINT</dd>
 
       <FormProvider {...methods}>
         <Form
@@ -137,11 +143,11 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                 <FormGroup className="margin-top-0 margin-bottom-3">
                   <Label
                     htmlFor={convertCamelCaseToKebabCase(field.name)}
-                    className="maxw-none text-bold"
+                    className="maxw-none"
                     requiredMarker
                   >
                     {modelToOperationsMiscT(
-                      'modal.milestone.milestoneCategory.label'
+                      'modal.moveSubCategory.newCategory'
                     )}
                   </Label>
 

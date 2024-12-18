@@ -393,7 +393,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     moveSubCategory: {
       description:
-        'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
+        'This action will also move any milestones within this sub-category.',
+      currentCategory: 'Current category',
+      newCategory: 'New category',
       alert: {
         success: 'Your solution ({{solution}}) has been added.',
         error:
