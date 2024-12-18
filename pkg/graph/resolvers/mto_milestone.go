@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 
 	"github.com/google/uuid"
@@ -142,9 +144,14 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 }
 
 // MTOMilestoneUpdate updates the fields of an MTOMilestone
-func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOMilestoneUpdate(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
+	solutionLinks *model.MTOSolutionLinks,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -166,7 +173,17 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOMilestoneUpdate(store, logger, existing)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+		if solutionLinks != nil {
+			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutions(ctx, store, id, solutionLinks.SolutionIDs, solutionLinks.CommonSolutionKeys)
+			if updateLinksErr != nil {
+				return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", updateLinksErr)
+			}
+		}
+
+		return storage.MTOMilestoneUpdate(tx, logger, existing)
+	})
 }
 
 // MTOMilestoneDelete deletes an MTOMilestone

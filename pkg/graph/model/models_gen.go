@@ -78,6 +78,11 @@ type MTOMilestoneTranslation struct {
 	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
 }
 
+type MTOSolutionLinks struct {
+	SolutionIDs        []uuid.UUID                   `json:"solutionIDs,omitempty"`
+	CommonSolutionKeys []models.MTOCommonSolutionKey `json:"commonSolutionKeys,omitempty"`
+}
+
 // Represents MTO Custom Solution translation data
 type MTOSolutionTranslation struct {
 	Name         models.TranslationField            `json:"name" db:"name"`

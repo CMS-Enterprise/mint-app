@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -57,11 +58,11 @@ func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPl
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.
-func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOMilestone, error) {
+func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID, changes map[string]interface{}, solutionLinks *model.MTOSolutionLinks) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes)
+	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes, solutionLinks)
 }
 
 // DeleteMTOMilestone is the resolver for the deleteMTOMilestone field.
@@ -72,14 +73,14 @@ func (r *mutationResolver) DeleteMTOMilestone(ctx context.Context, id uuid.UUID)
 	return true, MTOMilestoneDelete(ctx, logger, principal, r.store, id)
 }
 
+// MtoMilestoneUpdateLinkedSolutions is the resolver for the mtoMilestoneUpdateLinkedSolutions field.
+func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context, id uuid.UUID, solutionLinks model.MTOSolutionLinks) (*models.MTOMilestone, error) {
+	return MTOMilestoneUpdateLinkedSolutions(ctx, r.store, id, solutionLinks.SolutionIDs, solutionLinks.CommonSolutionKeys)
+}
+
 // MtoMilestone is the resolver for the mtoMilestone field.
 func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
 	return MTOMilestoneGetByIDLOADER(ctx, id)
-}
-
-// MtoMilestoneUpdateLinkedSolutions is the resolver for the mtoMilestoneUpdateLinkedSolutions field.
-func (r *queryResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context, id uuid.UUID, solutionIDs []uuid.UUID, commonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOMilestone, error) {
-	return MTOMilestoneUpdateLinkedSolutions(ctx, r.store, id, solutionIDs, commonSolutionKeys)
 }
 
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.

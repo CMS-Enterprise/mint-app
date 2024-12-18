@@ -995,6 +995,11 @@ export type MtoSolutionChanges = {
   status?: InputMaybe<MtoSolutionStatus>;
 };
 
+export type MtoSolutionLinks = {
+  commonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
 export enum MtoSolutionStatus {
   BACKLOG = 'BACKLOG',
   COMPLETED = 'COMPLETED',
@@ -1283,6 +1288,7 @@ export type Mutation = {
   markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
+  mtoMilestoneUpdateLinkedSolutions: MtoMilestone;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
@@ -1524,6 +1530,13 @@ export type MutationMarkNotificationAsReadArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
@@ -1600,6 +1613,7 @@ export type MutationUpdateExistingModelLinksArgs = {
 export type MutationUpdateMtoMilestoneArgs = {
   changes: MtoMilestoneChanges;
   id: Scalars['UUID']['input'];
+  solutionLinks?: InputMaybe<MtoSolutionLinks>;
 };
 
 
@@ -3815,7 +3829,6 @@ export type Query = {
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoMilestone: MtoMilestone;
-  mtoMilestoneUpdateLinkedSolutions: MtoMilestone;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3887,14 +3900,6 @@ export type QueryModelPlansByOperationalSolutionKeyArgs = {
 /** Query definition for the schema */
 export type QueryMtoMilestoneArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryMtoMilestoneUpdateLinkedSolutionsArgs = {
-  commonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
-  id: Scalars['UUID']['input'];
-  solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
 };
 
 
