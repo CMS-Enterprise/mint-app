@@ -3,9 +3,19 @@ import React, { createContext, useState } from 'react';
 interface MTOModalContextType {
   isMTOModalOpen: boolean;
   setMTOModalOpen: (isOpen: boolean) => void;
-  mtoModalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone';
+  mtoModalType:
+    | 'category'
+    | 'milestone'
+    | 'solution'
+    | 'solutionToMilestone'
+    | 'editCategoryTitle';
   setMTOModalType: (
-    type: 'category' | 'milestone' | 'solution' | 'solutionToMilestone'
+    type:
+      | 'category'
+      | 'milestone'
+      | 'solution'
+      | 'solutionToMilestone'
+      | 'editCategoryTitle'
   ) => void;
   categoryID: string;
   setCategoryID: (id: string) => void;
@@ -30,7 +40,11 @@ const MTOModalContext = createContext<MTOModalContextType>({
 const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMTOModalOpen, setMTOModalOpen] = useState(false);
   const [mtoModalType, setMTOModalType] = useState<
-    'category' | 'milestone' | 'solution' | 'solutionToMilestone'
+    | 'category'
+    | 'milestone'
+    | 'solution'
+    | 'solutionToMilestone'
+    | 'editCategoryTitle'
   >('category');
   const [categoryID, setCategoryID] = useState('');
   const [subCategoryID, setSubCategoryID] = useState('');

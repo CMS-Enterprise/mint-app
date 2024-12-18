@@ -171,6 +171,11 @@ const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                // TODO: Add edit category title form here!
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalType('editCategoryTitle');
+                setCategoryID(primaryCategoryID);
               }}
               onKeyPress={e => {
                 e.stopPropagation();
