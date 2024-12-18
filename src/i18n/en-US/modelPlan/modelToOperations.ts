@@ -269,6 +269,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       solutionToMilestone: 'Add a solution for this milestone?',
       editCategoryTitle: 'Edit category title'
     },
+    addButton: 'Add {{type}}',
+    cancel: 'Cancel',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
     category: {
@@ -388,8 +390,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
     },
-    addButton: 'Add {{type}}',
-    cancel: 'Cancel'
+    editCategoryTitle: {
+      label: 'Current title',
+      newTitle: 'New title'
+    }
   },
   milestoneLibrary: {
     heading: 'Milestone library',
