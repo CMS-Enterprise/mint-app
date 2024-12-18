@@ -10,8 +10,8 @@ import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
-import MoveSubCategoryForm from '../MoveSubCategoryForm';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
+import MoveSubCategoryForm from '../MoveSubCategoryForm';
 
 export type MTOModalType =
   | 'category'
@@ -19,8 +19,8 @@ export type MTOModalType =
   | 'solution'
   | 'solutionToMilestone'
   | 'editMilestone'
-  | 'moveSubCategory' |
-  'editCategoryTitle';
+  | 'moveSubCategory'
+  | 'editCategoryTitle';
 
 type MTOModalProps = {
   isOpen: boolean;
@@ -101,6 +101,7 @@ const MTOModal = ({
       )}
       {modalType === 'moveSubCategory' && (
         <MoveSubCategoryForm closeModal={closeModal} />
+      )}
       {modalType === 'editCategoryTitle' && (
         <EditCategoryTitleForm closeModal={closeModal} />
       )}
