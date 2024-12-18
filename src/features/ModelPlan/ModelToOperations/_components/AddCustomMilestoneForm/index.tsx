@@ -35,7 +35,12 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const {
+    errorMessageInModal,
+    showMessage,
+    showErrorMessageInModal,
+    clearMessage
+  } = useMessage();
   const { categoryID, subCategoryID } = useContext(MTOModalContext);
 
   // Variables for the form
@@ -111,7 +116,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
         }
       })
       .catch(() => {
-        showMessage(
+        showErrorMessageInModal(
           <Alert
             type="error"
             slim
@@ -126,7 +131,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {message}
+      {errorMessageInModal}
       <Form
         className="maxw-none"
         data-testid="custom-category-form"

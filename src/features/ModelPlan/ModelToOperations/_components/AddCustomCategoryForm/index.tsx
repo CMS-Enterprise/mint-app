@@ -54,7 +54,12 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const { categoryID } = useContext(MTOModalContext);
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const {
+    errorMessageInModal,
+    showErrorMessageInModal,
+    showMessage,
+    clearMessage
+  } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const { data, loading } = useGetMtoCategoriesQuery({
@@ -156,7 +161,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         }
       })
       .catch(() => {
-        showMessage(
+        showErrorMessageInModal(
           <Alert
             type="error"
             slim
@@ -171,7 +176,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {message}
+      {errorMessageInModal}
       <Form
         className="maxw-none"
         data-testid="custom-category-form"

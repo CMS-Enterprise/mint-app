@@ -27,7 +27,10 @@ const MessageProvider = ({ children }: { children: ReactNode }) => {
 
   const [lastPathname, setLastPathname] = useState(location.pathname);
 
-  const clearMessage = () => setMessage(undefined);
+  const clearMessage = () => {
+    setMessage(undefined);
+    setErrorMessageInModal(undefined);
+  };
 
   useEffect(() => {
     if (lastPathname !== location.pathname) {
