@@ -151,6 +151,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
           className={`usa-button ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
           onClick={() => {
             reset();
+            resetCategoryAndSubCategoryID();
             clearMessage();
             closeModal();
           }}
