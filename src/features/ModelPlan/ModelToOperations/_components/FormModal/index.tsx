@@ -35,7 +35,7 @@ const MTOModal = ({
 }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { clearMessage } = useMessage();
+  const { errorMessageInModal, clearMessage } = useMessage();
 
   const modalTitle = (() => {
     switch (modalType) {
@@ -80,6 +80,8 @@ const MTOModal = ({
           </p>
         )}
       </div>
+
+      {errorMessageInModal}
 
       {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CategoryForm closeModal={closeModal} />}

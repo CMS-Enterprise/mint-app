@@ -34,12 +34,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
     categoryName,
     resetCategoryAndSubCategoryID
   } = useContext(MTOModalContext);
-  const {
-    errorMessageInModal,
-    showMessage,
-    showErrorMessageInModal,
-    clearMessage
-  } = useMessage();
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const methods = useForm<FormValues>({
@@ -94,7 +89,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
             type="error"
             slim
             data-testid="error-alert"
-            className="margin-y-4"
+            className="margin-bottom-2"
           >
             {t('modal.editCategoryTitle.alert.error')}
           </Alert>
@@ -104,7 +99,6 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {errorMessageInModal}
       <Form
         className="maxw-none"
         data-testid="custom-category-form"
