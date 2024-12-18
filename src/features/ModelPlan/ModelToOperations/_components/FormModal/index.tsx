@@ -10,16 +10,20 @@ import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
+import MoveSubCategoryForm from '../MoveSubCategoryForm';
+
+export type MTOModalType =
+  | 'category'
+  | 'milestone'
+  | 'solution'
+  | 'solutionToMilestone'
+  | 'editMilestone'
+  | 'moveSubCategory';
 
 type MTOModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-  modalType:
-    | 'category'
-    | 'milestone'
-    | 'solution'
-    | 'solutionToMilestone'
-    | 'editMilestone';
+  modalType: MTOModalType;
   isRequired?: boolean;
   milestone?: MilestoneCardType;
 };
@@ -45,6 +49,8 @@ const MTOModal = ({
         return t('modal.title.solution');
       case 'solutionToMilestone':
         return t('modal.title.solutionToMilestone');
+      case 'moveSubCategory':
+        return t('modal.title.moveSubCategory');
       default:
         return '';
     }
@@ -86,6 +92,9 @@ const MTOModal = ({
           closeModal={closeModal}
           milestone={milestone}
         />
+      )}
+      {modalType === 'moveSubCategory' && (
+        <MoveSubCategoryForm closeModal={closeModal} />
       )}
     </Modal>
   );

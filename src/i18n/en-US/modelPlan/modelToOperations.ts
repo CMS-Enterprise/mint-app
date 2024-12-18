@@ -180,6 +180,9 @@ export const modelToOperationsMisc: Record<string, any> = {
   aboutCategories: 'About categories',
   aboutCategoriesDescription:
     'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
+  successReorder: 'Your categories have been reordered.',
+  errorReorderForm:
+    'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
   optionsCard: {
     milestones: {
       label: 'Milestones',
@@ -266,7 +269,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       category: 'Add a new category',
       milestone: 'Add a new model milestone',
       solution: 'Add a new solution',
-      solutionToMilestone: 'Add a solution for this milestone?'
+      solutionToMilestone: 'Add a solution for this milestone?',
+      moveSubCategory: 'Move sub-category to a new category'
     },
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
@@ -376,6 +380,18 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     solutionToMilestone: {
+      description:
+        'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
+      alert: {
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions'
+    },
+    moveSubCategory: {
       description:
         'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
       alert: {

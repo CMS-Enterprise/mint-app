@@ -1,12 +1,11 @@
 import React, { createContext, useState } from 'react';
+import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/FormModal';
 
 interface MTOModalContextType {
   isMTOModalOpen: boolean;
   setMTOModalOpen: (isOpen: boolean) => void;
-  mtoModalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone';
-  setMTOModalType: (
-    type: 'category' | 'milestone' | 'solution' | 'solutionToMilestone'
-  ) => void;
+  mtoModalType: MTOModalType;
+  setMTOModalType: (type: MTOModalType) => void;
   categoryID: string;
   setCategoryID: (id: string) => void;
   subCategoryID: string;
@@ -29,9 +28,7 @@ const MTOModalContext = createContext<MTOModalContextType>({
 
 const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMTOModalOpen, setMTOModalOpen] = useState(false);
-  const [mtoModalType, setMTOModalType] = useState<
-    'category' | 'milestone' | 'solution' | 'solutionToMilestone'
-  >('category');
+  const [mtoModalType, setMTOModalType] = useState<MTOModalType>('category');
   const [categoryID, setCategoryID] = useState('');
   const [subCategoryID, setSubCategoryID] = useState('');
 

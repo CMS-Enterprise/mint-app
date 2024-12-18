@@ -149,11 +149,14 @@ const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setCategoryID(primaryCategoryID);
                 if (rowType === 'category') {
-                  clearMessage();
-                  setMTOModalOpen(true);
                   setMTOModalType('category');
-                  setCategoryID(primaryCategoryID);
+                } else {
+                  setMTOModalType('moveSubCategory');
+                  if (subCategoryID) setSubCategoryID(subCategoryID);
                 }
               }}
               onKeyPress={e => {
