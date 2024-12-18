@@ -409,8 +409,6 @@ export const modelToOperationsMisc: Record<string, any> = {
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
     },
-    addButton: 'Add {{type}}',
-    cancel: 'Cancel',
     editCategoryTitle: {
       label: 'Current title',
       newTitle: 'New title',

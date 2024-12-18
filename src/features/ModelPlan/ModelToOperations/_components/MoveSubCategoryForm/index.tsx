@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
   Controller,
-  Form,
   FormProvider,
   SubmitHandler,
   useForm
@@ -11,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
+  Form,
   FormGroup,
   Label,
   Select
@@ -21,15 +21,12 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
-  newOrder: number;
   parentID: string;
 };
 
@@ -46,18 +43,14 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      parentID: categoryID || ''
+      parentID: 'default'
     }
-    // values: {
-    //   parentID: parentCategoryID || ''
-    // }
   });
 
   const {
     control,
     handleSubmit,
     watch,
-    setValue,
     formState: { isSubmitting, isDirty }
   } = methods;
 
@@ -65,6 +58,11 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     modelID,
     primaryCategory: watch('parentID')
   });
+
+  const currentCategory =
+    selectOptionsAndMappedCategories.find(
+      category => category.value === categoryID
+    )?.label || '';
 
   const [updateOrder] = useReorderMtoCategoryMutation({
     refetchQueries: [
@@ -78,9 +76,9 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const onSubmit: SubmitHandler<FormValues> = formData => {
     updateOrder({
       variables: {
-        id: subCategoryID,
+        id: subCategoryID || '',
         newOrder: 0,
-        parentID: '1'
+        parentID: formData.parentID
       }
     })
       .then(response => {
@@ -127,7 +125,7 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         {modelToOperationsMiscT('modal.moveSubCategory.currentCategory')}
       </dt>
 
-      <dd className="margin-0 margin-bottom-2">MINT</dd>
+      <dd className="margin-0 margin-bottom-2">{currentCategory}</dd>
 
       <FormProvider {...methods}>
         <Form
@@ -158,8 +156,6 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                     defaultValue="default"
                     onChange={e => {
                       field.onChange(e);
-                      // Reset subcategory when category changes
-                      setValue('parentID', 'default');
                     }}
                   >
                     {selectOptionsAndMappedCategories.map(option => {
@@ -173,20 +169,21 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
                 </FormGroup>
               )}
             />
+
+            <Button
+              type="submit"
+              disabled={isSubmitting || !isDirty}
+              className="margin-right-4"
+            >
+              {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+            </Button>
+
+            <Button type="button" unstyled onClick={() => closeModal()}>
+              {modelToOperationsMiscT('modal.cancel')}
+            </Button>
           </Fieldset>
         </Form>
       </FormProvider>
-      <Button
-        type="button"
-        className="margin-right-4 bg-error"
-        // onClick={() => handleRemove()}
-      >
-        {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
-      </Button>
-
-      <Button type="button" unstyled onClick={() => closeModal()}>
-        {modelToOperationsMiscT('modal.editMilestone.goBack')}
-      </Button>
     </>
   );
 };

@@ -28,13 +28,16 @@ type FormValues = {
 
 const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
   const {
     categoryID,
     subCategoryID,
     categoryName,
     resetCategoryAndSubCategoryID
   } = useContext(MTOModalContext);
+
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const methods = useForm<FormValues>({
