@@ -1,3 +1,4 @@
+DROP COLLATION IF EXISTS case_insensitive;
 CREATE COLLATION case_insensitive (PROVIDER = ICU, LOCALE = 'und-u-ks-level2', DETERMINISTIC = FALSE);
 
 COMMENT ON COLLATION case_insensitive IS 'a collation to enforce case insensitivity';

@@ -14,7 +14,12 @@ import SolutionForm from '../AddCustomSolutionForm';
 type MTOModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-  modalType: 'category' | 'milestone' | 'solution' | 'solutionToMilestone';
+  modalType:
+    | 'category'
+    | 'milestone'
+    | 'solution'
+    | 'solutionToMilestone'
+    | 'editMilestone';
   isRequired?: boolean;
   milestone?: MilestoneCardType;
 };

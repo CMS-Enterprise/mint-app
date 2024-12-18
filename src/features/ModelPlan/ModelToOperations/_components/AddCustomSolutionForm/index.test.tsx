@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
-import { GetMtoCategoriesDocument } from 'gql/generated/graphql';
+import { categoryMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
@@ -9,56 +9,12 @@ import MessageProvider from 'contexts/MessageContext';
 
 import SolutionForm from './index';
 
-const mocks = [
-  {
-    request: {
-      query: GetMtoCategoriesDocument,
-      variables: {
-        id: modelID
-      }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          mtoMatrix: {
-            __typename: 'MtoMatrix',
-            categories: [
-              {
-                __typename: 'MtoCategory',
-                id: '123',
-                name: 'Category 1',
-                subCategories: {
-                  __typename: 'MtoSubCategory',
-                  id: '123',
-                  name: 'SubCategory 1'
-                }
-              },
-              {
-                __typename: 'MtoCategory',
-                id: '456',
-                name: 'Category 2',
-                subCategories: {
-                  __typename: 'MtoSubCategory',
-                  id: '123',
-                  name: 'SubCategory 2'
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  }
-];
-
 describe('Custom Solution form', () => {
   it('matches snapshot', async () => {
     const { getAllByTestId, getByTestId, asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <VerboseMockedProvider mocks={[...categoryMock]} addTypename={false}>
             <Route path="/models/:modelID/">
               <SolutionForm closeModal={() => {}} />
             </Route>

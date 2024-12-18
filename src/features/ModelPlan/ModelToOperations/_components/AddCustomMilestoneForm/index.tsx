@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -16,16 +16,13 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import {
-  useCreateMtoMilestoneCustomMutation,
-  useGetMtoCategoriesQuery
-} from 'gql/generated/graphql';
+import { useCreateMtoMilestoneCustomMutation } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { MTOModalContext } from 'contexts/MTOModalContext';
+import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
-
-import { selectOptions, SelectProps } from '../AddCustomCategoryForm';
 
 type FormValues = {
   primaryCategory: string;
@@ -39,36 +36,13 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { message, showMessage, clearMessage } = useMessage();
-
-  const { data, loading } = useGetMtoCategoriesQuery({
-    variables: { id: modelID }
-  });
-  // Get categories from the data
-  const categories = data?.modelPlan?.mtoMatrix?.categories || [];
-
-  // Map categories to select options
-  const mappedCategories: SelectProps[] = categories.map(category => ({
-    value: category.id,
-    label: category.name
-  }));
-
-  // Combine select options and mapped categories
-  const selectOptionsAndMappedCategories: SelectProps[] = [
-    // only get the default option of selectOptions
-    selectOptions[0],
-    ...mappedCategories
-  ];
-
-  const getSubcategoryByPrimaryCategoryName = (id: string) => {
-    const result = categories.find(item => item.id === id);
-    return result ? result.subCategories : [];
-  };
+  const { categoryID, subCategoryID } = useContext(MTOModalContext);
 
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: 'default',
-      subcategory: 'default',
+      primaryCategory: categoryID ?? 'default',
+      subcategory: subCategoryID ?? 'default',
       name: ''
     }
   });
@@ -81,13 +55,15 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
-  const mappedSubcategories: SelectProps[] =
-    getSubcategoryByPrimaryCategoryName(watch('primaryCategory')).map(
-      subcategory => ({
-        value: subcategory.id,
-        label: subcategory.name
-      })
-    );
+  const {
+    selectOptionsAndMappedCategories,
+    mappedSubcategories,
+    selectOptions,
+    loading
+  } = useFormatMTOCategories({
+    modelID,
+    primaryCategory: watch('primaryCategory')
+  });
 
   const [create] = useCreateMtoMilestoneCustomMutation();
 

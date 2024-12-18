@@ -300,12 +300,61 @@ export const modelToOperationsMisc: Record<string, any> = {
       selectSubcategory: {
         label: 'Select sub-category'
       },
+      milestoneCategory: {
+        label: 'Category',
+        sublabel:
+          'If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.'
+      },
+      milestoneSubcategory: {
+        label: 'Sub-category',
+        sublabel:
+          'If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.'
+      },
       milestoneTitle: 'Milestone title',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
         success: 'Your milestone ({{milestone}}) has been added.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
+      }
+    },
+    editMilestone: {
+      milestoneTitle: 'Milestone details',
+      alert: {
+        info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
+        success: 'Your milestone ({{milestone}}) has been updated.',
+        error:
+          'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
+      },
+      statusInfo: [
+        '<bold>Not started</bold>: No work has started on any part of this milestone or any solution associated with it',
+        '<bold>In progress</bold>: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)',
+        '<bold>Completed</bold>: Work for this milestone and all of its selected solutions is finished'
+      ],
+      saveChanges: 'Save changes',
+      save: 'Save',
+      unsavedChanges: '{{count}} unsaved change',
+      unsavedChanges_other: '{{count}} unsaved changes',
+      removeMilestone: 'Remove milestone',
+      areYouSure: 'Are you sure you want to remove this milestone?',
+      removeDescription:
+        'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
+      goBack: 'Go back',
+      leave: 'Are you sure you want to leave ?',
+      leaveDescription:
+        'You have made {{count}} changes that will not be saved if you navigate away from this view.',
+      successUpdated: 'Your milestone ({{milestone}}) has been updated.',
+      errorUpdated:
+        'There was an error updating your milestone. Please try again. If the error persists, please try again another time.',
+      successRemoved: 'Your milestone ({{milestone}}) has been removed.',
+      errorRemoved:
+        'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
+      leaveConfim: {
+        heading: 'Are you sure you want to leave?',
+        description:
+          'You have made changes that will not be saved if you navigate away from this view.',
+        confirm: 'Leave without saving',
+        dontLeave: 'Don’t leave'
       }
     },
     solution: {
@@ -351,6 +400,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     hideAdded: 'Hide added milestones ({{count}})',
     milestone: 'Milestone',
     suggested: 'Suggested',
+    isDraft: 'Draft',
     category: 'Category: {{category}}',
     facilitatedByArray: 'Facilitated by: {{facilitatedBy}}',
     addToMatrix: 'Add to matrix',
@@ -369,28 +419,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Check <link1>all available milestones</link1> or <button1>add a custom milestone</button1>.',
     addCustomMilestone: 'Add a custom milestone',
     aboutSolution: 'About this solution',
-    commonSolutions: 'Common solutions',
-    facilitatedBy: {
-      MODEL_TEAM: 'Model team',
-      MODEL_LEAD: 'Model lead',
-      IT_LEAD: 'IT lead',
-      SOLUTION_ARCHITECT: 'Solution architect',
-      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
-      PARTICIPANTS: 'Participants',
-      APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
-      IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
-      EVALUATION_CONTRACTOR: 'Evaluation contractor',
-      QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
-        'Quality measures development contractor',
-      LEARNING_CONTRACTOR: 'Learning contractor',
-      MONITORING_CONTRACTOR: 'Monitoring contractor',
-      CONTRACTING_OFFICERS_REPRESENTATIVE:
-        'Contracting Officer’s Representative (COR)',
-      LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
-      RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
-        'Research and Rapid Cycle Evaluation Group (RREG)',
-      OTHER: 'Other'
-    }
+    commonSolutions: 'Common solutions'
+  },
+  validation: {
+    fillOut: 'Please fill out the required field.'
   }
 };
 

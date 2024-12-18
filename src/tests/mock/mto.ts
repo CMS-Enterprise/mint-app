@@ -1,8 +1,13 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
+  GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
+  GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
-  MtoCommonMilestoneKey
+  MtoCommonMilestoneKey,
+  MtoCommonSolutionKey,
+  MtoMilestoneStatus,
+  MtoRiskIndicator
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -30,7 +35,13 @@ export const commonMilestonesMock = [
                 isAdded: false,
                 isSuggested: true,
                 categoryName: 'Test Category',
-                subCategoryName: 'Test SubCategory'
+                subCategoryName: 'Test SubCategory',
+                facilitatedByRole: [],
+                commonSolutions: [
+                  {
+                    key: MtoCommonSolutionKey.BCDA
+                  }
+                ]
               }
             ]
           }
@@ -63,6 +74,86 @@ export const commonSolutionsMock = [
               {
                 __typename: 'MTOCommonSolution',
                 name: 'common solution 2'
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+export const milestoneMock = [
+  {
+    request: {
+      query: GetMtoMilestoneDocument,
+      variables: {
+        id: '123'
+      }
+    },
+    result: {
+      data: {
+        mtoMilestone: {
+          __typename: 'MtoMilestone',
+          id: '123',
+          name: 'Milestone 1',
+          key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+          facilitatedBy: [],
+          needBy: '2021-08-01',
+          status: MtoMilestoneStatus.COMPLETED,
+          riskIndicator: MtoRiskIndicator.AT_RISK,
+          addedFromMilestoneLibrary: true,
+          isDraft: false,
+          categories: {
+            category: {
+              __typename: 'MtoCategory',
+              id: '1'
+            },
+            subCategory: {
+              __typename: 'MtoSubcategory',
+              id: '2'
+            }
+          }
+        }
+      }
+    }
+  }
+];
+
+export const categoryMock = [
+  {
+    request: {
+      query: GetMtoCategoriesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          mtoMatrix: {
+            __typename: 'MtoMatrix',
+            categories: [
+              {
+                __typename: 'MtoCategory',
+                id: '123',
+                name: 'Category 1',
+                subCategories: {
+                  __typename: 'MtoSubCategory',
+                  id: '123',
+                  name: 'SubCategory 1'
+                }
+              },
+              {
+                __typename: 'MtoCategory',
+                id: '456',
+                name: 'Category 2',
+                subCategories: {
+                  __typename: 'MtoSubCategory',
+                  id: '123',
+                  name: 'SubCategory 2'
+                }
               }
             ]
           }
@@ -127,6 +218,11 @@ export const suggestedMilestonesMock = [
   }
 ];
 
-const allMocks = [...suggestedMilestonesMock, ...commonMilestonesMock];
+const allMocks = [
+  ...suggestedMilestonesMock,
+  ...commonMilestonesMock,
+  ...milestoneMock,
+  ...categoryMock
+];
 
 export default allMocks;

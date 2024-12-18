@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Icon, Menu } from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
+import React from 'react';
+import { Icon } from '@trussworks/react-uswds';
 import {
+  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator
@@ -10,7 +9,9 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { formatDateUtc } from 'utils/date';
+
+import MilestoneStatusTag from '../MilestoneStatusTag';
 
 import './index.scss';
 
@@ -32,7 +33,10 @@ export type MilestoneType = {
   needBy: string | null;
   status: MtoMilestoneStatus;
   actions: any;
+  addedFromMilestoneLibrary?: boolean;
+  isDraft?: boolean;
   isUncategorized?: boolean;
+  key?: MtoCommonMilestoneKey | null;
 };
 
 export type SubCategoryType = {
@@ -46,7 +50,10 @@ export type SubCategoryType = {
   status: undefined;
   actions: any;
   milestones: MilestoneType[];
+  addedFromMilestoneLibrary?: undefined;
+  isDraft?: undefined;
   isUncategorized?: boolean;
+  key?: undefined;
 };
 
 export type CategoryType = {
@@ -60,7 +67,10 @@ export type CategoryType = {
   status: undefined;
   actions: any;
   subCategories: SubCategoryType[];
+  addedFromMilestoneLibrary?: undefined;
+  isDraft?: undefined;
   isUncategorized?: boolean;
+  key?: undefined;
 };
 
 export type RowType = CategoryType | SubCategoryType | MilestoneType;
@@ -202,9 +212,7 @@ export const columns: ColumnType[] = [
         <>
           {row.facilitatedBy
             .map(facilitator =>
-              i18next.t(
-                `modelToOperationsMisc:milestoneLibrary.facilitatedBy.${facilitator}`
-              )
+              i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
             )
             .join(', ')}
         </>
@@ -254,7 +262,7 @@ export const columns: ColumnType[] = [
             {i18next.t('modelToOperationsMisc:table.noneAdded')}
           </span>
         );
-      return <>{row.needBy}</>;
+      return <>{formatDateUtc(row.needBy, 'MM/dd/yyyy')}</>;
     }
   },
   {
@@ -264,9 +272,9 @@ export const columns: ColumnType[] = [
     sort: sortNested,
     Cell: ({ row, rowType, expanded }: RowProps) => {
       const { status } = row;
-      if (rowType !== 'milestone') return <></>;
+      if (rowType !== 'milestone' || !status) return <></>;
       return (
-        <TaskListStatusTag status={status} classname="width-fit-content" />
+        <MilestoneStatusTag status={status} classname="width-fit-content" />
       );
     }
   },
@@ -277,151 +285,3 @@ export const columns: ColumnType[] = [
     canSort: false
   }
 ];
-
-export const ActionMenu = ({
-  rowType,
-  MoveUp,
-  MoveDown
-}: {
-  rowType: MTORowType;
-  MoveUp: React.ReactChild;
-  MoveDown: React.ReactChild;
-}) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  if (rowType !== 'milestone')
-    return (
-      <div ref={menuRef}>
-        <Button
-          type="button"
-          style={{ fontSize: '1.25rem' }}
-          className="width-auto padding-right-1 text-primary text-decoration-none text-bold float-right"
-          aria-label={i18next.t('modelToOperationsMisc:table.openActionMenu')}
-          unstyled
-          onClick={e => {
-            e.stopPropagation();
-            setIsMenuOpen(!isMenuOpen);
-          }}
-          onKeyPress={e => {
-            e.stopPropagation();
-          }}
-        >
-          &#8230;
-        </Button>
-        <Menu
-          className={classNames(
-            'share-export-modal__menu padding-top-05 padding-bottom-0 bg-white text-primary width-card-lg action-menu',
-            {
-              'position-absolute': !isTablet
-            }
-          )}
-          items={[
-            <Button
-              type="button"
-              onClick={e => {
-                e.stopPropagation();
-                setIsMenuOpen(false);
-              }}
-              onKeyPress={e => {
-                e.stopPropagation();
-              }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-              unstyled
-            >
-              {i18next.t('modelToOperationsMisc:table.menu.close')}
-            </Button>,
-            MoveUp,
-            MoveDown,
-            <Button
-              type="button"
-              onClick={e => {
-                e.stopPropagation();
-                setIsMenuOpen(false);
-              }}
-              onKeyPress={e => {
-                e.stopPropagation();
-              }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-              unstyled
-            >
-              {i18next.t('modelToOperationsMisc:table.menu.addMilestone')}
-            </Button>,
-            <Button
-              type="button"
-              onClick={e => {
-                setIsMenuOpen(false);
-              }}
-              onKeyPress={e => {
-                e.stopPropagation();
-              }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-              unstyled
-            >
-              {i18next.t(
-                `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'addSubCategory' : 'moveToAnotherCategory'}`
-              )}
-            </Button>,
-            <Button
-              type="button"
-              onClick={e => {
-                e.stopPropagation();
-                setIsMenuOpen(false);
-              }}
-              onKeyPress={e => {
-                e.stopPropagation();
-              }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-              unstyled
-            >
-              {i18next.t(
-                `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'editCategoryTitle' : 'editSubCategoryTitle'}`
-              )}
-            </Button>,
-            <Button
-              type="button"
-              onClick={e => {
-                e.stopPropagation();
-                setIsMenuOpen(false);
-              }}
-              onKeyPress={e => {
-                e.stopPropagation();
-              }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item text-red"
-              unstyled
-            >
-              {i18next.t(
-                `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'removeCategory' : 'removeSubCategory'}`
-              )}
-            </Button>
-          ]}
-          isOpen={isMenuOpen}
-        />
-      </div>
-    );
-  return (
-    <div style={{ textAlign: 'right' }}>
-      {/* TODO: add link to edit milestone */}
-      <UswdsReactLink to="#">
-        {i18next.t('modelToOperationsMisc:table.editDetails')}
-      </UswdsReactLink>
-    </div>
-  );
-};

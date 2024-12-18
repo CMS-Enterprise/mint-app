@@ -34,6 +34,11 @@ export const dirtyInput = (initialValues: any, values: any) => {
   Object.keys(initialValues).forEach(field => {
     // Added conditional for 0 value, as number inputs are always initialized with 0, and it needs to be persisted even if not touched
     if (
+      typeof initialValues[field] === 'object' &&
+      !isEqual(initialValues[field], values[field])
+    ) {
+      onlyDirtyInput[field] = values[field];
+    } else if (
       !isEqual(initialValues[field], values[field]) ||
       initialValues[field] === 0
     ) {
