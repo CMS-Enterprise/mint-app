@@ -392,7 +392,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     editCategoryTitle: {
       label: 'Current title',
-      newTitle: 'New title'
+      newTitle: 'New title',
+      saveChanges: 'Save changes'
     }
   },
   milestoneLibrary: {

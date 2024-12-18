@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -16,6 +16,7 @@ import {
 } from '@trussworks/react-uswds';
 import { useRenameMtoCategoryMutation } from 'gql/generated/graphql';
 
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -26,6 +27,7 @@ type FormValues = {
 
 const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { categoryI, categoryName } = useContext(MTOModalContext);
   const {
     message,
     // showMessage,
@@ -81,9 +83,14 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-y-0">
+                <p className="margin-y-0 text-bold">
+                  {t('modal.editCategoryTitle.label')}
+                </p>
+                <p className="margin-top-0">{categoryName}</p>
+
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
-                  className="mint-body-normal maxw-none"
+                  className="mint-body-normal maxw-none margin-top-2"
                   requiredMarker
                 >
                   {t('modal.editCategoryTitle.newTitle')}
@@ -100,7 +107,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
           />
         </Fieldset>
         <Button type="submit" disabled={!isValid} className="margin-right-3">
-          {t('modal.addButton', { type: 'category' })}
+          {t('modal.editCategoryTitle.saveChanges')}
         </Button>
         <Button
           type="button"
