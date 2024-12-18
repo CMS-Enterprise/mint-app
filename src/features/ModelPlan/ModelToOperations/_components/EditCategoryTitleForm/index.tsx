@@ -5,7 +5,7 @@ import {
   SubmitHandler,
   useForm
 } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -16,6 +16,7 @@ import {
 } from '@trussworks/react-uswds';
 import { useRenameMtoCategoryMutation } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
@@ -27,12 +28,13 @@ type FormValues = {
 
 const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const { categoryI, categoryName } = useContext(MTOModalContext);
   const {
-    message,
-    // showMessage,
-    clearMessage
-  } = useMessage();
+    categoryID,
+    subCategoryID,
+    categoryName,
+    resetCategoryAndSubCategoryID
+  } = useContext(MTOModalContext);
+  const { message, showMessage, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const methods = useForm<FormValues>({
@@ -51,16 +53,50 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
   const [rename] = useRenameMtoCategoryMutation();
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    console.log(formData);
-    // rename({
-    //   variables: {
-    //     id: 'some-id',
-    //     name: formData.name
-    //   }
-    // }).then(() => {
-    //   reset();
-    //   closeModal();
-    // });
+    rename({
+      variables: {
+        id: subCategoryID ?? categoryID,
+        name: formData.name
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  <Trans
+                    i18nKey={t('modal.editCategoryTitle.alert.success')}
+                    components={{
+                      b: <span className="text-bold" />
+                    }}
+                    values={{ title: formData.name }}
+                  />
+                </span>
+              </Alert>
+            </>
+          );
+        }
+        resetCategoryAndSubCategoryID();
+        closeModal();
+      })
+      .catch(() => {
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {t('modal.editCategoryTitle.alert.error')}
+          </Alert>
+        );
+      });
   };
 
   return (
@@ -72,9 +108,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
         id="custom-category-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Fieldset
-        // disabled={loading}
-        >
+        <Fieldset>
           <Controller
             name="name"
             control={control}
