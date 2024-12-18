@@ -266,7 +266,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       category: 'Add a new category',
       milestone: 'Add a new model milestone',
       solution: 'Add a new solution',
-      solutionToMilestone: 'Add a solution for this milestone?'
+      solutionToMilestone: 'Add a solution for this milestone?',
+      editCategoryTitle: 'Edit category title'
     },
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',

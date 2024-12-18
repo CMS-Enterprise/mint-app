@@ -47,6 +47,8 @@ const MTOModal = ({
         return t('modal.title.solution');
       case 'solutionToMilestone':
         return t('modal.title.solutionToMilestone');
+      case 'editCategoryTitle':
+        return t('modal.title.editCategoryTitle');
       default:
         return '';
     }
