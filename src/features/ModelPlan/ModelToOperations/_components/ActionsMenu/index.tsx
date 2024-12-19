@@ -210,6 +210,11 @@ const ActionMenu = ({
                     ? 'removeCategory'
                     : 'removeSubcategory'
                 );
+                if (rowType === 'category') {
+                  setCategoryID(primaryCategoryID);
+                } else {
+                  setSubCategoryID(subCategoryID);
+                }
               }}
               onKeyPress={e => {
                 e.stopPropagation();

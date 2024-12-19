@@ -1,30 +1,93 @@
-// import React, { useContext } from 'react';
-// import { useTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { Button } from '@trussworks/react-uswds';
+import {
+  GetModelToOperationsMatrixDocument,
+  useDeleteMtoCategoryMutation
+} from 'gql/generated/graphql';
 
-// import { MTOModalContext } from 'contexts/MTOModalContext';
-// import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-// import useMessage from 'hooks/useMessage';
+import Alert from 'components/Alert';
+import { MTOModalContext } from 'contexts/MTOModalContext';
+import useMessage from 'hooks/useMessage';
 
-// const RemoveCategoryForm = () => {
-//   const { t } = useTranslation('modelToOperationsMisc');
-//   const {
-//     categoryID,
-//     subCategoryID,
-//     categoryName,
-//     resetCategoryAndSubCategoryID
-//   } = useContext(MTOModalContext);
-//   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
-//   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
+const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
+  const { t } = useTranslation('modelToOperationsMisc');
+  const { modelID } = useParams<{ modelID: string }>();
+  const { categoryID, subCategoryID, resetCategoryAndSubCategoryID } =
+    useContext(MTOModalContext);
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
-//   const [deleteMtoCategoryMutation, { data, loading, error }] =
-//     useDeleteMtoCategoryMutation({});
+  const [deleteCategory] = useDeleteMtoCategoryMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
-//   return (
-//     <>
-//       <p>{t('modal.remove.category.copy')}</p>
-//       <button type="button">cancel baby</button>
-//     </>
-//   );
-// };
+  const handleRemove = () => {
+    deleteCategory({
+      variables: {
+        id: subCategoryID ?? categoryID
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+            >
+              {t('modal.remove.successAlert')}
+            </Alert>
+          );
+        }
+        resetCategoryAndSubCategoryID();
+        closeModal();
+      })
+      .catch(() => {
+        showErrorMessageInModal(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-bottom-2"
+          >
+            {t('modal.remove.category.errorAlert')}
+          </Alert>
+        );
+      });
+  };
 
-// export default RemoveCategoryForm;
+  return (
+    <>
+      <p>{t('modal.remove.category.copy')}</p>
+      <Button
+        type="button"
+        className="margin-right-4 bg-error"
+        onClick={() => handleRemove()}
+      >
+        {t('modal.remove.category.button')}
+      </Button>
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          resetCategoryAndSubCategoryID();
+          clearMessage();
+          closeModal();
+        }}
+      >
+        {t('modal.remove.goBack')}
+      </Button>
+    </>
+  );
+};
+
+export default RemoveCategoryForm;

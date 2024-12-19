@@ -106,7 +106,9 @@ const MTOModal = ({
         <EditCategoryTitleForm closeModal={closeModal} />
       )}
       {(modalType === 'removeCategory' ||
-        modalType === 'removeSubcategory') && <RemoveCategoryForm />}
+        modalType === 'removeSubcategory') && (
+        <RemoveCategoryForm closeModal={closeModal} />
+      )}
     </Modal>
   );
 };
