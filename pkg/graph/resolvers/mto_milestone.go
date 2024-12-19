@@ -96,47 +96,25 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			return nil, err
 		}
 		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
-
-		// TODO: Batch insert these solutions
-		var solutions []*models.MTOSolution
-		for _, commonSolutionKey := range commonSolutions {
-			solution := models.NewMTOSolution(modelPlanID,
-				&commonSolutionKey,
-				nil,
-				nil,
-				nil,
-				principal.Account().ID)
-
-			mtoSolution, createMTOSolutionErr := storage.MTOSolutionCreateAllowConflicts(tx, logger, solution)
-			if createMTOSolutionErr != nil {
-				logger.Error("failed to create solution when creating common milestone", zap.Error(err))
-				return nil, createMTOSolutionErr
-			}
-
-			solutions = append(solutions, mtoSolution)
+		if err != nil {
+			logger.Error("failed to create mto milestone from common library", zap.Error(err))
+			return nil, err
 		}
 
-		// TODO: Batch insert these links
-		for _, solution := range solutions {
-			mtoMilestoneSolutionLink := models.NewMTOMilestoneSolutionLink(
-				principal.Account().ID,
-				createdMilestone.ID,
-				solution.ID,
-			)
-
-			_, milestoneSolutionLinkErr := storage.MTOMilestoneSolutionLinkCreate(
-				tx,
-				logger,
-				mtoMilestoneSolutionLink,
-			)
-
-			if milestoneSolutionLinkErr != nil {
-				logger.Error(
-					"failed to create milestone solution link when creating milestone from library",
-					zap.Error(err),
-				)
-				return nil, milestoneSolutionLinkErr
-			}
+		// create common solutions and link them
+		_, err = MTOMilestoneUpdateLinkedSolutionsWithTX(
+			ctx,
+			principal,
+			logger,
+			tx,
+			createdMilestone.ID,
+			createdMilestone.ModelPlanID,
+			[]uuid.UUID{},
+			commonSolutions,
+		)
+		if err != nil {
+			logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+			return nil, err
 		}
 
 		return createdMilestone, err
