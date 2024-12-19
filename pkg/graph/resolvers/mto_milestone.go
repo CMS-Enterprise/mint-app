@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
+
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 
 	"github.com/google/uuid"
@@ -94,47 +96,25 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			return nil, err
 		}
 		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
-
-		// TODO: Batch insert these solutions
-		var solutions []*models.MTOSolution
-		for _, commonSolutionKey := range commonSolutions {
-			solution := models.NewMTOSolution(modelPlanID,
-				&commonSolutionKey,
-				nil,
-				nil,
-				nil,
-				principal.Account().ID)
-
-			mtoSolution, createMTOSolutionErr := storage.MTOSolutionCreateAllowConflicts(tx, logger, solution)
-			if createMTOSolutionErr != nil {
-				logger.Error("failed to create solution when creating common milestone", zap.Error(err))
-				return nil, createMTOSolutionErr
-			}
-
-			solutions = append(solutions, mtoSolution)
+		if err != nil {
+			logger.Error("failed to create mto milestone from common library", zap.Error(err))
+			return nil, err
 		}
 
-		// TODO: Batch insert these links
-		for _, solution := range solutions {
-			mtoMilestoneSolutionLink := models.NewMTOMilestoneSolutionLink(
-				principal.Account().ID,
-				createdMilestone.ID,
-				solution.ID,
-			)
-
-			_, milestoneSolutionLinkErr := storage.MTOMilestoneSolutionLinkCreate(
-				tx,
-				logger,
-				mtoMilestoneSolutionLink,
-			)
-
-			if milestoneSolutionLinkErr != nil {
-				logger.Error(
-					"failed to create milestone solution link when creating milestone from library",
-					zap.Error(err),
-				)
-				return nil, milestoneSolutionLinkErr
-			}
+		// create common solutions and link them
+		_, err = MTOMilestoneUpdateLinkedSolutionsWithTX(
+			ctx,
+			principal,
+			logger,
+			tx,
+			createdMilestone.ID,
+			createdMilestone.ModelPlanID,
+			[]uuid.UUID{},
+			commonSolutions,
+		)
+		if err != nil {
+			logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+			return nil, err
 		}
 
 		return createdMilestone, err
@@ -174,13 +154,15 @@ func MTOMilestoneUpdate(
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
 		if solutionLinks != nil {
-			_, updateLinksErr := storage.MTOMilestoneUpdateLinkedSolutions(
-				tx,
+			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutionsWithTX(
+				ctx,
+				principal,
 				logger,
+				tx,
 				id,
+				existing.ModelPlanID,
 				solutionLinks.SolutionIDs,
 				solutionLinks.CommonSolutionKeys,
-				principal.Account().ID,
 			)
 			if updateLinksErr != nil {
 				return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", updateLinksErr)
@@ -247,8 +229,37 @@ func MTOMilestoneGetBySolutionIDLOADER(
 	return loaders.MTOMilestone.BySolutionID.Load(ctx, solutionID)
 }
 
-// MTOMilestoneUpdateLinkedSolutions updates the linked solutions for a milestone
+// MTOMilestoneUpdateLinkedSolutionsWithTX updates the linked solutions for a milestone, deleting ones that are not included in the list
+func MTOMilestoneUpdateLinkedSolutionsWithTX(
+	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
+	tx *sqlx.Tx,
+	milestoneID uuid.UUID,
+	modelPlanID uuid.UUID,
+	solutionIDs []uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+) ([]*models.MTOSolution, error) {
+	commonSolutionsInstance, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, commonSolutionKeys, modelPlanID, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
+		return item.ID
+	})
+	joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
+
+	currentLinkedSolutions, err := storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, milestoneID, joinedSolutionIDs, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	return currentLinkedSolutions, nil
+}
+
+// MTOMilestoneUpdateLinkedSolutions is a convenience wrapper around MTOMilestoneUpdateLinkedSolutionsWithTX
+// it initiates the transaction, then calls MTOMilestoneUpdateLinkedSolutionsWithTX
 func MTOMilestoneUpdateLinkedSolutions(
+	ctx context.Context,
 	principal authentication.Principal,
 	logger *zap.Logger,
 	store *storage.Store,
@@ -256,24 +267,28 @@ func MTOMilestoneUpdateLinkedSolutions(
 	solutionIDs []uuid.UUID,
 	commonSolutionKeys []models.MTOCommonSolutionKey,
 ) ([]*models.MTOSolution, error) {
-	solutionSlicePtr, err := sqlutils.WithTransaction[[]*models.MTOSolution](store, func(tx *sqlx.Tx) (*[]*models.MTOSolution, error) {
-		solutions, err := storage.MTOMilestoneUpdateLinkedSolutions(
-			tx,
-			logger,
-			id,
-			solutionIDs,
-			commonSolutionKeys,
-			principal.Account().ID,
-		)
 
-		// TODO: Is there a way to simplify this to circumvent the need for returning by pointer?
-		return &solutions, err
-	})
-
-	// NOTE: This is necessary to handle the implicit referencing by sqlutils.WithTransaction on the return value
-	if nil == solutionSlicePtr {
+	milestone, err := MTOMilestoneGetByIDLOADER(ctx, id)
+	if err != nil {
 		return nil, err
 	}
 
-	return *solutionSlicePtr, err
+	// initiate transaction
+	var retSolutions []*models.MTOSolution
+	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
+	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
+		if err != nil {
+			return err
+		}
+		retSolutions = currentLinkedSolutions
+		// TODO, should we instead return the solutions?
+		return nil
+
+	})
+	if err != nil {
+		return nil, err
+	}
+	return retSolutions, nil
 }

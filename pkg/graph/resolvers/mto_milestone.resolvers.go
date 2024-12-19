@@ -79,6 +79,7 @@ func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context
 	logger := appcontext.ZLogger(ctx)
 
 	return MTOMilestoneUpdateLinkedSolutions(
+		ctx,
 		principal,
 		logger,
 		r.store,

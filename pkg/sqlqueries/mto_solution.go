@@ -8,6 +8,9 @@ var mtoSolutionCreateSQL string
 //go:embed SQL/mto/solution/create_allow_conflicts.sql
 var mtoSolutionCreateAllowConflictsSQL string
 
+//go:embed SQL/mto/solution/create_common_solutions_allow_conflicts.sql
+var mtoSolutionCreateCommonSolutionsAllowConflictsSQL string
+
 //go:embed SQL/mto/solution/update.sql
 var mtoSolutionUpdateSQL string
 
@@ -21,19 +24,21 @@ var mtoSolutionGetByModelPlanIDLoaderSQL string
 var mtoSolutionGetByMilestoneIDLoaderSQL string
 
 type mtoSolutionScripts struct {
-	Create                 string
-	CreateAllowConflicts   string
-	Update                 string
-	GetByIDLoader          string
-	GetByModelPlanIDLoader string
-	GetByMilestoneIDLoader string
+	Create                              string
+	CreateAllowConflicts                string
+	CreateCommonSolutionsAllowConflicts string
+	Update                              string
+	GetByIDLoader                       string
+	GetByModelPlanIDLoader              string
+	GetByMilestoneIDLoader              string
 }
 
 var MTOSolution = mtoSolutionScripts{
-	Create:                 mtoSolutionCreateSQL,
-	CreateAllowConflicts:   mtoSolutionCreateAllowConflictsSQL,
-	Update:                 mtoSolutionUpdateSQL,
-	GetByIDLoader:          mtoSolutionGetByIDLoaderSQL,
-	GetByModelPlanIDLoader: mtoSolutionGetByModelPlanIDLoaderSQL,
-	GetByMilestoneIDLoader: mtoSolutionGetByMilestoneIDLoaderSQL,
+	Create:                              mtoSolutionCreateSQL,
+	CreateAllowConflicts:                mtoSolutionCreateAllowConflictsSQL,
+	CreateCommonSolutionsAllowConflicts: mtoSolutionCreateCommonSolutionsAllowConflictsSQL,
+	Update:                              mtoSolutionUpdateSQL,
+	GetByIDLoader:                       mtoSolutionGetByIDLoaderSQL,
+	GetByModelPlanIDLoader:              mtoSolutionGetByModelPlanIDLoaderSQL,
+	GetByMilestoneIDLoader:              mtoSolutionGetByMilestoneIDLoaderSQL,
 }
