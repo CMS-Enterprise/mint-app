@@ -249,12 +249,12 @@ func MTOMilestoneUpdateLinkedSolutions(
 	id uuid.UUID,
 	solutionIDs []uuid.UUID,
 	commonSolutionKeys []models.MTOCommonSolutionKey,
-) (*models.MTOMilestone, error) {
+) ([]*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
-		return storage.MTOMilestoneUpdateLinkedSolutions(
+	solutionSlicePtr, err := sqlutils.WithTransaction[[]*models.MTOSolution](store, func(tx *sqlx.Tx) (*[]*models.MTOSolution, error) {
+		solutions, err := storage.MTOMilestoneUpdateLinkedSolutions(
 			tx,
 			logger,
 			id,
@@ -262,5 +262,15 @@ func MTOMilestoneUpdateLinkedSolutions(
 			commonSolutionKeys,
 			principal.Account().ID,
 		)
+
+		// TODO: Is there a way to simplify this to circumvent the need for returning by pointer?
+		return &solutions, err
 	})
+
+	// NOTE: This is necessary to handle the implicit referencing by sqlutils.WithTransaction on the return value
+	if nil == solutionSlicePtr {
+		return nil, err
+	}
+
+	return *solutionSlicePtr, err
 }
