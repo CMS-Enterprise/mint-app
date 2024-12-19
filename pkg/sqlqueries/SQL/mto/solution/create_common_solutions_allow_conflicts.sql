@@ -36,3 +36,22 @@ insert_attempt AS (
         modified_dts
 )
 -- Join and return inserted and existing data
+SELECT
+    mto_solution.id,
+    mto_solution.model_plan_id,
+    mto_solution.mto_common_solution_key,
+    COALESCE(mto_solution.name, mto_common_solution.name) AS "name",
+    COALESCE(mto_solution.type, mto_common_solution.type) AS "type",
+    mto_solution.facilitated_by,
+    mto_solution.needed_by,
+    mto_solution.status,
+    mto_solution.risk_indicator,
+    mto_solution.poc_name,
+    mto_solution.poc_email,
+    mto_solution.created_by
+FROM mto_solution
+JOIN data_to_insert on data_to_insert.model_plan_id = mto_solution.model_plan_id AND data_to_insert.mto_common_solution_key = mti_solution.mto_common_solution_key
+LEFT JOIN mto_common_solution ON mto_solution.mto_common_solution_key = mto_common_solution.key
+WHERE
+    mto_solution.model_plan_id = :model_plan_id
+    AND mto_solution.mto_common_solution_key = :mto_common_solution_key
