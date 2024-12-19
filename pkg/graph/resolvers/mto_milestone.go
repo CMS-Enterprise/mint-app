@@ -176,13 +176,15 @@ func MTOMilestoneUpdate(
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
 		if solutionLinks != nil {
-			_, updateLinksErr := storage.MTOMilestoneUpdateLinkedSolutions(
-				tx,
+			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutionsWithTX(
+				ctx,
+				principal,
 				logger,
+				tx,
 				id,
+				existing.ModelPlanID,
 				solutionLinks.SolutionIDs,
 				solutionLinks.CommonSolutionKeys,
-				principal.Account().ID,
 			)
 			if updateLinksErr != nil {
 				return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", updateLinksErr)
