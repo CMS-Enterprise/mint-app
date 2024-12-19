@@ -78,144 +78,154 @@ const MTOHome = () => {
   }, [data?.modelPlan.mtoMatrix]);
 
   return (
-    <GridContainer>
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.MODEL_TO_OPERATIONS
-        ]}
-      />
-
-      {message && <Expire delay={45000}>{message}</Expire>}
-
-      <Grid row className="margin-bottom-2">
-        <Grid desktop={{ col: 9 }}>
-          <h1 className="margin-bottom-0 margin-top-5 line-height-large">
-            {t('heading')}
-          </h1>
-
-          {!loading && (
-            <p className="mint-body-large margin-bottom-2 margin-top-05">
-              {t('forModel', {
-                modelName
-              })}
-            </p>
-          )}
-
-          {!loading && (
-            <MTOStatusBanner
-              status={modelToOperationsMatrix?.status}
-              lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
-            />
-          )}
-        </Grid>
-
-        <Grid desktop={{ col: 3 }}>
-          <AskAQuestion
-            modelID={modelID}
-            className="margin-top-6 margin-bottom-4"
-            renderTextFor="modelToOperations"
+    <>
+      <div className="shadow-2">
+        <GridContainer>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.MODEL_TO_OPERATIONS
+            ]}
           />
-        </Grid>
-      </Grid>
 
-      <UswdsReactLink
-        to={`/models/${modelID}/collaboration-area`}
-        data-testid="return-to-collaboration"
-      >
-        <span>
-          <Icon.ArrowBack className="top-3px margin-right-1" />
-          {t('returnToCollaboration')}
-        </span>
-      </UswdsReactLink>
+          {message && <Expire delay={45000}>{message}</Expire>}
 
-      <div className="model-to-operations margin-y-6">
-        <Header
-          basic
-          extended={false}
-          className="margin-bottom-4 model-to-operations__nav-container"
-        >
-          <div className="usa-nav-container padding-0">
-            <PrimaryNav
-              items={mtoOptions.map(item => (
-                <button
-                  type="button"
-                  onClick={() => {
-                    params.set('view', item);
-                    history.push({ search: params.toString() });
-                  }}
-                  className={classNames(
-                    'usa-nav__link margin-left-neg-2 margin-right-2',
-                    {
-                      'usa-current': currentView === item
-                    }
-                  )}
-                >
-                  <span
-                    className={classNames({
-                      'text-primary': currentView === item
-                    })}
+          <Grid row className="margin-bottom-2">
+            <Grid desktop={{ col: 9 }}>
+              <h1 className="margin-bottom-0 margin-top-5 line-height-large">
+                {t('heading')}
+              </h1>
+
+              {!loading && (
+                <p className="mint-body-large margin-bottom-2 margin-top-05">
+                  {t('forModel', {
+                    modelName
+                  })}
+                </p>
+              )}
+
+              {!loading && (
+                <MTOStatusBanner
+                  status={modelToOperationsMatrix?.status}
+                  lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
+                />
+              )}
+            </Grid>
+
+            <Grid desktop={{ col: 3 }}>
+              <AskAQuestion
+                modelID={modelID}
+                className="margin-top-6 margin-bottom-4"
+                renderTextFor="modelToOperations"
+              />
+            </Grid>
+          </Grid>
+
+          <UswdsReactLink
+            to={`/models/${modelID}/collaboration-area`}
+            data-testid="return-to-collaboration"
+          >
+            <span>
+              <Icon.ArrowBack className="top-3px margin-right-1" />
+              {t('returnToCollaboration')}
+            </span>
+          </UswdsReactLink>
+
+          <Header
+            basic
+            extended={false}
+            className="model-to-operations__nav-container"
+          >
+            <div className="usa-nav-container padding-0">
+              <PrimaryNav
+                items={mtoOptions.map(item => (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      params.set('view', item);
+                      history.push({ search: params.toString() });
+                    }}
+                    className={classNames(
+                      'usa-nav__link margin-left-neg-2 margin-right-2',
+                      {
+                        'usa-current': currentView === item
+                      }
+                    )}
                   >
-                    {t(item)}
-                  </span>
-                </button>
-              ))}
-              mobileExpanded={false}
-              className="flex-justify-start margin-0 padding-0"
-            />
-          </div>
-        </Header>
-
-        {isTablet && (
-          <div className="maxw-mobile-lg">
-            <Select
-              id="mto-navigation-select"
-              name="currentView"
-              value={currentView}
-              onChange={e => {
-                params.set('view', e.target.value);
-                history.push({ search: params.toString() });
-              }}
-              className="margin-bottom-4 text-primary text-bold"
-            >
-              {mtoOptions.map(item => {
-                return (
-                  <option key={item} value={item}>
-                    {t(item)}
-                  </option>
-                );
-              })}
-            </Select>
-          </div>
-        )}
-
-        {currentView === 'milestones' && (
-          <>
-            {loading ? (
-              <PageLoading />
-            ) : (
-              <MTOModalProvider>
-                <MTOModal />
-
-                {isMatrixStarted ? (
-                  <>
-                    <MTOTableActions />
-                    <MTOTable
-                      queryData={data}
-                      loading={loading}
-                      error={error}
-                    />
-                  </>
-                ) : (
-                  <MTOOptionsPanel />
-                )}
-              </MTOModalProvider>
-            )}
-          </>
-        )}
+                    <span
+                      className={classNames({
+                        'text-primary': currentView === item
+                      })}
+                    >
+                      {t(item)}
+                    </span>
+                  </button>
+                ))}
+                mobileExpanded={false}
+                className="flex-justify-start margin-0 padding-0"
+              />
+            </div>
+          </Header>
+        </GridContainer>
       </div>
-    </GridContainer>
+      <div className="width-full shadow-2  bg-accent-cool-lighter">
+        <GridContainer>
+          <p className="margin-y-0">{t('suggestedMilestoneBanner.empty')}</p>
+        </GridContainer>
+      </div>
+      <GridContainer>
+        <div className="model-to-operations margin-y-6">
+          {isTablet && (
+            <div className="maxw-mobile-lg">
+              <Select
+                id="mto-navigation-select"
+                name="currentView"
+                value={currentView}
+                onChange={e => {
+                  params.set('view', e.target.value);
+                  history.push({ search: params.toString() });
+                }}
+                className="margin-bottom-4 text-primary text-bold"
+              >
+                {mtoOptions.map(item => {
+                  return (
+                    <option key={item} value={item}>
+                      {t(item)}
+                    </option>
+                  );
+                })}
+              </Select>
+            </div>
+          )}
+
+          {currentView === 'milestones' && (
+            <>
+              {loading ? (
+                <PageLoading />
+              ) : (
+                <MTOModalProvider>
+                  <MTOModal />
+
+                  {isMatrixStarted ? (
+                    <>
+                      <MTOTableActions />
+                      <MTOTable
+                        queryData={data}
+                        loading={loading}
+                        error={error}
+                      />
+                    </>
+                  ) : (
+                    <MTOOptionsPanel />
+                  )}
+                </MTOModalProvider>
+              )}
+            </>
+          )}
+        </div>
+      </GridContainer>
+    </>
   );
 };
 
