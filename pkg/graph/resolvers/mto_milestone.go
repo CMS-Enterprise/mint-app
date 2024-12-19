@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
+
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
@@ -252,15 +254,37 @@ func MTOMilestoneUpdateLinkedSolutions(
 ) (*models.MTOMilestone, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
+	milestone, err := MTOMilestoneGetByIDLOADER(ctx, id)
+	if err != nil {
+		return nil, err
+	}
 
+	// initiate transaction
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
-		return storage.MTOMilestoneUpdateLinkedSolutions(
-			tx,
-			logger,
-			id,
-			solutionIDs,
-			commonSolutionKeys,
-			principal.Account().ID,
-		)
+		// Upsert common solutions
+		commonSolutionsInstance, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, commonSolutionKeys, milestone.ModelPlanID, principal.Account().ID)
+		if err != nil {
+			return nil, err
+		}
+		commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
+			return item.ID
+		})
+		joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
+
+		_, err = storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, id, joinedSolutionIDs, principal.Account().ID)
+		if err != nil {
+			return nil, err
+		}
+		// TODO, should we instead return the solutions?
+		return milestone, nil
+
+		// return storage.MTOMilestoneUpdateLinkedSolutions(
+		// 	tx,
+		// 	logger,
+		// 	id,
+		// 	solutionIDs,
+		// 	commonSolutionKeys,
+		// 	principal.Account().ID,
+		// )
 	})
 }

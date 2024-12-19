@@ -112,6 +112,28 @@ func MTOSolutionCreateAllowConflicts(
 	return returned, nil
 }
 
+// MTOSolutionCreateCommonAllowConflictsSQL takes a list of common solution keys for a model plan id, and inserts ones that don't exist
+// it will return existing data, or newly inserted data
+func MTOSolutionCreateCommonAllowConflictsSQL(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+	modelPlanID uuid.UUID,
+	createdBy uuid.UUID,
+) ([]*models.MTOSolution, error) {
+
+	args := map[string]interface{}{
+		"model_plan_id":           modelPlanID,
+		"mto_common_solution_key": pq.Array(commonSolutionKeys),
+		"created_by":              createdBy,
+	}
+	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}
+
 // MTOSolutionUpdate updates a new MTOSolution in the database
 func MTOSolutionUpdate(
 	np sqlutils.NamedPreparer,

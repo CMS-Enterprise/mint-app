@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -53,4 +54,32 @@ func MTOMilestoneSolutionLinkGetByMilestoneID(
 	}
 
 	return returned, nil
+}
+
+// MTOMilestoneSolutionLinkMergeSolutionsToMilestones taks a list of solution ids, and will merge them to a milestone
+// the end result is that solutions not included here have their link removed
+func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	milestoneID uuid.UUID,
+	solutionIDs []uuid.UUID,
+	createdBy uuid.UUID,
+) ([]*models.MTOMilestoneSolutionLink, error) {
+	arg := map[string]interface{}{
+		"milestone_id": milestoneID,
+		"solution_ids": pq.Array(solutionIDs),
+		"created_by":   createdBy,
+	}
+
+	returned, procErr := sqlutils.SelectProcedure[models.MTOMilestoneSolutionLink](
+		np,
+		sqlqueries.MTOMilestoneSolutionLink.MergeSolutionsToMilestones,
+		arg,
+	)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue merging MTO Milestone-Solution links: %w", procErr)
+	}
+
+	return returned, nil
+
 }
