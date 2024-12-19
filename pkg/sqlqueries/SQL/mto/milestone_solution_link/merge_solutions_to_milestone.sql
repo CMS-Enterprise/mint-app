@@ -10,11 +10,13 @@ MERGE INTO mto_milestone_solution_link AS target
 USING source_links AS source
 ON target.solution_id = source.solution_id
 AND target.milestone_id = source.milestone_id
+WHEN MATCHED THEN 
+    DO NOTHING
 -- delete all other source_links for that milestone 
 WHEN NOT MATCHED BY SOURCE AND target.milestone_id = :milestone_id THEN
     DELETE
 -- insert records that are not
-WHEN NOT MATCHED THEN
+WHEN NOT MATCHED BY TARGET THEN
     INSERT (milestone_id, solution_id, created_by)
     VALUES (source.milestone_id, source.solution_id, source.created_by)
 ),

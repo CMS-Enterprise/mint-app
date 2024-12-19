@@ -1,13 +1,13 @@
 
-data_to_insert AS (
+WITH data_to_insert AS (
     SELECT 
-    GEN_RANDOM_UUID() as id,
-    :model_plan_id as model_plan_id,
-     UNNEST(CAST(:common_solution_keys AS MTO_COMMON_SOLUTION_KEY[])) AS mto_common_solution_key,
-     'NOT_STARTED' as status,
-     :created_by AS created_by
+        GEN_RANDOM_UUID() AS id,
+        CAST(:model_plan_id AS UUID) AS model_plan_id,
+        UNNEST(CAST(:common_solution_keys AS MTO_COMMON_SOLUTION_KEY[])) AS mto_common_solution_key,
+        CAST('NOT_STARTED' AS MTO_SOLUTION_STATUS) AS status,
+        CAST(:created_by AS UUID) AS created_by
 ),
-insert_attempt AS (
+insert_attempt AS ( --noqa
     INSERT INTO mto_solution (
         id,
         model_plan_id,
@@ -35,6 +35,7 @@ insert_attempt AS (
         modified_by,
         modified_dts
 )
+
 -- Join and return inserted and existing data
 SELECT
     mto_solution.id,
@@ -50,8 +51,5 @@ SELECT
     mto_solution.poc_email,
     mto_solution.created_by
 FROM mto_solution
-JOIN data_to_insert on data_to_insert.model_plan_id = mto_solution.model_plan_id AND data_to_insert.mto_common_solution_key = mti_solution.mto_common_solution_key
+JOIN data_to_insert ON data_to_insert.model_plan_id = mto_solution.model_plan_id AND data_to_insert.mto_common_solution_key = mto_solution.mto_common_solution_key
 LEFT JOIN mto_common_solution ON mto_solution.mto_common_solution_key = mto_common_solution.key
-WHERE
-    mto_solution.model_plan_id = :model_plan_id
-    AND mto_solution.mto_common_solution_key = :mto_common_solution_key
