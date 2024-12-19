@@ -258,7 +258,7 @@ func MTOMilestoneUpdateLinkedSolutions(
 	id uuid.UUID,
 	solutionIDs []uuid.UUID,
 	commonSolutionKeys []models.MTOCommonSolutionKey,
-) (*models.MTOMilestone, error) {
+) ([]*models.MTOSolution, error) {
 
 	milestone, err := MTOMilestoneGetByIDLOADER(ctx, id)
 	if err != nil {
@@ -266,32 +266,31 @@ func MTOMilestoneUpdateLinkedSolutions(
 	}
 
 	// initiate transaction
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+	var retSolutions []*models.MTOSolution
+	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
+	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 		//
 		// Upsert common solutions
 		commonSolutionsInstance, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, commonSolutionKeys, milestone.ModelPlanID, principal.Account().ID)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
 			return item.ID
 		})
 		joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
 
-		_, err = storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, id, joinedSolutionIDs, principal.Account().ID)
+		currentLinkedSolutions, err := storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, id, joinedSolutionIDs, principal.Account().ID)
 		if err != nil {
-			return nil, err
+			return err
 		}
+		retSolutions = currentLinkedSolutions
 		// TODO, should we instead return the solutions?
-		return milestone, nil
+		return nil
 
-		// return storage.MTOMilestoneUpdateLinkedSolutions(
-		// 	tx,
-		// 	logger,
-		// 	id,
-		// 	solutionIDs,
-		// 	commonSolutionKeys,
-		// 	principal.Account().ID,
-		// )
 	})
+	if err != nil {
+		return nil, err
+	}
+	return retSolutions, nil
 }

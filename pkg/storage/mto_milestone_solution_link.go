@@ -64,14 +64,14 @@ func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
 	milestoneID uuid.UUID,
 	solutionIDs []uuid.UUID,
 	createdBy uuid.UUID,
-) ([]*models.MTOMilestoneSolutionLink, error) {
+) ([]*models.MTOSolution, error) {
 	arg := map[string]interface{}{
 		"milestone_id": milestoneID,
 		"solution_ids": pq.Array(solutionIDs),
 		"created_by":   createdBy,
 	}
 
-	returned, procErr := sqlutils.SelectProcedure[models.MTOMilestoneSolutionLink](
+	returned, procErr := sqlutils.SelectProcedure[models.MTOSolution](
 		np,
 		sqlqueries.MTOMilestoneSolutionLink.MergeSolutionsToMilestones,
 		arg,

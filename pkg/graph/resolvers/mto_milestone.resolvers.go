@@ -78,7 +78,7 @@ func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	_, err := MTOMilestoneUpdateLinkedSolutions(
+	return MTOMilestoneUpdateLinkedSolutions(
 		ctx,
 		principal,
 		logger,
@@ -87,8 +87,6 @@ func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context
 		solutionLinks.SolutionIDs,
 		solutionLinks.CommonSolutionKeys,
 	)
-	// TODO update wiring to return solutions
-	return nil, err
 }
 
 // MtoMilestone is the resolver for the mtoMilestone field.
