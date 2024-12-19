@@ -8,8 +8,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -178,7 +176,14 @@ func MTOMilestoneUpdate(
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
 		if solutionLinks != nil {
-			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutions(ctx, store, id, solutionLinks.SolutionIDs, solutionLinks.CommonSolutionKeys)
+			_, updateLinksErr := storage.MTOMilestoneUpdateLinkedSolutions(
+				tx,
+				logger,
+				id,
+				solutionLinks.SolutionIDs,
+				solutionLinks.CommonSolutionKeys,
+				principal.Account().ID,
+			)
 			if updateLinksErr != nil {
 				return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", updateLinksErr)
 			}
@@ -247,13 +252,14 @@ func MTOMilestoneGetBySolutionIDLOADER(
 // MTOMilestoneUpdateLinkedSolutions updates the linked solutions for a milestone
 func MTOMilestoneUpdateLinkedSolutions(
 	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
 	store *storage.Store,
 	id uuid.UUID,
 	solutionIDs []uuid.UUID,
 	commonSolutionKeys []models.MTOCommonSolutionKey,
 ) (*models.MTOMilestone, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
+
 	milestone, err := MTOMilestoneGetByIDLOADER(ctx, id)
 	if err != nil {
 		return nil, err

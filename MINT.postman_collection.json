@@ -3450,7 +3450,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation GetMTOMilestone {\n    mtoMilestoneUpdateLinkedSolutions(\n        id: \"{{mtoMilestoneID}}\",\n        solutionLinks: {\n            solutionIDs: [\"{{mtoSolutionID}}\"],\n            commonSolutionKeys: [APPS]\n        }) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }    \n\n    # commonMilestone\n    solutions {\n        id\n        name\n    }\n    # category\n    # subCategory\n    }\n}",
+										"query": "mutation GetMTOMilestone {\n    mtoMilestoneUpdateLinkedSolutions(\n        id: \"{{mtoMilestoneID}}\",\n        solutionLinks: {\n            solutionIDs: [\"{{mtoSolutionID}}\"],\n            commonSolutionKeys: [INNOVATION]\n        }) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    }\n}",
 										"variables": ""
 									}
 								},

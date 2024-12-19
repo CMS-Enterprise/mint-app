@@ -74,8 +74,21 @@ func (r *mutationResolver) DeleteMTOMilestone(ctx context.Context, id uuid.UUID)
 }
 
 // MtoMilestoneUpdateLinkedSolutions is the resolver for the mtoMilestoneUpdateLinkedSolutions field.
-func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context, id uuid.UUID, solutionLinks model.MTOSolutionLinks) (*models.MTOMilestone, error) {
-	return MTOMilestoneUpdateLinkedSolutions(ctx, r.store, id, solutionLinks.SolutionIDs, solutionLinks.CommonSolutionKeys)
+func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context, id uuid.UUID, solutionLinks model.MTOSolutionLinks) ([]*models.MTOSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	_, err := MTOMilestoneUpdateLinkedSolutions(
+		ctx,
+		principal,
+		logger,
+		r.store,
+		id,
+		solutionLinks.SolutionIDs,
+		solutionLinks.CommonSolutionKeys,
+	)
+	// TODO update wiring to return solutions
+	return nil, err
 }
 
 // MtoMilestone is the resolver for the mtoMilestone field.

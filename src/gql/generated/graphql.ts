@@ -1288,7 +1288,7 @@ export type Mutation = {
   markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
-  mtoMilestoneUpdateLinkedSolutions: MtoMilestone;
+  mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
