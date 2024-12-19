@@ -249,7 +249,35 @@ func MTOMilestoneGetBySolutionIDLOADER(
 	return loaders.MTOMilestone.BySolutionID.Load(ctx, solutionID)
 }
 
-// MTOMilestoneUpdateLinkedSolutions updates the linked solutions for a milestone
+// MTOMilestoneUpdateLinkedSolutionsWithTX updates the linked solutions for a milestone, deleting ones that are not included in the list
+func MTOMilestoneUpdateLinkedSolutionsWithTX(
+	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
+	tx *sqlx.Tx,
+	milestoneID uuid.UUID,
+	modelPlanID uuid.UUID,
+	solutionIDs []uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+) ([]*models.MTOSolution, error) {
+	commonSolutionsInstance, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, commonSolutionKeys, modelPlanID, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
+		return item.ID
+	})
+	joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
+
+	currentLinkedSolutions, err := storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, milestoneID, joinedSolutionIDs, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	return currentLinkedSolutions, nil
+}
+
+// MTOMilestoneUpdateLinkedSolutions is a convenience wrapper around MTOMilestoneUpdateLinkedSolutionsWithTX
+// it initiates the transaction, then calls MTOMilestoneUpdateLinkedSolutionsWithTX
 func MTOMilestoneUpdateLinkedSolutions(
 	ctx context.Context,
 	principal authentication.Principal,
@@ -269,18 +297,8 @@ func MTOMilestoneUpdateLinkedSolutions(
 	var retSolutions []*models.MTOSolution
 	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
-		//
-		// Upsert common solutions
-		commonSolutionsInstance, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, commonSolutionKeys, milestone.ModelPlanID, principal.Account().ID)
-		if err != nil {
-			return err
-		}
-		commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
-			return item.ID
-		})
-		joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
 
-		currentLinkedSolutions, err := storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, id, joinedSolutionIDs, principal.Account().ID)
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
 		if err != nil {
 			return err
 		}
