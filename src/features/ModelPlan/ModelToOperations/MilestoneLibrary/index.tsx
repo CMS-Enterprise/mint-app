@@ -6,6 +6,7 @@ import {
   ButtonGroup,
   CardGroup,
   Grid,
+  GridContainer,
   Icon,
   Link
 } from '@trussworks/react-uswds';
@@ -60,7 +61,7 @@ const MilestoneLibrary = () => {
   }
 
   return (
-    <>
+    <GridContainer>
       <Breadcrumbs
         items={[
           BreadcrumbItemOptions.HOME,
@@ -95,7 +96,7 @@ const MilestoneLibrary = () => {
       ) : (
         <MilstoneCardGroup milestones={milestones} />
       )}
-    </>
+    </GridContainer>
   );
 };
 

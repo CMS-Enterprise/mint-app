@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
+  GridContainer,
   Header,
   Icon,
   PrimaryNav,
@@ -77,7 +78,7 @@ const MTOHome = () => {
   }, [data?.modelPlan.mtoMatrix]);
 
   return (
-    <>
+    <GridContainer>
       <Breadcrumbs
         items={[
           BreadcrumbItemOptions.HOME,
@@ -214,7 +215,7 @@ const MTOHome = () => {
           </>
         )}
       </div>
-    </>
+    </GridContainer>
   );
 };
 
