@@ -3,7 +3,8 @@
 
 .model-to-operations {
     &__nav-container {
-        border-bottom: 1px solid color('base-light');
+      // TODO: temp comment out to ensure styles match the mockup. will need to revisit
+        // border-bottom: 1px solid color('base-light');
     }
 
     .usa-header--basic .usa-nav__primary-item > .usa-current::after, .usa-header--basic .usa-nav__link:hover::after {
