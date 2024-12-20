@@ -16,7 +16,10 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { useCreateMtoMilestoneCustomMutation } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixDocument,
+  useCreateMtoMilestoneCustomMutation
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -35,7 +38,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
   const { categoryID, subCategoryID } = useContext(MTOModalContext);
 
   // Variables for the form
@@ -65,7 +68,16 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
     primaryCategory: watch('primaryCategory')
   });
 
-  const [create] = useCreateMtoMilestoneCustomMutation();
+  const [create] = useCreateMtoMilestoneCustomMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     let mtoCategoryID;
@@ -111,12 +123,12 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
         }
       })
       .catch(() => {
-        showMessage(
+        showErrorMessageInModal(
           <Alert
             type="error"
             slim
             data-testid="error-alert"
-            className="margin-y-4"
+            className="margin-bottom-2"
           >
             {t('modal.milestone.alert.error')}
           </Alert>
@@ -126,7 +138,6 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {message}
       <Form
         className="maxw-none"
         data-testid="custom-category-form"

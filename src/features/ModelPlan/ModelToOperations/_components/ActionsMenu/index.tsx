@@ -21,7 +21,8 @@ const ActionMenu = ({
   MoveDown,
   milestoneID,
   primaryCategoryID,
-  subCategoryID
+  subCategoryID,
+  name
 }: {
   rowType: MTORowType;
   MoveUp: React.ReactChild;
@@ -29,6 +30,7 @@ const ActionMenu = ({
   milestoneID: string;
   primaryCategoryID: string;
   subCategoryID?: string;
+  name?: string;
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
@@ -38,8 +40,13 @@ const ActionMenu = ({
 
   const history = useHistory();
 
-  const { setMTOModalOpen, setMTOModalType, setCategoryID, setSubCategoryID } =
-    useContext(MTOModalContext);
+  const {
+    setMTOModalOpen,
+    setMTOModalType,
+    setCategoryID,
+    setSubCategoryID,
+    setCategoryName
+  } = useContext(MTOModalContext);
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
@@ -171,6 +178,15 @@ const ActionMenu = ({
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalType('editCategoryTitle');
+                setCategoryName(name || '');
+                if (rowType === 'category') {
+                  setCategoryID(primaryCategoryID);
+                } else {
+                  setSubCategoryID(subCategoryID);
+                }
               }}
               onKeyPress={e => {
                 e.stopPropagation();

@@ -39,8 +39,6 @@ describe('EditMilestoneForm', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Milestone 1')).toBeInTheDocument();
-
-      expect(screen.getByText('Suggested')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

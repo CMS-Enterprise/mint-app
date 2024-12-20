@@ -18,6 +18,7 @@ import {
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import {
+  GetModelToOperationsMatrixDocument,
   useCreateMtoCategoryMutation,
   useGetMtoCategoriesQuery
 } from 'gql/generated/graphql';
@@ -54,7 +55,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const { categoryID } = useContext(MTOModalContext);
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const { data, loading } = useGetMtoCategoriesQuery({
@@ -94,7 +95,16 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid }
   } = methods;
 
-  const [create] = useCreateMtoCategoryMutation();
+  const [create] = useCreateMtoCategoryMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     create({
@@ -156,12 +166,12 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         }
       })
       .catch(() => {
-        showMessage(
+        showErrorMessageInModal(
           <Alert
             type="error"
             slim
             data-testid="error-alert"
-            className="margin-y-4"
+            className="margin-bottom-2"
           >
             {t('modal.category.alert.error')}
           </Alert>
@@ -171,7 +181,6 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {message}
       <Form
         className="maxw-none"
         data-testid="custom-category-form"

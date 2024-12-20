@@ -17,6 +17,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import {
+  GetModelToOperationsMatrixDocument,
   MtoSolutionType,
   useCreateMtoSolutionCustomMutation
 } from 'gql/generated/graphql';
@@ -41,7 +42,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
-  const { message, showMessage, clearMessage } = useMessage();
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -61,7 +62,16 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isValid, errors }
   } = methods;
 
-  const [create] = useCreateMtoSolutionCustomMutation();
+  const [create] = useCreateMtoSolutionCustomMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     if (formData.solutionType === 'default') return;
@@ -101,12 +111,12 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
         }
       })
       .catch(() => {
-        showMessage(
+        showErrorMessageInModal(
           <Alert
             type="error"
             slim
             data-testid="error-alert"
-            className="margin-y-4"
+            className="margin-bottom-2"
           >
             {t('modal.solution.alert.error')}
           </Alert>
@@ -116,7 +126,6 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <FormProvider {...methods}>
-      {message}
       <Form
         className="maxw-none"
         data-testid="custom-solution-form"
