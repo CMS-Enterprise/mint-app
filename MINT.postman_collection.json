@@ -3657,6 +3657,27 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GetMTO Common Solutions With Contact information",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        contactInformation {\n            primaryContact {\n                name\n                email\n                isTeam\n                role\n                isPrimary\n            }\n            pointsOfContact {\n                name\n                email\n                isTeam\n                role\n                isPrimary\n            }\n        }\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
