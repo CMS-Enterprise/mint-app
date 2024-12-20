@@ -25,8 +25,8 @@ SELECT
     s.id,
     s.model_plan_id,
     s.mto_common_solution_key,
-    s.name,
-    s.type,
+    COALESCE(s.name, mto_common_solution.name) AS "name",
+    COALESCE(s.type, mto_common_solution.type) AS "type",
     s.facilitated_by,
     s.needed_by,
     s.status,
@@ -39,3 +39,4 @@ SELECT
     s.modified_dts
 FROM mto_solution s
 JOIN source_links ON s.id = source_links.solution_id
+LEFT JOIN mto_common_solution ON s.mto_common_solution_key = mto_common_solution.key
