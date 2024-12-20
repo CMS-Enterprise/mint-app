@@ -16,19 +16,14 @@ func (r *mTOCommonSolutionResolver) Subjects(ctx context.Context, obj *models.MT
 	return obj.Subjects, nil
 }
 
+// ContactInformation is the resolver for the contactInformation field.
+func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionContactInformation, error) {
+	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)
+}
+
 // MTOCommonSolution returns generated.MTOCommonSolutionResolver implementation.
 func (r *Resolver) MTOCommonSolution() generated.MTOCommonSolutionResolver {
 	return &mTOCommonSolutionResolver{r}
 }
 
 type mTOCommonSolutionResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *mTOCommonSolutionResolver) Subject(ctx context.Context, obj *models.MTOCommonSolution) ([]models.MTOCommonSolutionSubject, error) {
-	return obj.Subjects, nil
-}

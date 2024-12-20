@@ -801,12 +801,39 @@ export enum MtoCommonMilestoneKey {
 
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
+  contactInformation: MtoCommonSolutionContactInformation;
   filterView?: Maybe<ModelViewFilter>;
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
   subjects: Array<MtoCommonSolutionSubject>;
   type: MtoSolutionType;
+};
+
+export type MtoCommonSolutionContact = {
+  __typename: 'MTOCommonSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isPrimary: Scalars['Boolean']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+/** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
+export type MtoCommonSolutionContactInformation = {
+  __typename: 'MTOCommonSolutionContactInformation';
+  /** This is the list of all points of contact for this common solution */
+  pointsOfContact: Array<MtoCommonSolutionContact>;
+  /** The point of contact who is determined to be the primary contact */
+  primaryContact: MtoCommonSolutionContact;
 };
 
 export enum MtoCommonSolutionKey {
