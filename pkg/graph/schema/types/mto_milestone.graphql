@@ -52,14 +52,21 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   isDraft: Boolean
 }
 
+input MTOSolutionLinks {
+  solutionIDs: [UUID!]
+  commonSolutionKeys: [MTOCommonSolutionKey!]
+}
+
 extend type Mutation {
   createMTOMilestoneCustom(modelPlanID: UUID!, name: String!, mtoCategoryID: UUID): MTOMilestone!
   @hasRole(role: MINT_USER)
   createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!, commonSolutions: [MTOCommonSolutionKey!]): MTOMilestone!
   @hasRole(role: MINT_USER)
-  updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!): MTOMilestone!
+  updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!, solutionLinks: MTOSolutionLinks): MTOMilestone!
   @hasRole(role: MINT_USER)
   deleteMTOMilestone(id: UUID!): Boolean!
+  @hasRole(role: MINT_USER)
+  mtoMilestoneUpdateLinkedSolutions(id: UUID!, solutionLinks: MTOSolutionLinks!): [MTOSolution!]
   @hasRole(role: MINT_USER)
 }
 
