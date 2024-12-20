@@ -37,8 +37,19 @@
         color: color('accent-cool-darker');
     }
 
+    &__is-draft-tag {
+        background-color: color('accent-warm-lighter');
+        top: 1px;
+        color: color('accent-warm-darker');
+    }
+
     &__milestone-added {
         background-color: color('success-lighter') !important;
         color: color('success-darker') !important;
+    }
+
+    &__custom-tag {
+        background-color: color('warning-lighter') !important;
+        color: color('warning-darker') !important;
     }
 }

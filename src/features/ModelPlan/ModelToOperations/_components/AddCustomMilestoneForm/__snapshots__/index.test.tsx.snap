@@ -71,7 +71,6 @@ exports[`Custom Milestone form > matches snapshot 1`] = `
         <select
           class="usa-select"
           data-testid="Select"
-          disabled=""
           id="subcategory"
           name="subcategory"
         >

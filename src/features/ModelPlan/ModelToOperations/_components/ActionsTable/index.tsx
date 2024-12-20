@@ -1,31 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { ApolloQueryResult } from '@apollo/client';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
-  GetModelToOperationsMatrixQuery,
-  GetModelToOperationsMatrixQueryVariables,
   useCreateStandardCategoriesMutation,
   useGetMtoCommonSolutionsQuery,
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../../FormModal';
+import MTOModal from '../FormModal';
 
 import './index.scss';
 
-const MTOTableActions = ({
-  refetch
-}: {
-  refetch: ({
-    variables
-  }: {
-    variables?: GetModelToOperationsMatrixQueryVariables;
-  }) => Promise<ApolloQueryResult<GetModelToOperationsMatrixQuery>>;
-}) => {
+const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
@@ -33,16 +23,32 @@ const MTOTableActions = ({
 
   const { clearMessage } = useMessage();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+  // Load expanded table toggle from local storage
+  let defaultExpandedTable: boolean = true;
+  try {
+    if (window.localStorage[`mto-table-toggle`]) {
+      defaultExpandedTable = JSON.parse(
+        window.localStorage[`mto-table-toggle`]
+      );
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Error parsing local storage');
+  }
+
+  const [actionsMenuOpen, setActionsMenuOpen] = useState(defaultExpandedTable);
+
+  const {
+    isMTOModalOpen: isModalOpen,
+    setMTOModalOpen: setIsModalOpen,
+    mtoModalType: modalType,
+    setMTOModalType: setModalType,
+    resetCategoryAndSubCategoryID
+  } = useContext(MTOModalContext);
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID }
   });
-
-  const [modalType, setModalType] = useState<
-    'category' | 'milestone' | 'solution'
-  >('category');
 
   const { data: milestoneData } = useGetMtoMilestonesQuery({
     variables: { id: modelID }
@@ -61,13 +67,16 @@ const MTOTableActions = ({
     });
   };
 
+  useEffect(() => {
+    localStorage.setItem(`mto-table-toggle`, JSON.stringify(actionsMenuOpen));
+  }, [actionsMenuOpen]);
+
   return (
     <>
       <MTOModal
         isOpen={isModalOpen}
         closeModal={() => {
           setIsModalOpen(false);
-          refetch({ variables: { id: modelID } });
         }}
         modalType={modalType}
       />
@@ -145,6 +154,7 @@ const MTOTableActions = ({
                     clearMessage();
                     setModalType('milestone');
                     setIsModalOpen(true);
+                    resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
                   }}
                 >
                   {t('optionsCard.milestones.linkText')}
@@ -199,7 +209,6 @@ const MTOTableActions = ({
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    clearMessage();
                     setModalType('solution');
                     setIsModalOpen(true);
                   }}
@@ -257,7 +266,6 @@ const MTOTableActions = ({
                 className="display-block"
                 unstyled
                 onClick={() => {
-                  clearMessage();
                   setModalType('category');
                   setIsModalOpen(true);
                 }}

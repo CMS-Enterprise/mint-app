@@ -22,6 +22,8 @@ export default gql(/* GraphQL */ `
               needBy
               status
               riskIndicator
+              addedFromMilestoneLibrary
+              isDraft
               # solutions {
               #   id
               #   name

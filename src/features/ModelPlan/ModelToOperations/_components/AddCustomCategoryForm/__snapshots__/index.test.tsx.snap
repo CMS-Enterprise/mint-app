@@ -49,16 +49,6 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
           >
             None (this is a primary category)
           </option>
-          <option
-            value="123"
-          >
-            Category 1
-          </option>
-          <option
-            value="456"
-          >
-            Category 2
-          </option>
         </select>
       </div>
       <div

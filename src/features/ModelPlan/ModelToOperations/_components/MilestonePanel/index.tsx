@@ -14,6 +14,7 @@ import {
   HelpSolutionBaseType,
   helpSolutions
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import i18next from 'i18next';
 
 import useModalSolutionState from 'hooks/useModalSolutionState';
 
@@ -55,7 +56,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
 
   // Map the translated text for facilitated by roles into a joined string
   const facilitatedByUsers = milestone.facilitatedByRole
-    .map(role => t(`milestoneLibrary.facilitatedBy.${role}`))
+    .map(role => i18next.t(`mtoMilestone:facilitatedBy.options.${role}`))
     .join(', ');
 
   return (

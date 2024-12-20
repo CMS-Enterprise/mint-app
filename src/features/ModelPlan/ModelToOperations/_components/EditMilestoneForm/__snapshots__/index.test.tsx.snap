@@ -1,0 +1,525 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EditMilestoneForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container padding-8"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="grid-col-10"
+        data-testid="grid"
+      >
+        <form
+          class="usa-form maxw-none"
+          data-testid="form"
+          id="edit-milestone-form"
+        >
+          <h2
+            class="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter"
+          >
+            Milestone 1
+          </h2>
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <p
+              class="margin-top-0 margin-bottom-3 text-base"
+            >
+              Fields marked with an asterisk ( 
+              <span
+                class="text-secondary-dark"
+              >
+                *
+              </span>
+               ) are required.
+            </p>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  id="isDraft"
+                  name="isDraft"
+                  type="checkbox"
+                  value="isDraft"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="isDraft"
+                >
+                  Check if this milestone is a draft milestone
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                >
+                  The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.
+                </p>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none text-bold"
+                data-testid="label"
+                for="categories.category.id"
+              >
+                Category 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <div
+                class="mint-help-text margin-top-05"
+              >
+                If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.
+              </div>
+              <select
+                class="usa-select"
+                data-testid="Select"
+                id="categories.category.id"
+                name="categories.category.id"
+              >
+                <option
+                  value="default"
+                >
+                  - Select - 
+                </option>
+                <option
+                  value="123"
+                >
+                  Category 1
+                </option>
+                <option
+                  value="456"
+                >
+                  Category 2
+                </option>
+              </select>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none text-bold"
+                data-testid="label"
+                for="categories.sub-category.id"
+              >
+                Sub-category 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <div
+                class="mint-help-text margin-top-05"
+              >
+                If you don’t see what you’re looking for, you may add a custom category from the main page of your MTO.
+              </div>
+              <select
+                class="usa-select"
+                data-testid="Select"
+                id="categories.sub-category.id"
+                name="categories.subCategory.id"
+              >
+                <option
+                  value="default"
+                >
+                  - Select - 
+                </option>
+              </select>
+            </div>
+            <div
+              class="usa-form-group margin-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="facilitated-by"
+              >
+                Facilitated by
+              </label>
+              <div
+                class="mint-help-text margin-top-1"
+              >
+                Choose the role or group responsible for this work.
+              </div>
+              <div>
+                <div
+                  class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                  id="multi-source-data-to-collect"
+                >
+                  <span
+                    class="css-1f43avz-a11yText-A11yText"
+                    id="react-select-2-live-region"
+                  />
+                  <span
+                    aria-atomic="false"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                    class="css-1f43avz-a11yText-A11yText"
+                    role="log"
+                  />
+                  <div
+                    class=" css-1vl89cy-control"
+                  >
+                    <div
+                      class=" css-1fdsijx-ValueContainer"
+                    >
+                      <div
+                        class=" css-1jqq78o-placeholder"
+                        id="react-select-2-placeholder"
+                      >
+                        0 selected
+                      </div>
+                      <div
+                        class=" css-qbdosj-Input"
+                        data-value=""
+                      >
+                        <input
+                          aria-activedescendant=""
+                          aria-autocomplete="list"
+                          aria-describedby="react-select-2-placeholder"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          aria-label="Facilitated by"
+                          aria-labelledby="facilitated-by"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          autocorrect="off"
+                          class=""
+                          id="facilitated-by"
+                          role="combobox"
+                          spellcheck="false"
+                          style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                          tabindex="0"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class=" css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <span
+                        class=" css-16b81-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class=" css-gjng1h-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      name="facilitatedBy"
+                      type="hidden"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="need-by"
+              >
+                Need by
+              </label>
+              <div
+                class="mint-help-text margin-top-1"
+              >
+                Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy
+              </div>
+              <div
+                class="position-relative"
+              >
+                <div
+                  class="usa-date-picker usa-date-picker--initialized"
+                  data-testid="date-picker"
+                >
+                  <input
+                    aria-hidden="true"
+                    aria-labelledby="need-by"
+                    class="usa-input usa-sr-only usa-date-picker__internal-input"
+                    data-testid="date-picker-internal-input"
+                    name="needBy"
+                    readonly=""
+                    tabindex="-1"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="usa-date-picker__wrapper"
+                    tabindex="-1"
+                  >
+                    <input
+                      aria-labelledby="need-by"
+                      class="usa-input usa-date-picker__external-input"
+                      data-testid="date-picker-external-input"
+                      id="milestone-need-by"
+                      type="text"
+                      value=""
+                    />
+                    <button
+                      aria-haspopup="true"
+                      aria-label="Toggle calendar"
+                      class="usa-date-picker__button"
+                      data-testid="date-picker-button"
+                      type="button"
+                    />
+                    <div
+                      aria-modal="true"
+                      class="usa-date-picker__calendar"
+                      data-testid="date-picker-calendar"
+                      hidden=""
+                      role="dialog"
+                      style="top: 0px;"
+                    />
+                    <div
+                      aria-live="polite"
+                      class="usa-sr-only usa-date-picker__status"
+                      data-testid="date-picker-status"
+                      role="status"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="mint-datepicker-warning"
+                >
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger"
+                      data-testid="triggerElement"
+                      position="top"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon usa-icon--size-3 text-warning-dark"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate."
+                    >
+                      You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="usa-alert usa-alert--warning usa-alert--slim flex margin-top-2"
+                data-testid="alert"
+              >
+                <div
+                  class="usa-alert__body"
+                >
+                  <p
+                    class="usa-alert__text"
+                  >
+                    <span>
+                      You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none text-bold"
+                data-testid="label"
+                for="status"
+              >
+                Status 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <select
+                class="usa-select"
+                data-testid="Select"
+                id="status"
+                name="status"
+              >
+                <option
+                  value="NOT_STARTED"
+                >
+                  Not started
+                </option>
+                <option
+                  value="IN_PROGRESS"
+                >
+                  In progress
+                </option>
+                <option
+                  value="COMPLETED"
+                >
+                  Completed
+                </option>
+              </select>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none text-bold"
+                data-testid="label"
+                for="risk-indicator"
+              >
+                Risk indicator 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <div
+                class="mint-help-text margin-top-1"
+              >
+                Select the risk level for this milestone. This will help you and your team identify potential risks and plan accordingly.
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  checked=""
+                  class="usa-radio__input"
+                  id="risk-indicator-ON_TRACK"
+                  name="riskIndicator"
+                  type="radio"
+                  value="ON_TRACK"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="risk-indicator-ON_TRACK"
+                >
+                  No risk (on track)
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="risk-indicator-OFF_TRACK"
+                  name="riskIndicator"
+                  type="radio"
+                  value="OFF_TRACK"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="risk-indicator-OFF_TRACK"
+                >
+                  Some risk (off track)
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="risk-indicator-AT_RISK"
+                  name="riskIndicator"
+                  type="radio"
+                  value="AT_RISK"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="risk-indicator-AT_RISK"
+                >
+                  Significantly at risk
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <div
+            class="border-top-1px border-base-lighter padding-y-4"
+          >
+            <button
+              class="usa-button margin-bottom-2"
+              data-testid="button"
+              disabled=""
+              type="submit"
+            >
+              Save changes
+            </button>
+            <button
+              class="usa-button bg-error"
+              data-testid="button"
+              type="button"
+            >
+              Remove milestone
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

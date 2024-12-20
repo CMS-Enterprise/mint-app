@@ -46,8 +46,11 @@ import {
   MonitoringFileType,
   MtoCategoryTranslation,
   MtoCommonSolutionKey,
+  MtoFacilitator,
   MtoInfoTranslation,
+  MtoMilestoneStatus,
   MtoMilestoneTranslation,
+  MtoRiskIndicator,
   MtoSolutionTranslation,
   MtoSolutionType,
   MultiSourceDataToCollect,
@@ -1265,7 +1268,12 @@ export type TranslationMTOCategory = {
 // MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
+  isDraft: TranslationFieldPropertiesWithOptions<Bool>;
+  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  needBy: TranslationFieldProperties;
+  riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
+  status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
 };
 
 type TranslationMTOMilestoneCustomGQL = Omit<
