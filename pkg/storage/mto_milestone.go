@@ -83,8 +83,8 @@ func MTOMilestoneCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *
 // NOTE: This method is used for updating both Custom and Library-sourced (Common) milestones. It WILL return an error
 // if you try to update one that has both custom info (like a `name`) and a CommonMilestoneKey
 // This is controlled not by application code, but by constraints initially added in this migration: migrations/V185__Add_MTO_Milestone.sql
-func MTOMilestoneUpdate(tx *sqlx.Tx, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestone, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOMilestone](tx, sqlqueries.MTOMilestone.Update, MTOMilestone)
+func MTOMilestoneUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestone, error) {
+	returned, procErr := sqlutils.GetProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.Update, MTOMilestone)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating MTOMilestone object: %w", procErr)
 	}
