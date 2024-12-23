@@ -801,12 +801,39 @@ export enum MtoCommonMilestoneKey {
 
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
+  contactInformation: MtoCommonSolutionContactInformation;
   filterView?: Maybe<ModelViewFilter>;
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
   subjects: Array<MtoCommonSolutionSubject>;
   type: MtoSolutionType;
+};
+
+export type MtoCommonSolutionContact = {
+  __typename: 'MTOCommonSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isPrimary: Scalars['Boolean']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+/** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
+export type MtoCommonSolutionContactInformation = {
+  __typename: 'MTOCommonSolutionContactInformation';
+  /** This is the list of all points of contact for this common solution */
+  pointsOfContact: Array<MtoCommonSolutionContact>;
+  /** The point of contact who is determined to be the primary contact */
+  primaryContact: MtoCommonSolutionContact;
 };
 
 export enum MtoCommonSolutionKey {
@@ -998,6 +1025,11 @@ export type MtoSolutionChanges = {
   pocName?: InputMaybe<Scalars['String']['input']>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
   status?: InputMaybe<MtoSolutionStatus>;
+};
+
+export type MtoSolutionLinks = {
+  commonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
 };
 
 export enum MtoSolutionStatus {
@@ -1294,6 +1326,7 @@ export type Mutation = {
   markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
+  mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
@@ -1541,6 +1574,13 @@ export type MutationMarkNotificationAsReadArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
@@ -1617,6 +1657,7 @@ export type MutationUpdateExistingModelLinksArgs = {
 export type MutationUpdateMtoMilestoneArgs = {
   changes: MtoMilestoneChanges;
   id: Scalars['UUID']['input'];
+  solutionLinks?: InputMaybe<MtoSolutionLinks>;
 };
 
 

@@ -14,8 +14,6 @@ import MTOTableActions from '.';
 
 describe('MTO Table Actions Component', () => {
   it('renders correctly and matches snapshot', async () => {
-    const mockRefetch = vi.fn();
-
     const { asFragment } = render(
       <MockedProvider
         mocks={[...commonSolutionsMock, ...commonMilestonesMock]}
@@ -28,7 +26,7 @@ describe('MTO Table Actions Component', () => {
         >
           <MessageProvider>
             <Route path="/models/:modelID/collaboration-area/model-to-operations">
-              <MTOTableActions refetch={() => mockRefetch({ id: modelID })} />
+              <MTOTableActions />
             </Route>
           </MessageProvider>
         </MemoryRouter>

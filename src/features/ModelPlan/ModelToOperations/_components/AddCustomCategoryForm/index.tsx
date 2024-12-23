@@ -17,7 +17,10 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
-import { useCreateMtoCategoryMutation } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixDocument,
+  useCreateMtoCategoryMutation
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -76,7 +79,16 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     primaryCategory: watch('primaryCategory')
   });
 
-  const [create] = useCreateMtoCategoryMutation();
+  const [create] = useCreateMtoCategoryMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      }
+    ]
+  });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
     create({

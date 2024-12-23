@@ -3438,7 +3438,40 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n    facilitatedBy: [IT_LEAD,OTHER],\n    riskIndicator: AT_RISK,\n    status: IN_PROGRESS\n    needBy: \"2024-10-31T17:20:21.959953Z\"\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n        }\n        subCategory{\n            name\n        }\n    }\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    # solutions\n    }\n}",
+										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n    facilitatedBy: [IT_LEAD,OTHER],\n    riskIndicator: AT_RISK,\n    status: IN_PROGRESS\n    needBy: \"2024-10-31T17:20:21.959953Z\"\n},\nsolutionLinks: {\n    solutionIDs: [\"{{mtoSolutionID}}\"],\n    commonSolutionKeys: [APPS],\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n        }\n        subCategory{\n            name\n        }\n    }\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    solutions {\n        id\n        name\n    }\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateMTOMilestoneLinkedSolutions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation GetMTOMilestone {\n    mtoMilestoneUpdateLinkedSolutions(\n        id: \"{{mtoMilestoneID}}\",\n        solutionLinks: {\n            solutionIDs: [\"{{mtoSolutionID}}\"],\n            commonSolutionKeys: [INNOVATION]\n        }) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3613,6 +3646,27 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTO Common Solutions With Contact information",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        contactInformation {\n            primaryContact {\n                name\n                email\n                isTeam\n                role\n                isPrimary\n            }\n            pointsOfContact {\n                name\n                email\n                isTeam\n                role\n                isPrimary\n            }\n        }\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
 										"variables": ""
 									}
 								},
