@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
@@ -169,9 +169,48 @@ const MTOHome = () => {
           </Header>
         </GridContainer>
       </div>
-      <div className="width-full shadow-2  bg-accent-cool-lighter">
-        <GridContainer>
-          <p className="margin-y-0">{t('suggestedMilestoneBanner.empty')}</p>
+      <div className="bg-accent-cool-lighter shadow-2">
+        <GridContainer className="padding-y-2">
+          <Grid row className="flex-no-wrap">
+            <Icon.LightbulbOutline
+              size={3}
+              className="bg-accent-cool-darker circle-4 text-white margin-right-2"
+            />
+            <p className="margin-y-0">
+              {/* //TODO: pick up from here */}
+              {5 > 0 ? (
+                <>
+                  <Trans
+                    i18nKey={t('suggestedMilestoneBanner.notEmpty')}
+                    values={{ count: 3 }}
+                    components={{
+                      s: (
+                        <>
+                          <UswdsReactLink
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                          >
+                            <Icon.ArrowForward />
+                          </UswdsReactLink>
+                        </>
+                      )
+                    }}
+                  />
+                  {/* <Icon.ArrowForward /> */}
+                </>
+              ) : (
+                <Trans
+                  i18nKey={t('suggestedMilestoneBanner.empty')}
+                  components={{
+                    s: (
+                      <UswdsReactLink
+                        to={`/models/${modelID}/collaboration-area/task-list`}
+                      />
+                    )
+                  }}
+                />
+              )}
+            </p>
+          </Grid>
         </GridContainer>
       </div>
       <GridContainer>
