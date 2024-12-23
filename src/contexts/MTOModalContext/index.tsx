@@ -1,18 +1,14 @@
 import React, { createContext, useState } from 'react';
+import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/Table/columns';
 
 interface MTOModalContextType {
   isMTOModalOpen: boolean;
   setMTOModalOpen: (isOpen: boolean) => void;
-  mtoModalType:
-    | 'category'
-    | 'milestone'
-    | 'solution'
-    | 'solutionToMilestone'
-    | 'editMilestone'
-    | 'editCategoryTitle'
-    | 'removeCategory'
-    | 'removeSubcategory';
-  setMTOModalType: (
+  mtoModalState: {
+    categoryID: string;
+    categoryName?: string;
+    rowType?: MTORowType;
+    subCategoryID: string;
     type:
       | 'category'
       | 'milestone'
@@ -21,53 +17,54 @@ interface MTOModalContextType {
       | 'editMilestone'
       | 'editCategoryTitle'
       | 'removeCategory'
-      | 'removeSubcategory'
+      | 'removeSubcategory';
+  };
+  setMTOModalState: (
+    state: Partial<MTOModalContextType['mtoModalState']>
   ) => void;
-  categoryID: string;
-  setCategoryID: (id: string) => void;
-  subCategoryID?: string;
-  setSubCategoryID: (id?: string | undefined) => void;
-  categoryName: string;
-  setCategoryName: (id: string) => void;
-  resetCategoryAndSubCategoryID: () => void;
+  resetMTOModalState: () => void;
 }
 
 const MTOModalContext = createContext<MTOModalContextType>({
-  // Context Default Values
   isMTOModalOpen: false,
   setMTOModalOpen: () => {},
-  mtoModalType: 'category',
-  setMTOModalType: () => {},
-  categoryID: '',
-  setCategoryID: () => {},
-  subCategoryID: undefined,
-  setSubCategoryID: () => {},
-  categoryName: '',
-  setCategoryName: () => {},
-  resetCategoryAndSubCategoryID: () => {}
+  mtoModalState: {
+    categoryID: '',
+    categoryName: '',
+    rowType: 'category',
+    subCategoryID: '',
+    type: 'category'
+  },
+  setMTOModalState: () => {},
+  resetMTOModalState: () => {}
 });
 
 const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMTOModalOpen, setMTOModalOpen] = useState(false);
-  const [mtoModalType, setMTOModalType] = useState<
-    | 'category'
-    | 'milestone'
-    | 'solution'
-    | 'solutionToMilestone'
-    | 'editMilestone'
-    | 'editCategoryTitle'
-    | 'removeCategory'
-    | 'removeSubcategory'
-  >('category');
-  const [categoryID, setCategoryID] = useState('');
-  const [subCategoryID, setSubCategoryID] = useState<string | undefined>(
-    undefined
-  );
-  const [categoryName, setCategoryName] = useState('');
+  const [mtoModalState, setMtoModalStateInternal] = useState<
+    MTOModalContextType['mtoModalState']
+  >({
+    categoryID: '',
+    categoryName: '',
+    rowType: 'category',
+    subCategoryID: '',
+    type: 'category'
+  });
 
-  const resetCategoryAndSubCategoryID = () => {
-    setCategoryID('');
-    setSubCategoryID(undefined);
+  const setMTOModalState = (
+    state: Partial<MTOModalContextType['mtoModalState']>
+  ) => {
+    setMtoModalStateInternal(prevState => ({ ...prevState, ...state }));
+  };
+
+  const resetMTOModalState = () => {
+    setMtoModalStateInternal({
+      categoryID: '',
+      categoryName: '',
+      rowType: 'category',
+      subCategoryID: '',
+      type: 'category'
+    });
   };
 
   return (
@@ -75,15 +72,9 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         isMTOModalOpen,
         setMTOModalOpen,
-        mtoModalType,
-        setMTOModalType,
-        categoryID,
-        setCategoryID,
-        subCategoryID,
-        setSubCategoryID,
-        categoryName,
-        setCategoryName,
-        resetCategoryAndSubCategoryID
+        mtoModalState,
+        setMTOModalState,
+        resetMTOModalState
       }}
     >
       {children}
