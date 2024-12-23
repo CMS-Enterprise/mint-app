@@ -89,6 +89,10 @@ const ActionMenu = ({
     };
   }, []);
 
+  const isUncategorized =
+    primaryCategoryID === '00000000-0000-0000-0000-000000000000' ||
+    subCategoryID === '00000000-0000-0000-0000-000000000000';
+
   if (rowType !== 'milestone')
     return (
       <div ref={menuRef}>
@@ -151,8 +155,10 @@ const ActionMenu = ({
             >
               {i18next.t('modelToOperationsMisc:table.menu.addMilestone')}
             </Button>,
+
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
@@ -162,6 +168,7 @@ const ActionMenu = ({
                 if (rowType === 'category') {
                   setMTOModalType('category');
                 } else {
+                  setCategoryName(name || '');
                   setMTOModalType('moveSubCategory');
                   if (subCategoryID) setSubCategoryID(subCategoryID);
                 }
@@ -176,8 +183,10 @@ const ActionMenu = ({
                 `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'addSubCategory' : 'moveToAnotherCategory'}`
               )}
             </Button>,
+
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
@@ -201,8 +210,10 @@ const ActionMenu = ({
                 `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'editCategoryTitle' : 'editSubCategoryTitle'}`
               )}
             </Button>,
+
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
@@ -210,7 +221,12 @@ const ActionMenu = ({
               onKeyPress={e => {
                 e.stopPropagation();
               }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item text-red"
+              className={classNames(
+                'share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item ',
+                {
+                  'text-red': !isUncategorized
+                }
+              )}
               unstyled
             >
               {i18next.t(

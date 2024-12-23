@@ -19,10 +19,12 @@ const selectOptions: SelectProps[] = [
 
 const useFormatMTOCategories = ({
   modelID,
-  primaryCategory
+  primaryCategory,
+  hideUncategorized = true
 }: {
   modelID: string;
   primaryCategory: string;
+  hideUncategorized?: boolean;
 }) => {
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -30,8 +32,12 @@ const useFormatMTOCategories = ({
   // Get categories from the data
   const categories = data?.modelPlan?.mtoMatrix?.categories || [];
 
+  const noUncategorized = hideUncategorized
+    ? categories.filter(category => category.name !== 'Uncategorized')
+    : categories;
+
   // Map categories to select options
-  const mappedCategories: SelectProps[] = categories.map(category => ({
+  const mappedCategories: SelectProps[] = noUncategorized.map(category => ({
     value: category.id,
     label: category.name
   }));

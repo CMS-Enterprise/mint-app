@@ -407,7 +407,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       },
       add: 'Add with {{count}} solution',
       add_other: 'Add with {{count}} solutions',
-      add_zero: 'Add without solutions'
+      add_zero: 'Add without solutions',
+      subcategoryExists:
+        'There is already a sub-category named "{{name}}" in this primary category. To avoid issues, please select a different primary category or rename this sub-category before moving it.'
     },
     editCategoryTitle: {
       label: 'Current title',

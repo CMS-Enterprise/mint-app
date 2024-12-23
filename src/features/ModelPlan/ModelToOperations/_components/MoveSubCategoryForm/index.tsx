@@ -35,7 +35,11 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { categoryID, subCategoryID } = useContext(MTOModalContext);
+  const {
+    categoryID,
+    subCategoryID = '',
+    categoryName
+  } = useContext(MTOModalContext);
 
   const { showMessage } = useMessage();
 
@@ -54,11 +58,17 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     formState: { isSubmitting, isDirty }
   } = methods;
 
-  const { selectOptionsAndMappedCategories, loading } = useFormatMTOCategories({
-    modelID,
-    primaryCategory: watch('parentID')
-  });
+  const { selectOptionsAndMappedCategories, mappedSubcategories, loading } =
+    useFormatMTOCategories({
+      modelID,
+      primaryCategory: watch('parentID')
+    });
 
+  const showExistingSubcategoryAlert = mappedSubcategories.find(
+    subCategory => subCategory.label === categoryName
+  );
+
+  // Sets the current category label to display in the form
   const currentCategory =
     selectOptionsAndMappedCategories.find(
       category => category.value === categoryID
@@ -76,8 +86,8 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const onSubmit: SubmitHandler<FormValues> = formData => {
     updateOrder({
       variables: {
-        id: subCategoryID || '',
-        newOrder: 0,
+        id: subCategoryID,
+        newOrder: 0, // Always move the subcategory to the top
         parentID: formData.parentID
       }
     })
@@ -170,9 +180,27 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
               )}
             />
 
+            {showExistingSubcategoryAlert && (
+              <Alert
+                type="warning"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-2"
+              >
+                {modelToOperationsMiscT(
+                  'modal.moveSubCategory.subcategoryExists',
+                  {
+                    name: categoryName
+                  }
+                )}
+              </Alert>
+            )}
+
             <Button
               type="submit"
-              disabled={isSubmitting || !isDirty}
+              disabled={
+                isSubmitting || !isDirty || !!showExistingSubcategoryAlert
+              }
               className="margin-right-4"
             >
               {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
