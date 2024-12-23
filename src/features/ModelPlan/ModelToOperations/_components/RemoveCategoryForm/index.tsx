@@ -14,8 +14,10 @@ import useMessage from 'hooks/useMessage';
 const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { modelID } = useParams<{ modelID: string }>();
-  const { categoryID, subCategoryID, resetCategoryAndSubCategoryID } =
-    useContext(MTOModalContext);
+  const {
+    mtoModalState: { categoryID, subCategoryID, rowType },
+    resetMTOModalState
+  } = useContext(MTOModalContext);
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
@@ -32,7 +34,7 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const handleRemove = () => {
     deleteCategory({
       variables: {
-        id: subCategoryID ?? categoryID
+        id: rowType === 'category' ? categoryID : subCategoryID
       }
     })
       .then(response => {
@@ -48,7 +50,7 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
             </Alert>
           );
         }
-        resetCategoryAndSubCategoryID();
+        resetMTOModalState();
         closeModal();
       })
       .catch(() => {
@@ -79,7 +81,7 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         type="button"
         unstyled
         onClick={() => {
-          resetCategoryAndSubCategoryID();
+          resetMTOModalState();
           clearMessage();
           closeModal();
         }}
