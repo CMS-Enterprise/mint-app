@@ -53,7 +53,9 @@ export const selectOptions: SelectProps[] = [
 const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { categoryID } = useContext(MTOModalContext);
+  const {
+    mtoModalState: { categoryID }
+  } = useContext(MTOModalContext);
   const { modelID } = useParams<{ modelID: string }>();
   const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');

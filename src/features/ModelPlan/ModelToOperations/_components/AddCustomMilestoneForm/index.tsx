@@ -39,7 +39,9 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
-  const { categoryID, subCategoryID } = useContext(MTOModalContext);
+  const {
+    mtoModalState: { categoryID, subCategoryID }
+  } = useContext(MTOModalContext);
 
   // Variables for the form
   const methods = useForm<FormValues>({
