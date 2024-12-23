@@ -69,7 +69,6 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
           setIsModalOpen(false);
         }}
         modalType="solutionToMilestone"
-        isRequired={false}
         milestone={milestone}
       />
 

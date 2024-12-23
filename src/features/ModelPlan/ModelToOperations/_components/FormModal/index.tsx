@@ -25,7 +25,6 @@ type MTOModalProps = {
     | 'editCategoryTitle'
     | 'removeCategory'
     | 'removeSubcategory';
-  isRequired?: boolean;
   milestone?: MilestoneCardType;
 };
 
@@ -33,7 +32,6 @@ const MTOModal = ({
   isOpen,
   closeModal,
   modalType,
-  isRequired = true,
   milestone
 }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -76,8 +74,8 @@ const MTOModal = ({
           {modalTitle}
         </PageHeading>
 
-        {isRequired &&
-          modalType !== 'removeCategory' &&
+        {modalType !== 'removeCategory' &&
+          modalType !== 'solutionToMilestone' &&
           modalType !== 'removeSubcategory' && (
             <p className="margin-y-0 text-base">
               <Trans
