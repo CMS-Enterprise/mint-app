@@ -40,13 +40,7 @@ const ActionMenu = ({
 
   const history = useHistory();
 
-  const {
-    setMTOModalOpen,
-    setMTOModalType,
-    setCategoryID,
-    setSubCategoryID,
-    setCategoryName
-  } = useContext(MTOModalContext);
+  const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
@@ -132,6 +126,7 @@ const ActionMenu = ({
             </Button>,
             MoveUp,
             MoveDown,
+            // Add Model Milestone
             <Button
               type="button"
               onClick={e => {
@@ -139,9 +134,11 @@ const ActionMenu = ({
                 setIsMenuOpen(false);
                 clearMessage();
                 setMTOModalOpen(true);
-                setMTOModalType('milestone');
-                setCategoryID(primaryCategoryID);
-                if (subCategoryID) setSubCategoryID(subCategoryID);
+                setMTOModalState({
+                  modalType: 'milestone',
+                  categoryID: primaryCategoryID,
+                  subCategoryID: subCategoryID ?? ''
+                });
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -151,6 +148,7 @@ const ActionMenu = ({
             >
               {i18next.t('modelToOperationsMisc:table.menu.addMilestone')}
             </Button>,
+            // Add Subcategory or Move to Another Category
             <Button
               type="button"
               onClick={e => {
@@ -159,8 +157,10 @@ const ActionMenu = ({
                 if (rowType === 'category') {
                   clearMessage();
                   setMTOModalOpen(true);
-                  setMTOModalType('category');
-                  setCategoryID(primaryCategoryID);
+                  setMTOModalState({
+                    modalType: 'category',
+                    categoryID: primaryCategoryID
+                  });
                 }
               }}
               onKeyPress={e => {
@@ -173,6 +173,7 @@ const ActionMenu = ({
                 `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'addSubCategory' : 'moveToAnotherCategory'}`
               )}
             </Button>,
+            // Edit Category/Subcategory Title
             <Button
               type="button"
               onClick={e => {
@@ -180,13 +181,13 @@ const ActionMenu = ({
                 setIsMenuOpen(false);
                 clearMessage();
                 setMTOModalOpen(true);
-                setMTOModalType('editCategoryTitle');
-                setCategoryName(name || '');
-                if (rowType === 'category') {
-                  setCategoryID(primaryCategoryID);
-                } else {
-                  setSubCategoryID(subCategoryID);
-                }
+                setMTOModalState({
+                  modalType: 'editCategoryTitle',
+                  categoryName: name ?? '',
+                  rowType,
+                  categoryID: primaryCategoryID,
+                  subCategoryID
+                });
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -198,11 +199,23 @@ const ActionMenu = ({
                 `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'editCategoryTitle' : 'editSubCategoryTitle'}`
               )}
             </Button>,
+            // Remove Category/Subcategory
             <Button
               type="button"
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalState({
+                  modalType:
+                    rowType === 'category'
+                      ? 'removeCategory'
+                      : 'removeSubcategory',
+                  rowType,
+                  categoryID: primaryCategoryID,
+                  subCategoryID
+                });
               }}
               onKeyPress={e => {
                 e.stopPropagation();

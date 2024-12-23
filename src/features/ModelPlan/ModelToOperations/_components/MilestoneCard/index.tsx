@@ -58,7 +58,6 @@ const MilestoneCard = ({
           setIsModalOpen(false);
         }}
         modalType="solutionToMilestone"
-        isRequired={false}
         milestone={milestone}
       />
 

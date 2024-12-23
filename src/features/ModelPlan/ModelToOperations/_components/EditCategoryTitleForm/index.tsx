@@ -34,10 +34,8 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
   const {
-    categoryID,
-    subCategoryID,
-    categoryName,
-    resetCategoryAndSubCategoryID
+    mtoModalState: { categoryID, subCategoryID, categoryName },
+    resetMTOModalState
   } = useContext(MTOModalContext);
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -94,7 +92,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
             </Alert>
           );
         }
-        resetCategoryAndSubCategoryID();
+        resetMTOModalState();
         closeModal();
       })
       .catch(() => {
@@ -159,7 +157,7 @@ const EditCategoryTitleForm = ({ closeModal }: { closeModal: () => void }) => {
           className={`usa-button ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
           onClick={() => {
             reset();
-            resetCategoryAndSubCategoryID();
+            resetMTOModalState();
             clearMessage();
             closeModal();
           }}
