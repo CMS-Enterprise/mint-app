@@ -11,10 +11,10 @@ export interface MTOModalState {
     | 'editCategoryTitle'
     | 'removeCategory'
     | 'removeSubcategory';
-  categoryID?: string;
-  subCategoryID?: string;
+  categoryID: string;
+  subCategoryID: string;
   categoryName?: string;
-  rowType?: MTORowType;
+  rowType: MTORowType;
 }
 
 interface MTOModalContextType {
