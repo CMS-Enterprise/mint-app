@@ -1,3 +1,4 @@
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_info';
 CREATE TABLE mto_info (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id) UNIQUE,

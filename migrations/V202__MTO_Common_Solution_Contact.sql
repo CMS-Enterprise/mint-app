@@ -1,3 +1,5 @@
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_common_solution_contact';
+
 CREATE TABLE mto_common_solution_contact (
     id UUID PRIMARY KEY NOT NULL,
     mto_common_solution_key MTO_COMMON_SOLUTION_KEY REFERENCES mto_common_solution(key),
