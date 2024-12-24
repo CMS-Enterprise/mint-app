@@ -172,30 +172,28 @@ const MTOHome = () => {
       <div className="bg-accent-cool-lighter shadow-2">
         <GridContainer className="padding-y-2">
           <Grid row className="flex-no-wrap">
-            <Icon.LightbulbOutline
-              size={3}
-              className="bg-accent-cool-darker circle-4 text-white margin-right-2"
-            />
-            <p className="margin-y-0">
+            <div className="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center">
+              <Icon.LightbulbOutline className="text-white" />
+            </div>
+            <span className="margin-y-0">
               {/* //TODO: pick up from here */}
-              {5 > 0 ? (
+              {5 < 0 ? (
                 <>
                   <Trans
                     i18nKey={t('suggestedMilestoneBanner.notEmpty')}
                     values={{ count: 3 }}
                     components={{
                       s: (
-                        <>
-                          <UswdsReactLink
-                            to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
-                          >
-                            <Icon.ArrowForward />
-                          </UswdsReactLink>
-                        </>
+                        <UswdsReactLink
+                          to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                          className=""
+                        />
+                      ),
+                      arrow: (
+                        <Icon.ArrowForward className="margin-left-05 top-05" />
                       )
                     }}
                   />
-                  {/* <Icon.ArrowForward /> */}
                 </>
               ) : (
                 <Trans
@@ -209,7 +207,7 @@ const MTOHome = () => {
                   }}
                 />
               )}
-            </p>
+            </span>
           </Grid>
         </GridContainer>
       </div>
