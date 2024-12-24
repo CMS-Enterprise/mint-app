@@ -47,6 +47,10 @@ const MTOHome = () => {
 
   const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
 
+  const suggestedMilestones =
+    modelToOperationsMatrix?.commonMilestones.filter(obj => obj.isSuggested) ||
+    [];
+
   const history = useHistory();
 
   const location = useLocation();
@@ -176,12 +180,11 @@ const MTOHome = () => {
               <Icon.LightbulbOutline className="text-white" />
             </div>
             <span className="margin-y-0">
-              {/* //TODO: pick up from here */}
-              {5 < 0 ? (
+              {suggestedMilestones?.length > 0 ? (
                 <>
                   <Trans
                     i18nKey={t('suggestedMilestoneBanner.notEmpty')}
-                    values={{ count: 3 }}
+                    values={{ count: suggestedMilestones?.length }}
                     components={{
                       s: (
                         <UswdsReactLink
