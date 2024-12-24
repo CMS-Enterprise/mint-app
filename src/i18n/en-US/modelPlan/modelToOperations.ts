@@ -187,7 +187,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     empty:
       "There aren't currently any suggested milestones for your model. MINT may suggest model milestones as you and your team fill out more of your <s>Model Plan</s>.",
     notEmpty:
-      'There are {{count}} suggested milestones for your model based on answers in the Model Plan. <s>View suggested milestones</s>'
+      'There are {{count}} suggested milestones for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>'
   },
   optionsCard: {
     milestones: {
