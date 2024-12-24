@@ -30,15 +30,14 @@ type FormValues = {
   parentID: string;
 };
 
-const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
+const MoveSubCategoryForm = () => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
 
   const {
-    categoryID,
-    subCategoryID = '',
-    categoryName
+    mtoModalState: { categoryID, subCategoryID = '', categoryName },
+    setMTOModalOpen
   } = useContext(MTOModalContext);
 
   const { showMessage } = useMessage();
@@ -106,7 +105,7 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
             </>
           );
           setMutationError(null);
-          closeModal();
+          setMTOModalOpen(false);
         }
       })
       .catch(() => {
@@ -206,7 +205,11 @@ const MoveSubCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
               {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
             </Button>
 
-            <Button type="button" unstyled onClick={() => closeModal()}>
+            <Button
+              type="button"
+              unstyled
+              onClick={() => setMTOModalOpen(false)}
+            >
               {modelToOperationsMiscT('modal.cancel')}
             </Button>
           </Fieldset>

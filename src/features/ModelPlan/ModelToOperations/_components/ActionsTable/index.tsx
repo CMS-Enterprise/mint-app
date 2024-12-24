@@ -41,9 +41,8 @@ const MTOTableActions = () => {
   const {
     isMTOModalOpen: isModalOpen,
     setMTOModalOpen: setIsModalOpen,
-    mtoModalType: modalType,
-    setMTOModalType: setModalType,
-    resetCategoryAndSubCategoryID
+    mtoModalState: { modalType },
+    setMTOModalState
   } = useContext(MTOModalContext);
 
   const [create] = useCreateStandardCategoriesMutation({
@@ -73,13 +72,8 @@ const MTOTableActions = () => {
 
   return (
     <>
-      <MTOModal
-        isOpen={isModalOpen}
-        closeModal={() => {
-          setIsModalOpen(false);
-        }}
-        modalType={modalType}
-      />
+      <MTOModal isOpen={isModalOpen} modalType={modalType} />
+
       <div className="border-1px radius-md border-gray-10 padding-3">
         <div className="action-bar display-flex">
           <p className="margin-y-0 text-bold">
@@ -152,9 +146,8 @@ const MTOTableActions = () => {
                   unstyled
                   onClick={() => {
                     clearMessage();
-                    setModalType('milestone');
+                    setMTOModalState({ modalType: 'milestone' });
                     setIsModalOpen(true);
-                    resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
                   }}
                 >
                   {t('optionsCard.milestones.linkText')}
@@ -209,7 +202,7 @@ const MTOTableActions = () => {
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    setModalType('solution');
+                    setMTOModalState({ modalType: 'solution' });
                     setIsModalOpen(true);
                   }}
                 >
@@ -266,7 +259,7 @@ const MTOTableActions = () => {
                 className="display-block"
                 unstyled
                 onClick={() => {
-                  setModalType('category');
+                  setMTOModalState({ modalType: 'category' });
                   setIsModalOpen(true);
                 }}
               >

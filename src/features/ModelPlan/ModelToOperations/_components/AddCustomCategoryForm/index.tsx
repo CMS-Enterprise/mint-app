@@ -50,12 +50,18 @@ export const selectOptions: SelectProps[] = [
   }
 ];
 
-const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
+const CategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { categoryID } = useContext(MTOModalContext);
+  const {
+    mtoModalState: { categoryID },
+    setMTOModalOpen
+  } = useContext(MTOModalContext);
+
   const { modelID } = useParams<{ modelID: string }>();
-  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
+
+  const { showErrorMessageInModal, showMessage } = useMessage();
+
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   // Variables for the form
@@ -146,7 +152,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
               </>
             );
           }
-          closeModal();
+          setMTOModalOpen(false);
         }
       })
       .catch(() => {
@@ -247,8 +253,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
           className={`usa-button ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
           onClick={() => {
             reset();
-            clearMessage();
-            closeModal();
+            setMTOModalOpen(false);
           }}
         >
           {t('modal.cancel')}

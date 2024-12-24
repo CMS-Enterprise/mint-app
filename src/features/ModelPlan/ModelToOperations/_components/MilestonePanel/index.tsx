@@ -16,10 +16,13 @@ import {
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
 
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
+import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
-import MTOModal from '../FormModal';
+import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 
 import '../../index.scss';
 
@@ -29,6 +32,8 @@ type MilestonePanelProps = {
 
 const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const { errorMessageInModal, clearMessage } = useMessage();
 
   const history = useHistory();
 
@@ -61,17 +66,31 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
 
   return (
     <>
-      <MTOModal
+      <Modal
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
+          params.delete('milestone', milestone.key);
           history.replace({ search: params.toString() });
+          clearMessage();
           setIsModalOpen(false);
         }}
-        modalType="solutionToMilestone"
-        isRequired={false}
-        milestone={milestone}
-      />
+        shouldCloseOnOverlayClick
+        className="tablet:width-mobile-lg mint-body-normal"
+      >
+        <div className="margin-bottom-2">
+          <PageHeading headingLevel="h3" className="margin-y-0">
+            {t('modal.title.solutionToMilestone')}
+          </PageHeading>
+        </div>
+
+        {errorMessageInModal}
+
+        <AddSolutionToMilestoneForm
+          closeModal={() => setIsModalOpen(false)}
+          milestone={milestone}
+        />
+      </Modal>
 
       <GridContainer className="padding-8">
         <Grid row>
