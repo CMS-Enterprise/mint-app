@@ -46,7 +46,7 @@ const SolutionForm = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+  const { showMessage, showErrorMessageInModal } = useMessage();
 
   const { setMTOModalOpen } = useContext(MTOModalContext);
 
