@@ -20,11 +20,13 @@ const selectOptions: SelectProps[] = [
 const useFormatMTOCategories = ({
   modelID,
   primaryCategory,
-  hideUncategorized = true
+  hideUncategorized = true,
+  customCategory = false
 }: {
   modelID: string;
   primaryCategory: string;
   hideUncategorized?: boolean;
+  customCategory?: boolean;
 }) => {
   const { data, loading } = useGetMtoCategoriesQuery({
     variables: { id: modelID }
@@ -46,6 +48,7 @@ const useFormatMTOCategories = ({
   const selectOptionsAndMappedCategories: SelectProps[] = [
     // only get the default option of selectOptions
     selectOptions[0],
+    ...(customCategory ? [selectOptions[1]] : []),
     ...mappedCategories
   ];
 

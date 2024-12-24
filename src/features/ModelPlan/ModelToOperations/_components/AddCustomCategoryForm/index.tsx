@@ -82,7 +82,8 @@ const CategoryForm = () => {
 
   const { selectOptionsAndMappedCategories, loading } = useFormatMTOCategories({
     modelID,
-    primaryCategory: watch('primaryCategory')
+    primaryCategory: watch('primaryCategory'),
+    customCategory: true
   });
 
   const [create] = useCreateMtoCategoryMutation({

@@ -19,7 +19,7 @@ describe('Custom Catergory form', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/">
-              <CategoryForm closeModal={() => {}} />
+              <CategoryForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>

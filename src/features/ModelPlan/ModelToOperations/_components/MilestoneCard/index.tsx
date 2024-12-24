@@ -76,7 +76,13 @@ const MilestoneCard = ({
         {errorMessageInModal}
 
         <AddSolutionToMilestoneForm
-          closeModal={() => setIsModalOpen(false)}
+          closeModal={() => {
+            params.delete('add-milestone', milestone.key);
+            params.delete('milestone', milestone.key);
+            history.replace({ search: params.toString() });
+            clearMessage();
+            setIsModalOpen(false);
+          }}
           milestone={milestone}
         />
       </Modal>
