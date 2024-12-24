@@ -53,6 +53,7 @@ module.exports = {
       'EnumTranslation',
       'MTOCategoryTranslation',
       'MTOMilestoneTranslation',
+      'MTOMilestoneSolutionLinkTranslation',
       'MTOSolutionTranslation'
     ],
     'enum-values-all-caps': ['TableName']

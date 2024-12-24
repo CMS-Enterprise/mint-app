@@ -970,6 +970,13 @@ export type MtoMilestoneChanges = {
   status?: InputMaybe<MtoMilestoneStatus>;
 };
 
+/** Represents MTO Milestone Solution Link translation data */
+export type MtoMilestoneSolutionLinkTranslation = {
+  __typename: 'MTOMilestoneSolutionLinkTranslation';
+  milestoneID: TranslationField;
+  solutionID: TranslationField;
+};
+
 export enum MtoMilestoneStatus {
   COMPLETED = 'COMPLETED',
   IN_PROGRESS = 'IN_PROGRESS',

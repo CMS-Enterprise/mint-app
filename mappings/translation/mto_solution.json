@@ -1,0 +1,44 @@
+{
+  "solutionType": {
+    "gqlField": "solutionType",
+    "goField": "SolutionType",
+    "dbField": "type",
+    "label": "Milestone title",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "IT_SYSTEM": "IT System",
+      "CONTRACTOR": "Contract vehicle, contractor, or other contract",
+      "CROSS_CUTTING_GROUP": "Cross-cutting group",
+      "OTHER": "Other"
+    },
+    "order": 1
+  },
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "Milestone title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.1
+  },
+  "pocName": {
+    "gqlField": "pocName",
+    "goField": "PocName",
+    "dbField": "poc_name",
+    "label": "Milestone title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.2
+  },
+  "pocEmail": {
+    "gqlField": "pocEmail",
+    "goField": "PocEmail",
+    "dbField": "poc_email",
+    "label": "Milestone title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.3
+  }
+}

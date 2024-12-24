@@ -1,0 +1,11 @@
+{
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "New category title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1
+  }
+}
