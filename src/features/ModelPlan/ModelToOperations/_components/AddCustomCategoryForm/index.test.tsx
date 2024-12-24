@@ -1,8 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { categoryMock } from 'tests/mock/mto';
-import { modelID } from 'tests/mock/readonly';
+import { categoryMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
