@@ -5,6 +5,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/google/uuid"
@@ -91,6 +95,7 @@ func MTOSolutionCreateCommon(
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 	commonSolutionKey models.MTOCommonSolutionKey,
+	milestonesToLink []uuid.UUID,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -110,7 +115,32 @@ func MTOSolutionCreateCommon(
 		return nil, err
 	}
 
-	return storage.MTOSolutionCreate(store, logger, mtoSolution)
+	return sqlutils.WithTransaction[models.MTOSolution](store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		solution, err := storage.MTOSolutionCreate(tx, logger, mtoSolution)
+		if err != nil {
+			return nil, err
+		}
+
+		// Link the solution to the provided milestones
+		for _, milestoneID := range milestonesToLink {
+			link := models.NewMTOMilestoneSolutionLink(
+				principal.Account().ID,
+				milestoneID,
+				solution.ID,
+			)
+
+			_, err = storage.MTOMilestoneSolutionLinkCreate(
+				tx,
+				logger,
+				link,
+			)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		return solution, nil
+	})
 }
 
 // MTOSolutionGetByModelPlanIDLOADER implements resolver logic to get all MTO solutions by a model plan ID using a data loader
