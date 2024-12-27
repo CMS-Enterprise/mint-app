@@ -28,6 +28,11 @@ type MTOModalProps = {
   modalType: MTOModalType;
 };
 
+const nonRequiredForms: Partial<MTOModalType[]> = [
+  'removeCategory',
+  'removeSubcategory'
+];
+
 const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -51,17 +56,16 @@ const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
           {t(`modal.${modalType}.title`)}
         </PageHeading>
 
-        {modalType !== 'removeCategory' &&
-          modalType !== 'removeSubcategory' && (
-            <p className="margin-y-0 text-base">
-              <Trans
-                i18nKey={t('modal.allFieldsRequired')}
-                components={{
-                  s: <span className="text-secondary-dark" />
-                }}
-              />
-            </p>
-          )}
+        {!nonRequiredForms.includes(modalType) && (
+          <p className="margin-y-0 text-base">
+            <Trans
+              i18nKey={t('modal.allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        )}
       </div>
 
       {errorMessageInModal}
