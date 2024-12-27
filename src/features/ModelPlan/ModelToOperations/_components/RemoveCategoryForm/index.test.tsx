@@ -30,12 +30,12 @@ describe('Custom Catergory form', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `${i18next.t('modelToOperationsMisc:modal.remove.category.copy')}`
+          `${i18next.t('modelToOperationsMisc:modal.removeCategory.copy')}`
         )
       ).toBeInTheDocument();
       expect(
         screen.getByRole('button', {
-          name: `${i18next.t('modelToOperationsMisc:modal.remove.category.button')}`
+          name: `${i18next.t('modelToOperationsMisc:modal.removeCategory.button')}`
         })
       ).toBeInTheDocument();
     });
