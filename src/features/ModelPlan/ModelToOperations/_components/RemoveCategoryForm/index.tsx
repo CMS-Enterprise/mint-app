@@ -34,6 +34,9 @@ const RemoveCategoryForm = () => {
     ]
   });
 
+  const namespace =
+    rowType === 'category' ? 'removeCategory' : 'removeSubcategory';
+
   const handleRemove = () => {
     deleteCategory({
       variables: {
@@ -49,7 +52,7 @@ const RemoveCategoryForm = () => {
               data-testid="mandatory-fields-alert"
               className="margin-y-4"
             >
-              {t('modal.remove.successAlert')}
+              {t(`modal.${namespace}.successAlert`)}
             </Alert>
           );
         }
@@ -63,7 +66,7 @@ const RemoveCategoryForm = () => {
             data-testid="error-alert"
             className="margin-bottom-2"
           >
-            {t('modal.remove.category.errorAlert')}
+            {t(`modal.${namespace}.errorAlert`)}
           </Alert>
         );
       });
@@ -71,13 +74,14 @@ const RemoveCategoryForm = () => {
 
   return (
     <>
-      <p>{t('modal.remove.category.copy')}</p>
+      <p>{t(`modal.${namespace}.copy`)}</p>
+
       <Button
         type="button"
         className="margin-right-4 bg-error"
         onClick={() => handleRemove()}
       >
-        {t('modal.remove.category.button')}
+        {t(`modal.${namespace}.button`)}
       </Button>
       <Button
         type="button"
@@ -86,7 +90,7 @@ const RemoveCategoryForm = () => {
           setMTOModalOpen(false);
         }}
       >
-        {t('modal.remove.goBack')}
+        {t(`modal.${namespace}.goBack`)}
       </Button>
     </>
   );

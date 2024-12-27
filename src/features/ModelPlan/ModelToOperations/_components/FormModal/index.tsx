@@ -35,27 +35,6 @@ const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
 
   const { resetMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
 
-  const modalTitle = (() => {
-    switch (modalType) {
-      case 'category':
-        return t('modal.title.category');
-      case 'milestone':
-        return t('modal.title.milestone');
-      case 'solution':
-        return t('modal.title.solution');
-      case 'moveSubCategory':
-        return t('modal.title.moveSubCategory');
-      case 'editCategoryTitle':
-        return t('modal.title.editCategoryTitle');
-      case 'removeCategory':
-        return t('modal.title.removeCategory');
-      case 'removeSubcategory':
-        return t('modal.title.removeSubcategory');
-      default:
-        return '';
-    }
-  })();
-
   return (
     <Modal
       isOpen={isOpen}
@@ -69,7 +48,7 @@ const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {modalTitle}
+          {t(`modal.${modalType}.title`)}
         </PageHeading>
 
         {modalType !== 'removeCategory' &&

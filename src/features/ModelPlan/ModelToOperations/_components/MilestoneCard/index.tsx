@@ -69,7 +69,7 @@ const MilestoneCard = ({
       >
         <div className="margin-bottom-2">
           <PageHeading headingLevel="h3" className="margin-y-0">
-            {t('modal.title.solutionToMilestone')}
+            {t('modal.solutionToMilestone.title')}
           </PageHeading>
         </div>
 
