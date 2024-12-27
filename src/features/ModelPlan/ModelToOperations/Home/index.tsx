@@ -17,7 +17,7 @@ import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import { MTOModalContext, MTOModalProvider } from 'contexts/MTOModalContext';
+import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
@@ -27,9 +27,9 @@ import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable, { isMatrixStartedFc } from '../_components/Table';
 
-export type MTOOption = 'milestones' | 'systems-and-solutions';
+export type MTOOption = 'milestones' | 'solutions';
 
-export const mtoOptions: MTOOption[] = ['milestones', 'systems-and-solutions'];
+export const mtoOptions: MTOOption[] = ['milestones', 'solutions'];
 
 const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');

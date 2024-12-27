@@ -30,6 +30,9 @@ const MTOOptionsCard = ({
 
   const { modelID } = useParams<{ modelID: string }>();
 
+  const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
+    useContext(MTOModalContext);
+
   return (
     <Card
       containerProps={{
@@ -44,7 +47,7 @@ const MTOOptionsCard = ({
           'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg',
           {
             'bg-green-50': mtoType === 'milestones',
-            'indigo-cool-60': mtoType === 'systems-and-solutions'
+            'indigo-cool-60': mtoType === 'solutions'
           }
         )}
       >
@@ -69,20 +72,26 @@ const MTOOptionsCard = ({
 
         <CardFooter className="padding-x-0 padding-top-2 padding-bottom-0">
           <UswdsReactLink
-            className="usa-button usa-button--outline display-block width-fit-content text-decoration-none"
+            className="usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
             aria-label={t(`optionsCard.${mtoType}.buttonText`)}
-            to={`/models/${modelID}/collaboration-area/model-to-operations/${mtoType === 'milestones' ? 'milestone-library' : 'systems-and-solutions'}`}
+            to={`/models/${modelID}/collaboration-area/model-to-operations/${mtoType === 'milestones' ? 'milestone-library' : 'solution-library'}`}
           >
             {t(`optionsCard.${mtoType}.buttonText`)}
           </UswdsReactLink>
 
-          <UswdsReactLink
-            aria-label={t(`optionsCard.${mtoType}.linkText`)}
-            className="display-block margin-top-1"
-            to={`/models/${modelID}/collaboration-area/model-to-operations/custom-milestone`}
+          <Button
+            type="button"
+            className="display-block"
+            unstyled
+            onClick={() => {
+              setMTOModalState({
+                modalType: mtoType === 'milestones' ? 'milestone' : 'solution'
+              });
+              setIsModalOpen(true);
+            }}
           >
             {t(`optionsCard.${mtoType}.linkText`)}
-          </UswdsReactLink>
+          </Button>
         </CardFooter>
       </div>
     </Card>

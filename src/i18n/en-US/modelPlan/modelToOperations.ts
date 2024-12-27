@@ -164,7 +164,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
   forModel: 'for {{ modelName }}',
   milestones: 'Milestones',
-  'systems-and-solutions': 'IT systems and solutions',
+  solutions: 'IT systems and solutions',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
   isMTOInProgress: 'Is this MTO still in progress',
@@ -192,7 +192,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       buttonText: 'Browse common milestones',
       linkText: 'or, add a custom milestone'
     },
-    'systems-and-solutions': {
+    solutions: {
       label: 'Operational solutions',
       header: 'Start with IT systems or other solutions',
       description:

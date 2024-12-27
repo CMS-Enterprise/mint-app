@@ -184,7 +184,7 @@ const MTOTableActions = () => {
                     setIsModalOpen(true);
                   }}
                 >
-                  {t('optionsCard.systems-and-solutions.linkText')}
+                  {t('optionsCard.solutions.linkText')}
                 </Button>
               </div>
             </div>
