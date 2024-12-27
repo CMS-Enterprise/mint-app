@@ -41,9 +41,9 @@ const MTOTableActions = () => {
   const {
     isMTOModalOpen: isModalOpen,
     setMTOModalOpen: setIsModalOpen,
-    mtoModalType: modalType,
-    setMTOModalType: setModalType,
-    resetCategoryAndSubCategoryID
+    mtoModalState: { modalType },
+    setMTOModalState,
+    resetMTOModalState
   } = useContext(MTOModalContext);
 
   const [create] = useCreateStandardCategoriesMutation({
@@ -152,9 +152,9 @@ const MTOTableActions = () => {
                   unstyled
                   onClick={() => {
                     clearMessage();
-                    setModalType('milestone');
+                    setMTOModalState({ modalType: 'milestone' });
                     setIsModalOpen(true);
-                    resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
+                    resetMTOModalState(); // Reset category and subcategory ID
                   }}
                 >
                   {t('optionsCard.milestones.linkText')}
@@ -209,7 +209,7 @@ const MTOTableActions = () => {
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    setModalType('solution');
+                    setMTOModalState({ modalType: 'solution' });
                     setIsModalOpen(true);
                   }}
                 >
@@ -266,7 +266,7 @@ const MTOTableActions = () => {
                 className="display-block"
                 unstyled
                 onClick={() => {
-                  setModalType('category');
+                  setMTOModalState({ modalType: 'category' });
                   setIsModalOpen(true);
                 }}
               >
