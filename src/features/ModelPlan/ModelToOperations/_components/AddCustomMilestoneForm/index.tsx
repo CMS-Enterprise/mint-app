@@ -33,14 +33,15 @@ type FormValues = {
   name: string;
 };
 
-const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
+const ModelMilestoneForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
   const { modelID } = useParams<{ modelID: string }>();
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
   const {
-    mtoModalState: { categoryID, subCategoryID }
+    mtoModalState: { categoryID, subCategoryID },
+    setMTOModalOpen
   } = useContext(MTOModalContext);
 
   // Variables for the form
@@ -121,7 +122,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
               </Alert>
             </>
           );
-          closeModal();
+          setMTOModalOpen(false);
         }
       })
       .catch(() => {
@@ -279,7 +280,7 @@ const ModelMilestoneForm = ({ closeModal }: { closeModal: () => void }) => {
           onClick={() => {
             reset();
             clearMessage();
-            closeModal();
+            setMTOModalOpen(false);
           }}
         >
           {t('modal.cancel')}

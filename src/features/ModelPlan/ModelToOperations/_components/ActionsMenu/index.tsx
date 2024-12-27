@@ -83,6 +83,10 @@ const ActionMenu = ({
     };
   }, []);
 
+  const isUncategorized =
+    primaryCategoryID === '00000000-0000-0000-0000-000000000000' ||
+    subCategoryID === '00000000-0000-0000-0000-000000000000';
+
   if (rowType !== 'milestone')
     return (
       <div ref={menuRef}>
@@ -151,15 +155,24 @@ const ActionMenu = ({
             // Add Subcategory or Move to Another Category
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
                 if (rowType === 'category') {
-                  clearMessage();
                   setMTOModalOpen(true);
                   setMTOModalState({
                     modalType: 'category',
                     categoryID: primaryCategoryID
+                  });
+                } else {
+                  setMTOModalState({
+                    modalType: 'moveSubCategory',
+                    categoryID: primaryCategoryID,
+                    subCategoryID,
+                    categoryName: name || ''
                   });
                 }
               }}
@@ -176,6 +189,7 @@ const ActionMenu = ({
             // Edit Category/Subcategory Title
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
@@ -202,6 +216,7 @@ const ActionMenu = ({
             // Remove Category/Subcategory
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
@@ -220,7 +235,12 @@ const ActionMenu = ({
               onKeyPress={e => {
                 e.stopPropagation();
               }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item text-red"
+              className={classNames(
+                'share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item ',
+                {
+                  'text-red': !isUncategorized
+                }
+              )}
               unstyled
             >
               {i18next.t(

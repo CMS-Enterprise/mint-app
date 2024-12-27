@@ -1,42 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-import { MilestoneCardType } from '../../MilestoneLibrary';
-import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
+import MoveSubCategoryForm from '../MoveSubCategoryForm';
 import RemoveCategoryForm from '../RemoveCategoryForm';
+
+export type MTOModalType =
+  | 'category'
+  | 'milestone'
+  | 'solution'
+  | 'editMilestone'
+  | 'moveSubCategory'
+  | 'editCategoryTitle'
+  | 'removeCategory'
+  | 'removeSubcategory';
 
 type MTOModalProps = {
   isOpen: boolean;
-  closeModal: () => void;
-  modalType:
-    | 'category'
-    | 'milestone'
-    | 'solution'
-    | 'solutionToMilestone'
-    | 'editMilestone'
-    | 'editCategoryTitle'
-    | 'removeCategory'
-    | 'removeSubcategory';
-  milestone?: MilestoneCardType;
+  modalType: MTOModalType;
 };
 
-const MTOModal = ({
-  isOpen,
-  closeModal,
-  modalType,
-  milestone
-}: MTOModalProps) => {
+const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { errorMessageInModal, clearMessage } = useMessage();
+
+  const { resetMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
 
   const modalTitle = (() => {
     switch (modalType) {
@@ -46,8 +43,8 @@ const MTOModal = ({
         return t('modal.title.milestone');
       case 'solution':
         return t('modal.title.solution');
-      case 'solutionToMilestone':
-        return t('modal.title.solutionToMilestone');
+      case 'moveSubCategory':
+        return t('modal.title.moveSubCategory');
       case 'editCategoryTitle':
         return t('modal.title.editCategoryTitle');
       case 'removeCategory':
@@ -64,7 +61,8 @@ const MTOModal = ({
       isOpen={isOpen}
       closeModal={() => {
         clearMessage();
-        closeModal();
+        resetMTOModalState();
+        setMTOModalOpen(false);
       }}
       shouldCloseOnOverlayClick
       className="tablet:width-mobile-lg mint-body-normal"
@@ -75,7 +73,6 @@ const MTOModal = ({
         </PageHeading>
 
         {modalType !== 'removeCategory' &&
-          modalType !== 'solutionToMilestone' &&
           modalType !== 'removeSubcategory' && (
             <p className="margin-y-0 text-base">
               <Trans
@@ -91,22 +88,13 @@ const MTOModal = ({
       {errorMessageInModal}
 
       {/* if type is category, then render CategoryForm */}
-      {modalType === 'category' && <CategoryForm closeModal={closeModal} />}
-      {modalType === 'milestone' && <MilestoneForm closeModal={closeModal} />}
-      {modalType === 'solution' && <SolutionForm closeModal={closeModal} />}
-      {modalType === 'solutionToMilestone' && milestone && (
-        <AddSolutionToMilestoneForm
-          closeModal={closeModal}
-          milestone={milestone}
-        />
-      )}
-      {modalType === 'editCategoryTitle' && (
-        <EditCategoryTitleForm closeModal={closeModal} />
-      )}
+      {modalType === 'category' && <CategoryForm />}
+      {modalType === 'milestone' && <MilestoneForm />}
+      {modalType === 'solution' && <SolutionForm />}
+      {modalType === 'moveSubCategory' && <MoveSubCategoryForm />}
+      {modalType === 'editCategoryTitle' && <EditCategoryTitleForm />}
       {(modalType === 'removeCategory' ||
-        modalType === 'removeSubcategory') && (
-        <RemoveCategoryForm closeModal={closeModal} />
-      )}
+        modalType === 'removeSubcategory') && <RemoveCategoryForm />}
     </Modal>
   );
 };

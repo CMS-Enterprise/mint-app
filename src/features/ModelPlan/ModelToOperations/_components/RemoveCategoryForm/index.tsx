@@ -11,14 +11,17 @@ import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
+const RemoveCategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+
   const { modelID } = useParams<{ modelID: string }>();
+
   const {
     mtoModalState: { categoryID, subCategoryID, rowType },
-    resetMTOModalState
+    setMTOModalOpen
   } = useContext(MTOModalContext);
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+
+  const { showMessage, showErrorMessageInModal } = useMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
     refetchQueries: [
@@ -50,8 +53,7 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
             </Alert>
           );
         }
-        resetMTOModalState();
-        closeModal();
+        setMTOModalOpen(false);
       })
       .catch(() => {
         showErrorMessageInModal(
@@ -81,9 +83,7 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
         type="button"
         unstyled
         onClick={() => {
-          resetMTOModalState();
-          clearMessage();
-          closeModal();
+          setMTOModalOpen(false);
         }}
       >
         {t('modal.remove.goBack')}

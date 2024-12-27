@@ -180,6 +180,9 @@ export const modelToOperationsMisc: Record<string, any> = {
   aboutCategories: 'About categories',
   aboutCategoriesDescription:
     'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
+  successReorder: 'Your categories have been reordered.',
+  errorReorderForm:
+    'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
   optionsCard: {
     milestones: {
       label: 'Milestones',
@@ -267,6 +270,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       milestone: 'Add a new model milestone',
       solution: 'Add a new solution',
       solutionToMilestone: 'Add a solution for this milestone?',
+      moveSubCategory: 'Move sub-category to a new category',
       editCategoryTitle: 'Edit category title',
       removeCategory: 'Are you sure you want to remove this category?',
       removeSubcategory: 'Are you sure you want to remove this sub-category?'
@@ -408,6 +412,22 @@ export const modelToOperationsMisc: Record<string, any> = {
       add: 'Add with {{count}} solution',
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
+    },
+    moveSubCategory: {
+      description:
+        'This action will also move any milestones within this sub-category.',
+      currentCategory: 'Current category',
+      newCategory: 'New category',
+      alert: {
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions',
+      subcategoryExists:
+        'There is already a sub-category named "{{name}}" in this primary category. To avoid issues, please select a different primary category or rename this sub-category before moving it.'
     },
     editCategoryTitle: {
       label: 'Current title',

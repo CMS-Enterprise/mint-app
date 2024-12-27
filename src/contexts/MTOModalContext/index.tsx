@@ -1,16 +1,9 @@
 import React, { createContext, useState } from 'react';
+import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/FormModal';
 import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/Table/columns';
 
 export interface MTOModalState {
-  modalType:
-    | 'category'
-    | 'milestone'
-    | 'solution'
-    | 'solutionToMilestone'
-    | 'editMilestone'
-    | 'editCategoryTitle'
-    | 'removeCategory'
-    | 'removeSubcategory';
+  modalType: MTOModalType;
   categoryID: string;
   subCategoryID: string;
   categoryName?: string;
