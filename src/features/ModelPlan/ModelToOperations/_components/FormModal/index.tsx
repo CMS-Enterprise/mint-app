@@ -21,12 +21,19 @@ export type MTOModalType =
   | 'moveSubCategory'
   | 'editCategoryTitle'
   | 'removeCategory'
-  | 'removeSubcategory';
+  | 'removeSubcategory'
+  | 'addTemplate';
 
 type MTOModalProps = {
   isOpen: boolean;
   modalType: MTOModalType;
 };
+
+const nonRequiredForms: Partial<MTOModalType[]> = [
+  'removeCategory',
+  'removeSubcategory',
+  'addTemplate'
+];
 
 const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -34,27 +41,6 @@ const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
   const { errorMessageInModal, clearMessage } = useMessage();
 
   const { resetMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
-
-  const modalTitle = (() => {
-    switch (modalType) {
-      case 'category':
-        return t('modal.title.category');
-      case 'milestone':
-        return t('modal.title.milestone');
-      case 'solution':
-        return t('modal.title.solution');
-      case 'moveSubCategory':
-        return t('modal.title.moveSubCategory');
-      case 'editCategoryTitle':
-        return t('modal.title.editCategoryTitle');
-      case 'removeCategory':
-        return t('modal.title.removeCategory');
-      case 'removeSubcategory':
-        return t('modal.title.removeSubcategory');
-      default:
-        return '';
-    }
-  })();
 
   return (
     <Modal
@@ -69,20 +55,19 @@ const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {modalTitle}
+          {t(`modal.${modalType}.title`)}
         </PageHeading>
 
-        {modalType !== 'removeCategory' &&
-          modalType !== 'removeSubcategory' && (
-            <p className="margin-y-0 text-base">
-              <Trans
-                i18nKey={t('modal.allFieldsRequired')}
-                components={{
-                  s: <span className="text-secondary-dark" />
-                }}
-              />
-            </p>
-          )}
+        {!nonRequiredForms.includes(modalType) && (
+          <p className="margin-y-0 text-base">
+            <Trans
+              i18nKey={t('modal.allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
+        )}
       </div>
 
       {errorMessageInModal}
