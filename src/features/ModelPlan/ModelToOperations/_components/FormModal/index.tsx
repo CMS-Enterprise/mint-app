@@ -23,26 +23,26 @@ export type MTOModalType =
   | 'removeCategory'
   | 'removeSubcategory';
 
-type MTOModalProps = {
-  isOpen: boolean;
-  modalType: MTOModalType;
-};
-
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
   'removeSubcategory'
 ];
 
-const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
+const MTOModal = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
-  const { resetMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
+  const {
+    resetMTOModalState,
+    setMTOModalOpen,
+    isMTOModalOpen,
+    mtoModalState: { modalType }
+  } = useContext(MTOModalContext);
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isMTOModalOpen}
       closeModal={() => {
         clearMessage();
         resetMTOModalState();
