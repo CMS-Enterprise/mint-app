@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
@@ -13,6 +13,7 @@ import {
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 
 import { MTOOption, mtoOptions } from '../../Home';
 
@@ -91,6 +92,9 @@ const MTOOptionsCard = ({
 const MTOOptionsPanel = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
+    useContext(MTOModalContext);
+
   return (
     <div className="model-to-operations__options-panel">
       <h2 className="margin-y-0">{t('emptyMTO')}</h2>
@@ -161,7 +165,16 @@ const MTOOptionsPanel = () => {
 
               <Grid desktop={{ col: 3 }} tablet={{ col: 3 }}>
                 <div className="display-flex flex-justify-end">
-                  <Button type="button" outline onClick={() => {}}>
+                  <Button
+                    type="button"
+                    outline
+                    onClick={() => {
+                      setMTOModalState({
+                        modalType: 'addTemplate'
+                      });
+                      setIsModalOpen(true);
+                    }}
+                  >
                     {t('optionsCard.template.buttonText')}
                   </Button>
                 </div>

@@ -17,11 +17,12 @@ import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import { MTOModalProvider } from 'contexts/MTOModalContext';
+import { MTOModalContext, MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
+import MTOModal from '../_components/FormModal';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable, { isMatrixStartedFc } from '../_components/Table';
@@ -193,20 +194,22 @@ const MTOHome = () => {
             {loading ? (
               <PageLoading />
             ) : (
-              <>
+              <MTOModalProvider>
+                <MTOModal />
+
                 {isMatrixStarted ? (
-                  <MTOModalProvider>
+                  <>
                     <MTOTableActions />
                     <MTOTable
                       queryData={data}
                       loading={loading}
                       error={error}
                     />
-                  </MTOModalProvider>
+                  </>
                 ) : (
                   <MTOOptionsPanel />
                 )}
-              </>
+              </MTOModalProvider>
             )}
           </>
         )}

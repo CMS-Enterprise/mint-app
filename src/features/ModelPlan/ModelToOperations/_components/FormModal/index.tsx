@@ -9,6 +9,7 @@ import useMessage from 'hooks/useMessage';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
+import AddTemplateModal from '../AddTemplateModal';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
 import MoveSubCategoryForm from '../MoveSubCategoryForm';
 import RemoveCategoryForm from '../RemoveCategoryForm';
@@ -24,27 +25,27 @@ export type MTOModalType =
   | 'removeSubcategory'
   | 'addTemplate';
 
-type MTOModalProps = {
-  isOpen: boolean;
-  modalType: MTOModalType;
-};
-
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
   'removeSubcategory',
   'addTemplate'
 ];
 
-const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
+const MTOModal = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
-  const { resetMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
+  const {
+    resetMTOModalState,
+    setMTOModalOpen,
+    isMTOModalOpen,
+    mtoModalState: { modalType }
+  } = useContext(MTOModalContext);
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isMTOModalOpen}
       closeModal={() => {
         clearMessage();
         resetMTOModalState();
@@ -80,6 +81,7 @@ const MTOModal = ({ isOpen, modalType }: MTOModalProps) => {
       {modalType === 'editCategoryTitle' && <EditCategoryTitleForm />}
       {(modalType === 'removeCategory' ||
         modalType === 'removeSubcategory') && <RemoveCategoryForm />}
+      {modalType === 'addTemplate' && <AddTemplateModal />}
     </Modal>
   );
 };

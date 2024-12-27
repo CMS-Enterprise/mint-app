@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
-  useCreateStandardCategoriesMutation,
   useGetMtoCommonSolutionsQuery,
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
@@ -45,10 +44,6 @@ const MTOTableActions = () => {
     setMTOModalState
   } = useContext(MTOModalContext);
 
-  const [create] = useCreateStandardCategoriesMutation({
-    variables: { modelPlanID: modelID }
-  });
-
   const { data: milestoneData } = useGetMtoMilestonesQuery({
     variables: { id: modelID }
   });
@@ -57,22 +52,13 @@ const MTOTableActions = () => {
     variables: { id: modelID }
   });
 
-  const handleCreate = () => {
-    create().then(response => {
-      if (!response?.errors) {
-        // TODO: Add success message
-        // alert('Standard categories created successfully');
-      }
-    });
-  };
-
   useEffect(() => {
     localStorage.setItem(`mto-table-toggle`, JSON.stringify(actionsMenuOpen));
   }, [actionsMenuOpen]);
 
   return (
     <>
-      <MTOModal isOpen={isModalOpen} modalType={modalType} />
+      {/* <MTOModal isOpen={isModalOpen} modalType={modalType} /> */}
 
       <div className="border-1px radius-md border-gray-10 padding-3">
         <div className="action-bar display-flex">
@@ -247,7 +233,10 @@ const MTOTableActions = () => {
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    handleCreate();
+                    setMTOModalState({
+                      modalType: 'addTemplate'
+                    });
+                    setIsModalOpen(true);
                   }}
                 >
                   {t('table.tableActions.addThisTemplate')}

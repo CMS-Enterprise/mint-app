@@ -2,10 +2,7 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Button, Form } from '@trussworks/react-uswds';
-import {
-  GetModelToOperationsMatrixDocument,
-  useCreateMtoCategoryMutation
-} from 'gql/generated/graphql';
+import { useCreateStandardCategoriesMutation } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -20,15 +17,8 @@ const AddTemplateModal = () => {
 
   const { showErrorMessageInModal, showMessage } = useMessage();
 
-  const [create] = useCreateMtoCategoryMutation({
-    refetchQueries: [
-      {
-        query: GetModelToOperationsMatrixDocument,
-        variables: {
-          id: modelID
-        }
-      }
-    ]
+  const [create] = useCreateStandardCategoriesMutation({
+    variables: { modelPlanID: modelID }
   });
 
   const handleSubmit = () => {
@@ -43,11 +33,12 @@ const AddTemplateModal = () => {
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
               >
-                {t('modal.category.alert.success')}
+                {t('modal.addTemplate.success')}
               </Alert>
             </>
           );
         }
+        setMTOModalOpen(false);
       })
       .catch(() => {
         showErrorMessageInModal(
@@ -57,26 +48,43 @@ const AddTemplateModal = () => {
             data-testid="error-alert"
             className="margin-bottom-2"
           >
-            {t('modal.category.alert.error')}
+            {t('modal.addTemplate.error')}
           </Alert>
         );
       });
   };
 
   return (
-    <Form onSubmit={() => handleSubmit()}>
-      <Button type="submit" className="margin-right-3">
-        {t('modal.addtemplate')}
-      </Button>
+    <Form
+      onSubmit={e => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+      className="maxw-none"
+    >
+      <p className="margin-bottom-0">{t('modal.addTemplate.description')}</p>
 
-      <Button
-        type="button"
-        onClick={() => {
-          setMTOModalOpen(false);
-        }}
-      >
-        {t('modal.cancel')}
-      </Button>
+      <ul className="margin-y-1 margin-bottom-3">
+        <li>{t('modal.addTemplate.item')}</li>
+      </ul>
+
+      <p>{t('modal.addTemplate.description2')}</p>
+
+      <div className="display-flex">
+        <Button type="submit" className="margin-right-3">
+          {t('modal.addTemplate.addTemplate')}
+        </Button>
+
+        <Button
+          type="button"
+          unstyled
+          onClick={() => {
+            setMTOModalOpen(false);
+          }}
+        >
+          {t('modal.addTemplate.dontAdd')}
+        </Button>
+      </div>
     </Form>
   );
 };

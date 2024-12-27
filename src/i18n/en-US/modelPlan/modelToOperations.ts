@@ -1,6 +1,3 @@
-import AddTemplateModal from 'features/ModelPlan/ModelToOperations/_components/AddTemplateModal';
-import { head } from 'lodash';
-
 import { TranslationMTOInfo } from 'types/translation';
 
 import {
@@ -442,12 +439,17 @@ export const modelToOperationsMisc: Record<string, any> = {
       successAlert: 'Your category has been removed.'
     },
     addTemplate: {
-      heading: 'Are you sure you want to continue?',
+      title: 'Are you sure you want to continue?',
       description: 'Adding this template to your MTO will add:',
       item: '16 categories (including 8 primary categories)',
-      descprition2:
-        'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.'
-    },
+      description2:
+        'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
+      success: 'Your template (Standard categories) has been added.',
+      error:
+        'There was an error adding this template. Please try again. If the error persists, please try again another time.',
+      addTemplate: 'Add template',
+      dontAdd: 'Don’t add template'
+    }
   },
   milestoneLibrary: {
     heading: 'Milestone library',
