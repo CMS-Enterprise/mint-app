@@ -10,8 +10,6 @@ import {
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-import MTOModal from '../FormModal';
-
 import './index.scss';
 
 const MTOTableActions = () => {
@@ -37,12 +35,8 @@ const MTOTableActions = () => {
 
   const [actionsMenuOpen, setActionsMenuOpen] = useState(defaultExpandedTable);
 
-  const {
-    isMTOModalOpen: isModalOpen,
-    setMTOModalOpen: setIsModalOpen,
-    mtoModalState: { modalType },
-    setMTOModalState
-  } = useContext(MTOModalContext);
+  const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
+    useContext(MTOModalContext);
 
   const { data: milestoneData } = useGetMtoMilestonesQuery({
     variables: { id: modelID }
@@ -58,8 +52,6 @@ const MTOTableActions = () => {
 
   return (
     <>
-      {/* <MTOModal isOpen={isModalOpen} modalType={modalType} /> */}
-
       <div className="border-1px radius-md border-gray-10 padding-3">
         <div className="action-bar display-flex">
           <p className="margin-y-0 text-bold">
