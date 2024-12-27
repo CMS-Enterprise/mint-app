@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Button, Form } from '@trussworks/react-uswds';
-import { useCreateStandardCategoriesMutation } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixDocument,
+  useCreateStandardCategoriesMutation
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -18,7 +21,13 @@ const AddTemplateModal = () => {
   const { showErrorMessageInModal, showMessage } = useMessage();
 
   const [create] = useCreateStandardCategoriesMutation({
-    variables: { modelPlanID: modelID }
+    variables: { modelPlanID: modelID },
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: { id: modelID }
+      }
+    ]
   });
 
   const handleSubmit = () => {
