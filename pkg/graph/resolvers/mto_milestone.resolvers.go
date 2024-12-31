@@ -77,6 +77,11 @@ func (r *queryResolver) MtoMilestone(ctx context.Context, id uuid.UUID) (*models
 	return MTOMilestoneGetByIDLOADER(ctx, id)
 }
 
+// MtoMilestonesWithNoLinkedSolutions is the resolver for the mtoMilestonesWithNoLinkedSolutions field.
+func (r *queryResolver) MtoMilestonesWithNoLinkedSolutions(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOMilestone, error) {
+	return MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(ctx, modelPlanID)
+}
+
 // MTOMilestone returns generated.MTOMilestoneResolver implementation.
 func (r *Resolver) MTOMilestone() generated.MTOMilestoneResolver { return &mTOMilestoneResolver{r} }
 
