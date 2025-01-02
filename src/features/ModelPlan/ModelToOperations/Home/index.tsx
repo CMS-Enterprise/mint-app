@@ -139,7 +139,7 @@ const MTOHome = () => {
           <Header
             basic
             extended={false}
-            className="model-to-operations__nav-container"
+            className="model-to-operations__nav-container margin-top-6"
           >
             <div className="usa-nav-container padding-0">
               <PrimaryNav
@@ -173,47 +173,49 @@ const MTOHome = () => {
           </Header>
         </GridContainer>
       </div>
-      <div className="bg-accent-cool-lighter shadow-2">
-        <GridContainer className="padding-y-2">
-          <Grid row className="flex-no-wrap">
-            <div className="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center">
-              <Icon.LightbulbOutline className="text-white" />
-            </div>
-            <span className="margin-y-0">
-              {suggestedMilestones?.length > 0 ? (
-                <>
+      {currentView === 'milestones' && (
+        <div className="bg-accent-cool-lighter shadow-2 z-bottom position-relative">
+          <GridContainer className="padding-y-2">
+            <Grid row className="flex-no-wrap">
+              <div className="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center">
+                <Icon.LightbulbOutline className="text-white" />
+              </div>
+              <span className="margin-y-0">
+                {suggestedMilestones?.length > 0 ? (
+                  <>
+                    <Trans
+                      i18nKey={t('suggestedMilestoneBanner.notEmpty')}
+                      values={{ count: suggestedMilestones?.length }}
+                      components={{
+                        s: (
+                          <UswdsReactLink
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                            className=""
+                          />
+                        ),
+                        arrow: (
+                          <Icon.ArrowForward className="margin-left-05 top-05" />
+                        )
+                      }}
+                    />
+                  </>
+                ) : (
                   <Trans
-                    i18nKey={t('suggestedMilestoneBanner.notEmpty')}
-                    values={{ count: suggestedMilestones?.length }}
+                    i18nKey={t('suggestedMilestoneBanner.empty')}
                     components={{
                       s: (
                         <UswdsReactLink
-                          to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
-                          className=""
+                          to={`/models/${modelID}/collaboration-area/task-list`}
                         />
-                      ),
-                      arrow: (
-                        <Icon.ArrowForward className="margin-left-05 top-05" />
                       )
                     }}
                   />
-                </>
-              ) : (
-                <Trans
-                  i18nKey={t('suggestedMilestoneBanner.empty')}
-                  components={{
-                    s: (
-                      <UswdsReactLink
-                        to={`/models/${modelID}/collaboration-area/task-list`}
-                      />
-                    )
-                  }}
-                />
-              )}
-            </span>
-          </Grid>
-        </GridContainer>
-      </div>
+                )}
+              </span>
+            </Grid>
+          </GridContainer>
+        </div>
+      )}
       <GridContainer>
         <div className="model-to-operations margin-y-6">
           {isTablet && (
