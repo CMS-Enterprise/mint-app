@@ -95,11 +95,9 @@ const MTOHome = () => {
 
           {message && <Expire delay={45000}>{message}</Expire>}
 
-          <Grid row className="margin-bottom-2">
+          <Grid row className="desktop:margin-bottom-6 margin-top-4">
             <Grid desktop={{ col: 9 }}>
-              <h1 className="margin-bottom-0 margin-top-5 line-height-large">
-                {t('heading')}
-              </h1>
+              <h1 className="margin-y-0 line-height-large">{t('heading')}</h1>
 
               {!loading && (
                 <p className="mint-body-large margin-bottom-2 margin-top-05">
@@ -110,36 +108,43 @@ const MTOHome = () => {
               )}
 
               {!loading && (
-                <MTOStatusBanner
-                  status={modelToOperationsMatrix?.status}
-                  lastUpdated={modelToOperationsMatrix?.recentEdit?.modifiedDts}
-                />
+                <div className="margin-bottom-3">
+                  <MTOStatusBanner
+                    status={modelToOperationsMatrix?.status}
+                    lastUpdated={
+                      modelToOperationsMatrix?.recentEdit?.modifiedDts
+                    }
+                  />
+                </div>
               )}
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area`}
+                data-testid="return-to-collaboration"
+              >
+                <span>
+                  <Icon.ArrowBack className="top-3px margin-right-1" />
+                  {t('returnToCollaboration')}
+                </span>
+              </UswdsReactLink>
             </Grid>
 
             <Grid desktop={{ col: 3 }}>
               <AskAQuestion
                 modelID={modelID}
-                className="margin-top-6 margin-bottom-4"
+                // className="margin-top-6 margin-bottom-4"
+                className="margin-top-3 desktop:margin-top-0 margin-bottom-5"
                 renderTextFor="modelToOperations"
+
+                // inlineText={isTablet}
+                // TODO: redo the way the inline text works
               />
             </Grid>
           </Grid>
 
-          <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area`}
-            data-testid="return-to-collaboration"
-          >
-            <span>
-              <Icon.ArrowBack className="top-3px margin-right-1" />
-              {t('returnToCollaboration')}
-            </span>
-          </UswdsReactLink>
-
           <Header
             basic
             extended={false}
-            className="model-to-operations__nav-container margin-top-6"
+            className="model-to-operations__nav-container"
           >
             <div className="usa-nav-container padding-0">
               <PrimaryNav
