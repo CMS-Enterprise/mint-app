@@ -66,9 +66,7 @@ const AskAQuestion = ({
         style={{ gap: '1rem' }}
       >
         {renderTextFor && (
-          <p className="text-bold margin-top-0 margin-0">
-            {renderText(renderTextFor)}
-          </p>
+          <p className="text-bold margin-0">{renderText(renderTextFor)}</p>
         )}
 
         <div className="display-flex" data-testid="ask-a-question">

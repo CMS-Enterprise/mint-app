@@ -337,7 +337,7 @@ exports[`Operational Solutions NeedQuestionAndAnswer > matches snapshot 1`] = `
           style="gap: 1rem;"
         >
           <p
-            class="text-bold margin-top-0 margin-0"
+            class="text-bold margin-0"
           >
             Need help choosing a solution?
           </p>

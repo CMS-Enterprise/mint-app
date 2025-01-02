@@ -284,7 +284,7 @@ exports[`Operational Solutions Add Subtasks > matches snapshot 1`] = `
             style="gap: 1rem;"
           >
             <p
-              class="text-bold margin-top-0 margin-0"
+              class="text-bold margin-0"
             >
               Don’t know what to do next?
             </p>
@@ -691,7 +691,7 @@ exports[`Operational Solutions Manage Subtasks > matches snapshot 1`] = `
             style="gap: 1rem;"
           >
             <p
-              class="text-bold margin-top-0 margin-0"
+              class="text-bold margin-0"
             >
               Don’t know what to do next?
             </p>
