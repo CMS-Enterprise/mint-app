@@ -133,9 +133,6 @@ const MTOHome = () => {
                 modelID={modelID}
                 className="margin-top-3 desktop:margin-top-0 margin-bottom-5"
                 renderTextFor="modelToOperations"
-
-                // inlineText={isTablet}
-                // TODO: redo the way the inline text works
               />
             </Grid>
           </Grid>

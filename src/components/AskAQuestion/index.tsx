@@ -6,8 +6,6 @@ import classNames from 'classnames';
 import Discussions from 'features/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
 
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-
 type AskAQuestionType = {
   modelID: string;
   renderTextFor?:
@@ -16,14 +14,12 @@ type AskAQuestionType = {
     | 'status'
     | 'dataExchangeApproach'
     | 'modelToOperations';
-  inlineText?: boolean;
   className?: string;
 };
 
 const AskAQuestion = ({
   modelID,
   renderTextFor,
-  inlineText,
   className
 }: AskAQuestionType) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
@@ -34,8 +30,6 @@ const AskAQuestion = ({
   const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
-
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const renderText = (text: string | undefined) => {
     switch (text) {
@@ -63,18 +57,16 @@ const AskAQuestion = ({
       </DiscussionModalWrapper>
 
       <div
-        className={classNames('padding-2 bg-primary-lighter', {
-          'display-flex flex-justify flex-align-center':
-            inlineText && !isMobile,
-          'padding-bottom-205': renderTextFor === 'modelToOperations'
-        })}
+        className={classNames(
+          'padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center',
+          {
+            'padding-bottom-205': renderTextFor === 'modelToOperations'
+          }
+        )}
+        style={{ gap: '1rem' }}
       >
         {renderTextFor && (
-          <p
-            className={classNames('text-bold margin-top-0', {
-              'margin-0': inlineText && !isMobile
-            })}
-          >
+          <p className="text-bold margin-top-0 margin-0">
             {renderText(renderTextFor)}
           </p>
         )}
