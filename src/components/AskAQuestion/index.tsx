@@ -55,14 +55,12 @@ const AskAQuestion = ({
 
   return (
     <div className={className}>
-      {isDiscussionOpen && (
-        <DiscussionModalWrapper
-          isOpen={isDiscussionOpen}
-          closeModal={() => setIsDiscussionOpen(false)}
-        >
-          <Discussions modelID={modelID} askAQuestion />
-        </DiscussionModalWrapper>
-      )}
+      <DiscussionModalWrapper
+        isOpen={isDiscussionOpen}
+        closeModal={() => setIsDiscussionOpen(false)}
+      >
+        <Discussions modelID={modelID} askAQuestion />
+      </DiscussionModalWrapper>
 
       <div
         className={classNames('padding-2 bg-primary-lighter', {
