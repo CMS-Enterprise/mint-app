@@ -60,7 +60,7 @@ describe('Custom Milestone form', () => {
         <MessageProvider>
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <Route path="/models/:modelID/">
-              <MilestoneForm closeModal={() => {}} />
+              <MilestoneForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>

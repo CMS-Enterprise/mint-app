@@ -180,6 +180,9 @@ export const modelToOperationsMisc: Record<string, any> = {
   aboutCategories: 'About categories',
   aboutCategoriesDescription:
     'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
+  successReorder: 'Your categories have been reordered.',
+  errorReorderForm:
+    'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
   optionsCard: {
     milestones: {
       label: 'Milestones',
@@ -262,36 +265,13 @@ export const modelToOperationsMisc: Record<string, any> = {
     error: 'Failed to update MTO status'
   },
   modal: {
-    title: {
-      category: 'Add a new category',
-      milestone: 'Add a new model milestone',
-      solution: 'Add a new solution',
-      solutionToMilestone: 'Add a solution for this milestone?',
-      editCategoryTitle: 'Edit category title',
-      removeCategory: 'Are you sure you want to remove this category?',
-      removeSubcategory: 'Are you sure you want to remove this sub-category?'
-    },
     addButton: 'Add {{type}}',
     cancel: 'Cancel',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
-    remove: {
-      category: {
-        copy: 'This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.',
-        button: 'Remove category',
-        errorAlert:
-          'There was an error removing this category. Please try again. If the error persists, please try again another time.'
-      },
-      subcategory: {
-        copy: 'This action cannot be undone. Any milestones will move to the “Uncategorized” sub-category in this primary category.',
-        button: 'Remove sub-category',
-        errorAlert:
-          'There was an error removing this sub-category. Please try again. If the error persists, please try again another time.'
-      },
-      goBack: 'Go back',
-      successAlert: 'Your category has been removed.'
-    },
+
     category: {
+      title: 'Add a new category',
       selectPrimaryCategory: {
         label: 'Select primary category',
         sublabel:
@@ -315,6 +295,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     milestone: {
+      title: 'Add a new model milestone',
       selectPrimaryCategory: {
         label: 'Select primary category'
       },
@@ -380,6 +361,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     solution: {
+      title: 'Add a new solution',
       label: {
         solutionType: 'What type of solution is this?',
         solutionTitle: 'Please add a title for your solution',
@@ -398,6 +380,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     solutionToMilestone: {
+      title: 'Add a solution for this milestone?',
       description:
         'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
       alert: {
@@ -409,7 +392,25 @@ export const modelToOperationsMisc: Record<string, any> = {
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
     },
+    moveSubCategory: {
+      title: 'Move sub-category to a new category',
+      description:
+        'This action will also move any milestones within this sub-category.',
+      currentCategory: 'Current category',
+      newCategory: 'New category',
+      alert: {
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions',
+      subcategoryExists:
+        'There is already a sub-category named "{{name}}" in this primary category. To avoid issues, please select a different primary category or rename this sub-category before moving it.'
+    },
     editCategoryTitle: {
+      title: 'Edit category title',
       label: 'Current title',
       newTitle: 'New title',
       saveChanges: 'Save changes',
@@ -418,6 +419,24 @@ export const modelToOperationsMisc: Record<string, any> = {
         error:
           'There was an error editing the title. Please try again. If the error persists, please try again another time.'
       }
+    },
+    removeCategory: {
+      title: 'Are you sure you want to remove this category?',
+      copy: 'This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.',
+      button: 'Remove category',
+      errorAlert:
+        'There was an error removing this category. Please try again. If the error persists, please try again another time.',
+      goBack: 'Go back',
+      successAlert: 'Your category has been removed.'
+    },
+    removeSubcategory: {
+      title: 'Are you sure you want to remove this sub-category?',
+      copy: 'This action cannot be undone. Any milestones will move to the “Uncategorized” sub-category in this primary category.',
+      button: 'Remove sub-category',
+      errorAlert:
+        'There was an error removing this sub-category. Please try again. If the error persists, please try again another time.',
+      goBack: 'Go back',
+      successAlert: 'Your category has been removed.'
     }
   },
   milestoneLibrary: {

@@ -11,8 +11,12 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
+import useMessage from 'hooks/useMessage';
+
 import { MilestoneCardType } from '../../MilestoneLibrary';
-import MTOModal from '../FormModal';
+import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import SuggestedMilestoneToggle from '../SuggestedMilestoneToggle';
 
 import '../../index.scss';
@@ -29,6 +33,8 @@ const MilestoneCard = ({
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
+
+  const { errorMessageInModal, clearMessage } = useMessage();
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
@@ -49,17 +55,37 @@ const MilestoneCard = ({
 
   return (
     <>
-      <MTOModal
+      <Modal
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
           params.delete('milestone', milestone.key);
           history.replace({ search: params.toString() });
+          clearMessage();
           setIsModalOpen(false);
         }}
-        modalType="solutionToMilestone"
-        milestone={milestone}
-      />
+        shouldCloseOnOverlayClick
+        className="tablet:width-mobile-lg mint-body-normal"
+      >
+        <div className="margin-bottom-2">
+          <PageHeading headingLevel="h3" className="margin-y-0">
+            {t('modal.solutionToMilestone.title')}
+          </PageHeading>
+        </div>
+
+        {errorMessageInModal}
+
+        <AddSolutionToMilestoneForm
+          closeModal={() => {
+            params.delete('add-milestone', milestone.key);
+            params.delete('milestone', milestone.key);
+            history.replace({ search: params.toString() });
+            clearMessage();
+            setIsModalOpen(false);
+          }}
+          milestone={milestone}
+        />
+      </Modal>
 
       <Card
         containerProps={{

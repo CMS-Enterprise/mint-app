@@ -1,14 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import i18next from 'i18next';
-import { categoryMock } from 'tests/mock/mto';
-import { modelID } from 'tests/mock/readonly';
+import { categoryMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import RemoveCategoryForm from './index';
+import MoveSubCategoryForm from '.';
 
 describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
@@ -20,7 +18,7 @@ describe('Custom Catergory form', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/">
-              <RemoveCategoryForm />
+              <MoveSubCategoryForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
@@ -30,13 +28,8 @@ describe('Custom Catergory form', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `${i18next.t('modelToOperationsMisc:modal.removeCategory.copy')}`
+          'This action will also move any milestones within this sub-category.'
         )
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', {
-          name: `${i18next.t('modelToOperationsMisc:modal.removeCategory.button')}`
-        })
       ).toBeInTheDocument();
     });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -23,6 +23,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -35,14 +36,19 @@ type FormValues = {
   pocEmail: string;
 };
 
-const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
+const SolutionForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+
   const { solutionType: solutionTypeConfig } =
     usePlanTranslation('mtoSolution');
 
   const history = useHistory();
+
   const { modelID } = useParams<{ modelID: string }>();
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+
+  const { showMessage, showErrorMessageInModal } = useMessage();
+
+  const { setMTOModalOpen } = useContext(MTOModalContext);
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -107,7 +113,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
               </Alert>
             </>
           );
-          closeModal();
+          setMTOModalOpen(false);
         }
       })
       .catch(() => {
@@ -296,8 +302,7 @@ const SolutionForm = ({ closeModal }: { closeModal: () => void }) => {
           className="usa-button usa-button--unstyled"
           onClick={() => {
             reset();
-            clearMessage();
-            closeModal();
+            setMTOModalOpen(false);
           }}
         >
           {t('modal.cancel')}

@@ -11,14 +11,17 @@ import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
+const RemoveCategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+
   const { modelID } = useParams<{ modelID: string }>();
+
   const {
     mtoModalState: { categoryID, subCategoryID, rowType },
-    resetMTOModalState
+    setMTOModalOpen
   } = useContext(MTOModalContext);
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+
+  const { showMessage, showErrorMessageInModal } = useMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
     refetchQueries: [
@@ -30,6 +33,9 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
       }
     ]
   });
+
+  const namespace =
+    rowType === 'category' ? 'removeCategory' : 'removeSubcategory';
 
   const handleRemove = () => {
     deleteCategory({
@@ -46,12 +52,11 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
               data-testid="mandatory-fields-alert"
               className="margin-y-4"
             >
-              {t('modal.remove.successAlert')}
+              {t(`modal.${namespace}.successAlert`)}
             </Alert>
           );
         }
-        resetMTOModalState();
-        closeModal();
+        setMTOModalOpen(false);
       })
       .catch(() => {
         showErrorMessageInModal(
@@ -61,7 +66,7 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
             data-testid="error-alert"
             className="margin-bottom-2"
           >
-            {t('modal.remove.category.errorAlert')}
+            {t(`modal.${namespace}.errorAlert`)}
           </Alert>
         );
       });
@@ -69,24 +74,23 @@ const RemoveCategoryForm = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <>
-      <p>{t('modal.remove.category.copy')}</p>
+      <p>{t(`modal.${namespace}.copy`)}</p>
+
       <Button
         type="button"
         className="margin-right-4 bg-error"
         onClick={() => handleRemove()}
       >
-        {t('modal.remove.category.button')}
+        {t(`modal.${namespace}.button`)}
       </Button>
       <Button
         type="button"
         unstyled
         onClick={() => {
-          resetMTOModalState();
-          clearMessage();
-          closeModal();
+          setMTOModalOpen(false);
         }}
       >
-        {t('modal.remove.goBack')}
+        {t(`modal.${namespace}.goBack`)}
       </Button>
     </>
   );
