@@ -26,6 +26,11 @@ export default gql(/* GraphQL */ `
         key
         status
         riskIndicator
+        commonSolution {
+          name
+          key
+          isAdded
+        }
       }
     }
   }

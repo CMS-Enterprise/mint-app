@@ -52,6 +52,7 @@ import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
@@ -66,12 +67,13 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import LinkSolutionForm from '../LinkSolutionForm';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import './index.scss';
 import '../../index.scss';
 
-type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
+export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 
 type FormValues = {
   isDraft: boolean;
@@ -118,12 +120,11 @@ const EditMilestoneForm = ({
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history]
-  );
+  const params = new URLSearchParams(history.location.search);
 
   const editMilestoneID = params.get('edit-milestone');
+
+  const selectSolutionsParam = params.get('select-solutions');
 
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
@@ -132,6 +133,9 @@ const EditMilestoneForm = ({
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
   const { showMessage } = useMessage();
+
+  const [editSolutionsOpen, setEditSolutionsOpen] =
+    useState<boolean>(!!selectSolutionsParam);
 
   const {
     data,
@@ -510,6 +514,35 @@ const EditMilestoneForm = ({
           {modelToOperationsMiscT('modal.editMilestone.goBack')}
         </Button>
       </Modal>
+
+      {milestone && (
+        <Sidepanel
+          isOpen={editSolutionsOpen}
+          ariaLabel="Edit Solutions"
+          testid="edit-solutions-sidepanel"
+          modalHeading="Edit Solutions"
+          closeModal={() => {
+            params.delete('select-solutions');
+            history.push({ search: params.toString() });
+            setEditSolutionsOpen(false);
+          }}
+          overlayClassName="bg-transparent"
+          // className="tablet:width-mobile-lg mint-body-normal"
+        >
+          {/* <div className="margin-bottom-2">
+            <PageHeading headingLevel="h3" className="margin-y-0">
+              {t('modal.solutionToMilestone.title')}
+            </PageHeading>
+          </div>
+
+          {errorMessageInModal} */}
+
+          <LinkSolutionForm
+            milestone={milestone}
+            closeModal={setEditSolutionsOpen}
+          />
+        </Sidepanel>
+      )}
 
       {unsavedChanges > 0 && (
         <div
@@ -929,7 +962,11 @@ const EditMilestoneForm = ({
 
                     <Button
                       type="button"
-                      onClick={() => {}}
+                      onClick={() => {
+                        params.set('select-solutions', 'true');
+                        history.push({ search: params.toString() });
+                        setEditSolutionsOpen(true);
+                      }}
                       unstyled
                       className="margin-0 display-flex"
                     >

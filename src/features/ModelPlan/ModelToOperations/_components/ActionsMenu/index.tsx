@@ -258,6 +258,7 @@ const ActionMenu = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       params.delete('edit-milestone');
+      params.delete('select-solutions');
       history.replace({ search: params.toString() });
       setLeavePage(false);
       setIsModalOpen(false);

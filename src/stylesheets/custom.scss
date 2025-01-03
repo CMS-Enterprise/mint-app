@@ -314,5 +314,12 @@
     background-color: #fff;
     z-index: 1;
     line-height: 1.6em;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
   }
+
+ 
 }
