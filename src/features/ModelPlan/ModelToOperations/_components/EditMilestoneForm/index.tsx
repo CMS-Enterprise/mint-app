@@ -8,6 +8,14 @@ import {
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
+  Column,
+  Row,
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable
+} from 'react-table';
+import {
   Button,
   Fieldset,
   Form,
@@ -18,11 +26,13 @@ import {
   Label,
   Radio,
   Select,
+  Table as UswdsTable,
   TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   GetModelToOperationsMatrixDocument,
+  GetMtoMilestoneQuery,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
@@ -42,6 +52,7 @@ import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import TablePagination from 'components/TablePagination';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
@@ -53,9 +64,14 @@ import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
+import { getHeaderSortIcon } from 'utils/tableSort';
+
+import MilestoneStatusTag from '../MTOStatusTag';
 
 import './index.scss';
 import '../../index.scss';
+
+type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 
 type FormValues = {
   isDraft: boolean;
@@ -129,6 +145,14 @@ const EditMilestoneForm = ({
 
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
+  }, [data]);
+
+  const [selectedSolutions, setSelectedSolutions] = useState<SolutionType[]>(
+    data?.mtoMilestone.solutions || []
+  );
+
+  useEffect(() => {
+    setSelectedSolutions(data?.mtoMilestone.solutions || []);
   }, [data]);
 
   // Set default values for form
@@ -370,6 +394,83 @@ const EditMilestoneForm = ({
         setIsModalOpen(false);
       });
   };
+
+  const columns: Column<SolutionType>[] = useMemo(
+    () => [
+      {
+        Header: modelToOperationsMiscT('modal.editMilestone.solution'),
+        accessor: 'name'
+      },
+      {
+        Header: modelToOperationsMiscT('modal.editMilestone.status'),
+        accessor: 'status',
+        Cell: ({ row }: { row: Row<SolutionType> }) => {
+          return (
+            <MilestoneStatusTag
+              status={row.original.status}
+              classname="width-fit-content"
+            />
+          );
+        }
+      },
+      {
+        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        accessor: 'riskIndicator',
+        Cell: ({ row }: { row: Row<SolutionType> }) => {
+          const { riskIndicator } = row.original;
+
+          return (
+            <span className="text-bold text-base-lighter">
+              {(() => {
+                if (riskIndicator === MtoRiskIndicator.AT_RISK)
+                  return (
+                    <Icon.Error className="text-error-dark top-05" size={3} />
+                  );
+                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
+                  return (
+                    <Icon.Warning
+                      className="text-warning-dark top-05"
+                      size={3}
+                    />
+                  );
+                return '';
+              })()}
+            </span>
+          );
+        }
+      }
+    ],
+    [modelToOperationsMiscT]
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    gotoPage,
+    headerGroups,
+    nextPage,
+    page,
+    pageOptions,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageCount,
+    setPageSize,
+    state,
+    rows,
+    prepareRow
+  } = useTable(
+    {
+      columns,
+      data: selectedSolutions,
+      initialState: { pageIndex: 0, pageSize: 5 }
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
+
+  rows.map(row => prepareRow(row));
 
   if (loading && !milestone) {
     return <PageLoading />;
@@ -809,6 +910,120 @@ const EditMilestoneForm = ({
                       </FormGroup>
                     )}
                   />
+
+                  <div className="border-top-1px border-base-lighter padding-y-4">
+                    <h3 className="margin-0 margin-bottom-1">
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.selectedSolutions'
+                      )}
+                    </h3>
+
+                    <p className="margin-0 margin-bottom-1">
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.selectedSolutionsCount',
+                        {
+                          count: selectedSolutions?.length || 0
+                        }
+                      )}
+                    </p>
+
+                    <Button
+                      type="button"
+                      onClick={() => {}}
+                      unstyled
+                      className="margin-0 display-flex"
+                    >
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.editSolutions'
+                      )}
+                      <Icon.ArrowForward className="top-2px" />
+                    </Button>
+
+                    {selectedSolutions.length === 0 ? (
+                      <Alert type="info" slim>
+                        {modelToOperationsMiscT(
+                          'modal.editMilestone.noSolutions'
+                        )}
+                      </Alert>
+                    ) : (
+                      <>
+                        <UswdsTable
+                          bordered={false}
+                          {...getTableProps()}
+                          className="margin-top-0"
+                          fullWidth
+                        >
+                          <thead>
+                            {headerGroups.map(headerGroup => (
+                              <tr
+                                {...headerGroup.getHeaderGroupProps()}
+                                key={
+                                  { ...headerGroup.getHeaderGroupProps() }.key
+                                }
+                              >
+                                {headerGroup.headers.map(column => (
+                                  <th
+                                    {...column.getHeaderProps()}
+                                    scope="col"
+                                    key={column.id}
+                                    className="padding-left-0 padding-bottom-0"
+                                  >
+                                    <button
+                                      className="usa-button usa-button--unstyled position-relative"
+                                      type="button"
+                                      {...column.getSortByToggleProps()}
+                                    >
+                                      {column.render('Header')}
+                                      {getHeaderSortIcon(column, false)}
+                                    </button>
+                                  </th>
+                                ))}
+                              </tr>
+                            ))}
+                          </thead>
+                          <tbody {...getTableBodyProps()}>
+                            {page.map((row, i) => {
+                              const { getRowProps, cells, id } = { ...row };
+
+                              prepareRow(row);
+                              return (
+                                <tr {...getRowProps()} key={id}>
+                                  {cells.map(cell => {
+                                    return (
+                                      <td
+                                        {...cell.getCellProps()}
+                                        key={cell.getCellProps().key}
+                                        className="padding-left-0"
+                                      >
+                                        {cell.render('Cell')}
+                                      </td>
+                                    );
+                                  })}
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </UswdsTable>
+
+                        {selectedSolutions.length > 5 && (
+                          <TablePagination
+                            className="flex-justify-start margin-left-neg-05"
+                            gotoPage={gotoPage}
+                            previousPage={previousPage}
+                            nextPage={nextPage}
+                            canNextPage={canNextPage}
+                            pageIndex={state.pageIndex}
+                            pageOptions={pageOptions}
+                            canPreviousPage={canPreviousPage}
+                            pageCount={pageCount}
+                            pageSize={state.pageSize}
+                            setPageSize={setPageSize}
+                            page={[]}
+                          />
+                        )}
+                      </>
+                    )}
+                  </div>
                 </Fieldset>
 
                 <div className="border-top-1px border-base-lighter padding-y-4">

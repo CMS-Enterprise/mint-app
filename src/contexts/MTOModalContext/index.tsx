@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/FormModal';
-import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/Table/columns';
+import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/columns';
 
 export interface MTOModalState {
   modalType: MTOModalType;

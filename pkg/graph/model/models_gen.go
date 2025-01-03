@@ -94,6 +94,7 @@ type MTOSolutionTranslation struct {
 	PocName      models.TranslationField            `json:"pocName" db:"poc_name"`
 	PocEmail     models.TranslationField            `json:"pocEmail" db:"poc_email"`
 	SolutionType models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 // Represents model plan base translation data

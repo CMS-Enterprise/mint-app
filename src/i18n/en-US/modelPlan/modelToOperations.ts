@@ -358,7 +358,17 @@ export const modelToOperationsMisc: Record<string, any> = {
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
-      }
+      },
+      selectedSolutions: 'Selected solutions',
+      selectedSolutionsCount:
+        '{{count}} solutions associated with this milestone',
+      selectedSolutionsCount_other:
+        '{{count}} solution associated with this milestone',
+      editSolutions: 'Edit solutions',
+      noSolutions:
+        'You haven’t selected any solutions or IT systems to implement this milestone.',
+      solution: 'Solution',
+      status: 'Status'
     },
     solution: {
       title: 'Add a new solution',

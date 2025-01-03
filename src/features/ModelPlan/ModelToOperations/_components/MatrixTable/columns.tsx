@@ -11,7 +11,7 @@ import i18next from 'i18next';
 import UswdsReactLink from 'components/LinkWrapper';
 import { formatDateUtc } from 'utils/date';
 
-import MilestoneStatusTag from '../MilestoneStatusTag';
+import MilestoneStatusTag from '../MTOStatusTag';
 
 import './index.scss';
 

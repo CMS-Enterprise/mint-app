@@ -13,7 +13,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import EditMilestoneForm from '../EditMilestoneForm';
-import { MTORowType } from '../Table/columns';
+import { MTORowType } from '../MatrixTable/columns';
 
 const ActionMenu = ({
   rowType,
