@@ -186,10 +186,12 @@ export const modelToOperationsMisc: Record<string, any> = {
   suggestedMilestoneBanner: {
     empty:
       "There aren't currently any suggested milestones for your model. MINT may suggest model milestones as you and your team fill out more of your <s>Model Plan</s>.",
-    notEmpty:
-      'There is {{count}} suggested milestone for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>',
-    notEmpty_other:
-      'There are {{count}} suggested milestones for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>'
+    notEmpty_part1: {
+      output: 'There is {{count}} suggested milestone ',
+      output_other: 'There are {{count}} suggested milestones '
+    },
+    notEmpty_part2:
+      'for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>'
   },
   optionsCard: {
     milestones: {

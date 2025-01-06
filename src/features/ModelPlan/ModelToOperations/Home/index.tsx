@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
@@ -26,6 +26,7 @@ import MTOTableActions from '../_components/ActionsTable';
 import MTOModal from '../_components/FormModal';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
+import SuggestedMilestoneBanner from '../_components/SuggestedMilestoneBanner';
 import MTOTable, { isMatrixStartedFc } from '../_components/Table';
 
 export type MTOOption = 'milestones' | 'solutions';
@@ -83,7 +84,7 @@ const MTOHome = () => {
 
   return (
     <>
-      <div className="shadow-2">
+      <div className="shadow-2 z-100 position-relative">
         <GridContainer>
           <Breadcrumbs
             items={[
@@ -175,47 +176,7 @@ const MTOHome = () => {
         </GridContainer>
       </div>
       {currentView === 'milestones' && (
-        <div className="bg-accent-cool-lighter shadow-2 z-bottom position-relative">
-          <GridContainer className="padding-y-2">
-            <Grid row className="flex-no-wrap">
-              <div className="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center">
-                <Icon.LightbulbOutline className="text-white" />
-              </div>
-              <span className="margin-y-0">
-                {suggestedMilestones?.length > 0 ? (
-                  <>
-                    <Trans
-                      i18nKey={t('suggestedMilestoneBanner.notEmpty')}
-                      values={{ count: suggestedMilestones?.length }}
-                      components={{
-                        s: (
-                          <UswdsReactLink
-                            to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
-                            className=""
-                          />
-                        ),
-                        arrow: (
-                          <Icon.ArrowForward className="margin-left-05 top-05" />
-                        )
-                      }}
-                    />
-                  </>
-                ) : (
-                  <Trans
-                    i18nKey={t('suggestedMilestoneBanner.empty')}
-                    components={{
-                      s: (
-                        <UswdsReactLink
-                          to={`/models/${modelID}/collaboration-area/task-list`}
-                        />
-                      )
-                    }}
-                  />
-                )}
-              </span>
-            </Grid>
-          </GridContainer>
-        </div>
+        <SuggestedMilestoneBanner suggestedMilestones={suggestedMilestones} />
       )}
       <GridContainer>
         <div className="model-to-operations margin-y-6">
