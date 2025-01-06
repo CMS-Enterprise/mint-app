@@ -9,6 +9,7 @@ import useMessage from 'hooks/useMessage';
 import CategoryForm from '../AddCustomCategoryForm';
 import MilestoneForm from '../AddCustomMilestoneForm';
 import SolutionForm from '../AddCustomSolutionForm';
+import AddTemplateModal from '../AddTemplateModal';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
 import MoveSubCategoryForm from '../MoveSubCategoryForm';
 import RemoveCategoryForm from '../RemoveCategoryForm';
@@ -21,11 +22,13 @@ export type MTOModalType =
   | 'moveSubCategory'
   | 'editCategoryTitle'
   | 'removeCategory'
-  | 'removeSubcategory';
+  | 'removeSubcategory'
+  | 'addTemplate';
 
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
-  'removeSubcategory'
+  'removeSubcategory',
+  'addTemplate'
 ];
 
 const MTOModal = () => {
@@ -78,6 +81,7 @@ const MTOModal = () => {
       {modalType === 'editCategoryTitle' && <EditCategoryTitleForm />}
       {(modalType === 'removeCategory' ||
         modalType === 'removeSubcategory') && <RemoveCategoryForm />}
+      {modalType === 'addTemplate' && <AddTemplateModal />}
     </Modal>
   );
 };

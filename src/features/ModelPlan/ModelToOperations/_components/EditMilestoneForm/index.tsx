@@ -223,7 +223,8 @@ const EditMilestoneForm = ({
     selectOptions
   } = useFormatMTOCategories({
     modelID,
-    primaryCategory: watch('categories.category.id')
+    primaryCategory: watch('categories.category.id'),
+    hideUncategorized: false
   });
 
   const [updateMilestone] = useUpdateMtoMilestoneMutation({

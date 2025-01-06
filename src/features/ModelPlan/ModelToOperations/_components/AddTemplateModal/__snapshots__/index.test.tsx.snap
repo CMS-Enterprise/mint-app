@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Custom Catergory form > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none"
+    data-testid="form"
+  >
+    <p
+      class="margin-bottom-0"
+    >
+      Adding this template to your MTO will add:
+    </p>
+    <ul
+      class="margin-y-1 margin-bottom-3"
+    >
+      <li>
+        16 categories (including 8 primary categories)
+      </li>
+    </ul>
+    <p>
+      Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.
+    </p>
+    <div
+      class="display-flex"
+    >
+      <button
+        class="usa-button margin-right-3"
+        data-testid="button"
+        type="submit"
+      >
+        Add template
+      </button>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Don’t add template
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;
