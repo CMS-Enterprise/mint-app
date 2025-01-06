@@ -1250,6 +1250,8 @@ export type TranslationMTOInfo = {
 // MTO Category - Change History purposes only
 export type TranslationMTOCategoryForm = {
   name: TranslationFieldProperties;
+  parentID: TranslationFieldProperties;
+  position: TranslationFieldProperties;
 };
 
 type TranslationMTOCategoryGQL = Omit<

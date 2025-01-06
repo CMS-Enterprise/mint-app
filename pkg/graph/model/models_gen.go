@@ -63,7 +63,9 @@ type LockableSectionLockStatusChanged struct {
 
 // Represents MTO Category translation data
 type MTOCategoryTranslation struct {
-	Name models.TranslationField `json:"name" db:"name"`
+	Name     models.TranslationField `json:"name" db:"name"`
+	Position models.TranslationField `json:"position" db:"position"`
+	ParentID models.TranslationField `json:"parentID" db:"parent_id"`
 }
 
 // Represents mto info translation data

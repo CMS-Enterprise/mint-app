@@ -739,6 +739,8 @@ export type MtoCategory = {
 export type MtoCategoryTranslation = {
   __typename: 'MTOCategoryTranslation';
   name: TranslationField;
+  parentID: TranslationField;
+  position: TranslationField;
 };
 
 /** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
