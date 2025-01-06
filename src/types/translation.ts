@@ -48,6 +48,7 @@ import {
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoInfoTranslation,
+  MtoMilestoneSolutionLinkTranslation,
   MtoMilestoneStatus,
   MtoMilestoneTranslation,
   MtoRiskIndicator,
@@ -1265,6 +1266,20 @@ type TranslationMTOCategoryGQL = Omit<
 */
 export type TranslationMTOCategory = {
   [K in keyof TranslationMTOCategoryGQL]: TranslationMTOCategoryForm[K]; // FE form type
+};
+
+// MTO Milestone Solution Link - Change History purposes only
+export type TranslationMTOMilestoneSolutionLinkCustomForm = {
+  milestoneID: TranslationFieldProperties;
+  solutionID: TranslationFieldProperties;
+};
+type TranslationMTOMilestoneSolutionLinkCustomGQL = Omit<
+  MtoMilestoneSolutionLinkTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOMilestoneSolutionLinkCustom = {
+  [K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
 };
 
 // MTO Milestone - Change History purposes only

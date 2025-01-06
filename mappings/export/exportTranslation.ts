@@ -20,7 +20,7 @@ import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
 import mtoCategory from '../../src/i18n/en-US/modelPlan/mtoCategory';
 // import mtoCommonSolutionContact from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContact';
 import mtoMilestone from '../../src/i18n/en-US/modelPlan/mtoMilestone';
-// import mtoMilestoneSolutionLink from '../../src/i18n/en-US/modelPlan/mtoMilestoneSolutionLink';
+import mtoMilestoneSolutionLink from '../../src/i18n/en-US/modelPlan/mtoMilestoneSolutionLink';
 import mtoSolution from '../../src/i18n/en-US/modelPlan/mtoSolution';
 import operationalNeeds from '../../src/i18n/en-US/modelPlan/operationalNeeds';
 import subtasks from '../../src/i18n/en-US/modelPlan/operationalSolutionSubtasks';
@@ -58,7 +58,7 @@ export const translationSections = {
   mto_info: mtoInfo,
   mto_milestone: mtoMilestone,
   mto_solution: mtoSolution,
-  // mto_milestone_solution_link: mtoMilestoneSolutionLink,
+  mto_milestone_solution_link: mtoMilestoneSolutionLink,
   // mto_common_solution_contact: mtoCommonSolutionContact,
   mto_category: mtoCategory
 };
