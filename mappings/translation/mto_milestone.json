@@ -19,7 +19,7 @@
     "order": 1.01,
     "options": {
       "true": "Draft",
-      "false": ""
+      "false": " "
     }
   },
   "facilitatedBy": {
@@ -142,5 +142,25 @@
     "readonlyOptions": {
       "INNOVATION": "4i"
     }
+  },
+  "key": {
+    "gqlField": "key",
+    "goField": "Key",
+    "dbField": "mto_common_milestone_key",
+    "label": "Key",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3,
+    "tableReference": "mto_common_milestone"
+  },
+  "mtoCategoryID": {
+    "gqlField": "mtoCategoryID",
+    "goField": "MTOCategoryID",
+    "dbField": "mto_category_id",
+    "label": "MTO Category ID",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 4,
+    "tableReference": "mto_category"
   }
 }

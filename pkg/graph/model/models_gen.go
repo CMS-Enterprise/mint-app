@@ -89,6 +89,8 @@ type MTOMilestoneTranslation struct {
 	RiskIndicator   models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
 	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
 	Status          models.TranslationFieldWithOptions `json:"status" db:"status"`
+	Key             models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCategoryID   models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
 }
 
 type MTOSolutionLinks struct {

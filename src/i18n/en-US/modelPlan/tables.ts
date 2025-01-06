@@ -96,6 +96,12 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   [TableName.MTO_INFO]: {
     generalName: 'MTO info'
   },
+  [TableName.MTO_COMMON_MILESTONE]: {
+    generalName: 'MTO common milestone'
+  },
+  [TableName.MTO_COMMON_SOLUTION]: {
+    generalName: 'MTO common solution'
+  },
   [TableName.MTO_MILESTONE_SOLUTION_LINK]: {
     generalName: 'MTO milestone solution link'
   },

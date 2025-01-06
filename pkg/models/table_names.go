@@ -46,5 +46,7 @@ const (
 	TNMTOSolution                        TableName = "mto_solution"
 	TNMTOMilestoneSolutionLink           TableName = "mto_milestone_solution_link"
 	TNMTOInfo                            TableName = "mto_info"
+	TNMTOCommonMilestone                 TableName = "mto_common_milestone"
 	TNMTOCommonSolutionContact           TableName = "mto_common_solution_contact"
+	TNMTOCommonSolution                  TableName = "mto_common_solution"
 )

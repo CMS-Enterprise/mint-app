@@ -1,6 +1,7 @@
 import { TranslationMTOMilestoneCustom } from 'types/translation';
 
 import {
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -27,7 +28,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     order: 1.01,
     options: {
       true: 'Draft',
-      false: ''
+      false: ' '
     }
   },
   facilitatedBy: {
@@ -156,6 +157,26 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     readonlyOptions: {
       INNOVATION: '4i'
     }
+  },
+  key: {
+    gqlField: 'key',
+    goField: 'Key',
+    dbField: 'mto_common_milestone_key',
+    label: 'Key',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.0,
+    tableReference: TableName.MTO_COMMON_MILESTONE
+  },
+  mtoCategoryID: {
+    gqlField: 'mtoCategoryID',
+    goField: 'MTOCategoryID',
+    dbField: 'mto_category_id',
+    label: 'MTO Category ID',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    order: 4.0,
+    tableReference: TableName.MTO_CATEGORY
   }
 };
 

@@ -1291,6 +1291,8 @@ export type TranslationMTOMilestoneCustomForm = {
   riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
   status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
+  key: TranslationFieldProperties;
+  mtoCategoryID: TranslationFieldProperties;
 };
 
 type TranslationMTOMilestoneCustomGQL = Omit<

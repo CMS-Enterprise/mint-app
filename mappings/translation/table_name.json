@@ -129,6 +129,12 @@
   "mto_info": {
     "generalName": "MTO info"
   },
+  "mto_common_milestone": {
+    "generalName": "MTO common milestone"
+  },
+  "mto_common_solution": {
+    "generalName": "MTO common solution"
+  },
   "mto_milestone_solution_link": {
     "generalName": "MTO milestone solution link"
   },

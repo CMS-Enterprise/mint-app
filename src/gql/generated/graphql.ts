@@ -991,6 +991,8 @@ export type MtoMilestoneTranslation = {
   commonSolutions: TranslationFieldWithOptions;
   facilitatedBy: TranslationFieldWithOptions;
   isDraft: TranslationFieldWithOptions;
+  key: TranslationField;
+  mtoCategoryID: TranslationField;
   name: TranslationField;
   needBy: TranslationField;
   riskIndicator: TranslationFieldWithOptions;
@@ -4206,6 +4208,8 @@ export enum TableName {
   EXISTING_MODEL_LINK = 'existing_model_link',
   MODEL_PLAN = 'model_plan',
   MTO_CATEGORY = 'mto_category',
+  MTO_COMMON_MILESTONE = 'mto_common_milestone',
+  MTO_COMMON_SOLUTION = 'mto_common_solution',
   MTO_COMMON_SOLUTION_CONTACT = 'mto_common_solution_contact',
   MTO_INFO = 'mto_info',
   MTO_MILESTONE = 'mto_milestone',
