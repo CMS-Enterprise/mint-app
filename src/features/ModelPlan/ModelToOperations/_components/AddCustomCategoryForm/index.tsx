@@ -19,13 +19,13 @@ import {
 import i18n from 'config/i18n';
 import {
   GetModelToOperationsMatrixDocument,
-  useCreateMtoCategoryMutation,
-  useGetMtoCategoriesQuery
+  useCreateMtoCategoryMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
@@ -50,35 +50,19 @@ export const selectOptions: SelectProps[] = [
   }
 ];
 
-const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
+const CategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { categoryID } = useContext(MTOModalContext);
+  const {
+    mtoModalState: { categoryID },
+    setMTOModalOpen
+  } = useContext(MTOModalContext);
+
   const { modelID } = useParams<{ modelID: string }>();
-  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
+
+  const { showErrorMessageInModal, showMessage } = useMessage();
+
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
-
-  const { data, loading } = useGetMtoCategoriesQuery({
-    variables: { id: modelID }
-  });
-
-  // Get categories from the data
-  const categories = data?.modelPlan?.mtoMatrix?.categories || [];
-  const noUncategorized = categories.filter(
-    category => category.name !== 'Uncategorized'
-  );
-
-  // Map categories to sort options
-  const mappedCategories: SelectProps[] = noUncategorized.map(category => ({
-    value: category.id,
-    label: category.name
-  }));
-
-  // Combine sort options and mapped categories
-  const selectOptionsAndMappedCategories: SelectProps[] = [
-    ...selectOptions,
-    ...mappedCategories
-  ];
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -92,8 +76,15 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { isValid }
   } = methods;
+
+  const { selectOptionsAndMappedCategories, loading } = useFormatMTOCategories({
+    modelID,
+    primaryCategory: watch('primaryCategory'),
+    customCategory: true
+  });
 
   const [create] = useCreateMtoCategoryMutation({
     refetchQueries: [
@@ -162,7 +153,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
               </>
             );
           }
-          closeModal();
+          setMTOModalOpen(false);
         }
       })
       .catch(() => {
@@ -263,8 +254,7 @@ const CategoryForm = ({ closeModal }: { closeModal: () => void }) => {
           className={`usa-button ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
           onClick={() => {
             reset();
-            clearMessage();
-            closeModal();
+            setMTOModalOpen(false);
           }}
         >
           {t('modal.cancel')}

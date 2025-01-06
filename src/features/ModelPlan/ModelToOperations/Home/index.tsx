@@ -22,13 +22,14 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
+import MTOModal from '../_components/FormModal';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable, { isMatrixStartedFc } from '../_components/Table';
 
-export type MTOOption = 'milestones' | 'systems-and-solutions';
+export type MTOOption = 'milestones' | 'solutions';
 
-export const mtoOptions: MTOOption[] = ['milestones', 'systems-and-solutions'];
+export const mtoOptions: MTOOption[] = ['milestones', 'solutions'];
 
 const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -193,20 +194,22 @@ const MTOHome = () => {
             {loading ? (
               <PageLoading />
             ) : (
-              <>
+              <MTOModalProvider>
+                <MTOModal />
+
                 {isMatrixStarted ? (
-                  <MTOModalProvider>
+                  <>
                     <MTOTableActions />
                     <MTOTable
                       queryData={data}
                       loading={loading}
                       error={error}
                     />
-                  </MTOModalProvider>
+                  </>
                 ) : (
                   <MTOOptionsPanel />
                 )}
-              </>
+              </MTOModalProvider>
             )}
           </>
         )}

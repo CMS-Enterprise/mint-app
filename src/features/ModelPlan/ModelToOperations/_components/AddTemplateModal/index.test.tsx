@@ -1,13 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, screen, waitFor } from '@testing-library/react';
-import { categoryMock } from 'tests/mock/mto';
-import { modelID } from 'tests/mock/readonly';
+import { render } from '@testing-library/react';
+import { categoryMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import EditCategoryTitleForm from './index';
+import AddTemplateModal from '.';
 
 describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
@@ -19,16 +18,12 @@ describe('Custom Catergory form', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/">
-              <EditCategoryTitleForm />
+              <AddTemplateModal />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
       </MemoryRouter>
     );
-
-    await waitFor(() => {
-      expect(screen.getByText('Current title')).toBeInTheDocument();
-    });
 
     expect(asFragment()).toMatchSnapshot();
   });

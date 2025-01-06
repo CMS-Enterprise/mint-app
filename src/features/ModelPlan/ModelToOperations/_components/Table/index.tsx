@@ -203,7 +203,8 @@ const MTOTable = ({
     itemsPerPage,
     loading: false,
     sliceFn: getVisibleIndexes,
-    itemLength
+    itemLength,
+    withQueryParams: 'page'
   });
 
   const RenderCells = ({

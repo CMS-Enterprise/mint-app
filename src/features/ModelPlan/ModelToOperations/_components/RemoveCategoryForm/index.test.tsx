@@ -1,13 +1,14 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
+import i18next from 'i18next';
 import { categoryMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import EditCategoryTitleForm from './index';
+import RemoveCategoryForm from './index';
 
 describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
@@ -19,7 +20,7 @@ describe('Custom Catergory form', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/">
-              <EditCategoryTitleForm />
+              <RemoveCategoryForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
@@ -27,7 +28,16 @@ describe('Custom Catergory form', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Current title')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          `${i18next.t('modelToOperationsMisc:modal.removeCategory.copy')}`
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', {
+          name: `${i18next.t('modelToOperationsMisc:modal.removeCategory.button')}`
+        })
+      ).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

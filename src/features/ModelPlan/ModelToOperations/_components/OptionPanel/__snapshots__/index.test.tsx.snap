@@ -71,18 +71,18 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
             >
               <a
                 aria-label="Browse common milestones"
-                class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none"
+                class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
                 href="/models/123/collaboration-area/model-to-operations/milestone-library"
               >
                 Browse common milestones
               </a>
-              <a
-                aria-label="or, add a custom milestone"
-                class="usa-link display-block margin-top-1"
-                href="/models/123/collaboration-area/model-to-operations/custom-milestone"
+              <button
+                class="usa-button usa-button--unstyled display-block"
+                data-testid="button"
+                type="button"
               >
                 or, add a custom milestone
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -139,18 +139,18 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
             >
               <a
                 aria-label="Browse common solutions"
-                class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none"
-                href="/models/123/collaboration-area/model-to-operations/systems-and-solutions"
+                class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
+                href="/models/123/collaboration-area/model-to-operations/solution-library"
               >
                 Browse common solutions
               </a>
-              <a
-                aria-label="or, add a custom solution"
-                class="usa-link display-block margin-top-1"
-                href="/models/123/collaboration-area/model-to-operations/custom-milestone"
+              <button
+                class="usa-button usa-button--unstyled display-block"
+                data-testid="button"
+                type="button"
               >
                 or, add a custom solution
-              </a>
+              </button>
             </div>
           </div>
         </div>

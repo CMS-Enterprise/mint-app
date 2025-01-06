@@ -29,7 +29,6 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
-import MTOModal from '../_components/FormModal';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
@@ -249,12 +248,6 @@ const MilstoneCardGroup = ({
       >
         {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
       </Sidepanel>
-
-      <MTOModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        modalType="milestone"
-      />
 
       {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 

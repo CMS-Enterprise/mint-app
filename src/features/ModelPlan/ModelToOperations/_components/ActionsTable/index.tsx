@@ -3,15 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
-  useCreateStandardCategoriesMutation,
   useGetMtoCommonSolutionsQuery,
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
-
-import MTOModal from '../FormModal';
 
 import './index.scss';
 
@@ -38,17 +35,8 @@ const MTOTableActions = () => {
 
   const [actionsMenuOpen, setActionsMenuOpen] = useState(defaultExpandedTable);
 
-  const {
-    isMTOModalOpen: isModalOpen,
-    setMTOModalOpen: setIsModalOpen,
-    mtoModalType: modalType,
-    setMTOModalType: setModalType,
-    resetCategoryAndSubCategoryID
-  } = useContext(MTOModalContext);
-
-  const [create] = useCreateStandardCategoriesMutation({
-    variables: { modelPlanID: modelID }
-  });
+  const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
+    useContext(MTOModalContext);
 
   const { data: milestoneData } = useGetMtoMilestonesQuery({
     variables: { id: modelID }
@@ -58,28 +46,12 @@ const MTOTableActions = () => {
     variables: { id: modelID }
   });
 
-  const handleCreate = () => {
-    create().then(response => {
-      if (!response?.errors) {
-        // TODO: Add success message
-        // alert('Standard categories created successfully');
-      }
-    });
-  };
-
   useEffect(() => {
     localStorage.setItem(`mto-table-toggle`, JSON.stringify(actionsMenuOpen));
   }, [actionsMenuOpen]);
 
   return (
     <>
-      <MTOModal
-        isOpen={isModalOpen}
-        closeModal={() => {
-          setIsModalOpen(false);
-        }}
-        modalType={modalType}
-      />
       <div className="border-1px radius-md border-gray-10 padding-3">
         <div className="action-bar display-flex">
           <p className="margin-y-0 text-bold">
@@ -152,9 +124,8 @@ const MTOTableActions = () => {
                   unstyled
                   onClick={() => {
                     clearMessage();
-                    setModalType('milestone');
+                    setMTOModalState({ modalType: 'milestone' });
                     setIsModalOpen(true);
-                    resetCategoryAndSubCategoryID(); // Reset category and subcategory ID
                   }}
                 >
                   {t('optionsCard.milestones.linkText')}
@@ -209,11 +180,11 @@ const MTOTableActions = () => {
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    setModalType('solution');
+                    setMTOModalState({ modalType: 'solution' });
                     setIsModalOpen(true);
                   }}
                 >
-                  {t('optionsCard.systems-and-solutions.linkText')}
+                  {t('optionsCard.solutions.linkText')}
                 </Button>
               </div>
             </div>
@@ -254,7 +225,10 @@ const MTOTableActions = () => {
                   className="display-block"
                   unstyled
                   onClick={() => {
-                    handleCreate();
+                    setMTOModalState({
+                      modalType: 'addTemplate'
+                    });
+                    setIsModalOpen(true);
                   }}
                 >
                   {t('table.tableActions.addThisTemplate')}
@@ -266,7 +240,7 @@ const MTOTableActions = () => {
                 className="display-block"
                 unstyled
                 onClick={() => {
-                  setModalType('category');
+                  setMTOModalState({ modalType: 'category' });
                   setIsModalOpen(true);
                 }}
               >
