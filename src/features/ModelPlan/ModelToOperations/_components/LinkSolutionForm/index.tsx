@@ -1,6 +1,7 @@
 import React, {
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useMemo,
   useState
@@ -21,8 +22,10 @@ import {
 import {
   GetMtoAllSolutionsQuery,
   GetMtoMilestoneQuery,
-  MtoCommonSolutionKey
+  MtoCommonSolutionKey,
+  MtoSolution
 } from 'gql/generated/graphql';
+import { map } from 'lodash';
 
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
@@ -61,20 +64,14 @@ const LinkSolutionForm = ({
 
   //   console.log('data', allSolutions);
 
-  const setChecked = (key: MtoCommonSolutionKey) => {
-    if (commonSolutionKeys.includes(key)) {
-      setCommonSolutionKeys(commonSolutionKeys.filter(k => k !== key));
-    } else {
-      setCommonSolutionKeys([...commonSolutionKeys, key]);
-    }
-  };
-
   // Map the common solutions to the FE help solutions
-  const mappedSolutions = milestone.solutions
-    .filter(solution => !!solution.commonSolution)
-    .map(solution => {
-      return helpSolutions.find(s => s.enum === solution.commonSolution?.key);
-    });
+  const mappedSolutions = useMemo(
+    () =>
+      milestone.commonMilestone?.commonSolutions.map(solution => {
+        return helpSolutions.find(s => s.enum === solution.key);
+      }) || [],
+    [milestone.commonMilestone]
+  );
 
   const mappedSolutionKeys = mappedSolutions.map(solution => solution?.enum);
 
@@ -83,8 +80,16 @@ const LinkSolutionForm = ({
       solution => !mappedSolutionKeys.includes(solution.key)
     ) || [];
 
-  const createdSolutions =
-    allSolutions?.solutions?.filter(solution => !solution.key) || [];
+  const createdSolutions = useMemo(
+    () => allSolutions?.solutions?.filter(solution => !solution.key) || [],
+    [allSolutions?.solutions]
+  );
+
+  //   // Combine all solutions from both custom and common solutions
+  //   const combinedSolutions = [
+  //     ...allSolutions?.solutions,
+  //     ...allSolutions?.commonSolutions
+  //   ];
 
   const groupedOptions = [
     {
@@ -109,9 +114,53 @@ const LinkSolutionForm = ({
 
   const initialValues = [...commonSolutionKeys, ...solutionIDs];
 
-  const isCustomSolution = (id: string) => {
-    return createdSolutions.find(solution => solution.id === id);
+  const isCustomSolution = useCallback(
+    (id: string) => {
+      return createdSolutions.find(solution => solution.id === id);
+    },
+    [createdSolutions]
+  );
+
+  const [selectedSolutions, setSelectedSolutions] =
+    useState<string[]>(initialValues);
+
+  const setChecked = (key: MtoCommonSolutionKey) => {
+    if (commonSolutionKeys.includes(key)) {
+      setCommonSolutionKeys(commonSolutionKeys.filter(k => k !== key));
+    } else {
+      setCommonSolutionKeys([...commonSolutionKeys, key]);
+    }
   };
+
+  useEffect(() => {
+    const custom: string[] = [];
+    const common: MtoCommonSolutionKey[] = [];
+
+    selectedSolutions.forEach(solution => {
+      if (isCustomSolution(solution)) {
+        custom.push(solution);
+      } else {
+        common.push(solution as MtoCommonSolutionKey);
+      }
+    });
+
+    setSolutionIDs(custom);
+    setCommonSolutionKeys([
+      ...(common as unknown as MtoCommonSolutionKey[]),
+      ...(mappedSolutions
+        .filter(s =>
+          commonSolutionKeys.includes(s?.enum as MtoCommonSolutionKey)
+        )
+        .map(s => s?.enum) as MtoCommonSolutionKey[])
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    selectedSolutions,
+    isCustomSolution,
+    setCommonSolutionKeys,
+    setSolutionIDs,
+    mappedSolutions
+  ]);
 
   return (
     <GridContainer className="padding-8">
@@ -145,19 +194,10 @@ const LinkSolutionForm = ({
             options={[]}
             groupedOptions={groupedOptions}
             selectedLabel="Selected solutions"
-            initialValues={initialValues}
+            initialValues={selectedSolutions}
             name="availableSolutions"
             onChange={values => {
-              values.forEach(value => {
-                if (isCustomSolution(value)) {
-                  setSolutionIDs([...solutionIDs, value]);
-                } else {
-                  setCommonSolutionKeys([
-                    ...commonSolutionKeys,
-                    value as MtoCommonSolutionKey
-                  ]);
-                }
-              });
+              setSelectedSolutions(values);
             }}
           />
         </Grid>

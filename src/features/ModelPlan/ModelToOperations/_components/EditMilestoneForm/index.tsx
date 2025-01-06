@@ -134,8 +134,6 @@ const EditMilestoneForm = ({
 
   const editMilestoneID = params.get('edit-milestone');
 
-  // const selectSolutionsParam = params.get('select-solutions');
-
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -166,6 +164,7 @@ const EditMilestoneForm = ({
     }
   });
 
+  // Extracts all solutions from the query
   const allSolutions = useMemo(() => {
     return (
       allSolutionData?.modelPlan.mtoMatrix || {
@@ -176,6 +175,7 @@ const EditMilestoneForm = ({
     );
   }, [allSolutionData]);
 
+  // Combine all solutions from both custom and common solutions
   const combinedSolutions = useMemo(
     () => [
       ...allSolutions?.solutions,
@@ -191,6 +191,7 @@ const EditMilestoneForm = ({
     [combinedSolutions]
   );
 
+  // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
   const formatSolutionForTable = useCallback(
     (
       solution: SolutionType | MtoCommonSolutionKey | string
@@ -214,26 +215,49 @@ const EditMilestoneForm = ({
     [combinedSolutions, isCustomSolution]
   );
 
-  const [selectedSolutions, setSelectedSolutions] = useState<
-    TableSolutionType[]
-  >(
-    data?.mtoMilestone.solutions.map(solution =>
-      formatSolutionForTable(solution)
-    ) || []
-  );
-
+  // Common solution state
   const [commonSolutionKeys, setCommonSolutionKeys] = useState<
     MtoCommonSolutionKey[]
-  >([]);
+  >(
+    data?.mtoMilestone.solutions
+      .filter(solution => !!solution.key)
+      .map(solution => solution.key!) || []
+  );
 
-  const [solutionIDs, setSolutionIDs] = useState<string[]>([]);
-
+  // Sets initial solution IDs from milestone from async data
   useEffect(() => {
-    setSolutionIDs(
-      data?.mtoMilestone.solutions.map(solution => solution.id) || []
+    setCommonSolutionKeys(
+      data?.mtoMilestone.solutions
+        .filter(solution => !!solution.key)
+        .map(solution => solution.key!) || []
     );
   }, [data]);
 
+  // Custom solution state
+  const [solutionIDs, setSolutionIDs] = useState<string[]>(
+    data?.mtoMilestone.solutions
+      .filter(solution => !solution.key)
+      .map(solution => solution.id) || []
+  );
+
+  // Sets initial solution IDs from milestone from async data
+  useEffect(() => {
+    setSolutionIDs(
+      data?.mtoMilestone.solutions
+        .filter(solution => !solution.key)
+        .map(solution => solution.id) || []
+    );
+  }, [data]);
+
+  // Table state
+  const [selectedSolutions, setSelectedSolutions] = useState<
+    TableSolutionType[]
+  >([
+    ...solutionIDs.map(solution => formatSolutionForTable(solution)),
+    ...commonSolutionKeys.map(solution => formatSolutionForTable(solution))
+  ]);
+
+  // Updates table data when solutions are added or removed
   useEffect(() => {
     const formattedCustomSolutions = solutionIDs.map(solution =>
       formatSolutionForTable(solution)

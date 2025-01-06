@@ -12,6 +12,12 @@ export default gql(/* GraphQL */ `
       riskIndicator
       addedFromMilestoneLibrary
       isDraft
+      commonMilestone {
+        key
+        commonSolutions {
+          key
+        }
+      }
       categories {
         category {
           id
