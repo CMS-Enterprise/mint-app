@@ -27,9 +27,9 @@ import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import MTOTable, { isMatrixStartedFc } from '../_components/MatrixTable';
 
-export type MTOOption = 'milestones' | 'systems-and-solutions';
+export type MTOOption = 'milestones' | 'solutions';
 
-export const mtoOptions: MTOOption[] = ['milestones', 'systems-and-solutions'];
+export const mtoOptions: MTOOption[] = ['milestones', 'solutions'];
 
 const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');

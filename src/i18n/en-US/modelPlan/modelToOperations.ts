@@ -164,7 +164,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
   forModel: 'for {{ modelName }}',
   milestones: 'Milestones',
-  'systems-and-solutions': 'IT systems and solutions',
+  solutions: 'IT systems and solutions',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
   isMTOInProgress: 'Is this MTO still in progress',
@@ -192,7 +192,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       buttonText: 'Browse common milestones',
       linkText: 'or, add a custom milestone'
     },
-    'systems-and-solutions': {
+    solutions: {
       label: 'Operational solutions',
       header: 'Start with IT systems or other solutions',
       description:
@@ -447,6 +447,18 @@ export const modelToOperationsMisc: Record<string, any> = {
         'There was an error removing this sub-category. Please try again. If the error persists, please try again another time.',
       goBack: 'Go back',
       successAlert: 'Your category has been removed.'
+    },
+    addTemplate: {
+      title: 'Are you sure you want to continue?',
+      description: 'Adding this template to your MTO will add:',
+      item: '16 categories (including 8 primary categories)',
+      description2:
+        'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
+      success: 'Your template (Standard categories) has been added.',
+      error:
+        'There was an error adding this template. Please try again. If the error persists, please try again another time.',
+      addTemplate: 'Add template',
+      dontAdd: 'Don’t add template'
     }
   },
   milestoneLibrary: {

@@ -37,8 +37,11 @@ const ModelMilestoneForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
+
   const { modelID } = useParams<{ modelID: string }>();
+
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+
   const {
     mtoModalState: { categoryID, subCategoryID },
     setMTOModalOpen
@@ -68,7 +71,8 @@ const ModelMilestoneForm = () => {
     loading
   } = useFormatMTOCategories({
     modelID,
-    primaryCategory: watch('primaryCategory')
+    primaryCategory: watch('primaryCategory'),
+    hideUncategorized: false
   });
 
   const [create] = useCreateMtoMilestoneCustomMutation({

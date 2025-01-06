@@ -162,7 +162,6 @@ const ActionMenu = ({
                 clearMessage();
                 setMTOModalOpen(true);
                 if (rowType === 'category') {
-                  setMTOModalOpen(true);
                   setMTOModalState({
                     modalType: 'category',
                     categoryID: primaryCategoryID
