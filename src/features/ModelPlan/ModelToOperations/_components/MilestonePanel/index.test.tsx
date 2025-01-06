@@ -59,25 +59,3 @@ describe('MilestonePanel Component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 });
-
-describe('MTO SolutionCard Component', () => {
-  it('renders correctly and matches snapshot', () => {
-    const { asFragment, getByText } = render(
-      <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
-        <MemoryRouter>
-          <MessageProvider>
-            <SolutionCard solution={helpSolutions[0]} />
-          </MessageProvider>
-        </MemoryRouter>
-      </MockedProvider>
-    );
-
-    // Check if the component renders prop data
-    expect(getByText('IT System')).toBeInTheDocument();
-    expect(getByText('4innovation')).toBeInTheDocument();
-    expect(getByText('4i')).toBeInTheDocument();
-
-    // Match the snapshot
-    expect(asFragment()).toMatchSnapshot();
-  });
-});

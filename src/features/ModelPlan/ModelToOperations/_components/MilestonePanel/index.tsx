@@ -23,6 +23,7 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
+import { SolutionCard } from '../SolutionCard';
 
 import '../../index.scss';
 
@@ -165,70 +166,6 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
         </Grid>
       </GridContainer>
     </>
-  );
-};
-
-export const SolutionCard = ({
-  solution,
-  className
-}: {
-  solution: HelpSolutionBaseType;
-  className?: string;
-}) => {
-  const { t } = useTranslation('modelToOperationsMisc');
-
-  const { modelID } = useParams<{ modelID: string }>();
-
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
-
-  // Set the solution route params
-  params.set('solution', solution.route);
-  params.set('section', 'about');
-
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.enum
-  );
-
-  return (
-    <Grid desktop={{ col: 9 }} className="display-flex">
-      {renderModal && selectedSolution && (
-        <SolutionDetailsModal
-          solution={selectedSolution}
-          openedFrom={prevPathname}
-          closeRoute={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
-        />
-      )}
-
-      <Card
-        className={classNames('width-full', className)}
-        containerProps={{
-          className: classNames(
-            'padding-3 flex-justify radius-md shadow-2 margin-0'
-          )
-        }}
-      >
-        <p className="margin-top-0 margin-bottom-05 text-base-dark">
-          {solution?.type}
-        </p>
-
-        <h3 className="margin-0">{solution?.name}</h3>
-
-        {solution?.acronym && (
-          <p className="margin-top-0">{solution?.acronym}</p>
-        )}
-
-        <div className="border-top border-base-light padding-top-2">
-          <Button
-            type="button"
-            unstyled
-            onClick={() => history.replace({ search: params.toString() })}
-          >
-            {t('milestoneLibrary.aboutSolution')}
-          </Button>
-        </div>
-      </Card>
-    </Grid>
   );
 };
 

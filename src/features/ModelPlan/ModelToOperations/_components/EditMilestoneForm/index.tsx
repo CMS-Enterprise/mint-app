@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -33,10 +33,14 @@ import classNames from 'classnames';
 import {
   GetModelToOperationsMatrixDocument,
   GetMtoMilestoneQuery,
+  MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
+  MtoSolution,
+  MtoSolutionStatus,
   useDeleteMtoMilestoneMutation,
+  useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation
 } from 'gql/generated/graphql';
@@ -92,6 +96,12 @@ type FormValues = {
   riskIndicator: MtoRiskIndicator;
 };
 
+type TableSolutionType = {
+  name: string;
+  status: MtoSolutionStatus;
+  riskIndicator: MtoRiskIndicator;
+};
+
 type EditMilestoneFormProps = {
   closeModal: () => void;
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
@@ -124,7 +134,7 @@ const EditMilestoneForm = ({
 
   const editMilestoneID = params.get('edit-milestone');
 
-  const selectSolutionsParam = params.get('select-solutions');
+  // const selectSolutionsParam = params.get('select-solutions');
 
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
@@ -134,8 +144,7 @@ const EditMilestoneForm = ({
 
   const { showMessage } = useMessage();
 
-  const [editSolutionsOpen, setEditSolutionsOpen] =
-    useState<boolean>(!!selectSolutionsParam);
+  const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
 
   const {
     data,
@@ -151,13 +160,94 @@ const EditMilestoneForm = ({
     return data?.mtoMilestone;
   }, [data]);
 
-  const [selectedSolutions, setSelectedSolutions] = useState<SolutionType[]>(
-    data?.mtoMilestone.solutions || []
+  const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const allSolutions = useMemo(() => {
+    return (
+      allSolutionData?.modelPlan.mtoMatrix || {
+        __typename: 'ModelsToOperationMatrix',
+        commonSolutions: [],
+        solutions: []
+      }
+    );
+  }, [allSolutionData]);
+
+  const combinedSolutions = useMemo(
+    () => [
+      ...allSolutions?.solutions,
+      ...(allSolutions?.commonSolutions as MtoSolution[])
+    ],
+    [allSolutions]
   );
 
+  const isCustomSolution = useCallback(
+    (id: string) => {
+      return combinedSolutions.find(solution => solution.id === id);
+    },
+    [combinedSolutions]
+  );
+
+  const formatSolutionForTable = useCallback(
+    (
+      solution: SolutionType | MtoCommonSolutionKey | string
+    ): TableSolutionType => {
+      if (typeof solution === 'string') {
+        return {
+          name: isCustomSolution(solution)
+            ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
+            : combinedSolutions.find(sol => sol.key === solution)?.name || '',
+          status: MtoSolutionStatus.NOT_STARTED,
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        };
+      }
+
+      return {
+        name: solution.name || '',
+        status: solution.status,
+        riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
+      };
+    },
+    [combinedSolutions, isCustomSolution]
+  );
+
+  const [selectedSolutions, setSelectedSolutions] = useState<
+    TableSolutionType[]
+  >(
+    data?.mtoMilestone.solutions.map(solution =>
+      formatSolutionForTable(solution)
+    ) || []
+  );
+
+  const [commonSolutionKeys, setCommonSolutionKeys] = useState<
+    MtoCommonSolutionKey[]
+  >([]);
+
+  const [solutionIDs, setSolutionIDs] = useState<string[]>([]);
+
   useEffect(() => {
-    setSelectedSolutions(data?.mtoMilestone.solutions || []);
+    setSolutionIDs(
+      data?.mtoMilestone.solutions.map(solution => solution.id) || []
+    );
   }, [data]);
+
+  useEffect(() => {
+    const formattedCustomSolutions = solutionIDs.map(solution =>
+      formatSolutionForTable(solution)
+    );
+
+    const formattedCommonSolutions = commonSolutionKeys.map(solution =>
+      formatSolutionForTable(solution)
+    );
+
+    setSelectedSolutions([
+      ...formattedCustomSolutions,
+      ...formattedCommonSolutions
+    ]);
+  }, [data, solutionIDs, commonSolutionKeys, formatSolutionForTable]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -523,8 +613,8 @@ const EditMilestoneForm = ({
           testid="edit-solutions-sidepanel"
           modalHeading="Edit Solutions"
           closeModal={() => {
-            params.delete('select-solutions');
-            history.push({ search: params.toString() });
+            // params.delete('select-solutions');
+            // history.push({ search: params.toString() });
             setEditSolutionsOpen(false);
           }}
           overlayClassName="bg-transparent"
@@ -541,6 +631,11 @@ const EditMilestoneForm = ({
           <LinkSolutionForm
             milestone={milestone}
             closeModal={setEditSolutionsOpen}
+            commonSolutionKeys={commonSolutionKeys}
+            setCommonSolutionKeys={setCommonSolutionKeys}
+            solutionIDs={solutionIDs}
+            setSolutionIDs={setSolutionIDs}
+            allSolutions={allSolutions}
           />
         </Sidepanel>
       )}
@@ -964,8 +1059,8 @@ const EditMilestoneForm = ({
                     <Button
                       type="button"
                       onClick={() => {
-                        params.set('select-solutions', 'true');
-                        history.push({ search: params.toString() });
+                        // params.set('select-solutions', 'true');
+                        // history.push({ search: params.toString() });
                         setEditSolutionsOpen(true);
                       }}
                       unstyled
@@ -1005,6 +1100,12 @@ const EditMilestoneForm = ({
                                     scope="col"
                                     key={column.id}
                                     className="padding-left-0 padding-bottom-0"
+                                    style={{
+                                      width:
+                                        column.id === 'status'
+                                          ? '150px'
+                                          : 'auto'
+                                    }}
                                   >
                                     <button
                                       className="usa-button usa-button--unstyled position-relative"
