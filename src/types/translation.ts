@@ -52,6 +52,7 @@ import {
   MtoMilestoneStatus,
   MtoMilestoneTranslation,
   MtoRiskIndicator,
+  MtoSolutionStatus,
   MtoSolutionTranslation,
   MtoSolutionType,
   MultiSourceDataToCollect,
@@ -1314,6 +1315,11 @@ export type TranslationMTOSolutionCustomForm = {
   pocName: TranslationFieldProperties;
   pocEmail: TranslationFieldProperties;
   solutionType: TranslationFieldPropertiesWithOptions<MtoSolutionType>;
+  key: TranslationFieldProperties;
+  riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
+  status: TranslationFieldPropertiesWithOptions<MtoSolutionStatus>;
+  neededBy: TranslationFieldProperties;
+  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
 };
 
 type TranslationMTOSolutionCustomGQL = Omit<

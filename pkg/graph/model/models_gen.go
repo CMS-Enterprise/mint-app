@@ -100,10 +100,15 @@ type MTOSolutionLinks struct {
 
 // Represents MTO Custom Solution translation data
 type MTOSolutionTranslation struct {
-	Name         models.TranslationField            `json:"name" db:"name"`
-	PocName      models.TranslationField            `json:"pocName" db:"poc_name"`
-	PocEmail     models.TranslationField            `json:"pocEmail" db:"poc_email"`
-	SolutionType models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Name          models.TranslationField            `json:"name" db:"name"`
+	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	SolutionType  models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Key           models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	RiskIndicator models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
+	NeededBy      models.TranslationField            `json:"neededBy" db:"needed_by"`
+	FacilitatedBy models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 }
 
 // Represents model plan base translation data

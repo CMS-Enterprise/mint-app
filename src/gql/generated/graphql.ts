@@ -1054,10 +1054,15 @@ export enum MtoSolutionStatus {
 /** Represents MTO Custom Solution translation data */
 export type MtoSolutionTranslation = {
   __typename: 'MTOSolutionTranslation';
+  facilitatedBy: TranslationFieldWithOptions;
+  key: TranslationField;
   name: TranslationField;
+  neededBy: TranslationField;
   pocEmail: TranslationField;
   pocName: TranslationField;
+  riskIndicator: TranslationFieldWithOptions;
   solutionType: TranslationFieldWithOptions;
+  status: TranslationFieldWithOptions;
 };
 
 export enum MtoSolutionType {
