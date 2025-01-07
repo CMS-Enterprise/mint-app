@@ -37,6 +37,7 @@ export default gql(/* GraphQL */ `
         }
         commonMilestones {
           isSuggested
+          isAdded
         }
         recentEdit {
           id: modifiedBy

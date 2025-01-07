@@ -49,8 +49,9 @@ const MTOHome = () => {
   const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
 
   const suggestedMilestones =
-    modelToOperationsMatrix?.commonMilestones.filter(obj => obj.isSuggested) ||
-    [];
+    modelToOperationsMatrix?.commonMilestones.filter(
+      obj => obj.isSuggested && !obj.isAdded
+    ) || [];
 
   const history = useHistory();
 
