@@ -419,6 +419,10 @@ const EditMilestoneForm = ({
           ...(isCategoryDirty && { mtoCategoryID }),
           ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
           ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
+        },
+        solutionLinks: {
+          commonSolutionKeys,
+          solutionIDs
         }
       }
     })
@@ -636,6 +640,8 @@ const EditMilestoneForm = ({
           ariaLabel="Edit Solutions"
           testid="edit-solutions-sidepanel"
           modalHeading="Edit Solutions"
+          backButton
+          showScroll
           closeModal={() => {
             // params.delete('select-solutions');
             // history.push({ search: params.toString() });

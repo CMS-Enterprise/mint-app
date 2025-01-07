@@ -7,31 +7,18 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  Grid,
-  GridContainer,
-  Label
-} from '@trussworks/react-uswds';
-import {
-  HelpSolutionBaseType,
-  helpSolutions
-} from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { useHistory } from 'react-router-dom';
+import { Grid, GridContainer, Label } from '@trussworks/react-uswds';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetMtoAllSolutionsQuery,
   GetMtoMilestoneQuery,
-  MtoCommonSolutionKey,
-  MtoSolution
+  MtoCommonSolutionKey
 } from 'gql/generated/graphql';
-import { map } from 'lodash';
 
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import useMessage from 'hooks/useMessage';
-import useModalSolutionState from 'hooks/useModalSolutionState';
-import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import { SolutionCard } from '../SolutionCard';
 
@@ -57,10 +44,6 @@ const LinkSolutionForm = ({
   allSolutions
 }: LinkSolutionFormProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
-
-  const { errorMessageInModal, clearMessage } = useMessage();
-
-  const history = useHistory();
 
   //   console.log('data', allSolutions);
 
