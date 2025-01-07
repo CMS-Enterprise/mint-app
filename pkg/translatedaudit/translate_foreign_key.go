@@ -52,6 +52,10 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getMTOCommonMilestoneForeignKeyReference(ctx, store, value)
 		}
+	case models.TNMTOCommonSolution:
+		{
+			return getMTOCommonSolutionForeignKeyReference(ctx, store, value)
+		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
 	}
@@ -176,7 +180,7 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	return category.Name, nil
 }
 func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
-	// cast interface to UUID
+	// cast interface to key
 	enumKey, err := parseInterfaceToEnum[models.MTOCommonMilestoneKey](key)
 	if err != nil {
 		return "", fmt.Errorf("unable to convert the provided key to a MTOCommonMilestoneKey to get the mto common milestone reference. err %w", err)
@@ -194,6 +198,27 @@ func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storag
 		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
 	}
 	return commonMilestone[0].Name, nil
+}
+
+func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to UUID
+	enumKey, err := parseInterfaceToEnum[models.MTOCommonSolutionKey](key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a MTOCommonSolutionKey to get the mto common Solution reference. err %w", err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	// TODO(mto) --> This shouldn't use the data loaders store method
+	// get the common Solution
+	commonSolution, err := storage.MTOCommonSolutionGetByKeyLoader(store, logger, []models.MTOCommonSolutionKey{enumKey})
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto common Solution foreign key reference. err %w", err)
+	}
+
+	if len(commonSolution) != 1 {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
+	}
+	return commonSolution[0].Name, nil
 }
 
 func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
