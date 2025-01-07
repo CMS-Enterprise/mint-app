@@ -45,6 +45,7 @@ import {
   ModelViewFilter,
   MonitoringFileType,
   MtoCategoryTranslation,
+  MtoCommonSolutionContactTranslation,
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoInfoTranslation,
@@ -1333,6 +1334,24 @@ type TranslationMTOSolutionCustomGQL = Omit<
 */
 export type TranslationMTOSolutionCustom = {
   [K in keyof TranslationMTOSolutionCustomGQL]: TranslationMTOSolutionCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution Contact - Change History purposes only
+export type TransltionMTOCommonSolutionContactCustomForm = {
+  key: TranslationFieldProperties;
+  name: TranslationFieldProperties;
+  email: TranslationFieldProperties;
+  isTeam: TranslationFieldProperties;
+  role: TranslationFieldProperties;
+  isPrimary: TranslationFieldProperties;
+};
+type TranslationMTOCommonSolutionContactCustomGQL = Omit<
+  MtoCommonSolutionContactTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionContactCustom = {
+  [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

@@ -68,6 +68,16 @@ type MTOCategoryTranslation struct {
 	ParentID models.TranslationField `json:"parentID" db:"parent_id"`
 }
 
+// Represents a translation of a contact for a common solution
+type MTOCommonSolutionContactTranslation struct {
+	Key       models.TranslationField `json:"key" db:"mto_common_solution_key"`
+	Name      models.TranslationField `json:"name" db:"name"`
+	Email     models.TranslationField `json:"email" db:"email"`
+	IsTeam    models.TranslationField `json:"isTeam" db:"is_team"`
+	Role      models.TranslationField `json:"role" db:"role"`
+	IsPrimary models.TranslationField `json:"isPrimary" db:"is_primary"`
+}
+
 // Represents mto info translation data
 type MTOInfoTranslation struct {
 	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`

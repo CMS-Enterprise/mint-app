@@ -838,6 +838,17 @@ export type MtoCommonSolutionContactInformation = {
   primaryContact: MtoCommonSolutionContact;
 };
 
+/** Represents a translation of a contact for a common solution */
+export type MtoCommonSolutionContactTranslation = {
+  __typename: 'MTOCommonSolutionContactTranslation';
+  email: TranslationField;
+  isPrimary: TranslationField;
+  isTeam: TranslationField;
+  key: TranslationField;
+  name: TranslationField;
+  role: TranslationField;
+};
+
 export enum MtoCommonSolutionKey {
   ACO_OS = 'ACO_OS',
   APPS = 'APPS',
