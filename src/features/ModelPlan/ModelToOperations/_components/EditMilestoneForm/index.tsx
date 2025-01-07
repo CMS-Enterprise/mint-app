@@ -378,13 +378,10 @@ const EditMilestoneForm = ({
     const totalChanges = facilitatedByChangeCount + Object.keys(rest).length;
 
     setUnsavedChanges(totalChanges);
-
-    setIsDirty(!!totalChanges);
   }, [
     dirtyFields,
     touchedFields.needBy,
     values,
-    setIsDirty,
     formValues.needBy,
     formValues.facilitatedBy.length
   ]);
@@ -409,6 +406,15 @@ const EditMilestoneForm = ({
     commonSolutionKeys,
     commonSolutionKeysInitial
   ]);
+
+  // Sets dirty state based on changes in form to render the leave confirmation modal
+  useEffect(() => {
+    if (!!unsavedChanges || !!unsavedSolutionChanges) {
+      setIsDirty(true);
+    } else {
+      setIsDirty(false);
+    }
+  }, [unsavedChanges, unsavedSolutionChanges, setIsDirty]);
 
   const {
     selectOptionsAndMappedCategories,
@@ -700,7 +706,6 @@ const EditMilestoneForm = ({
         >
           <LinkSolutionForm
             milestone={milestone}
-            closeModal={setEditSolutionsOpen}
             commonSolutionKeys={commonSolutionKeys}
             setCommonSolutionKeys={setCommonSolutionKeys}
             solutionIDs={solutionIDs}
@@ -827,9 +832,6 @@ const EditMilestoneForm = ({
                   <Controller
                     name="isDraft"
                     control={control}
-                    rules={{
-                      required: true
-                    }}
                     render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-top-0 margin-bottom-3">
                         <CheckboxField

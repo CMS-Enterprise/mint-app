@@ -10,6 +10,8 @@ import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import CheckboxField from 'components/CheckboxField';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 
+import '../../index.scss';
+
 export const SolutionCard = ({
   solution,
   setChecked,
@@ -51,16 +53,17 @@ export const SolutionCard = ({
       <Card
         className={classNames('width-full', className)}
         containerProps={{
-          className: classNames(
-            'padding-3 flex-justify radius-md shadow-2 margin-0'
-          )
+          className: classNames('padding-3 flex-justify radius-md margin-0', {
+            'model-to-operations__selected-shadow': !!checked,
+            'shadow-2': !checked
+          })
         }}
       >
         {setChecked ? (
           <CheckboxField
             id={solution.key}
             name={solution.key}
-            label={solution.name}
+            label={t('modal.editMilestone.selectThisSolution')}
             value={solution.key}
             checked={checked}
             onBlur={() => null}

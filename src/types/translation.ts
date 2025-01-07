@@ -1274,6 +1274,7 @@ export type TranslationMTOMilestoneCustomForm = {
   needBy: TranslationFieldProperties;
   riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
+  solutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
   status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
 };
 

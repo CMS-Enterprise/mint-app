@@ -80,6 +80,7 @@ type MTOMilestoneTranslation struct {
 	NeedBy          models.TranslationField            `json:"needBy" db:"need_by"`
 	RiskIndicator   models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
 	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
+	Solutions       models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
 	Status          models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 

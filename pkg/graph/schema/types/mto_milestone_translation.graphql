@@ -10,5 +10,6 @@ type MTOMilestoneTranslation {
   needBy: TranslationField! @goTag(key: "db", value: "need_by")
   riskIndicator: TranslationFieldWithOptions! @goTag(key: "db", value: "risk_indicator")
   commonSolutions: TranslationFieldWithOptions! @goTag(key: "db", value: "common_solutions")
+  solutions: TranslationFieldWithOptions! @goTag(key: "db", value: "solutions")
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }

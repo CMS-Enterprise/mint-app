@@ -985,6 +985,7 @@ export type MtoMilestoneTranslation = {
   name: TranslationField;
   needBy: TranslationField;
   riskIndicator: TranslationFieldWithOptions;
+  solutions: TranslationFieldWithOptions;
   status: TranslationFieldWithOptions;
 };
 

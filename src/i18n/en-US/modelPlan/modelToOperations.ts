@@ -368,7 +368,15 @@ export const modelToOperationsMisc: Record<string, any> = {
       noSolutions:
         'You haven’t selected any solutions or IT systems to implement this milestone.',
       solution: 'Solution',
-      status: 'Status'
+      status: 'Status',
+      selectedSolutionCount_other: '{{count}} selected solutions',
+      selectedSolutionCount: '{{count}} selected solution',
+      suggestedSolutions: 'Suggested solutions',
+      selectedSolutionsDescription:
+        'These solutions are commonly used for this milestone.',
+      selectThisSolution: 'Select this solution',
+      availableSolutionsDescription:
+        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply. You may learn more about any non-custom operational solutions by visiting MINT’s <solution>solution library</solution> or <help>help center</help>.'
     },
     solution: {
       title: 'Add a new solution',
