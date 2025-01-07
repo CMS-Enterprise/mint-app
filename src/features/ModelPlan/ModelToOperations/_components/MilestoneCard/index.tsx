@@ -36,10 +36,7 @@ const MilestoneCard = ({
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
-  const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history]
-  );
+  const params = new URLSearchParams(history.location.search);
 
   const milestoneParam = params.get('add-milestone');
 
