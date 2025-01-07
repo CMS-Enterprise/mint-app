@@ -83,6 +83,10 @@ func parseInterfaceToEnum[E ~string](val interface{}) (E, error) {
 	if isEnum {
 		return enumKey, nil
 	}
+	stringKey, isString := val.(string)
+	if isString {
+		return E(stringKey), nil
+	}
 
 	return "", fmt.Errorf("there was an issue casting the provided value (%v) to Enum. It is of type %T", val, val)
 }
