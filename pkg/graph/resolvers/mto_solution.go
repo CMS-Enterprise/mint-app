@@ -101,46 +101,65 @@ func MTOSolutionCreateCommon(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
+
+	// Create a new MTOSolution object
 	mtoSolution := models.NewMTOSolution(
 		modelPlanID,
 		&commonSolutionKey,
 		nil, // name is not stored for a solution from the common library
 		nil, // type is not stored for a solution from the common library
-		nil, // needed by is not provided when creating a custom solution. It must be updated later
+		nil, // neededBy is not provided when creating a custom solution. It must be updated later
 		principalAccount.ID,
 	)
 
+	// Perform pre-create validations
 	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	return sqlutils.WithTransaction[models.MTOSolution](store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+	// Use a transaction for atomic operations
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		// Step 1: Create the solution
 		solution, err := storage.MTOSolutionCreate(tx, logger, mtoSolution)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to create solution: %w", err)
 		}
 
-		// Link the solution to the provided milestones
-		for _, milestoneID := range milestonesToLink {
-			link := models.NewMTOMilestoneSolutionLink(
-				principal.Account().ID,
-				milestoneID,
-				solution.ID,
-			)
-
-			_, err = storage.MTOMilestoneSolutionLinkCreate(
-				tx,
-				logger,
-				link,
-			)
+		// Step 2: Link milestones in a consolidated fashion
+		if len(milestonesToLink) > 0 {
+			_, err := MTOSolutionLinkMilestonesWithTX(ctx, principal, logger, tx, solution.ID, milestonesToLink)
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("failed to link milestones to solution: %w", err)
 			}
 		}
 
 		return solution, nil
 	})
+}
+
+// MTOSolutionLinkMilestonesWithTX handles linking milestones to a solution in a single transaction
+func MTOSolutionLinkMilestonesWithTX(
+	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
+	tx *sqlx.Tx,
+	solutionID uuid.UUID,
+	milestonesToLink []uuid.UUID,
+) ([]*models.MTOMilestone, error) {
+	// Prepare data for batch insertion
+	/*links := lo.Map(milestonesToLink, func(milestoneID uuid.UUID, _ int) *models.MTOMilestoneSolutionLink {
+		return models.NewMTOMilestoneSolutionLink(principal.Account().ID, milestoneID, solutionID)
+	})*/
+
+	// Insert or update links in bulk
+	linkedMilestones, err := storage.MTOMilestoneSolutionLinkMilestonesToSolution(tx, logger, solutionID, milestonesToLink, principal.Account().ID)
+	if err != nil {
+		logger.Error("failed to merge milestone links", zap.Error(err))
+		return nil, err
+	}
+
+	return linkedMilestones, nil
 }
 
 // MTOSolutionGetByModelPlanIDLOADER implements resolver logic to get all MTO solutions by a model plan ID using a data loader
