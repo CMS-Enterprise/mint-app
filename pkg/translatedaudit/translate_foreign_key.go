@@ -43,6 +43,11 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getExistingModelForeignKeyReference(ctx, store, value)
 		}
+	// MTO
+	case models.TNMTOCategory:
+		{
+			return getMTOCategoryForeignKeyReference(ctx, store, value)
+		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
 	}
@@ -136,6 +141,26 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 		return *solution.NameOther, nil
 	}
 	return solution.ID.String(), nil
+}
+
+func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the mto category reference. err %w", err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	// get the solution
+	category, err := storage.MTOCategoryGetByID(store, logger, uuidKey)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+	}
+
+	if category == nil {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	}
+	return category.Name, nil
 }
 
 func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
