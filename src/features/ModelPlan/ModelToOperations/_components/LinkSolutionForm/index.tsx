@@ -45,8 +45,6 @@ const LinkSolutionForm = ({
 }: LinkSolutionFormProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  //   console.log('data', allSolutions);
-
   // Map the common solutions to the FE help solutions
   const mappedSolutions = useMemo(
     () =>

@@ -32,6 +32,7 @@ import {
 import classNames from 'classnames';
 import {
   GetModelToOperationsMatrixDocument,
+  GetMtoAllSolutionsQuery,
   GetMtoMilestoneQuery,
   MtoCommonSolutionKey,
   MtoFacilitator,
@@ -64,7 +65,7 @@ import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
-import dirtyInput from 'utils/formUtil';
+import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
@@ -139,6 +140,9 @@ const EditMilestoneForm = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
+
+  const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
+    useState<number>(0);
 
   const { showMessage } = useMessage();
 
@@ -224,9 +228,23 @@ const EditMilestoneForm = ({
       .map(solution => solution.key!) || []
   );
 
+  // Common solution initial state
+  const [commonSolutionKeysInitial, setCommonSolutionKeysInitial] = useState<
+    MtoCommonSolutionKey[]
+  >(
+    data?.mtoMilestone.solutions
+      .filter(solution => !!solution.key)
+      .map(solution => solution.key!) || []
+  );
+
   // Sets initial solution IDs from milestone from async data
   useEffect(() => {
     setCommonSolutionKeys(
+      data?.mtoMilestone.solutions
+        .filter(solution => !!solution.key)
+        .map(solution => solution.key!) || []
+    );
+    setCommonSolutionKeysInitial(
       data?.mtoMilestone.solutions
         .filter(solution => !!solution.key)
         .map(solution => solution.key!) || []
@@ -240,9 +258,21 @@ const EditMilestoneForm = ({
       .map(solution => solution.id) || []
   );
 
+  // Custom solution initial state
+  const [solutionIDsInitial, setSolutionIDsInitial] = useState<string[]>(
+    data?.mtoMilestone.solutions
+      .filter(solution => !solution.key)
+      .map(solution => solution.id) || []
+  );
+
   // Sets initial solution IDs from milestone from async data
   useEffect(() => {
     setSolutionIDs(
+      data?.mtoMilestone.solutions
+        .filter(solution => !solution.key)
+        .map(solution => solution.id) || []
+    );
+    setSolutionIDsInitial(
       data?.mtoMilestone.solutions
         .filter(solution => !solution.key)
         .map(solution => solution.id) || []
@@ -357,6 +387,27 @@ const EditMilestoneForm = ({
     setIsDirty,
     formValues.needBy,
     formValues.facilitatedBy.length
+  ]);
+
+  useEffect(() => {
+    const solutionIDDifferenceCount = symmetricDifference(
+      solutionIDs,
+      solutionIDsInitial
+    ).length;
+
+    const commonSolutionKeysDifferenceCount = symmetricDifference(
+      commonSolutionKeys,
+      commonSolutionKeysInitial
+    ).length;
+
+    setUnsavedSolutionChanges(
+      solutionIDDifferenceCount + commonSolutionKeysDifferenceCount
+    );
+  }, [
+    solutionIDs,
+    solutionIDsInitial,
+    commonSolutionKeys,
+    commonSolutionKeysInitial
   ]);
 
   const {
@@ -584,7 +635,7 @@ const EditMilestoneForm = ({
     prepareRow
   } = useTable(
     {
-      columns,
+      columns: columns as Column<object>[],
       data: selectedSolutions,
       initialState: { pageIndex: 0, pageSize: 5 }
     },
@@ -643,21 +694,10 @@ const EditMilestoneForm = ({
           backButton
           showScroll
           closeModal={() => {
-            // params.delete('select-solutions');
-            // history.push({ search: params.toString() });
             setEditSolutionsOpen(false);
           }}
           overlayClassName="bg-transparent"
-          // className="tablet:width-mobile-lg mint-body-normal"
         >
-          {/* <div className="margin-bottom-2">
-            <PageHeading headingLevel="h3" className="margin-y-0">
-              {t('modal.solutionToMilestone.title')}
-            </PageHeading>
-          </div>
-
-          {errorMessageInModal} */}
-
           <LinkSolutionForm
             milestone={milestone}
             closeModal={setEditSolutionsOpen}
@@ -665,12 +705,14 @@ const EditMilestoneForm = ({
             setCommonSolutionKeys={setCommonSolutionKeys}
             solutionIDs={solutionIDs}
             setSolutionIDs={setSolutionIDs}
-            allSolutions={allSolutions}
+            allSolutions={
+              allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
+            }
           />
         </Sidepanel>
       )}
 
-      {unsavedChanges > 0 && (
+      {unsavedChanges + unsavedSolutionChanges > 0 && (
         <div
           className={classNames('save-tag', {
             'margin-top-4': isMobile
@@ -680,7 +722,7 @@ const EditMilestoneForm = ({
             <Icon.Warning className="margin-right-1 top-2px text-warning" />
             <p className="margin-0 display-inline margin-right-1">
               {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
-                count: unsavedChanges
+                count: unsavedChanges + unsavedSolutionChanges
               })}
             </p>
             -
@@ -1198,7 +1240,9 @@ const EditMilestoneForm = ({
                 <div className="border-top-1px border-base-lighter padding-y-4">
                   <Button
                     type="submit"
-                    disabled={isSubmitting || !isDirty}
+                    disabled={
+                      (isSubmitting || !isDirty) && !unsavedSolutionChanges
+                    }
                     className="margin-bottom-2"
                   >
                     {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
