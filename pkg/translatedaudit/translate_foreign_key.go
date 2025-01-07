@@ -56,6 +56,14 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getMTOCommonSolutionForeignKeyReference(ctx, store, value)
 		}
+	case models.TNMTOMilestone:
+		{
+			return getMTOMilestoneForeignKeyReference(ctx, store, value)
+		}
+	case models.TNMTOSolution:
+		{
+			return getMTOSolutionForeignKeyReference(ctx, store, value)
+		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
 	}
@@ -223,6 +231,47 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
 	}
 	return commonSolution[0].Name, nil
+}
+func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to key
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	// TODO(mto) --> This shouldn't use the data loaders store method
+	// get the  milestone
+	milestone, err := storage.MTOMilestoneGetByIDLoader(store, logger, []uuid.UUID{uuidKey})
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto  milestone foreign key reference. err %w", err)
+	}
+
+	if len(milestone) != 1 {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	}
+	return milestone[0].Name, nil
+}
+
+func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	// TODO(mto) --> This shouldn't use the data loaders store method
+	// get the  solution
+	solution, err := storage.MTOSolutionGetByIDLoader(store, logger, []uuid.UUID{uuidKey})
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto  Solution foreign key reference. err %w", err)
+	}
+
+	if len(solution) != 1 {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	}
+	return solution[0].Name, nil
 }
 
 func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
