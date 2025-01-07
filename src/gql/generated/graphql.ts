@@ -1427,6 +1427,7 @@ export type MutationCreateMtoMilestoneCustomArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateMtoSolutionCommonArgs = {
   key: MtoCommonSolutionKey;
+  milestonesToLink?: InputMaybe<Array<Scalars['UUID']['input']>>;
   modelPlanID: Scalars['UUID']['input'];
 };
 
