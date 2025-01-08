@@ -666,7 +666,8 @@ describe('isMatrixStartedFc', () => {
         ],
         isUncategorized: false
       }
-    ]
+    ],
+    commonMilestones: []
   };
 
   it('should return true when the matrix is started', () => {

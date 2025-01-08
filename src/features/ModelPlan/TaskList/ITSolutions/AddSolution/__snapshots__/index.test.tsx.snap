@@ -354,10 +354,11 @@ exports[`Operational Solutions AddSolution > matches snapshot 1`] = `
       >
         <div>
           <div
-            class="padding-2 bg-primary-lighter"
+            class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
+            style="gap: 1rem;"
           >
             <p
-              class="text-bold margin-top-0"
+              class="text-bold margin-0"
             >
               Need help choosing a solution?
             </p>

@@ -183,6 +183,16 @@ export const modelToOperationsMisc: Record<string, any> = {
   successReorder: 'Your categories have been reordered.',
   errorReorderForm:
     'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
+  suggestedMilestoneBanner: {
+    empty:
+      "There aren't currently any suggested milestones for your model. MINT may suggest model milestones as you and your team fill out more of your <s>Model Plan</s>.",
+    notEmpty_part1: {
+      output: 'There is {{count}} suggested milestone ',
+      output_other: 'There are {{count}} suggested milestones '
+    },
+    notEmpty_part2:
+      'for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>'
+  },
   optionsCard: {
     milestones: {
       label: 'Milestones',
