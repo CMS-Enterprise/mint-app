@@ -6,3 +6,5 @@ SELECT audit.AUDIT_TABLE('public', 'mto_info', 'id', 'model_plan_id', '{created_
 
 
 SELECT audit.AUDIT_TABLE('public', 'mto_common_solution_contact', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]);
+
+ALTER TYPE TRANSLATED_AUDIT_META_DATA_TYPE ADD VALUE 'MTO_CATEGORY';

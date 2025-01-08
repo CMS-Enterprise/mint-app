@@ -12,6 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // DiscussionReplyMetaDataGet uses the provided information to generate metadata needed for any discussion reply audits
@@ -374,6 +375,35 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 	return &meta, &metaType, nil
 }
 
+// MTOCategoryMetaDataGet uses the provided information to generate metadata needed for any mto category audits
+func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryID uuid.UUID) (*models.TranslatedAuditMetaMTOCategory, *models.TranslatedAuditMetaDataType, error) {
+
+	// get the Category
+	var parentName *string
+
+	category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
+	}
+
+	if category == nil {
+		return nil, nil, fmt.Errorf("the category for %s was not returned for this mto category meta data", categoryID)
+	}
+
+	if category.ParentID != nil {
+		subcategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+		}
+		parentName = &subcategory.Name
+	}
+
+	metaNeed := models.NewTranslatedAuditMetaMTOCategory(0, parentName, category.ParentID)
+	metaType := models.TAMetaMTOCategory
+	return &metaNeed, &metaType, nil
+
+}
+
 // SetTranslatedAuditTableSpecificMetaData does table specific analysis to
 // 1. Get meta data where needed
 // 2. Set the needed restriction level of an audit.
@@ -457,6 +487,13 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 			return true, err
 		}
 		restricted = isRestricted
+	case models.TNMTOCategory:
+		metaData, metaDataType, err := MTOCategoryMetaDataGet(ctx, store, audit.PrimaryKey)
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
 	default:
 		// Tables that aren't configured to generate meta data, or to be restricted will return nil
 		return false, nil

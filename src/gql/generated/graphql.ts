@@ -4429,7 +4429,7 @@ export type TranslatedAuditMetaBaseStruct = {
 };
 
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
-export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaMtoCategory | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
 
 export enum TranslatedAuditMetaDataType {
   BASE = 'BASE',
@@ -4483,6 +4483,14 @@ export type TranslatedAuditMetaGeneric = {
   relationContent?: Maybe<Scalars['String']['output']>;
   tableName: TableName;
   version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited */
+export type TranslatedAuditMetaMtoCategory = {
+  __typename: 'TranslatedAuditMetaMTOCategory';
+  isSubCategory: Scalars['Boolean']['output'];
+  parentCategoryID?: Maybe<Scalars['UUID']['output']>;
+  parentCategoryName?: Maybe<Scalars['String']['output']>;
 };
 
 /** TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for an operational need */
@@ -4983,7 +4991,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaMTOCategory' } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;

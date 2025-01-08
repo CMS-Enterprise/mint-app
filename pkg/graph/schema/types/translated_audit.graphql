@@ -3,7 +3,7 @@ TranslatedAuditMetaData is a type that represents all the data that can be captu
 """
 union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric | TranslatedAuditMetaDiscussionReply 
 | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask
-| TranslatedAuditMetaDocumentSolutionLink
+| TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaMTOCategory
 
 
 type TranslatedAuditMetaBaseStruct {
@@ -117,6 +117,14 @@ type TranslatedAuditMetaDocumentSolutionLink {
     Document ID  will always be present, regardless of if a document was deleted or not
     """
     documentID: UUID!
+}
+"""
+TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited
+"""
+type TranslatedAuditMetaMTOCategory {
+    isSubCategory: Boolean!
+    parentCategoryID: UUID
+    parentCategoryName: String
 }
 
 
