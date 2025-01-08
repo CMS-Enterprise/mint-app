@@ -10,6 +10,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 //Future Enhancement: allow faktory workers to take a dataloader
@@ -238,19 +239,17 @@ func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Stor
 	if err != nil {
 		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
 	}
-	logger := appcontext.ZLogger(ctx)
 
-	// TODO(mto) --> This shouldn't use the data loaders store method
 	// get the  milestone
-	milestone, err := storage.MTOMilestoneGetByIDLoader(store, logger, []uuid.UUID{uuidKey})
+	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		return "", fmt.Errorf("there was an issue translating the mto  milestone foreign key reference. err %w", err)
 	}
 
-	if len(milestone) != 1 {
+	if milestone == nil {
 		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
 	}
-	return milestone[0].Name, nil
+	return milestone.Name, nil
 }
 
 func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
