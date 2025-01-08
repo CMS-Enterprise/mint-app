@@ -4,6 +4,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -83,4 +85,67 @@ func (suite *ResolverSuite) TestMTOSolutionGetByMilestoneIDLOADER() {
 	// Call the helper method to validate all results
 	loaders.VerifyLoaders[uuid.UUID, []*models.MTOSolution, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOSolution.ByMilestoneID,
 		expectedResults, verifyFunc)
+}
+
+func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
+	plan := suite.createModelPlan("Plan for testing CreateCommonSolutionAndLinkMilestones")
+	// We'll make two new, existing milestones to link to
+	// We'll just create them as custom milestones for simplicity here
+	milestoneA, err := MTOMilestoneCreateCustom(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		"Milestone A",
+		plan.ID,
+		nil,
+	)
+	suite.NoError(err)
+
+	milestoneB, err := MTOMilestoneCreateCustom(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		"Milestone B",
+		plan.ID,
+		nil,
+	)
+	suite.NoError(err)
+
+	// Pick a known commonSolutionKey from your code; must exist in MTOCommonSolution
+	commonSolutionKey := models.MTOCSKCcw
+
+	// Now call the method we want to test: Create a common solution and link to these two milestones
+	solution, err := MTOSolutionCreateCommon(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		plan.ID,
+		commonSolutionKey,
+		[]uuid.UUID{milestoneA.ID, milestoneB.ID}, // link these two milestones
+	)
+	suite.NoError(err)
+	suite.NotNil(solution)
+	suite.NotNil(solution.Key)
+	suite.Equal(commonSolutionKey, *solution.Key, "Created solution should reference the correct common solution key")
+
+	// Verify that the solution was created
+	// We'll query by model plan to ensure we have exactly 1 solution for this plan
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Len(solutions, 1, "We expect exactly one solution for this plan")
+
+	// Verify that the solution is linked to both milestones
+	for _, mID := range []uuid.UUID{milestoneA.ID, milestoneB.ID} {
+		milestoneLinks, linkErr := storage.MTOMilestoneSolutionLinkGetByMilestoneID(
+			suite.testConfigs.Store,
+			suite.testConfigs.Logger,
+			mID,
+		)
+		suite.NoError(linkErr)
+		suite.Len(milestoneLinks, 1, "Each milestone should have exactly 1 solution linked")
+		suite.Equal(solution.ID, milestoneLinks[0].SolutionID, "The solution linked should match the one we created")
+	}
 }

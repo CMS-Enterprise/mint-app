@@ -62,11 +62,11 @@ func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPla
 }
 
 // CreateMTOSolutionCommon is the resolver for the createMTOSolutionCommon field.
-func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPlanID uuid.UUID, key models.MTOCommonSolutionKey) (*models.MTOSolution, error) {
+func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPlanID uuid.UUID, key models.MTOCommonSolutionKey, milestonesToLink []uuid.UUID) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return MTOSolutionCreateCommon(ctx, logger, principal, r.store, modelPlanID, key)
+	return MTOSolutionCreateCommon(ctx, logger, principal, r.store, modelPlanID, key, milestonesToLink)
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.

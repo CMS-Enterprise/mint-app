@@ -9,6 +9,7 @@ import React, {
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Label, Link } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetMtoAllSolutionsQuery,
@@ -19,6 +20,7 @@ import {
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import { SolutionCard } from '../SolutionCard';
 
@@ -45,6 +47,8 @@ const LinkSolutionForm = ({
   const { t: milestoneT } = useTranslation('mtoMilestone');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   // Map the common solutions to the FE help solutions
   const mappedSolutions = useMemo(
@@ -149,7 +153,12 @@ const LinkSolutionForm = ({
     commonSolutionKeys.length + solutionIDs.length;
 
   return (
-    <GridContainer className="padding-8">
+    <GridContainer
+      className={classNames({
+        'padding-8': !isTablet,
+        'padding-4': isTablet
+      })}
+    >
       <Grid row>
         <Grid col={10}>
           <h3 className="margin-bottom-2">

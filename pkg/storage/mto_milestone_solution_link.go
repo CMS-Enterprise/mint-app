@@ -57,7 +57,7 @@ func MTOMilestoneSolutionLinkGetByMilestoneID(
 	return returned, nil
 }
 
-// MTOMilestoneSolutionLinkMergeSolutionsToMilestones taks a list of solution ids, and will merge them to a milestone
+// MTOMilestoneSolutionLinkMergeSolutionsToMilestones takes a list of solution ids, and will merge them to a milestone
 // the end result is that solutions not included here have their link removed
 func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
 	tx *sqlx.Tx,
@@ -86,5 +86,39 @@ func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
 	}
 
 	return returned, nil
+}
 
+// MTOMilestoneSolutionLinkMilestonesToSolution takes a list of milestone IDs and links them to a solution.
+// The end result is that milestones not included here are unlinked from the solution.
+func MTOMilestoneSolutionLinkMilestonesToSolution(
+	tx *sqlx.Tx,
+	logger *zap.Logger,
+	solutionID uuid.UUID,
+	milestoneIDs []uuid.UUID,
+	actorID uuid.UUID,
+) ([]*models.MTOMilestone, error) {
+	// Set the current session user variable for audit purposes
+	err := setCurrentSessionUserVariable(tx, actorID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to set session user variable: %w", err)
+	}
+
+	// Prepare query arguments
+	arg := map[string]interface{}{
+		"solution_id":   solutionID,
+		"milestone_ids": pq.Array(milestoneIDs),
+		"created_by":    actorID,
+	}
+
+	// Execute the SQL query and return the linked milestones
+	returned, procErr := sqlutils.SelectProcedure[models.MTOMilestone](
+		tx,
+		sqlqueries.MTOMilestoneSolutionLink.LinkMilestonesToSolution,
+		arg,
+	)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue linking milestones to solution: %w", procErr)
+	}
+
+	return returned, nil
 }

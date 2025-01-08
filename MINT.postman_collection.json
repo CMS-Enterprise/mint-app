@@ -3780,7 +3780,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    key: INNOVATION\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    milestonesToLink: [\"{{mtoMilestoneID}}\"]\n    key: INNOVATION\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
 										"variables": ""
 									}
 								},
