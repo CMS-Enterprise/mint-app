@@ -41,11 +41,8 @@ const LinkSolutionForm = ({
   setSolutionIDs,
   allSolutions
 }: LinkSolutionFormProps) => {
-  const { t } = useTranslation('modelToOperationsMisc');
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: milestoneT } = useTranslation('mtoMilestone');
-
-  // console.log('commonSolutionKeys', commonSolutionKeys);
-  // console.log('solutionIDs', solutionIDs);
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -72,7 +69,7 @@ const LinkSolutionForm = ({
 
   const groupedOptions = [
     {
-      label: 'Custom solutions added to this MTO',
+      label: modelToOperationsMiscT('modal.editMilestone.customSolution'),
       options: createdSolutions.map(solution => {
         return {
           label: solution.name || '',
@@ -81,7 +78,7 @@ const LinkSolutionForm = ({
       })
     },
     {
-      label: 'Other available solutions',
+      label: modelToOperationsMiscT('modal.editMilestone.otherSolutions'),
       options: commonSolutions.map(solution => {
         return {
           label: solution.name || '',
@@ -154,20 +151,49 @@ const LinkSolutionForm = ({
   return (
     <GridContainer className="padding-8">
       <Grid row>
-        <Grid col={12}>
-          <h3 className="margin-bottom-4">
-            {t('modal.editMilestone.selectedSolutionCount', {
-              count: selectedSolutionCount
-            })}
+        <Grid col={10}>
+          <h3 className="margin-bottom-2">
+            {modelToOperationsMiscT(
+              'modal.editMilestone.selectedSolutionCount',
+              {
+                count: selectedSolutionCount
+              }
+            )}
           </h3>
+
+          <div className="text-base-dark mint-body-normal margin-bottom-4">
+            <Trans
+              i18nKey="modelToOperationsMisc:modal.editMilestone.visitSolutionLibrary"
+              components={{
+                solution: (
+                  <UswdsReactLink
+                    to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                  >
+                    {' '}
+                  </UswdsReactLink>
+                ),
+                help: (
+                  <Link
+                    href="/help-and-knowledge/operational-solutions"
+                    target="_blank"
+                    variant="external"
+                  >
+                    {' '}
+                  </Link>
+                )
+              }}
+            />
+          </div>
 
           <div className="border-bottom-1px border-base-lighter border-top-1px padding-top-4 padding-bottom-2 margin-bottom-4">
             <h4 className="margin-0">
-              {t('modal.editMilestone.suggestedSolutions')}
+              {modelToOperationsMiscT('modal.editMilestone.suggestedSolutions')}
             </h4>
 
             <p className="margin-top-0 margin-bottom-3 mint-body-normal text-base">
-              {t('modal.editMilestone.selectedSolutionsDescription')}
+              {modelToOperationsMiscT(
+                'modal.editMilestone.selectedSolutionsDescription'
+              )}
             </p>
 
             {mappedSolutions.map(solution =>
@@ -188,34 +214,16 @@ const LinkSolutionForm = ({
             {milestoneT('solutions.label')}
           </Label>
 
-          <HelpText className="margin-top-1">
-            <Trans
-              i18nKey="modelToOperationsMisc:modal.editMilestone.availableSolutionsDescription"
-              components={{
-                solution: (
-                  <UswdsReactLink
-                    to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
-                  >
-                    {' '}
-                  </UswdsReactLink>
-                ),
-                help: (
-                  <Link
-                    href="/help-and-knowledge/operational-solutions"
-                    target="_blank"
-                    variant="external"
-                  >
-                    {' '}
-                  </Link>
-                )
-              }}
-            />
+          <HelpText className="margin-top-1 text-base-dark mint-body-normal">
+            {modelToOperationsMiscT(
+              'modal.editMilestone.availableSolutionsDescription'
+            )}
           </HelpText>
 
           <MultiSelect
             id="available-solutions"
             inputId="available-solutions"
-            ariaLabel="Available solutions"
+            ariaLabel={milestoneT('solutions.label')}
             options={[]}
             groupedOptions={groupedOptions}
             selectedLabel="Selected solutions"

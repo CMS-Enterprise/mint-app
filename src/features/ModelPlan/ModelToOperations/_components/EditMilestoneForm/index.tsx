@@ -694,9 +694,13 @@ const EditMilestoneForm = ({
       {milestone && (
         <Sidepanel
           isOpen={editSolutionsOpen}
-          ariaLabel="Edit Solutions"
+          ariaLabel={modelToOperationsMiscT(
+            'modal.editMilestone.backToMilestone'
+          )}
           testid="edit-solutions-sidepanel"
-          modalHeading="Edit Solutions"
+          modalHeading={modelToOperationsMiscT(
+            'modal.editMilestone.backToMilestone'
+          )}
           backButton
           showScroll
           closeModal={() => {
@@ -734,7 +738,7 @@ const EditMilestoneForm = ({
             <Button
               type="button"
               onClick={handleSubmit(onSubmit)}
-              disabled={isSubmitting || !isDirty}
+              disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
               className="margin-x-1"
               unstyled
             >
@@ -752,7 +756,7 @@ const EditMilestoneForm = ({
       >
         <Grid row>
           <Grid col={10}>
-            {milestone.isDraft && (
+            {watch('isDraft') && (
               <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
                 <Icon.Science
                   className="margin-left-1"
@@ -1133,8 +1137,6 @@ const EditMilestoneForm = ({
                     <Button
                       type="button"
                       onClick={() => {
-                        // params.set('select-solutions', 'true');
-                        // history.push({ search: params.toString() });
                         setEditSolutionsOpen(true);
                       }}
                       unstyled

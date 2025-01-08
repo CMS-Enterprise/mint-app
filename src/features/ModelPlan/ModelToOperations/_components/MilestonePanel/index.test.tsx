@@ -2,7 +2,6 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
@@ -14,7 +13,7 @@ import MessageProvider from 'contexts/MessageContext';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
-import MilestonePanel, { SolutionCard } from './index';
+import MilestonePanel from './index';
 
 describe('MilestonePanel Component', () => {
   const mockMilestone: MilestoneCardType = {
