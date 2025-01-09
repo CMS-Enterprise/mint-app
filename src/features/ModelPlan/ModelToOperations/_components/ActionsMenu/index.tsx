@@ -13,7 +13,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import EditMilestoneForm from '../EditMilestoneForm';
-import { MTORowType } from '../Table/columns';
+import { MTORowType } from '../MatrixTable/columns';
 
 const ActionMenu = ({
   rowType,
@@ -257,7 +257,8 @@ const ActionMenu = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       params.delete('edit-milestone');
-      history.replace({ search: params.toString() });
+      params.delete('select-solutions');
+      history.push({ search: params.toString() });
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
@@ -334,7 +335,7 @@ const ActionMenu = ({
         className="margin-right-2"
         onClick={() => {
           params.set('edit-milestone', milestoneID);
-          history.replace({ search: params.toString() });
+          history.push({ search: params.toString() });
           setIsModalOpen(true);
         }}
       >

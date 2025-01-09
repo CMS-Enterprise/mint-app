@@ -59,7 +59,7 @@ const subComponents = (
 type SolutionDetailsModalProps = {
   solution: HelpSolutionType;
   openedFrom: string | undefined;
-  closeRoute: string;
+  closeRoute: string | (() => string);
 };
 
 const SolutionDetailsModal = ({
@@ -72,6 +72,7 @@ const SolutionDetailsModal = ({
   const params = new URLSearchParams(location.search);
   const milestoneParam = params.get('milestone');
   const solutionParam = params.get('solution');
+  const selectSolutions = params.get('select-solutions');
   const section = params.get('section') || 'about';
 
   const { t } = useTranslation('helpAndKnowledge');
@@ -97,9 +98,12 @@ const SolutionDetailsModal = ({
     setIsOpen(!!solution);
   }, [solution]);
 
+  const setCloseRoute =
+    typeof closeRoute === 'function' ? closeRoute() : closeRoute;
+
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(prevRoute || closeRoute, {
+    history.push(prevRoute || setCloseRoute, {
       fromModal: true
     });
   };
@@ -117,14 +121,16 @@ const SolutionDetailsModal = ({
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
         overlayClassName={
-          milestoneParam && solutionParam ? 'bg-transparent' : ''
+          (milestoneParam && solutionParam) || selectSolutions
+            ? 'bg-transparent'
+            : ''
         }
       >
         <Header solution={solution} />
 
         {isMobile && (
           <MobileNav
-            subComponents={subComponents(solution, location, closeRoute)}
+            subComponents={subComponents(solution, location, setCloseRoute)}
             subinfo={section}
             isHelpArticle
             solutionDetailRoute={prevRoute}
@@ -140,7 +146,7 @@ const SolutionDetailsModal = ({
                     subComponents={subComponents(
                       solution,
                       location,
-                      closeRoute
+                      setCloseRoute
                     )}
                     isHelpArticle
                     solutionNavigation
@@ -148,7 +154,7 @@ const SolutionDetailsModal = ({
                   />
                 </div>
 
-                <Contact contact={primaryContact} closeRoute={closeRoute} />
+                <Contact contact={primaryContact} closeRoute={setCloseRoute} />
 
                 <Alert type="info" noIcon lessPadding className="margin-top-5">
                   {t('itLeadInfo')}
@@ -161,7 +167,7 @@ const SolutionDetailsModal = ({
               className="padding-bottom-4 border-bottom-1px border-base-light desktop:border-bottom-0"
             >
               {
-                subComponents(solution, location, closeRoute)[section]
+                subComponents(solution, location, setCloseRoute)[section]
                   ?.component
               }
             </Grid>

@@ -48,4 +48,9 @@
         background-color: color('warning-lighter') !important;
         color: color('warning-darker') !important;
     }
+
+    &__selected-shadow {
+        border: 2px solid color($theme-color-primary-light) !important;
+        box-shadow: 0px 4px 15px rgba(115, 179, 231, 0.75) !important;
+    }
 }

@@ -368,7 +368,30 @@ export const modelToOperationsMisc: Record<string, any> = {
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
-      }
+      },
+      selectedSolutions: 'Selected solutions',
+      selectedSolutionsCount:
+        '{{count}} solutions associated with this milestone',
+      selectedSolutionsCount_other:
+        '{{count}} solution associated with this milestone',
+      editSolutions: 'Edit solutions',
+      noSolutions:
+        'You haven’t selected any solutions or IT systems to implement this milestone.',
+      solution: 'Solution',
+      status: 'Status',
+      selectedSolutionCount_other: '{{count}} selected solutions',
+      selectedSolutionCount: '{{count}} selected solution',
+      suggestedSolutions: 'Suggested solutions',
+      selectedSolutionsDescription:
+        'These solutions are commonly used for this milestone.',
+      selectThisSolution: 'Select this solution',
+      availableSolutionsDescription:
+        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
+      visitSolutionLibrary:
+        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
+      customSolution: 'Custom solutions added to this MTO',
+      otherSolutions: 'Other available solutions',
+      backToMilestone: 'Back to milestone details'
     },
     solution: {
       title: 'Add a new solution',

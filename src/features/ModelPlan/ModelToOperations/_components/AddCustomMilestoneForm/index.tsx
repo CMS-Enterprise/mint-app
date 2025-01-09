@@ -276,7 +276,7 @@ const ModelMilestoneForm = () => {
           />
         </Alert>
         <Button type="submit" disabled={!isValid} className="margin-right-3">
-          {t('modal.addButton', { type: 'category' })}
+          {t('modal.addButton', { type: 'milestone' })}
         </Button>
         <Button
           type="button"

@@ -24,10 +24,10 @@ import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
 import MTOModal from '../_components/FormModal';
+import MTOTable, { isMatrixStartedFc } from '../_components/MatrixTable';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import SuggestedMilestoneBanner from '../_components/SuggestedMilestoneBanner';
-import MTOTable, { isMatrixStartedFc } from '../_components/Table';
 
 export type MTOOption = 'milestones' | 'solutions';
 
