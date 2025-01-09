@@ -1,25 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  Grid,
-  GridContainer,
-  Icon
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import {
-  HelpSolutionBaseType,
-  helpSolutions
-} from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { useHistory } from 'react-router-dom';
+import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
-import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
