@@ -129,9 +129,9 @@ const MilstoneCardGroup = ({
   // Query parameters
   const params = new URLSearchParams(history.location.search);
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
-  let viewParam: MilestoneViewType = 'suggested';
-
   const milestoneParam: string = params.get('milestone') || '';
+
+  let viewParam: MilestoneViewType = 'suggested';
 
   const [, setIsSidepanelOpen] = useState(false);
 

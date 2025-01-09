@@ -113,7 +113,25 @@ export const milestoneMock = [
               __typename: 'MtoSubcategory',
               id: '2'
             }
-          }
+          },
+          solutions: [
+            {
+              __typename: 'MtoSolution',
+              id: '1',
+              name: 'Solution 1',
+              key: MtoCommonSolutionKey.BCDA,
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
+              commonSolution: [
+                {
+                  __typename: 'MtoCommonSolution',
+                  name: 'common solution 1',
+                  key: MtoCommonSolutionKey.BCDA,
+                  isAdded: true
+                }
+              ]
+            }
+          ]
         }
       }
     }
