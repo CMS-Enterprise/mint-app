@@ -13,6 +13,7 @@ import AddTemplateModal from '../AddTemplateModal';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
 import MoveSubCategoryForm from '../MoveSubCategoryForm';
 import RemoveCategoryForm from '../RemoveCategoryForm';
+import SelectSolutionForm from '../SelectSolutionForm';
 
 export type MTOModalType =
   | 'category'
@@ -23,7 +24,8 @@ export type MTOModalType =
   | 'editCategoryTitle'
   | 'removeCategory'
   | 'removeSubcategory'
-  | 'addTemplate';
+  | 'addTemplate'
+  | 'selectSolution';
 
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
@@ -73,7 +75,6 @@ const MTOModal = () => {
 
       {errorMessageInModal}
 
-      {/* if type is category, then render CategoryForm */}
       {modalType === 'category' && <CustomCategoryForm />}
       {modalType === 'milestone' && <CustomMilestoneForm />}
       {modalType === 'solution' && <CustomSolutionForm />}
@@ -82,6 +83,7 @@ const MTOModal = () => {
       {(modalType === 'removeCategory' ||
         modalType === 'removeSubcategory') && <RemoveCategoryForm />}
       {modalType === 'addTemplate' && <AddTemplateModal />}
+      {modalType === 'selectSolution' && <SelectSolutionForm />}
     </Modal>
   );
 };
