@@ -391,11 +391,11 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 	}
 
 	if category.ParentID != nil {
-		subcategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
+		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
 		if err != nil {
 			return nil, nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
 		}
-		parentName = &subcategory.Name
+		parentName = &parentCategory.Name
 	}
 
 	metaNeed := models.NewTranslatedAuditMetaMTOCategory(0, parentName, category.ParentID)

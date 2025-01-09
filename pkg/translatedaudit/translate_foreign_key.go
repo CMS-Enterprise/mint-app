@@ -189,7 +189,22 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	if category == nil {
 		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
 	}
-	return category.Name, nil
+	// default to the name of the category
+	name := category.Name
+
+	// Check to see if this is a subCategory (has a parent), if so, just return the name of the parent as well
+	// ex ParentCategory (subCategory)
+	// get the Category
+	if category.ParentID != nil {
+		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
+		if err != nil {
+			return nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+		}
+		if parentCategory != nil {
+			name = parentCategory.Name + " (" + category.Name + ")"
+		}
+	}
+	return name, nil
 }
 func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
 	// cast interface to key
