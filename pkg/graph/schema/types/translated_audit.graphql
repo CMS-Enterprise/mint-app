@@ -122,6 +122,9 @@ type TranslatedAuditMetaDocumentSolutionLink {
 TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited
 """
 type TranslatedAuditMetaMTOCategory {
+    version: Int!
+    tableName: TableName!
+    
     isSubCategory: Boolean!
     parentCategoryID: UUID
     parentCategoryName: String
@@ -136,6 +139,9 @@ enum TranslatedAuditMetaDataType {
     OPERATIONAL_SOLUTION
     OPERATIONAL_SOLUTION_SUBTASK
     DOCUMENT_SOLUTION_LINK
+    MTO_CATEGORY
+    MTO_SOLUTION
+    MTO_MILESTONE
 }
 
 enum DatabaseOperation {

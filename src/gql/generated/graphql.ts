@@ -4436,6 +4436,9 @@ export enum TranslatedAuditMetaDataType {
   DISCUSSION_REPLY = 'DISCUSSION_REPLY',
   DOCUMENT_SOLUTION_LINK = 'DOCUMENT_SOLUTION_LINK',
   GENERIC = 'GENERIC',
+  MTO_CATEGORY = 'MTO_CATEGORY',
+  MTO_MILESTONE = 'MTO_MILESTONE',
+  MTO_SOLUTION = 'MTO_SOLUTION',
   OPERATIONAL_NEED = 'OPERATIONAL_NEED',
   OPERATIONAL_SOLUTION = 'OPERATIONAL_SOLUTION',
   OPERATIONAL_SOLUTION_SUBTASK = 'OPERATIONAL_SOLUTION_SUBTASK'
@@ -4491,6 +4494,8 @@ export type TranslatedAuditMetaMtoCategory = {
   isSubCategory: Scalars['Boolean']['output'];
   parentCategoryID?: Maybe<Scalars['UUID']['output']>;
   parentCategoryName?: Maybe<Scalars['String']['output']>;
+  tableName: TableName;
+  version: Scalars['Int']['output'];
 };
 
 /** TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for an operational need */
