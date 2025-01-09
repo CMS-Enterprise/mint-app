@@ -335,7 +335,7 @@ const ActionMenu = ({
         className="margin-right-2"
         onClick={() => {
           params.set('edit-milestone', milestoneID);
-          history.replace({ search: params.toString() });
+          history.push({ search: params.toString() });
           setIsModalOpen(true);
         }}
       >
