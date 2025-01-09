@@ -188,6 +188,7 @@ const EditMilestoneForm = ({
     [allSolutions]
   );
 
+  // Checks to see if a solution is a custom solution by its ID
   const isCustomSolution = useCallback(
     (id: string) => {
       return combinedSolutions.find(solution => solution.id === id);
@@ -386,6 +387,7 @@ const EditMilestoneForm = ({
     formValues.facilitatedBy.length
   ]);
 
+  // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
   useEffect(() => {
     const solutionIDDifferenceCount = symmetricDifference(
       solutionIDs,

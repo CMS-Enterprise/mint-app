@@ -92,8 +92,10 @@ const LinkSolutionForm = ({
     }
   ];
 
+  // Initial values for multiselect form component
   const initialValues = [...commonSolutionKeys, ...solutionIDs];
 
+  // Checks to see if a solution is a custom solution by its ID
   const isCustomSolution = useCallback(
     (id: string) => {
       return createdSolutions.find(solution => solution.id === id);
@@ -101,6 +103,7 @@ const LinkSolutionForm = ({
     [createdSolutions]
   );
 
+  // Checks if the solution should be rendered in the SolutionCard component
   const isSuggestedSolution = useCallback(
     (key: string) => {
       return mappedSolutionKeys.find(k => k === key);
@@ -111,6 +114,7 @@ const LinkSolutionForm = ({
   const [selectedSolutions, setSelectedSolutions] =
     useState<string[]>(initialValues);
 
+  // onChange handler for the SolutionCard component
   const setChecked = (key: MtoCommonSolutionKey) => {
     if (commonSolutionKeys.includes(key)) {
       setCommonSolutionKeys(commonSolutionKeys.filter(k => k !== key));
@@ -119,6 +123,7 @@ const LinkSolutionForm = ({
     }
   };
 
+  // Sets the solution IDs and common solution keys when the selectedSolutions state changes
   useEffect(() => {
     const custom: string[] = [];
     const common: MtoCommonSolutionKey[] = [];
