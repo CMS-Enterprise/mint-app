@@ -242,7 +242,7 @@ export const columns: ColumnType[] = [
       if (row.solutions.length === 0)
         return (
           <UswdsReactLink to="#">
-            Select a solution{' '}
+            {i18next.t('modelToOperationsMisc:table.selectASolution')}
             <Icon.ArrowForward className="top-05 margin-left-05" />
           </UswdsReactLink>
         );

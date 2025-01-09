@@ -230,6 +230,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     noneAdded: 'None added yet',
     editDetails: 'Edit details',
     milestones: 'milestones',
+    selectASolution: 'Select a solution',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',
