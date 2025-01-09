@@ -138,7 +138,7 @@ exports[`Custom Milestone form > matches snapshot 1`] = `
       disabled=""
       type="submit"
     >
-      Add category
+      Add milestone
     </button>
     <button
       class="usa-button usa-button usa-button--unstyled"
