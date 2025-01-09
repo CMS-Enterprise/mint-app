@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
@@ -226,6 +227,9 @@ const MTOTable = ({
     subCategoryID?: string;
     categoryIndex?: number;
   }) => {
+    const { clearMessage } = useMessage();
+    const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
+
     return (
       <>
         {columns.map((column, index) => {
@@ -329,6 +333,9 @@ const MTOTable = ({
                       row={row}
                       rowType={rowType}
                       expanded={expanded}
+                      clearMessage={clearMessage}
+                      setMTOModalOpen={setMTOModalOpen}
+                      setMTOModalState={setMTOModalState}
                     />
                   ) : (
                     row[column.accessor as keyof MilestoneType]

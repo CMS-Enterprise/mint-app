@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import {
   MtoCommonMilestoneKey,
   MtoFacilitator,
@@ -9,6 +9,7 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { MTOModalState } from 'contexts/MTOModalContext';
 import { formatDateUtc } from 'utils/date';
 
 import MilestoneStatusTag from '../MTOStatusTag';
@@ -87,6 +88,12 @@ type RowProps = {
   expanded?: boolean;
 };
 
+type ExtendedRowProps = RowProps & {
+  clearMessage?: () => void;
+  setMTOModalOpen?: (open: boolean) => void;
+  setMTOModalState?: (state: Partial<MTOModalState>) => void;
+};
+
 export type ColumnType = {
   Header: string | React.ReactNode;
   accessor: string;
@@ -97,7 +104,7 @@ export type ColumnType = {
     direction: 'ASC' | 'DESC',
     accessor: keyof MilestoneType
   ) => CategoryType[];
-  Cell?: (cellRow: RowProps) => JSX.Element;
+  Cell?: (cellRow: RowProps | ExtendedRowProps) => JSX.Element;
 };
 
 const sortNested = (
@@ -237,14 +244,37 @@ export const columns: ColumnType[] = [
       });
       return copyData;
     },
-    Cell: ({ row, rowType, expanded }: RowProps) => {
+    Cell: ({
+      row,
+      rowType,
+      expanded,
+      clearMessage,
+      setMTOModalOpen,
+      setMTOModalState
+    }: ExtendedRowProps) => {
       if (rowType !== 'milestone') return <></>;
       if (row.solutions.length === 0)
         return (
-          <UswdsReactLink to="#">
-            {i18next.t('modelToOperationsMisc:table.selectASolution')}
-            <Icon.ArrowForward className="top-05 margin-left-05" />
-          </UswdsReactLink>
+          <>
+            <UswdsReactLink to="#">
+              {i18next.t('modelToOperationsMisc:table.selectASolution')}
+              <Icon.ArrowForward className="top-05 margin-left-05" />
+            </UswdsReactLink>
+            <Button
+              type="button"
+              className="display-block"
+              unstyled
+              onClick={() => {
+                if (clearMessage) clearMessage();
+                if (setMTOModalState)
+                  setMTOModalState({ modalType: 'selectSolution' });
+                if (setMTOModalOpen) setMTOModalOpen(true);
+              }}
+            >
+              {i18next.t('modelToOperationsMisc:table.selectASolution')}
+              <Icon.ArrowForward className="top-05 margin-left-05" />
+            </Button>
+          </>
         );
 
       return <>{row.solutions.join(', ')}</>;
