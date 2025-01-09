@@ -140,8 +140,6 @@ enum TranslatedAuditMetaDataType {
     OPERATIONAL_SOLUTION_SUBTASK
     DOCUMENT_SOLUTION_LINK
     MTO_CATEGORY
-    MTO_SOLUTION
-    MTO_MILESTONE
 }
 
 enum DatabaseOperation {
