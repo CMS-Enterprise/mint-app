@@ -8,7 +8,6 @@ import {
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import { MTOModalState } from 'contexts/MTOModalContext';
 import { formatDateUtc } from 'utils/date';
 
@@ -256,10 +255,6 @@ export const columns: ColumnType[] = [
       if (row.solutions.length === 0)
         return (
           <>
-            <UswdsReactLink to="#">
-              {i18next.t('modelToOperationsMisc:table.selectASolution')}
-              <Icon.ArrowForward className="top-05 margin-left-05" />
-            </UswdsReactLink>
             <Button
               type="button"
               className="display-block"
