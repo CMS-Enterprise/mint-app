@@ -6,7 +6,7 @@ import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import CategoryForm from './index';
+import CustomCategoryForm from './index';
 
 describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
@@ -18,7 +18,7 @@ describe('Custom Catergory form', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/">
-              <CategoryForm />
+              <CustomCategoryForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
