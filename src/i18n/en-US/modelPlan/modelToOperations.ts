@@ -426,6 +426,24 @@ export const modelToOperationsMisc: Record<string, any> = {
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
     },
+    selectSolution: {
+      title: 'Add a solution for this milestone?',
+      description:
+        'Any added solutions will be associated with this milestone and will also appear in the solution view of your MTO.',
+      label: 'Solution',
+      helperText:
+        'Select from all operational solutions and IT systems included in MINT. Select all that apply. You may learn more about any non-custom operational solutions by visiting MINT’s <rl>solution library</rl> or <el>help center.</el>',
+      cta: {
+        disabled: 'Add solutions',
+        add: 'Add {{count}} solution',
+        add_other: 'Add {{count}} solutions'
+      },
+      alert: {
+        success: 'Your solution(s) have been added.',
+        error:
+          'There was an error adding your solution(s). Please try again. If the error persists, please try again another time.'
+      }
+    },
     moveSubCategory: {
       title: 'Move sub-category to a new category',
       description:

@@ -272,6 +272,7 @@ export const columns: ColumnType[] = [
           </>
         );
 
+      // TODO: this is not working
       return <>{row.solutions.join(', ')}</>;
     }
   },
