@@ -12,10 +12,7 @@ import './index.scss';
 
 const ModelToOperations = () => {
   return (
-    <MainContent
-      className="grid-container mint-body-normal"
-      data-testid="model-to-operations"
-    >
+    <MainContent className="mint-body-normal" data-testid="model-to-operations">
       <Switch>
         <ProtectedRoute
           path="/models/:modelID/collaboration-area/model-to-operations/matrix"

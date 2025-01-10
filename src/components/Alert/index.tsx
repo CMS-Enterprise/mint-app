@@ -81,7 +81,7 @@ export const Alert = ({
             <Button
               type="button"
               role="button"
-              className="usa-button usa-button--unstyled text-no-underline text-black flex-align-start"
+              className="usa-button usa-button--unstyled text-no-underline text-black flex-align-start margin-top-05"
               tabIndex={0}
               aria-label="Close Button"
               onClick={() => {

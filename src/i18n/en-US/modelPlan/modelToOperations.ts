@@ -183,6 +183,16 @@ export const modelToOperationsMisc: Record<string, any> = {
   successReorder: 'Your categories have been reordered.',
   errorReorderForm:
     'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
+  suggestedMilestoneBanner: {
+    empty:
+      "There aren't currently any suggested milestones for your model. MINT may suggest model milestones as you and your team fill out more of your <s>Model Plan</s>.",
+    notEmpty_part1: {
+      output: 'There is {{count}} suggested milestone ',
+      output_other: 'There are {{count}} suggested milestones '
+    },
+    notEmpty_part2:
+      'for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>'
+  },
   optionsCard: {
     milestones: {
       label: 'Milestones',
@@ -358,7 +368,30 @@ export const modelToOperationsMisc: Record<string, any> = {
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
-      }
+      },
+      selectedSolutions: 'Selected solutions',
+      selectedSolutionsCount:
+        '{{count}} solutions associated with this milestone',
+      selectedSolutionsCount_other:
+        '{{count}} solution associated with this milestone',
+      editSolutions: 'Edit solutions',
+      noSolutions:
+        'You haven’t selected any solutions or IT systems to implement this milestone.',
+      solution: 'Solution',
+      status: 'Status',
+      selectedSolutionCount_other: '{{count}} selected solutions',
+      selectedSolutionCount: '{{count}} selected solution',
+      suggestedSolutions: 'Suggested solutions',
+      selectedSolutionsDescription:
+        'These solutions are commonly used for this milestone.',
+      selectThisSolution: 'Select this solution',
+      availableSolutionsDescription:
+        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
+      visitSolutionLibrary:
+        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
+      customSolution: 'Custom solutions added to this MTO',
+      otherSolutions: 'Other available solutions',
+      backToMilestone: 'Back to milestone details'
     },
     solution: {
       title: 'Add a new solution',

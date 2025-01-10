@@ -35,6 +35,10 @@ export default gql(/* GraphQL */ `
         milestones {
           id
         }
+        commonMilestones {
+          isSuggested
+          isAdded
+        }
         recentEdit {
           id: modifiedBy
           modifiedByUserAccount {

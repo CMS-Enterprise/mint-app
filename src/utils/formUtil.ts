@@ -22,6 +22,24 @@ export function onChangeCheckboxHandler<T>(
   }
 }
 
+export const symmetricDifference = (
+  a1: (string | number)[],
+  a2: (string | number)[]
+) => {
+  const result = [];
+  for (let i = 0; i < a1.length; i += 1) {
+    if (a2.indexOf(a1[i]) === -1) {
+      result.push(a1[i]);
+    }
+  }
+  for (let i = 0; i < a2.length; i += 1) {
+    if (a1.indexOf(a2[i]) === -1) {
+      result.push(a2[i]);
+    }
+  }
+  return result;
+};
+
 type DirtyInputType = {
   [key: string]: any;
 };

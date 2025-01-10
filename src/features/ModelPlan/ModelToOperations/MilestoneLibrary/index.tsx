@@ -6,6 +6,7 @@ import {
   ButtonGroup,
   CardGroup,
   Grid,
+  GridContainer,
   Icon,
   Link
 } from '@trussworks/react-uswds';
@@ -60,7 +61,7 @@ const MilestoneLibrary = () => {
   }
 
   return (
-    <>
+    <GridContainer>
       <Breadcrumbs
         items={[
           BreadcrumbItemOptions.HOME,
@@ -95,7 +96,7 @@ const MilestoneLibrary = () => {
       ) : (
         <MilstoneCardGroup milestones={milestones} />
       )}
-    </>
+    </GridContainer>
   );
 };
 
@@ -128,9 +129,9 @@ const MilstoneCardGroup = ({
   // Query parameters
   const params = new URLSearchParams(history.location.search);
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
-  let viewParam: MilestoneViewType = 'suggested';
-
   const milestoneParam: string = params.get('milestone') || '';
+
+  let viewParam: MilestoneViewType = 'suggested';
 
   const [, setIsSidepanelOpen] = useState(false);
 
