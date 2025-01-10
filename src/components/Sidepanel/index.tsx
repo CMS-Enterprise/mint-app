@@ -17,6 +17,8 @@ type SidepanelProps = {
   openModal?: () => void;
   testid: string;
   noScrollable?: boolean;
+  showScroll?: boolean;
+  backButton?: boolean;
 };
 
 const Sidepanel = ({
@@ -29,7 +31,9 @@ const Sidepanel = ({
   modalHeading,
   openModal,
   testid,
-  noScrollable
+  noScrollable,
+  showScroll,
+  backButton
 }: SidepanelProps) => {
   const handleOpenModal = () => {
     noScroll.on();
@@ -42,7 +46,11 @@ const Sidepanel = ({
     <ReactModal
       isOpen={isOpen}
       overlayClassName={classNames(
-        'mint-sidepanel__overlay overflow-y-auto',
+        'mint-sidepanel__overlay',
+        {
+          'overflow-y-auto': !showScroll,
+          'overflow-y-scroll': showScroll
+        },
         overlayClassName
       )}
       className={classNames('mint-sidepanel__content', classname)}
@@ -66,7 +74,11 @@ const Sidepanel = ({
             aria-label="Close Modal"
             onClick={closeModal}
           >
-            <Icon.Close size={4} className="text-base" />
+            {backButton ? (
+              <Icon.ArrowBack size={4} className="text-base" />
+            ) : (
+              <Icon.Close size={4} className="text-base" />
+            )}
           </button>
           <h4 className="margin-0">{modalHeading}</h4>
         </div>

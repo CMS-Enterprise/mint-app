@@ -31,6 +31,13 @@
   width: 100%;
 }
 
+.usa-pagination__previous-page {
+  border: none;
+  background-color: transparent;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
 .mint-textarea {
   min-height: 2.5rem !important;
   resize: both !important;
@@ -307,5 +314,12 @@
     background-color: #fff;
     z-index: 1;
     line-height: 1.6em;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
   }
+
+ 
 }

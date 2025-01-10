@@ -497,6 +497,56 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                 </label>
               </div>
             </div>
+            <div
+              class="border-top-1px border-base-lighter padding-y-4"
+            >
+              <h3
+                class="margin-0 margin-bottom-1"
+              >
+                Selected solutions
+              </h3>
+              <p
+                class="margin-0 margin-bottom-1"
+              >
+                0 solution associated with this milestone
+              </p>
+              <button
+                class="usa-button usa-button--unstyled margin-0 display-flex"
+                data-testid="button"
+                type="button"
+              >
+                Edit solutions
+                <svg
+                  class="usa-icon top-2px"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </button>
+              <div
+                class="usa-alert usa-alert--info usa-alert--slim flex"
+                data-testid="alert"
+              >
+                <div
+                  class="usa-alert__body"
+                >
+                  <p
+                    class="usa-alert__text"
+                  >
+                    <span>
+                      You haven’t selected any solutions or IT systems to implement this milestone.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </fieldset>
           <div
             class="border-top-1px border-base-lighter padding-y-4"

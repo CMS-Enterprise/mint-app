@@ -1,50 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MTO SolutionCard Component > renders correctly and matches snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="desktop:grid-col-9 display-flex"
-    data-testid="grid"
-  >
-    <li
-      class="usa-card width-full"
-      data-testid="Card"
-    >
-      <div
-        class="usa-card__container padding-3 flex-justify radius-md shadow-2 margin-0"
-      >
-        <p
-          class="margin-top-0 margin-bottom-05 text-base-dark"
-        >
-          IT System
-        </p>
-        <h3
-          class="margin-0"
-        >
-          4innovation
-        </h3>
-        <p
-          class="margin-top-0"
-        >
-          4i
-        </p>
-        <div
-          class="border-top border-base-light padding-top-2"
-        >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
-          >
-            About this solution
-          </button>
-        </div>
-      </div>
-    </li>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
@@ -129,7 +84,7 @@ exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] =
             data-testid="Card"
           >
             <div
-              class="usa-card__container padding-3 flex-justify radius-md shadow-2 margin-0"
+              class="usa-card__container padding-3 flex-justify radius-md margin-0 shadow-2"
             >
               <p
                 class="margin-top-0 margin-bottom-05 text-base-dark"

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -36,10 +36,7 @@ const MilestoneCard = ({
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
-  const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history]
-  );
+  const params = new URLSearchParams(history.location.search);
 
   const milestoneParam = params.get('add-milestone');
 

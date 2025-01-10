@@ -12,6 +12,12 @@ export default gql(/* GraphQL */ `
       riskIndicator
       addedFromMilestoneLibrary
       isDraft
+      commonMilestone {
+        key
+        commonSolutions {
+          key
+        }
+      }
       categories {
         category {
           id
@@ -20,11 +26,18 @@ export default gql(/* GraphQL */ `
           id
         }
       }
-      # solutions {
-      #   id
-      #   name
-      #   key
-      # }
+      solutions {
+        id
+        name
+        key
+        status
+        riskIndicator
+        commonSolution {
+          name
+          key
+          isAdded
+        }
+      }
     }
   }
 `);
