@@ -390,6 +390,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
       visitSolutionLibrary:
         'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
+      suggestedSolution: 'Suggested solutions for this milestone',
       customSolution: 'Custom solutions added to this MTO',
       otherSolutions: 'Other available solutions',
       backToMilestone: 'Back to milestone details'
