@@ -433,7 +433,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Any added solutions will be associated with this milestone and will also appear in the solution view of your MTO.',
       label: 'Solution',
       helperText:
-        'Select from all operational solutions and IT systems included in MINT. Select all that apply. You may learn more about any non-custom operational solutions by visiting MINT’s <rl>solution library</rl> or <el>help center.</el>',
+        'Select from all operational solutions and IT systems included in MINT. Select all that apply. You may learn more about any non-custom operational solutions by visiting MINT’s <solution>solution library</solution> or <help>help center.</help>',
       cta: {
         disabled: 'Add solutions',
         add: 'Add {{count}} solution',

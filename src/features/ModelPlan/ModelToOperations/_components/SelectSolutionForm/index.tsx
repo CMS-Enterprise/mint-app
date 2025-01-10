@@ -26,21 +26,18 @@ import {
   MtoCommonSolutionKey,
   useCreateMtoMilestoneMutation,
   useGetMtoAllSolutionsQuery,
-  useGetMtoMilestoneQuery,
-  useGetMtoMilestonesQuery
+  useGetMtoMilestoneQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import ExternalLink from 'components/ExternalLink';
 import HelpText from 'components/HelpText';
+import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import {
-  composeMultiSelectOptions,
-  convertCamelCaseToKebabCase
-} from 'utils/modelPlan';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 
@@ -285,7 +282,28 @@ const SelectSolutionForm = () => {
                   </Label>
 
                   <HelpText className="margin-top-1">
-                    {commonSolutionsConfig.sublabel}
+                    <Trans
+                      i18nKey="modelToOperationsMisc:modal.selectSolution.helperText"
+                      components={{
+                        solution: (
+                          <UswdsReactLink
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                          >
+                            {' '}
+                          </UswdsReactLink>
+                        ),
+                        help: (
+                          <UswdsReactLink
+                            to="/help-and-knowledge/operational-solutions"
+                            variant="external"
+                            target="_blank"
+                            className="margin-top-0"
+                          >
+                            {' '}
+                          </UswdsReactLink>
+                        )
+                      }}
+                    />
                   </HelpText>
 
                   <MultiSelect
