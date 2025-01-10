@@ -262,7 +262,10 @@ export const columns: ColumnType[] = [
               onClick={() => {
                 if (clearMessage) clearMessage();
                 if (setMTOModalState)
-                  setMTOModalState({ modalType: 'selectSolution' });
+                  setMTOModalState({
+                    modalType: 'selectSolution',
+                    milestoneID: row.id
+                  });
                 if (setMTOModalOpen) setMTOModalOpen(true);
               }}
             >
