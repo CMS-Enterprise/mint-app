@@ -166,3 +166,24 @@ func MTOSolutionGetByMilestoneIDLoader(
 	}
 	return returned, nil
 }
+
+func MTOSolutionLinkMilestonesToSolutions(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	milestoneIDs []uuid.UUID,
+	solutionID uuid.UUID,
+	createBy uuid.UUID,
+) ([]*models.MTOMilestone, error) {
+	args := map[string]interface{}{
+		"milestone_ids": pq.Array(milestoneIDs),
+		"solution_id":   solutionID,
+		"created_by":    uuid.Nil,
+	}
+
+	linkedMilestones, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestoneSolutionLink.LinkMilestonesToSolution, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue linking milestones to solutions: %w", err)
+	}
+
+	return linkedMilestones, nil
+}

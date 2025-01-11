@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -27,6 +29,7 @@ func MTOSolutionUpdate(
 	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
+	milestoneLinks *model.MTOMilestoneLinks,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -49,7 +52,31 @@ func MTOSolutionUpdate(
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOSolutionUpdate(store, logger, existing)
+
+	// return storage.MTOSolutionUpdate(store, logger, existing)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		updatedSolution, err := storage.MTOSolutionUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update solution: %w", err)
+		}
+
+		// Update linked milestones
+		if milestoneLinks.MilestoneIDs != nil {
+			_, err := MTOSolutionUpdateLinkedMilestonesWithTX(
+				principal,
+				logger,
+				tx,
+				updatedSolution.ID,
+				*milestoneLinks,
+			)
+			if err != nil {
+				return nil, fmt.Errorf("failed to update linked milestones: %w", err)
+			}
+		}
+
+		return updatedSolution, nil
+	})
 }
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
@@ -176,4 +203,60 @@ func MTOSolutionGetByMilestoneIDLOADER(
 	milestoneID uuid.UUID,
 ) ([]*models.MTOSolution, error) {
 	return loaders.MTOSolution.ByMilestoneID.Load(ctx, milestoneID)
+}
+
+// MTOSolutionUpdateLinkedMilestonesWithTX updates the linked milestones for a solution, deleting ones that are not included in the list
+func MTOSolutionUpdateLinkedMilestonesWithTX(
+	principal authentication.Principal,
+	logger *zap.Logger,
+	tx *sqlx.Tx,
+	solutionID uuid.UUID,
+	milestoneLinks model.MTOMilestoneLinks,
+) ([]*models.MTOMilestone, error) {
+
+	// Link milestones to the solution, removing any that are not in the joined list
+	currentLinkedMilestones, err := storage.MTOSolutionLinkMilestonesToSolutions(
+		tx,
+		logger,
+		milestoneLinks.MilestoneIDs,
+		solutionID,
+		principal.Account().ID,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return currentLinkedMilestones, nil
+}
+
+// MTOSolutionUpdateLinkedMilestones is a convenience wrapper around MTOSolutionUpdateLinkedMilestonesWithTX
+// it initiates the transaction, then calls MTOSolutionUpdateLinkedMilestonesWithTX
+func MTOSolutionUpdateLinkedMilestones(
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+	id uuid.UUID,
+	milestoneLinks model.MTOMilestoneLinks,
+) ([]*models.MTOMilestone, error) {
+	// Initiate transaction
+	var retMilestones []*models.MTOMilestone
+	err := sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		currentLinkedMilestones, err := MTOSolutionUpdateLinkedMilestonesWithTX(
+			principal,
+			logger,
+			tx,
+			id,
+			milestoneLinks,
+		)
+		if err != nil {
+			return err
+		}
+		retMilestones = currentLinkedMilestones
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return retMilestones, nil
 }

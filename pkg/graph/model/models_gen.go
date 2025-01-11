@@ -72,6 +72,11 @@ type MTOInfoTranslation struct {
 	ReadyForReviewDts models.TranslationField `json:"readyForReviewDTS" db:"ready_for_review_dts"`
 }
 
+type MTOMilestoneLinks struct {
+	MilestoneIDs        []uuid.UUID                    `json:"milestoneIDs,omitempty"`
+	CommonMilestoneKeys []models.MTOCommonMilestoneKey `json:"commonMilestoneKeys,omitempty"`
+}
+
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
 	Name            models.TranslationField            `json:"name" db:"name"`

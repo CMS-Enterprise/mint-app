@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -70,11 +71,19 @@ func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPla
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.
-func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOSolution, error) {
+func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}, milestoneLinks *model.MTOMilestoneLinks) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return MTOSolutionUpdate(ctx, logger, principal, r.store, id, changes)
+	return MTOSolutionUpdate(ctx, logger, principal, r.store, id, changes, milestoneLinks)
+}
+
+// MtoSolutionUpdateLinkedMilestones is the resolver for the mtoSolutionUpdateLinkedMilestones field.
+func (r *mutationResolver) MtoSolutionUpdateLinkedMilestones(ctx context.Context, id uuid.UUID, milestoneLinks model.MTOMilestoneLinks) ([]*models.MTOMilestone, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return MTOSolutionUpdateLinkedMilestones(logger, r.store, principal, id, milestoneLinks)
 }
 
 // MTOSolution returns generated.MTOSolutionResolver implementation.
