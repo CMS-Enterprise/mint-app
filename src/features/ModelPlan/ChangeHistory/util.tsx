@@ -57,6 +57,14 @@ export type TranslationTables =
   | TableName.PLAN_DATA_EXCHANGE_APPROACH
   | TableName.PLAN_DISCUSSION
   | TableName.DISCUSSION_REPLY
+  | TableName.MTO_CATEGORY
+  | TableName.MTO_COMMON_MILESTONE
+  | TableName.MTO_COMMON_SOLUTION
+  | TableName.MTO_COMMON_SOLUTION_CONTACT
+  | TableName.MTO_INFO
+  | TableName.MTO_MILESTONE
+  | TableName.MTO_MILESTONE_SOLUTION_LINK
+  | TableName.MTO_SOLUTION
   | TableName.PLAN_DOCUMENT
   | TableName.PLAN_CR
   | TableName.PLAN_TDL
