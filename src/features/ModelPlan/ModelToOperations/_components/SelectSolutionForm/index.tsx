@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import {
   Controller,
   FormProvider,
@@ -33,7 +33,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
-  commonSolutions: MtoCommonSolutionKey[] | undefined;
+  linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
 };
 
 const SelectSolutionForm = () => {
@@ -81,7 +81,6 @@ const SelectSolutionForm = () => {
       }) || [],
     [milestone?.commonMilestone]
   );
-  console.log(mappedSolutions);
 
   const mappedSolutionKeys = mappedSolutions.map(solution => solution?.enum);
 
@@ -91,8 +90,13 @@ const SelectSolutionForm = () => {
       solution => !mappedSolutionKeys.includes(solution.key)
     ) || [];
 
-  const createdSolutions =
-    allSolutions?.solutions?.filter(solution => !solution.key) || [];
+  const createdSolutions = useMemo(() => {
+    return allSolutions?.solutions?.filter(solution => !solution.key) || [];
+  }, [allSolutions]);
+
+  const initialValues = milestone?.solutions.map(solution =>
+    solution.key !== null ? solution.key : solution.id
+  );
 
   const groupedOptions = [
     {
@@ -126,7 +130,7 @@ const SelectSolutionForm = () => {
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      commonSolutions: []
+      linkedSolutions: initialValues
     },
     mode: 'onBlur'
   });
@@ -150,16 +154,34 @@ const SelectSolutionForm = () => {
     ]
   });
 
+  // Checks to see if a solution is a custom solution by its ID
+  const isCustomSolution = useCallback(
+    (id: string) => {
+      return createdSolutions.find(solution => solution.id === id);
+    },
+    [createdSolutions]
+  );
+
   const onSubmit: SubmitHandler<FormValues> = formData => {
     if (!milestoneID) return;
+
+    const custom: string[] = [];
+    const common: MtoCommonSolutionKey[] = [];
+
+    formData.linkedSolutions?.forEach(solution => {
+      if (isCustomSolution(solution)) {
+        custom.push(solution);
+      } else {
+        common.push(solution as MtoCommonSolutionKey);
+      }
+    });
 
     update({
       variables: {
         id: milestoneID,
         solutionLinks: {
-          // TODO: Add the correct values here
-          // commonSolutionKeys,
-          // solutionIDs
+          commonSolutionKeys: common,
+          solutionIDs: custom
         }
       }
     })
@@ -211,12 +233,12 @@ const SelectSolutionForm = () => {
         >
           <Fieldset>
             <Controller
-              name="commonSolutions"
+              name="linkedSolutions"
               control={control}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-0">
                   <Label
-                    htmlFor={convertCamelCaseToKebabCase('commonSolutions')}
+                    htmlFor={convertCamelCaseToKebabCase('linkedSolutions')}
                     requiredMarker
                   >
                     {commonSolutionsConfig.label}
@@ -256,8 +278,9 @@ const SelectSolutionForm = () => {
                     options={[]}
                     groupedOptions={groupedOptions}
                     selectedLabel={commonSolutionsConfig.multiSelectLabel || ''}
-                    initialValues={watch('commonSolutions')}
-                    onChange={values => console.log(values)}
+                    // This probably needs to change
+                    initialValues={watch('linkedSolutions')}
+                    // onChange={values => console.log(values)}
                   />
                 </FormGroup>
               )}
@@ -265,8 +288,10 @@ const SelectSolutionForm = () => {
           </Fieldset>
 
           <Button type="submit" disabled={!isValid} className="margin-right-3">
+            {/* {linkedSolutions.length > 0 ? () : ()} */}
+
             {t('modal.selectSolution.cta.add', {
-              count: watch('commonSolutions')?.length || 0
+              count: watch('linkedSolutions')?.length || 0
             })}
           </Button>
 
