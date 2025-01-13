@@ -5700,6 +5700,14 @@ export type UpdateMtoMilestoneMutationVariables = Exact<{
 
 export type UpdateMtoMilestoneMutation = { __typename: 'Mutation', updateMTOMilestone: { __typename: 'MTOMilestone', id: UUID } };
 
+export type UpdateMtoMilestoneLinkedSolutionsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
+}>;
+
+
+export type UpdateMtoMilestoneLinkedSolutionsMutation = { __typename: 'Mutation', mtoMilestoneUpdateLinkedSolutions?: Array<{ __typename: 'MTOSolution', id: UUID }> | null };
+
 export type UpdateMtoReadyForReviewMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
   readyForReview: Scalars['Boolean']['input'];
@@ -12110,6 +12118,40 @@ export function useUpdateMtoMilestoneMutation(baseOptions?: Apollo.MutationHookO
 export type UpdateMtoMilestoneMutationHookResult = ReturnType<typeof useUpdateMtoMilestoneMutation>;
 export type UpdateMtoMilestoneMutationResult = Apollo.MutationResult<UpdateMtoMilestoneMutation>;
 export type UpdateMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+export const UpdateMtoMilestoneLinkedSolutionsDocument = gql`
+    mutation UpdateMTOMilestoneLinkedSolutions($id: UUID!, $solutionLinks: MTOSolutionLinks!) {
+  mtoMilestoneUpdateLinkedSolutions(id: $id, solutionLinks: $solutionLinks) {
+    id
+  }
+}
+    `;
+export type UpdateMtoMilestoneLinkedSolutionsMutationFn = Apollo.MutationFunction<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+
+/**
+ * __useUpdateMtoMilestoneLinkedSolutionsMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoMilestoneLinkedSolutionsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoMilestoneLinkedSolutionsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoMilestoneLinkedSolutionsMutation, { data, loading, error }] = useUpdateMtoMilestoneLinkedSolutionsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      solutionLinks: // value for 'solutionLinks'
+ *   },
+ * });
+ */
+export function useUpdateMtoMilestoneLinkedSolutionsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>(UpdateMtoMilestoneLinkedSolutionsDocument, options);
+      }
+export type UpdateMtoMilestoneLinkedSolutionsMutationHookResult = ReturnType<typeof useUpdateMtoMilestoneLinkedSolutionsMutation>;
+export type UpdateMtoMilestoneLinkedSolutionsMutationResult = Apollo.MutationResult<UpdateMtoMilestoneLinkedSolutionsMutation>;
+export type UpdateMtoMilestoneLinkedSolutionsMutationOptions = Apollo.BaseMutationOptions<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
 export const UpdateMtoReadyForReviewDocument = gql`
     mutation UpdateMTOReadyForReview($modelPlanID: UUID!, $readyForReview: Boolean!) {
   markMTOReadyForReview(
@@ -15001,6 +15043,7 @@ export const TypedGetMilestoneSuggestedAnswerDocument = {"kind":"Document","defi
 export const TypedRenameMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RenameMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"renameMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
 export const TypedReorderMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ReorderMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newOrder"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reorderMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"newOrder"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newOrder"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
 export const TypedUpdateMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOMilestoneChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+export const TypedUpdateMtoMilestoneLinkedSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOMilestoneLinkedSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionLinks"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMilestoneUpdateLinkedSolutions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
 export const TypedUpdateMtoReadyForReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOReadyForReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readyForReview"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markMTOReadyForReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"readyForReview"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readyForReview"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
 export const TypedUpdateNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreeToNDA"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"agree"},"value":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedComplete"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedCompleteNotificationType"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
