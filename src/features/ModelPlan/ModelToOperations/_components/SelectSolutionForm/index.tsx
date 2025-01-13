@@ -277,11 +277,12 @@ const SelectSolutionForm = () => {
                 <FormGroup className="margin-0">
                   <Label
                     htmlFor={convertCamelCaseToKebabCase('commonSolutions')}
+                    requiredMarker
                   >
                     {commonSolutionsConfig.label}
                   </Label>
 
-                  <HelpText className="margin-top-1">
+                  <HelpText>
                     <Trans
                       i18nKey="modelToOperationsMisc:modal.selectSolution.helperText"
                       components={{
