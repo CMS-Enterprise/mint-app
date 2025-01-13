@@ -188,8 +188,6 @@ const EditMilestoneForm = ({
     [allSolutions]
   );
 
-  console.log(combinedSolutions);
-
   // Checks to see if a solution is a custom solution by its ID
   const isCustomSolution = useCallback(
     (id: string) => {
