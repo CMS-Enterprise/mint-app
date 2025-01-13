@@ -45,9 +45,11 @@ import {
   ModelViewFilter,
   MonitoringFileType,
   MtoCategoryTranslation,
+  MtoCommonSolutionContactTranslation,
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoInfoTranslation,
+  MtoMilestoneSolutionLinkTranslation,
   MtoMilestoneStatus,
   MtoMilestoneTranslation,
   MtoRiskIndicator,
@@ -1251,6 +1253,8 @@ export type TranslationMTOInfo = {
 // MTO Category - Change History purposes only
 export type TranslationMTOCategoryForm = {
   name: TranslationFieldProperties;
+  parentID: TranslationFieldProperties;
+  position: TranslationFieldProperties;
 };
 
 type TranslationMTOCategoryGQL = Omit<
@@ -1266,6 +1270,20 @@ export type TranslationMTOCategory = {
   [K in keyof TranslationMTOCategoryGQL]: TranslationMTOCategoryForm[K]; // FE form type
 };
 
+// MTO Milestone Solution Link - Change History purposes only
+export type TranslationMTOMilestoneSolutionLinkCustomForm = {
+  milestoneID: TranslationFieldProperties;
+  solutionID: TranslationFieldProperties;
+};
+type TranslationMTOMilestoneSolutionLinkCustomGQL = Omit<
+  MtoMilestoneSolutionLinkTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOMilestoneSolutionLinkCustom = {
+  [K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
+};
+
 // MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
@@ -1276,6 +1294,8 @@ export type TranslationMTOMilestoneCustomForm = {
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
   solutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
   status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
+  key: TranslationFieldProperties;
+  mtoCategoryID: TranslationFieldProperties;
 };
 
 type TranslationMTOMilestoneCustomGQL = Omit<
@@ -1297,7 +1317,11 @@ export type TranslationMTOSolutionCustomForm = {
   pocName: TranslationFieldProperties;
   pocEmail: TranslationFieldProperties;
   solutionType: TranslationFieldPropertiesWithOptions<MtoSolutionType>;
+  key: TranslationFieldProperties;
+  riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   status: TranslationFieldPropertiesWithOptions<MtoSolutionStatus>;
+  neededBy: TranslationFieldProperties;
+  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
 };
 
 type TranslationMTOSolutionCustomGQL = Omit<
@@ -1311,6 +1335,24 @@ type TranslationMTOSolutionCustomGQL = Omit<
 */
 export type TranslationMTOSolutionCustom = {
   [K in keyof TranslationMTOSolutionCustomGQL]: TranslationMTOSolutionCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution Contact - Change History purposes only
+export type TransltionMTOCommonSolutionContactCustomForm = {
+  key: TranslationFieldProperties;
+  name: TranslationFieldProperties;
+  email: TranslationFieldProperties;
+  isTeam: TranslationFieldProperties;
+  role: TranslationFieldProperties;
+  isPrimary: TranslationFieldProperties;
+};
+type TranslationMTOCommonSolutionContactCustomGQL = Omit<
+  MtoCommonSolutionContactTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionContactCustom = {
+  [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

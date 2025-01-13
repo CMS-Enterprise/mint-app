@@ -10,6 +10,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 //Future Enhancement: allow faktory workers to take a dataloader
@@ -43,6 +44,27 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getExistingModelForeignKeyReference(ctx, store, value)
 		}
+	// MTO
+	case models.TNMTOCategory:
+		{
+			return getMTOCategoryForeignKeyReference(ctx, store, value)
+		}
+	case models.TNMTOCommonMilestone:
+		{
+			return getMTOCommonMilestoneForeignKeyReference(ctx, store, value)
+		}
+	case models.TNMTOCommonSolution:
+		{
+			return getMTOCommonSolutionForeignKeyReference(ctx, store, value)
+		}
+	case models.TNMTOMilestone:
+		{
+			return getMTOMilestoneForeignKeyReference(ctx, store, value)
+		}
+	case models.TNMTOSolution:
+		{
+			return getMTOSolutionForeignKeyReference(ctx, store, value)
+		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
 	}
@@ -63,6 +85,19 @@ func getUserAccountForeignKeyTranslation(store *storage.Store, key interface{}) 
 	// can update the translation as needed.
 	return account.CommonName, nil
 
+}
+
+func parseInterfaceToEnum[E ~string](val interface{}) (E, error) {
+	enumKey, isEnum := val.(E)
+	if isEnum {
+		return enumKey, nil
+	}
+	stringKey, isString := val.(string)
+	if isString {
+		return E(stringKey), nil
+	}
+
+	return "", fmt.Errorf("there was an issue casting the provided value (%v) to Enum. It is of type %T", val, val)
 }
 
 // parseInterfaceToUUID is a utility value to try and cast an interface to a UUID
@@ -136,6 +171,113 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 		return *solution.NameOther, nil
 	}
 	return solution.ID.String(), nil
+}
+
+func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the mto category reference. err %w", err)
+	}
+
+	// get the Category
+	category, err := loaders.MTOCategory.ByID.Load(ctx, uuidKey)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+	}
+
+	if category == nil {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	}
+	// default to the name of the category
+	name := category.Name
+
+	// Check to see if this is a subCategory (has a parent), if so, just return the name of the parent as well
+	// ex ParentCategory (subCategory)
+	// get the Category
+	if category.ParentID != nil {
+		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
+		if err != nil {
+			return nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+		}
+		if parentCategory != nil {
+			name = parentCategory.Name + " (" + category.Name + ")"
+		}
+	}
+	return name, nil
+}
+func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to key
+	enumKey, err := parseInterfaceToEnum[models.MTOCommonMilestoneKey](key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a MTOCommonMilestoneKey to get the mto common milestone reference. err %w", err)
+	}
+
+	// get the common milestone
+	commonMilestone, err := loaders.MTOCommonMilestone.ByKey.Load(ctx, enumKey)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto common milestone foreign key reference. err %w", err)
+	}
+
+	if commonMilestone == nil {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
+	}
+	return commonMilestone.Name, nil
+}
+
+func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to UUID
+	enumKey, err := parseInterfaceToEnum[models.MTOCommonSolutionKey](key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a MTOCommonSolutionKey to get the mto common Solution reference. err %w", err)
+	}
+
+	// get the common Solution
+	commonSolution, err := loaders.MTOCommonSolution.ByKey.Load(ctx, enumKey)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto common Solution foreign key reference. err %w", err)
+	}
+
+	if commonSolution == nil {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
+	}
+	return commonSolution.Name, nil
+}
+func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to key
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
+	}
+
+	// get the  milestone
+	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, uuidKey)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto  milestone foreign key reference. err %w", err)
+	}
+
+	if milestone == nil {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	}
+	return milestone.Name, nil
+}
+
+func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
+	}
+	// get the  solution
+	solution, err := loaders.MTOSolution.ByID.Load(ctx, uuidKey)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the mto  Solution foreign key reference. err %w", err)
+	}
+
+	if solution == nil {
+		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	}
+	return solution.Name, nil
 }
 
 func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {

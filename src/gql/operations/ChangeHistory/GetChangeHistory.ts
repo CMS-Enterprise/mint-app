@@ -86,6 +86,13 @@ export default gql(/* GraphQL */ `
           documentURL
           documentID
         }
+        ... on TranslatedAuditMetaMTOCategory {
+          isSubCategory
+          parentCategoryID
+          parentCategoryName
+          tableName
+          version
+        }
       }
     }
   }

@@ -1,4 +1,3 @@
---TODO (mto) confirm these statuses, they could change
 
 CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
     'NOT_STARTED',
@@ -7,6 +6,7 @@ CREATE TYPE MTO_MILESTONE_STATUS AS ENUM (
 );
 COMMENT ON TYPE MTO_MILESTONE_STATUS IS 'Status of the milestone within the model to operation process';
 
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_milestone';
 
 CREATE TABLE mto_milestone (
     id UUID PRIMARY KEY,

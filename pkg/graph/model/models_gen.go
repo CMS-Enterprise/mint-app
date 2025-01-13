@@ -63,13 +63,31 @@ type LockableSectionLockStatusChanged struct {
 
 // Represents MTO Category translation data
 type MTOCategoryTranslation struct {
-	Name models.TranslationField `json:"name" db:"name"`
+	Name     models.TranslationField `json:"name" db:"name"`
+	Position models.TranslationField `json:"position" db:"position"`
+	ParentID models.TranslationField `json:"parentID" db:"parent_id"`
+}
+
+// Represents a translation of a contact for a common solution
+type MTOCommonSolutionContactTranslation struct {
+	Key       models.TranslationField `json:"key" db:"mto_common_solution_key"`
+	Name      models.TranslationField `json:"name" db:"name"`
+	Email     models.TranslationField `json:"email" db:"email"`
+	IsTeam    models.TranslationField `json:"isTeam" db:"is_team"`
+	Role      models.TranslationField `json:"role" db:"role"`
+	IsPrimary models.TranslationField `json:"isPrimary" db:"is_primary"`
 }
 
 // Represents mto info translation data
 type MTOInfoTranslation struct {
 	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts models.TranslationField `json:"readyForReviewDTS" db:"ready_for_review_dts"`
+}
+
+// Represents MTO Milestone Solution Link translation data
+type MTOMilestoneSolutionLinkTranslation struct {
+	MilestoneID models.TranslationField `json:"milestoneID" db:"milestone_id"`
+	SolutionID  models.TranslationField `json:"solutionID" db:"solution_id"`
 }
 
 // Represents MTO Custom Milestone translation data
@@ -82,6 +100,8 @@ type MTOMilestoneTranslation struct {
 	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
 	Solutions       models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
 	Status          models.TranslationFieldWithOptions `json:"status" db:"status"`
+	Key             models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCategoryID   models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
 }
 
 type MTOSolutionLinks struct {
@@ -91,11 +111,15 @@ type MTOSolutionLinks struct {
 
 // Represents MTO Custom Solution translation data
 type MTOSolutionTranslation struct {
-	Name         models.TranslationField            `json:"name" db:"name"`
-	PocName      models.TranslationField            `json:"pocName" db:"poc_name"`
-	PocEmail     models.TranslationField            `json:"pocEmail" db:"poc_email"`
-	SolutionType models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
-	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
+	Name          models.TranslationField            `json:"name" db:"name"`
+	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	SolutionType  models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Key           models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	RiskIndicator models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
+	NeededBy      models.TranslationField            `json:"neededBy" db:"needed_by"`
+	FacilitatedBy models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 }
 
 // Represents model plan base translation data

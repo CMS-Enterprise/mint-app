@@ -38,6 +38,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 
 	// Ensure there's a context with the user account service
 	// TODO THis is a bit hacky -- we should probably be doing this on every job, not just this one, but we needed to get this working in MINT-3068
+	// Future Enhancement: See if we can move this to the worker instantiation lifecycle, so that we don't have to do this on every job
 	dataLoaders := loaders.NewDataLoaders(w.Store)
 	ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
 	ctx = appcontext.WithUserAccountService(ctx, userhelpers.UserAccountGetByIDLOADER)
