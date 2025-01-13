@@ -22,11 +22,13 @@ import {
 } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
+  GetModelToOperationsMatrixDocument,
   GetMtoMilestonesDocument,
   MtoCommonSolutionKey,
   useCreateMtoMilestoneMutation,
   useGetMtoAllSolutionsQuery,
-  useGetMtoMilestoneQuery
+  useGetMtoMilestoneQuery,
+  useUpdateMtoMilestoneLinkedSolutionsMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -196,25 +198,29 @@ const SelectSolutionForm = () => {
     formState: { isValid }
   } = methods;
 
-  const [create] = useCreateMtoMilestoneMutation({
+  const [update] = useUpdateMtoMilestoneLinkedSolutionsMutation({
     refetchQueries: [
       {
-        query: GetMtoMilestonesDocument,
-        variables: { id: modelID }
+        query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
       }
     ]
   });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    // if (!milestoneKey) return;
+    if (!milestoneID) return;
 
     showMessage('submitted');
 
-    create({
+    update({
       variables: {
-        modelPlanID: modelID,
-        commonMilestoneKey: milestoneKey,
-        commonSolutions: formData.commonSolutions
+        id: milestoneID,
+        solutionLinks: {
+          commonSolutionKeys,
+          solutionIDs
+        }
       }
     })
       .then(response => {
@@ -228,13 +234,7 @@ const SelectSolutionForm = () => {
                 className="margin-y-4"
               >
                 <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.milestone.alert.success')}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    // values={{ milestone: formData.name }}
-                  />
+                  {t('modal.selectSolution.alert.success')}
                 </span>
               </Alert>
             </>
@@ -250,7 +250,7 @@ const SelectSolutionForm = () => {
             data-testid="error-alert"
             className="margin-bottom-2"
           >
-            {t('modal.milestone.alert.error')}
+            {t('modal.selectSolution.alert.error')}
           </Alert>
         );
       });
