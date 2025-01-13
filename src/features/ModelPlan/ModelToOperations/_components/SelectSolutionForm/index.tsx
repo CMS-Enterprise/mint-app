@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
   Controller,
   FormProvider,
@@ -23,16 +17,13 @@ import {
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
-  GetMtoMilestonesDocument,
   MtoCommonSolutionKey,
-  useCreateMtoMilestoneMutation,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneLinkedSolutionsMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import ExternalLink from 'components/ExternalLink';
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
@@ -40,8 +31,6 @@ import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
-
-import { MilestoneCardType } from '../../MilestoneLibrary';
 
 type FormValues = {
   commonSolutions: MtoCommonSolutionKey[] | undefined;
@@ -60,20 +49,13 @@ const SelectSolutionForm = () => {
 
   const { message, showMessage, showErrorMessageInModal } = useMessage();
 
-  const { data: milestoneData, error } = useGetMtoMilestoneQuery({
+  const { data: milestoneData } = useGetMtoMilestoneQuery({
     variables: {
       id: milestoneID || ''
     }
   });
 
   const milestone = milestoneData?.mtoMilestone;
-
-  // Custom solution state
-  const [solutionIDs, setSolutionIDs] = useState<string[]>(
-    milestone?.solutions
-      .filter(solution => !solution.key)
-      .map(solution => solution.id) || []
-  );
 
   const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
     variables: {
@@ -92,7 +74,6 @@ const SelectSolutionForm = () => {
     );
   }, [allSolutionData]);
 
-  // Map the common solutions to the FE help solutions
   const mappedSolutions = useMemo(
     () =>
       milestone?.commonMilestone?.commonSolutions.map(solution => {
@@ -100,46 +81,28 @@ const SelectSolutionForm = () => {
       }) || [],
     [milestone?.commonMilestone]
   );
+  console.log(mappedSolutions);
 
   const mappedSolutionKeys = mappedSolutions.map(solution => solution?.enum);
 
+  // All the common solutions but filter out the suggested solution
   const commonSolutions =
     allSolutions?.commonSolutions.filter(
       solution => !mappedSolutionKeys.includes(solution.key)
     ) || [];
 
-  const createdSolutions = useMemo(
-    () => allSolutions?.solutions?.filter(solution => !solution.key) || [],
-    [allSolutions?.solutions]
-  );
-
-  // Common solution state
-  const [commonSolutionKeys, setCommonSolutionKeys] = useState<
-    MtoCommonSolutionKey[]
-  >(
-    milestone?.solutions
-      .filter(solution => !!solution.key)
-      .map(solution => solution.key!) || []
-  );
-
-  const formatSolutions = useCallback(
-    (solutions: MilestoneCardType['commonSolutions']) => {
-      return solutions.map(solution => {
-        return {
-          label: commonSolutionsConfig.options[solution.key] || '',
-          value: solution.key
-        };
-      });
-    },
-    [commonSolutionsConfig.options]
-  );
+  const createdSolutions =
+    allSolutions?.solutions?.filter(solution => !solution.key) || [];
 
   const groupedOptions = [
     {
       label: t('modal.editMilestone.suggestedSolution'),
-      options: formatSolutions(
-        milestone?.commonMilestone?.commonSolutions || []
-      )
+      options: mappedSolutions.map(solution => {
+        return {
+          label: solution?.name || '',
+          value: solution?.enum || ''
+        };
+      })
     },
     {
       label: t('modal.editMilestone.customSolution'),
@@ -160,28 +123,6 @@ const SelectSolutionForm = () => {
       })
     }
   ];
-
-  // Initial values for multiselect form component
-  const initialValues = [...commonSolutionKeys, ...solutionIDs];
-
-  // Checks to see if a solution is a custom solution by its ID
-  const isCustomSolution = useCallback(
-    (id: string) => {
-      return createdSolutions.find(solution => solution.id === id);
-    },
-    [createdSolutions]
-  );
-
-  // Checks if the solution should be rendered in the SolutionCard component
-  const isSuggestedSolution = useCallback(
-    (key: string) => {
-      return mappedSolutionKeys.find(k => k === key);
-    },
-    [mappedSolutionKeys]
-  );
-
-  const [selectedSolutions, setSelectedSolutions] =
-    useState<string[]>(initialValues);
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -212,14 +153,13 @@ const SelectSolutionForm = () => {
   const onSubmit: SubmitHandler<FormValues> = formData => {
     if (!milestoneID) return;
 
-    showMessage('submitted');
-
     update({
       variables: {
         id: milestoneID,
         solutionLinks: {
-          commonSolutionKeys,
-          solutionIDs
+          // TODO: Add the correct values here
+          // commonSolutionKeys,
+          // solutionIDs
         }
       }
     })
@@ -317,6 +257,7 @@ const SelectSolutionForm = () => {
                     groupedOptions={groupedOptions}
                     selectedLabel={commonSolutionsConfig.multiSelectLabel || ''}
                     initialValues={watch('commonSolutions')}
+                    onChange={values => console.log(values)}
                   />
                 </FormGroup>
               )}
