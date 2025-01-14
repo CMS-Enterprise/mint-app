@@ -293,9 +293,17 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO milestone header */}
         {change.tableName === TableName.MTO_MILESTONE &&
           (() => {
-            const milestoneName = change.translatedFields.find(
-              field => field.fieldName === 'mto_common_milestone_key'
-            )?.newTranslated;
+            const milestoneName =
+              change.translatedFields.find(
+                field => field.fieldName === 'mto_common_milestone_key'
+              )?.newTranslated ||
+              change.translatedFields.find(field => field.fieldName === 'name')
+                ?.newTranslated ||
+              change.translatedFields.find(
+                field => field.fieldName === 'mto_common_milestone_key'
+              )?.oldTranslated ||
+              change.translatedFields.find(field => field.fieldName === 'name')
+                ?.oldTranslated;
 
             return (
               <span className="text-bold">
@@ -311,9 +319,17 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO solution header */}
         {change.tableName === TableName.MTO_SOLUTION &&
           (() => {
-            const solutionName = change.translatedFields.find(
-              field => field.fieldName === 'mto_common_solution_key'
-            )?.newTranslated;
+            const solutionName =
+              change.translatedFields.find(
+                field => field.fieldName === 'mto_common_solution_key'
+              )?.newTranslated ||
+              change.translatedFields.find(field => field.fieldName === 'name')
+                ?.newTranslated ||
+              change.translatedFields.find(
+                field => field.fieldName === 'mto_common_solution_key'
+              )?.oldTranslated ||
+              change.translatedFields.find(field => field.fieldName === 'name')
+                ?.oldTranslated;
 
             return (
               <span className="text-bold">
@@ -620,9 +636,19 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO milestone audits */}
               {change.tableName === TableName.MTO_MILESTONE &&
                 (() => {
-                  const milestoneName = change.translatedFields.find(
-                    field => field.fieldName === 'mto_common_milestone_key'
-                  )?.newTranslated;
+                  const milestoneName =
+                    change.translatedFields.find(
+                      field => field.fieldName === 'mto_common_milestone_key'
+                    )?.newTranslated ||
+                    change.translatedFields.find(
+                      field => field.fieldName === 'name'
+                    )?.newTranslated ||
+                    change.translatedFields.find(
+                      field => field.fieldName === 'mto_common_milestone_key'
+                    )?.oldTranslated ||
+                    change.translatedFields.find(
+                      field => field.fieldName === 'name'
+                    )?.oldTranslated;
 
                   return (
                     <Trans
@@ -640,9 +666,13 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO solution audits */}
               {change.tableName === TableName.MTO_SOLUTION &&
                 (() => {
-                  const solutionName = change.translatedFields.find(
-                    field => field.fieldName === 'mto_common_solution_key'
-                  )?.newTranslated;
+                  const solutionName =
+                    change.translatedFields.find(
+                      field => field.fieldName === 'mto_common_solution_key'
+                    )?.newTranslated ||
+                    change.translatedFields.find(
+                      field => field.fieldName === 'name'
+                    )?.newTranslated;
 
                   return (
                     <Trans

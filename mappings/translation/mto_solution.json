@@ -3,7 +3,8 @@
     "gqlField": "solutionType",
     "goField": "SolutionType",
     "dbField": "type",
-    "label": "Milestone title",
+    "label": "What type of solution is this",
+    "exportLabel": "Solution type",
     "dataType": "ENUM",
     "formType": "SELECT",
     "options": {
@@ -18,7 +19,8 @@
     "gqlField": "name",
     "goField": "Name",
     "dbField": "name",
-    "label": "Milestone title",
+    "label": "Please add a title for your solution",
+    "exportLabel": "Solution name",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.1
@@ -27,7 +29,7 @@
     "gqlField": "pocName",
     "goField": "PocName",
     "dbField": "poc_name",
-    "label": "Milestone title",
+    "label": "Point of contact name",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.2
@@ -36,7 +38,7 @@
     "gqlField": "pocEmail",
     "goField": "PocEmail",
     "dbField": "poc_email",
-    "label": "Milestone title",
+    "label": "Point of contact email address",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.3
