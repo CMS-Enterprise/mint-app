@@ -62,10 +62,6 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return MTOInfoTranslation()
 	case models.TNMTOCommonSolutionContact:
 		return MTOCommonSolutionContactTranslation()
-	// case models.TNMTOCommonMilestone:
-	// 	return MTOCommonMilestoneTranslation()
-	// case models.TNMTOCommonSolution:
-	// 	return MTOCommonSolutionTranslation()
 	default:
 
 		return nil, fmt.Errorf("no translation for table: %s ", tableName)
