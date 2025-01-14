@@ -12,6 +12,7 @@ import {
 
 import { AvatarCircle } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
+import properlyCapitalizeInitiator from 'components/CRAndTDLSidePanel/_utils';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
@@ -55,8 +56,6 @@ type BatchChangeProps = {
 // Render a single change record, showing the field name, the change type, and the old and new values
 const BatchChanges = ({ change, connected }: BatchChangeProps) => {
   const { t } = useTranslation('changeHistory');
-
-  console.log(change, connected);
 
   let fieldsToMap: ChangeRecordType['translatedFields'][0][] =
     change.translatedFields;
@@ -305,6 +304,42 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                   {t(`auditUpdateType.${change.action}`)}
                 </span>{' '}
                 : {milestoneName}
+              </span>
+            );
+          })()}
+
+        {/* MTO solution header */}
+        {change.tableName === TableName.MTO_SOLUTION &&
+          (() => {
+            const solutionName = change.translatedFields.find(
+              field => field.fieldName === 'mto_common_solution_key'
+            )?.newTranslated;
+
+            return (
+              <span className="text-bold">
+                {t('milestone')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                </span>{' '}
+                : {solutionName}
+              </span>
+            );
+          })()}
+
+        {/* MTO solution link  header */}
+        {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
+          (() => {
+            const solutionName = change.translatedFields.find(
+              field => field.fieldName === 'solution_id'
+            )?.newTranslated;
+
+            return (
+              <span className="text-bold">
+                {properlyCapitalizeInitiator(t('solution'))}{' '}
+                <span className="text-normal">
+                  {t(`solutionLinkType.${change.action}`)}
+                </span>{' '}
+                : {solutionName}
               </span>
             );
           })()}
@@ -593,6 +628,46 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                         action: t(`auditUpdateType.${change.action}`),
                         mtoType: t('milestone'),
                         name: milestoneName
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO solution audits */}
+              {change.tableName === TableName.MTO_SOLUTION &&
+                (() => {
+                  const solutionName = change.translatedFields.find(
+                    field => field.fieldName === 'mto_common_solution_key'
+                  )?.newTranslated;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: properlyCapitalizeInitiator(t('solution')),
+                        name: solutionName
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO solution link audits */}
+              {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
+                (() => {
+                  const solutionName = change.translatedFields.find(
+                    field => field.fieldName === 'solution_id'
+                  )?.newTranslated;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`solutionLinkType.${change.action}`),
+                        mtoType: properlyCapitalizeInitiator(t('solution')),
+                        name: solutionName
                       }}
                     />
                   );

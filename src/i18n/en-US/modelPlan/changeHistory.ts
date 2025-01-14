@@ -143,6 +143,10 @@ const changeHistory = {
     newest: 'Newest changes',
     oldest: 'Oldest changes'
   },
+  solutionLinkType: {
+    INSERT: 'linked',
+    DELETE: 'unlinked'
+  },
   previousAnswer: 'Previous answer',
   previousNote: 'Previous note',
   previousDetails: 'Previous details',
