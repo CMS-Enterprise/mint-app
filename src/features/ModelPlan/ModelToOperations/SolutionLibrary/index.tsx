@@ -312,7 +312,7 @@ const SolutionLibrary = () => {
                       components={{
                         link1: (
                           <UswdsReactLink
-                            to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library?view=all`}
                             className="margin-x-05"
                           >
                             {' '}
