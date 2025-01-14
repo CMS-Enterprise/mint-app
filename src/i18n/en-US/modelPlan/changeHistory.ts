@@ -41,7 +41,7 @@ const changeHistory = {
     'Subtask {{action}} {{forFrom}} <bold>{{solutionName}}: {{needName}}</bold>',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
-  mtoCategoryUpdate: '{{categoryType}} {{action}}: {{categoryName}}',
+  mtoUpdate: '{{mtoType}} {{action}}: {{name}}',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   sections: {
@@ -91,6 +91,7 @@ const changeHistory = {
   subtask: 'Subtask',
   category: 'Category',
   subCategory: 'Subcategory',
+  milestone: 'Milestone',
   in: 'in',
   to: 'to',
   auditUpdateType: {

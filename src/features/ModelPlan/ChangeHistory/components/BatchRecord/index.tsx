@@ -290,6 +290,24 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               </span>
             );
           })()}
+
+        {/* MTO milestone header */}
+        {change.tableName === TableName.MTO_MILESTONE &&
+          (() => {
+            const milestoneName = change.translatedFields.find(
+              field => field.fieldName === 'mto_common_milestone_key'
+            )?.newTranslated;
+
+            return (
+              <span className="text-bold">
+                {t('milestone')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                </span>{' '}
+                : {milestoneName}
+              </span>
+            );
+          })()}
       </div>
 
       {/* Render the fields that were changed */}
@@ -548,13 +566,33 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                   return (
                     <Trans
                       shouldUnescape
-                      i18nKey="changeHistory:mtoCategoryUpdate"
+                      i18nKey="changeHistory:mtoUpdate"
                       values={{
                         action: t(`auditUpdateType.${change.action}`),
-                        categoryType: isSubCategory
+                        mtoType: isSubCategory
                           ? t('subCategory')
                           : t('category'),
-                        categoryName
+                        name: categoryName
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO milestone audits */}
+              {change.tableName === TableName.MTO_MILESTONE &&
+                (() => {
+                  const milestoneName = change.translatedFields.find(
+                    field => field.fieldName === 'mto_common_milestone_key'
+                  )?.newTranslated;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: t('milestone'),
+                        name: milestoneName
                       }}
                     />
                   );

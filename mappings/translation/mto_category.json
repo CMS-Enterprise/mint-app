@@ -4,6 +4,7 @@
     "goField": "Name",
     "dbField": "name",
     "label": "New category title",
+    "exportLabel": "Category title",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.01
