@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
   MtoCommonMilestoneKey,
+  MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator
@@ -23,13 +24,19 @@ export type ColumnSortType = {
 
 export type MTORowType = 'category' | 'subcategory' | 'milestone';
 
+type MtoSolutionType = {
+  id: string;
+  key?: MtoCommonSolutionKey | null;
+  name?: string | null;
+};
+
 export type MilestoneType = {
   __typename: 'MTOMilestone';
   id: string;
   riskIndicator: MtoRiskIndicator;
   name: string;
   facilitatedBy: MtoFacilitator[] | null;
-  solutions: string[];
+  solutions: MtoSolutionType[];
   needBy: string | null;
   status: MtoMilestoneStatus;
   actions: any;
@@ -38,6 +45,10 @@ export type MilestoneType = {
   isUncategorized?: boolean;
   key?: MtoCommonMilestoneKey | null;
 };
+
+export function isMilestoneType(data: RowType): data is MilestoneType {
+  return data.__typename === 'MTOMilestone'; // eslint-disable-line no-underscore-dangle
+}
 
 export type SubCategoryType = {
   __typename: 'MTOSubcategory';
@@ -252,31 +263,41 @@ export const columns: ColumnType[] = [
       setMTOModalState
     }: ExtendedRowProps) => {
       if (rowType !== 'milestone') return <></>;
-      if (row.solutions.length === 0)
+      if (isMilestoneType(row)) {
+        if (row.solutions.length === 0)
+          return (
+            <>
+              <Button
+                type="button"
+                className="display-block"
+                unstyled
+                onClick={() => {
+                  if (clearMessage) clearMessage();
+                  if (setMTOModalState)
+                    setMTOModalState({
+                      modalType: 'selectSolution',
+                      milestoneID: row.id
+                    });
+                  if (setMTOModalOpen) setMTOModalOpen(true);
+                }}
+              >
+                {i18next.t('modelToOperationsMisc:table.selectASolution')}
+                <Icon.ArrowForward className="top-05 margin-left-05" />
+              </Button>
+            </>
+          );
+
         return (
           <>
-            <Button
-              type="button"
-              className="display-block"
-              unstyled
-              onClick={() => {
-                if (clearMessage) clearMessage();
-                if (setMTOModalState)
-                  setMTOModalState({
-                    modalType: 'selectSolution',
-                    milestoneID: row.id
-                  });
-                if (setMTOModalOpen) setMTOModalOpen(true);
-              }}
-            >
-              {i18next.t('modelToOperationsMisc:table.selectASolution')}
-              <Icon.ArrowForward className="top-05 margin-left-05" />
-            </Button>
+            {row.solutions
+              .map(solution =>
+                solution.key !== null ? solution.key : solution.name
+              )
+              .join(', ')}
           </>
         );
-
-      // TODO: this is not working
-      return <>{row.solutions.join(', ')}</>;
+      }
+      return <></>;
     }
   },
   {
