@@ -35,8 +35,14 @@ solutions AS (
         solution.id,
         solution.operational_need_id,
         need.model_plan_id,
-        possible.sol_key AS possible_solution_type,
+        CASE 
+            WHEN possible.sol_key  IN (INTERNAL_STAFF, OTHER_NEW_PROCESS, CONTRACTOR, CROSS_MODEL_CONTRACT)
+                THEN NULL
+            ELSE possible.sol_key         
+        END AS possible_solution_type, --TODO, use the data Zoë provided to map the types
         solution.name_other,
+        solution.poc_email,
+        solution.poc_name,
         solution.is_other,
         solution.other_header,
         solution.created_by,
@@ -85,6 +91,10 @@ inserted_solutions AS ( --noqa
         id,
         model_plan_id,
         name,
+        mto_common_solution_key,
+        poc_email,
+        poc_name,
+        type,
         status,
         created_by
     )
@@ -92,6 +102,19 @@ inserted_solutions AS ( --noqa
         s.id,
         s.model_plan_id,
         s.name_other,
+        (s.possible_solution_type::TEXT)::MTO_COMMON_SOLUTION_KEY AS common_solution_key,
+        CASE
+            WHEN s.possible_solution_type IS NOT NULL THEN NULL --Don't add POC info for common solutions
+            ELSE s.poc_email
+        END AS poc_email,
+        CASE
+            WHEN s.possible_solution_type IS NOT NULL THEN NULL --Don't add POC info for common solutions
+            ELSE s.poc_name
+        END AS poc_name,
+        CASE
+            WHEN s.possible_solution_type IS NOT NULL THEN NULL 
+            ELSE 'IT_SYSTEM'::MTO_SOLUTION_TYPE 
+        END AS  type, --TODO Adjust this to try to determine what the type should be for a custom type
         CASE
             WHEN        s.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
             ELSE 'NOT_STARTED'::MTO_SOLUTION_STATUS
