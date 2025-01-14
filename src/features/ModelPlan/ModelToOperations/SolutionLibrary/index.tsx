@@ -14,10 +14,6 @@ import {
   Icon
   // Link
 } from '@trussworks/react-uswds';
-import {
-  findCategoryMapByRouteParam,
-  findSolutionByRouteParam
-} from 'features/HelpAndKnowledge/SolutionsHelp';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoCommonSolutionsQuery,
