@@ -9,6 +9,7 @@ import {
   TranslatedAuditMetaDiscussionReply,
   TranslatedAuditMetaDocumentSolutionLink,
   TranslatedAuditMetaGeneric,
+  TranslatedAuditMetaMtoCategory,
   TranslatedAuditMetaOperationalSolution,
   TranslatedAuditMetaOperationalSolutionSubtask,
   TranslationDataType,
@@ -137,6 +138,14 @@ export const isSolutionDocumentLinkWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaDocumentSolutionLink';
 };
 
+// Type guard to check mto categoryunion type
+export const isMTOCategoryWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaMtoCategory => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaMTOCategory';
+};
+
 export const datesWithNoDay: string[] = ['date_implemented'];
 
 // Fields that are not displayed in the change history
@@ -173,17 +182,32 @@ const unneededFields: HiddenFieldTypes[] = [
   {
     table: TableName.PLAN_DATA_EXCHANGE_APPROACH,
     fields: ['marked_complete_by', 'marked_complete_dts']
+  },
+  {
+    table: TableName.MTO_CATEGORY,
+    fields: ['position']
   }
 ];
 
 export const hiddenFields: string[] = ['is_link'];
+
+export const mtoTables: TableName[] = [
+  TableName.MTO_CATEGORY,
+  TableName.MTO_MILESTONE,
+  TableName.MTO_SOLUTION,
+  TableName.MTO_MILESTONE_SOLUTION_LINK
+];
 
 // Tables where similar audits are batched together
 export const batchedTables: TableName[] = [
   TableName.OPERATIONAL_SOLUTION,
   TableName.OPERATIONAL_SOLUTION_SUBTASK,
   TableName.PLAN_DOCUMENT_SOLUTION_LINK,
-  TableName.EXISTING_MODEL_LINK
+  TableName.EXISTING_MODEL_LINK,
+  TableName.MTO_SOLUTION,
+  TableName.MTO_CATEGORY,
+  TableName.MTO_MILESTONE_SOLUTION_LINK,
+  TableName.MTO_MILESTONE
 ];
 
 // Tables where audits are batch with a different table

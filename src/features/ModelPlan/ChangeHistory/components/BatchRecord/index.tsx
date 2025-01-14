@@ -25,9 +25,11 @@ import {
   getSolutionOperationStatus,
   hiddenFields,
   isLinkingTable,
+  isMTOCategoryWithMetaData,
   isOperationalSolutionWithMetaData,
   isSolutionDocumentLinkWithMetaData,
   linkingTableQuestions,
+  mtoTables,
   solutionDeleteFields,
   solutionDocumentLinkFields,
   solutionInsertFields
@@ -53,6 +55,8 @@ type BatchChangeProps = {
 // Render a single change record, showing the field name, the change type, and the old and new values
 const BatchChanges = ({ change, connected }: BatchChangeProps) => {
   const { t } = useTranslation('changeHistory');
+
+  console.log(change, connected);
 
   let fieldsToMap: ChangeRecordType['translatedFields'][0][] =
     change.translatedFields;
@@ -268,6 +272,24 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               />
             );
           })()}
+
+        {/* MTO category header */}
+        {change.tableName === TableName.MTO_CATEGORY &&
+          (() => {
+            const isSubCategory =
+              change.metaData &&
+              isMTOCategoryWithMetaData(change.metaData) &&
+              change.metaData?.isSubCategory;
+
+            return (
+              <span className="text-bold">
+                {isSubCategory ? t('subCategory') : t('category')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                </span>
+              </span>
+            );
+          })()}
       </div>
 
       {/* Render the fields that were changed */}
@@ -380,7 +402,8 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                 : changeRecords.length,
               section: t(`sections.${tableName}`),
               date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
-              time: formatTime(changeRecords[0].date)
+              time: formatTime(changeRecords[0].date),
+              inOrTo: mtoTables.includes(tableName) ? t('to') : t('in')
             }}
             components={{
               datetime: <span />
@@ -505,6 +528,33 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                       components={{
                         datetime: <span />,
                         bold: <span className="text-normal" />
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO category audits */}
+              {change.tableName === TableName.MTO_CATEGORY &&
+                (() => {
+                  const categoryName = change.translatedFields.find(
+                    field => field.fieldName === 'name'
+                  )?.newTranslated;
+
+                  const isSubCategory =
+                    change.metaData &&
+                    isMTOCategoryWithMetaData(change.metaData) &&
+                    change.metaData?.isSubCategory;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoCategoryUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        categoryType: isSubCategory
+                          ? t('subCategory')
+                          : t('category'),
+                        categoryName
                       }}
                     />
                   );

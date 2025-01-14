@@ -5,9 +5,9 @@ const changeHistory = {
   backToReadView: 'Back to the Read view',
   thisModelPlan: 'this Model Plan',
   change:
-    'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+    'made {{count}} change {{inOrTo}} {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
-    'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+    'made {{count}} changes {{inOrTo}} {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   planCreate:
     'created <planName>{{plan_name}}</planName> <datetime>on {{date}} at {{time}}</datetime>',
   taskStartedUpdate:
@@ -41,6 +41,7 @@ const changeHistory = {
     'Subtask {{action}} {{forFrom}} <bold>{{solutionName}}: {{needName}}</bold>',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  mtoCategoryUpdate: '{{categoryType}} {{action}}: {{categoryName}}',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   sections: {
@@ -88,6 +89,10 @@ const changeHistory = {
   },
   solution: 'solution',
   subtask: 'Subtask',
+  category: 'Category',
+  subCategory: 'Subcategory',
+  in: 'in',
+  to: 'to',
   auditUpdateType: {
     INSERT: 'added',
     DELETE: 'removed',

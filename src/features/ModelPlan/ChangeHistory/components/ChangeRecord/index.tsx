@@ -321,7 +321,8 @@ export const ChangeHeader = ({
           count: changeRecord.translatedFields.length,
           section: t(`sections.${changeRecord.tableName}`),
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-          time: formatTime(changeRecord.date)
+          time: formatTime(changeRecord.date),
+          inOrTo: t('in')
         }}
         components={{
           datetime: DateSpan

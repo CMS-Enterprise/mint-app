@@ -12,6 +12,7 @@ export const mtoCategory: TranslationMTOCategory = {
     goField: 'Name',
     dbField: 'name',
     label: 'New category title',
+    exportLabel: 'Category title',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.01
