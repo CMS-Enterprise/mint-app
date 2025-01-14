@@ -28,8 +28,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.CHECKBOX,
     order: 1.01,
     options: {
-      true: 'Draft',
-      false: ' '
+      true: 'Yes',
+      false: ' No'
     }
   },
   facilitatedBy: {
