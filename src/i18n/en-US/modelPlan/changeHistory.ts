@@ -92,6 +92,9 @@ const changeHistory = {
   category: 'Category',
   subCategory: 'Subcategory',
   milestone: 'Milestone',
+  status: 'Status',
+  readyForReview: 'Ready for review',
+  inProgress: 'In progress',
   in: 'in',
   to: 'to',
   auditUpdateType: {

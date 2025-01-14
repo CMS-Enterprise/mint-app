@@ -59,9 +59,6 @@ export type TranslationTables =
   | TableName.PLAN_DISCUSSION
   | TableName.DISCUSSION_REPLY
   | TableName.MTO_CATEGORY
-  | TableName.MTO_COMMON_MILESTONE
-  | TableName.MTO_COMMON_SOLUTION
-  | TableName.MTO_COMMON_SOLUTION_CONTACT
   | TableName.MTO_INFO
   | TableName.MTO_MILESTONE
   | TableName.MTO_MILESTONE_SOLUTION_LINK
@@ -196,6 +193,7 @@ export const hiddenFields: string[] = [
 ];
 
 export const mtoTables: TableName[] = [
+  TableName.MTO_INFO,
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE,
   TableName.MTO_SOLUTION,
@@ -211,7 +209,8 @@ export const batchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
-  TableName.MTO_MILESTONE
+  TableName.MTO_MILESTONE,
+  TableName.MTO_INFO
 ];
 
 // Tables where audits are batch with a different table
@@ -477,6 +476,9 @@ const readyForReviewFields = [
 
 // Removes the fields that are ready for review from the list of translatedFields changes
 export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
+  // Allow MTO_INFO changes to pass through, as there is no official status, but calculated on FE by ready for review fields
+  if (changes[0]?.tableName === TableName.MTO_INFO) return changes;
+
   const filteredReviewChanges: ChangeRecordType[] = [];
 
   changes.forEach(change => {

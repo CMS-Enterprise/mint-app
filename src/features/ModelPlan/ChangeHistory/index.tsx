@@ -237,6 +237,8 @@ const ChangeHistory = () => {
     [currentItems]
   );
 
+  console.log('changesByDay', changesByDay);
+
   if (error) {
     return <NotFound />;
   }

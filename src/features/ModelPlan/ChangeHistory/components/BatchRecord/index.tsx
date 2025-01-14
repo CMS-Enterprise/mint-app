@@ -606,6 +606,29 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                   );
                 })()}
 
+              {/* MTO info audits */}
+              {change.tableName === TableName.MTO_INFO &&
+                (() => {
+                  console.log('change', change);
+                  const status = change.translatedFields.find(
+                    field => field.fieldName === 'ready_for_review_by'
+                  )?.newTranslated
+                    ? t('readyForReview')
+                    : t('inProgress');
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: t('status'),
+                        name: status
+                      }}
+                    />
+                  );
+                })()}
+
               {/* MTO category audits */}
               {change.tableName === TableName.MTO_CATEGORY &&
                 (() => {
