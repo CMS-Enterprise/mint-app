@@ -543,11 +543,13 @@ export const modelToOperationsMisc: Record<string, any> = {
     tabs: {
       allSolutions: 'All common solutions ({{count}})',
       itSystems: 'IT systems ({{count}})',
-      contract: 'Contracts and contractors ({{count}})',
+      contracts: 'Contracts and contractors ({{count}})',
       crossCutting: 'Cross-cutting groups ({{count}})'
     },
-    dontSeeSolution:
-      'Don’t see the solution you need? <link>Add a custom solution<link>.'
+    dontSeeSolution: 'Don’t see the solution you need?',
+    checkAllSolutions:
+      'Check <link1>all available solutions</link1> or <button1>add a custom solution</button1>.',
+    addCustomSolution: 'Add a custom solution'
   },
   validation: {
     fillOut: 'Please fill out the required field.'
