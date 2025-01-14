@@ -535,6 +535,20 @@ export const modelToOperationsMisc: Record<string, any> = {
     aboutSolution: 'About this solution',
     commonSolutions: 'Common solutions'
   },
+  solutionLibrary: {
+    heading: 'Solution library',
+    description:
+      'Browse common available operational solutions and IT systems and add them to your model-to-operations matrix. Solutions in this library include IT systems, contractors and contract vehicles, cross-cutting groups, and more. You will be able to associate these solutions with any relevant model milestones.',
+    hideAdded: 'Hide added solutions ({{count}})',
+    tabs: {
+      allSolutions: 'All common solutions ({{count}})',
+      itSystems: 'IT systems ({{count}})',
+      contract: 'Contracts and contractors ({{count}})',
+      crossCutting: 'Cross-cutting groups ({{count}})'
+    },
+    dontSeeSolution:
+      'Don’t see the solution you need? <link>Add a custom solution<link>.'
+  },
   validation: {
     fillOut: 'Please fill out the required field.'
   }
