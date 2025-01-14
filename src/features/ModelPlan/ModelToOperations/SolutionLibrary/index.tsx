@@ -14,6 +14,10 @@ import {
   Icon
   // Link
 } from '@trussworks/react-uswds';
+import {
+  findCategoryMapByRouteParam,
+  findSolutionByRouteParam
+} from 'features/HelpAndKnowledge/SolutionsHelp';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoCommonSolutionsQuery,
@@ -31,13 +35,14 @@ import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
 import TableResults from 'components/TableResults';
 import { MTOModalContext } from 'contexts/MTOModalContext';
+import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MTOSolutionCard from './_components/MTOSolutionCard';
 
-type SolutionCardType =
+export type SolutionCardType =
   GetMtoCommonSolutionsQuery['modelPlan']['mtoMatrix']['commonSolutions'][0];
 
 type SolutionViewType = 'all' | 'it-systems' | 'contracts' | 'cross-cut';
@@ -66,6 +71,9 @@ const SolutionLibrary = () => {
       viewParam = view;
     }
   }
+
+  const { helpSolutions } = useHelpSolution();
+  // const garyTest = findSolutionByRouteParam(category, helpSolutions);
 
   const { data, loading, error } = useGetMtoCommonSolutionsQuery({
     variables: { id: modelID }
@@ -320,7 +328,6 @@ const SolutionLibrary = () => {
                         ),
                         button1: (
                           <Button
-                            // TODO: Update this to pop up the custom solution modal
                             unstyled
                             type="button"
                             className="margin-x-05"
@@ -337,7 +344,6 @@ const SolutionLibrary = () => {
                     />
                   ) : (
                     <Button
-                      // TODO: Update this to pop up the custom solution modal
                       unstyled
                       type="button"
                       className="margin-x-05"
@@ -355,47 +361,18 @@ const SolutionLibrary = () => {
             </div>
 
             {viewParam === 'all' && (
-              //   suggestedMilestones.length === 0 ? (
-              // <Alert
-              //   type="info"
-              //   heading={t('solutionLibrary.noSuggestedHeading')}
-              //   className="mint-body-normal"
-              // >
-              //   <Trans
-              //     t={t}
-              //     i18nKey="solutionLibrary.noSuggestedDescription"
-              //     components={{
-              //       link1: (
-              //         <UswdsReactLink
-              //           to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
-              //         >
-              //           {' '}
-              //         </UswdsReactLink>
-              //       ),
-              //       link2: (
-              //         <UswdsReactLink
-              //           to={`/models/${modelID}/collaboration-area`}
-              //         >
-              //           {' '}
-              //         </UswdsReactLink>
-              //       ),
-              //       email1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
-              //     }}
-              //   />
-              // </Alert>
-              // ) :
               <>
                 <CardGroup className="padding-x-1">
                   <Grid desktop={{ col: 12 }}>
                     <Grid row gap={2}>
-                      {currentItems.map(milestone => (
+                      {currentItems.map(solution => (
                         <Grid
                           desktop={{ col: 4 }}
                           tablet={{ col: 6 }}
-                          key={milestone.key}
+                          key={solution.key}
                         >
                           {/* // TODO:  */}
-                          <MTOSolutionCard />
+                          <MTOSolutionCard solution={solution} />
                           {/* <MilestoneCard
                             milestone={milestone}
                             setIsSidepanelOpen={setIsSidepanelOpen}

@@ -9,6 +9,7 @@ export default gql(/* GraphQL */ `
           name
           key
           type
+          subjects
           isAdded
         }
       }
