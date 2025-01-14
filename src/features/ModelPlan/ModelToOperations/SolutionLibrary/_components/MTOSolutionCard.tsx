@@ -10,6 +10,7 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import SolutionsTag from 'features/HelpAndKnowledge/SolutionsHelp/_components/SolutionsTag';
 
 import useMessage from 'hooks/useMessage';
 
@@ -73,6 +74,14 @@ const MTOSolutionCard = ({
             })}{' '}
             {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
           </div> */}
+          {solution.subjects.map(subject => (
+            // TODO: Somehow use the HelpSolutions instead
+            <SolutionsTag
+            // key={categoryTag}
+            // category={categoryTag}
+            // route={categoryTag}
+            />
+          ))}
         </CardBody>
 
         <CardFooter className="padding-3">
