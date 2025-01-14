@@ -1,14 +1,19 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import {
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  OperationalSolutionKey
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import { MTOModalState } from 'contexts/MTOModalContext';
 import { formatDateUtc } from 'utils/date';
 
@@ -26,7 +31,7 @@ export type MTORowType = 'category' | 'subcategory' | 'milestone';
 
 type MtoSolutionType = {
   id: string;
-  key?: MtoCommonSolutionKey | null;
+  key?: OperationalSolutionKey | null;
   name?: string | null;
 };
 
@@ -102,6 +107,8 @@ type ExtendedRowProps = RowProps & {
   clearMessage?: () => void;
   setMTOModalOpen?: (open: boolean) => void;
   setMTOModalState?: (state: Partial<MTOModalState>) => void;
+  detailRoute?: string;
+  location: any;
 };
 
 export type ColumnType = {
@@ -260,7 +267,8 @@ export const columns: ColumnType[] = [
       expanded,
       clearMessage,
       setMTOModalOpen,
-      setMTOModalState
+      setMTOModalState,
+      detailRoute
     }: ExtendedRowProps) => {
       if (rowType !== 'milestone') return <></>;
       if (isMilestoneType(row)) {
@@ -289,11 +297,28 @@ export const columns: ColumnType[] = [
 
         return (
           <>
-            {row.solutions
-              .map(solution =>
-                solution.key !== null ? solution.key : solution.name
-              )
-              .join(', ')}
+            {row.solutions.map((solution, index) => {
+              const solutionMap = findSolutionByKey(
+                solution.key!,
+                helpSolutions
+              );
+
+              const detailRoute = solutionMap?.route
+                ? `${initLocation}${location.search}${
+                    location.search ? '&' : '?'
+                  }solution=${solutionMap?.route || ''}&section=about`
+                : `${initLocation}${location.search}`;
+              return (
+                <React.Fragment key={index}>
+                  {solution.key !== null ? (
+                    <UswdsReactLink to={}>{solution.key}</UswdsReactLink>
+                  ) : (
+                    solution.name
+                  )}
+                  {index < row.solutions.length - 1 && ', '}
+                </React.Fragment>
+              );
+            })}
           </>
         );
       }

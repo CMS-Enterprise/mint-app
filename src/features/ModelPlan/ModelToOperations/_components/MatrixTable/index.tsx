@@ -2,14 +2,18 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
+  OperationalSolutionKey,
   ReorderMtoCategoryMutationVariables,
   useReorderMtoCategoryMutation
 } from 'gql/generated/graphql';
@@ -20,7 +24,9 @@ import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import { MTOModalContext } from 'contexts/MTOModalContext';
+import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -73,6 +79,18 @@ const MTOTable = ({
           []) as unknown as GetModelToOperationsMatrixCategoryType
       ),
     [queryData?.modelPlan.mtoMatrix]
+  );
+
+  const location = useLocation();
+  const [initLocation] = useState<string>(location.pathname);
+
+  const { helpSolutions } = useHelpSolution();
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState();
+
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.route || null,
+    helpSolutions
   );
 
   // Holds the rearranged/dragged state of data pre-sorted
@@ -329,14 +347,23 @@ const MTOTable = ({
               ) : (
                 <>
                   {RenderCell ? (
-                    <RenderCell
-                      row={row}
-                      rowType={rowType}
-                      expanded={expanded}
-                      clearMessage={clearMessage}
-                      setMTOModalOpen={setMTOModalOpen}
-                      setMTOModalState={setMTOModalState}
-                    />
+                    <>
+                      {/* {selectedSolution && (
+                        <SolutionDetailsModal
+                          solution={selectedSolution}
+                          openedFrom={prevPathname}
+                          closeRoute={initLocation}
+                        />
+                      )} */}
+                      <RenderCell
+                        row={row}
+                        rowType={rowType}
+                        expanded={expanded}
+                        clearMessage={clearMessage}
+                        setMTOModalOpen={setMTOModalOpen}
+                        setMTOModalState={setMTOModalState}
+                      />
+                    </>
                   ) : (
                     row[column.accessor as keyof MilestoneType]
                   )}
@@ -519,6 +546,13 @@ const MTOTable = ({
 
   return (
     <>
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={initLocation}
+        />
+      )}
       <DndProvider backend={HTML5Backend}>
         <div
           className="display-block"
