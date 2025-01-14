@@ -275,6 +275,27 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             );
           })()}
 
+        {/* MTO info header */}
+        {change.tableName === TableName.MTO_INFO &&
+          (() => {
+            const status = change.translatedFields.find(
+              field => field.fieldName === 'ready_for_review_by'
+            )?.newTranslated
+              ? t('readyForReview')
+              : t('inProgress');
+
+            return (
+              <span className="text-bold">
+                {t('status')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                  {': '}
+                </span>
+                {status}
+              </span>
+            );
+          })()}
+
         {/* MTO category header */}
         {change.tableName === TableName.MTO_CATEGORY &&
           (() => {
@@ -612,7 +633,6 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO info audits */}
               {change.tableName === TableName.MTO_INFO &&
                 (() => {
-                  console.log('change', change);
                   const status = change.translatedFields.find(
                     field => field.fieldName === 'ready_for_review_by'
                   )?.newTranslated
