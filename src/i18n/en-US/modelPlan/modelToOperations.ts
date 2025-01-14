@@ -549,7 +549,12 @@ export const modelToOperationsMisc: Record<string, any> = {
     dontSeeSolution: 'Don’t see the solution you need?',
     checkAllSolutions:
       'Check <link1>all available solutions</link1> or <button1>add a custom solution</button1>.',
-    addCustomSolution: 'Add a custom solution'
+    addCustomSolution: 'Add a custom solution',
+    aboutThisSolution: 'About this solution',
+    IT_SYSTEM: 'IT System',
+    CONTRACTOR: 'Contract vehicle, contractor, or other contract',
+    CROSS_CUTTING_GROUP: 'Cross-cutting group',
+    OTHER: 'Other'
   },
   validation: {
     fillOut: 'Please fill out the required field.'
