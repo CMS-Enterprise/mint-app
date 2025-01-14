@@ -189,7 +189,11 @@ const unneededFields: HiddenFieldTypes[] = [
   }
 ];
 
-export const hiddenFields: string[] = ['is_link', 'solution_id'];
+export const hiddenFields: string[] = [
+  'is_link',
+  'solution_id',
+  'mto_common_milestone_key'
+];
 
 export const mtoTables: TableName[] = [
   TableName.MTO_CATEGORY,

@@ -329,9 +329,13 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO solution link  header */}
         {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
           (() => {
-            const solutionName = change.translatedFields.find(
-              field => field.fieldName === 'solution_id'
-            )?.newTranslated;
+            const solutionName =
+              change.translatedFields.find(
+                field => field.fieldName === 'solution_id'
+              )?.newTranslated ||
+              change.translatedFields.find(
+                field => field.fieldName === 'solution_id'
+              )?.oldTranslated;
 
             return (
               <span className="text-bold">
@@ -656,9 +660,13 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO solution link audits */}
               {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
                 (() => {
-                  const solutionName = change.translatedFields.find(
-                    field => field.fieldName === 'solution_id'
-                  )?.newTranslated;
+                  const solutionName =
+                    change.translatedFields.find(
+                      field => field.fieldName === 'solution_id'
+                    )?.newTranslated ||
+                    change.translatedFields.find(
+                      field => field.fieldName === 'solution_id'
+                    )?.oldTranslated;
 
                   return (
                     <Trans
