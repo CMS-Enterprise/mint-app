@@ -14,12 +14,16 @@ This migration migrates operational solution data to mto solution data. It does 
 **/
 
 
-WITH needs AS (
+WITH needs AS ( --noqa
     SELECT 
         need.id,
         need.model_plan_id,
-        possible.need_key AS possible_need_type,
-        need.name_other
+        possible.need_key AS possible_need_type, --TODO, this must be translated to a common milestone type, or handled individually
+        need.name_other,
+        need.created_by,
+        need.created_dts,
+        need.modified_by,
+        need.modified_dts
         
     FROM operational_need AS need 
     LEFT JOIN possible_operational_need AS possible ON need.need_type = possible.id
@@ -28,20 +32,75 @@ WITH needs AS (
 
 solutions AS (
     SELECT 
+        solution.id,
         solution.operational_need_id,
         need.model_plan_id,
         possible.sol_key AS possible_solution_type,
         solution.name_other,
         solution.is_other,
-        solution.other_header
+        solution.other_header,
+        solution.created_by,
+        solution.created_dts,
+        solution.modified_by,
+        solution.modified_dts
         
     FROM operational_solution AS solution
     JOIN operational_need AS need ON solution.operational_need_id = need.id -- TODO should we disregard solutions that are for needs that are not needed? or still add any solutions that are needed? They might currently be hidden in the front end 
     LEFT JOIN possible_operational_solution AS possible ON solution.solution_type = possible.id
     WHERE solution.needed = TRUE
+),
+
+inserted_milestones AS ( --noqa
+    INSERT INTO mto_milestone (
+        id,
+        model_plan_id,
+        name,
+        mto_common_milestone_key,
+        status,
+        created_by  --todo should we add modified and dates etc?
+        
+    )
+    SELECT
+        needs.id, --insert the same id as the operational need
+        needs.model_plan_id,
+        needs.name_other,
+        (needs.possible_need_type::TEXT)::MTO_COMMON_MILESTONE_KEY AS common_milestone_key, --TODO, this must be translated to a common milestone type, or handled individually
+        CASE
+            WHEN        needs.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_MILESTONE_STATUS
+            ELSE 'NOT_STARTED'::MTO_MILESTONE_STATUS
+        END AS status,
+        needs.created_by
+        
+
+    FROM needs
+    RETURNING *
+),
+--
+----SELECT * FROM needs;
+--SELECT solutions.* FROM solutions
+--LEFT JOIN needs ON solutions.operational_need_id = needs.id;
+
+inserted_solutions AS ( --noqa
+    INSERT INTO mto_solution (
+        id,
+        model_plan_id,
+        name,
+        status,
+        created_by
+    )
+    SELECT
+        s.id,
+        s.model_plan_id,
+        s.name_other,
+        CASE
+            WHEN        s.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
+            ELSE 'NOT_STARTED'::MTO_SOLUTION_STATUS
+        END AS status,
+        s.created_by
+    FROM solutions s
+    RETURNING
+        mto_solution.id AS solution_id
+        -- s.operational_need_id;
 )
 
-
---SELECT * FROM needs;
-SELECT solutions.* FROM solutions
-LEFT JOIN needs ON solutions.operational_need_id = needs.id;
+SELECT * FROM inserted_milestones
