@@ -62,7 +62,10 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
   // Remove hidden fields from the fields to map
   fieldsToMap = fieldsToMap.filter(
-    field => !hiddenFields.includes(field.fieldName)
+    field =>
+      !hiddenFields.find(
+        f => f.fields.includes(field.fieldName) && f.table === change.tableName
+      )
   );
 
   // If the change is connected to another table, only show the fields that are connected
