@@ -8,7 +8,6 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
@@ -348,13 +347,6 @@ const MTOTable = ({
                 <>
                   {RenderCell ? (
                     <>
-                      {/* {selectedSolution && (
-                        <SolutionDetailsModal
-                          solution={selectedSolution}
-                          openedFrom={prevPathname}
-                          closeRoute={initLocation}
-                        />
-                      )} */}
                       <RenderCell
                         row={row}
                         rowType={rowType}
@@ -362,6 +354,8 @@ const MTOTable = ({
                         clearMessage={clearMessage}
                         setMTOModalOpen={setMTOModalOpen}
                         setMTOModalState={setMTOModalState}
+                        initLocation={initLocation}
+                        search={location.search}
                       />
                     </>
                   ) : (
@@ -720,7 +714,11 @@ export const formatAndHomogenizeMilestoneData = (
         formattedMilestone.solutions = [];
         formattedSubCategory.milestones.push({
           ...formattedMilestone,
-          ...milestone
+          ...milestone,
+          solutions: milestone.solutions.map(solution => ({
+            ...solution,
+            key: solution.key as OperationalSolutionKey | null | undefined
+          }))
         });
       });
 

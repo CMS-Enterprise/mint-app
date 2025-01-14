@@ -1,11 +1,9 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import {
   MtoCommonMilestoneKey,
-  MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
@@ -107,8 +105,8 @@ type ExtendedRowProps = RowProps & {
   clearMessage?: () => void;
   setMTOModalOpen?: (open: boolean) => void;
   setMTOModalState?: (state: Partial<MTOModalState>) => void;
-  detailRoute?: string;
-  location: any;
+  initLocation?: string;
+  search?: string;
 };
 
 export type ColumnType = {
@@ -268,7 +266,8 @@ export const columns: ColumnType[] = [
       clearMessage,
       setMTOModalOpen,
       setMTOModalState,
-      detailRoute
+      initLocation,
+      search
     }: ExtendedRowProps) => {
       if (rowType !== 'milestone') return <></>;
       if (isMilestoneType(row)) {
@@ -304,14 +303,16 @@ export const columns: ColumnType[] = [
               );
 
               const detailRoute = solutionMap?.route
-                ? `${initLocation}${location.search}${
-                    location.search ? '&' : '?'
+                ? `${initLocation}${search}${
+                    search ? '&' : '?'
                   }solution=${solutionMap?.route || ''}&section=about`
-                : `${initLocation}${location.search}`;
+                : `${initLocation}${search}`;
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={solution.id}>
                   {solution.key !== null ? (
-                    <UswdsReactLink to={}>{solution.key}</UswdsReactLink>
+                    <UswdsReactLink to={detailRoute}>
+                      {solution.key}
+                    </UswdsReactLink>
                   ) : (
                     solution.name
                   )}

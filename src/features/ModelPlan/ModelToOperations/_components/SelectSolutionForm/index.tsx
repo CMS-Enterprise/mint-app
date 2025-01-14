@@ -140,7 +140,7 @@ const SelectSolutionForm = () => {
     handleSubmit,
     reset,
     watch,
-    formState: { isValid }
+    formState: { isDirty }
   } = methods;
 
   const [update] = useUpdateMtoMilestoneLinkedSolutionsMutation({
@@ -235,6 +235,7 @@ const SelectSolutionForm = () => {
             <Controller
               name="linkedSolutions"
               control={control}
+              rules={{ required: true }}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-0">
                   <Label
@@ -278,21 +279,19 @@ const SelectSolutionForm = () => {
                     options={[]}
                     groupedOptions={groupedOptions}
                     selectedLabel={commonSolutionsConfig.multiSelectLabel || ''}
-                    // This probably needs to change
                     initialValues={watch('linkedSolutions')}
-                    // onChange={values => console.log(values)}
                   />
                 </FormGroup>
               )}
             />
           </Fieldset>
 
-          <Button type="submit" disabled={!isValid} className="margin-right-3">
-            {/* {linkedSolutions.length > 0 ? () : ()} */}
-
-            {t('modal.selectSolution.cta.add', {
-              count: watch('linkedSolutions')?.length || 0
-            })}
+          <Button type="submit" disabled={!isDirty} className="margin-right-3">
+            {watch('linkedSolutions')?.length === 0
+              ? t('modal.selectSolution.cta.disabled')
+              : t('modal.selectSolution.cta.add', {
+                  count: watch('linkedSolutions')?.length || 0
+                })}
           </Button>
 
           <Button
