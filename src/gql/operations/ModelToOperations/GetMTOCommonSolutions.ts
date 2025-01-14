@@ -7,6 +7,9 @@ export default gql(/* GraphQL */ `
       mtoMatrix {
         commonSolutions {
           name
+          key
+          type
+          isAdded
         }
       }
     }

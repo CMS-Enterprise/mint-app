@@ -7,6 +7,7 @@ import ProtectedRoute from 'components/ProtectedRoute';
 
 import MTOHome from './Home';
 import MilestoneLibrary from './MilestoneLibrary';
+import SolutionLibrary from './SolutionLibrary';
 
 import './index.scss';
 
@@ -23,6 +24,12 @@ const ModelToOperations = () => {
         <ProtectedRoute
           path="/models/:modelID/collaboration-area/model-to-operations/milestone-library"
           component={MilestoneLibrary}
+          exact
+        />
+
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/model-to-operations/solution-library"
+          component={SolutionLibrary}
           exact
         />
 
