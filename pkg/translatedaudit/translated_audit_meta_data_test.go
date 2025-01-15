@@ -884,3 +884,103 @@ func (suite *TAuditSuite) TestMTOSolutionMetaDataGet() {
 		}
 	})
 }
+
+// func (suite *TAuditSuite) TestMTOCategoryMetaDataGet() {
+// 	plan := suite.createModelPlan("test model plan for category meta data")
+// 	categoryNameDB := "categoryName in database"
+// 	parentCategoryNameDB := "parent categoryName in database"
+
+// 	parentCategory := suite.createMTOCategory(plan.ID, parentCategoryNameDB, nil, nil)
+// 	category := suite.createMTOCategory(plan.ID, categoryNameDB, &parentCategory.ID, nil)
+
+// 	categoryNameNew := "newCategoryName"
+// 	categoryNameOld := "oldCategoryName"
+
+// 	newChanges := models.AuditFields{
+// 		"name": models.AuditField{
+// 			New: categoryNameNew,
+// 			Old: nil,
+// 		},
+// 	}
+
+// 	oldChanges := models.AuditFields{
+// 		"name": models.AuditField{
+// 			New: nil,
+// 			Old: categoryNameOld,
+// 		},
+// 	}
+// 	emptyChanges := models.AuditFields{}
+
+// 	suite.Run("Category meta data priorities data from changes set (new field on insert)", func() {
+// 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, newChanges, models.DBOpInsert)
+// 		suite.NoError(err)
+// 		if suite.NotNil(metaDataType) {
+// 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+// 		}
+
+// 		if suite.NotNil(categoryMeta) {
+// 			suite.EqualValues("name", categoryMeta.Relation)
+// 			if suite.NotNil(categoryMeta.RelationContent) {
+// 				suite.EqualValues(categoryNameNew, *categoryMeta.RelationContent)
+// 			}
+// 		}
+// 	})
+// 	suite.Run("Category meta data priorities data from changes set (old field on delete)", func() {
+// 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, oldChanges, models.DBOpDelete)
+// 		suite.NoError(err)
+// 		if suite.NotNil(metaDataType) {
+// 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+// 		}
+
+// 		if suite.NotNil(categoryMeta) {
+// 			suite.EqualValues("name", categoryMeta.Relation)
+// 			if suite.NotNil(categoryMeta.RelationContent) {
+// 				suite.EqualValues(categoryNameOld, *categoryMeta.RelationContent)
+// 			}
+// 		}
+// 	})
+// 	suite.Run("Category meta data gets data from db if not in change set", func() {
+// 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpInsert)
+// 		suite.NoError(err)
+// 		if suite.NotNil(metaDataType) {
+// 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+// 		}
+// 		if suite.NotNil(categoryMeta) {
+// 			suite.EqualValues("name", categoryMeta.Relation)
+// 			if suite.NotNil(categoryMeta.RelationContent) {
+// 				suite.EqualValues(categoryNameDB, *categoryMeta.RelationContent)
+// 			}
+// 		}
+// 	})
+// 	suite.Run("A delete or truncate without a name in the changes object will error", func() {
+// 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpDelete)
+// 		suite.Error(err)
+// 		suite.Nil(categoryMeta)
+// 		suite.Nil(metaDataType)
+
+// 	})
+// 	suite.Run("Category meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+// 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpUpdate)
+// 		suite.NoError(err)
+// 		suite.NotNil(metaDataType)
+
+// 		if suite.NotNil(categoryMeta) {
+// 			suite.EqualValues(categoryNameDB, *categoryMeta.RelationContent)
+// 		}
+// 	})
+// 	suite.Run("Category meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+
+// 		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+// 			return storage.MTOCategoryDelete(tx, suite.testConfigs.Principal.UserAccount.ID, category.ID)
+// 		})
+// 		suite.NoError(err)
+
+// 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpUpdate)
+// 		suite.NoError(err)
+// 		suite.NotNil(metaDataType)
+
+// 		if suite.NotNil(categoryMeta) {
+// 			suite.Nil(categoryMeta.RelationContent)
+// 		}
+// 	})
+// }

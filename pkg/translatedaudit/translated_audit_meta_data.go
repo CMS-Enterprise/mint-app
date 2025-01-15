@@ -450,30 +450,59 @@ func MTOSolutionMetaDataGet(ctx context.Context, store *storage.Store, solutionI
 }
 
 // MTOCategoryMetaDataGet uses the provided information to generate metadata needed for any mto category audits
-func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryID uuid.UUID) (*models.TranslatedAuditMetaMTOCategory, *models.TranslatedAuditMetaDataType, error) {
+func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaMTOCategory, *models.TranslatedAuditMetaDataType, error) {
 
 	// get the Category
+	var parentCategoryID *uuid.UUID
 	var parentName *string
 	//TODO, this should be updated to handle if the data is deleted and not fail if so.
-
-	category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
-	if err != nil {
-		return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
-	}
-
-	if category == nil {
-		return nil, nil, fmt.Errorf("the category for %s was not returned for this mto category meta data", categoryID)
-	}
-
-	if category.ParentID != nil {
-		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
-		if err != nil {
-			return nil, nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+	parentIDChange, fieldPresent := changesFields["parent_id"]
+	if fieldPresent {
+		var parentCategoryIDString string
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			parentCategoryIDString = fmt.Sprint(parentIDChange.Old)
+		} else {
+			parentCategoryIDString = fmt.Sprint(parentIDChange.New)
 		}
-		parentName = &parentCategory.Name
+		parentCategoryIDtemp, err := uuid.Parse(parentCategoryIDString)
+		if err != nil {
+			return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. Unable to parse uuid err %w", err)
+		}
+		parentCategoryID = &parentCategoryIDtemp
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("there wasn't a parent ID present for this MTO category, unable to generate metadata for this entry. MTO category %v", categoryID)
+		}
+		// attempt to fetch the category, and get parent id from the entyr
+		category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
+		}
+
+		if category == nil {
+			return nil, nil, fmt.Errorf("the category for %s was not returned for this mto category meta data", categoryID)
+		}
+		parentCategoryID = category.ParentID
+
 	}
 
-	metaNeed := models.NewTranslatedAuditMetaMTOCategory(0, parentName, category.ParentID)
+	// get the parent category name if possible. This can fail if the parent was deleted
+	if parentCategoryID != nil {
+		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *parentCategoryID)
+		if err != nil {
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return nil, nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+			} else { // expect that a nil category can be returned under this circumstance.
+				parentName = nil
+			}
+
+		} else {
+			parentName = &parentCategory.Name
+		}
+
+	}
+
+	metaNeed := models.NewTranslatedAuditMetaMTOCategory(0, parentName, parentCategoryID)
 	metaType := models.TAMetaMTOCategory
 	return &metaNeed, &metaType, nil
 
@@ -563,7 +592,7 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		}
 		restricted = isRestricted
 	case models.TNMTOCategory:
-		metaData, metaDataType, err := MTOCategoryMetaDataGet(ctx, store, audit.PrimaryKey)
+		metaData, metaDataType, err := MTOCategoryMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {
