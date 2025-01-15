@@ -3,7 +3,11 @@ package translatedaudit
 import (
 	"time"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
@@ -683,4 +687,327 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 		}
 	})
 
+}
+
+func (suite *TAuditSuite) TestMTOMilestoneMetaDataGet() {
+	plan := suite.createModelPlan("test model plan for milestone meta data")
+	milestoneNameDB := "milestoneName in database"
+
+	milestone := suite.createMTOMilestone(plan.ID, milestoneNameDB)
+
+	milestoneNameNew := "newMilestoneName"
+	milestoneNameOld := "oldMilestoneName"
+
+	newChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: milestoneNameNew,
+			Old: nil,
+		},
+	}
+
+	oldChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: nil,
+			Old: milestoneNameOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Milestone meta data priorities data from changes set (new field on insert)", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, newChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues("name", milestoneMeta.Relation)
+			if suite.NotNil(milestoneMeta.RelationContent) {
+				suite.EqualValues(milestoneNameNew, *milestoneMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Milestone meta data priorities data from changes set (old field on delete)", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, oldChanges, models.DBOpDelete)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues("name", milestoneMeta.Relation)
+			if suite.NotNil(milestoneMeta.RelationContent) {
+				suite.EqualValues(milestoneNameOld, *milestoneMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Milestone meta data gets data from db if not in change set", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues("name", milestoneMeta.Relation)
+			if suite.NotNil(milestoneMeta.RelationContent) {
+				suite.EqualValues(milestoneNameDB, *milestoneMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("A delete or truncate without a name in the changes object will error", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(milestoneMeta)
+		suite.Nil(metaDataType)
+
+	})
+	suite.Run("Milestone meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues(milestoneNameDB, *milestoneMeta.RelationContent)
+		}
+	})
+	suite.Run("Milestone meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			return storage.MTOMilestoneDelete(tx, suite.testConfigs.Principal.UserAccount.ID, suite.testConfigs.Logger, milestone.ID)
+		})
+		suite.NoError(err)
+
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(milestoneMeta) {
+			suite.Nil(milestoneMeta.RelationContent)
+		}
+	})
+}
+
+func (suite *TAuditSuite) TestMTOSolutionMetaDataGet() {
+	plan := suite.createModelPlan("test model plan for solution meta data")
+	solutionNameDB := "solutionName in database"
+
+	solution := suite.createMTOSolution(plan.ID, solutionNameDB)
+
+	solutionNameNew := "newSolutionName"
+	solutionNameOld := "oldSolutionName"
+
+	newChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: solutionNameNew,
+			Old: nil,
+		},
+	}
+
+	oldChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: nil,
+			Old: solutionNameOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Solution meta data priorities data from changes set (new field on insert)", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, newChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues("name", solutionMeta.Relation)
+			if suite.NotNil(solutionMeta.RelationContent) {
+				suite.EqualValues(solutionNameNew, *solutionMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Solution meta data priorities data from changes set (old field on delete)", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, oldChanges, models.DBOpDelete)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues("name", solutionMeta.Relation)
+			if suite.NotNil(solutionMeta.RelationContent) {
+				suite.EqualValues(solutionNameOld, *solutionMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Solution meta data gets data from db if not in change set", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues("name", solutionMeta.Relation)
+			if suite.NotNil(solutionMeta.RelationContent) {
+				suite.EqualValues(solutionNameDB, *solutionMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("A delete or truncate without a name in the changes object will error", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(solutionMeta)
+		suite.Nil(metaDataType)
+
+	})
+	suite.Run("Solution meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues(solutionNameDB, *solutionMeta.RelationContent)
+		}
+	})
+	suite.Run("Solution meta data fails when field isn't present in change set for DELETE, fetch filename from db", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(solutionMeta)
+	})
+	suite.Run("Solution meta data doesn't fail when field isn't present in change set for UPDATE, fetch filename from db", func() {
+
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			return storage.MTOSolutionDelete(tx, suite.testConfigs.Principal.UserAccount.ID, suite.testConfigs.Logger, solution.ID)
+		})
+		suite.NoError(err)
+
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(solutionMeta) {
+			suite.Nil(solutionMeta.RelationContent)
+		}
+	})
+}
+
+func (suite *TAuditSuite) TestMTOCategoryMetaDataGet() {
+	plan := suite.createModelPlan("test model plan for category meta data")
+	categoryNameDB := "categoryName in database"
+	// this is the parent actually in the db
+	parentCategoryNameDBOld := "old parent categoryName in database"
+	parentCategoryNameDBNew := "new parent categoryName in database"
+
+	parentCategoryOld := suite.createMTOCategory(plan.ID, parentCategoryNameDBOld, nil)
+	category := suite.createMTOCategory(plan.ID, categoryNameDB, &parentCategoryOld.ID)
+	parentCategoryNew := suite.createMTOCategory(plan.ID, parentCategoryNameDBNew, nil)
+
+	categoryParentIDNew := parentCategoryNew.ID
+	// this is the id acutally in the db
+	categoryParentIDOld := parentCategoryOld.ID
+
+	newChanges := models.AuditFields{
+		"parent_id": models.AuditField{
+			New: categoryParentIDNew,
+			Old: nil,
+		},
+	}
+
+	oldChanges := models.AuditFields{
+		"parent_id": models.AuditField{
+			New: nil,
+			Old: categoryParentIDOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Category meta data priorities data from changes set (new field on insert)", func() {
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, newChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaMTOCategory, *metaDataType)
+		}
+
+		if suite.NotNil(categoryMeta) {
+			if suite.NotNil(categoryMeta.ParentCategoryID) {
+				suite.EqualValues(categoryParentIDNew, *categoryMeta.ParentCategoryID)
+			}
+		}
+	})
+	suite.Run("Category meta data priorities data from changes set (old field on delete)", func() {
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, oldChanges, models.DBOpDelete)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaMTOCategory, *metaDataType)
+		}
+
+		if suite.NotNil(categoryMeta) {
+			if suite.NotNil(categoryMeta.ParentCategoryID) {
+				suite.EqualValues(categoryParentIDOld, *categoryMeta.ParentCategoryID)
+			}
+		}
+	})
+	suite.Run("Category meta data gets data from db if not in change set", func() {
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaMTOCategory, *metaDataType)
+		}
+		if suite.NotNil(categoryMeta) {
+			if suite.NotNil(categoryMeta.ParentCategoryID) {
+				suite.EqualValues(parentCategoryOld.ID, *categoryMeta.ParentCategoryID)
+				if suite.NotNil(categoryMeta.ParentCategoryName) {
+					suite.EqualValues(parentCategoryNameDBOld, *categoryMeta.ParentCategoryName)
+				}
+
+			}
+		}
+	})
+	suite.Run("A delete or truncate without a parentID in the changes object will error", func() {
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(categoryMeta)
+		suite.Nil(metaDataType)
+
+	})
+	suite.Run("Category meta data doesn't fail when field isn't present in change set for Update, fetch category info from db", func() {
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(categoryMeta) {
+			if suite.NotNil(categoryMeta.ParentCategoryID) {
+				suite.EqualValues(parentCategoryOld.ID, *categoryMeta.ParentCategoryID)
+				if suite.NotNil(categoryMeta.ParentCategoryName) {
+					suite.EqualValues(parentCategoryNameDBOld, *categoryMeta.ParentCategoryName)
+				}
+
+			}
+		}
+	})
+	suite.Run("Category meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			return storage.MTOCategoryDelete(tx, suite.testConfigs.Principal.UserAccount.ID, category.ID)
+		})
+		suite.NoError(err)
+
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(categoryMeta) {
+			suite.Nil(categoryMeta.ParentCategoryID)
+			suite.Nil(categoryMeta.ParentCategoryName)
+		}
+	})
+	suite.Run("Category meta data fails when field isn't present in change set for DELETE", func() {
+
+		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(categoryMeta)
+	})
 }
