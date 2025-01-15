@@ -1341,6 +1341,7 @@ export type Mutation = {
    */
   deleteMTOCategory: Scalars['Boolean']['output'];
   deleteMTOMilestone: Scalars['Boolean']['output'];
+  deleteMTOSolution: Scalars['Boolean']['output'];
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
@@ -1536,6 +1537,12 @@ export type MutationDeleteMtoCategoryArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeleteMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoSolutionArgs = {
   id: Scalars['UUID']['input'];
 };
 
