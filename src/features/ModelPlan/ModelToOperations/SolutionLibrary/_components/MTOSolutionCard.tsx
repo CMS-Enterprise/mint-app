@@ -11,9 +11,9 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionsTag from 'features/HelpAndKnowledge/SolutionsHelp/_components/SolutionsTag';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import useMessage from 'hooks/useMessage';
-
+// import useMessage from 'hooks/useMessage';
 import { SolutionCardType } from '..';
 
 const MTOSolutionCard = ({
@@ -24,30 +24,32 @@ const MTOSolutionCard = ({
   solution: SolutionCardType;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const { errorMessageInModal, clearMessage } = useMessage();
+  // const { errorMessageInModal, clearMessage } = useMessage();
   const history = useHistory();
 
   const params = new URLSearchParams(history.location.search);
 
   // const milestoneParam = params.get('add-milestone');
 
-  const splitOnParatheses = (input: string) => {
-    if (input.includes('(')) {
-      const [beforeParen, insideParen] = input.split('(');
-      return {
-        main: beforeParen.trim(), // Everything before the '('
-        additional: insideParen.replace(')', '').trim() // Everything inside the '()', without the ')'
-      };
-    }
+  const mappedSolution = helpSolutions.find(s => s.enum === solution.key);
 
-    // If no parentheses, return the whole string as `main`
-    return {
-      main: input.trim(),
-      additional: null
-    };
-  };
-  const solutionName = splitOnParatheses(solution.name).main;
-  const solutionAcronym = splitOnParatheses(solution.name).additional;
+  // const splitOnParatheses = (input: string) => {
+  //   if (input.includes('(')) {
+  //     const [beforeParen, insideParen] = input.split('(');
+  //     return {
+  //       main: beforeParen.trim(), // Everything before the '('
+  //       additional: insideParen.replace(')', '').trim() // Everything inside the '()', without the ')'
+  //     };
+  //   }
+
+  //   // If no parentheses, return the whole string as `main`
+  //   return {
+  //     main: input.trim(),
+  //     additional: null
+  //   };
+  // };
+  // const solutionName = splitOnParatheses(solution.name).main;
+  // const solutionAcronym = splitOnParatheses(solution.name).additional;
 
   return (
     <>
@@ -63,23 +65,21 @@ const MTOSolutionCard = ({
               {t(`solutionLibrary.${solution.type}`)}
             </span>
           </div>
-          <h3 className="line-height-normal margin-y-1">{solutionName}</h3>
-          {solutionAcronym && <p className="margin-y-0">{solutionAcronym}</p>}
+          <h3 className="line-height-normal margin-y-1">
+            {mappedSolution?.name}
+          </h3>
+          {mappedSolution?.acronym && (
+            <p className="margin-y-0">{mappedSolution?.acronym}</p>
+          )}
         </CardHeader>
 
         <CardBody className="padding-x-3 ">
-          {/* <div className="text-base-dark">
-            {t('milestoneLibrary.category', {
-              category: milestone.categoryName
-            })}{' '}
-            {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
-          </div> */}
-          {solution.subjects.map(subject => (
-            // TODO: Somehow use the HelpSolutions instead
+          {mappedSolution?.categories.map(categoryTag => (
             <SolutionsTag
-            // key={categoryTag}
-            // category={categoryTag}
-            // route={categoryTag}
+              isBold={false}
+              key={categoryTag}
+              category={categoryTag}
+              route={categoryTag}
             />
           ))}
         </CardBody>
@@ -117,7 +117,7 @@ const MTOSolutionCard = ({
             type="button"
             className="margin-top-2"
             onClick={() => {
-              setIsSidepanelOpen(true);
+              // setIsSidepanelOpen(true);
               params.set('solution', solution.key);
               history.push({ search: params.toString() });
             }}
