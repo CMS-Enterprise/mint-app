@@ -70,7 +70,7 @@ const EditCategoryTitleForm = () => {
   const onSubmit: SubmitHandler<FormValues> = formData => {
     rename({
       variables: {
-        id: subCategoryID ?? categoryID,
+        id: subCategoryID || categoryID,
         name: formData.name
       }
     })

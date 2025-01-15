@@ -148,7 +148,7 @@ exports[`Select a Solution form > matches snapshot 1`] = `
       disabled=""
       type="submit"
     >
-      Add 0 solutions
+      Add solutions
     </button>
     <button
       class="usa-button usa-button usa-button--unstyled"
