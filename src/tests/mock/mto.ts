@@ -1,5 +1,6 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
+  GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
@@ -83,12 +84,54 @@ export const commonSolutionsMock = [
   }
 ];
 
+export const allMTOSolutionsMock = [
+  {
+    request: {
+      query: GetMtoAllSolutionsDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            commonSolutions: [
+              {
+                __typename: 'MTOCommonSolution',
+                key: MtoCommonSolutionKey.BCDA,
+                name: 'common solution 1'
+              },
+              {
+                __typename: 'MTOCommonSolution',
+                key: MtoCommonSolutionKey.BCDA,
+                name: 'common solution 2'
+              }
+            ],
+            solutions: [
+              {
+                __typename: 'MtoSolution',
+                id: '1',
+                name: 'Solution 1',
+                key: MtoCommonSolutionKey.BCDA
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
 export const milestoneMock = [
   {
     request: {
       query: GetMtoMilestoneDocument,
       variables: {
-        id: '123'
+        id: ''
       }
     },
     result: {
@@ -113,6 +156,16 @@ export const milestoneMock = [
               __typename: 'MtoSubcategory',
               id: '2'
             }
+          },
+          commonMilestone: {
+            __typename: 'MTOCommonMilestone',
+            key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+            commonSolutions: [
+              {
+                __typename: 'MTOCommonSolution',
+                key: MtoCommonSolutionKey.BCDA
+              }
+            ]
           },
           solutions: [
             {
