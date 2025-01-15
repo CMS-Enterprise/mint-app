@@ -3,7 +3,11 @@ package translatedaudit
 import (
 	"time"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
@@ -683,4 +687,102 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 		}
 	})
 
+}
+
+func (suite *TAuditSuite) TestMTOMilestoneMetaDataGet() {
+	plan := suite.createModelPlan("test model plan for milestone meta data")
+	milestoneNameDB := "milestoneName in database"
+
+	milestone := suite.createMTOMilestone(plan.ID, milestoneNameDB)
+
+	milestoneNameNew := "newMilestoneName"
+	milestoneNameOld := "oldMilestoneName"
+
+	newChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: milestoneNameNew,
+			Old: nil,
+		},
+	}
+
+	oldChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: nil,
+			Old: milestoneNameOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Milestone meta data priorities data from changes set (new field on insert)", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, newChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues("name", milestoneMeta.Relation)
+			if suite.NotNil(milestoneMeta.RelationContent) {
+				suite.EqualValues(milestoneNameNew, *milestoneMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Milestone meta data priorities data from changes set (old field on delete)", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, oldChanges, models.DBOpDelete)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues("name", milestoneMeta.Relation)
+			if suite.NotNil(milestoneMeta.RelationContent) {
+				suite.EqualValues(milestoneNameOld, *milestoneMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Milestone meta data gets data from db if not in change set", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues("name", milestoneMeta.Relation)
+			if suite.NotNil(milestoneMeta.RelationContent) {
+				suite.EqualValues(milestoneNameDB, *milestoneMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("A delete or truncate without a name in the changes object will error", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(milestoneMeta)
+		suite.Nil(metaDataType)
+
+	})
+	suite.Run("Milestone meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(milestoneMeta) {
+			suite.EqualValues(milestoneNameDB, *milestoneMeta.RelationContent)
+		}
+	})
+	suite.Run("Milestone meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			return storage.MTOMilestoneDelete(tx, suite.testConfigs.Principal.UserAccount.ID, suite.testConfigs.Logger, milestone.ID)
+		})
+		suite.NoError(err)
+
+		milestoneMeta, metaDataType, err := MTOMilestoneMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(milestoneMeta) {
+			suite.Nil(milestoneMeta.RelationContent)
+		}
+	})
 }

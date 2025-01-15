@@ -395,9 +395,16 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 		// Handle the fields carefully here, this is a deletable entry, so we will lose the ability to query on delete
 		milestone, err := loaders.MTOMilestone.ByID.Load(ctx, milestoneID)
 		if err != nil {
-			return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone. err %w", err)
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone. err %w", err)
+			} else { // expect that a nil milestone can be returned under this circumstance.
+				name = nil
+			}
+
+		} else {
+			name = milestone.Name
 		}
-		name = milestone.Name
+
 	}
 
 	meta := models.NewTranslatedAuditMetaGeneric(models.TNMTOMilestone, 0, "name", name)
