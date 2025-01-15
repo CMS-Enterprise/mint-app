@@ -107,8 +107,8 @@ const SolutionLibrary = () => {
     query: string,
     items: SolutionCardType[]
   ): SolutionCardType[] => {
-    return items.filter(milestone =>
-      milestone.name.toLowerCase().includes(query.toLowerCase())
+    return items.filter(solution =>
+      solution.name.toLowerCase().includes(query.toLowerCase())
     );
   };
 
@@ -140,7 +140,6 @@ const SolutionLibrary = () => {
         return contractsSolutions;
       case 'cross-cut':
         return crossCutSolutions;
-
       case 'all':
       default:
         return allSolutions;
@@ -204,8 +203,6 @@ const SolutionLibrary = () => {
           <PageLoading />
         ) : (
           <>
-            {/* SIDEPANEL FOR THE SOLUTIONS HERE */}
-
             {!isModalOpen && message && (
               <Expire delay={45000}>{message}</Expire>
             )}
