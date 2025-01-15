@@ -2,7 +2,12 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
-import { categoryMock, milestoneMock, modelID } from 'tests/mock/mto';
+import {
+  allMTOSolutionsMock,
+  categoryMock,
+  milestoneMock,
+  modelID
+} from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
@@ -41,7 +46,11 @@ describe('Component', () => {
       >
         <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
           <MockedProvider
-            mocks={[...milestoneMock, ...categoryMock]}
+            mocks={[
+              ...milestoneMock('123'),
+              ...categoryMock,
+              ...allMTOSolutionsMock
+            ]}
             addTypename={false}
           >
             <MessageProvider>

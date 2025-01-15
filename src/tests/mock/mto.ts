@@ -126,12 +126,12 @@ export const allMTOSolutionsMock = [
   }
 ];
 
-export const milestoneMock = [
+export const milestoneMock = (id: string) => [
   {
     request: {
       query: GetMtoMilestoneDocument,
       variables: {
-        id: ''
+        id
       }
     },
     result: {
@@ -292,7 +292,7 @@ export const suggestedMilestonesMock = [
 const allMocks = [
   ...suggestedMilestonesMock,
   ...commonMilestonesMock,
-  ...milestoneMock,
+  ...milestoneMock(modelID),
   ...categoryMock
 ];
 

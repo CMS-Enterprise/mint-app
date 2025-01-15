@@ -22,7 +22,7 @@ describe('EditMilestoneForm', () => {
       >
         <MessageProvider>
           <MockedProvider
-            mocks={[...milestoneMock, ...categoryMock]}
+            mocks={[...milestoneMock('123'), ...categoryMock]}
             addTypename={false}
           >
             <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">

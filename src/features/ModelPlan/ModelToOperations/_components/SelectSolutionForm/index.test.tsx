@@ -8,13 +8,13 @@ import MessageProvider from 'contexts/MessageContext';
 
 import SelectSolutionForm from './index';
 
-describe('Custom Solution form', () => {
+describe('Select a Solution form', () => {
   it('matches snapshot', async () => {
     const { getByText, asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
           <VerboseMockedProvider
-            mocks={[...milestoneMock, ...allMTOSolutionsMock]}
+            mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
             addTypename={false}
           >
             <Route path="/models/:modelID/">
