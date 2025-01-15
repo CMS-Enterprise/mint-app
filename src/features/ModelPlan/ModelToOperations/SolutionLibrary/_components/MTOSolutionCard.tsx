@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -12,6 +12,8 @@ import {
 import classNames from 'classnames';
 import SolutionsTag from 'features/HelpAndKnowledge/SolutionsHelp/_components/SolutionsTag';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import UswdsReactLink from 'components/LinkWrapper';
 
 // import useMessage from 'hooks/useMessage';
 import { SolutionCardType } from '..';
@@ -32,24 +34,7 @@ const MTOSolutionCard = ({
   // const milestoneParam = params.get('add-milestone');
 
   const mappedSolution = helpSolutions.find(s => s.enum === solution.key);
-
-  // const splitOnParatheses = (input: string) => {
-  //   if (input.includes('(')) {
-  //     const [beforeParen, insideParen] = input.split('(');
-  //     return {
-  //       main: beforeParen.trim(), // Everything before the '('
-  //       additional: insideParen.replace(')', '').trim() // Everything inside the '()', without the ')'
-  //     };
-  //   }
-
-  //   // If no parentheses, return the whole string as `main`
-  //   return {
-  //     main: input.trim(),
-  //     additional: null
-  //   };
-  // };
-  // const solutionName = splitOnParatheses(solution.name).main;
-  // const solutionAcronym = splitOnParatheses(solution.name).additional;
+  const location = useLocation();
 
   return (
     <>
@@ -84,7 +69,7 @@ const MTOSolutionCard = ({
           ))}
         </CardBody>
 
-        <CardFooter className="padding-3">
+        <CardFooter className="padding-3 display-flex">
           {!solution.isAdded ? (
             <Button
               type="button"
@@ -111,19 +96,15 @@ const MTOSolutionCard = ({
             </Button>
           )}
 
-          {/* //TODO: to add to solution info sidepanel */}
-          <Button
-            unstyled
-            type="button"
-            className="margin-top-2"
-            onClick={() => {
-              // setIsSidepanelOpen(true);
-              params.set('solution', solution.key);
-              history.push({ search: params.toString() });
-            }}
+          <UswdsReactLink
+            className="display-block width-fit-content usa-button usa-button--unstyled margin-top-2"
+            aria-label={`${t('aboutSolutionAriaLabel')} ${mappedSolution?.name}`}
+            to={`${location.pathname}${location.search}${
+              location.search ? '&' : '?'
+            }solution=${mappedSolution?.route}&section=about`}
           >
             {t('solutionLibrary.aboutThisSolution')}
-          </Button>
+          </UswdsReactLink>
         </CardFooter>
       </Card>
     </>
