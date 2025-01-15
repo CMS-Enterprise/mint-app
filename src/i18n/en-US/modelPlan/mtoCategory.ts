@@ -30,7 +30,7 @@ export const mtoCategory: TranslationMTOCategory = {
     gqlField: 'parentID',
     goField: 'ParentID',
     dbField: 'parent_id',
-    label: 'Parent category',
+    label: 'Primary category',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.SELECT,
     order: 1.03,
