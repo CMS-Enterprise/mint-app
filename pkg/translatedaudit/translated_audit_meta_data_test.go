@@ -786,3 +786,101 @@ func (suite *TAuditSuite) TestMTOMilestoneMetaDataGet() {
 		}
 	})
 }
+
+func (suite *TAuditSuite) TestMTOSolutionMetaDataGet() {
+	plan := suite.createModelPlan("test model plan for solution meta data")
+	solutionNameDB := "solutionName in database"
+
+	solution := suite.createMTOSolution(plan.ID, solutionNameDB)
+
+	solutionNameNew := "newSolutionName"
+	solutionNameOld := "oldSolutionName"
+
+	newChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: solutionNameNew,
+			Old: nil,
+		},
+	}
+
+	oldChanges := models.AuditFields{
+		"name": models.AuditField{
+			New: nil,
+			Old: solutionNameOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Solution meta data priorities data from changes set (new field on insert)", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, newChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues("name", solutionMeta.Relation)
+			if suite.NotNil(solutionMeta.RelationContent) {
+				suite.EqualValues(solutionNameNew, *solutionMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Solution meta data priorities data from changes set (old field on delete)", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, oldChanges, models.DBOpDelete)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues("name", solutionMeta.Relation)
+			if suite.NotNil(solutionMeta.RelationContent) {
+				suite.EqualValues(solutionNameOld, *solutionMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Solution meta data gets data from db if not in change set", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues("name", solutionMeta.Relation)
+			if suite.NotNil(solutionMeta.RelationContent) {
+				suite.EqualValues(solutionNameDB, *solutionMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("A delete or truncate without a name in the changes object will error", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(solutionMeta)
+		suite.Nil(metaDataType)
+
+	})
+	suite.Run("Solution meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(solutionMeta) {
+			suite.EqualValues(solutionNameDB, *solutionMeta.RelationContent)
+		}
+	})
+	suite.Run("Solution meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			return storage.MTOSolutionDelete(tx, suite.testConfigs.Principal.UserAccount.ID, suite.testConfigs.Logger, solution.ID)
+		})
+		suite.NoError(err)
+
+		solutionMeta, metaDataType, err := MTOSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(solutionMeta) {
+			suite.Nil(solutionMeta.RelationContent)
+		}
+	})
+}

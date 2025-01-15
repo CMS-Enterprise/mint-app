@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
@@ -216,21 +217,23 @@ func (suite *TAuditSuite) createPlanCollaborator(modelPlanID uuid.UUID, userName
 	return retCollaborator
 }
 
-// // createMTOSolution creates an MTO solution using the store. It is just for testing
-// func (suite *TAuditSuite) createMTOSolution(modelPlanID uuid.UUID, name string, preHooks ...func(*models.MTOSolution)) *models.MTOSolution {
+// createMTOSolution creates an MTO solution using the store. It is just for testing
+func (suite *TAuditSuite) createMTOSolution(modelPlanID uuid.UUID, name string, preHooks ...func(*models.MTOSolution)) *models.MTOSolution {
 
-// 	neededBy := time.Now()
-// 	otherType := models.MTOSolutionTypeOther
-// 	solToCreate := models.NewMTOSolution(modelPlanID, nil, &name, &otherType, &neededBy, suite.testConfigs.Principal.UserAccount.ID)
-// 	solToCreate.Name = &name
-// 	for _, preHook := range preHooks {
-// 		preHook(solToCreate)
+	neededBy := time.Now()
+	otherType := models.MTOSolutionTypeOther
+	solToCreate := models.NewMTOSolution(modelPlanID, nil, &name, &otherType, &neededBy, suite.testConfigs.Principal.UserAccount.ID)
+	solToCreate.PocName = helpers.PointerTo("Test POC")
+	solToCreate.PocEmail = helpers.PointerTo("testPOC@fake.fake")
+	solToCreate.Name = &name
+	for _, preHook := range preHooks {
+		preHook(solToCreate)
 
-// 	}
-// 	retSol, err := storage.MTOSolutionCreate(suite.testConfigs.Store, suite.testConfigs.Logger, solToCreate)
-// 	suite.NoError(err)
-// 	return retSol
-// }
+	}
+	retSol, err := storage.MTOSolutionCreate(suite.testConfigs.Store, suite.testConfigs.Logger, solToCreate)
+	suite.NoError(err)
+	return retSol
+}
 
 // createMTOMilestone creates an MTO Milestone using the store. It is just for testing
 func (suite *TAuditSuite) createMTOMilestone(modelPlanID uuid.UUID, name string, preHooks ...func(*models.MTOMilestone)) *models.MTOMilestone {

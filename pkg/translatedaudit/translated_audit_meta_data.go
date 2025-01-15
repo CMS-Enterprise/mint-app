@@ -432,9 +432,16 @@ func MTOSolutionMetaDataGet(ctx context.Context, store *storage.Store, solutionI
 		// Handle the fields carefully here, this is a deletable entry, so we will lose the ability to query on delete
 		solution, err := loaders.MTOSolution.ByID.Load(ctx, solutionID)
 		if err != nil {
-			return nil, nil, fmt.Errorf("there was an issue getting meta data for mto solution. err %w", err)
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto solution. err %w", err)
+			} else { // expect that a nil solution can be returned under this circumstance.
+				name = nil
+			}
+
+		} else {
+			name = solution.Name
 		}
-		name = solution.Name
+
 	}
 
 	meta := models.NewTranslatedAuditMetaGeneric(models.TNMTOSolution, 0, "name", name)
