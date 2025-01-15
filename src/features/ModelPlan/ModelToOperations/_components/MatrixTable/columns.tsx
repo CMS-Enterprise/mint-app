@@ -311,7 +311,7 @@ export const columns: ColumnType[] = [
                 <React.Fragment key={solution.id}>
                   {solution.key !== null ? (
                     <UswdsReactLink to={detailRoute}>
-                      {solution.key}
+                      {solutionMap?.acronym ?? solutionMap?.name}
                     </UswdsReactLink>
                   ) : (
                     solution.name
