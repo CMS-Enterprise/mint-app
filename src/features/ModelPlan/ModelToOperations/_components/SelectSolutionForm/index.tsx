@@ -287,7 +287,7 @@ const SelectSolutionForm = () => {
           </Fieldset>
 
           <Button type="submit" disabled={!isDirty} className="margin-right-3">
-            {watch('linkedSolutions')?.length === 0
+            {!watch('linkedSolutions')?.length
               ? t('modal.selectSolution.cta.disabled')
               : t('modal.selectSolution.cta.add', {
                   count: watch('linkedSolutions')?.length || 0

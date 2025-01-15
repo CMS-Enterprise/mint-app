@@ -45,7 +45,7 @@ export const SolutionCard = ({
           closeRoute={() => {
             params.delete('solution');
             params.delete('section');
-            return `${history.location.pathname}?${params.toString()}`;
+            return `${history.location.pathname}`;
           }}
         />
       )}

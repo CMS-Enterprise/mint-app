@@ -31,7 +31,7 @@ const Sidepanel = ({
   modalHeading,
   openModal,
   testid,
-  noScrollable,
+  noScrollable = true,
   showScroll,
   backButton
 }: SidepanelProps) => {
