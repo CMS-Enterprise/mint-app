@@ -33,7 +33,7 @@ type FormValues = {
   name: string;
 };
 
-const ModelMilestoneForm = () => {
+const CustomMilestoneForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
@@ -294,4 +294,4 @@ const ModelMilestoneForm = () => {
   );
 };
 
-export default ModelMilestoneForm;
+export default CustomMilestoneForm;

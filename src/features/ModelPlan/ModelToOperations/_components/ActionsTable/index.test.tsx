@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import {
   commonMilestonesMock,
   commonSolutionsMock,
+  milestoneMock,
   modelID
 } from 'tests/mock/mto';
 
@@ -16,7 +17,11 @@ describe('MTO Table Actions Component', () => {
   it('renders correctly and matches snapshot', async () => {
     const { asFragment } = render(
       <MockedProvider
-        mocks={[...commonSolutionsMock, ...commonMilestonesMock]}
+        mocks={[
+          ...commonSolutionsMock,
+          ...milestoneMock(modelID),
+          ...commonMilestonesMock
+        ]}
         addTypename={false}
       >
         <MemoryRouter

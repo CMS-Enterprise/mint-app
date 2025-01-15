@@ -230,6 +230,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     noneAdded: 'None added yet',
     editDetails: 'Edit details',
     milestones: 'milestones',
+    selectASolution: 'Select a solution',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',
@@ -389,6 +390,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
       visitSolutionLibrary:
         'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
+      suggestedSolution: 'Suggested solutions for this milestone',
       customSolution: 'Custom solutions added to this MTO',
       otherSolutions: 'Other available solutions',
       backToMilestone: 'Back to milestone details'
@@ -424,6 +426,24 @@ export const modelToOperationsMisc: Record<string, any> = {
       add: 'Add with {{count}} solution',
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
+    },
+    selectSolution: {
+      title: 'Add a solution for this milestone?',
+      description:
+        'Any added solutions will be associated with this milestone and will also appear in the solution view of your MTO.',
+      label: 'Solution',
+      helperText:
+        'Select from all operational solutions and IT systems included in MINT. Select all that apply. You may learn more about any non-custom operational solutions by visiting MINT’s <solution>solution library</solution> or <help>help center.</help>',
+      cta: {
+        disabled: 'Add solutions',
+        add: 'Add {{count}} solution',
+        add_other: 'Add {{count}} solutions'
+      },
+      alert: {
+        success: 'Your solution(s) have been added.',
+        error:
+          'There was an error adding your solution(s). Please try again. If the error persists, please try again another time.'
+      }
     },
     moveSubCategory: {
       title: 'Move sub-category to a new category',

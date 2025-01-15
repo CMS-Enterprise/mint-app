@@ -36,7 +36,7 @@ type FormValues = {
   pocEmail: string;
 };
 
-const SolutionForm = () => {
+const CustomSolutionForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { solutionType: solutionTypeConfig } =
@@ -312,4 +312,4 @@ const SolutionForm = () => {
   );
 };
 
-export default SolutionForm;
+export default CustomSolutionForm;

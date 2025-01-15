@@ -50,7 +50,7 @@ export const selectOptions: SelectProps[] = [
   }
 ];
 
-const CategoryForm = () => {
+const CustomCategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const {
@@ -264,4 +264,4 @@ const CategoryForm = () => {
   );
 };
 
-export default CategoryForm;
+export default CustomCategoryForm;

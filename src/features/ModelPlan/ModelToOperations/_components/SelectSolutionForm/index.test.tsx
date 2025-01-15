@@ -1,24 +1,24 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { render, screen, waitFor } from '@testing-library/react';
-import { categoryMock, modelID } from 'tests/mock/mto';
+import { render, waitFor } from '@testing-library/react';
+import { allMTOSolutionsMock, milestoneMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import CustomCategoryForm from './index';
+import SelectSolutionForm from './index';
 
-describe('Custom Catergory form', () => {
+describe('Select a Solution form', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { getByText, asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
           <VerboseMockedProvider
-            mocks={[...[...categoryMock]]}
+            mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
             addTypename={false}
           >
             <Route path="/models/:modelID/">
-              <CustomCategoryForm />
+              <SelectSolutionForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>
@@ -27,8 +27,8 @@ describe('Custom Catergory form', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          'Choose a primary category if you are adding a sub-category, or choose "None" if you are adding a primary category.'
+        getByText(
+          'Any added solutions will be associated with this milestone and will also appear in the solution view of your MTO.'
         )
       ).toBeInTheDocument();
     });

@@ -80,7 +80,7 @@ describe('LinkSolutionForm', () => {
         <MessageProvider>
           <MockedProvider
             mocks={[
-              ...milestoneMock,
+              ...milestoneMock('123'),
               ...categoryMock,
               ...possibleSolutionsMock
             ]}
