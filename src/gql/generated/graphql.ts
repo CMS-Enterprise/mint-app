@@ -1222,6 +1222,7 @@ export type ModelsToOperationMatrix = {
   commonSolutions: Array<MtoCommonSolution>;
   info: MtoInfo;
   milestones: Array<MtoMilestone>;
+  milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
   status: MtoStatus;
@@ -3832,7 +3833,6 @@ export type Query = {
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoMilestone: MtoMilestone;
-  mtoMilestonesWithNoLinkedSolutions: Array<MtoMilestone>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3904,12 +3904,6 @@ export type QueryModelPlansByOperationalSolutionKeyArgs = {
 /** Query definition for the schema */
 export type QueryMtoMilestoneArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryMtoMilestonesWithNoLinkedSolutionsArgs = {
-  modelPlanID: Scalars['UUID']['input'];
 };
 
 
