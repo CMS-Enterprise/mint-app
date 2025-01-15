@@ -181,6 +181,7 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	}
 
 	// get the Category
+	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	category, err := loaders.MTOCategory.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
@@ -251,6 +252,7 @@ func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Stor
 	}
 
 	// get the  milestone
+	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		return "", fmt.Errorf("there was an issue translating the mto  milestone foreign key reference. err %w", err)
@@ -269,6 +271,7 @@ func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store
 		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
 	}
 	// get the  solution
+	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	solution, err := loaders.MTOSolution.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		return "", fmt.Errorf("there was an issue translating the mto  Solution foreign key reference. err %w", err)

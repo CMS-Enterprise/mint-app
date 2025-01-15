@@ -476,13 +476,13 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 		// attempt to fetch the category, and get parent id from the entyr
 		category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
 		if err != nil {
-			return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) { // this can be nil if the category was deleted6
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
+			}
 		}
-
-		if category == nil {
-			return nil, nil, fmt.Errorf("the category for %s was not returned for this mto category meta data", categoryID)
+		if category != nil {
+			parentCategoryID = category.ParentID
 		}
-		parentCategoryID = category.ParentID
 
 	}
 

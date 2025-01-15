@@ -249,16 +249,16 @@ func (suite *TAuditSuite) createMTOMilestone(modelPlanID uuid.UUID, name string,
 	return retSol
 }
 
-// // createMTOCategory creates an MTO Category using the store. It is just for testing
-// func (suite *TAuditSuite) createMTOCategory(modelPlanID uuid.UUID, name string, parentCategoryID *uuid.UUID, preHooks ...func(*models.MTOCategory)) *models.MTOCategory {
+// createMTOCategory creates an MTO Category using the store. It is just for testing
+func (suite *TAuditSuite) createMTOCategory(modelPlanID uuid.UUID, name string, parentCategoryID *uuid.UUID, preHooks ...func(*models.MTOCategory)) *models.MTOCategory {
 
-// 	categoryToCreate := models.NewMTOCategory(suite.testConfigs.Principal.UserAccount.ID, name, modelPlanID, parentCategoryID, 0)
+	categoryToCreate := models.NewMTOCategory(suite.testConfigs.Principal.UserAccount.ID, name, modelPlanID, parentCategoryID, 0)
 
-// 	for _, preHook := range preHooks {
-// 		preHook(categoryToCreate)
+	for _, preHook := range preHooks {
+		preHook(categoryToCreate)
 
-// 	}
-// 	retSol, err := storage.MTOCategoryCreate(suite.testConfigs.Store, suite.testConfigs.Logger, categoryToCreate)
-// 	suite.NoError(err)
-// 	return retSol
-// }
+	}
+	retSol, err := storage.MTOCategoryCreate(suite.testConfigs.Store, suite.testConfigs.Logger, categoryToCreate)
+	suite.NoError(err)
+	return retSol
+}
