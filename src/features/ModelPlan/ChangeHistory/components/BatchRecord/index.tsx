@@ -25,6 +25,7 @@ import {
   getSolutionName,
   getSolutionOperationStatus,
   hiddenFields,
+  isGenericWithMetaData,
   isLinkingTable,
   isMTOCategoryWithMetaData,
   isOperationalSolutionWithMetaData,
@@ -323,7 +324,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO milestone header */}
         {change.tableName === TableName.MTO_MILESTONE &&
           (() => {
-            const milestoneName =
+            let milestoneName =
               change.translatedFields.find(
                 field => field.fieldName === 'mto_common_milestone_key'
               )?.newTranslated ||
@@ -334,6 +335,10 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               )?.oldTranslated ||
               change.translatedFields.find(field => field.fieldName === 'name')
                 ?.oldTranslated;
+
+            if (change.metaData && isGenericWithMetaData(change.metaData)) {
+              milestoneName = change.metaData.relationContent;
+            }
 
             return (
               <span className="text-bold">
@@ -688,7 +693,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO milestone audits */}
               {change.tableName === TableName.MTO_MILESTONE &&
                 (() => {
-                  const milestoneName =
+                  let milestoneName =
                     change.translatedFields.find(
                       field => field.fieldName === 'mto_common_milestone_key'
                     )?.newTranslated ||
@@ -701,6 +706,13 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                     change.translatedFields.find(
                       field => field.fieldName === 'name'
                     )?.oldTranslated;
+
+                  if (
+                    change.metaData &&
+                    isGenericWithMetaData(change.metaData)
+                  ) {
+                    milestoneName = change.metaData.relationContent;
+                  }
 
                   return (
                     <Trans
