@@ -80,14 +80,16 @@ const SolutionLibrary = () => {
     [data?.modelPlan?.mtoMatrix.commonSolutions]
   );
 
-  const filterSolutionsByType = (type: MtoSolutionType) => {
-    return allSolutions.filter(solution => {
-      if (hideAddedSolutions) {
-        return !solution.isAdded && solution.type === type;
-      }
-      return solution.type === type;
-    });
-  };
+  const filterSolutionsByType = useMemo(() => {
+    return (type: MtoSolutionType) => {
+      return allSolutions.filter(solution => {
+        if (hideAddedSolutions) {
+          return !solution.isAdded && solution.type === type;
+        }
+        return solution.type === type;
+      });
+    };
+  }, [allSolutions, hideAddedSolutions]);
 
   const itSystemsSolutions = filterSolutionsByType(MtoSolutionType.IT_SYSTEM);
   const contractsSolutions = filterSolutionsByType(MtoSolutionType.CONTRACTOR);
@@ -112,11 +114,25 @@ const SolutionLibrary = () => {
     );
   };
 
+  const selectedSolutionItems = () => {
+    switch (viewParam) {
+      case 'it-systems':
+        return itSystemsSolutions;
+      case 'contracts':
+        return contractsSolutions;
+      case 'cross-cut':
+        return crossCutSolutions;
+      case 'all':
+      default:
+        return allSolutions;
+    }
+  };
+
   const { allItems, search, pageSize } = useSearchSortPagination<
     SolutionCardType,
     any
   >({
-    items: allSolutions,
+    items: selectedSolutionItems(),
     filterFunction: useMemo(() => searchSolutions, []),
     sortFunction: (items: SolutionCardType[], sort: any) => items,
     sortOptions: [
@@ -132,26 +148,12 @@ const SolutionLibrary = () => {
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
-  const selectedSolutionItems = () => {
-    switch (viewParam) {
-      case 'it-systems':
-        return itSystemsSolutions;
-      case 'contracts':
-        return contractsSolutions;
-      case 'cross-cut':
-        return crossCutSolutions;
-      case 'all':
-      default:
-        return allSolutions;
-    }
-  };
-
   const {
     currentItems,
     Pagination: PaginationComponent,
     pagination: { currentPage, pageCount }
   } = usePagination<SolutionCardType[]>({
-    items: selectedSolutionItems(),
+    items: allItems,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
@@ -289,8 +291,8 @@ const SolutionLibrary = () => {
                     </ButtonGroup>
 
                     <CheckboxField
-                      id="hide-added-milestones"
-                      name="hide-added-milestones"
+                      id="hide-added-solutions"
+                      name="hide-added-solutions"
                       label={t('solutionLibrary.hideAdded', {
                         count: addedSolutions.length
                       })}
@@ -299,7 +301,7 @@ const SolutionLibrary = () => {
                       onBlur={() => null}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         params.set(
-                          'hide-added-milestones',
+                          'hide-added-solutions',
                           addedSolutionsHidden ? 'false' : 'true'
                         );
                         history.replace({ search: params.toString() });
@@ -393,7 +395,7 @@ const SolutionLibrary = () => {
                         pageSize={itemsPerPage}
                         setPageSize={setItemsPerPage}
                         valueArray={[6, 9, 'all']}
-                        suffix={t('milestones')}
+                        suffix={t('solutions')}
                       />
                     )}
                   </div>
