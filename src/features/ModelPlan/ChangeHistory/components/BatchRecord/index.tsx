@@ -299,6 +299,10 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO category header */}
         {change.tableName === TableName.MTO_CATEGORY &&
           (() => {
+            const categoryName = change.translatedFields.find(
+              field => field.fieldName === 'name'
+            )?.newTranslated;
+
             const isSubCategory =
               change.metaData &&
               isMTOCategoryWithMetaData(change.metaData) &&
@@ -310,6 +314,8 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 <span className="text-normal">
                   {t(`auditUpdateType.${change.action}`)}
                 </span>
+                {': '}
+                {categoryName}
               </span>
             );
           })()}
