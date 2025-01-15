@@ -98,12 +98,6 @@ const SolutionLibrary = () => {
   );
 
   const addedSolutions = allSolutions.filter(solution => solution.isAdded);
-  const addedSolutionsHidden = allSolutions.filter(solution => {
-    if (hideAddedSolutions) {
-      return !solution.isAdded;
-    }
-    return solution;
-  });
 
   const searchSolutions = (
     query: string,
@@ -128,11 +122,18 @@ const SolutionLibrary = () => {
     }
   };
 
+  const addedSolutionsHidden = selectedSolutionItems().filter(solution => {
+    if (hideAddedSolutions) {
+      return !solution.isAdded;
+    }
+    return solution;
+  });
+
   const { allItems, search, pageSize } = useSearchSortPagination<
     SolutionCardType,
     any
   >({
-    items: selectedSolutionItems(),
+    items: addedSolutionsHidden,
     filterFunction: useMemo(() => searchSolutions, []),
     sortFunction: (items: SolutionCardType[], sort: any) => items,
     sortOptions: [
@@ -302,7 +303,7 @@ const SolutionLibrary = () => {
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         params.set(
                           'hide-added-solutions',
-                          addedSolutionsHidden ? 'false' : 'true'
+                          hideAddedSolutions ? 'false' : 'true'
                         );
                         history.replace({ search: params.toString() });
                       }}
