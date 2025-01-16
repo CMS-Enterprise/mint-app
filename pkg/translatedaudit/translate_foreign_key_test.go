@@ -161,3 +161,56 @@ func (suite *TAuditSuite) TestGetMTOSolutionForeignKeyReferencen() {
 	})
 
 }
+
+func (suite *TAuditSuite) TestGetMTOCategoryForeignKeyReferencen() {
+	suite.Run("Category with foreign key that doesn't reference a category returns nil", func() {
+		translatedCategory, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String())
+		suite.NoError(err)
+		suite.EqualValues(DataNotAvailableMessage, translatedCategory)
+	})
+	suite.Run("Parent Category with a foreign key will return category name", func() {
+		// TODO(mto) should we include uncategorized as the subcategory name?
+		modelPlan := suite.createModelPlan("test plan")
+		categoryName := "test category"
+		category := suite.createMTOCategory(modelPlan.ID, categoryName, nil)
+		translatedCategory, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, category.ID.String())
+		suite.NoError(err)
+
+		suite.EqualValues(categoryName, translatedCategory)
+
+	})
+	suite.Run("Sub category with an existing parent key will return category name with Parent Information", func() {
+		// TODO(mto) should we include uncategorized as the subcategory name?
+		modelPlan := suite.createModelPlan("test plan")
+		categoryName := "test category"
+		category := suite.createMTOCategory(modelPlan.ID, categoryName, nil)
+		subCategoryName := "test subcategory"
+		subCategory := suite.createMTOCategory(modelPlan.ID, subCategoryName, &category.ID)
+		translatedCategoryName, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, subCategory.ID.String())
+		suite.NoError(err)
+
+		expectedName := formatCategoryTranslation(subCategoryName, &categoryName)
+
+		suite.EqualValues(expectedName, translatedCategoryName)
+
+	})
+	suite.Run("Sub category with a deleted parent key will return category name with Information Not available", func() {
+
+		modelPlan := suite.createModelPlan("test plan")
+		categoryName := "test category"
+		category := suite.createMTOCategory(modelPlan.ID, categoryName, nil)
+
+		subCategoryName := "test subcategory"
+		subCategory := suite.createMTOCategory(modelPlan.ID, subCategoryName, &category.ID)
+		suite.deleteMTOCategory(category.ID)
+		// this also deletes the subcateogyr
+		translatedCategoryName, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, subCategory.ID.String())
+		suite.NoError(err)
+
+		expectedName := DataNotAvailableMessage
+
+		suite.EqualValues(expectedName, translatedCategoryName)
+
+	})
+
+}

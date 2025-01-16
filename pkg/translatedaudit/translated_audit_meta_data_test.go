@@ -988,10 +988,7 @@ func (suite *TAuditSuite) TestMTOCategoryMetaDataGet() {
 	})
 	suite.Run("Category meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
 
-		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
-			return storage.MTOCategoryDelete(tx, suite.testConfigs.Principal.UserAccount.ID, category.ID)
-		})
-		suite.NoError(err)
+		suite.deleteMTOCategory(category.ID)
 
 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpUpdate)
 		suite.NoError(err)

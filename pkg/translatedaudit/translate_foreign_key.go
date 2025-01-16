@@ -176,7 +176,7 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 	return solution.ID.String(), nil
 }
 
-func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -184,7 +184,6 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	}
 
 	// get the Category
-	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	category, err := loaders.MTOCategory.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
@@ -195,22 +194,29 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	if category == nil {
 		return DataNotAvailableMessage, nil
 	}
+
 	//TODO decide what to do if only the parent category can not be fetched
 	// default to the name of the category
-	name := category.Name
+
+	var parentCategoryName *string
 
 	// Check to see if this is a subCategory (has a parent), if so, just return the name of the parent as well
 	// ex ParentCategory (subCategory)
 	// get the Category
 	if category.ParentID != nil {
 		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
-		if err != nil {
-			return nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+		if err != nil { // only error if there is another issue fetching the data
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+			}
 		}
+
 		if parentCategory != nil {
-			name = parentCategory.Name + " (" + category.Name + ")"
+			parentCategoryName = &parentCategory.Name
+			// name = parentCategory.Name + " (" + category.Name + ")"
 		}
-	}
+	} //TODO (mto) do we need to show uncategorized subcategory here?
+	name := formatCategoryTranslation(category.Name, parentCategoryName)
 	return name, nil
 }
 func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
