@@ -348,9 +348,7 @@ const SolutionLibrary = () => {
                             <UswdsReactLink
                               to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library?view=all`}
                               className="margin-x-05"
-                            >
-                              {' '}
-                            </UswdsReactLink>
+                            />
                           ),
                           button1: (
                             <Button
@@ -408,7 +406,8 @@ const SolutionLibrary = () => {
                         )
                       })}
                     >
-                      {t('solutionLibrary.emptyFilter.text', {
+                      {t('solutionLibrary.emptyFilter.text-firstHalf')}
+                      {t('solutionLibrary.emptyFilter.text-secondHalf', {
                         solution: t(
                           `solutionLibrary.emptyFilter.solution.${viewParam}.body`
                         )
@@ -427,7 +426,53 @@ const SolutionLibrary = () => {
                 </div>
               )}
 
-              <>
+              {totalResults !== 0 && currentItems.length === 0 ? (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="margin-bottom-4"
+                >
+                  {query && (
+                    <Alert
+                      type="info"
+                      heading={t('solutionLibrary.emptyFilter.heading', {
+                        solution: t(
+                          `solutionLibrary.emptyFilter.solution.${viewParam}.heading`
+                        )
+                      })}
+                    >
+                      {t('solutionLibrary.emptyFilter.text-firstHalf')}
+                      <Trans
+                        t={t}
+                        i18nKey="solutionLibrary.emptyFilter.checkAllSolutions"
+                        components={{
+                          link1: (
+                            <Link
+                              href={`/models/${modelID}/collaboration-area/model-to-operations/solution-library?view=all&query=`}
+                            >
+                              {' '}
+                            </Link>
+                          )
+                        }}
+                      />
+                      {t('solutionLibrary.emptyFilter.text-secondHalf', {
+                        solution: t(
+                          `solutionLibrary.emptyFilter.solution.${viewParam}.body`
+                        )
+                      })}
+                      <Trans
+                        t={t}
+                        i18nKey="solutionLibrary.emptyFilter.email"
+                        components={{
+                          email1: (
+                            <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                          )
+                        }}
+                      />
+                    </Alert>
+                  )}
+                </div>
+              ) : (
                 <CardGroup className="padding-x-1">
                   <Grid desktop={{ col: 12 }}>
                     <Grid row gap={2}>
@@ -443,24 +488,24 @@ const SolutionLibrary = () => {
                     </Grid>
                   </Grid>
                 </CardGroup>
+              )}
 
-                {/* Pagination */}
+              {/* Pagination */}
 
-                <div className="display-flex flex-wrap">
-                  {currentItems.length > 0 && pageCount > 0 && (
-                    <>{PaginationComponent}</>
-                  )}
+              <div className="display-flex flex-wrap">
+                {currentItems.length > 0 && pageCount > 0 && (
+                  <>{PaginationComponent}</>
+                )}
 
-                  {currentItems.length > 0 && (
-                    <TablePageSize
-                      className="margin-left-auto desktop:grid-col-auto"
-                      pageSize={itemsPerPage}
-                      setPageSize={setItemsPerPage}
-                      valueArray={[6, 9, 'all']}
-                    />
-                  )}
-                </div>
-              </>
+                {currentItems.length > 0 && (
+                  <TablePageSize
+                    className="margin-left-auto desktop:grid-col-auto"
+                    pageSize={itemsPerPage}
+                    setPageSize={setItemsPerPage}
+                    valueArray={[6, 9, 'all']}
+                  />
+                )}
+              </div>
             </div>
           </>
         )}
