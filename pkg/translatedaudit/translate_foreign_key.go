@@ -194,8 +194,6 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	if category == nil {
 		return DataNotAvailableMessage, nil
 	}
-
-	//TODO decide what to do if only the parent category can not be fetched
 	// default to the name of the category
 
 	var parentCategoryName *string
@@ -213,9 +211,8 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 
 		if parentCategory != nil {
 			parentCategoryName = &parentCategory.Name
-			// name = parentCategory.Name + " (" + category.Name + ")"
 		}
-	} //TODO (mto) do we need to show uncategorized subcategory here?
+	}
 	name := formatCategoryTranslation(category.Name, parentCategoryName)
 	return name, nil
 }
@@ -256,45 +253,51 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 	}
 	return commonSolution.Name, nil
 }
-func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
+func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 
 	// cast interface to key
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return nil, fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
 	}
 
 	// get the  milestone
 	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
-			return nil, fmt.Errorf("there was an issue getting the mto milestone for translation. err %w", err)
+			return "", fmt.Errorf("there was an issue getting the mto milestone for translation. err %w", err)
 		}
 	}
 	if milestone == nil { // expect that a nil milestone can be returned, since they can be deleted
-		return nil, nil
+		return DataNotAvailableMessage, nil
 	}
-	return milestone.Name, nil
+	if milestone.Name == nil {
+		return DataNotAvailableMessage, nil
+	}
+	return *milestone.Name, nil
 }
 
-func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
+func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return nil, fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
 	}
 	// get the  solution
 	solution, err := loaders.MTOSolution.ByID.Load(ctx, uuidKey)
 	if err != nil {
 		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
-			return nil, fmt.Errorf("there was an issue getting the mto solution for translation. err %w", err)
+			return "", fmt.Errorf("there was an issue getting the mto solution for translation. err %w", err)
 		}
 	}
 
 	if solution == nil { // expect that a nil solution can be returned, since they can be deleted
-		return nil, nil
+		return DataNotAvailableMessage, nil
 	}
-	return solution.Name, nil
+	if solution.Name == nil {
+		return DataNotAvailableMessage, nil
+	}
+	return *solution.Name, nil
 }
 
 func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {

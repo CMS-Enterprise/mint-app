@@ -127,7 +127,7 @@ func (suite *TAuditSuite) TestGetMTOMilestoneForeignKeyReferencen() {
 	suite.Run("Milestone with foreign key that doesn't reference a milestone returns nil", func() {
 		translatedMilestone, err := getMTOMilestoneForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String())
 		suite.NoError(err)
-		suite.Nil(translatedMilestone)
+		suite.EqualValues(DataNotAvailableMessage, translatedMilestone)
 	})
 	suite.Run("Milestone with a foreign key will return milestone name", func() {
 		modelPlan := suite.createModelPlan("test plan")
@@ -136,7 +136,7 @@ func (suite *TAuditSuite) TestGetMTOMilestoneForeignKeyReferencen() {
 		translatedMilestone, err := getMTOMilestoneForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID.String())
 		suite.NoError(err)
 		if suite.NotNil(translatedMilestone) {
-			suite.EqualValues(milestoneName, *translatedMilestone)
+			suite.EqualValues(milestoneName, translatedMilestone)
 		}
 
 	})
@@ -146,7 +146,7 @@ func (suite *TAuditSuite) TestGetMTOSolutionForeignKeyReferencen() {
 	suite.Run("Solution with foreign key that doesn't reference a solution returns nil", func() {
 		translatedSolution, err := getMTOSolutionForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String())
 		suite.NoError(err)
-		suite.Nil(translatedSolution)
+		suite.EqualValues(DataNotAvailableMessage, translatedSolution)
 	})
 	suite.Run("Solution with a foreign key will return solution name", func() {
 		modelPlan := suite.createModelPlan("test plan")
@@ -155,7 +155,7 @@ func (suite *TAuditSuite) TestGetMTOSolutionForeignKeyReferencen() {
 		translatedSolution, err := getMTOSolutionForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID.String())
 		suite.NoError(err)
 		if suite.NotNil(translatedSolution) {
-			suite.EqualValues(solutionName, *translatedSolution)
+			suite.EqualValues(solutionName, translatedSolution)
 		}
 
 	})
