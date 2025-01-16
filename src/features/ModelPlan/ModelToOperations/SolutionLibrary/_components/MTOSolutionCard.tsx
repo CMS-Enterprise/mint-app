@@ -42,7 +42,8 @@ const MTOSolutionCard = ({
         containerProps={{
           className: 'radius-md minh-mobile padding-0 margin-0'
         }}
-        className={classNames(className, 'margin-bottom-2')}
+        className={classNames(className, 'margin-bottom-2 padding-x-1')}
+        gridLayout={{ desktop: { col: 4 }, tablet: { col: 6 }, gap: 6 }}
       >
         <CardHeader className="padding-3 padding-bottom-0">
           <div className="display-flex flex-justify">
