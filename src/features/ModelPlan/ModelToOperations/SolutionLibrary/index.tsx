@@ -107,49 +107,40 @@ const SolutionLibrary = () => {
     defaultItemsPerPage: 6
   });
 
-  // const filterSolutionsByType = useMemo(() => {
-  //   return (type: MtoSolutionType) => {
-  //     return allItems.filter(solution => {
-  //       if (hideAddedSolutions) {
-  //         return !solution.isAdded && solution.type === type;
-  //       }
-  //       return solution.type === type;
-  //     });
-  //   };
-  // }, [allItems, hideAddedSolutions]);
+  const itSystemsSolutions = useMemo(
+    () =>
+      allItems.filter(item => {
+        if (hideAddedSolutions) {
+          return !item.isAdded && item.type === MtoSolutionType.IT_SYSTEM;
+        }
+        return item.type === MtoSolutionType.IT_SYSTEM;
+      }),
+    [allItems, hideAddedSolutions]
+  );
 
-  // const itSystemsSolutions = useMemo(
-  //   () => filterSolutionsByType(MtoSolutionType.IT_SYSTEM),
-  //   [filterSolutionsByType]
-  // );
-  // const contractsSolutions = useMemo(
-  //   () => filterSolutionsByType(MtoSolutionType.CONTRACTOR),
-  //   [filterSolutionsByType]
-  // );
-  // const crossCutSolutions = useMemo(
-  //   () => filterSolutionsByType(MtoSolutionType.CROSS_CUTTING_GROUP),
-  //   [filterSolutionsByType]
-  // );
+  const contractsSolutions = useMemo(
+    () =>
+      allItems.filter(item => {
+        if (hideAddedSolutions) {
+          return !item.isAdded && item.type === MtoSolutionType.CONTRACTOR;
+        }
+        return item.type === MtoSolutionType.CONTRACTOR;
+      }),
+    [allItems, hideAddedSolutions]
+  );
 
-  // const selectedSolutionItems = useMemo(() => {
-  //   switch (viewParam) {
-  //     case 'it-systems':
-  //       return itSystemsSolutions;
-  //     case 'contracts':
-  //       return contractsSolutions;
-  //     case 'cross-cut':
-  //       return crossCutSolutions;
-  //     case 'all':
-  //     default:
-  //       return allSolutions;
-  //   }
-  // }, [
-  //   viewParam,
-  //   itSystemsSolutions,
-  //   contractsSolutions,
-  //   crossCutSolutions,
-  //   allSolutions
-  // ]);
+  const crossCutSolutions = useMemo(
+    () =>
+      allItems.filter(item => {
+        if (hideAddedSolutions) {
+          return (
+            !item.isAdded && item.type === MtoSolutionType.CROSS_CUTTING_GROUP
+          );
+        }
+        return item.type === MtoSolutionType.CROSS_CUTTING_GROUP;
+      }),
+    [allItems, hideAddedSolutions]
+  );
 
   const selectedSolutions = useMemo(
     () =>
@@ -279,8 +270,7 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.itSystems', {
-                          // count: itSystemsSolutions.length
-                          count: 1
+                          count: itSystemsSolutions.length
                         })}
                       </Button>
                       <Button
@@ -292,8 +282,7 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.contracts', {
-                          // count: contractsSolutions.length
-                          count: 1
+                          count: contractsSolutions.length
                         })}
                       </Button>
                       <Button
@@ -305,8 +294,7 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.crossCutting', {
-                          // count: crossCutSolutions.length
-                          count: 1
+                          count: crossCutSolutions.length
                         })}
                       </Button>
                     </ButtonGroup>
