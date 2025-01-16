@@ -108,32 +108,25 @@ const SolutionLibrary = () => {
     );
   };
 
-  const selectedSolutionItems = () => {
-    switch (viewParam) {
-      case 'it-systems':
-        return itSystemsSolutions;
-      case 'contracts':
-        return contractsSolutions;
-      case 'cross-cut':
-        return crossCutSolutions;
-      case 'all':
-      default:
-        return allSolutions;
-    }
-  };
-
-  const addedSolutionsHidden = selectedSolutionItems().filter(solution => {
-    if (hideAddedSolutions) {
-      return !solution.isAdded;
-    }
-    return solution;
-  });
+  // const selectedSolutionItems = () => {
+  //   switch (viewParam) {
+  //     case 'it-systems':
+  //       return itSystemsSolutions;
+  //     case 'contracts':
+  //       return contractsSolutions;
+  //     case 'cross-cut':
+  //       return crossCutSolutions;
+  //     case 'all':
+  //     default:
+  //       return allSolutions;
+  //   }
+  // };
 
   const { allItems, search, pageSize } = useSearchSortPagination<
     SolutionCardType,
     any
   >({
-    items: addedSolutionsHidden,
+    items: allSolutions,
     filterFunction: useMemo(() => searchSolutions, []),
     sortFunction: (items: SolutionCardType[], sort: any) => items,
     sortOptions: [
@@ -145,6 +138,17 @@ const SolutionLibrary = () => {
     defaultItemsPerPage: 6
   });
 
+  const selectedSolutions = useMemo(
+    () =>
+      allItems.filter(solution => {
+        if (hideAddedSolutions) {
+          return !solution.isAdded;
+        }
+        return solution;
+      }),
+    [allItems, hideAddedSolutions]
+  );
+
   const { query, setQuery, rowLength } = search;
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
@@ -154,7 +158,7 @@ const SolutionLibrary = () => {
     Pagination: PaginationComponent,
     pagination: { currentPage, pageCount }
   } = usePagination<SolutionCardType[]>({
-    items: allItems,
+    items: selectedSolutions,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
@@ -365,42 +369,40 @@ const SolutionLibrary = () => {
                 </Grid>
               </div>
 
-              {viewParam === 'all' && (
-                <>
-                  <CardGroup className="padding-x-1">
-                    <Grid desktop={{ col: 12 }}>
-                      <Grid row gap={2}>
-                        {currentItems.map(solution => (
-                          <Grid
-                            desktop={{ col: 4 }}
-                            tablet={{ col: 6 }}
-                            key={solution.key}
-                          >
-                            <MTOSolutionCard solution={solution} />
-                          </Grid>
-                        ))}
-                      </Grid>
+              <>
+                <CardGroup className="padding-x-1">
+                  <Grid desktop={{ col: 12 }}>
+                    <Grid row gap={2}>
+                      {currentItems.map(solution => (
+                        <Grid
+                          desktop={{ col: 4 }}
+                          tablet={{ col: 6 }}
+                          key={solution.key}
+                        >
+                          <MTOSolutionCard solution={solution} />
+                        </Grid>
+                      ))}
                     </Grid>
-                  </CardGroup>
+                  </Grid>
+                </CardGroup>
 
-                  {/* Pagination */}
+                {/* Pagination */}
 
-                  <div className="display-flex flex-wrap">
-                    {currentItems.length > 0 && pageCount > 0 && (
-                      <>{PaginationComponent}</>
-                    )}
+                <div className="display-flex flex-wrap">
+                  {currentItems.length > 0 && pageCount > 0 && (
+                    <>{PaginationComponent}</>
+                  )}
 
-                    {currentItems.length > 0 && (
-                      <TablePageSize
-                        className="margin-left-auto desktop:grid-col-auto"
-                        pageSize={itemsPerPage}
-                        setPageSize={setItemsPerPage}
-                        valueArray={[6, 9, 'all']}
-                      />
-                    )}
-                  </div>
-                </>
-              )}
+                  {currentItems.length > 0 && (
+                    <TablePageSize
+                      className="margin-left-auto desktop:grid-col-auto"
+                      pageSize={itemsPerPage}
+                      setPageSize={setItemsPerPage}
+                      valueArray={[6, 9, 'all']}
+                    />
+                  )}
+                </div>
+              </>
             </div>
           </>
         )}
