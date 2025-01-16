@@ -207,9 +207,6 @@ const SolutionLibrary = () => {
           {t('solutionLibrary.heading')}
         </h1>
 
-        <Button type="button" onClick={() => setQuery('')}>
-          gary!
-        </Button>
         <p className="mint-body-large margin-bottom-2 margin-top-05">
           {t('solutionLibrary.description')}
         </p>
@@ -489,20 +486,10 @@ const SolutionLibrary = () => {
                   )}
                 </div>
               ) : (
-                <CardGroup className="padding-x-1">
-                  <Grid desktop={{ col: 12 }}>
-                    <Grid row gap={2}>
-                      {currentItems.map(solution => (
-                        <Grid
-                          desktop={{ col: 4 }}
-                          tablet={{ col: 6 }}
-                          key={solution.key}
-                        >
-                          <MTOSolutionCard solution={solution} />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Grid>
+                <CardGroup>
+                  {currentItems.map(solution => (
+                    <MTOSolutionCard solution={solution} />
+                  ))}
                 </CardGroup>
               )}
 
