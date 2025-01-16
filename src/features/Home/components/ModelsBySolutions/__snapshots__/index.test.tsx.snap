@@ -40,9 +40,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Total
                   </div>
                   <div
@@ -60,9 +58,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Planned
                   </div>
                   <div
@@ -80,9 +76,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Active
                   </div>
                   <div
@@ -100,9 +94,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="button"
                   type="button"
                 >
-                  <div
-                    class="margin-bottom-1"
-                  >
+                  <div>
                     Ended
                   </div>
                   <div

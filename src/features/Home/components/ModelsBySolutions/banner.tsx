@@ -66,9 +66,7 @@ const ModelsBySolutionsBanner = ({
                   'bg-primary-darker': selectedStatus === 'total'
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.total`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.total`)}</div>
                 <div data-testid="total-count">{solutionModels.length}</div>
               </Button>
               <Button
@@ -79,9 +77,7 @@ const ModelsBySolutionsBanner = ({
                     selectedStatus === ModelBySolutionStatus.PLANNED
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.planned`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.planned`)}</div>
                 <div data-testid="planned-count">
                   {
                     solutionModels.filter(
@@ -100,9 +96,7 @@ const ModelsBySolutionsBanner = ({
                     selectedStatus === ModelBySolutionStatus.ACTIVE
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.active`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.active`)}</div>
                 <div data-testid="active-count">
                   {
                     solutionModels.filter(
@@ -121,9 +115,7 @@ const ModelsBySolutionsBanner = ({
                     selectedStatus === ModelBySolutionStatus.ENDED
                 })}
               >
-                <div className="margin-bottom-1">
-                  {customHomeT(`solutionStatus.ended`)}
-                </div>
+                <div>{customHomeT(`solutionStatus.ended`)}</div>
                 <div data-testid="ended-count">
                   {
                     solutionModels.filter(
