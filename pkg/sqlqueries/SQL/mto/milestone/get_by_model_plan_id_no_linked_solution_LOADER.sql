@@ -1,4 +1,4 @@
-WITH QIDS AS (
+WITH QUERIED_IDS AS (
     SELECT UNNEST(CAST(:model_plan_ids AS UUID[])) AS model_plan_id
 )
 
@@ -26,15 +26,4 @@ LEFT JOIN mto_common_milestone AS cm
 LEFT JOIN mto_milestone_solution_link AS link
     ON m.id = link.milestone_id
 
-/* LEFT JOIN to see if the milestone's mto_common_milestone_key is
-     found in the common link table */
-LEFT JOIN mto_common_milestone_solution_link AS cLink
-    ON m.mto_common_milestone_key = cLink.mto_common_milestone_key
-
-WHERE
-    /* Only milestones whose model_plan_id is in the QIDS set */
-    m.model_plan_id IN (SELECT model_plan_id FROM QIDS)
-    /* Exclude if there's a direct link entry (milestone_id not null) */
-    AND link.milestone_id IS NULL
-    /* Exclude if there's a matching common key in the cLink table */
-    AND cLink.mto_common_milestone_key IS NULL;
+INNER JOIN QUERIED_IDS AS qIDs ON m.model_plan_id = qIDs.model_plan_id AND link.milestone_id IS NULL
