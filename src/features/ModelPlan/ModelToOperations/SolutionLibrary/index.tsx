@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useMemo
-  // useState
-} from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
@@ -11,8 +7,8 @@ import {
   CardGroup,
   Grid,
   GridContainer,
-  Icon
-  // Link
+  Icon,
+  Link
 } from '@trussworks/react-uswds';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { NotFoundPartial } from 'features/NotFound';
@@ -22,6 +18,7 @@ import {
   useGetMtoCommonSolutionsQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
@@ -29,7 +26,6 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
-import TableResults from 'components/TableResults';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -154,13 +150,14 @@ const SolutionLibrary = () => {
   );
 
   const { query, setQuery, rowLength } = search;
+  const totalResults: number = query ? rowLength : allItems.length;
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
   const {
     currentItems,
     Pagination: PaginationComponent,
-    pagination: { currentPage, pageCount }
+    pagination: { pageCount }
   } = usePagination<SolutionCardType[]>({
     items: selectedSolutions,
     itemsPerPage,
@@ -232,15 +229,15 @@ const SolutionLibrary = () => {
                     />
                   </Grid>
 
+                  {/* X results for 'query' */}
                   {!!query && (
-                    <Grid desktop={{ col: 12 }}>
-                      <TableResults
-                        globalFilter={query}
-                        pageIndex={currentPage - 1}
-                        pageSize={itemsPerPage}
-                        filteredRowLength={rowLength}
-                        rowLength={allItems.length}
-                      />
+                    <Grid desktop={{ col: 12 }} className="margin-bottom-3">
+                      <span>
+                        {t('tableAndPagination:results.resultsFor', {
+                          count: totalResults
+                        })}
+                        <strong>&quot;{query}&quot;</strong>
+                      </span>
                     </Grid>
                   )}
 
@@ -372,6 +369,38 @@ const SolutionLibrary = () => {
                   </Grid>
                 </Grid>
               </div>
+
+              {/* No Results Banner Here */}
+              {totalResults === 0 && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="margin-bottom-4"
+                >
+                  {query && (
+                    <Alert
+                      type="warning"
+                      heading={t('solutionLibrary.emptyFilter.heading', {
+                        // TODO: change what goes here
+                        solution: viewParam
+                      })}
+                    >
+                      {t('solutionLibrary.emptyFilter.text', {
+                        solution: viewParam
+                      })}
+                      <Trans
+                        t={t}
+                        i18nKey="solutionLibrary.emptyFilter.email"
+                        components={{
+                          email1: (
+                            <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                          )
+                        }}
+                      />
+                    </Alert>
+                  )}
+                </div>
+              )}
 
               <>
                 <CardGroup className="padding-x-1">
