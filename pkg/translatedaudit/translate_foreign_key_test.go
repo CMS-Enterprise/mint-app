@@ -176,11 +176,10 @@ func (suite *TAuditSuite) TestGetMTOCategoryForeignKeyReferencen() {
 		translatedCategory, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, category.ID.String())
 		suite.NoError(err)
 
-		suite.EqualValues(categoryName, translatedCategory)
+		suite.EqualValues(formatCategoryTranslation(categoryName, nil), translatedCategory)
 
 	})
 	suite.Run("Sub category with an existing parent key will return category name with Parent Information", func() {
-		// TODO(mto) should we include uncategorized as the subcategory name?
 		modelPlan := suite.createModelPlan("test plan")
 		categoryName := "test category"
 		category := suite.createMTOCategory(modelPlan.ID, categoryName, nil)
