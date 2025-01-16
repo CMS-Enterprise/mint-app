@@ -554,7 +554,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     IT_SYSTEM: 'IT System',
     CONTRACTOR: 'Contract vehicle, contractor, or other contract',
     CROSS_CUTTING_GROUP: 'Cross-cutting group',
-    OTHER: 'Other'
+    OTHER: 'Other',
+    emptyFilter: {
+      heading: 'There are no {{solution}} that match your search.',
+      text: 'Please double-check your search and try again. If you’re searching for {{solution}} that you believe should be a part of MINT, please contact the MINT Team at <link>MINTTeam@cms.hhs.gov</link>.'
+    }
   },
   validation: {
     fillOut: 'Please fill out the required field.'
