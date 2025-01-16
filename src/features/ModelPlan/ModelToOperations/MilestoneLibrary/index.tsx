@@ -6,6 +6,7 @@ import {
   ButtonGroup,
   CardGroup,
   Grid,
+  GridContainer,
   Icon,
   Link
 } from '@trussworks/react-uswds';
@@ -29,7 +30,6 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
-import MTOModal from '../_components/FormModal';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
@@ -61,7 +61,7 @@ const MilestoneLibrary = () => {
   }
 
   return (
-    <>
+    <GridContainer>
       <Breadcrumbs
         items={[
           BreadcrumbItemOptions.HOME,
@@ -96,7 +96,7 @@ const MilestoneLibrary = () => {
       ) : (
         <MilstoneCardGroup milestones={milestones} />
       )}
-    </>
+    </GridContainer>
   );
 };
 
@@ -129,9 +129,9 @@ const MilstoneCardGroup = ({
   // Query parameters
   const params = new URLSearchParams(history.location.search);
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
-  let viewParam: MilestoneViewType = 'suggested';
-
   const milestoneParam: string = params.get('milestone') || '';
+
+  let viewParam: MilestoneViewType = 'suggested';
 
   const [, setIsSidepanelOpen] = useState(false);
 
@@ -249,12 +249,6 @@ const MilstoneCardGroup = ({
       >
         {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
       </Sidepanel>
-
-      <MTOModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        modalType="milestone"
-      />
 
       {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 

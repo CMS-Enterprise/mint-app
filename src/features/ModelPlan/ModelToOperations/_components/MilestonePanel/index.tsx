@@ -1,25 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  Grid,
-  GridContainer,
-  Icon
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import {
-  HelpSolutionBaseType,
-  helpSolutions
-} from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { useHistory } from 'react-router-dom';
+import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
 
-import useModalSolutionState from 'hooks/useModalSolutionState';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
+import useMessage from 'hooks/useMessage';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
-import MTOModal from '../FormModal';
+import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
+import { SolutionCard } from '../SolutionCard';
 
 import '../../index.scss';
 
@@ -29,6 +21,8 @@ type MilestonePanelProps = {
 
 const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const { errorMessageInModal, clearMessage } = useMessage();
 
   const history = useHistory();
 
@@ -61,17 +55,31 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
 
   return (
     <>
-      <MTOModal
+      <Modal
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
+          params.delete('milestone', milestone.key);
           history.replace({ search: params.toString() });
+          clearMessage();
           setIsModalOpen(false);
         }}
-        modalType="solutionToMilestone"
-        isRequired={false}
-        milestone={milestone}
-      />
+        shouldCloseOnOverlayClick
+        className="tablet:width-mobile-lg mint-body-normal"
+      >
+        <div className="margin-bottom-2">
+          <PageHeading headingLevel="h3" className="margin-y-0">
+            {t('modal.solutionToMilestone.title')}
+          </PageHeading>
+        </div>
+
+        {errorMessageInModal}
+
+        <AddSolutionToMilestoneForm
+          closeModal={() => setIsModalOpen(false)}
+          milestone={milestone}
+        />
+      </Modal>
 
       <GridContainer className="padding-8">
         <Grid row>
@@ -146,70 +154,6 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
         </Grid>
       </GridContainer>
     </>
-  );
-};
-
-export const SolutionCard = ({
-  solution,
-  className
-}: {
-  solution: HelpSolutionBaseType;
-  className?: string;
-}) => {
-  const { t } = useTranslation('modelToOperationsMisc');
-
-  const { modelID } = useParams<{ modelID: string }>();
-
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
-
-  // Set the solution route params
-  params.set('solution', solution.route);
-  params.set('section', 'about');
-
-  const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.enum
-  );
-
-  return (
-    <Grid desktop={{ col: 9 }} className="display-flex">
-      {renderModal && selectedSolution && (
-        <SolutionDetailsModal
-          solution={selectedSolution}
-          openedFrom={prevPathname}
-          closeRoute={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
-        />
-      )}
-
-      <Card
-        className={classNames('width-full', className)}
-        containerProps={{
-          className: classNames(
-            'padding-3 flex-justify radius-md shadow-2 margin-0'
-          )
-        }}
-      >
-        <p className="margin-top-0 margin-bottom-05 text-base-dark">
-          {solution?.type}
-        </p>
-
-        <h3 className="margin-0">{solution?.name}</h3>
-
-        {solution?.acronym && (
-          <p className="margin-top-0">{solution?.acronym}</p>
-        )}
-
-        <div className="border-top border-base-light padding-top-2">
-          <Button
-            type="button"
-            unstyled
-            onClick={() => history.replace({ search: params.toString() })}
-          >
-            {t('milestoneLibrary.aboutSolution')}
-          </Button>
-        </div>
-      </Card>
-    </Grid>
   );
 };
 

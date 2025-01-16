@@ -4,6 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
+
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -92,47 +96,25 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			return nil, err
 		}
 		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
-
-		// TODO: Batch insert these solutions
-		var solutions []*models.MTOSolution
-		for _, commonSolutionKey := range commonSolutions {
-			solution := models.NewMTOSolution(modelPlanID,
-				&commonSolutionKey,
-				nil,
-				nil,
-				nil,
-				principal.Account().ID)
-
-			mtoSolution, createMTOSolutionErr := storage.MTOSolutionCreateAllowConflicts(tx, logger, solution)
-			if createMTOSolutionErr != nil {
-				logger.Error("failed to create solution when creating common milestone", zap.Error(err))
-				return nil, createMTOSolutionErr
-			}
-
-			solutions = append(solutions, mtoSolution)
+		if err != nil {
+			logger.Error("failed to create mto milestone from common library", zap.Error(err))
+			return nil, err
 		}
 
-		// TODO: Batch insert these links
-		for _, solution := range solutions {
-			mtoMilestoneSolutionLink := models.NewMTOMilestoneSolutionLink(
-				principal.Account().ID,
-				createdMilestone.ID,
-				solution.ID,
-			)
-
-			_, milestoneSolutionLinkErr := storage.MTOMilestoneSolutionLinkCreate(
-				tx,
-				logger,
-				mtoMilestoneSolutionLink,
-			)
-
-			if milestoneSolutionLinkErr != nil {
-				logger.Error(
-					"failed to create milestone solution link when creating milestone from library",
-					zap.Error(err),
-				)
-				return nil, milestoneSolutionLinkErr
-			}
+		// create common solutions and link them
+		_, err = MTOMilestoneUpdateLinkedSolutionsWithTX(
+			ctx,
+			principal,
+			logger,
+			tx,
+			createdMilestone.ID,
+			createdMilestone.ModelPlanID,
+			[]uuid.UUID{},
+			commonSolutions,
+		)
+		if err != nil {
+			logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+			return nil, err
 		}
 
 		return createdMilestone, err
@@ -140,9 +122,14 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 }
 
 // MTOMilestoneUpdate updates the fields of an MTOMilestone
-func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOMilestoneUpdate(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
+	solutionLinks *model.MTOSolutionLinks,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -164,7 +151,26 @@ func MTOMilestoneUpdate(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOMilestoneUpdate(store, logger, existing)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+		if solutionLinks != nil {
+			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutionsWithTX(
+				ctx,
+				principal,
+				logger,
+				tx,
+				id,
+				existing.ModelPlanID,
+				solutionLinks.SolutionIDs,
+				solutionLinks.CommonSolutionKeys,
+			)
+			if updateLinksErr != nil {
+				return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", updateLinksErr)
+			}
+		}
+
+		return storage.MTOMilestoneUpdate(tx, logger, existing)
+	})
 }
 
 // MTOMilestoneDelete deletes an MTOMilestone
@@ -221,6 +227,70 @@ func MTOMilestoneGetBySolutionIDLOADER(
 	solutionID uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.BySolutionID.Load(ctx, solutionID)
+}
+
+// MTOMilestoneUpdateLinkedSolutionsWithTX updates the linked solutions for a milestone, deleting ones that are not included in the list
+func MTOMilestoneUpdateLinkedSolutionsWithTX(
+	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
+	tx *sqlx.Tx,
+	milestoneID uuid.UUID,
+	modelPlanID uuid.UUID,
+	solutionIDs []uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+) ([]*models.MTOSolution, error) {
+	commonSolutionsInstance, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, commonSolutionKeys, modelPlanID, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
+		return item.ID
+	})
+	joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
+
+	currentLinkedSolutions, err := storage.MTOMilestoneSolutionLinkMergeSolutionsToMilestones(tx, logger, milestoneID, joinedSolutionIDs, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+	return currentLinkedSolutions, nil
+}
+
+// MTOMilestoneUpdateLinkedSolutions is a convenience wrapper around MTOMilestoneUpdateLinkedSolutionsWithTX
+// it initiates the transaction, then calls MTOMilestoneUpdateLinkedSolutionsWithTX
+func MTOMilestoneUpdateLinkedSolutions(
+	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
+	store *storage.Store,
+	id uuid.UUID,
+	solutionIDs []uuid.UUID,
+	commonSolutionKeys []models.MTOCommonSolutionKey,
+) ([]*models.MTOSolution, error) {
+
+	milestone, err := MTOMilestoneGetByIDLOADER(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	// initiate transaction
+	var retSolutions []*models.MTOSolution
+	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
+	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
+		if err != nil {
+			return err
+		}
+		retSolutions = currentLinkedSolutions
+		// TODO, should we instead return the solutions?
+		return nil
+
+	})
+	if err != nil {
+		return nil, err
+	}
+	return retSolutions, nil
 }
 
 // MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader returns all milestones by a model plan ID that are not linked to a solution

@@ -47,6 +47,22 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.3
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
+    options: {
+      NOT_STARTED: 'Not started',
+      ONBOARDING: 'Onboarding',
+      BACKLOG: 'Backlog',
+      IN_PROGRESS: 'In Progress',
+      COMPLETED: 'Completed'
+    },
+    order: 1.4
   }
 };
 

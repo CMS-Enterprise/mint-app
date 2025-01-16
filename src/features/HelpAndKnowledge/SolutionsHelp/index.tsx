@@ -48,7 +48,7 @@ export const findCategoryMapByRouteParam = (
 };
 
 export const findSolutionByRouteParam = (
-  route: string | null,
+  route: string | null | undefined,
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
   if (!route) return undefined;

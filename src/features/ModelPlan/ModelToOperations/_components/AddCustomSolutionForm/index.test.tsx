@@ -16,7 +16,7 @@ describe('Custom Solution form', () => {
         <MessageProvider>
           <VerboseMockedProvider mocks={[...categoryMock]} addTypename={false}>
             <Route path="/models/:modelID/">
-              <SolutionForm closeModal={() => {}} />
+              <SolutionForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>

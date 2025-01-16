@@ -4,6 +4,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -330,6 +332,189 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOMilestone.BySolutionID,
 		expectedResults, verifyFunc)
 
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionID() {
+	plan := suite.createModelPlan("plan for adding solutions by solution ID")
+	// Create a milestone with no linked solutions
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone", plan.ID, nil)
+	suite.NoError(err)
+
+	// Create a custom solution (no common key)
+	solName := "Custom Solution 1"
+	solType := models.MTOSolutionTypeOther
+	sol, err := MTOSolutionCreateCustom(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		plan.ID,
+		nil,
+		solName,
+		solType,
+		nil,
+		"POC Name",
+		"poc@example.com",
+	)
+	suite.NoError(err)
+
+	// Add the solution to the milestone by solution ID
+	solutionLinks := &model.MTOSolutionLinks{
+		SolutionIDs: []uuid.UUID{sol.ID},
+	}
+	updatedMilestone, err := MTOMilestoneUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		milestone.ID,
+		map[string]interface{}{},
+		solutionLinks,
+	)
+	suite.NoError(err)
+
+	// Verify the solution is linked now
+	linkedSolutions, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, updatedMilestone.ID)
+	suite.NoError(err)
+	suite.Len(linkedSolutions, 1)
+	suite.Equal(sol.ID, linkedSolutions[0].SolutionID)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddByCommonKey() {
+	plan := suite.createModelPlan("plan for adding solutions by common key")
+	// Create a milestone with no linked solutions
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone CK", plan.ID, nil)
+	suite.NoError(err)
+
+	// Use a known common solution key from your codebase
+	commonKey := models.MTOCSKCcw // Example common solution key
+	// Add the solution by common key
+	solutionLinks := &model.MTOSolutionLinks{
+		CommonSolutionKeys: []models.MTOCommonSolutionKey{commonKey},
+	}
+	updatedMilestone, err := MTOMilestoneUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		milestone.ID,
+		map[string]interface{}{},
+		solutionLinks,
+	)
+	suite.NoError(err)
+
+	// Verify the solution is linked now by fetching solutions for this milestone
+	linkedSolutions, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, updatedMilestone.ID)
+	suite.NoError(err)
+	suite.Len(linkedSolutions, 1)
+
+	// Fetch the solution and verify it has the common key
+	solRetrieved, err := MTOSolutionGetByMilestoneIDLOADER(suite.testConfigs.Context, updatedMilestone.ID)
+	suite.NoError(err)
+	suite.Len(solRetrieved, 1)
+	suite.NotNil(solRetrieved[0].Key)
+	suite.Equal(commonKey, *solRetrieved[0].Key)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySolutionID() {
+	plan := suite.createModelPlan("plan for unlinking solutions by solution ID")
+	// Create a milestone and link a solution
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone to Unlink ID", plan.ID, nil)
+	suite.NoError(err)
+
+	solName := "To Unlink Solution"
+	solType := models.MTOSolutionTypeOther
+	sol, err := MTOSolutionCreateCustom(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		plan.ID,
+		nil,
+		solName,
+		solType,
+		nil,
+		"POC Name",
+		"poc@example.com",
+	)
+	suite.NoError(err)
+
+	// Link the solution
+	solutionLinks := &model.MTOSolutionLinks{
+		SolutionIDs: []uuid.UUID{sol.ID},
+	}
+	_, err = MTOMilestoneUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		milestone.ID,
+		map[string]interface{}{},
+		solutionLinks,
+	)
+	suite.NoError(err)
+
+	// Now unlink by providing an empty set
+	solutionLinksEmpty := &model.MTOSolutionLinks{
+		SolutionIDs: []uuid.UUID{},
+	}
+	_, err = MTOMilestoneUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		milestone.ID,
+		map[string]interface{}{},
+		solutionLinksEmpty,
+	)
+	suite.NoError(err)
+
+	// Verify no solutions are linked now
+	linkedSolutions, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
+	suite.NoError(err)
+	suite.Len(linkedSolutions, 0)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommonKey() {
+	plan := suite.createModelPlan("plan for unlinking solutions by common key")
+	// Create a milestone and link a common solution key
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone Unlink CK", plan.ID, nil)
+	suite.NoError(err)
+
+	commonKey := models.MTOCSKCcw // Example common solution key
+
+	// Link the common solution key
+	solutionLinks := &model.MTOSolutionLinks{
+		CommonSolutionKeys: []models.MTOCommonSolutionKey{commonKey},
+	}
+	_, err = MTOMilestoneUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		milestone.ID,
+		map[string]interface{}{},
+		solutionLinks,
+	)
+	suite.NoError(err)
+
+	// Now unlink by providing an empty set of common keys
+	solutionLinksEmpty := &model.MTOSolutionLinks{
+		CommonSolutionKeys: []models.MTOCommonSolutionKey{},
+	}
+	_, err = MTOMilestoneUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		milestone.ID,
+		map[string]interface{}{},
+		solutionLinksEmpty,
+	)
+	suite.NoError(err)
+
+	// Verify no solutions are linked now
+	linkedSolutions, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
+	suite.NoError(err)
+	suite.Len(linkedSolutions, 0)
 }
 
 func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_SinglePlan() {

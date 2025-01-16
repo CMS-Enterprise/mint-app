@@ -98,7 +98,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('QUALITY_PERFORMANCE_SCORES', '{EXISTING_CMS_DATA_AND_PROCESS, HDR}')
+    FROM link_key_and_array('QUALITY_PERFORMANCE_SCORES', '{HDR}')
     UNION
     SELECT
         "key",

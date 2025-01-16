@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -50,6 +52,72 @@ func MTOMilestoneSolutionLinkGetByMilestoneID(
 	)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue retrieving MTO Milestone-Solution links: %w", procErr)
+	}
+
+	return returned, nil
+}
+
+// MTOMilestoneSolutionLinkMergeSolutionsToMilestones takes a list of solution ids, and will merge them to a milestone
+// the end result is that solutions not included here have their link removed
+func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
+	tx *sqlx.Tx,
+	_ *zap.Logger,
+	milestoneID uuid.UUID,
+	solutionIDs []uuid.UUID,
+	actorID uuid.UUID,
+) ([]*models.MTOSolution, error) {
+	err := setCurrentSessionUserVariable(tx, actorID)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"milestone_id": milestoneID,
+		"solution_ids": pq.Array(solutionIDs),
+		"created_by":   actorID,
+	}
+
+	returned, procErr := sqlutils.SelectProcedure[models.MTOSolution](
+		tx,
+		sqlqueries.MTOMilestoneSolutionLink.MergeSolutionsToMilestones,
+		arg,
+	)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue merging MTO Milestone-Solution links: %w", procErr)
+	}
+
+	return returned, nil
+}
+
+// MTOMilestoneSolutionLinkMilestonesToSolution takes a list of milestone IDs and links them to a solution.
+// The end result is that milestones not included here are unlinked from the solution.
+func MTOMilestoneSolutionLinkMilestonesToSolution(
+	tx *sqlx.Tx,
+	logger *zap.Logger,
+	solutionID uuid.UUID,
+	milestoneIDs []uuid.UUID,
+	actorID uuid.UUID,
+) ([]*models.MTOMilestone, error) {
+	// Set the current session user variable for audit purposes
+	err := setCurrentSessionUserVariable(tx, actorID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to set session user variable: %w", err)
+	}
+
+	// Prepare query arguments
+	arg := map[string]interface{}{
+		"solution_id":   solutionID,
+		"milestone_ids": pq.Array(milestoneIDs),
+		"created_by":    actorID,
+	}
+
+	// Execute the SQL query and return the linked milestones
+	returned, procErr := sqlutils.SelectProcedure[models.MTOMilestone](
+		tx,
+		sqlqueries.MTOMilestoneSolutionLink.LinkMilestonesToSolution,
+		arg,
+	)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue linking milestones to solution: %w", procErr)
 	}
 
 	return returned, nil

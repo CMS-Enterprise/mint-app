@@ -13,7 +13,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import EditMilestoneForm from '../EditMilestoneForm';
-import { MTORowType } from '../Table/columns';
+import { MTORowType } from '../MatrixTable/columns';
 
 const ActionMenu = ({
   rowType,
@@ -40,13 +40,7 @@ const ActionMenu = ({
 
   const history = useHistory();
 
-  const {
-    setMTOModalOpen,
-    setMTOModalType,
-    setCategoryID,
-    setSubCategoryID,
-    setCategoryName
-  } = useContext(MTOModalContext);
+  const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
@@ -88,6 +82,10 @@ const ActionMenu = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const isUncategorized =
+    primaryCategoryID === '00000000-0000-0000-0000-000000000000' ||
+    subCategoryID === '00000000-0000-0000-0000-000000000000';
 
   if (rowType !== 'milestone')
     return (
@@ -132,6 +130,7 @@ const ActionMenu = ({
             </Button>,
             MoveUp,
             MoveDown,
+            // Add Model Milestone
             <Button
               type="button"
               onClick={e => {
@@ -139,9 +138,11 @@ const ActionMenu = ({
                 setIsMenuOpen(false);
                 clearMessage();
                 setMTOModalOpen(true);
-                setMTOModalType('milestone');
-                setCategoryID(primaryCategoryID);
-                if (subCategoryID) setSubCategoryID(subCategoryID);
+                setMTOModalState({
+                  modalType: 'milestone',
+                  categoryID: primaryCategoryID,
+                  subCategoryID: subCategoryID ?? ''
+                });
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -151,16 +152,27 @@ const ActionMenu = ({
             >
               {i18next.t('modelToOperationsMisc:table.menu.addMilestone')}
             </Button>,
+            // Add Subcategory or Move to Another Category
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
                 if (rowType === 'category') {
-                  clearMessage();
-                  setMTOModalOpen(true);
-                  setMTOModalType('category');
-                  setCategoryID(primaryCategoryID);
+                  setMTOModalState({
+                    modalType: 'category',
+                    categoryID: primaryCategoryID
+                  });
+                } else {
+                  setMTOModalState({
+                    modalType: 'moveSubCategory',
+                    categoryID: primaryCategoryID,
+                    subCategoryID,
+                    categoryName: name || ''
+                  });
                 }
               }}
               onKeyPress={e => {
@@ -173,20 +185,22 @@ const ActionMenu = ({
                 `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'addSubCategory' : 'moveToAnotherCategory'}`
               )}
             </Button>,
+            // Edit Category/Subcategory Title
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
                 clearMessage();
                 setMTOModalOpen(true);
-                setMTOModalType('editCategoryTitle');
-                setCategoryName(name || '');
-                if (rowType === 'category') {
-                  setCategoryID(primaryCategoryID);
-                } else {
-                  setSubCategoryID(subCategoryID);
-                }
+                setMTOModalState({
+                  modalType: 'editCategoryTitle',
+                  categoryName: name ?? '',
+                  rowType,
+                  categoryID: primaryCategoryID,
+                  subCategoryID
+                });
               }}
               onKeyPress={e => {
                 e.stopPropagation();
@@ -198,16 +212,34 @@ const ActionMenu = ({
                 `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'editCategoryTitle' : 'editSubCategoryTitle'}`
               )}
             </Button>,
+            // Remove Category/Subcategory
             <Button
               type="button"
+              disabled={isUncategorized}
               onClick={e => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
+                clearMessage();
+                setMTOModalOpen(true);
+                setMTOModalState({
+                  modalType:
+                    rowType === 'category'
+                      ? 'removeCategory'
+                      : 'removeSubcategory',
+                  rowType,
+                  categoryID: primaryCategoryID,
+                  subCategoryID
+                });
               }}
               onKeyPress={e => {
                 e.stopPropagation();
               }}
-              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item text-red"
+              className={classNames(
+                'share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item ',
+                {
+                  'text-red': !isUncategorized
+                }
+              )}
               unstyled
             >
               {i18next.t(
@@ -225,7 +257,8 @@ const ActionMenu = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       params.delete('edit-milestone');
-      history.replace({ search: params.toString() });
+      params.delete('select-solutions');
+      history.push({ search: params.toString() });
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
@@ -302,7 +335,7 @@ const ActionMenu = ({
         className="margin-right-2"
         onClick={() => {
           params.set('edit-milestone', milestoneID);
-          history.replace({ search: params.toString() });
+          history.push({ search: params.toString() });
           setIsModalOpen(true);
         }}
       >

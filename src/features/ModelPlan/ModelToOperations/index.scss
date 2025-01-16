@@ -2,10 +2,6 @@
 @use 'viewports' as *;
 
 .model-to-operations {
-    &__nav-container {
-        border-bottom: 1px solid color('base-light');
-    }
-
     .usa-header--basic .usa-nav__primary-item > .usa-current::after, .usa-header--basic .usa-nav__link:hover::after {
         bottom: 0 !important;
     }
@@ -51,5 +47,10 @@
     &__custom-tag {
         background-color: color('warning-lighter') !important;
         color: color('warning-darker') !important;
+    }
+
+    &__selected-shadow {
+        border: 2px solid color($theme-color-primary-light) !important;
+        box-shadow: 0px 4px 15px rgba(115, 179, 231, 0.75) !important;
     }
 }

@@ -1,16 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MtoMilestoneStatus } from 'gql/generated/graphql';
+import { MtoMilestoneStatus, MtoSolutionStatus } from 'gql/generated/graphql';
 
 export const MilestoneStatusTag = ({
   status,
   classname
 }: {
-  status: MtoMilestoneStatus;
+  status: MtoMilestoneStatus | MtoSolutionStatus;
 
   classname?: string;
 }) => {
   const { t } = useTranslation('mtoMilestone');
+  const { t: solutionT } = useTranslation('mtoSolution');
 
   let tagStyle;
   let tagCopy;
@@ -18,6 +19,14 @@ export const MilestoneStatusTag = ({
     case MtoMilestoneStatus.NOT_STARTED:
       tagCopy = t(`status.options.${MtoMilestoneStatus.NOT_STARTED}`);
       tagStyle = 'bg-white border-2px text-base';
+      break;
+    case MtoSolutionStatus.ONBOARDING:
+      tagCopy = solutionT(`status.options.${MtoSolutionStatus.ONBOARDING}`);
+      tagStyle = 'bg-base-lighter text-base-darker';
+      break;
+    case MtoSolutionStatus.BACKLOG:
+      tagCopy = solutionT(`status.options.${MtoSolutionStatus.BACKLOG}`);
+      tagStyle = 'bg-info-light text-base-darkest';
       break;
     case MtoMilestoneStatus.IN_PROGRESS:
       tagCopy = t(`status.options.${MtoMilestoneStatus.IN_PROGRESS}`);
@@ -27,6 +36,7 @@ export const MilestoneStatusTag = ({
       tagCopy = t(`status.options.${MtoMilestoneStatus.COMPLETED}`);
       tagStyle = 'bg-success-dark text-white';
       break;
+
     default:
       tagCopy = '';
       tagStyle = 'bg-info-light';

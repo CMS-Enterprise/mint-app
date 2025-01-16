@@ -164,7 +164,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
   forModel: 'for {{ modelName }}',
   milestones: 'Milestones',
-  'systems-and-solutions': 'IT systems and solutions',
+  solutions: 'IT systems and solutions',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
   isMTOInProgress: 'Is this MTO still in progress',
@@ -180,6 +180,19 @@ export const modelToOperationsMisc: Record<string, any> = {
   aboutCategories: 'About categories',
   aboutCategoriesDescription:
     'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
+  successReorder: 'Your categories have been reordered.',
+  errorReorderForm:
+    'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
+  suggestedMilestoneBanner: {
+    empty:
+      "There aren't currently any suggested milestones for your model. MINT may suggest model milestones as you and your team fill out more of your <s>Model Plan</s>.",
+    notEmpty_part1: {
+      output: 'There is {{count}} suggested milestone ',
+      output_other: 'There are {{count}} suggested milestones '
+    },
+    notEmpty_part2:
+      'for your model based on answers in the Model Plan. <s>View suggested milestones<arrow></arrow></s>'
+  },
   optionsCard: {
     milestones: {
       label: 'Milestones',
@@ -189,7 +202,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       buttonText: 'Browse common milestones',
       linkText: 'or, add a custom milestone'
     },
-    'systems-and-solutions': {
+    solutions: {
       label: 'Operational solutions',
       header: 'Start with IT systems or other solutions',
       description:
@@ -262,18 +275,13 @@ export const modelToOperationsMisc: Record<string, any> = {
     error: 'Failed to update MTO status'
   },
   modal: {
-    title: {
-      category: 'Add a new category',
-      milestone: 'Add a new model milestone',
-      solution: 'Add a new solution',
-      solutionToMilestone: 'Add a solution for this milestone?',
-      editCategoryTitle: 'Edit category title'
-    },
     addButton: 'Add {{type}}',
     cancel: 'Cancel',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
+
     category: {
+      title: 'Add a new category',
       selectPrimaryCategory: {
         label: 'Select primary category',
         sublabel:
@@ -297,6 +305,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     milestone: {
+      title: 'Add a new model milestone',
       selectPrimaryCategory: {
         label: 'Select primary category'
       },
@@ -359,9 +368,33 @@ export const modelToOperationsMisc: Record<string, any> = {
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
-      }
+      },
+      selectedSolutions: 'Selected solutions',
+      selectedSolutionsCount:
+        '{{count}} solutions associated with this milestone',
+      selectedSolutionsCount_other:
+        '{{count}} solution associated with this milestone',
+      editSolutions: 'Edit solutions',
+      noSolutions:
+        'You haven’t selected any solutions or IT systems to implement this milestone.',
+      solution: 'Solution',
+      status: 'Status',
+      selectedSolutionCount_other: '{{count}} selected solutions',
+      selectedSolutionCount: '{{count}} selected solution',
+      suggestedSolutions: 'Suggested solutions',
+      selectedSolutionsDescription:
+        'These solutions are commonly used for this milestone.',
+      selectThisSolution: 'Select this solution',
+      availableSolutionsDescription:
+        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
+      visitSolutionLibrary:
+        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
+      customSolution: 'Custom solutions added to this MTO',
+      otherSolutions: 'Other available solutions',
+      backToMilestone: 'Back to milestone details'
     },
     solution: {
+      title: 'Add a new solution',
       label: {
         solutionType: 'What type of solution is this?',
         solutionTitle: 'Please add a title for your solution',
@@ -380,6 +413,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     solutionToMilestone: {
+      title: 'Add a solution for this milestone?',
       description:
         'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
       alert: {
@@ -391,7 +425,25 @@ export const modelToOperationsMisc: Record<string, any> = {
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions'
     },
+    moveSubCategory: {
+      title: 'Move sub-category to a new category',
+      description:
+        'This action will also move any milestones within this sub-category.',
+      currentCategory: 'Current category',
+      newCategory: 'New category',
+      alert: {
+        success: 'Your solution ({{solution}}) has been added.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      add: 'Add with {{count}} solution',
+      add_other: 'Add with {{count}} solutions',
+      add_zero: 'Add without solutions',
+      subcategoryExists:
+        'There is already a sub-category named "{{name}}" in this primary category. To avoid issues, please select a different primary category or rename this sub-category before moving it.'
+    },
     editCategoryTitle: {
+      title: 'Edit category title',
       label: 'Current title',
       newTitle: 'New title',
       saveChanges: 'Save changes',
@@ -400,6 +452,36 @@ export const modelToOperationsMisc: Record<string, any> = {
         error:
           'There was an error editing the title. Please try again. If the error persists, please try again another time.'
       }
+    },
+    removeCategory: {
+      title: 'Are you sure you want to remove this category?',
+      copy: 'This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.',
+      button: 'Remove category',
+      errorAlert:
+        'There was an error removing this category. Please try again. If the error persists, please try again another time.',
+      goBack: 'Go back',
+      successAlert: 'Your category has been removed.'
+    },
+    removeSubcategory: {
+      title: 'Are you sure you want to remove this sub-category?',
+      copy: 'This action cannot be undone. Any milestones will move to the “Uncategorized” sub-category in this primary category.',
+      button: 'Remove sub-category',
+      errorAlert:
+        'There was an error removing this sub-category. Please try again. If the error persists, please try again another time.',
+      goBack: 'Go back',
+      successAlert: 'Your category has been removed.'
+    },
+    addTemplate: {
+      title: 'Are you sure you want to continue?',
+      description: 'Adding this template to your MTO will add:',
+      item: '16 categories (including 8 primary categories)',
+      description2:
+        'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
+      success: 'Your template (Standard categories) has been added.',
+      error:
+        'There was an error adding this template. Please try again. If the error persists, please try again another time.',
+      addTemplate: 'Add template',
+      dontAdd: 'Don’t add template'
     }
   },
   milestoneLibrary: {

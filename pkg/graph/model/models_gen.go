@@ -80,7 +80,13 @@ type MTOMilestoneTranslation struct {
 	NeedBy          models.TranslationField            `json:"needBy" db:"need_by"`
 	RiskIndicator   models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
 	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
+	Solutions       models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
 	Status          models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
+type MTOSolutionLinks struct {
+	SolutionIDs        []uuid.UUID                   `json:"solutionIDs,omitempty"`
+	CommonSolutionKeys []models.MTOCommonSolutionKey `json:"commonSolutionKeys,omitempty"`
 }
 
 // Represents MTO Custom Solution translation data
@@ -89,6 +95,7 @@ type MTOSolutionTranslation struct {
 	PocName      models.TranslationField            `json:"pocName" db:"poc_name"`
 	PocEmail     models.TranslationField            `json:"pocEmail" db:"poc_email"`
 	SolutionType models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 // Represents model plan base translation data
