@@ -382,11 +382,15 @@ const SolutionLibrary = () => {
                       type="warning"
                       heading={t('solutionLibrary.emptyFilter.heading', {
                         // TODO: change what goes here
-                        solution: viewParam
+                        solution: t(
+                          `solutionLibrary.emptyFilter.solution.${viewParam}.heading`
+                        )
                       })}
                     >
                       {t('solutionLibrary.emptyFilter.text', {
-                        solution: viewParam
+                        solution: t(
+                          `solutionLibrary.emptyFilter.solution.${viewParam}.body`
+                        )
                       })}
                       <Trans
                         t={t}

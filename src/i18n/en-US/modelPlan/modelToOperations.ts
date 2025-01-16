@@ -558,7 +558,25 @@ export const modelToOperationsMisc: Record<string, any> = {
     emptyFilter: {
       heading: 'There are no {{solution}} that match your search.',
       text: 'Please double-check your search and try again. If you’re searching for {{solution}} that you believe should be a part of MINT, please contact the MINT Team at ',
-      email: '<email1>MINTTeam@cms.hhs.gov</email1>.'
+      email: '<email1>MINTTeam@cms.hhs.gov</email1>.',
+      solution: {
+        all: {
+          heading: 'operational solutions',
+          body: 'a solution'
+        },
+        'it-systems': {
+          heading: 'IT systems',
+          body: 'an IT system'
+        },
+        contracts: {
+          heading: 'contract vehicles, contractors, or other contracts',
+          body: 'a contract vehicle, contractor, or other contract'
+        },
+        'cross-cut': {
+          heading: 'cross-cutting groups',
+          body: 'a cross-cutting group'
+        }
+      }
     }
   },
   validation: {
