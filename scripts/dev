@@ -408,6 +408,9 @@ namespace :test do
   task :go => "db:clean" do
     sh "go test -short -count=1 -p=1 ./..."
   end
+  task :resolvers => "db:clean" do
+    sh "go test -short -count=1 -p=1 ./pkg/graph/resolvers"
+  end
   namespace :go do
     desc "Runs Go tests, including long ones"
     task :long => "db:clean" do
