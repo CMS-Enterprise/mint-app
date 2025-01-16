@@ -202,7 +202,7 @@ func (suite *TAuditSuite) TestGetMTOCategoryForeignKeyReferencen() {
 		subCategoryName := "test subcategory"
 		subCategory := suite.createMTOCategory(modelPlan.ID, subCategoryName, &category.ID)
 		suite.deleteMTOCategory(category.ID)
-		// this also deletes the subcateogyr
+		// this also deletes the subcategory
 		translatedCategoryName, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, subCategory.ID.String())
 		suite.NoError(err)
 
