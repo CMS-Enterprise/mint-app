@@ -408,9 +408,6 @@ namespace :test do
   task :go => "db:clean" do
     sh "go test -short -count=1 -p=1 ./..."
   end
-  task :resolvers => "db:clean" do
-    sh "go test -short -count=1 -p=1 ./pkg/graph/resolvers"
-  end
   namespace :go do
     desc "Runs Go tests, including long ones"
     task :long => "db:clean" do
@@ -419,6 +416,9 @@ namespace :test do
     desc "Run targeted Go tests (pass full package name as additional options)"
     task :only => ["db:clean", :consume_args] do |t, args|
       sh "go", "test", "-short", "-count=1", "-v", "-p=1", *args
+    end
+    task :resolvers => "db:clean" do
+      sh "go test -short -count=1 -p=1 ./pkg/graph/resolvers"
     end
   end
 
