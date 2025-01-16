@@ -198,6 +198,10 @@ export const hiddenFields: HiddenFieldTypes[] = [
   {
     table: TableName.MTO_MILESTONE,
     fields: ['mto_common_milestone_key', 'name']
+  },
+  {
+    table: TableName.MTO_SOLUTION,
+    fields: ['mto_common_solution_key', 'name']
   }
 ];
 
@@ -225,7 +229,9 @@ export const batchedTables: TableName[] = [
 // Tables where audits are batch with a different table
 export const doubleBatchedTables: TableName[] = [
   TableName.PLAN_DOCUMENT,
-  TableName.PLAN_DOCUMENT_SOLUTION_LINK
+  TableName.PLAN_DOCUMENT_SOLUTION_LINK,
+  TableName.MTO_SOLUTION,
+  TableName.MTO_MILESTONE_SOLUTION_LINK
 ];
 
 // Fields that are connected to other tables

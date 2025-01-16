@@ -336,7 +336,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               change.translatedFields.find(field => field.fieldName === 'name')
                 ?.oldTranslated;
 
-            if (change.metaData && isGenericWithMetaData(change.metaData)) {
+            if (
+              change.action === DatabaseOperation.UPDATE &&
+              change.metaData &&
+              isGenericWithMetaData(change.metaData)
+            ) {
               milestoneName = change.metaData.relationContent;
             }
 
@@ -368,7 +372,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
             return (
               <span className="text-bold">
-                {t('milestone')}{' '}
+                {properlyCapitalizeInitiator(t('solution'))}{' '}
                 <span className="text-normal">
                   {t(`auditUpdateType.${change.action}`)}
                 </span>{' '}
@@ -708,6 +712,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                     )?.oldTranslated;
 
                   if (
+                    change.action === DatabaseOperation.UPDATE &&
                     change.metaData &&
                     isGenericWithMetaData(change.metaData)
                   ) {
