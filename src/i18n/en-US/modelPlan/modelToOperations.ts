@@ -559,7 +559,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     OTHER: 'Other',
     emptyFilter: {
       heading: 'There are no {{solution}} that match your search.',
-      text: 'Please double-check your search and try again. If you’re searching for {{solution}} that you believe should be a part of MINT, please contact the MINT Team at ',
+      'text-firstHalf': 'Please double-check your search and try again. ',
+      checkAllSolutions:
+        'You may also try checking <link1>all available solutions</link1>. ',
+      'text-secondHalf':
+        'If you’re searching for {{solution}} that you believe should be a part of MINT, please contact the MINT Team at ',
       email: '<email1>MINTTeam@cms.hhs.gov</email1>.',
       solution: {
         all: {
