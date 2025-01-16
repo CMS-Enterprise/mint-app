@@ -411,7 +411,9 @@ export const modelToOperationsMisc: Record<string, any> = {
         info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
         success: 'Your solution ({{solution}}) has been added.',
         error:
-          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.',
+        fromSolutionLibrary:
+          'Once you create this custom solution, it will be visible in your MTO but will not be visible in the solution library.'
       }
     },
     solutionToMilestone: {

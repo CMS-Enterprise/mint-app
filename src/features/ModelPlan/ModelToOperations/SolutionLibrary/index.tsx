@@ -343,7 +343,10 @@ const SolutionLibrary = () => {
                               className="margin-x-05"
                               onClick={() => {
                                 clearMessage();
-                                setMTOModalState({ modalType: 'solution' });
+                                setMTOModalState({
+                                  modalType: 'solution',
+                                  modalCalledFrom: 'solution-library'
+                                });
                                 setIsModalOpen(true);
                               }}
                             >
@@ -359,7 +362,10 @@ const SolutionLibrary = () => {
                         className="margin-x-05"
                         onClick={() => {
                           clearMessage();
-                          setMTOModalState({ modalType: 'solution' });
+                          setMTOModalState({
+                            modalType: 'solution',
+                            modalCalledFrom: 'solution-library'
+                          });
                           setIsModalOpen(true);
                         }}
                       >
@@ -381,7 +387,6 @@ const SolutionLibrary = () => {
                     <Alert
                       type="warning"
                       heading={t('solutionLibrary.emptyFilter.heading', {
-                        // TODO: change what goes here
                         solution: t(
                           `solutionLibrary.emptyFilter.solution.${viewParam}.heading`
                         )
