@@ -142,3 +142,22 @@ func (suite *TAuditSuite) TestGetMTOMilestoneForeignKeyReferencen() {
 	})
 
 }
+func (suite *TAuditSuite) TestGetMTOSolutionForeignKeyReferencen() {
+	suite.Run("Solution with foreign key that doesn't reference a solution returns nil", func() {
+		translatedSolution, err := getMTOSolutionForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String())
+		suite.NoError(err)
+		suite.Nil(translatedSolution)
+	})
+	suite.Run("Solution with a foreign key will return solution name", func() {
+		modelPlan := suite.createModelPlan("test plan")
+		solutionName := "test solution"
+		solution := suite.createMTOSolution(modelPlan.ID, solutionName)
+		translatedSolution, err := getMTOSolutionForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, solution.ID.String())
+		suite.NoError(err)
+		if suite.NotNil(translatedSolution) {
+			suite.EqualValues(solutionName, *translatedSolution)
+		}
+
+	})
+
+}
