@@ -271,7 +271,7 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.allSolutions', {
-                          count: solutions.length
+                          count: allSolutions.length
                         })}
                       </Button>
                       <Button
