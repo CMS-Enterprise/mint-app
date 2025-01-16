@@ -48,7 +48,10 @@ const CustomSolutionForm = () => {
 
   const { showMessage, showErrorMessageInModal } = useMessage();
 
-  const { setMTOModalOpen } = useContext(MTOModalContext);
+  const {
+    mtoModalState: { modalCalledFrom },
+    setMTOModalOpen
+  } = useContext(MTOModalContext);
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -275,24 +278,29 @@ const CustomSolutionForm = () => {
           />
         </Fieldset>
         <Alert type="info" slim className="margin-bottom-2">
-          <Trans
-            i18nKey={t('modal.solution.alert.info')}
-            components={{
-              s: (
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled margin-top-0"
-                  onClick={() => {
-                    history.push(
-                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
-                    );
-                  }}
-                >
-                  {' '}
-                </Button>
-              )
-            }}
-          />
+          {modalCalledFrom === 'solution-library' ? (
+            t('modal.solution.alert.fromSolutionLibrary')
+          ) : (
+            <Trans
+              i18nKey={t('modal.solution.alert.info')}
+              components={{
+                s: (
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled margin-top-0"
+                    onClick={() => {
+                      history.push(
+                        `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
+                      );
+                      setMTOModalOpen(false);
+                    }}
+                  >
+                    {' '}
+                  </Button>
+                )
+              }}
+            />
+          )}
         </Alert>
         <Button type="submit" disabled={!isValid} className="margin-right-3">
           {t('modal.addButton', { type: 'solution' })}
