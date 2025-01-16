@@ -122,3 +122,23 @@ func (suite *TAuditSuite) TestParseInterfaceToUUID() {
 	})
 
 }
+
+func (suite *TAuditSuite) TestGetMTOMilestoneForeignKeyReferencen() {
+	suite.Run("Milestone with foreign key that doesn't reference a milestone returns nil", func() {
+		translatedMilestone, err := getMTOMilestoneForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String())
+		suite.NoError(err)
+		suite.Nil(translatedMilestone)
+	})
+	suite.Run("Milestone with a foreign key will return milestone name", func() {
+		modelPlan := suite.createModelPlan("test plan")
+		milestoneName := "test milestone"
+		milestone := suite.createMTOMilestone(modelPlan.ID, milestoneName)
+		translatedMilestone, err := getMTOMilestoneForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, milestone.ID.String())
+		suite.NoError(err)
+		if suite.NotNil(translatedMilestone) {
+			suite.EqualValues(milestoneName, *translatedMilestone)
+		}
+
+	})
+
+}

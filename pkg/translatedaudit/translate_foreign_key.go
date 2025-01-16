@@ -2,6 +2,7 @@ package translatedaudit
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -12,6 +13,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+const DataNotAvailableMessage = "Data not available"
 
 //Future Enhancement: allow faktory workers to take a dataloader
 
@@ -184,12 +187,15 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	category, err := loaders.MTOCategory.ByID.Load(ctx, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+		}
 	}
 
 	if category == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+		return DataNotAvailableMessage, nil
 	}
+	//TODO decide what to do if only the parent category can not be fetched
 	// default to the name of the category
 	name := category.Name
 
@@ -207,7 +213,7 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	}
 	return name, nil
 }
-func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to key
 	enumKey, err := parseInterfaceToEnum[models.MTOCommonMilestoneKey](key)
 	if err != nil {
@@ -226,7 +232,7 @@ func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storag
 	return commonMilestone.Name, nil
 }
 
-func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
 	enumKey, err := parseInterfaceToEnum[models.MTOCommonSolutionKey](key)
 	if err != nil {
@@ -244,27 +250,29 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 	}
 	return commonSolution.Name, nil
 }
-func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
+
 	// cast interface to key
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
+		return nil, fmt.Errorf("unable to convert the provided key to a uuid to get the mto  milestone reference. err %w", err)
 	}
 
 	// get the  milestone
-	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the mto  milestone foreign key reference. err %w", err)
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return nil, fmt.Errorf("there was an issue getting the mto milestone for translation. err %w", err)
+		}
 	}
-
-	if milestone == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	if milestone == nil { // expect that a nil milestone can be returned, since they can be deleted this circumstance.
+		return nil, nil
 	}
 	return milestone.Name, nil
 }
 
 func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+	// TODO handle the case where the solution is deleted
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
