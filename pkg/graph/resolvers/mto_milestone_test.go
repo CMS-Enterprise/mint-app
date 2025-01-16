@@ -273,6 +273,7 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 		models.MTOCSKCmsBox,
 		models.MTOCSKCcw,
 	})
+
 	/***
 	Validate the created solutions and assign them by key
 	***/
@@ -329,8 +330,13 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 		return suite.ElementsMatch(dataIDs, expected)
 	}
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOMilestone.BySolutionID,
-		expectedResults, verifyFunc)
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](
+		suite.testConfigs.Context,
+		&suite.Suite,
+		loaders.MTOMilestone.BySolutionID,
+		expectedResults,
+		verifyFunc,
+	)
 
 }
 
@@ -518,143 +524,63 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 }
 
 func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_SinglePlan() {
-	// 1) Create a model plan
 	plan := suite.createModelPlan("NoLinkedSolutions SinglePlan")
+	_ = suite.createMTOSolutionCommon(plan.ID, models.MTOCSKInnovation, nil)
 
-	// 2) Create multiple milestones for this plan
-	//    We'll make one unlinked, one linked in some way
-	unlinkedMilestone, err := MTOMilestoneCreateCustom(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		"Unlinked Milestone",
+	linkedMilestone := suite.createMilestoneCommon(
 		plan.ID,
-		nil, // no category
+		models.MTOCommonMilestoneKeyManageCd,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
 	)
-	suite.NoError(err)
 
-	linkedMilestone, err := MTOMilestoneCreateCustom(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		"Linked Milestone",
+	unlinkedMilestone := suite.createMilestoneCommon(
 		plan.ID,
+		models.MTOCommonMilestoneKeyRevColBids,
 		nil,
 	)
-	suite.NoError(err)
 
-	// 3) Link the second milestone in the direct milestone-to-solution table
-	//    OR in the common link table. We'll demonstrate the direct link table:
-	// Create or fetch a solution
-	solName := "Any Custom Solution"
-	solType := models.MTOSolutionTypeOther
-	sol, solErr := MTOSolutionCreateCustom(
-		suite.testConfigs.Logger,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		plan.ID,
-		nil, // no MTOCommonSolutionKey
-		solName,
-		solType,
-		nil,
-		"pocName",
-		"pocEmail",
-	)
-	suite.NoError(solErr)
+	nonLinkedMilestones := suite.getMilestonesWithNoLinkedSolution(plan.ID)
+	milestoneIDs := lo.Map(nonLinkedMilestones, func(m *models.MTOMilestone, _ int) uuid.UUID {
+		return m.ID
+	})
 
-	// Link it
-	link := models.NewMTOMilestoneSolutionLink(
-		suite.testConfigs.Principal.Account().ID,
-		linkedMilestone.ID,
-		sol.ID,
-	)
-	_, linkErr := storage.MTOMilestoneSolutionLinkCreate(
-		suite.testConfigs.Store,
-		suite.testConfigs.Logger,
-		link,
-	)
-	suite.NoError(linkErr)
-
-	// 4) Query the "no linked solutions" loader for a single plan ID
-	milsNoLink, err := MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(
-		suite.testConfigs.Context,
-		plan.ID,
-	)
-	suite.NoError(err)
-
-	// 5) Check that the unlinked milestone is returned, linked is excluded
-	gotIDs := make([]uuid.UUID, 0, len(milsNoLink))
-	for _, m := range milsNoLink {
-		gotIDs = append(gotIDs, m.ID)
-	}
-	suite.Contains(gotIDs, unlinkedMilestone.ID, "Unlinked milestone should be present")
-	suite.NotContains(gotIDs, linkedMilestone.ID, "Linked milestone should be excluded from the results")
+	suite.Contains(milestoneIDs, unlinkedMilestone.ID, "Unlinked milestone should be present")
+	suite.NotContains(milestoneIDs, linkedMilestone.ID, "Linked milestone should be excluded from the results")
 }
 
 func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
-	// 1) Create multiple model plans
 	planA := suite.createModelPlan("NoLinkedSolutions Plan A")
 	planB := suite.createModelPlan("NoLinkedSolutions Plan B")
 
-	// 2) Create an unlinked milestone in Plan A
-	milUnlinkedA, err := MTOMilestoneCreateCustom(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		"Milestone A Unlinked",
+	_ = suite.createMTOSolutionCommon(planA.ID, models.MTOCSKInnovation, nil)
+	_ = suite.createMTOSolutionCommon(planB.ID, models.MTOCSKAcoOs, nil)
+
+	linkedMilestone := suite.createMilestoneCommon(
 		planA.ID,
-		nil,
+		models.MTOCommonMilestoneKeyManageCd,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
 	)
-	suite.NoError(err)
 
-	// 3) Create a milestone in Plan B and link it in the "common" link table
-	linkedMilB, err := MTOMilestoneCreateCustom(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		"Milestone B Linked",
+	nonLinkedMilestone := suite.createMilestoneCommon(
 		planB.ID,
+		models.MTOCommonMilestoneKeyRevColBids,
 		nil,
 	)
-	suite.NoError(err)
 
-	// We'll assume the milestone references some MTOCommonMilestoneKey
-	// to emulate the 'cLink' scenario:
-	commonKey := models.MTOCommonMilestoneKeyManageCd
-	linkedMilB.Key = &commonKey // assign the milestone's key in memory
+	planANonLinkedMilestones := suite.getMilestonesWithNoLinkedSolution(planA.ID)
+	planBNonLinkedMilestones := suite.getMilestonesWithNoLinkedSolution(planB.ID)
 
-	// We must update the milestone in DB to store that key
-	_, err = storage.MTOMilestoneUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, linkedMilB)
-	suite.NoError(err)
+	suite.Len(planANonLinkedMilestones, 0)
+	suite.Len(planBNonLinkedMilestones, 1)
 
-	// Insert a row into mto_common_milestone_solution_link with that commonKey
-	// so the query sees it as "linked" in the cLink table:
+	planAMilestoneIDs := lo.Map(planANonLinkedMilestones, func(m *models.MTOMilestone, _ int) uuid.UUID {
+		return m.ID
+	})
 
-	// TODO: MERGE IN THE EDIT MILESTONE SOLUTION LINK PR TO FINISH THIS TEST
-	panic("TODO: MERGE IN THE EDIT MILESTONE SOLUTION LINK PR TO FINISH THIS TEST")
+	planBMilestoneIDs := lo.Map(planBNonLinkedMilestones, func(m *models.MTOMilestone, _ int) uuid.UUID {
+		return m.ID
+	})
 
-	// 4) Call the "no linked solutions" loader with both plan IDs
-	modelPlanIDs := []uuid.UUID{planA.ID, planB.ID}
-	milsNoLink, err := storage.MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(
-		suite.testConfigs.Store,
-		suite.testConfigs.Logger,
-		modelPlanIDs,
-	)
-	suite.NoError(err)
-
-	// 5) Evaluate results
-	gotIDs := make([]uuid.UUID, 0, len(milsNoLink))
-	for _, m := range milsNoLink {
-		gotIDs = append(gotIDs, m.ID)
-	}
-
-	// The unlinked milestone in Plan A should appear
-	suite.Contains(gotIDs, milUnlinkedA.ID, "Unlinked milestone in Plan A is expected")
-
-	// The milestone in Plan B is "linked" via the cLink table, so exclude
-	suite.NotContains(gotIDs, linkedMilB.ID, "Milestone in Plan B with a common link should be excluded")
+	suite.NotContains(planAMilestoneIDs, linkedMilestone.ID, "Milestone in Plan A with a common link should be excluded")
+	suite.Contains(planBMilestoneIDs, nonLinkedMilestone.ID, "Unlinked milestone in Plan B is expected")
 }

@@ -408,6 +408,32 @@ func (suite *ResolverSuite) createMilestoneCommon(
 	return milestone
 }
 
+func (suite *ResolverSuite) getMilestonesWithNoLinkedSolution(
+	planID uuid.UUID,
+) []*models.MTOMilestone {
+	milestones, err := MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(suite.testConfigs.Context, planID)
+	suite.NoError(err)
+	return milestones
+}
+
+func (suite *ResolverSuite) createMTOSolutionCommon(
+	planID uuid.UUID,
+	commonSolutionKey models.MTOCommonSolutionKey,
+	milestonesToLink []uuid.UUID,
+) *models.MTOSolution {
+	solution, err := MTOSolutionCreateCommon(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		planID,
+		commonSolutionKey,
+		milestonesToLink,
+	)
+	suite.NoError(err)
+	return solution
+}
+
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
