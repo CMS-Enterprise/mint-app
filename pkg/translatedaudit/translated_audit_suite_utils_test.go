@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
@@ -214,4 +215,50 @@ func (suite *TAuditSuite) createPlanCollaborator(modelPlanID uuid.UUID, userName
 	retCollaborator, err := suite.testConfigs.Store.PlanCollaboratorCreate(suite.testConfigs.Store, suite.testConfigs.Logger, collaborator)
 	suite.NoError(err)
 	return retCollaborator
+}
+
+// createMTOSolution creates an MTO solution using the store. It is just for testing
+func (suite *TAuditSuite) createMTOSolution(modelPlanID uuid.UUID, name string, preHooks ...func(*models.MTOSolution)) *models.MTOSolution {
+
+	neededBy := time.Now()
+	otherType := models.MTOSolutionTypeOther
+	solToCreate := models.NewMTOSolution(modelPlanID, nil, &name, &otherType, &neededBy, suite.testConfigs.Principal.UserAccount.ID)
+	solToCreate.PocName = helpers.PointerTo("Test POC")
+	solToCreate.PocEmail = helpers.PointerTo("testPOC@fake.fake")
+	solToCreate.Name = &name
+	for _, preHook := range preHooks {
+		preHook(solToCreate)
+
+	}
+	retSol, err := storage.MTOSolutionCreate(suite.testConfigs.Store, suite.testConfigs.Logger, solToCreate)
+	suite.NoError(err)
+	return retSol
+}
+
+// createMTOMilestone creates an MTO Milestone using the store. It is just for testing
+func (suite *TAuditSuite) createMTOMilestone(modelPlanID uuid.UUID, name string, preHooks ...func(*models.MTOMilestone)) *models.MTOMilestone {
+
+	milestoneToCreate := models.NewMTOMilestone(suite.testConfigs.Principal.UserAccount.ID, &name, nil, modelPlanID, nil)
+	milestoneToCreate.Name = &name
+	for _, preHook := range preHooks {
+		preHook(milestoneToCreate)
+
+	}
+	retSol, err := storage.MTOMilestoneCreate(suite.testConfigs.Store, suite.testConfigs.Logger, milestoneToCreate)
+	suite.NoError(err)
+	return retSol
+}
+
+// createMTOCategory creates an MTO Category using the store. It is just for testing
+func (suite *TAuditSuite) createMTOCategory(modelPlanID uuid.UUID, name string, parentCategoryID *uuid.UUID, preHooks ...func(*models.MTOCategory)) *models.MTOCategory {
+
+	categoryToCreate := models.NewMTOCategory(suite.testConfigs.Principal.UserAccount.ID, name, modelPlanID, parentCategoryID, 0)
+
+	for _, preHook := range preHooks {
+		preHook(categoryToCreate)
+
+	}
+	retSol, err := storage.MTOCategoryCreate(suite.testConfigs.Store, suite.testConfigs.Logger, categoryToCreate)
+	suite.NoError(err)
+	return retSol
 }

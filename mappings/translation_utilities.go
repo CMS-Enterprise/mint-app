@@ -49,6 +49,19 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return PlanDocumentSolutionLinkTranslation()
 	case models.TNPlanDataExchangeApproach:
 		return PlanDataExchangeApproachTranslation()
+	// MTO TABLES
+	case models.TNMTOCategory:
+		return MTOCategoryTranslation()
+	case models.TNMTOMilestone:
+		return MTOMilestoneTranslation()
+	case models.TNMTOSolution:
+		return MTOSolutionTranslation()
+	case models.TNMTOMilestoneSolutionLink:
+		return MTOMilestoneSolutionLinkTranslation()
+	case models.TNMTOInfo:
+		return MTOInfoTranslation()
+	case models.TNMTOCommonSolutionContact:
+		return MTOCommonSolutionContactTranslation()
 	default:
 
 		return nil, fmt.Errorf("no translation for table: %s ", tableName)

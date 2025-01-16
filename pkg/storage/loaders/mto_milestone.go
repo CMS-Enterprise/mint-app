@@ -2,6 +2,8 @@ package loaders
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/google/uuid"
 
@@ -109,7 +111,10 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 
 	data, err := storage.MTOMilestoneGetBySolutionIDLoader(loaders.DataReader.Store, logger, solutionIDs)
 	if err != nil {
-		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
+		if !errors.Is(err, sql.ErrNoRows) { // don't error if there are no results, this could be expected
+			return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
+		}
+
 	}
 
 	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOMilestoneWithSolutionID) ([]*models.MTOMilestone, bool) {

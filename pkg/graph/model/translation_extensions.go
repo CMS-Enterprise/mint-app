@@ -192,3 +192,63 @@ func (pdt *PlanDataExchangeApproachTranslation) TableName() models.TableName {
 func (pdt *PlanDataExchangeApproachTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*pdt)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *MTOCategoryTranslation) TableName() models.TableName {
+	return models.TNMTOCategory
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *MTOCategoryTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *MTOMilestoneTranslation) TableName() models.TableName {
+	return models.TNMTOMilestone
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *MTOMilestoneTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *MTOSolutionTranslation) TableName() models.TableName {
+	return models.TNMTOSolution
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *MTOSolutionTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *MTOMilestoneSolutionLinkTranslation) TableName() models.TableName {
+	return models.TNMTOMilestoneSolutionLink
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *MTOMilestoneSolutionLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *MTOInfoTranslation) TableName() models.TableName {
+	return models.TNMTOInfo
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *MTOInfoTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *MTOCommonSolutionContactTranslation) TableName() models.TableName {
+	return models.TNMTOCommonSolutionContact
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *MTOCommonSolutionContactTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}

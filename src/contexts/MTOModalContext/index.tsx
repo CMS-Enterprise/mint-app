@@ -7,6 +7,7 @@ export interface MTOModalState {
   categoryID: string;
   subCategoryID: string;
   categoryName?: string;
+  milestoneID?: string;
   rowType: MTORowType;
 }
 

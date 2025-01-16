@@ -12,4 +12,6 @@ type MTOMilestoneTranslation {
   commonSolutions: TranslationFieldWithOptions! @goTag(key: "db", value: "common_solutions")
   solutions: TranslationFieldWithOptions! @goTag(key: "db", value: "solutions")
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  key: TranslationField! @goTag(key: "db", value: "mto_common_milestone_key")
+  mtoCategoryID: TranslationField! @goTag(key: "db", value: "mto_category_id")
 }

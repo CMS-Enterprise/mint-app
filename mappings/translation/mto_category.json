@@ -1,0 +1,30 @@
+{
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "New category title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.01
+  },
+  "position": {
+    "gqlField": "position",
+    "goField": "Position",
+    "dbField": "position",
+    "label": "Position",
+    "dataType": "NUMBER",
+    "formType": "NUMBER",
+    "order": 1.02
+  },
+  "parentID": {
+    "gqlField": "parentID",
+    "goField": "ParentID",
+    "dbField": "parent_id",
+    "label": "Parent category",
+    "dataType": "STRING",
+    "formType": "SELECT",
+    "order": 1.03,
+    "tableReference": "mto_category"
+  }
+}

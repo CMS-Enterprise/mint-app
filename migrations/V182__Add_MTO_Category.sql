@@ -3,6 +3,8 @@ CREATE COLLATION case_insensitive (PROVIDER = ICU, LOCALE = 'und-u-ks-level2', D
 
 COMMENT ON COLLATION case_insensitive IS 'a collation to enforce case insensitivity';
 
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_category';
+
 CREATE TABLE mto_category (
     id UUID PRIMARY KEY,
     name ZERO_STRING NOT NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the name column,

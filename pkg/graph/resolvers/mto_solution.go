@@ -177,3 +177,40 @@ func MTOSolutionGetByMilestoneIDLOADER(
 ) ([]*models.MTOSolution, error) {
 	return loaders.MTOSolution.ByMilestoneID.Load(ctx, milestoneID)
 }
+
+func MTOSolutionGetByIDLOADER(
+	ctx context.Context,
+	id uuid.UUID,
+) (*models.MTOSolution, error) {
+	return loaders.MTOSolution.ByID.Load(ctx, id)
+}
+
+// MTOSolutionDelete deletes an MTOSolution
+// It returns an error if the principal is invalid, the solution doesn't exist, user doesn't have permissions to delete, or the delete call itself fails
+// TODO - Consider returning a *models.MTOSolution here if we want to ever access the returned data on what was deleted
+func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
+	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		// First, fetch the existing solution so we can check permissions
+		existing, err := MTOSolutionGetByIDLOADER(ctx, id)
+		if err != nil {
+			return fmt.Errorf("error fetching mto solution during deletion: %s", err)
+		}
+
+		// Check permissions
+		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+			return fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
+		}
+
+		// Finally, delete the solution
+		if err := storage.MTOSolutionDelete(tx, principalAccount.ID, logger, id); err != nil {
+			return fmt.Errorf("unable to delete mto solution. Err %w", err)
+		}
+		return nil
+	})
+}
