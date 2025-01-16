@@ -207,6 +207,9 @@ const SolutionLibrary = () => {
           {t('solutionLibrary.heading')}
         </h1>
 
+        <Button type="button" onClick={() => setQuery('')}>
+          gary!
+        </Button>
         <p className="mint-body-large margin-bottom-2 margin-top-05">
           {t('solutionLibrary.description')}
         </p>
@@ -345,16 +348,23 @@ const SolutionLibrary = () => {
                         i18nKey="solutionLibrary.checkAllSolutions"
                         components={{
                           link1: (
-                            <UswdsReactLink
-                              to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library?view=all`}
-                              className="margin-x-05"
-                            />
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--unstyled margin-x-05 margin-top-05"
+                              onClick={() => {
+                                setQuery('');
+                                params.set('view', 'all');
+                                history.replace({ search: params.toString() });
+                              }}
+                            >
+                              {' '}
+                            </Button>
                           ),
                           button1: (
                             <Button
                               unstyled
                               type="button"
-                              className="margin-x-05"
+                              className="margin-x-05 margin-top-05"
                               onClick={() => {
                                 clearMessage();
                                 setMTOModalState({
@@ -447,11 +457,17 @@ const SolutionLibrary = () => {
                         i18nKey="solutionLibrary.emptyFilter.checkAllSolutions"
                         components={{
                           link1: (
-                            <Link
-                              href={`/models/${modelID}/collaboration-area/model-to-operations/solution-library?view=all&query=`}
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--unstyled"
+                              onClick={() => {
+                                setQuery('');
+                                params.set('view', 'all');
+                                history.replace({ search: params.toString() });
+                              }}
                             >
                               {' '}
-                            </Link>
+                            </Button>
                           )
                         }}
                       />
