@@ -150,16 +150,13 @@ const SolutionLibrary = () => {
   );
 
   const filteredView = useMemo(() => {
-    if (viewParam === 'it-systems') {
-      return itSystemsSolutions;
-    }
-    if (viewParam === 'contracts') {
-      return contractsSolutions;
-    }
-    if (viewParam === 'cross-cut') {
-      return crossCutSolutions;
-    }
-    return allSolutions;
+    const views = {
+      'it-systems': itSystemsSolutions,
+      contracts: contractsSolutions,
+      'cross-cut': crossCutSolutions,
+      all: allSolutions
+    };
+    return views[viewParam];
   }, [
     viewParam,
     itSystemsSolutions,
