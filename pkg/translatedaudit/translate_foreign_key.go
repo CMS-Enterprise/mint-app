@@ -265,28 +265,28 @@ func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Stor
 			return nil, fmt.Errorf("there was an issue getting the mto milestone for translation. err %w", err)
 		}
 	}
-	if milestone == nil { // expect that a nil milestone can be returned, since they can be deleted this circumstance.
+	if milestone == nil { // expect that a nil milestone can be returned, since they can be deleted
 		return nil, nil
 	}
 	return milestone.Name, nil
 }
 
-func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
-	// TODO handle the case where the solution is deleted
+func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
+		return nil, fmt.Errorf("unable to convert the provided key to a uuid to get the mto  Solution reference. err %w", err)
 	}
 	// get the  solution
-	// TOOO: (mto) verify this, milestones can be deleted, we probably don't want this to fail if this is the case
 	solution, err := loaders.MTOSolution.ByID.Load(ctx, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the mto  Solution foreign key reference. err %w", err)
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return nil, fmt.Errorf("there was an issue getting the mto solution for translation. err %w", err)
+		}
 	}
 
-	if solution == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	if solution == nil { // expect that a nil solution can be returned, since they can be deleted
+		return nil, nil
 	}
 	return solution.Name, nil
 }
