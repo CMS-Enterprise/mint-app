@@ -70,13 +70,13 @@ const SolutionLibrary = () => {
     variables: { id: modelID }
   });
 
-  const allSolutions = useMemo(
+  const solutions = useMemo(
     () =>
       data?.modelPlan?.mtoMatrix.commonSolutions || ([] as SolutionCardType[]),
     [data?.modelPlan?.mtoMatrix.commonSolutions]
   );
 
-  const addedSolutions = allSolutions.filter(solution => solution.isAdded);
+  const addedSolutions = solutions.filter(solution => solution.isAdded);
 
   const searchSolutions = (
     query: string,
@@ -91,7 +91,7 @@ const SolutionLibrary = () => {
     SolutionCardType,
     any
   >({
-    items: allSolutions,
+    items: solutions,
     filterFunction: useMemo(() => searchSolutions, []),
     sortFunction: (items: SolutionCardType[], sort: any) => items,
     sortOptions: [
@@ -138,7 +138,7 @@ const SolutionLibrary = () => {
     [allItems, hideAddedSolutions]
   );
 
-  const selectedSolutions = useMemo(
+  const allSolutions = useMemo(
     () =>
       allItems.filter(solution => {
         if (hideAddedSolutions) {
@@ -148,6 +148,25 @@ const SolutionLibrary = () => {
       }),
     [allItems, hideAddedSolutions]
   );
+
+  const filteredView = useMemo(() => {
+    if (viewParam === 'it-systems') {
+      return itSystemsSolutions;
+    }
+    if (viewParam === 'contracts') {
+      return contractsSolutions;
+    }
+    if (viewParam === 'cross-cut') {
+      return crossCutSolutions;
+    }
+    return allSolutions;
+  }, [
+    viewParam,
+    itSystemsSolutions,
+    contractsSolutions,
+    crossCutSolutions,
+    allSolutions
+  ]);
 
   const { query, setQuery, rowLength } = search;
   const totalResults: number = query ? rowLength : allItems.length;
@@ -159,7 +178,7 @@ const SolutionLibrary = () => {
     Pagination: PaginationComponent,
     pagination: { pageCount }
   } = usePagination<SolutionCardType[]>({
-    items: selectedSolutions,
+    items: filteredView,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
@@ -255,7 +274,7 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.allSolutions', {
-                          count: allSolutions.length
+                          count: solutions.length
                         })}
                       </Button>
                       <Button
