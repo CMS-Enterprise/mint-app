@@ -80,23 +80,6 @@ const SolutionLibrary = () => {
     [data?.modelPlan?.mtoMatrix.commonSolutions]
   );
 
-  const filterSolutionsByType = useMemo(() => {
-    return (type: MtoSolutionType) => {
-      return allSolutions.filter(solution => {
-        if (hideAddedSolutions) {
-          return !solution.isAdded && solution.type === type;
-        }
-        return solution.type === type;
-      });
-    };
-  }, [allSolutions, hideAddedSolutions]);
-
-  const itSystemsSolutions = filterSolutionsByType(MtoSolutionType.IT_SYSTEM);
-  const contractsSolutions = filterSolutionsByType(MtoSolutionType.CONTRACTOR);
-  const crossCutSolutions = filterSolutionsByType(
-    MtoSolutionType.CROSS_CUTTING_GROUP
-  );
-
   const addedSolutions = allSolutions.filter(solution => solution.isAdded);
 
   const searchSolutions = (
@@ -107,20 +90,6 @@ const SolutionLibrary = () => {
       solution.name.toLowerCase().includes(query.toLowerCase())
     );
   };
-
-  // const selectedSolutionItems = () => {
-  //   switch (viewParam) {
-  //     case 'it-systems':
-  //       return itSystemsSolutions;
-  //     case 'contracts':
-  //       return contractsSolutions;
-  //     case 'cross-cut':
-  //       return crossCutSolutions;
-  //     case 'all':
-  //     default:
-  //       return allSolutions;
-  //   }
-  // };
 
   const { allItems, search, pageSize } = useSearchSortPagination<
     SolutionCardType,
@@ -137,6 +106,50 @@ const SolutionLibrary = () => {
     ],
     defaultItemsPerPage: 6
   });
+
+  // const filterSolutionsByType = useMemo(() => {
+  //   return (type: MtoSolutionType) => {
+  //     return allItems.filter(solution => {
+  //       if (hideAddedSolutions) {
+  //         return !solution.isAdded && solution.type === type;
+  //       }
+  //       return solution.type === type;
+  //     });
+  //   };
+  // }, [allItems, hideAddedSolutions]);
+
+  // const itSystemsSolutions = useMemo(
+  //   () => filterSolutionsByType(MtoSolutionType.IT_SYSTEM),
+  //   [filterSolutionsByType]
+  // );
+  // const contractsSolutions = useMemo(
+  //   () => filterSolutionsByType(MtoSolutionType.CONTRACTOR),
+  //   [filterSolutionsByType]
+  // );
+  // const crossCutSolutions = useMemo(
+  //   () => filterSolutionsByType(MtoSolutionType.CROSS_CUTTING_GROUP),
+  //   [filterSolutionsByType]
+  // );
+
+  // const selectedSolutionItems = useMemo(() => {
+  //   switch (viewParam) {
+  //     case 'it-systems':
+  //       return itSystemsSolutions;
+  //     case 'contracts':
+  //       return contractsSolutions;
+  //     case 'cross-cut':
+  //       return crossCutSolutions;
+  //     case 'all':
+  //     default:
+  //       return allSolutions;
+  //   }
+  // }, [
+  //   viewParam,
+  //   itSystemsSolutions,
+  //   contractsSolutions,
+  //   crossCutSolutions,
+  //   allSolutions
+  // ]);
 
   const selectedSolutions = useMemo(
     () =>
@@ -266,7 +279,8 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.itSystems', {
-                          count: itSystemsSolutions.length
+                          // count: itSystemsSolutions.length
+                          count: 1
                         })}
                       </Button>
                       <Button
@@ -278,7 +292,8 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.contracts', {
-                          count: contractsSolutions.length
+                          // count: contractsSolutions.length
+                          count: 1
                         })}
                       </Button>
                       <Button
@@ -290,7 +305,8 @@ const SolutionLibrary = () => {
                         }}
                       >
                         {t('solutionLibrary.tabs.crossCutting', {
-                          count: crossCutSolutions.length
+                          // count: crossCutSolutions.length
+                          count: 1
                         })}
                       </Button>
                     </ButtonGroup>
