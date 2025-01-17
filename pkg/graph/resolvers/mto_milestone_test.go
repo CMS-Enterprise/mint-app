@@ -273,6 +273,7 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 		models.MTOCSKCmsBox,
 		models.MTOCSKCcw,
 	})
+
 	/***
 	Validate the created solutions and assign them by key
 	***/
@@ -329,8 +330,13 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 		return suite.ElementsMatch(dataIDs, expected)
 	}
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOMilestone.BySolutionID,
-		expectedResults, verifyFunc)
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](
+		suite.testConfigs.Context,
+		&suite.Suite,
+		loaders.MTOMilestone.BySolutionID,
+		expectedResults,
+		verifyFunc,
+	)
 
 }
 
@@ -515,4 +521,46 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 	linkedSolutions, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
 	suite.NoError(err)
 	suite.Len(linkedSolutions, 0)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
+	planA := suite.createModelPlan("NoLinkedSolutions Plan A")
+	planB := suite.createModelPlan("NoLinkedSolutions Plan B")
+
+	_ = suite.createMTOSolutionCommon(planA.ID, models.MTOCSKInnovation, nil)
+	_ = suite.createMTOSolutionCommon(planB.ID, models.MTOCSKAcoOs, nil)
+
+	_ = suite.createMilestoneCommon(
+		planA.ID,
+		models.MTOCommonMilestoneKeyManageCd,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
+	)
+
+	nonLinkedMilestone := suite.createMilestoneCommon(
+		planB.ID,
+		models.MTOCommonMilestoneKeyRevColBids,
+		nil,
+	)
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, []uuid.UUID]{
+		{Key: planA.ID, Expected: []uuid.UUID{}},
+		{Key: planB.ID, Expected: []uuid.UUID{nonLinkedMilestone.ID}},
+	}
+
+	verifyFunc := func(data []*models.MTOMilestone, expected []uuid.UUID) bool {
+		// Map the IDs from the milestones, assert they match the expected returned result
+		dataIDs := lo.Map(data, func(item *models.MTOMilestone, _ int) uuid.UUID {
+			return item.ID
+		})
+		return suite.ElementsMatch(dataIDs, expected)
+	}
+
+	// Call the helper method to validate all results
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](
+		suite.testConfigs.Context,
+		&suite.Suite,
+		loaders.MTOMilestone.ByModelPlanIDNoLinkedSolution,
+		expectedResults,
+		verifyFunc,
+	)
 }

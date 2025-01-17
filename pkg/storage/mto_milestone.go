@@ -132,3 +132,23 @@ func MTOMilestoneGetBySolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 	}
 	return returned, nil
 }
+
+// MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader returns all milestones by a model plan ID that are not linked to a solution
+func MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOMilestone, error) {
+
+	args := map[string]interface{}{
+		"model_plan_ids": pq.Array(modelPlanIDs),
+	}
+
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](
+		np,
+		sqlqueries.MTOMilestone.GetByModelPlanIDNoLinkedSolutionLoader,
+		args,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return returned, nil
+}

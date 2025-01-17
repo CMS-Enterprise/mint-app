@@ -6,6 +6,7 @@ DECLARE
      This determines if we need to add or subtract a value from the position. It should be +1 or -1
     */
     position_adjustment INT;
+    deleted_user_uuid UUID = '00000000-0000-0000-0000-000000000000'; -- default to unknown user
 BEGIN
 
     -- Avoid recursion by checking pg_trigger_depth()
@@ -98,9 +99,10 @@ BEGIN
 
     -- Handle Delete: Move positions up for all categories after the deleted category
     ELSIF TG_OP = 'DELETE' THEN
+        deleted_user_uuid = COALESCE(current_setting('app.current_user',TRUE),'00000000-0000-0000-0000-000000000000'); --Try to get user from variable, if not will default to unknown
         UPDATE mto_category
         SET position = position - 1,
-            modified_by = OLD.modified_by,
+            modified_by = deleted_user_uuid,
             modified_dts = OLD.modified_dts
         WHERE ((parent_id IS NULL AND OLD.parent_id IS NULL) OR (parent_id = OLD.parent_id))
           AND ((model_plan_id IS NULL AND OLD.model_plan_id IS NULL) OR (model_plan_id = OLD.model_plan_id))

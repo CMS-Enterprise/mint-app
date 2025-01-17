@@ -26,6 +26,9 @@ var mtoMilestoneGetByModelPlanIDAndCategoryIDLoaderSQL string
 //go:embed SQL/mto/milestone/get_by_solution_id_LOADER.sql
 var mtoMilestoneGetBySolutionIDLoaderSQL string
 
+//go:embed SQL/mto/milestone/get_by_model_plan_id_no_linked_solution_LOADER.sql
+var mtoMilestoneGetByModelPlanIDNoLinkedSolutionLoaderSQL string
+
 type mtoMilestoneScripts struct {
 	Create        string
 	Update        string
@@ -38,15 +41,18 @@ type mtoMilestoneScripts struct {
 	GetByModelPlanIDAndCategoryIDLoader string
 	// returns all Milestones by a solution ID
 	GetBySolutionIDLoader string
+	// returns all Milestones by a model plan ID that are not linked to a solution
+	GetByModelPlanIDNoLinkedSolutionLoader string
 }
 
 var MTOMilestone = mtoMilestoneScripts{
-	Create:                              mtoMilestoneCreateSQL,
-	Update:                              mtoMilestoneUpdateSQL,
-	Delete:                              mtoMilestoneDeleteSQL,
-	GetByID:                             mtoMilestoneGetByIDSQL,
-	GetByIDLoader:                       mtoMilestoneGetByIDLoaderSQL,
-	GetByModelPlanIDLoader:              mtoMilestoneGetByModelPlanIDLoaderSQL,
-	GetByModelPlanIDAndCategoryIDLoader: mtoMilestoneGetByModelPlanIDAndCategoryIDLoaderSQL,
-	GetBySolutionIDLoader:               mtoMilestoneGetBySolutionIDLoaderSQL,
+	Create:                                 mtoMilestoneCreateSQL,
+	Update:                                 mtoMilestoneUpdateSQL,
+	Delete:                                 mtoMilestoneDeleteSQL,
+	GetByID:                                mtoMilestoneGetByIDSQL,
+	GetByIDLoader:                          mtoMilestoneGetByIDLoaderSQL,
+	GetByModelPlanIDLoader:                 mtoMilestoneGetByModelPlanIDLoaderSQL,
+	GetByModelPlanIDAndCategoryIDLoader:    mtoMilestoneGetByModelPlanIDAndCategoryIDLoaderSQL,
+	GetBySolutionIDLoader:                  mtoMilestoneGetBySolutionIDLoaderSQL,
+	GetByModelPlanIDNoLinkedSolutionLoader: mtoMilestoneGetByModelPlanIDNoLinkedSolutionLoaderSQL,
 }
