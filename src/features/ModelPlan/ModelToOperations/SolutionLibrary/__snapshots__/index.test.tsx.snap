@@ -152,7 +152,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
             </form>
           </div>
           <div
-            class="desktop:grid-col-12 display-flex flex-wrap margin-bottom-2"
+            class="desktop:grid-col-12 desktop:display-flex flex-wrap margin-bottom-2"
             data-testid="grid"
           >
             <ul
@@ -300,7 +300,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               </a>
             </div>
             <div
-              class="usa-card__footer padding-3 display-flex"
+              class="usa-card__footer padding-3 display-flex flex-wrap"
               data-testid="CardFooter"
             >
               <button
@@ -370,7 +370,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               </a>
             </div>
             <div
-              class="usa-card__footer padding-3 display-flex"
+              class="usa-card__footer padding-3 display-flex flex-wrap"
               data-testid="CardFooter"
             >
               <button
