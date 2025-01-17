@@ -14,6 +14,9 @@ var mtoSolutionCreateCommonSolutionsAllowConflictsSQL string
 //go:embed SQL/mto/solution/update.sql
 var mtoSolutionUpdateSQL string
 
+//go:embed SQL/mto/solution/delete.sql
+var mtoSolutionDeleteSQL string
+
 //go:embed SQL/mto/solution/get_by_id_LOADER.sql
 var mtoSolutionGetByIDLoaderSQL string
 
@@ -28,6 +31,7 @@ type mtoSolutionScripts struct {
 	CreateAllowConflicts                string
 	CreateCommonSolutionsAllowConflicts string
 	Update                              string
+	Delete                              string
 	GetByIDLoader                       string
 	GetByModelPlanIDLoader              string
 	GetByMilestoneIDLoader              string
@@ -38,6 +42,7 @@ var MTOSolution = mtoSolutionScripts{
 	CreateAllowConflicts:                mtoSolutionCreateAllowConflictsSQL,
 	CreateCommonSolutionsAllowConflicts: mtoSolutionCreateCommonSolutionsAllowConflictsSQL,
 	Update:                              mtoSolutionUpdateSQL,
+	Delete:                              mtoSolutionDeleteSQL,
 	GetByIDLoader:                       mtoSolutionGetByIDLoaderSQL,
 	GetByModelPlanIDLoader:              mtoSolutionGetByModelPlanIDLoaderSQL,
 	GetByMilestoneIDLoader:              mtoSolutionGetByMilestoneIDLoaderSQL,

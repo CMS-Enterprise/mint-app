@@ -7,7 +7,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 )
 
-const unCategorizedMTOName = "Uncategorized"
+const UncategorizedMTOName = "Uncategorized"
 
 type Positioner interface {
 	GetPosition() int
@@ -71,16 +71,16 @@ func GetMaxPosition[T Positioner](positioners []T) int {
 
 // MTOUncategorized returns a placeholder category to hold all milestones that aren't categorized into a subcategory
 func MTOUncategorized(modelPlanID uuid.UUID, parentID *uuid.UUID, position int) *MTOCategory {
-	return NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID, position)
+	return NewMTOCategory(constants.GetSystemAccountUUID(), UncategorizedMTOName, modelPlanID, parentID, position)
 }
 func MTOUncategorizedSubcategory(modelPlanID uuid.UUID, parentID *uuid.UUID, position int) *MTOSubcategory {
-	category := NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID, position)
+	category := NewMTOCategory(constants.GetSystemAccountUUID(), UncategorizedMTOName, modelPlanID, parentID, position)
 
 	return category.ToSubcategory()
 }
 func MTOUncategorizedSubcategoryFromArray(modelPlanID uuid.UUID, parentID *uuid.UUID, subCategories []*MTOSubcategory) *MTOSubcategory {
 	maxPosition := GetMaxPosition(subCategories)
-	category := NewMTOCategory(constants.GetSystemAccountUUID(), unCategorizedMTOName, modelPlanID, parentID, maxPosition+1)
+	category := NewMTOCategory(constants.GetSystemAccountUUID(), UncategorizedMTOName, modelPlanID, parentID, maxPosition+1)
 
 	return category.ToSubcategory()
 }
