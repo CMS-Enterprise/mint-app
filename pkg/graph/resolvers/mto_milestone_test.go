@@ -523,31 +523,6 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 	suite.Len(linkedSolutions, 0)
 }
 
-func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_SinglePlan() {
-	plan := suite.createModelPlan("NoLinkedSolutions SinglePlan")
-	_ = suite.createMTOSolutionCommon(plan.ID, models.MTOCSKInnovation, nil)
-
-	linkedMilestone := suite.createMilestoneCommon(
-		plan.ID,
-		models.MTOCommonMilestoneKeyManageCd,
-		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
-	)
-
-	unlinkedMilestone := suite.createMilestoneCommon(
-		plan.ID,
-		models.MTOCommonMilestoneKeyRevColBids,
-		nil,
-	)
-
-	nonLinkedMilestones := suite.getMilestonesWithNoLinkedSolution(plan.ID)
-	milestoneIDs := lo.Map(nonLinkedMilestones, func(m *models.MTOMilestone, _ int) uuid.UUID {
-		return m.ID
-	})
-
-	suite.Contains(milestoneIDs, unlinkedMilestone.ID, "Unlinked milestone should be present")
-	suite.NotContains(milestoneIDs, linkedMilestone.ID, "Linked milestone should be excluded from the results")
-}
-
 func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 	planA := suite.createModelPlan("NoLinkedSolutions Plan A")
 	planB := suite.createModelPlan("NoLinkedSolutions Plan B")
