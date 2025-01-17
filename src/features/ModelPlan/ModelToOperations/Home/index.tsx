@@ -18,12 +18,10 @@ import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
-import MTOModal from '../_components/FormModal';
 import MTOTable, { isMatrixStartedFc } from '../_components/MatrixTable';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
@@ -209,9 +207,7 @@ const MTOHome = () => {
               {loading ? (
                 <PageLoading />
               ) : (
-                <MTOModalProvider>
-                  <MTOModal />
-
+                <>
                   {isMatrixStarted ? (
                     <>
                       <MTOTableActions />
@@ -224,7 +220,7 @@ const MTOHome = () => {
                   ) : (
                     <MTOOptionsPanel />
                   )}
-                </MTOModalProvider>
+                </>
               )}
             </>
           )}

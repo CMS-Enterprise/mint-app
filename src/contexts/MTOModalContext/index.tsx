@@ -3,12 +3,13 @@ import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/F
 import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/columns';
 
 export interface MTOModalState {
-  modalType: MTOModalType;
   categoryID: string;
-  subCategoryID: string;
   categoryName?: string;
   milestoneID?: string;
+  modalType: MTOModalType;
   rowType: MTORowType;
+  subCategoryID: string;
+  modalCalledFrom?: 'solution-library';
 }
 
 interface MTOModalContextType {

@@ -7,6 +7,10 @@ export default gql(/* GraphQL */ `
       mtoMatrix {
         commonSolutions {
           name
+          key
+          type
+          subjects
+          isAdded
         }
       }
     }

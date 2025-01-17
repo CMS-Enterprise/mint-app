@@ -411,7 +411,9 @@ export const modelToOperationsMisc: Record<string, any> = {
         info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
         success: 'Your solution ({{solution}}) has been added.',
         error:
-          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.',
+        fromSolutionLibrary:
+          'Once you create this custom solution, it will be visible in your MTO but will not be visible in the solution library.'
       }
     },
     solutionToMilestone: {
@@ -534,6 +536,54 @@ export const modelToOperationsMisc: Record<string, any> = {
     addCustomMilestone: 'Add a custom milestone',
     aboutSolution: 'About this solution',
     commonSolutions: 'Common solutions'
+  },
+  solutionLibrary: {
+    heading: 'Solution library',
+    description:
+      'Browse common available operational solutions and IT systems and add them to your model-to-operations matrix. Solutions in this library include IT systems, contractors and contract vehicles, cross-cutting groups, and more. You will be able to associate these solutions with any relevant model milestones.',
+    hideAdded: 'Hide added solutions ({{count}})',
+    tabs: {
+      allSolutions: 'All common solutions ({{count}})',
+      itSystems: 'IT systems ({{count}})',
+      contracts: 'Contracts and contractors ({{count}})',
+      crossCutting: 'Cross-cutting groups ({{count}})'
+    },
+    dontSeeSolution: 'Don’t see the solution you need?',
+    checkAllSolutions:
+      'Check <link1>all available solutions</link1> or <button1>add a custom solution</button1>.',
+    addCustomSolution: 'Add a custom solution',
+    aboutThisSolution: 'About this solution',
+    IT_SYSTEM: 'IT System',
+    CONTRACTOR: 'Contract vehicle, contractor, or other contract',
+    CROSS_CUTTING_GROUP: 'Cross-cutting group',
+    OTHER: 'Other',
+    emptyFilter: {
+      heading: 'There are no {{solution}} that match your search.',
+      'text-firstHalf': 'Please double-check your search and try again. ',
+      checkAllSolutions:
+        'You may also try checking <link1>all available solutions</link1>. ',
+      'text-secondHalf':
+        'If you’re searching for {{solution}} that you believe should be a part of MINT, please contact the MINT Team at ',
+      email: '<email1>MINTTeam@cms.hhs.gov</email1>.',
+      solution: {
+        all: {
+          heading: 'operational solutions',
+          body: 'a solution'
+        },
+        'it-systems': {
+          heading: 'IT systems',
+          body: 'an IT system'
+        },
+        contracts: {
+          heading: 'contract vehicles, contractors, or other contracts',
+          body: 'a contract vehicle, contractor, or other contract'
+        },
+        'cross-cut': {
+          heading: 'cross-cutting groups',
+          body: 'a cross-cutting group'
+        }
+      }
+    }
   },
   validation: {
     fillOut: 'Please fill out the required field.'
