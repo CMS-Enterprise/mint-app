@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
-  ButtonGroup,
   CardGroup,
   Grid,
   GridContainer,
@@ -33,11 +32,12 @@ import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MTOSolutionCard from './_components/MTOSolutionCard';
+import ViewSelector from './_components/ViewSelector';
 
 export type SolutionCardType =
   GetMtoCommonSolutionsQuery['modelPlan']['mtoMatrix']['commonSolutions'][0];
 
-type SolutionViewType = 'all' | 'it-systems' | 'contracts' | 'cross-cut';
+export type SolutionViewType = 'all' | 'it-systems' | 'contracts' | 'cross-cut';
 
 const SolutionLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -259,58 +259,15 @@ const SolutionLibrary = () => {
 
                   <Grid
                     desktop={{ col: 12 }}
-                    className="display-flex flex-wrap margin-bottom-2"
+                    className="desktop:display-flex flex-wrap margin-bottom-2"
                   >
-                    <ButtonGroup type="segmented" className="margin-right-3">
-                      <Button
-                        type="button"
-                        outline={viewParam !== 'all'}
-                        onClick={() => {
-                          params.set('view', 'all');
-                          history.replace({ search: params.toString() });
-                        }}
-                      >
-                        {t('solutionLibrary.tabs.allSolutions', {
-                          count: allSolutions.length
-                        })}
-                      </Button>
-                      <Button
-                        type="button"
-                        outline={viewParam !== 'it-systems'}
-                        onClick={() => {
-                          params.set('view', 'it-systems');
-                          history.replace({ search: params.toString() });
-                        }}
-                      >
-                        {t('solutionLibrary.tabs.itSystems', {
-                          count: itSystemsSolutions.length
-                        })}
-                      </Button>
-                      <Button
-                        type="button"
-                        outline={viewParam !== 'contracts'}
-                        onClick={() => {
-                          params.set('view', 'contracts');
-                          history.replace({ search: params.toString() });
-                        }}
-                      >
-                        {t('solutionLibrary.tabs.contracts', {
-                          count: contractsSolutions.length
-                        })}
-                      </Button>
-                      <Button
-                        type="button"
-                        outline={viewParam !== 'cross-cut'}
-                        onClick={() => {
-                          params.set('view', 'cross-cut');
-                          history.replace({ search: params.toString() });
-                        }}
-                      >
-                        {t('solutionLibrary.tabs.crossCutting', {
-                          count: crossCutSolutions.length
-                        })}
-                      </Button>
-                    </ButtonGroup>
+                    <ViewSelector
+                      viewParam={viewParam}
+                      allSolutions={allSolutions}
+                      itSystemsSolutions={itSystemsSolutions}
+                      contractsSolutions={contractsSolutions}
+                      crossCutSolutions={crossCutSolutions}
+                    />
 
                     <CheckboxField
                       id="hide-added-solutions"
@@ -499,7 +456,6 @@ const SolutionLibrary = () => {
                 {currentItems.length > 0 && pageCount > 0 && (
                   <>{PaginationComponent}</>
                 )}
-
                 {currentItems.length > 0 && (
                   <TablePageSize
                     className="margin-left-auto desktop:grid-col-auto"
