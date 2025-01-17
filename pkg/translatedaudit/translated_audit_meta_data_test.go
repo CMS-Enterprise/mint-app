@@ -964,11 +964,21 @@ func (suite *TAuditSuite) TestMTOCategoryMetaDataGet() {
 			}
 		}
 	})
-	suite.Run("A delete or truncate without a parentID in the changes object will error", func() {
+	suite.Run("A delete or truncate without a parentID in the changes object will not error, (parent_id will not show up in changes if not set, but will fetch from the db)", func() {
 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpDelete)
-		suite.Error(err)
-		suite.Nil(categoryMeta)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaMTOCategory, *metaDataType)
+		}
+		if suite.NotNil(categoryMeta) {
+			if suite.NotNil(categoryMeta.ParentCategoryID) {
+				suite.EqualValues(parentCategoryOld.ID, *categoryMeta.ParentCategoryID)
+				if suite.NotNil(categoryMeta.ParentCategoryName) {
+					suite.EqualValues(parentCategoryNameDBOld, *categoryMeta.ParentCategoryName)
+				}
+
+			}
+		}
 
 	})
 	suite.Run("Category meta data doesn't fail when field isn't present in change set for Update, fetch category info from db", func() {
@@ -999,12 +1009,17 @@ func (suite *TAuditSuite) TestMTOCategoryMetaDataGet() {
 			suite.Nil(categoryMeta.ParentCategoryName)
 		}
 	})
-	suite.Run("Category meta data fails when field isn't present in change set for DELETE", func() {
+	suite.Run("Category meta data doesn't fails when field isn't present in change set for DELETE. If parent or category is not fetchable, data is null", func() {
 
 		categoryMeta, metaDataType, err := MTOCategoryMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, category.ID, emptyChanges, models.DBOpDelete)
-		suite.Error(err)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaMTOCategory, *metaDataType)
+		}
 
-		suite.Nil(categoryMeta)
+		if suite.NotNil(categoryMeta) {
+			suite.Nil(categoryMeta.ParentCategoryID)
+			suite.Nil(categoryMeta.ParentCategoryName)
+		}
 	})
 }
