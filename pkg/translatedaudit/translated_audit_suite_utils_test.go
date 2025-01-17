@@ -5,9 +5,11 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -258,7 +260,15 @@ func (suite *TAuditSuite) createMTOCategory(modelPlanID uuid.UUID, name string, 
 		preHook(categoryToCreate)
 
 	}
-	retSol, err := storage.MTOCategoryCreate(suite.testConfigs.Store, suite.testConfigs.Logger, categoryToCreate)
+	retCategory, err := storage.MTOCategoryCreate(suite.testConfigs.Store, suite.testConfigs.Logger, categoryToCreate)
 	suite.NoError(err)
-	return retSol
+	return retCategory
+}
+
+// deleteMTOCategory deletes an MTO Category using the store. It is just for testing
+func (suite *TAuditSuite) deleteMTOCategory(catgoryID uuid.UUID) {
+	err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+		return storage.MTOCategoryDelete(tx, suite.testConfigs.Principal.UserAccount.ID, catgoryID)
+	})
+	suite.NoError(err)
 }
