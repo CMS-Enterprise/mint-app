@@ -470,9 +470,8 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 		}
 		parentCategoryID = &parentCategoryIDtemp
 	} else {
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			return nil, nil, fmt.Errorf("there wasn't a parent ID present for this MTO category, unable to generate metadata for this entry. MTO category %v", categoryID)
-		}
+		// Note, if a parent id wasn't set and deleted, it is excluded from the audit as it is unchanged. EG null --> null never shows up in the audit.
+
 		// attempt to fetch the category, and get parent id from the entyr
 		category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
 		if err != nil {
