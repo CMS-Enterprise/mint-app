@@ -70,7 +70,7 @@ const MTOSolutionCard = ({
           ))}
         </CardBody>
 
-        <CardFooter className="padding-3 display-flex">
+        <CardFooter className="padding-3 display-flex flex-wrap">
           {!solution.isAdded ? (
             <Button
               type="button"
