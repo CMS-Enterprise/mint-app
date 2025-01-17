@@ -488,7 +488,7 @@ const SolutionLibrary = () => {
               ) : (
                 <CardGroup>
                   {currentItems.map(solution => (
-                    <MTOSolutionCard solution={solution} />
+                    <MTOSolutionCard key={solution.key} solution={solution} />
                   ))}
                 </CardGroup>
               )}
