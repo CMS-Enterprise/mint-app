@@ -292,3 +292,11 @@ func MTOMilestoneUpdateLinkedSolutions(
 	}
 	return retSolutions, nil
 }
+
+// MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader returns all milestones by a model plan ID that are not linked to a solution
+func MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(
+	ctx context.Context,
+	modelPlanID uuid.UUID,
+) ([]*models.MTOMilestone, error) {
+	return loaders.MTOMilestone.ByModelPlanIDNoLinkedSolution.Load(ctx, modelPlanID)
+}
