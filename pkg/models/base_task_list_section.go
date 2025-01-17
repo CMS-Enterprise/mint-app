@@ -20,6 +20,7 @@ type IBaseTaskListSection interface {
 	GetModifiedBy() *string
 	SetModifiedBy(principal authentication.Principal) error
 	GetStatus() TaskStatus
+	MostRecentModification() (time.Time, uuid.UUID)
 }
 
 // baseTaskListSection represents all the shared fields in common to a task list section

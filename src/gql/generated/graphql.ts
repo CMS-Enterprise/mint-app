@@ -694,6 +694,7 @@ export enum LockableSection {
   BENEFICIARIES = 'BENEFICIARIES',
   DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
   GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
+  MODELS_TO_OPERATION_MATRIX = 'MODELS_TO_OPERATION_MATRIX',
   OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
   PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
   PAYMENT = 'PAYMENT',
@@ -713,6 +714,389 @@ export type LockableSectionLockStatusChanged = {
   actionType: ActionType;
   changeType: ChangeType;
   lockStatus: LockableSectionLockStatus;
+};
+
+/**
+ * MTOCategories combines the concept of Category and Subcategory
+ * This allows it to be fetched more conveniently in one resolver
+ */
+export type MtoCategories = {
+  __typename: 'MTOCategories';
+  category: MtoCategory;
+  subCategory: MtoSubcategory;
+};
+
+export type MtoCategory = {
+  __typename: 'MTOCategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
+  subCategories: Array<MtoSubcategory>;
+};
+
+/** Represents MTO Category translation data */
+export type MtoCategoryTranslation = {
+  __typename: 'MTOCategoryTranslation';
+  name: TranslationField;
+  parentID: TranslationField;
+  position: TranslationField;
+};
+
+/** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
+export type MtoCommonMilestone = {
+  __typename: 'MTOCommonMilestone';
+  categoryName: Scalars['String']['output'];
+  commonSolutions: Array<MtoCommonSolution>;
+  facilitatedByRole: Array<MtoFacilitator>;
+  /**
+   * To represent if this Common Milestone is _already_ part of the Model Plan's MTO.
+   * This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+   */
+  isAdded: Scalars['Boolean']['output'];
+  /**
+   * To represent if this Common Milestone is suggested to be part of the Model Plan's MTO, according to answers provided elsewhere in the app.
+   * This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+   */
+  isSuggested: Scalars['Boolean']['output'];
+  key: MtoCommonMilestoneKey;
+  name: Scalars['String']['output'];
+  /** Specifies the Task List Section that corresponds to suggesting this common milestone */
+  section?: Maybe<TaskListSection>;
+  subCategoryName?: Maybe<Scalars['String']['output']>;
+};
+
+/** These are all the common milestone keys that we expect to for mto common milestones */
+export enum MtoCommonMilestoneKey {
+  ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
+  ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
+  ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
+  APP_SUPPORT_CON = 'APP_SUPPORT_CON',
+  CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
+  COMM_W_PART = 'COMM_W_PART',
+  COMPUTE_SHARED_SAVINGS_PAYMENT = 'COMPUTE_SHARED_SAVINGS_PAYMENT',
+  DATA_TO_MONITOR = 'DATA_TO_MONITOR',
+  DATA_TO_SUPPORT_EVAL = 'DATA_TO_SUPPORT_EVAL',
+  EDUCATE_BENEF = 'EDUCATE_BENEF',
+  ESTABLISH_BENCH = 'ESTABLISH_BENCH',
+  HELPDESK_SUPPORT = 'HELPDESK_SUPPORT',
+  IDDOC_SUPPORT = 'IDDOC_SUPPORT',
+  IT_PLATFORM_FOR_LEARNING = 'IT_PLATFORM_FOR_LEARNING',
+  MAKE_NON_CLAIMS_BASED_PAYMENTS = 'MAKE_NON_CLAIMS_BASED_PAYMENTS',
+  MANAGE_BEN_OVERLAP = 'MANAGE_BEN_OVERLAP',
+  MANAGE_CD = 'MANAGE_CD',
+  MANAGE_FFS_EXCL_PAYMENTS = 'MANAGE_FFS_EXCL_PAYMENTS',
+  MANAGE_PROV_OVERLAP = 'MANAGE_PROV_OVERLAP',
+  PART_TO_PART_COLLAB = 'PART_TO_PART_COLLAB',
+  PROCESS_PART_APPEALS = 'PROCESS_PART_APPEALS',
+  QUALITY_PERFORMANCE_SCORES = 'QUALITY_PERFORMANCE_SCORES',
+  RECOVER_PAYMENTS = 'RECOVER_PAYMENTS',
+  RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
+  REV_COL_BIDS = 'REV_COL_BIDS',
+  REV_SCORE_APP = 'REV_SCORE_APP',
+  SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
+  SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
+  UPDATE_CONTRACT = 'UPDATE_CONTRACT',
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
+}
+
+export type MtoCommonSolution = {
+  __typename: 'MTOCommonSolution';
+  contactInformation: MtoCommonSolutionContactInformation;
+  filterView?: Maybe<ModelViewFilter>;
+  isAdded: Scalars['Boolean']['output'];
+  key: MtoCommonSolutionKey;
+  name: Scalars['String']['output'];
+  subjects: Array<MtoCommonSolutionSubject>;
+  type: MtoSolutionType;
+};
+
+export type MtoCommonSolutionContact = {
+  __typename: 'MTOCommonSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isPrimary: Scalars['Boolean']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+/** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
+export type MtoCommonSolutionContactInformation = {
+  __typename: 'MTOCommonSolutionContactInformation';
+  /** This is the list of all points of contact for this common solution */
+  pointsOfContact: Array<MtoCommonSolutionContact>;
+  /** The point of contact who is determined to be the primary contact */
+  primaryContact: MtoCommonSolutionContact;
+};
+
+/** Represents a translation of a contact for a common solution */
+export type MtoCommonSolutionContactTranslation = {
+  __typename: 'MTOCommonSolutionContactTranslation';
+  email: TranslationField;
+  isPrimary: TranslationField;
+  isTeam: TranslationField;
+  key: TranslationField;
+  name: TranslationField;
+  role: TranslationField;
+};
+
+export enum MtoCommonSolutionKey {
+  ACO_OS = 'ACO_OS',
+  APPS = 'APPS',
+  ARS = 'ARS',
+  BCDA = 'BCDA',
+  CBOSC = 'CBOSC',
+  CCW = 'CCW',
+  CDX = 'CDX',
+  CMS_BOX = 'CMS_BOX',
+  CMS_QUALTRICS = 'CMS_QUALTRICS',
+  CONNECT = 'CONNECT',
+  CPI_VETTING = 'CPI_VETTING',
+  EDFR = 'EDFR',
+  EFT = 'EFT',
+  EXISTING_CMS_DATA_AND_PROCESS = 'EXISTING_CMS_DATA_AND_PROCESS',
+  GOVDELIVERY = 'GOVDELIVERY',
+  GS = 'GS',
+  HDR = 'HDR',
+  HIGLAS = 'HIGLAS',
+  HPMS = 'HPMS',
+  IDR = 'IDR',
+  INNOVATION = 'INNOVATION',
+  IPC = 'IPC',
+  ISP = 'ISP',
+  LDG = 'LDG',
+  LOI = 'LOI',
+  LV = 'LV',
+  MARX = 'MARX',
+  MDM_NCBP = 'MDM_NCBP',
+  MDM_POR = 'MDM_POR',
+  MIDS = 'MIDS',
+  MODEL_SPACE = 'MODEL_SPACE',
+  OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
+  POST_PORTAL = 'POST_PORTAL',
+  QV = 'QV',
+  RFA = 'RFA',
+  RMADA = 'RMADA',
+  SHARED_SYSTEMS = 'SHARED_SYSTEMS'
+}
+
+export enum MtoCommonSolutionSubject {
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS',
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS',
+  COMMUNICATION_TOOLS_AND_HELP_DESK = 'COMMUNICATION_TOOLS_AND_HELP_DESK',
+  CONTRACT_VEHICLES = 'CONTRACT_VEHICLES',
+  DATA = 'DATA',
+  LEARNING = 'LEARNING',
+  LEGAL = 'LEGAL',
+  MEDICARE_ADVANTAGE_AND_PART_D = 'MEDICARE_ADVANTAGE_AND_PART_D',
+  MEDICARE_FEE_FOR_SERVICE = 'MEDICARE_FEE_FOR_SERVICE',
+  PAYMENTS_AND_FINANCIALS = 'PAYMENTS_AND_FINANCIALS',
+  QUALITY = 'QUALITY'
+}
+
+export enum MtoFacilitator {
+  APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
+  CONTRACTING_OFFICERS_REPRESENTATIVE = 'CONTRACTING_OFFICERS_REPRESENTATIVE',
+  EVALUATION_CONTRACTOR = 'EVALUATION_CONTRACTOR',
+  IMPLEMENTATION_CONTRACTOR = 'IMPLEMENTATION_CONTRACTOR',
+  IT_LEAD = 'IT_LEAD',
+  IT_SYSTEM_TEAM_OR_PRODUCT_OWNER = 'IT_SYSTEM_TEAM_OR_PRODUCT_OWNER',
+  LEARNING_AND_DIFFUSION_GROUP = 'LEARNING_AND_DIFFUSION_GROUP',
+  LEARNING_CONTRACTOR = 'LEARNING_CONTRACTOR',
+  MODEL_LEAD = 'MODEL_LEAD',
+  MODEL_TEAM = 'MODEL_TEAM',
+  MONITORING_CONTRACTOR = 'MONITORING_CONTRACTOR',
+  OTHER = 'OTHER',
+  PARTICIPANTS = 'PARTICIPANTS',
+  QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP = 'RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP',
+  SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
+}
+
+/** This holds information specific to a models to operation matrix */
+export type MtoInfo = {
+  __typename: 'MTOInfo';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
+};
+
+/** Represents mto info translation data */
+export type MtoInfoTranslation = {
+  __typename: 'MTOInfoTranslation';
+  readyForReviewBy: TranslationField;
+  readyForReviewDTS: TranslationField;
+};
+
+export type MtoMilestone = {
+  __typename: 'MTOMilestone';
+  addedFromMilestoneLibrary: Scalars['Boolean']['output'];
+  /** Category resolves relational category information. */
+  categories: MtoCategories;
+  commonMilestone?: Maybe<MtoCommonMilestone>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  facilitatedBy?: Maybe<Array<MtoFacilitator>>;
+  id: Scalars['UUID']['output'];
+  isDraft: Scalars['Boolean']['output'];
+  key?: Maybe<MtoCommonMilestoneKey>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  /**
+   * Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
+   * This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
+   */
+  mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
+  name: Scalars['String']['output'];
+  needBy?: Maybe<Scalars['Time']['output']>;
+  riskIndicator: MtoRiskIndicator;
+  solutions: Array<MtoSolution>;
+  status: MtoMilestoneStatus;
+};
+
+export type MtoMilestoneChanges = {
+  facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
+  isDraft?: InputMaybe<Scalars['Boolean']['input']>;
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  needBy?: InputMaybe<Scalars['Time']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoMilestoneStatus>;
+};
+
+/** Represents MTO Milestone Solution Link translation data */
+export type MtoMilestoneSolutionLinkTranslation = {
+  __typename: 'MTOMilestoneSolutionLinkTranslation';
+  milestoneID: TranslationField;
+  solutionID: TranslationField;
+};
+
+export enum MtoMilestoneStatus {
+  COMPLETED = 'COMPLETED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_STARTED = 'NOT_STARTED'
+}
+
+/** Represents MTO Custom Milestone translation data */
+export type MtoMilestoneTranslation = {
+  __typename: 'MTOMilestoneTranslation';
+  commonSolutions: TranslationFieldWithOptions;
+  facilitatedBy: TranslationFieldWithOptions;
+  isDraft: TranslationFieldWithOptions;
+  key: TranslationField;
+  mtoCategoryID: TranslationField;
+  name: TranslationField;
+  needBy: TranslationField;
+  riskIndicator: TranslationFieldWithOptions;
+  solutions: TranslationFieldWithOptions;
+  status: TranslationFieldWithOptions;
+};
+
+export enum MtoRiskIndicator {
+  AT_RISK = 'AT_RISK',
+  OFF_TRACK = 'OFF_TRACK',
+  ON_TRACK = 'ON_TRACK'
+}
+
+export type MtoSolution = {
+  __typename: 'MTOSolution';
+  addedFromSolutionLibrary: Scalars['Boolean']['output'];
+  commonSolution?: Maybe<MtoCommonSolution>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  facilitatedBy?: Maybe<Array<MtoFacilitator>>;
+  id: Scalars['UUID']['output'];
+  key?: Maybe<MtoCommonSolutionKey>;
+  milestones: Array<MtoMilestone>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  neededBy?: Maybe<Scalars['Time']['output']>;
+  pocEmail?: Maybe<Scalars['String']['output']>;
+  pocName?: Maybe<Scalars['String']['output']>;
+  riskIndicator?: Maybe<MtoRiskIndicator>;
+  status: MtoSolutionStatus;
+  type?: Maybe<MtoSolutionType>;
+};
+
+export type MtoSolutionChanges = {
+  facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  neededBy?: InputMaybe<Scalars['Time']['input']>;
+  pocEmail?: InputMaybe<Scalars['String']['input']>;
+  pocName?: InputMaybe<Scalars['String']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoSolutionStatus>;
+};
+
+export type MtoSolutionLinks = {
+  commonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
+export enum MtoSolutionStatus {
+  BACKLOG = 'BACKLOG',
+  COMPLETED = 'COMPLETED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_STARTED = 'NOT_STARTED',
+  ONBOARDING = 'ONBOARDING'
+}
+
+/** Represents MTO Custom Solution translation data */
+export type MtoSolutionTranslation = {
+  __typename: 'MTOSolutionTranslation';
+  facilitatedBy: TranslationFieldWithOptions;
+  key: TranslationField;
+  name: TranslationField;
+  neededBy: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  riskIndicator: TranslationFieldWithOptions;
+  solutionType: TranslationFieldWithOptions;
+  status: TranslationFieldWithOptions;
+};
+
+export enum MtoSolutionType {
+  CONTRACTOR = 'CONTRACTOR',
+  CROSS_CUTTING_GROUP = 'CROSS_CUTTING_GROUP',
+  IT_SYSTEM = 'IT_SYSTEM',
+  OTHER = 'OTHER'
+}
+
+export enum MtoStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  READY = 'READY',
+  READY_FOR_REVIEW = 'READY_FOR_REVIEW'
+}
+
+export type MtoSubcategory = {
+  __typename: 'MTOSubcategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  milestones: Array<MtoMilestone>;
+  name: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
 };
 
 export enum MintUses {
@@ -785,6 +1169,7 @@ export type ModelPlan = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoMatrix: ModelsToOperationMatrix;
   nameHistory: Array<Scalars['String']['output']>;
   opSolutionLastModifiedDts: Scalars['Time']['output'];
   operationalNeeds: Array<OperationalNeed>;
@@ -890,6 +1275,19 @@ export enum ModelViewFilter {
   PBG = 'PBG'
 }
 
+export type ModelsToOperationMatrix = {
+  __typename: 'ModelsToOperationMatrix';
+  categories: Array<MtoCategory>;
+  commonMilestones: Array<MtoCommonMilestone>;
+  commonSolutions: Array<MtoCommonSolution>;
+  info: MtoInfo;
+  milestones: Array<MtoMilestone>;
+  milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
+  recentEdit?: Maybe<RecentModification>;
+  solutions: Array<MtoSolution>;
+  status: MtoStatus;
+};
+
 export enum MonitoringFileType {
   BENEFICIARY = 'BENEFICIARY',
   OTHER = 'OTHER',
@@ -915,6 +1313,15 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  /**
+   * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
+   * Note, the parent must belong to the same model plan, or this will return an error
+   */
+  createMTOCategory: MtoCategory;
+  createMTOMilestoneCommon: MtoMilestone;
+  createMTOMilestoneCustom: MtoMilestone;
+  createMTOSolutionCommon: MtoSolution;
+  createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
   createOperationalSolution: OperationalSolution;
   createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -923,6 +1330,19 @@ export type Mutation = {
   createPlanDiscussion: PlanDiscussion;
   createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
   createPlanTDL: PlanTdl;
+  /**
+   * Automatically attempts to create a series of categories and subcategories by name. If any specific category/subcategory already exists, it will
+   * still create the others
+   */
+  createStandardCategories: Scalars['Boolean']['output'];
+  /**
+   * Deletes an MTO category. If the category has subcategories, it will delete them as well.
+   * If the target category is a subcategory, it will only delete the subcategory and redirect
+   * references to the parent category.
+   */
+  deleteMTOCategory: Scalars['Boolean']['output'];
+  deleteMTOMilestone: Scalars['Boolean']['output'];
+  deleteMTOSolution: Scalars['Boolean']['output'];
   deleteOperationalSolutionSubtask: Scalars['Int']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
@@ -933,9 +1353,23 @@ export type Mutation = {
   lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
+  markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
+  mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
   removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  /**
+   * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
+   * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
+   */
+  renameMTOCategory: MtoCategory;
+  /**
+   * Allows you to change the position and parent of an MTO category. Other categories will automatically
+   * have their positions changed to adjust to the new position of the new category.
+   * If only the parent is changed, the category will be placed as the last category in order for the group of subcategories
+   * Note, a subcategory can't become a subcategory and vice versa
+   */
+  reorderMTOCategory: MtoCategory;
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
@@ -948,6 +1382,8 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  updateMTOMilestone: MtoMilestone;
+  updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
   updateOperationalSolution: OperationalSolution;
   updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
@@ -991,6 +1427,48 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCategoryArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneCommonArgs = {
+  commonMilestoneKey: MtoCommonMilestoneKey;
+  commonSolutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneCustomArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCommonArgs = {
+  key: MtoCommonSolutionKey;
+  milestonesToLink?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCustomArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  solutionType: MtoSolutionType;
 };
 
 
@@ -1047,6 +1525,30 @@ export type MutationCreatePlanTdlArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationCreateStandardCategoriesArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoSolutionArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationDeleteOperationalSolutionSubtaskArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -1096,8 +1598,22 @@ export type MutationLockLockableSectionArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMarkMtoReadyForReviewArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationMarkNotificationAsReadArgs = {
   notificationID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
 };
 
 
@@ -1105,6 +1621,21 @@ export type MutationMarkNotificationAsReadArgs = {
 export type MutationRemovePlanDocumentSolutionLinksArgs = {
   documentIDs: Array<Scalars['UUID']['input']>;
   solutionID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationRenameMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationReorderMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  newOrder?: InputMaybe<Scalars['Int']['input']>;
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
@@ -1156,6 +1687,21 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoMilestoneArgs = {
+  changes: MtoMilestoneChanges;
+  id: Scalars['UUID']['input'];
+  solutionLinks?: InputMaybe<MtoSolutionLinks>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoSolutionArgs = {
+  changes: MtoSolutionChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -3363,6 +3909,7 @@ export type Query = {
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoMilestone: MtoMilestone;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3432,6 +3979,12 @@ export type QueryModelPlansByOperationalSolutionKeyArgs = {
 
 
 /** Query definition for the schema */
+export type QueryMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
 export type QueryOperationalNeedArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -3497,6 +4050,13 @@ export type QueryTranslatedAuditCollectionArgs = {
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
+};
+
+export type RecentModification = {
+  __typename: 'RecentModification';
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
 export enum RecruitmentType {
@@ -3673,6 +4233,14 @@ export enum TableName {
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
   MODEL_PLAN = 'model_plan',
+  MTO_CATEGORY = 'mto_category',
+  MTO_COMMON_MILESTONE = 'mto_common_milestone',
+  MTO_COMMON_SOLUTION = 'mto_common_solution',
+  MTO_COMMON_SOLUTION_CONTACT = 'mto_common_solution_contact',
+  MTO_INFO = 'mto_info',
+  MTO_MILESTONE = 'mto_milestone',
+  MTO_MILESTONE_SOLUTION_LINK = 'mto_milestone_solution_link',
+  MTO_SOLUTION = 'mto_solution',
   NDA_AGREEMENT = 'nda_agreement',
   OPERATIONAL_NEED = 'operational_need',
   OPERATIONAL_SOLUTION = 'operational_solution',
@@ -3870,13 +4438,14 @@ export type TranslatedAuditMetaBaseStruct = {
 };
 
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
-export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaMtoCategory | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
 
 export enum TranslatedAuditMetaDataType {
   BASE = 'BASE',
   DISCUSSION_REPLY = 'DISCUSSION_REPLY',
   DOCUMENT_SOLUTION_LINK = 'DOCUMENT_SOLUTION_LINK',
   GENERIC = 'GENERIC',
+  MTO_CATEGORY = 'MTO_CATEGORY',
   OPERATIONAL_NEED = 'OPERATIONAL_NEED',
   OPERATIONAL_SOLUTION = 'OPERATIONAL_SOLUTION',
   OPERATIONAL_SOLUTION_SUBTASK = 'OPERATIONAL_SOLUTION_SUBTASK'
@@ -3922,6 +4491,16 @@ export type TranslatedAuditMetaGeneric = {
   relation: Scalars['String']['output'];
   /** Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated */
   relationContent?: Maybe<Scalars['String']['output']>;
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited */
+export type TranslatedAuditMetaMtoCategory = {
+  __typename: 'TranslatedAuditMetaMTOCategory';
+  isSubCategory: Scalars['Boolean']['output'];
+  parentCategoryID?: Maybe<Scalars['UUID']['output']>;
+  parentCategoryName?: Maybe<Scalars['String']['output']>;
   tableName: TableName;
   version: Scalars['Int']['output'];
 };
@@ -4424,7 +5003,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaMTOCategory', isSubCategory: boolean, parentCategoryID?: UUID | null, parentCategoryName?: string | null, tableName: TableName, version: number } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;
@@ -4888,7 +5467,7 @@ export type GetModelPlanQueryVariables = Exact<{
 }>;
 
 
-export type GetModelPlanQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, opSolutionLastModifiedDts: Time, archived: boolean, status: ModelStatus, taskListStatus: TaskStatus, isFavorite: boolean, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null, suggestedPhase?: { __typename: 'PhaseSuggestion', phase: ModelPhase, suggestedStatuses: Array<ModelStatus> } | null, basics: { __typename: 'PlanBasics', id: UUID, clearanceStarts?: Time | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, status: DataExchangeApproachStatus, modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, documents: Array<{ __typename: 'PlanDocument', id: UUID, fileName: string, fileType: string }>, echimpCRsAndTDLs: Array<{ __typename: 'EChimpCR', id: string } | { __typename: 'EChimpTDL', id: string }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null }> }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }>, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus, modifiedDts?: Time | null } } };
+export type GetModelPlanQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, opSolutionLastModifiedDts: Time, archived: boolean, status: ModelStatus, taskListStatus: TaskStatus, isFavorite: boolean, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null, suggestedPhase?: { __typename: 'PhaseSuggestion', phase: ModelPhase, suggestedStatuses: Array<ModelStatus> } | null, basics: { __typename: 'PlanBasics', id: UUID, clearanceStarts?: Time | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, status: DataExchangeApproachStatus, modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, documents: Array<{ __typename: 'PlanDocument', id: UUID, fileName: string, fileType: string }>, echimpCRsAndTDLs: Array<{ __typename: 'EChimpCR', id: string } | { __typename: 'EChimpTDL', id: string }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null }> }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }>, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus, modifiedDts?: Time | null }, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, recentEdit?: { __typename: 'RecentModification', modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null } | null, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string }> } } };
 
 export type GetModelPlanBaseQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4956,6 +5535,194 @@ export type UnlockModelPlanSectionMutationVariables = Exact<{
 
 
 export type UnlockModelPlanSectionMutation = { __typename: 'Mutation', unlockLockableSection: boolean };
+
+export type CreateMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type CreateMtoCategoryMutation = { __typename: 'Mutation', createMTOCategory: { __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean } };
+
+export type CreateMtoMilestoneMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  commonMilestoneKey: MtoCommonMilestoneKey;
+  commonSolutions?: InputMaybe<Array<MtoCommonSolutionKey> | MtoCommonSolutionKey>;
+}>;
+
+
+export type CreateMtoMilestoneMutation = { __typename: 'Mutation', createMTOMilestoneCommon: { __typename: 'MTOMilestone', id: UUID, name: string } };
+
+export type CreateMtoMilestoneCustomMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type CreateMtoMilestoneCustomMutation = { __typename: 'Mutation', createMTOMilestoneCustom: { __typename: 'MTOMilestone', id: UUID, name: string } };
+
+export type CreateMtoSolutionCustomMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  solutionType: MtoSolutionType;
+  name: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+}>;
+
+
+export type CreateMtoSolutionCustomMutation = { __typename: 'Mutation', createMTOSolutionCustom: { __typename: 'MTOSolution', id: UUID, name?: string | null, status: MtoSolutionStatus, pocName?: string | null, pocEmail?: string | null, type?: MtoSolutionType | null } };
+
+export type CreateStandardCategoriesMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type CreateStandardCategoriesMutation = { __typename: 'Mutation', createStandardCategories: boolean };
+
+export type DeleteMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteMtoCategoryMutation = { __typename: 'Mutation', deleteMTOCategory: boolean };
+
+export type DeleteMtoMilestoneMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteMtoMilestoneMutation = { __typename: 'Mutation', deleteMTOMilestone: boolean };
+
+export type GetCustomMtoSolutionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCustomMtoSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, addedFromSolutionLibrary: boolean }> } } };
+
+export type GetMtoAllSolutionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoAllSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey, name: string }>, solutions: Array<{ __typename: 'MTOSolution', id: UUID, key?: MtoCommonSolutionKey | null, name?: string | null }> } } };
+
+export type GetMtoCategoriesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoCategoriesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', mtoMatrix: { __typename: 'ModelsToOperationMatrix', categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string, subCategories: Array<{ __typename: 'MTOSubcategory', id: UUID, name: string }> }> } } };
+
+export type GetMtoMilestonesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', commonMilestones: Array<{ __typename: 'MTOCommonMilestone', name: string, key: MtoCommonMilestoneKey, isAdded: boolean, isSuggested: boolean, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }> } } };
+
+export type GetMtoCommonSolutionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoCommonSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', commonSolutions: Array<{ __typename: 'MTOCommonSolution', name: string }> } } };
+
+export type GetModelToOperationsMatrixQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelToOperationsMatrixQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean, subCategories: Array<{ __typename: 'MTOSubcategory', id: UUID, name: string, isUncategorized: boolean, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, facilitatedBy?: Array<MtoFacilitator> | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, addedFromMilestoneLibrary: boolean, isDraft: boolean, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, key?: MtoCommonSolutionKey | null }> }> }> }>, milestones: Array<{ __typename: 'MTOMilestone', id: UUID }>, commonMilestones: Array<{ __typename: 'MTOCommonMilestone', isSuggested: boolean, isAdded: boolean }>, recentEdit?: { __typename: 'RecentModification', modifiedDts?: Time | null, id?: UUID | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } | null } } };
+
+export type GetMtoMilestoneQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoMilestoneQuery = { __typename: 'Query', mtoMilestone: { __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, facilitatedBy?: Array<MtoFacilitator> | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, addedFromMilestoneLibrary: boolean, isDraft: boolean, commonMilestone?: { __typename: 'MTOCommonMilestone', key: MtoCommonMilestoneKey, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> } | null, categories: { __typename: 'MTOCategories', category: { __typename: 'MTOCategory', id: UUID }, subCategory: { __typename: 'MTOSubcategory', id: UUID } }, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, key?: MtoCommonSolutionKey | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null, commonSolution?: { __typename: 'MTOCommonSolution', name: string, key: MtoCommonSolutionKey, isAdded: boolean } | null }> } };
+
+export type GetMilestoneSuggestedAnswerQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  generalCharacteristics: Scalars['Boolean']['input'];
+  participantsAndProviders: Scalars['Boolean']['input'];
+  beneficiaries: Scalars['Boolean']['input'];
+  opsEvalAndLearning: Scalars['Boolean']['input'];
+  payments: Scalars['Boolean']['input'];
+  managePartCDEnrollment: Scalars['Boolean']['input'];
+  collectPlanBids: Scalars['Boolean']['input'];
+  planContractUpdated: Scalars['Boolean']['input'];
+  agreementTypes: Scalars['Boolean']['input'];
+  recruitmentMethod: Scalars['Boolean']['input'];
+  selectionMethod: Scalars['Boolean']['input'];
+  communicationMethod: Scalars['Boolean']['input'];
+  providerOverlap: Scalars['Boolean']['input'];
+  participantsIds: Scalars['Boolean']['input'];
+  beneficiaryOverlap: Scalars['Boolean']['input'];
+  helpdeskUse: Scalars['Boolean']['input'];
+  iddocSupport: Scalars['Boolean']['input'];
+  benchmarkForPerformance: Scalars['Boolean']['input'];
+  appealPerformance: Scalars['Boolean']['input'];
+  appealFeedback: Scalars['Boolean']['input'];
+  appealPayments: Scalars['Boolean']['input'];
+  appealOther: Scalars['Boolean']['input'];
+  evaluationApproaches: Scalars['Boolean']['input'];
+  dataNeededForMonitoring: Scalars['Boolean']['input'];
+  dataToSendParticicipants: Scalars['Boolean']['input'];
+  modelLearningSystems: Scalars['Boolean']['input'];
+  developNewQualityMeasures: Scalars['Boolean']['input'];
+  payType: Scalars['Boolean']['input'];
+  shouldAnyProvidersExcludedFFSSystems: Scalars['Boolean']['input'];
+  nonClaimsPayments: Scalars['Boolean']['input'];
+  willRecoverPayments: Scalars['Boolean']['input'];
+}>;
+
+
+export type GetMilestoneSuggestedAnswerQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', managePartCDEnrollment?: boolean | null, collectPlanBids?: boolean | null, planContractUpdated?: boolean | null, agreementTypes?: Array<AgreementType> }, participantsAndProviders?: { __typename: 'PlanParticipantsAndProviders', recruitmentMethod?: RecruitmentType | null, selectionMethod?: Array<ParticipantSelectionType>, communicationMethod?: Array<ParticipantCommunicationType>, providerOverlap?: OverlapType | null, participantsIds?: Array<ParticipantsIdType> }, beneficiaries?: { __typename: 'PlanBeneficiaries', beneficiaryOverlap?: OverlapType | null }, opsEvalAndLearning?: { __typename: 'PlanOpsEvalAndLearning', helpdeskUse?: boolean | null, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, evaluationApproaches?: Array<EvaluationApproachType>, dataNeededForMonitoring?: Array<DataForMonitoringType>, dataToSendParticicipants?: Array<DataToSendParticipantsType>, modelLearningSystems?: Array<ModelLearningSystemType>, developNewQualityMeasures?: boolean | null }, payments?: { __typename: 'PlanPayments', payType?: Array<PayType>, shouldAnyProvidersExcludedFFSSystems?: boolean | null, nonClaimsPayments?: Array<NonClaimsBasedPayType>, willRecoverPayments?: boolean | null } } };
+
+export type RenameMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type RenameMtoCategoryMutation = { __typename: 'Mutation', renameMTOCategory: { __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean } };
+
+export type ReorderMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  newOrder: Scalars['Int']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type ReorderMtoCategoryMutation = { __typename: 'Mutation', reorderMTOCategory: { __typename: 'MTOCategory', id: UUID } };
+
+export type UpdateMtoMilestoneMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: MtoMilestoneChanges;
+  solutionLinks?: InputMaybe<MtoSolutionLinks>;
+}>;
+
+
+export type UpdateMtoMilestoneMutation = { __typename: 'Mutation', updateMTOMilestone: { __typename: 'MTOMilestone', id: UUID } };
+
+export type UpdateMtoMilestoneLinkedSolutionsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
+}>;
+
+
+export type UpdateMtoMilestoneLinkedSolutionsMutation = { __typename: 'Mutation', mtoMilestoneUpdateLinkedSolutions?: Array<{ __typename: 'MTOSolution', id: UUID }> | null };
+
+export type UpdateMtoReadyForReviewMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateMtoReadyForReviewMutation = { __typename: 'Mutation', markMTOReadyForReview: { __typename: 'MTOInfo', id: UUID } };
 
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -5966,6 +6733,13 @@ export const GetChangeHistoryDocument = gql`
         documentNote
         documentURL
         documentID
+      }
+      ... on TranslatedAuditMetaMTOCategory {
+        isSubCategory
+        parentCategoryID
+        parentCategoryName
+        tableName
+        version
       }
     }
   }
@@ -10023,6 +10797,19 @@ export const GetModelPlanDocument = gql`
       status
       modifiedDts: latestClearanceDts
     }
+    mtoMatrix {
+      status
+      recentEdit {
+        modifiedDts
+        modifiedByUserAccount {
+          commonName
+        }
+      }
+      milestones {
+        id
+        name
+      }
+    }
   }
 }
     `;
@@ -10469,6 +11256,952 @@ export function useUnlockModelPlanSectionMutation(baseOptions?: Apollo.MutationH
 export type UnlockModelPlanSectionMutationHookResult = ReturnType<typeof useUnlockModelPlanSectionMutation>;
 export type UnlockModelPlanSectionMutationResult = Apollo.MutationResult<UnlockModelPlanSectionMutation>;
 export type UnlockModelPlanSectionMutationOptions = Apollo.BaseMutationOptions<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+export const CreateMtoCategoryDocument = gql`
+    mutation CreateMTOCategory($id: UUID!, $name: String!, $parentID: UUID) {
+  createMTOCategory(modelPlanID: $id, name: $name, parentID: $parentID) {
+    id
+    name
+    isUncategorized
+  }
+}
+    `;
+export type CreateMtoCategoryMutationFn = Apollo.MutationFunction<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+
+/**
+ * __useCreateMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoCategoryMutation, { data, loading, error }] = useCreateMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      parentID: // value for 'parentID'
+ *   },
+ * });
+ */
+export function useCreateMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>(CreateMtoCategoryDocument, options);
+      }
+export type CreateMtoCategoryMutationHookResult = ReturnType<typeof useCreateMtoCategoryMutation>;
+export type CreateMtoCategoryMutationResult = Apollo.MutationResult<CreateMtoCategoryMutation>;
+export type CreateMtoCategoryMutationOptions = Apollo.BaseMutationOptions<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+export const CreateMtoMilestoneDocument = gql`
+    mutation CreateMTOMilestone($modelPlanID: UUID!, $commonMilestoneKey: MTOCommonMilestoneKey!, $commonSolutions: [MTOCommonSolutionKey!]) {
+  createMTOMilestoneCommon(
+    modelPlanID: $modelPlanID
+    commonMilestoneKey: $commonMilestoneKey
+    commonSolutions: $commonSolutions
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type CreateMtoMilestoneMutationFn = Apollo.MutationFunction<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
+
+/**
+ * __useCreateMtoMilestoneMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoMilestoneMutation, { data, loading, error }] = useCreateMtoMilestoneMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      commonMilestoneKey: // value for 'commonMilestoneKey'
+ *      commonSolutions: // value for 'commonSolutions'
+ *   },
+ * });
+ */
+export function useCreateMtoMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>(CreateMtoMilestoneDocument, options);
+      }
+export type CreateMtoMilestoneMutationHookResult = ReturnType<typeof useCreateMtoMilestoneMutation>;
+export type CreateMtoMilestoneMutationResult = Apollo.MutationResult<CreateMtoMilestoneMutation>;
+export type CreateMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
+export const CreateMtoMilestoneCustomDocument = gql`
+    mutation CreateMTOMilestoneCustom($id: UUID!, $name: String!, $mtoCategoryID: UUID) {
+  createMTOMilestoneCustom(
+    modelPlanID: $id
+    name: $name
+    mtoCategoryID: $mtoCategoryID
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type CreateMtoMilestoneCustomMutationFn = Apollo.MutationFunction<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>;
+
+/**
+ * __useCreateMtoMilestoneCustomMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoMilestoneCustomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoMilestoneCustomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoMilestoneCustomMutation, { data, loading, error }] = useCreateMtoMilestoneCustomMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      mtoCategoryID: // value for 'mtoCategoryID'
+ *   },
+ * });
+ */
+export function useCreateMtoMilestoneCustomMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>(CreateMtoMilestoneCustomDocument, options);
+      }
+export type CreateMtoMilestoneCustomMutationHookResult = ReturnType<typeof useCreateMtoMilestoneCustomMutation>;
+export type CreateMtoMilestoneCustomMutationResult = Apollo.MutationResult<CreateMtoMilestoneCustomMutation>;
+export type CreateMtoMilestoneCustomMutationOptions = Apollo.BaseMutationOptions<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>;
+export const CreateMtoSolutionCustomDocument = gql`
+    mutation CreateMTOSolutionCustom($modelPlanID: UUID!, $solutionType: MTOSolutionType!, $name: String!, $pocName: String!, $pocEmail: String!) {
+  createMTOSolutionCustom(
+    modelPlanID: $modelPlanID
+    solutionType: $solutionType
+    name: $name
+    pocName: $pocName
+    pocEmail: $pocEmail
+  ) {
+    id
+    name
+    status
+    pocName
+    pocEmail
+    type
+  }
+}
+    `;
+export type CreateMtoSolutionCustomMutationFn = Apollo.MutationFunction<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>;
+
+/**
+ * __useCreateMtoSolutionCustomMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoSolutionCustomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoSolutionCustomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoSolutionCustomMutation, { data, loading, error }] = useCreateMtoSolutionCustomMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      solutionType: // value for 'solutionType'
+ *      name: // value for 'name'
+ *      pocName: // value for 'pocName'
+ *      pocEmail: // value for 'pocEmail'
+ *   },
+ * });
+ */
+export function useCreateMtoSolutionCustomMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>(CreateMtoSolutionCustomDocument, options);
+      }
+export type CreateMtoSolutionCustomMutationHookResult = ReturnType<typeof useCreateMtoSolutionCustomMutation>;
+export type CreateMtoSolutionCustomMutationResult = Apollo.MutationResult<CreateMtoSolutionCustomMutation>;
+export type CreateMtoSolutionCustomMutationOptions = Apollo.BaseMutationOptions<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>;
+export const CreateStandardCategoriesDocument = gql`
+    mutation CreateStandardCategories($modelPlanID: UUID!) {
+  createStandardCategories(modelPlanID: $modelPlanID)
+}
+    `;
+export type CreateStandardCategoriesMutationFn = Apollo.MutationFunction<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>;
+
+/**
+ * __useCreateStandardCategoriesMutation__
+ *
+ * To run a mutation, you first call `useCreateStandardCategoriesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateStandardCategoriesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createStandardCategoriesMutation, { data, loading, error }] = useCreateStandardCategoriesMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useCreateStandardCategoriesMutation(baseOptions?: Apollo.MutationHookOptions<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>(CreateStandardCategoriesDocument, options);
+      }
+export type CreateStandardCategoriesMutationHookResult = ReturnType<typeof useCreateStandardCategoriesMutation>;
+export type CreateStandardCategoriesMutationResult = Apollo.MutationResult<CreateStandardCategoriesMutation>;
+export type CreateStandardCategoriesMutationOptions = Apollo.BaseMutationOptions<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>;
+export const DeleteMtoCategoryDocument = gql`
+    mutation DeleteMTOCategory($id: UUID!) {
+  deleteMTOCategory(id: $id)
+}
+    `;
+export type DeleteMtoCategoryMutationFn = Apollo.MutationFunction<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
+
+/**
+ * __useDeleteMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMtoCategoryMutation, { data, loading, error }] = useDeleteMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>(DeleteMtoCategoryDocument, options);
+      }
+export type DeleteMtoCategoryMutationHookResult = ReturnType<typeof useDeleteMtoCategoryMutation>;
+export type DeleteMtoCategoryMutationResult = Apollo.MutationResult<DeleteMtoCategoryMutation>;
+export type DeleteMtoCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
+export const DeleteMtoMilestoneDocument = gql`
+    mutation DeleteMTOMilestone($id: UUID!) {
+  deleteMTOMilestone(id: $id)
+}
+    `;
+export type DeleteMtoMilestoneMutationFn = Apollo.MutationFunction<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
+
+/**
+ * __useDeleteMtoMilestoneMutation__
+ *
+ * To run a mutation, you first call `useDeleteMtoMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMtoMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMtoMilestoneMutation, { data, loading, error }] = useDeleteMtoMilestoneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMtoMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>(DeleteMtoMilestoneDocument, options);
+      }
+export type DeleteMtoMilestoneMutationHookResult = ReturnType<typeof useDeleteMtoMilestoneMutation>;
+export type DeleteMtoMilestoneMutationResult = Apollo.MutationResult<DeleteMtoMilestoneMutation>;
+export type DeleteMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
+export const GetCustomMtoSolutionsDocument = gql`
+    query GetCustomMTOSolutions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      solutions {
+        id
+        name
+        addedFromSolutionLibrary
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCustomMtoSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetCustomMtoSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomMtoSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomMtoSolutionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCustomMtoSolutionsQuery(baseOptions: Apollo.QueryHookOptions<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables> & ({ variables: GetCustomMtoSolutionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>(GetCustomMtoSolutionsDocument, options);
+      }
+export function useGetCustomMtoSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>(GetCustomMtoSolutionsDocument, options);
+        }
+export function useGetCustomMtoSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>(GetCustomMtoSolutionsDocument, options);
+        }
+export type GetCustomMtoSolutionsQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsQuery>;
+export type GetCustomMtoSolutionsLazyQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsLazyQuery>;
+export type GetCustomMtoSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsSuspenseQuery>;
+export type GetCustomMtoSolutionsQueryResult = Apollo.QueryResult<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
+export const GetMtoAllSolutionsDocument = gql`
+    query GetMTOAllSolutions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      commonSolutions {
+        key
+        name
+      }
+      solutions {
+        id
+        key
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoAllSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetMtoAllSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoAllSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoAllSolutionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoAllSolutionsQuery(baseOptions: Apollo.QueryHookOptions<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables> & ({ variables: GetMtoAllSolutionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>(GetMtoAllSolutionsDocument, options);
+      }
+export function useGetMtoAllSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>(GetMtoAllSolutionsDocument, options);
+        }
+export function useGetMtoAllSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>(GetMtoAllSolutionsDocument, options);
+        }
+export type GetMtoAllSolutionsQueryHookResult = ReturnType<typeof useGetMtoAllSolutionsQuery>;
+export type GetMtoAllSolutionsLazyQueryHookResult = ReturnType<typeof useGetMtoAllSolutionsLazyQuery>;
+export type GetMtoAllSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetMtoAllSolutionsSuspenseQuery>;
+export type GetMtoAllSolutionsQueryResult = Apollo.QueryResult<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>;
+export const GetMtoCategoriesDocument = gql`
+    query GetMTOCategories($id: UUID!) {
+  modelPlan(id: $id) {
+    mtoMatrix {
+      categories {
+        id
+        name
+        subCategories {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoCategoriesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoCategoriesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables> & ({ variables: GetMtoCategoriesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+      }
+export function useGetMtoCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+        }
+export function useGetMtoCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+        }
+export type GetMtoCategoriesQueryHookResult = ReturnType<typeof useGetMtoCategoriesQuery>;
+export type GetMtoCategoriesLazyQueryHookResult = ReturnType<typeof useGetMtoCategoriesLazyQuery>;
+export type GetMtoCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetMtoCategoriesSuspenseQuery>;
+export type GetMtoCategoriesQueryResult = Apollo.QueryResult<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
+export const GetMtoMilestonesDocument = gql`
+    query GetMTOMilestones($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      commonMilestones {
+        name
+        key
+        isAdded
+        isSuggested
+        categoryName
+        subCategoryName
+        facilitatedByRole
+        commonSolutions {
+          key
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoMilestonesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoMilestonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoMilestonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoMilestonesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoMilestonesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables> & ({ variables: GetMtoMilestonesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>(GetMtoMilestonesDocument, options);
+      }
+export function useGetMtoMilestonesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>(GetMtoMilestonesDocument, options);
+        }
+export function useGetMtoMilestonesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>(GetMtoMilestonesDocument, options);
+        }
+export type GetMtoMilestonesQueryHookResult = ReturnType<typeof useGetMtoMilestonesQuery>;
+export type GetMtoMilestonesLazyQueryHookResult = ReturnType<typeof useGetMtoMilestonesLazyQuery>;
+export type GetMtoMilestonesSuspenseQueryHookResult = ReturnType<typeof useGetMtoMilestonesSuspenseQuery>;
+export type GetMtoMilestonesQueryResult = Apollo.QueryResult<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>;
+export const GetMtoCommonSolutionsDocument = gql`
+    query GetMTOCommonSolutions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      commonSolutions {
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoCommonSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetMtoCommonSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoCommonSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoCommonSolutionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoCommonSolutionsQuery(baseOptions: Apollo.QueryHookOptions<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables> & ({ variables: GetMtoCommonSolutionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>(GetMtoCommonSolutionsDocument, options);
+      }
+export function useGetMtoCommonSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>(GetMtoCommonSolutionsDocument, options);
+        }
+export function useGetMtoCommonSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>(GetMtoCommonSolutionsDocument, options);
+        }
+export type GetMtoCommonSolutionsQueryHookResult = ReturnType<typeof useGetMtoCommonSolutionsQuery>;
+export type GetMtoCommonSolutionsLazyQueryHookResult = ReturnType<typeof useGetMtoCommonSolutionsLazyQuery>;
+export type GetMtoCommonSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetMtoCommonSolutionsSuspenseQuery>;
+export type GetMtoCommonSolutionsQueryResult = Apollo.QueryResult<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>;
+export const GetModelToOperationsMatrixDocument = gql`
+    query GetModelToOperationsMatrix($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      status
+      categories {
+        id
+        name
+        isUncategorized
+        subCategories {
+          id
+          name
+          isUncategorized
+          milestones {
+            id
+            name
+            key
+            facilitatedBy
+            needBy
+            status
+            riskIndicator
+            addedFromMilestoneLibrary
+            isDraft
+            solutions {
+              id
+              name
+              key
+            }
+          }
+        }
+      }
+      milestones {
+        id
+      }
+      commonMilestones {
+        isSuggested
+        isAdded
+      }
+      recentEdit {
+        id: modifiedBy
+        modifiedByUserAccount {
+          id
+          commonName
+        }
+        modifiedDts
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelToOperationsMatrixQuery__
+ *
+ * To run a query within a React component, call `useGetModelToOperationsMatrixQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelToOperationsMatrixQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelToOperationsMatrixQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelToOperationsMatrixQuery(baseOptions: Apollo.QueryHookOptions<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables> & ({ variables: GetModelToOperationsMatrixQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>(GetModelToOperationsMatrixDocument, options);
+      }
+export function useGetModelToOperationsMatrixLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>(GetModelToOperationsMatrixDocument, options);
+        }
+export function useGetModelToOperationsMatrixSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>(GetModelToOperationsMatrixDocument, options);
+        }
+export type GetModelToOperationsMatrixQueryHookResult = ReturnType<typeof useGetModelToOperationsMatrixQuery>;
+export type GetModelToOperationsMatrixLazyQueryHookResult = ReturnType<typeof useGetModelToOperationsMatrixLazyQuery>;
+export type GetModelToOperationsMatrixSuspenseQueryHookResult = ReturnType<typeof useGetModelToOperationsMatrixSuspenseQuery>;
+export type GetModelToOperationsMatrixQueryResult = Apollo.QueryResult<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>;
+export const GetMtoMilestoneDocument = gql`
+    query GetMTOMilestone($id: UUID!) {
+  mtoMilestone(id: $id) {
+    id
+    name
+    key
+    facilitatedBy
+    needBy
+    status
+    riskIndicator
+    addedFromMilestoneLibrary
+    isDraft
+    commonMilestone {
+      key
+      commonSolutions {
+        key
+      }
+    }
+    categories {
+      category {
+        id
+      }
+      subCategory {
+        id
+      }
+    }
+    solutions {
+      id
+      name
+      key
+      status
+      riskIndicator
+      commonSolution {
+        name
+        key
+        isAdded
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoMilestoneQuery__
+ *
+ * To run a query within a React component, call `useGetMtoMilestoneQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoMilestoneQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoMilestoneQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoMilestoneQuery(baseOptions: Apollo.QueryHookOptions<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables> & ({ variables: GetMtoMilestoneQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>(GetMtoMilestoneDocument, options);
+      }
+export function useGetMtoMilestoneLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>(GetMtoMilestoneDocument, options);
+        }
+export function useGetMtoMilestoneSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>(GetMtoMilestoneDocument, options);
+        }
+export type GetMtoMilestoneQueryHookResult = ReturnType<typeof useGetMtoMilestoneQuery>;
+export type GetMtoMilestoneLazyQueryHookResult = ReturnType<typeof useGetMtoMilestoneLazyQuery>;
+export type GetMtoMilestoneSuspenseQueryHookResult = ReturnType<typeof useGetMtoMilestoneSuspenseQuery>;
+export type GetMtoMilestoneQueryResult = Apollo.QueryResult<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>;
+export const GetMilestoneSuggestedAnswerDocument = gql`
+    query GetMilestoneSuggestedAnswer($id: UUID!, $generalCharacteristics: Boolean!, $participantsAndProviders: Boolean!, $beneficiaries: Boolean!, $opsEvalAndLearning: Boolean!, $payments: Boolean!, $managePartCDEnrollment: Boolean!, $collectPlanBids: Boolean!, $planContractUpdated: Boolean!, $agreementTypes: Boolean!, $recruitmentMethod: Boolean!, $selectionMethod: Boolean!, $communicationMethod: Boolean!, $providerOverlap: Boolean!, $participantsIds: Boolean!, $beneficiaryOverlap: Boolean!, $helpdeskUse: Boolean!, $iddocSupport: Boolean!, $benchmarkForPerformance: Boolean!, $appealPerformance: Boolean!, $appealFeedback: Boolean!, $appealPayments: Boolean!, $appealOther: Boolean!, $evaluationApproaches: Boolean!, $dataNeededForMonitoring: Boolean!, $dataToSendParticicipants: Boolean!, $modelLearningSystems: Boolean!, $developNewQualityMeasures: Boolean!, $payType: Boolean!, $shouldAnyProvidersExcludedFFSSystems: Boolean!, $nonClaimsPayments: Boolean!, $willRecoverPayments: Boolean!) {
+  modelPlan(id: $id) {
+    id
+    generalCharacteristics @include(if: $generalCharacteristics) {
+      managePartCDEnrollment @include(if: $managePartCDEnrollment)
+      collectPlanBids @include(if: $collectPlanBids)
+      planContractUpdated @include(if: $planContractUpdated)
+      agreementTypes @include(if: $agreementTypes)
+    }
+    participantsAndProviders @include(if: $participantsAndProviders) {
+      recruitmentMethod @include(if: $recruitmentMethod)
+      selectionMethod @include(if: $selectionMethod)
+      communicationMethod @include(if: $communicationMethod)
+      providerOverlap @include(if: $providerOverlap)
+      participantsIds @include(if: $participantsIds)
+    }
+    beneficiaries @include(if: $beneficiaries) {
+      beneficiaryOverlap @include(if: $beneficiaryOverlap)
+    }
+    opsEvalAndLearning @include(if: $opsEvalAndLearning) {
+      helpdeskUse @include(if: $helpdeskUse)
+      iddocSupport @include(if: $iddocSupport)
+      benchmarkForPerformance @include(if: $benchmarkForPerformance)
+      appealPerformance @include(if: $appealPerformance)
+      appealFeedback @include(if: $appealFeedback)
+      appealPayments @include(if: $appealPayments)
+      appealOther @include(if: $appealOther)
+      evaluationApproaches @include(if: $evaluationApproaches)
+      dataNeededForMonitoring @include(if: $dataNeededForMonitoring)
+      dataToSendParticicipants @include(if: $dataToSendParticicipants)
+      modelLearningSystems @include(if: $modelLearningSystems)
+      developNewQualityMeasures @include(if: $developNewQualityMeasures)
+    }
+    payments @include(if: $payments) {
+      payType @include(if: $payType)
+      shouldAnyProvidersExcludedFFSSystems @include(if: $shouldAnyProvidersExcludedFFSSystems)
+      nonClaimsPayments @include(if: $nonClaimsPayments)
+      willRecoverPayments @include(if: $willRecoverPayments)
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMilestoneSuggestedAnswerQuery__
+ *
+ * To run a query within a React component, call `useGetMilestoneSuggestedAnswerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMilestoneSuggestedAnswerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMilestoneSuggestedAnswerQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      generalCharacteristics: // value for 'generalCharacteristics'
+ *      participantsAndProviders: // value for 'participantsAndProviders'
+ *      beneficiaries: // value for 'beneficiaries'
+ *      opsEvalAndLearning: // value for 'opsEvalAndLearning'
+ *      payments: // value for 'payments'
+ *      managePartCDEnrollment: // value for 'managePartCDEnrollment'
+ *      collectPlanBids: // value for 'collectPlanBids'
+ *      planContractUpdated: // value for 'planContractUpdated'
+ *      agreementTypes: // value for 'agreementTypes'
+ *      recruitmentMethod: // value for 'recruitmentMethod'
+ *      selectionMethod: // value for 'selectionMethod'
+ *      communicationMethod: // value for 'communicationMethod'
+ *      providerOverlap: // value for 'providerOverlap'
+ *      participantsIds: // value for 'participantsIds'
+ *      beneficiaryOverlap: // value for 'beneficiaryOverlap'
+ *      helpdeskUse: // value for 'helpdeskUse'
+ *      iddocSupport: // value for 'iddocSupport'
+ *      benchmarkForPerformance: // value for 'benchmarkForPerformance'
+ *      appealPerformance: // value for 'appealPerformance'
+ *      appealFeedback: // value for 'appealFeedback'
+ *      appealPayments: // value for 'appealPayments'
+ *      appealOther: // value for 'appealOther'
+ *      evaluationApproaches: // value for 'evaluationApproaches'
+ *      dataNeededForMonitoring: // value for 'dataNeededForMonitoring'
+ *      dataToSendParticicipants: // value for 'dataToSendParticicipants'
+ *      modelLearningSystems: // value for 'modelLearningSystems'
+ *      developNewQualityMeasures: // value for 'developNewQualityMeasures'
+ *      payType: // value for 'payType'
+ *      shouldAnyProvidersExcludedFFSSystems: // value for 'shouldAnyProvidersExcludedFFSSystems'
+ *      nonClaimsPayments: // value for 'nonClaimsPayments'
+ *      willRecoverPayments: // value for 'willRecoverPayments'
+ *   },
+ * });
+ */
+export function useGetMilestoneSuggestedAnswerQuery(baseOptions: Apollo.QueryHookOptions<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables> & ({ variables: GetMilestoneSuggestedAnswerQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>(GetMilestoneSuggestedAnswerDocument, options);
+      }
+export function useGetMilestoneSuggestedAnswerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>(GetMilestoneSuggestedAnswerDocument, options);
+        }
+export function useGetMilestoneSuggestedAnswerSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>(GetMilestoneSuggestedAnswerDocument, options);
+        }
+export type GetMilestoneSuggestedAnswerQueryHookResult = ReturnType<typeof useGetMilestoneSuggestedAnswerQuery>;
+export type GetMilestoneSuggestedAnswerLazyQueryHookResult = ReturnType<typeof useGetMilestoneSuggestedAnswerLazyQuery>;
+export type GetMilestoneSuggestedAnswerSuspenseQueryHookResult = ReturnType<typeof useGetMilestoneSuggestedAnswerSuspenseQuery>;
+export type GetMilestoneSuggestedAnswerQueryResult = Apollo.QueryResult<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>;
+export const RenameMtoCategoryDocument = gql`
+    mutation RenameMTOCategory($id: UUID!, $name: String!) {
+  renameMTOCategory(id: $id, name: $name) {
+    id
+    name
+    isUncategorized
+  }
+}
+    `;
+export type RenameMtoCategoryMutationFn = Apollo.MutationFunction<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
+
+/**
+ * __useRenameMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useRenameMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRenameMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [renameMtoCategoryMutation, { data, loading, error }] = useRenameMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useRenameMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>(RenameMtoCategoryDocument, options);
+      }
+export type RenameMtoCategoryMutationHookResult = ReturnType<typeof useRenameMtoCategoryMutation>;
+export type RenameMtoCategoryMutationResult = Apollo.MutationResult<RenameMtoCategoryMutation>;
+export type RenameMtoCategoryMutationOptions = Apollo.BaseMutationOptions<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
+export const ReorderMtoCategoryDocument = gql`
+    mutation ReorderMTOCategory($id: UUID!, $newOrder: Int!, $parentID: UUID) {
+  reorderMTOCategory(id: $id, newOrder: $newOrder, parentID: $parentID) {
+    id
+  }
+}
+    `;
+export type ReorderMtoCategoryMutationFn = Apollo.MutationFunction<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
+
+/**
+ * __useReorderMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useReorderMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReorderMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reorderMtoCategoryMutation, { data, loading, error }] = useReorderMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      newOrder: // value for 'newOrder'
+ *      parentID: // value for 'parentID'
+ *   },
+ * });
+ */
+export function useReorderMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>(ReorderMtoCategoryDocument, options);
+      }
+export type ReorderMtoCategoryMutationHookResult = ReturnType<typeof useReorderMtoCategoryMutation>;
+export type ReorderMtoCategoryMutationResult = Apollo.MutationResult<ReorderMtoCategoryMutation>;
+export type ReorderMtoCategoryMutationOptions = Apollo.BaseMutationOptions<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
+export const UpdateMtoMilestoneDocument = gql`
+    mutation UpdateMTOMilestone($id: UUID!, $changes: MTOMilestoneChanges!, $solutionLinks: MTOSolutionLinks) {
+  updateMTOMilestone(id: $id, changes: $changes, solutionLinks: $solutionLinks) {
+    id
+  }
+}
+    `;
+export type UpdateMtoMilestoneMutationFn = Apollo.MutationFunction<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+
+/**
+ * __useUpdateMtoMilestoneMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoMilestoneMutation, { data, loading, error }] = useUpdateMtoMilestoneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *      solutionLinks: // value for 'solutionLinks'
+ *   },
+ * });
+ */
+export function useUpdateMtoMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>(UpdateMtoMilestoneDocument, options);
+      }
+export type UpdateMtoMilestoneMutationHookResult = ReturnType<typeof useUpdateMtoMilestoneMutation>;
+export type UpdateMtoMilestoneMutationResult = Apollo.MutationResult<UpdateMtoMilestoneMutation>;
+export type UpdateMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+export const UpdateMtoMilestoneLinkedSolutionsDocument = gql`
+    mutation UpdateMTOMilestoneLinkedSolutions($id: UUID!, $solutionLinks: MTOSolutionLinks!) {
+  mtoMilestoneUpdateLinkedSolutions(id: $id, solutionLinks: $solutionLinks) {
+    id
+  }
+}
+    `;
+export type UpdateMtoMilestoneLinkedSolutionsMutationFn = Apollo.MutationFunction<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+
+/**
+ * __useUpdateMtoMilestoneLinkedSolutionsMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoMilestoneLinkedSolutionsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoMilestoneLinkedSolutionsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoMilestoneLinkedSolutionsMutation, { data, loading, error }] = useUpdateMtoMilestoneLinkedSolutionsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      solutionLinks: // value for 'solutionLinks'
+ *   },
+ * });
+ */
+export function useUpdateMtoMilestoneLinkedSolutionsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>(UpdateMtoMilestoneLinkedSolutionsDocument, options);
+      }
+export type UpdateMtoMilestoneLinkedSolutionsMutationHookResult = ReturnType<typeof useUpdateMtoMilestoneLinkedSolutionsMutation>;
+export type UpdateMtoMilestoneLinkedSolutionsMutationResult = Apollo.MutationResult<UpdateMtoMilestoneLinkedSolutionsMutation>;
+export type UpdateMtoMilestoneLinkedSolutionsMutationOptions = Apollo.BaseMutationOptions<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+export const UpdateMtoReadyForReviewDocument = gql`
+    mutation UpdateMTOReadyForReview($modelPlanID: UUID!, $readyForReview: Boolean!) {
+  markMTOReadyForReview(
+    modelPlanID: $modelPlanID
+    readyForReview: $readyForReview
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateMtoReadyForReviewMutationFn = Apollo.MutationFunction<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
+
+/**
+ * __useUpdateMtoReadyForReviewMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoReadyForReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoReadyForReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoReadyForReviewMutation, { data, loading, error }] = useUpdateMtoReadyForReviewMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      readyForReview: // value for 'readyForReview'
+ *   },
+ * });
+ */
+export function useUpdateMtoReadyForReviewMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>(UpdateMtoReadyForReviewDocument, options);
+      }
+export type UpdateMtoReadyForReviewMutationHookResult = ReturnType<typeof useUpdateMtoReadyForReviewMutation>;
+export type UpdateMtoReadyForReviewMutationResult = Apollo.MutationResult<UpdateMtoReadyForReviewMutation>;
+export type UpdateMtoReadyForReviewMutationOptions = Apollo.BaseMutationOptions<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
@@ -13234,7 +14967,7 @@ export const TypedGetBeneficiaryIdentificationDocument = {"kind":"Document","def
 export const TypedGetFrequencyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFrequency"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetFrequencyQuery, GetFrequencyQueryVariables>;
 export const TypedGetPeopleImpactedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPeopleImpacted"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}}]}}]}}]}}]} as unknown as DocumentNode<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>;
 export const TypedUpdateModelPlanBeneficiariesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlanBeneficiaries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBeneficiariesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBeneficiaries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
-export const TypedGetChangeHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetChangeHistory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translatedAuditCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}},{"kind":"Field","name":{"kind":"Name","value":"translatedFields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"dataType"}},{"kind":"Field","name":{"kind":"Name","value":"fieldName"}},{"kind":"Field","name":{"kind":"Name","value":"fieldNameTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"referenceLabel"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"notApplicableQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"old"}},{"kind":"Field","name":{"kind":"Name","value":"oldTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"new"}},{"kind":"Field","name":{"kind":"Name","value":"newTranslated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaBaseStruct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaGeneric"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"relation"}},{"kind":"Field","name":{"kind":"Name","value":"relationContent"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDiscussionReply"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"discussionContent"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfReplies"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalNeed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolution"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustStart"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustFinish"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolutionSubtask"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"subtaskName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDocumentSolutionLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"documentName"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"documentOtherType"}},{"kind":"Field","name":{"kind":"Name","value":"documentVisibility"}},{"kind":"Field","name":{"kind":"Name","value":"documentNote"}},{"kind":"Field","name":{"kind":"Name","value":"documentURL"}},{"kind":"Field","name":{"kind":"Name","value":"documentID"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
+export const TypedGetChangeHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetChangeHistory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translatedAuditCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}},{"kind":"Field","name":{"kind":"Name","value":"translatedFields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"dataType"}},{"kind":"Field","name":{"kind":"Name","value":"fieldName"}},{"kind":"Field","name":{"kind":"Name","value":"fieldNameTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"referenceLabel"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"notApplicableQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"old"}},{"kind":"Field","name":{"kind":"Name","value":"oldTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"new"}},{"kind":"Field","name":{"kind":"Name","value":"newTranslated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaBaseStruct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaGeneric"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"relation"}},{"kind":"Field","name":{"kind":"Name","value":"relationContent"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDiscussionReply"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"discussionContent"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfReplies"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalNeed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolution"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustStart"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustFinish"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolutionSubtask"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"subtaskName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDocumentSolutionLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"documentName"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"documentOtherType"}},{"kind":"Field","name":{"kind":"Name","value":"documentVisibility"}},{"kind":"Field","name":{"kind":"Name","value":"documentNote"}},{"kind":"Field","name":{"kind":"Name","value":"documentURL"}},{"kind":"Field","name":{"kind":"Name","value":"documentID"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaMTOCategory"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSubCategory"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"version"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
 export const TypedCreateModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanCollaboratorCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
 export const TypedDeleteModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
 export const TypedGetIndividualModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIndividualModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planCollaboratorByID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]} as unknown as DocumentNode<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>;
@@ -13295,7 +15028,7 @@ export const TypedGetAllSingleModelDataDocument = {"kind":"Document","definition
 export const TypedGetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"launchDarkly"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userKey"}},{"kind":"Field","name":{"kind":"Name","value":"signedHash"}}]}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
 export const TypedGetEchimpCrandTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEchimpCrandTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyCrFlag"}},{"kind":"Field","name":{"kind":"Name","value":"sensitiveFlag"}},{"kind":"Field","name":{"kind":"Name","value":"crStatus"}},{"kind":"Field","name":{"kind":"Name","value":"implementationDate"}},{"kind":"Field","name":{"kind":"Name","value":"initiator"}},{"kind":"Field","name":{"kind":"Name","value":"crSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"relatedCrTdlNumbers"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"issuedDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEchimpCrandTdlQuery, GetEchimpCrandTdlQueryVariables>;
 export const TypedGetFavoritesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFavorites"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFavoritesQuery, GetFavoritesQueryVariables>;
-export const TypedGetModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opSolutionLastModifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"taskListStatus"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedPhase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phase"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedStatuses"}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"prepareForClearance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","alias":{"kind":"Name","value":"modifiedDts"},"name":{"kind":"Name","value":"latestClearanceDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanQuery, GetModelPlanQueryVariables>;
+export const TypedGetModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opSolutionLastModifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"taskListStatus"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedPhase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phase"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedStatuses"}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"prepareForClearance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","alias":{"kind":"Name","value":"modifiedDts"},"name":{"kind":"Name","value":"latestClearanceDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"recentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanQuery, GetModelPlanQueryVariables>;
 export const TypedGetModelPlanBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
 export const TypedGetModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlans"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlansQuery, GetModelPlansQueryVariables>;
 export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]} as unknown as DocumentNode<GetUserInfoQuery, GetUserInfoQueryVariables>;
@@ -13305,6 +15038,26 @@ export const TypedGetLockedModelPlanSectionsDocument = {"kind":"Document","defin
 export const TypedLockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
 export const TypedModelPlanSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ModelPlanSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockLockableSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables>;
 export const TypedUnlockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+export const TypedCreateMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+export const TypedCreateMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commonMilestoneKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonMilestoneKey"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commonSolutions"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonSolutionKey"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOMilestoneCommon"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"commonMilestoneKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commonMilestoneKey"}}},{"kind":"Argument","name":{"kind":"Name","value":"commonSolutions"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commonSolutions"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
+export const TypedCreateMtoMilestoneCustomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOMilestoneCustom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mtoCategoryID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOMilestoneCustom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"mtoCategoryID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mtoCategoryID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>;
+export const TypedCreateMtoSolutionCustomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOSolutionCustom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pocName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pocEmail"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOSolutionCustom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"pocName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pocName"}}},{"kind":"Argument","name":{"kind":"Name","value":"pocEmail"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pocEmail"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"pocName"}},{"kind":"Field","name":{"kind":"Name","value":"pocEmail"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]} as unknown as DocumentNode<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>;
+export const TypedCreateStandardCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateStandardCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createStandardCategories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}]}]}}]} as unknown as DocumentNode<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>;
+export const TypedDeleteMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
+export const TypedDeleteMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
+export const TypedGetCustomMtoSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomMTOSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromSolutionLibrary"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
+export const TypedGetMtoAllSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOAllSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>;
+export const TypedGetMtoCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
+export const TypedGetMtoMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}},{"kind":"Field","name":{"kind":"Name","value":"isSuggested"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"subCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByRole"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>;
+export const TypedGetMtoCommonSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOCommonSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>;
+export const TypedGetModelToOperationsMatrixDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelToOperationsMatrix"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromMilestoneLibrary"}},{"kind":"Field","name":{"kind":"Name","value":"isDraft"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSuggested"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"id"},"name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>;
+export const TypedGetMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromMilestoneLibrary"}},{"kind":"Field","name":{"kind":"Name","value":"isDraft"}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestone"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolution"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>;
+export const TypedGetMilestoneSuggestedAnswerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMilestoneSuggestedAnswer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"generalCharacteristics"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProviders"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaries"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearning"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"managePartCDEnrollment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"collectPlanBids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"planContractUpdated"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"agreementTypes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recruitmentMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"selectionMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"communicationMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"providerOverlap"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsIds"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaryOverlap"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"helpdeskUse"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"iddocSupport"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"benchmarkForPerformance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealPerformance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealFeedback"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealOther"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"evaluationApproaches"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dataNeededForMonitoring"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dataToSendParticicipants"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelLearningSystems"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"developNewQualityMeasures"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"nonClaimsPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"willRecoverPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"generalCharacteristics"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"managePartCDEnrollment"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"collectPlanBids"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"planContractUpdated"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"agreementTypes"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProviders"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recruitmentMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"selectionMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"communicationMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"providerOverlap"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsIds"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaries"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaryOverlap"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearning"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"helpdeskUse"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"iddocSupport"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"benchmarkForPerformance"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealPerformance"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealFeedback"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealPayments"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealOther"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealOther"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"evaluationApproaches"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dataNeededForMonitoring"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dataToSendParticicipants"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelLearningSystems"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"developNewQualityMeasures"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payments"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"payType"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payType"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"nonClaimsPayments"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"willRecoverPayments"}}}]}]}]}}]}}]}}]} as unknown as DocumentNode<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>;
+export const TypedRenameMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RenameMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"renameMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
+export const TypedReorderMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ReorderMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newOrder"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reorderMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"newOrder"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newOrder"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
+export const TypedUpdateMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOMilestoneChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+export const TypedUpdateMtoMilestoneLinkedSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOMilestoneLinkedSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionLinks"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMilestoneUpdateLinkedSolutions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+export const TypedUpdateMtoReadyForReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOReadyForReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readyForReview"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markMTOReadyForReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"readyForReview"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readyForReview"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
 export const TypedUpdateNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreeToNDA"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"agree"},"value":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedComplete"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedCompleteNotificationType"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
 export const TypedGetNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUnreadNotifications"}},{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}},{"kind":"Field","name":{"kind":"Name","value":"inAppSent"}},{"kind":"Field","name":{"kind":"Name","value":"emailSent"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"activity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activityType"}},{"kind":"Field","name":{"kind":"Name","value":"entityID"}},{"kind":"Field","name":{"kind":"Name","value":"actorID"}},{"kind":"Field","name":{"kind":"Name","value":"actorUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewDiscussionRepliedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DatesChangedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"dateChanges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isChanged"}},{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"isRange"}},{"kind":"Field","name":{"kind":"Name","value":"oldDate"}},{"kind":"Field","name":{"kind":"Name","value":"newDate"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeEnd"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeEnd"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInPlanDiscussionActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddedAsCollaboratorMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInDiscussionReplyActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanSharedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"optionalMessage"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewModelPlanActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DailyDigestCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanIDs"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"analyzedAudits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"changes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oldName"}},{"kind":"Field","name":{"kind":"Name","value":"statusChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crTdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planSections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReview"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearance"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedComplete"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelLeads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"added"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"planDiscussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDataExchangeApproachMarkedCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationsQuery, GetNotificationsQueryVariables>;
