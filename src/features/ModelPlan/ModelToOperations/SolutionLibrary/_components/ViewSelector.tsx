@@ -32,7 +32,15 @@ const ViewSelector = ({
           <Label htmlFor="select-view" className="text-normal maxw-none">
             {t('documentsMisc:documentTable.view')}
           </Label>
-          <Select id="select-view" name="select-view" className="maxw-none">
+          <Select
+            id="select-view"
+            name="select-view"
+            className="maxw-none"
+            onChange={e => {
+              params.set('view', e.target.value);
+              history.replace({ search: params.toString() });
+            }}
+          >
             <option value="all">
               {t('solutionLibrary.tabs.allSolutions', {
                 count: allSolutions.length
