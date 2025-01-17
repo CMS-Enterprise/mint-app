@@ -1282,6 +1282,7 @@ export type ModelsToOperationMatrix = {
   commonSolutions: Array<MtoCommonSolution>;
   info: MtoInfo;
   milestones: Array<MtoMilestone>;
+  milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
   recentEdit?: Maybe<RecentModification>;
   solutions: Array<MtoSolution>;
   status: MtoStatus;

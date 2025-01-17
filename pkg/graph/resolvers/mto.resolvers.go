@@ -51,6 +51,11 @@ func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *m
 	return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
 }
 
+// MilestonesWithNoLinkedSolutions is the resolver for the milestonesWithNoLinkedSolutions field.
+func (r *modelsToOperationMatrixResolver) MilestonesWithNoLinkedSolutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOMilestone, error) {
+	return MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(ctx, obj.ModelPlan.ID)
+}
+
 // Info is the resolver for the info field.
 func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error) {
 	return MTOInfoGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
