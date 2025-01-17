@@ -530,7 +530,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 	_ = suite.createMTOSolutionCommon(planA.ID, models.MTOCSKInnovation, nil)
 	_ = suite.createMTOSolutionCommon(planB.ID, models.MTOCSKAcoOs, nil)
 
-	linkedMilestone := suite.createMilestoneCommon(
+	_ = suite.createMilestoneCommon(
 		planA.ID,
 		models.MTOCommonMilestoneKeyManageCd,
 		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
@@ -542,20 +542,25 @@ func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 		nil,
 	)
 
-	planANonLinkedMilestones := suite.getMilestonesWithNoLinkedSolution(planA.ID)
-	planBNonLinkedMilestones := suite.getMilestonesWithNoLinkedSolution(planB.ID)
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, []uuid.UUID]{
+		{Key: planA.ID, Expected: []uuid.UUID{}},
+		{Key: planB.ID, Expected: []uuid.UUID{nonLinkedMilestone.ID}},
+	}
 
-	suite.Len(planANonLinkedMilestones, 0)
-	suite.Len(planBNonLinkedMilestones, 1)
+	verifyFunc := func(data []*models.MTOMilestone, expected []uuid.UUID) bool {
+		// Map the IDs from the milestones, assert they match the expected returned result
+		dataIDs := lo.Map(data, func(item *models.MTOMilestone, _ int) uuid.UUID {
+			return item.ID
+		})
+		return suite.ElementsMatch(dataIDs, expected)
+	}
 
-	planAMilestoneIDs := lo.Map(planANonLinkedMilestones, func(m *models.MTOMilestone, _ int) uuid.UUID {
-		return m.ID
-	})
-
-	planBMilestoneIDs := lo.Map(planBNonLinkedMilestones, func(m *models.MTOMilestone, _ int) uuid.UUID {
-		return m.ID
-	})
-
-	suite.NotContains(planAMilestoneIDs, linkedMilestone.ID, "Milestone in Plan A with a common link should be excluded")
-	suite.Contains(planBMilestoneIDs, nonLinkedMilestone.ID, "Unlinked milestone in Plan B is expected")
+	// Call the helper method to validate all results
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](
+		suite.testConfigs.Context,
+		&suite.Suite,
+		loaders.MTOMilestone.ByModelPlanIDNoLinkedSolution,
+		expectedResults,
+		verifyFunc,
+	)
 }

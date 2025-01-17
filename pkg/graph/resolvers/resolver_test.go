@@ -408,14 +408,6 @@ func (suite *ResolverSuite) createMilestoneCommon(
 	return milestone
 }
 
-func (suite *ResolverSuite) getMilestonesWithNoLinkedSolution(
-	planID uuid.UUID,
-) []*models.MTOMilestone {
-	milestones, err := MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(suite.testConfigs.Context, planID)
-	suite.NoError(err)
-	return milestones
-}
-
 func (suite *ResolverSuite) createMTOSolutionCommon(
 	planID uuid.UUID,
 	commonSolutionKey models.MTOCommonSolutionKey,
