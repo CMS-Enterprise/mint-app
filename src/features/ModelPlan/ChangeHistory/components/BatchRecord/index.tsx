@@ -24,6 +24,7 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
+  getTranslatedFieldValue,
   hiddenFields,
   isGenericWithMetaData,
   isLinkingTable,
@@ -292,7 +293,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                   {t(`auditUpdateType.${change.action}`)}
                   {': '}
                 </span>
-                {status}
+                {status || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -300,9 +301,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO category header */}
         {change.tableName === TableName.MTO_CATEGORY &&
           (() => {
-            const categoryName = change.translatedFields.find(
-              field => field.fieldName === 'name'
-            )?.newTranslated;
+            const categoryName = getTranslatedFieldValue(change, 'name');
 
             const isSubCategory =
               change.metaData &&
@@ -316,7 +315,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                   {t(`auditUpdateType.${change.action}`)}
                 </span>
                 {': '}
-                {categoryName}
+                {categoryName || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -324,24 +323,21 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO milestone header */}
         {change.tableName === TableName.MTO_MILESTONE &&
           (() => {
-            let milestoneName =
-              change.translatedFields.find(
-                field => field.fieldName === 'mto_common_milestone_key'
-              )?.newTranslated ||
-              change.translatedFields.find(field => field.fieldName === 'name')
-                ?.newTranslated ||
-              change.translatedFields.find(
-                field => field.fieldName === 'mto_common_milestone_key'
-              )?.oldTranslated ||
-              change.translatedFields.find(field => field.fieldName === 'name')
-                ?.oldTranslated;
+            const milestoneKey = getTranslatedFieldValue(
+              change,
+              'mto_common_milestone_key'
+            );
+
+            const milestoneName = getTranslatedFieldValue(change, 'name');
+
+            let milestoneValue = milestoneName || milestoneKey;
 
             if (
               change.action === DatabaseOperation.UPDATE &&
               change.metaData &&
               isGenericWithMetaData(change.metaData)
             ) {
-              milestoneName = change.metaData.relationContent;
+              milestoneValue = change.metaData.relationContent;
             }
 
             return (
@@ -350,7 +346,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 <span className="text-normal">
                   {t(`auditUpdateType.${change.action}`)}
                 </span>{' '}
-                : {milestoneName}
+                : {milestoneValue || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -358,17 +354,22 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO solution header */}
         {change.tableName === TableName.MTO_SOLUTION &&
           (() => {
-            const solutionName =
-              change.translatedFields.find(
-                field => field.fieldName === 'mto_common_solution_key'
-              )?.newTranslated ||
-              change.translatedFields.find(field => field.fieldName === 'name')
-                ?.newTranslated ||
-              change.translatedFields.find(
-                field => field.fieldName === 'mto_common_solution_key'
-              )?.oldTranslated ||
-              change.translatedFields.find(field => field.fieldName === 'name')
-                ?.oldTranslated;
+            const solutionKey = getTranslatedFieldValue(
+              change,
+              'mto_common_solution_key'
+            );
+
+            const solutionName = getTranslatedFieldValue(change, 'name');
+
+            let solutionValue = solutionName || solutionKey;
+
+            if (
+              change.action === DatabaseOperation.UPDATE &&
+              change.metaData &&
+              isGenericWithMetaData(change.metaData)
+            ) {
+              solutionValue = change.metaData.relationContent;
+            }
 
             return (
               <span className="text-bold">
@@ -376,7 +377,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 <span className="text-normal">
                   {t(`auditUpdateType.${change.action}`)}
                 </span>{' '}
-                : {solutionName}
+                : {solutionValue || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -384,13 +385,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO solution link  header */}
         {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
           (() => {
-            const solutionName =
-              change.translatedFields.find(
-                field => field.fieldName === 'solution_id'
-              )?.newTranslated ||
-              change.translatedFields.find(
-                field => field.fieldName === 'solution_id'
-              )?.oldTranslated;
+            const solutionName = getTranslatedFieldValue(change, 'name');
 
             return (
               <span className="text-bold">
@@ -648,9 +643,10 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO info audits */}
               {change.tableName === TableName.MTO_INFO &&
                 (() => {
-                  const status = change.translatedFields.find(
-                    field => field.fieldName === 'ready_for_review_by'
-                  )?.newTranslated
+                  const status = getTranslatedFieldValue(
+                    change,
+                    'ready_for_review_by'
+                  )
                     ? t('readyForReview')
                     : t('inProgress');
 
@@ -661,7 +657,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                       values={{
                         action: t(`auditUpdateType.${change.action}`),
                         mtoType: t('status'),
-                        name: status
+                        name: status || t('dataNotAvailable')
                       }}
                     />
                   );
@@ -670,9 +666,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO category audits */}
               {change.tableName === TableName.MTO_CATEGORY &&
                 (() => {
-                  const categoryName = change.translatedFields.find(
-                    field => field.fieldName === 'name'
-                  )?.newTranslated;
+                  const categoryName = getTranslatedFieldValue(change, 'name');
 
                   const isSubCategory =
                     change.metaData &&
@@ -688,7 +682,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                         mtoType: isSubCategory
                           ? t('subCategory')
                           : t('category'),
-                        name: categoryName
+                        name: categoryName || t('dataNotAvailable')
                       }}
                     />
                   );
@@ -697,26 +691,21 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO milestone audits */}
               {change.tableName === TableName.MTO_MILESTONE &&
                 (() => {
-                  let milestoneName =
-                    change.translatedFields.find(
-                      field => field.fieldName === 'mto_common_milestone_key'
-                    )?.newTranslated ||
-                    change.translatedFields.find(
-                      field => field.fieldName === 'name'
-                    )?.newTranslated ||
-                    change.translatedFields.find(
-                      field => field.fieldName === 'mto_common_milestone_key'
-                    )?.oldTranslated ||
-                    change.translatedFields.find(
-                      field => field.fieldName === 'name'
-                    )?.oldTranslated;
+                  const milestoneKey = getTranslatedFieldValue(
+                    change,
+                    'mto_common_milestone_key'
+                  );
+
+                  const milestoneName = getTranslatedFieldValue(change, 'name');
+
+                  let milestoneValue = milestoneName || milestoneKey;
 
                   if (
                     change.action === DatabaseOperation.UPDATE &&
                     change.metaData &&
                     isGenericWithMetaData(change.metaData)
                   ) {
-                    milestoneName = change.metaData.relationContent;
+                    milestoneValue = change.metaData.relationContent;
                   }
 
                   return (
@@ -726,7 +715,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                       values={{
                         action: t(`auditUpdateType.${change.action}`),
                         mtoType: t('milestone'),
-                        name: milestoneName
+                        name: milestoneValue || t('dataNotAvailable')
                       }}
                     />
                   );
@@ -735,13 +724,22 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO solution audits */}
               {change.tableName === TableName.MTO_SOLUTION &&
                 (() => {
-                  const solutionName =
-                    change.translatedFields.find(
-                      field => field.fieldName === 'mto_common_solution_key'
-                    )?.newTranslated ||
-                    change.translatedFields.find(
-                      field => field.fieldName === 'name'
-                    )?.newTranslated;
+                  const solutionKey = getTranslatedFieldValue(
+                    change,
+                    'mto_common_solution_key'
+                  );
+
+                  const solutionName = getTranslatedFieldValue(change, 'name');
+
+                  let solutionValue = solutionName || solutionKey;
+
+                  if (
+                    change.action === DatabaseOperation.UPDATE &&
+                    change.metaData &&
+                    isGenericWithMetaData(change.metaData)
+                  ) {
+                    solutionValue = change.metaData.relationContent;
+                  }
 
                   return (
                     <Trans
@@ -750,7 +748,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                       values={{
                         action: t(`auditUpdateType.${change.action}`),
                         mtoType: properlyCapitalizeInitiator(t('solution')),
-                        name: solutionName
+                        name: solutionValue || t('dataNotAvailable')
                       }}
                     />
                   );
@@ -774,7 +772,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                       values={{
                         action: t(`solutionLinkType.${change.action}`),
                         mtoType: properlyCapitalizeInitiator(t('solution')),
-                        name: solutionName
+                        name: solutionName || t('dataNotAvailable')
                       }}
                     />
                   );

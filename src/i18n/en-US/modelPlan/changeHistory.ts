@@ -95,6 +95,7 @@ const changeHistory = {
   status: 'Status',
   readyForReview: 'Ready for review',
   inProgress: 'In progress',
+  dataNotAvailable: 'Data not available',
   in: 'in',
   to: 'to',
   auditUpdateType: {

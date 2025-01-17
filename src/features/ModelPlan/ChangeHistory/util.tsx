@@ -365,6 +365,15 @@ export const getOperationalMetadata = (
   return '';
 };
 
+export const getTranslatedFieldValue = (
+  change: ChangeRecordType,
+  fieldName: string
+) =>
+  change.translatedFields.find(field => field.fieldName === fieldName)
+    ?.newTranslated ||
+  change.translatedFields.find(field => field.fieldName === fieldName)
+    ?.oldTranslated;
+
 /* 
   Returns the operation status of the solution.  
   Solutions are not deleted, they are marked as not needed/needed
