@@ -12,6 +12,7 @@ import {
 
 import { AvatarCircle } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
+import properlyCapitalizeInitiator from 'components/CRAndTDLSidePanel/_utils';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
@@ -23,11 +24,15 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
+  getTranslatedFieldValue,
   hiddenFields,
+  isGenericWithMetaData,
   isLinkingTable,
+  isMTOCategoryWithMetaData,
   isOperationalSolutionWithMetaData,
   isSolutionDocumentLinkWithMetaData,
   linkingTableQuestions,
+  mtoTables,
   solutionDeleteFields,
   solutionDocumentLinkFields,
   solutionInsertFields
@@ -59,7 +64,10 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
   // Remove hidden fields from the fields to map
   fieldsToMap = fieldsToMap.filter(
-    field => !hiddenFields.includes(field.fieldName)
+    field =>
+      !hiddenFields.find(
+        f => f.fields.includes(field.fieldName) && f.table === change.tableName
+      )
   );
 
   // If the change is connected to another table, only show the fields that are connected
@@ -268,6 +276,127 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               />
             );
           })()}
+
+        {/* MTO info header */}
+        {change.tableName === TableName.MTO_INFO &&
+          (() => {
+            const status = change.translatedFields.find(
+              field => field.fieldName === 'ready_for_review_by'
+            )?.newTranslated
+              ? t('readyForReview')
+              : t('inProgress');
+
+            return (
+              <span className="text-bold">
+                {t('status')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                  {': '}
+                </span>
+                {status || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO category header */}
+        {change.tableName === TableName.MTO_CATEGORY &&
+          (() => {
+            const categoryName = getTranslatedFieldValue(change, 'name');
+
+            const isSubCategory =
+              change.metaData &&
+              isMTOCategoryWithMetaData(change.metaData) &&
+              change.metaData?.isSubCategory;
+
+            return (
+              <span className="text-bold">
+                {isSubCategory ? t('subCategory') : t('category')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                </span>
+                {': '}
+                {categoryName || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO milestone header */}
+        {change.tableName === TableName.MTO_MILESTONE &&
+          (() => {
+            const milestoneKey = getTranslatedFieldValue(
+              change,
+              'mto_common_milestone_key'
+            );
+
+            const milestoneName = getTranslatedFieldValue(change, 'name');
+
+            let milestoneValue = milestoneName || milestoneKey;
+
+            if (
+              change.action === DatabaseOperation.UPDATE &&
+              change.metaData &&
+              isGenericWithMetaData(change.metaData)
+            ) {
+              milestoneValue = change.metaData.relationContent;
+            }
+
+            return (
+              <span className="text-bold">
+                {t('milestone')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                </span>{' '}
+                : {milestoneValue || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO solution header */}
+        {change.tableName === TableName.MTO_SOLUTION &&
+          (() => {
+            const solutionKey = getTranslatedFieldValue(
+              change,
+              'mto_common_solution_key'
+            );
+
+            const solutionName = getTranslatedFieldValue(change, 'name');
+
+            let solutionValue = solutionName || solutionKey;
+
+            if (
+              change.action === DatabaseOperation.UPDATE &&
+              change.metaData &&
+              isGenericWithMetaData(change.metaData)
+            ) {
+              solutionValue = change.metaData.relationContent;
+            }
+
+            return (
+              <span className="text-bold">
+                {properlyCapitalizeInitiator(t('solution'))}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                </span>{' '}
+                : {solutionValue || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO solution link  header */}
+        {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
+          (() => {
+            const solutionName = getTranslatedFieldValue(change, 'name');
+
+            return (
+              <span className="text-bold">
+                {properlyCapitalizeInitiator(t('solution'))}{' '}
+                <span className="text-normal">
+                  {t(`solutionLinkType.${change.action}`)}
+                </span>{' '}
+                : {solutionName}
+              </span>
+            );
+          })()}
       </div>
 
       {/* Render the fields that were changed */}
@@ -380,7 +509,8 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                 : changeRecords.length,
               section: t(`sections.${tableName}`),
               date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
-              time: formatTime(changeRecords[0].date)
+              time: formatTime(changeRecords[0].date),
+              inOrTo: mtoTables.includes(tableName) ? t('to') : t('in')
             }}
             components={{
               datetime: <span />
@@ -505,6 +635,144 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                       components={{
                         datetime: <span />,
                         bold: <span className="text-normal" />
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO info audits */}
+              {change.tableName === TableName.MTO_INFO &&
+                (() => {
+                  const status = getTranslatedFieldValue(
+                    change,
+                    'ready_for_review_by'
+                  )
+                    ? t('readyForReview')
+                    : t('inProgress');
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: t('status'),
+                        name: status || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO category audits */}
+              {change.tableName === TableName.MTO_CATEGORY &&
+                (() => {
+                  const categoryName = getTranslatedFieldValue(change, 'name');
+
+                  const isSubCategory =
+                    change.metaData &&
+                    isMTOCategoryWithMetaData(change.metaData) &&
+                    change.metaData?.isSubCategory;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: isSubCategory
+                          ? t('subCategory')
+                          : t('category'),
+                        name: categoryName || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO milestone audits */}
+              {change.tableName === TableName.MTO_MILESTONE &&
+                (() => {
+                  const milestoneKey = getTranslatedFieldValue(
+                    change,
+                    'mto_common_milestone_key'
+                  );
+
+                  const milestoneName = getTranslatedFieldValue(change, 'name');
+
+                  let milestoneValue = milestoneName || milestoneKey;
+
+                  if (
+                    change.action === DatabaseOperation.UPDATE &&
+                    change.metaData &&
+                    isGenericWithMetaData(change.metaData)
+                  ) {
+                    milestoneValue = change.metaData.relationContent;
+                  }
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: t('milestone'),
+                        name: milestoneValue || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO solution audits */}
+              {change.tableName === TableName.MTO_SOLUTION &&
+                (() => {
+                  const solutionKey = getTranslatedFieldValue(
+                    change,
+                    'mto_common_solution_key'
+                  );
+
+                  const solutionName = getTranslatedFieldValue(change, 'name');
+
+                  let solutionValue = solutionName || solutionKey;
+
+                  if (
+                    change.action === DatabaseOperation.UPDATE &&
+                    change.metaData &&
+                    isGenericWithMetaData(change.metaData)
+                  ) {
+                    solutionValue = change.metaData.relationContent;
+                  }
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: properlyCapitalizeInitiator(t('solution')),
+                        name: solutionValue || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO solution link audits */}
+              {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
+                (() => {
+                  const solutionName =
+                    change.translatedFields.find(
+                      field => field.fieldName === 'solution_id'
+                    )?.newTranslated ||
+                    change.translatedFields.find(
+                      field => field.fieldName === 'solution_id'
+                    )?.oldTranslated;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`solutionLinkType.${change.action}`),
+                        mtoType: properlyCapitalizeInitiator(t('solution')),
+                        name: solutionName || t('dataNotAvailable')
                       }}
                     />
                   );

@@ -61,7 +61,6 @@ const MilestoneCard = ({
           clearMessage();
           setIsModalOpen(false);
         }}
-        shouldCloseOnOverlayClick
         className="tablet:width-mobile-lg mint-body-normal"
       >
         <div className="margin-bottom-2">

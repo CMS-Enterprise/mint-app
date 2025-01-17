@@ -14,12 +14,13 @@
     "dbField": "is_draft",
     "label": "Check if this milestone is a draft milestone",
     "sublabel": "The \"draft\" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.",
+    "exportLabel": "Is this a draft milestone?",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
     "order": 1.01,
     "options": {
-      "true": "Draft",
-      "false": " "
+      "true": "Yes",
+      "false": " No"
     }
   },
   "facilitatedBy": {
@@ -210,6 +211,7 @@
     "goField": "MTOCategoryID",
     "dbField": "mto_category_id",
     "label": "MTO Category ID",
+    "exportLabel": "Category",
     "dataType": "UUID",
     "formType": "TEXT",
     "order": 4,

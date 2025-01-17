@@ -23,12 +23,13 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     label: 'Check if this milestone is a draft milestone',
     sublabel:
       'The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
+    exportLabel: 'Is this a draft milestone?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
     order: 1.01,
     options: {
-      true: 'Draft',
-      false: ' '
+      true: 'Yes',
+      false: ' No'
     }
   },
   facilitatedBy: {
@@ -225,6 +226,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'MTOCategoryID',
     dbField: 'mto_category_id',
     label: 'MTO Category ID',
+    exportLabel: 'Category',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 4.0,

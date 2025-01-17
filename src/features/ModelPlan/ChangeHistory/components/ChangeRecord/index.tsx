@@ -321,7 +321,8 @@ export const ChangeHeader = ({
           count: changeRecord.translatedFields.length,
           section: t(`sections.${changeRecord.tableName}`),
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-          time: formatTime(changeRecord.date)
+          time: formatTime(changeRecord.date),
+          inOrTo: t('in')
         }}
         components={{
           datetime: DateSpan
@@ -338,7 +339,11 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   // If the field name is in the hidden fields list, do not render the change record
-  if (hiddenFields.includes(change.fieldName)) {
+  if (
+    hiddenFields.find(
+      f => f.fields.includes(change.fieldName) && f.table === tableName
+    )
+  ) {
     return <></>;
   }
 

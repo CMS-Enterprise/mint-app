@@ -4,6 +4,7 @@
     "goField": "Name",
     "dbField": "name",
     "label": "New category title",
+    "exportLabel": "Category title",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.01
@@ -21,7 +22,7 @@
     "gqlField": "parentID",
     "goField": "ParentID",
     "dbField": "parent_id",
-    "label": "Parent category",
+    "label": "Primary category",
     "dataType": "STRING",
     "formType": "SELECT",
     "order": 1.03,

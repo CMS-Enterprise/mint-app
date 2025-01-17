@@ -11,7 +11,8 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'solutionType',
     goField: 'SolutionType',
     dbField: 'type',
-    label: 'Milestone title',
+    label: 'What type of solution is this',
+    exportLabel: 'Solution type',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
@@ -26,7 +27,8 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'name',
     goField: 'Name',
     dbField: 'name',
-    label: 'Milestone title',
+    label: 'Please add a title for your solution',
+    exportLabel: 'Solution name',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.1
@@ -35,7 +37,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'pocName',
     goField: 'PocName',
     dbField: 'poc_name',
-    label: 'Milestone title',
+    label: 'Point of contact name',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.2
@@ -44,7 +46,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'pocEmail',
     goField: 'PocEmail',
     dbField: 'poc_email',
-    label: 'Milestone title',
+    label: 'Point of contact email address',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.3
