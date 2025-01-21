@@ -5,10 +5,14 @@ import {
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
+  GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
+  MtoCommonSolutionSubject,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  MtoSolutionType,
+  OperationalSolutionKey
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -70,15 +74,56 @@ export const commonSolutionsMock = [
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',
-                name: 'common solution 1'
+                name: 'common solution 1',
+                isAdded: false,
+                key: MtoCommonSolutionKey.ACO_OS,
+                type: MtoSolutionType.CONTRACTOR,
+                subjects: [
+                  MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+                ]
               },
               {
                 __typename: 'MTOCommonSolution',
-                name: 'common solution 2'
+                name: 'common solution 2',
+                isAdded: false,
+                key: MtoCommonSolutionKey.APPS,
+                type: MtoSolutionType.CROSS_CUTTING_GROUP,
+                subjects: [
+                  MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+                ]
               }
             ]
           }
         }
+      }
+    }
+  }
+];
+
+export const possibleSolutionsMock = [
+  {
+    request: {
+      query: GetPossibleSolutionsDocument
+    },
+    results: {
+      data: {
+        possibleOperationalSolutions: [
+          {
+            id: '123',
+            key: OperationalSolutionKey.ACO_OS,
+            pointsOfContact: [
+              {
+                __typename: 'PossibleOperationalSolutionContact',
+                id: '123',
+                name: 'test',
+                email: 'email@email.com',
+                isTeam: true,
+                isPrimary: true,
+                role: 'role'
+              }
+            ]
+          }
+        ]
       }
     }
   }
