@@ -5602,6 +5602,13 @@ export type GetCustomMtoSolutionsQueryVariables = Exact<{
 
 export type GetCustomMtoSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, addedFromSolutionLibrary: boolean }> } } };
 
+export type GetMtoAllMilestonesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoAllMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', commonMilestones: Array<{ __typename: 'MTOCommonMilestone', name: string, key: MtoCommonMilestoneKey }>, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, key?: MtoCommonMilestoneKey | null, name: string }> } } };
+
 export type GetMtoAllSolutionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -11561,6 +11568,57 @@ export type GetCustomMtoSolutionsQueryHookResult = ReturnType<typeof useGetCusto
 export type GetCustomMtoSolutionsLazyQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsLazyQuery>;
 export type GetCustomMtoSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsSuspenseQuery>;
 export type GetCustomMtoSolutionsQueryResult = Apollo.QueryResult<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
+export const GetMtoAllMilestonesDocument = gql`
+    query GetMTOAllMilestones($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      commonMilestones {
+        name
+        key
+      }
+      milestones {
+        id
+        key
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoAllMilestonesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoAllMilestonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoAllMilestonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoAllMilestonesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoAllMilestonesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables> & ({ variables: GetMtoAllMilestonesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>(GetMtoAllMilestonesDocument, options);
+      }
+export function useGetMtoAllMilestonesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>(GetMtoAllMilestonesDocument, options);
+        }
+export function useGetMtoAllMilestonesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>(GetMtoAllMilestonesDocument, options);
+        }
+export type GetMtoAllMilestonesQueryHookResult = ReturnType<typeof useGetMtoAllMilestonesQuery>;
+export type GetMtoAllMilestonesLazyQueryHookResult = ReturnType<typeof useGetMtoAllMilestonesLazyQuery>;
+export type GetMtoAllMilestonesSuspenseQueryHookResult = ReturnType<typeof useGetMtoAllMilestonesSuspenseQuery>;
+export type GetMtoAllMilestonesQueryResult = Apollo.QueryResult<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>;
 export const GetMtoAllSolutionsDocument = gql`
     query GetMTOAllSolutions($id: UUID!) {
   modelPlan(id: $id) {
@@ -15050,6 +15108,7 @@ export const TypedCreateStandardCategoriesDocument = {"kind":"Document","definit
 export const TypedDeleteMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
 export const TypedDeleteMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
 export const TypedGetCustomMtoSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomMTOSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromSolutionLibrary"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
+export const TypedGetMtoAllMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOAllMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>;
 export const TypedGetMtoAllSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOAllSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>;
 export const TypedGetMtoCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
 export const TypedGetMtoMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}},{"kind":"Field","name":{"kind":"Name","value":"isSuggested"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"subCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByRole"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>;

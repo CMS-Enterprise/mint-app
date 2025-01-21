@@ -1,34 +1,34 @@
 import React from 'react';
-import {
-  Controller,
-  FormProvider,
-  SubmitHandler,
-  useForm
-} from 'react-hook-form';
+// import {
+//   Controller,
+//   FormProvider,
+//   SubmitHandler,
+//   useForm
+// } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { MtoCommonSolutionKey } from 'gql/generated/graphql';
+// import { useParams } from 'react-router-dom';
+// import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
-import useMessage from 'hooks/useMessage';
+// import useMessage from 'hooks/useMessage';
 
-type FormValues = {
-  linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
-};
+// type FormValues = {
+//   linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
+// };
 
 const AddToExistingMilestoneForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  // const { modelID } = useParams<{ modelID: string }>();
 
-  const { message, showMessage, clearMessage } = useMessage();
+  // const { message, showMessage, clearMessage } = useMessage();
 
   // Variables for the form
-  const methods = useForm<FormValues>({
-    defaultValues: {
-      commonSolutions: []
-    },
-    mode: 'onBlur'
-  });
+  // const methods = useForm<FormValues>({
+  //   defaultValues: {
+  //     linkedSolutions: []
+  //   },
+  //   mode: 'onBlur'
+  // });
 
   return (
     <>
