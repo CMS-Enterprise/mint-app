@@ -21,6 +21,8 @@ import useMessage from 'hooks/useMessage';
 // import useMessage from 'hooks/useMessage';
 import { SolutionCardType } from '..';
 
+import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
+
 const MTOSolutionCard = ({
   className,
   solution
@@ -58,11 +60,13 @@ const MTOSolutionCard = ({
       >
         <div className="margin-bottom-2">
           <PageHeading headingLevel="h3" className="margin-y-0">
-            {t('modal.solutionToMilestone.title')}
+            {t('modal.addToExistingMilestone.title')}
           </PageHeading>
         </div>
 
         {errorMessageInModal}
+
+        <AddToExistingMilestoneForm />
 
         {/* <AddSolutionToMilestoneForm
           closeModal={() => {
