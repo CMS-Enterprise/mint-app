@@ -52,7 +52,9 @@ const ITSystemsTable = () => {
     if (!data) return [];
     const { mtoMatrix } = data.modelPlan;
 
-    const formattedSolutions = [...mtoMatrix.solutions];
+    const formattedSolutions = [...mtoMatrix.solutions].sort((a, b) => {
+      return sortColumnValues(a.name!, b.name!);
+    });
 
     // Format milestones with no linked solutions to display in the table as solutions
     mtoMatrix.milestonesWithNoLinkedSolutions.forEach((milestone: any) => {
@@ -114,7 +116,7 @@ const ITSystemsTable = () => {
                   if (setMTOModalState)
                     setMTOModalState({
                       modalType: 'selectSolution',
-                      milestoneID: row.id
+                      milestoneID: row.original.id
                     });
                   if (setMTOModalOpen) setMTOModalOpen(true);
                 }}
@@ -264,7 +266,6 @@ const ITSystemsTable = () => {
       // Remove sort on filterSolutions because its accessor is a function and can't be passed a proper id for initial sort.
       // https://github.com/TanStack/table/issues/2641
       initialState: {
-        sortBy: useMemo(() => [{ id: 'name', asc: true }], []),
         pageIndex: 0
       }
     },
