@@ -212,8 +212,6 @@ const MTOHome = () => {
                   <PageLoading />
                 ) : (
                   <>
-                    <MTOModal />
-
                     {isMatrixStarted ? (
                       <>
                         <MTOTableActions />
@@ -237,7 +235,6 @@ const MTOHome = () => {
                   <PageLoading />
                 ) : (
                   <>
-                    <MTOModal />
                     <MTOTableActions />
                     <ITSystemsTable />
                   </>
