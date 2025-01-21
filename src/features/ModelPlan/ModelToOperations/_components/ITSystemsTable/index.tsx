@@ -27,6 +27,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
+import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 const ITSystemsTable = () => {
@@ -81,24 +82,7 @@ const ITSystemsTable = () => {
         Cell: ({ row }: any) => {
           const { riskIndicator } = row.original;
 
-          return (
-            <span className="text-bold text-base-lighter">
-              {(() => {
-                if (riskIndicator === MtoRiskIndicator.AT_RISK)
-                  return (
-                    <Icon.Error className="text-error-dark top-05" size={3} />
-                  );
-                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
-                  return (
-                    <Icon.Warning
-                      className="text-warning-dark top-05"
-                      size={3}
-                    />
-                  );
-                return '';
-              })()}
-            </span>
-          );
+          return <MTORiskIndicatorTag riskIndicator={riskIndicator} />;
         }
       },
       {
