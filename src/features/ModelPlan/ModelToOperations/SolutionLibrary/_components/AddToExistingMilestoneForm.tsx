@@ -7,11 +7,12 @@ import {
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import useMessage from 'hooks/useMessage';
 
 type FormValues = {
-  commonSolutions: MtoCommonSolutionKey[] | undefined;
+  linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
 };
 
 const AddToExistingMilestoneForm = () => {
