@@ -38,6 +38,7 @@ const ViewSelector = ({
             className="maxw-none"
             onChange={e => {
               params.set('view', e.target.value);
+              params.set('page', '1');
               history.replace({ search: params.toString() });
             }}
           >
@@ -70,6 +71,7 @@ const ViewSelector = ({
             outline={viewParam !== 'all'}
             onClick={() => {
               params.set('view', 'all');
+              params.set('page', '1');
               history.replace({ search: params.toString() });
             }}
           >
@@ -82,6 +84,7 @@ const ViewSelector = ({
             outline={viewParam !== 'it-systems'}
             onClick={() => {
               params.set('view', 'it-systems');
+              params.set('page', '1');
               history.replace({ search: params.toString() });
             }}
           >
@@ -94,6 +97,7 @@ const ViewSelector = ({
             outline={viewParam !== 'contracts'}
             onClick={() => {
               params.set('view', 'contracts');
+              params.set('page', '1');
               history.replace({ search: params.toString() });
             }}
           >
@@ -106,6 +110,7 @@ const ViewSelector = ({
             outline={viewParam !== 'cross-cut'}
             onClick={() => {
               params.set('view', 'cross-cut');
+              params.set('page', '1');
               history.replace({ search: params.toString() });
             }}
           >
