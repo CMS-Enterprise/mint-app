@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
@@ -14,6 +14,9 @@ import SolutionsTag from 'features/HelpAndKnowledge/SolutionsHelp/_components/So
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
+import useMessage from 'hooks/useMessage';
 
 // import useMessage from 'hooks/useMessage';
 import { SolutionCardType } from '..';
@@ -26,18 +29,52 @@ const MTOSolutionCard = ({
   solution: SolutionCardType;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  // const { errorMessageInModal, clearMessage } = useMessage();
+  const { errorMessageInModal, clearMessage } = useMessage();
   const history = useHistory();
 
   const params = new URLSearchParams(history.location.search);
 
-  // const milestoneParam = params.get('add-milestone');
+  const solutionParam = params.get('add-solution');
+
+  const [isModalOpen, setIsModalOpen] = useState(
+    solutionParam === solution.key
+  );
 
   const mappedSolution = helpSolutions.find(s => s.enum === solution.key);
   const location = useLocation();
 
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        shouldCloseOnOverlayClick
+        closeModal={() => {
+          params.delete('add-solution', solution.key);
+          history.replace({ search: params.toString() });
+          clearMessage();
+          setIsModalOpen(false);
+        }}
+        className="tablet:width-mobile-lg mint-body-normal"
+      >
+        <div className="margin-bottom-2">
+          <PageHeading headingLevel="h3" className="margin-y-0">
+            {t('modal.solutionToMilestone.title')}
+          </PageHeading>
+        </div>
+
+        {errorMessageInModal}
+
+        {/* <AddSolutionToMilestoneForm
+          closeModal={() => {
+            params.delete('add-solution', solution.key);
+            params.delete('solution', solution.key);
+            history.replace({ search: params.toString() });
+            clearMessage();
+            setIsModalOpen(false);
+          }}
+          milestone={milestone}
+        /> */}
+      </Modal>
       <Card
         containerProps={{
           className: 'radius-md minh-mobile padding-0 margin-0'
@@ -77,11 +114,10 @@ const MTOSolutionCard = ({
               outline
               className="margin-right-2"
               onClick={() => {
-                params.delete('milestone');
                 params.set('add-solution', solution.key);
                 history.replace({ search: params.toString() });
                 // TODO: to open "Add to existing milestone" modal
-                // setIsModalOpen(true);
+                setIsModalOpen(true);
               }}
             >
               {t('milestoneLibrary.addToMatrix')}
