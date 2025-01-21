@@ -33,6 +33,9 @@ describe('SolutionLibrary Component', () => {
     // Match the snapshot
     await waitFor(() => {
       expect(getByText('Don’t see the solution you need?')).toBeInTheDocument();
+      expect(
+        getByText('Accountable Care Organization - Operational System')
+      ).toBeInTheDocument();
     });
     expect(asFragment()).toMatchSnapshot();
   });

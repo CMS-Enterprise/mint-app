@@ -311,7 +311,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 Add to matrix
               </button>
               <a
-                aria-label="aboutSolutionAriaLabel Accountable Care Organization - Operational System"
+                aria-label="Click to learn more about this solution: Accountable Care Organization - Operational System"
                 class="usa-link display-block width-fit-content usa-button usa-button--unstyled margin-top-2"
                 href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library?page=1&solution=accountable-care-organization&section=about"
               >
@@ -381,7 +381,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 Add to matrix
               </button>
               <a
-                aria-label="aboutSolutionAriaLabel Automated Plan Payment System"
+                aria-label="Click to learn more about this solution: Automated Plan Payment System"
                 class="usa-link display-block width-fit-content usa-button usa-button--unstyled margin-top-2"
                 href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library?page=1&solution=automated-plan-payment-system&section=about"
               >

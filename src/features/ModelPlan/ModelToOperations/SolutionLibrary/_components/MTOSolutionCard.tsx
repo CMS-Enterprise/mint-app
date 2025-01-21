@@ -99,7 +99,7 @@ const MTOSolutionCard = ({
 
           <UswdsReactLink
             className="display-block width-fit-content usa-button usa-button--unstyled margin-top-2"
-            aria-label={`${t('aboutSolutionAriaLabel')} ${mappedSolution?.name}`}
+            aria-label={`${t('helpAndKnowledge:aboutSolutionAriaLabel')} ${mappedSolution?.name}`}
             to={`${location.pathname}${location.search}${
               location.search ? '&' : '?'
             }solution=${mappedSolution?.route}&section=about`}
