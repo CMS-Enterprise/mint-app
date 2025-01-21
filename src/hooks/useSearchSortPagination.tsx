@@ -142,14 +142,14 @@ const useSearchSortPagination = <T, K extends string>({
     setPageCount(Math.ceil(searchAndSortedItems.length / itemsPerPage));
   }, [searchAndSortedItems, currentPage, setPageCount, itemsPerPage]);
 
-  // Reset pagination if itemsPerPage changes and the current page is greater than the new page count
+  // Reset pagination if itemsPerPage changes and the current page is greater than the new page count or if items per page is set to "show all"
   useEffect(() => {
-    if (currentItems.length === 0) {
+    if (currentItems.length === 0 || itemsPerPage === 100000) {
       params.set('page', '1');
       history.push({ search: params.toString() });
       setCurrentPage(1);
     }
-  }, [currentItems]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentItems, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sort the changes when the sort option changes.
   useEffect(() => {

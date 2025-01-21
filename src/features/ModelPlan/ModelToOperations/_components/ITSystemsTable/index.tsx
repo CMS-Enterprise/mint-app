@@ -1,20 +1,29 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { Column, usePagination, useSortBy, useTable } from 'react-table';
-import { Button, Icon, Table } from '@trussworks/react-uswds';
+import {
+  Column,
+  usePagination as usePaginationTable,
+  useSortBy,
+  useTable
+} from 'react-table';
+import { Button, Grid, Icon, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { NotFoundPartial } from 'features/NotFound';
 import {
+  GetMtoSolutionsAndMilestonesQuery,
   MtoRiskIndicator,
+  MtoSolutionType,
   useGetMtoSolutionsAndMilestonesQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
+import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
@@ -28,8 +37,13 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
+import { SolutionViewType } from '../../SolutionLibrary';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MilestoneStatusTag from '../MTOStatusTag';
+import SolutionViewSelector from '../SolutionViewSelector';
+
+export type SolutionType =
+  GetMtoSolutionsAndMilestonesQuery['modelPlan']['mtoMatrix']['solutions'][0];
 
 const ITSystemsTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -39,6 +53,20 @@ const ITSystemsTable = () => {
   const history = useHistory();
 
   const { location } = history;
+
+  const params = new URLSearchParams(history.location.search);
+
+  const hideMilestonesWithoutSolutions =
+    params.get('hide-milestones-without-solutions') === 'true';
+
+  let viewParam: SolutionViewType = 'all';
+
+  if (params.get('view')) {
+    const view = params.get('type') as SolutionViewType;
+    if (['all', 'it-systems', 'contracts', 'cross-cut'].includes(view)) {
+      viewParam = view;
+    }
+  }
 
   const { clearMessage } = useMessage();
 
@@ -50,30 +78,84 @@ const ITSystemsTable = () => {
     variables: { id: modelID }
   });
 
+  const milestonesWithoutSolutions = useMemo(
+    () =>
+      data?.modelPlan.mtoMatrix.milestonesWithNoLinkedSolutions.map(
+        (milestone: any) => {
+          // Format milestones with no linked solutions to display in the table as solutions
+          return {
+            __typename: 'MTOMilestone' as 'MTOSolution',
+            id: milestone.id,
+            name: milestone.name,
+            riskIndicator: MtoRiskIndicator.ON_TRACK,
+            milestones: [],
+            facilitatedBy: [],
+            neededBy: null,
+            status: null as any
+          } as SolutionType;
+        }
+      ) || [],
+    [data?.modelPlan.mtoMatrix.milestonesWithNoLinkedSolutions]
+  );
+
   const solutions = useMemo(() => {
     if (!data) return [];
-    const { mtoMatrix } = data.modelPlan;
 
-    const formattedSolutions = [...mtoMatrix.solutions].sort((a, b) => {
-      return sortColumnValues(a.name!, b.name!);
-    });
+    const sortedSolutions = [...data?.modelPlan.mtoMatrix.solutions].sort(
+      (a, b) => {
+        return sortColumnValues(a.name!, b.name!);
+      }
+    );
 
-    // Format milestones with no linked solutions to display in the table as solutions
-    mtoMatrix.milestonesWithNoLinkedSolutions.forEach((milestone: any) => {
-      formattedSolutions.push({
-        __typename: 'MTOMilestone' as 'MTOSolution',
-        id: milestone.id,
-        name: milestone.name,
-        riskIndicator: MtoRiskIndicator.ON_TRACK,
-        milestones: [],
-        facilitatedBy: [],
-        neededBy: null,
-        status: null as any
-      });
-    });
-
-    return formattedSolutions;
+    return sortedSolutions;
   }, [data]);
+
+  const solutionsAndMilestones = useMemo(() => {
+    if (!hideMilestonesWithoutSolutions) {
+      return [...solutions].concat([...milestonesWithoutSolutions]);
+    }
+    return solutions;
+  }, [hideMilestonesWithoutSolutions, milestonesWithoutSolutions, solutions]);
+
+  const itSystemsSolutions = useMemo(
+    () =>
+      solutions.filter(item => {
+        return item.type === MtoSolutionType.IT_SYSTEM;
+      }),
+    [solutions]
+  );
+
+  const contractsSolutions = useMemo(
+    () =>
+      solutions.filter(item => {
+        return item.type === MtoSolutionType.CONTRACTOR;
+      }),
+    [solutions]
+  );
+
+  const crossCutSolutions = useMemo(
+    () =>
+      solutions.filter(item => {
+        return item.type === MtoSolutionType.CROSS_CUTTING_GROUP;
+      }),
+    [solutions]
+  );
+
+  const filteredView = useMemo(() => {
+    const views = {
+      'it-systems': itSystemsSolutions,
+      contracts: contractsSolutions,
+      'cross-cut': crossCutSolutions,
+      all: solutionsAndMilestones
+    };
+    return views[viewParam];
+  }, [
+    viewParam,
+    itSystemsSolutions,
+    contractsSolutions,
+    crossCutSolutions,
+    solutionsAndMilestones
+  ]);
 
   const columns = useMemo<Column<any>[]>(() => {
     return [
@@ -236,7 +318,7 @@ const ITSystemsTable = () => {
   } = useTable(
     {
       columns,
-      data: solutions,
+      data: filteredView,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
@@ -251,11 +333,12 @@ const ITSystemsTable = () => {
       // Remove sort on filterSolutions because its accessor is a function and can't be passed a proper id for initial sort.
       // https://github.com/TanStack/table/issues/2641
       initialState: {
-        pageIndex: 0
+        pageIndex: 0,
+        pageSize: 6
       }
     },
     useSortBy,
-    usePagination
+    usePaginationTable
   );
 
   if (!data && loading) {
@@ -272,19 +355,7 @@ const ITSystemsTable = () => {
   rows.map(row => prepareRow(row));
 
   return (
-    <div className={classNames('model-plan-table margin-top-4')}>
-      {/* {renderModal && selectedSolution && (
-        <SolutionDetailsModal
-          solution={selectedSolution}
-          openedFrom={prevPathname}
-          closeRoute={() => {
-            params.delete('solution');
-            params.delete('section');
-            return `${history.location.pathname}`;
-          }}
-        />
-      )} */}
-
+    <div className={classNames('margin-top-4 line-height-normal')}>
       {selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
@@ -292,6 +363,39 @@ const ITSystemsTable = () => {
           closeRoute={location.pathname}
         />
       )}
+
+      <Grid
+        desktop={{ col: 12 }}
+        className="desktop:display-flex flex-wrap margin-bottom-2"
+      >
+        <SolutionViewSelector
+          viewParam={viewParam}
+          viewParamName="type"
+          usePages={false}
+          allSolutions={solutionsAndMilestones}
+          itSystemsSolutions={itSystemsSolutions}
+          contractsSolutions={contractsSolutions}
+          crossCutSolutions={crossCutSolutions}
+        />
+
+        <CheckboxField
+          id="hide-added-solutions"
+          name="hide-added-solutions"
+          label={t('solutionLibrary.hideAdded', {
+            count: milestonesWithoutSolutions.length
+          })}
+          value="true"
+          checked={hideMilestonesWithoutSolutions}
+          onBlur={() => null}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            params.set(
+              'hide-milestones-without-solutions',
+              hideMilestonesWithoutSolutions ? 'false' : 'true'
+            );
+            history.replace({ search: params.toString() });
+          }}
+        />
+      </Grid>
 
       <Table bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>
@@ -374,21 +478,35 @@ const ITSystemsTable = () => {
         </tbody>
       </Table>
 
-      {solutions.length > 10 && (
-        <TablePagination
-          gotoPage={gotoPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canNextPage={canNextPage}
-          pageIndex={state.pageIndex}
-          pageOptions={pageOptions}
-          canPreviousPage={canPreviousPage}
-          pageCount={pageCount}
-          pageSize={state.pageSize}
-          setPageSize={setPageSize}
-          page={[]}
-        />
-      )}
+      {/* Pagination */}
+
+      <div className="display-flex flex-wrap">
+        {filteredView.length > state.pageSize && (
+          <TablePagination
+            gotoPage={gotoPage}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            canNextPage={canNextPage}
+            pageIndex={state.pageIndex}
+            pageOptions={pageOptions}
+            canPreviousPage={canPreviousPage}
+            pageCount={pageCount}
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+            page={[]}
+          />
+        )}
+
+        {filteredView.length > 0 && (
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+            valueArray={[6, 9, 'all']}
+            suffix={t('table.solutions').toLowerCase()}
+          />
+        )}
+      </div>
 
       <div
         className="usa-sr-only usa-table__announcement-region"
@@ -397,9 +515,9 @@ const ITSystemsTable = () => {
         {currentTableSortDescription(headerGroups[0])}
       </div>
 
-      {solutions.length === 0 && (
+      {solutionsAndMilestones.length === 0 && (
         <Alert type="info" slim>
-          {solutions.length === 0
+          {solutionsAndMilestones.length === 0
             ? t('table.alert.noSolutions')
             : t('table.alert.noFilterSelections')}
         </Alert>

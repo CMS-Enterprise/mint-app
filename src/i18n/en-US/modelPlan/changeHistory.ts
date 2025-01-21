@@ -5,9 +5,9 @@ const changeHistory = {
   backToReadView: 'Back to the Read view',
   thisModelPlan: 'this Model Plan',
   change:
-    'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+    'made {{count}} change {{inOrTo}} {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
-    'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+    'made {{count}} changes {{inOrTo}} {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   planCreate:
     'created <planName>{{plan_name}}</planName> <datetime>on {{date}} at {{time}}</datetime>',
   taskStartedUpdate:
@@ -41,6 +41,7 @@ const changeHistory = {
     'Subtask {{action}} {{forFrom}} <bold>{{solutionName}}: {{needName}}</bold>',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  mtoUpdate: '{{mtoType}} {{action}}: {{name}}',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   sections: {
@@ -54,6 +55,13 @@ const changeHistory = {
     plan_collaborator: 'Model team',
     plan_discussion: 'Discussions',
     discussion_reply: 'Discussions',
+    mto_category: 'model-to-operations matrix',
+    mto_milestone: 'model-to-operations matrix',
+    mto_solution: 'model-to-operations matrix',
+    mto_common_solution: 'model-to-operations matrix',
+    mto_common_solution_contact: 'model-to-operations matrix',
+    mto_info: 'model-to-operations matrix',
+    mto_milestone_solution_link: 'model-to-operations matrix',
     plan_document: 'Documents',
     plan_cr: 'FFS CRs and TDLs',
     plan_tdl: 'FFS CRs and TDLs',
@@ -81,6 +89,15 @@ const changeHistory = {
   },
   solution: 'solution',
   subtask: 'Subtask',
+  category: 'Category',
+  subCategory: 'Subcategory',
+  milestone: 'Milestone',
+  status: 'Status',
+  readyForReview: 'Ready for review',
+  inProgress: 'In progress',
+  dataNotAvailable: 'Data not available',
+  in: 'in',
+  to: 'to',
   auditUpdateType: {
     INSERT: 'added',
     DELETE: 'removed',
@@ -129,6 +146,10 @@ const changeHistory = {
     label: 'Sort',
     newest: 'Newest changes',
     oldest: 'Oldest changes'
+  },
+  solutionLinkType: {
+    INSERT: 'linked',
+    DELETE: 'unlinked'
   },
   previousAnswer: 'Previous answer',
   previousNote: 'Previous note',

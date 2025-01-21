@@ -19,7 +19,6 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
@@ -212,7 +211,7 @@ const MTOHome = () => {
                 {loading ? (
                   <PageLoading />
                 ) : (
-                  <MTOModalProvider>
+                  <>
                     <MTOModal />
 
                     {isMatrixStarted ? (
@@ -227,7 +226,7 @@ const MTOHome = () => {
                     ) : (
                       <MTOOptionsPanel />
                     )}
-                  </MTOModalProvider>
+                  </>
                 )}
               </>
             )}
@@ -237,11 +236,11 @@ const MTOHome = () => {
                 {loading ? (
                   <PageLoading />
                 ) : (
-                  <MTOModalProvider>
+                  <>
                     <MTOModal />
                     <MTOTableActions />
                     <ITSystemsTable />
-                  </MTOModalProvider>
+                  </>
                 )}
               </>
             )}

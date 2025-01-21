@@ -7,6 +7,7 @@ export default gql(/* GraphQL */ `
       mtoMatrix {
         solutions {
           id
+          type
           key
           name
           facilitatedBy

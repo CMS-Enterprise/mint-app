@@ -33,6 +33,8 @@ const nonRequiredForms: Partial<MTOModalType[]> = [
   'addTemplate'
 ];
 
+const shouldNotCloseModals: string[] = ['selectSolution'];
+
 const MTOModal = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -53,7 +55,7 @@ const MTOModal = () => {
         resetMTOModalState();
         setMTOModalOpen(false);
       }}
-      shouldCloseOnOverlayClick
+      shouldCloseOnOverlayClick={!shouldNotCloseModals.includes(modalType)}
       className="tablet:width-mobile-lg mint-body-normal"
     >
       <div className="margin-bottom-2">

@@ -9,7 +9,7 @@ exports[`Operation Solution Help Tag > matches snapshot 1`] = `
     href="/help-and-knowledge/operational-solutions?category=data"
   >
     <span
-      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
       data-testid="tag"
     >
       Data
