@@ -221,6 +221,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     modelMilestone: 'Model milestone',
     facilitatedBy: 'Facilitated by',
     solutions: 'Solutions',
+    solution: 'Solution',
+    relatedMilestones: 'Related milestones',
     needBy: 'Need by',
     status: 'Status',
     actions: 'Actions',
@@ -231,6 +233,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     editDetails: 'Edit details',
     milestones: 'milestones',
     selectASolution: 'Select a solution',
+    noRelatedMilestones: 'No related milestones',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',

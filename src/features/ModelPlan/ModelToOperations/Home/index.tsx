@@ -24,6 +24,7 @@ import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
 import MTOModal from '../_components/FormModal';
+import ITSystemsTable from '../_components/ITSystemsTable';
 import MTOTable, { isMatrixStartedFc } from '../_components/MatrixTable';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
@@ -220,6 +221,27 @@ const MTOHome = () => {
                         loading={loading}
                         error={error}
                       />
+                    </>
+                  ) : (
+                    <MTOOptionsPanel />
+                  )}
+                </MTOModalProvider>
+              )}
+            </>
+          )}
+
+          {currentView === 'solutions' && (
+            <>
+              {loading ? (
+                <PageLoading />
+              ) : (
+                <MTOModalProvider>
+                  <MTOModal />
+
+                  {isMatrixStarted ? (
+                    <>
+                      <MTOTableActions />
+                      <ITSystemsTable />
                     </>
                   ) : (
                     <MTOOptionsPanel />

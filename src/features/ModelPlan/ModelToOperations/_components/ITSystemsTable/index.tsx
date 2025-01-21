@@ -1,27 +1,38 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
+  Column,
   useFilters,
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable
 } from 'react-table';
-import { Table } from '@trussworks/react-uswds';
+import { Button, Icon, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import {
+  MtoRiskIndicator,
+  useGetMtoSolutionsAndMilestonesQuery
+} from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
+import Sidepanel from 'components/Sidepanel';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import useMessage from 'hooks/useMessage';
+import { formatDateUtc } from 'utils/date';
+import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
+
+import EditMilestoneForm from '../EditMilestoneForm';
+import MilestoneStatusTag from '../MTOStatusTag';
 
 const ITSystemsTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -30,56 +41,126 @@ const ITSystemsTable = () => {
 
   const { showMessage: setError } = useMessage();
 
-  const possibleNeedsColumns = useMemo(() => {
+  const history = useHistory();
+
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history]
+  );
+
+  const milestoneParam = params.get('edit-milestone');
+
+  const [isModalOpen, setIsModalOpen] = useState(!!milestoneParam);
+
+  // const [isModalOpen, setIsModalOpen] = useState(
+  //   milestoneParam === milestoneID
+  // );
+
+  const submitted = useRef<boolean>(false);
+
+  const { data, loading, error } = useGetMtoSolutionsAndMilestonesQuery({
+    variables: { id: modelID }
+  });
+
+  const solutions = useMemo(() => {
+    if (!data) return [];
+    const { mtoMatrix } = data.modelPlan;
+    return mtoMatrix.solutions;
+  }, [data]);
+
+  console.log(solutions);
+
+  const columns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: operationalNeedsT<string, {}, string>('name.label'),
+        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        accessor: 'riskIndicator',
+        Cell: ({ row }: any) => {
+          const { riskIndicator } = row;
+
+          return (
+            <span className="text-bold text-base-lighter">
+              {(() => {
+                if (riskIndicator === MtoRiskIndicator.AT_RISK)
+                  return (
+                    <Icon.Error className="text-error-dark top-05" size={3} />
+                  );
+                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
+                  return (
+                    <Icon.Warning
+                      className="text-warning-dark top-05"
+                      size={3}
+                    />
+                  );
+                return '';
+              })()}
+            </span>
+          );
+        }
+      },
+      {
+        Header: t<string, {}, string>('table.solution'),
         accessor: 'name'
       },
       {
-        Header: operationalNeedsT<string, {}, string>('section.label'),
-        accessor: 'section',
-        Cell: ({
-          row,
-          value
-        }: CellProps<
-          GetOperationalNeedsTableType,
-          OperationalNeedsSolutionsStatus
-        >): string => {
-          if (row.original.key && operationalNeedMap[row.original.key]) {
-            return i18next.t(
-              `${operationalNeedMap[row.original.key].section}:heading`
-            );
-          }
-          return '';
-        }
-      },
+        Header: t<string, {}, string>('table.relatedMilestones'),
+        accessor: 'milestones',
+        Cell: ({ row }: any) => {
+          if (row.milestones.length === 0)
+            return t('table.noRelatedMilestones');
 
-      {
-        Header: operationalNeedsT<string, {}, string>('needed.label'),
-        accessor: 'status',
-        Cell: ({
-          row,
-          value
-        }: CellProps<
-          GetOperationalNeedsTableType,
-          OperationalNeedsSolutionsStatus
-        >): JSX.Element => {
-          return <OperationalNeedsStatusTag status={value} />;
+          return (
+            <>
+              {row.milestones[0].name}{' '}
+              {row.milestone.length > 1 && (
+                <Button type="button">+{row.milestones.length - 1}</Button>
+              )}
+            </>
+          );
         }
       },
       {
-        Header: opSolutionsMiscT<string, {}, string>(
-          'itSolutionsTable.actions'
-        ),
-        Cell: ({
-          row
-        }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
-          return returnActionLinks(row.original.status, row.original, modelID);
+        Header: t('table.facilitatedBy'),
+        accessor: 'facilitatedBy',
+        Cell: ({ row }: any) => {
+          if (!row.facilitatedBy) return <></>;
+          return (
+            <>
+              {row.facilitatedBy
+                .map((facilitator: any) =>
+                  t(`facilitatedBy.options.${facilitator}`)
+                )
+                .join(', ')}
+            </>
+          );
         }
+      },
+      {
+        Header: t('table.needBy'),
+        accessor: 'needBy',
+        Cell: ({ row }: any) => {
+          if (!row.needBy)
+            return <span className="text-italic">{t('table.noneAdded')}</span>;
+          return <>{formatDateUtc(row.needBy, 'MM/dd/yyyy')}</>;
+        }
+      },
+      {
+        Header: t('table.status'),
+        accessor: 'status',
+        Cell: ({ row }: any) => {
+          const { status } = row;
+          if (!status) return <></>;
+          return (
+            <MilestoneStatusTag status={status} classname="width-fit-content" />
+          );
+        }
+      },
+      {
+        Header: t<string, {}, string>('table.actions'),
+        accessor: 'actions'
       }
     ];
-  }, [opSolutionsMiscT, operationalNeedsT, modelID]);
+  }, [t]);
 
   const {
     getTableProps,
@@ -100,10 +181,8 @@ const ITSystemsTable = () => {
     prepareRow
   } = useTable(
     {
-      columns: (type === 'needs'
-        ? (needsColumns as Column<GetOperationalNeedsTableType>[])
-        : (possibleNeedsColumns as Column<GetOperationalNeedsTableType>[])) as Column<object>[],
-      data: operationalNeeds,
+      columns,
+      data: solutions,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
@@ -137,33 +216,56 @@ const ITSystemsTable = () => {
   // `Column.Cell` is available during filtering
   rows.map(row => prepareRow(row));
 
-  return (
-    <div
-      className={classNames(className, 'model-plan-table')}
-      data-testid={`${type}-table`}
-    >
-      {!hideGlobalFilter && !isPrintPDF && (
-        <>
-          <div className="mint-header__basic">
-            <GlobalClientFilter
-              globalFilter={state.globalFilter}
-              setGlobalFilter={setGlobalFilter}
-              tableID={opSolutionsMiscT('itSolutionsTable.id')}
-              tableName={opSolutionsMiscT('itSolutionsTable.title')}
-              className="margin-bottom-4 width-mobile-lg maxw-full"
-            />
-          </div>
+  const closeModal = () => {
+    if (isDirty && !submitted.current) {
+      setLeavePage(true);
+    } else if (!isDirty || submitted.current) {
+      params.delete('edit-milestone');
+      params.delete('select-solutions');
+      history.push({ search: params.toString() });
+      setLeavePage(false);
+      setIsModalOpen(false);
+      submitted.current = false;
+    }
+  };
 
-          <TableResults
+  return (
+    <div className={classNames('model-plan-table')}>
+      <Sidepanel
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        ariaLabel={t('milestoneLibrary.aboutThisMilestone')}
+        testid="edit-milestone-sidepanel"
+        modalHeading={t('milestoneLibrary.aboutThisMilestone')}
+        noScrollable
+      >
+        <EditMilestoneForm
+          closeModal={closeModal}
+          setIsDirty={setIsDirty}
+          submitted={submitted}
+        />
+      </Sidepanel>
+
+      <>
+        <div className="mint-header__basic">
+          <GlobalClientFilter
             globalFilter={state.globalFilter}
-            pageIndex={state.pageIndex}
-            pageSize={state.pageSize}
-            filteredRowLength={page.length}
-            rowLength={operationalNeeds.length}
-            className="margin-bottom-4"
+            setGlobalFilter={setGlobalFilter}
+            tableID={t('itSolutionsTable.id')}
+            tableName={t('itSolutionsTable.title')}
+            className="margin-bottom-4 width-mobile-lg maxw-full"
           />
-        </>
-      )}
+        </div>
+
+        <TableResults
+          globalFilter={state.globalFilter}
+          pageIndex={state.pageIndex}
+          pageSize={state.pageSize}
+          filteredRowLength={page.length}
+          rowLength={solutions.length}
+          className="margin-bottom-4"
+        />
+      </>
 
       <Table bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>
@@ -172,41 +274,30 @@ const ITSystemsTable = () => {
               {...headerGroup.getHeaderGroupProps()}
               key={{ ...headerGroup.getHeaderGroupProps() }.key}
             >
-              {headerGroup.headers
-                .filter(
-                  column =>
-                    // @ts-ignore
-                    !hiddenTableColumns?.includes(column.Header)
-                )
-                .map((column, index) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    aria-sort={getColumnSortStatus(column)}
-                    className="table-header"
-                    scope="col"
-                    style={{
-                      minWidth: index !== 3 ? '138px' : '',
-                      paddingBottom: '.5rem',
-                      position: 'relative',
-                      paddingLeft: index === 0 ? '.5em' : '0px',
-                      width:
-                        (index === 5 && '235px') ||
-                        (index === 2 && '170px') ||
-                        (index === 3 && type !== 'possibleNeeds' && '100px') ||
-                        'auto'
-                    }}
-                    key={column.id}
+              {headerGroup.headers.map((column, index) => (
+                <th
+                  {...column.getHeaderProps()}
+                  aria-sort={getColumnSortStatus(column)}
+                  className="table-header"
+                  scope="col"
+                  style={{
+                    paddingBottom: '.5rem',
+                    position: 'relative',
+                    paddingLeft: index === 0 ? '.5em' : '0px',
+                    width: index === 0 ? '60px' : 'auto'
+                  }}
+                  key={column.id}
+                >
+                  <button
+                    className="usa-button usa-button--unstyled position-relative"
+                    type="button"
+                    {...column.getSortByToggleProps()}
                   >
-                    <button
-                      className="usa-button usa-button--unstyled position-relative"
-                      type="button"
-                      {...column.getSortByToggleProps()}
-                    >
-                      {column.render('Header')}
-                      {getHeaderSortIcon(column, false)}
-                    </button>
-                  </th>
-                ))}
+                    {column.render('Header')}
+                    {getHeaderSortIcon(column, false)}
+                  </button>
+                </th>
+              ))}
             </tr>
           ))}
         </thead>
@@ -214,64 +305,50 @@ const ITSystemsTable = () => {
           {page.map((row, index) => {
             return (
               <tr {...row.getRowProps()} key={row.id}>
-                {row.cells
-                  .filter(
-                    cell =>
-                      // @ts-ignore
-                      !hiddenTableColumns?.includes(cell.column.Header)
-                  )
-                  .map((cell, i) => {
-                    if (i === 0) {
-                      return (
-                        <th
-                          {...cell.getCellProps()}
-                          scope="row"
-                          className={classNames('padding-x-1', {
-                            'bg-base-lightest':
-                              row.values.status === 'NOT_NEEDED'
-                          })}
-                          style={{
-                            paddingLeft: '0',
-                            borderBottom:
-                              index === page.length - 1
-                                ? '1px solid black'
-                                : 'auto',
-                            whiteSpace: 'normal'
-                          }}
-                          key={cell.getCellProps().key}
-                        >
-                          {cell.render('Cell')}
-                        </th>
-                      );
-                    }
+                {row.cells.map((cell, i) => {
+                  if (i === 0) {
                     return (
-                      <td
+                      <th
                         {...cell.getCellProps()}
-                        className={classNames({
-                          'bg-base-lightest': row.values.status === 'NOT_NEEDED'
-                        })}
+                        scope="row"
+                        className={classNames('padding-x-1')}
                         style={{
                           paddingLeft: '0',
-                          whiteSpace: 'normal',
-                          maxWidth: i === 1 ? '275px' : 'auto',
                           borderBottom:
                             index === page.length - 1
                               ? '1px solid black'
-                              : 'auto'
+                              : 'auto',
+                          whiteSpace: 'normal'
                         }}
                         key={cell.getCellProps().key}
                       >
                         {cell.render('Cell')}
-                      </td>
+                      </th>
                     );
-                  })}
+                  }
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      style={{
+                        paddingLeft: '0',
+                        whiteSpace: 'normal',
+                        maxWidth: i === 1 ? '275px' : 'auto',
+                        borderBottom:
+                          index === page.length - 1 ? '1px solid black' : 'auto'
+                      }}
+                      key={cell.getCellProps().key}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })}
         </tbody>
       </Table>
 
-      {operationalNeeds.length > 10 && (
+      {solutions.length > 10 && (
         <TablePagination
           gotoPage={gotoPage}
           previousPage={previousPage}
@@ -294,14 +371,14 @@ const ITSystemsTable = () => {
         {currentTableSortDescription(headerGroups[0])}
       </div>
 
-      {operationalNeeds.length === 0 && (
+      {/* {operationalNeeds.length === 0 && (
         <Alert
           heading={opSolutionsMiscT('itSolutionsTable.noNeeds')}
           type="info"
         >
           {opSolutionsMiscT('itSolutionsTable.noNeedsInfo')}
         </Alert>
-      )}
+      )} */}
 
       {/* {filterSolutions && (
         <FilterViewSolutionsAlert
