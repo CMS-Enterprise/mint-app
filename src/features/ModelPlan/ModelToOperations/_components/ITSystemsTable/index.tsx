@@ -1,14 +1,7 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import {
-  Column,
-  useFilters,
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable
-} from 'react-table';
+import { Column, usePagination, useSortBy, useTable } from 'react-table';
 import { Button, Icon, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
@@ -17,10 +10,7 @@ import {
 } from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
-import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
-import TableResults from 'components/TableResults';
-import { EditMTOMilestoneContext } from 'contexts/EditMTOMilestoneContext';
 import useMessage from 'hooks/useMessage';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
@@ -38,8 +28,6 @@ const ITSystemsTable = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { openEditMilestoneModal } = useContext(EditMTOMilestoneContext);
-
   const { showMessage: setError } = useMessage();
 
   const { data, loading, error } = useGetMtoSolutionsAndMilestonesQuery({
@@ -49,7 +37,24 @@ const ITSystemsTable = () => {
   const solutions = useMemo(() => {
     if (!data) return [];
     const { mtoMatrix } = data.modelPlan;
-    return mtoMatrix.solutions;
+
+    const formattedSolutions = [...mtoMatrix.solutions];
+
+    // Format milestones with no linked solutions to display in the table as solutions
+    mtoMatrix.milestonesWithNoLinkedSolutions.forEach((milestone: any) => {
+      formattedSolutions.push({
+        __typename: 'MTOMilestone' as 'MTOSolution',
+        id: milestone.id,
+        name: milestone.name,
+        riskIndicator: MtoRiskIndicator.ON_TRACK,
+        milestones: [],
+        facilitatedBy: [],
+        neededBy: null,
+        status: null as any
+      });
+    });
+
+    return formattedSolutions;
   }, [data]);
 
   console.log(solutions);
@@ -60,7 +65,7 @@ const ITSystemsTable = () => {
         Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
         accessor: 'riskIndicator',
         Cell: ({ row }: any) => {
-          const { riskIndicator } = row;
+          const { riskIndicator } = row.original;
 
           return (
             <span className="text-bold text-base-lighter">
@@ -84,19 +89,28 @@ const ITSystemsTable = () => {
       },
       {
         Header: t<string, {}, string>('table.solution'),
-        accessor: 'name'
+        accessor: 'name',
+        Cell: ({ row }: any) => {
+          if (row.original.__typename === 'MTOMilestone') return <Button type="button">{t('table.edit')}</Button>;
+
+          return <>{row.original.name}</>;
+        }
       },
       {
         Header: t<string, {}, string>('table.relatedMilestones'),
         accessor: 'milestones',
         Cell: ({ row }: any) => {
-          if (!row.milestones || row.milestones?.length === 0)
-            return t('table.noRelatedMilestones');
+          if (row.original.__typename === 'MTOMilestone') return <>{row.original.name}</>;
+
+          const { milestones } = row.original;
+
+          if (!milestones || milestones?.length === 0)
+            return <>{t('table.noRelatedMilestones')}</>;
 
           return (
             <>
-              {row.milestones[0].name}{' '}
-              {row.milestone.length > 1 && (
+              {milestones[0].name}{' '}
+              {milestones.length > 1 && (
                 <Button
                   type="button"
                   onClick={() => {
@@ -104,7 +118,7 @@ const ITSystemsTable = () => {
                   }}
                 >
                   {t('table.moreMilestones', {
-                    count: row.milestones.length - 1
+                    count: milestones.length - 1
                   })}
                 </Button>
               )}
@@ -116,10 +130,12 @@ const ITSystemsTable = () => {
         Header: t('table.facilitatedBy'),
         accessor: 'facilitatedBy',
         Cell: ({ row }: any) => {
-          if (!row.facilitatedBy) return <></>;
+
+          if (!row?.orignal?.facilitatedBy || row.original.__typename === 'MTOMilestone') return <></>;
+
           return (
             <>
-              {row.facilitatedBy
+              {row.orignal.facilitatedBy
                 .map((facilitator: any) =>
                   t(`facilitatedBy.options.${facilitator}`)
                 )
@@ -132,8 +148,11 @@ const ITSystemsTable = () => {
         Header: t('table.needBy'),
         accessor: 'needBy',
         Cell: ({ row }: any) => {
+          if (row.original.__typename === 'MTOMilestone') return <></>;
+
           if (!row.needBy)
             return <span className="text-italic">{t('table.noneAdded')}</span>;
+
           return <>{formatDateUtc(row.needBy, 'MM/dd/yyyy')}</>;
         }
       },
@@ -141,8 +160,10 @@ const ITSystemsTable = () => {
         Header: t('table.status'),
         accessor: 'status',
         Cell: ({ row }: any) => {
-          const { status } = row;
-          if (!status) return <></>;
+          if (row.original.__typename === 'MTOMilestone') return <></>;
+
+          const { status } = row.original;
+
           return (
             <MilestoneStatusTag status={status} classname="width-fit-content" />
           );
@@ -159,7 +180,6 @@ const ITSystemsTable = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    setGlobalFilter,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -194,8 +214,6 @@ const ITSystemsTable = () => {
         pageIndex: 0
       }
     },
-    useFilters,
-    useGlobalFilter,
     useSortBy,
     usePagination
   );
@@ -210,28 +228,7 @@ const ITSystemsTable = () => {
   rows.map(row => prepareRow(row));
 
   return (
-    <div className={classNames('model-plan-table')}>
-      <>
-        <div className="mint-header__basic">
-          <GlobalClientFilter
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            tableID={t('itSolutionsTable.id')}
-            tableName={t('itSolutionsTable.title')}
-            className="margin-bottom-4 width-mobile-lg maxw-full"
-          />
-        </div>
-
-        <TableResults
-          globalFilter={state.globalFilter}
-          pageIndex={state.pageIndex}
-          pageSize={state.pageSize}
-          filteredRowLength={page.length}
-          rowLength={solutions.length}
-          className="margin-bottom-4"
-        />
-      </>
-
+    <div className={classNames('model-plan-table margin-top-4')}>
       <Table bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>
           {headerGroups.map(headerGroup => (
