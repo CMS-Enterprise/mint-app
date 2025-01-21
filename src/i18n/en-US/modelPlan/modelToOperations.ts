@@ -153,7 +153,7 @@ export const modelToOperations: TranslationMTOInfo = {
     gqlField: 'readyForReviewDTS',
     goField: 'ReadyForReviewDTS',
     dbField: 'ready_for_review_dts',
-    label: 'Ready for review by',
+    label: 'Ready for review at',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
     order: 1.02
