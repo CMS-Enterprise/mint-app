@@ -432,17 +432,17 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
             <option
               value="6"
             >
-              Show 6 Solutions
+              Show 6 solutions
             </option>
             <option
               value="9"
             >
-              Show 9 Solutions
+              Show 9 solutions
             </option>
             <option
               value="100000"
             >
-              Show all Solutions
+              Show all solutions
             </option>
           </select>
         </div>
