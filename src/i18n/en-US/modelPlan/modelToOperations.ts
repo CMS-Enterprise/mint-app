@@ -234,6 +234,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     milestones: 'milestones',
     selectASolution: 'Select a solution',
     noRelatedMilestones: 'No related milestones',
+    moreMilestones: '+ {{count}} more milestones',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',

@@ -1,6 +1,6 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Column,
   useFilters,
@@ -17,10 +17,10 @@ import {
 } from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
-import Sidepanel from 'components/Sidepanel';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import { EditMTOMilestoneContext } from 'contexts/EditMTOMilestoneContext';
 import useMessage from 'hooks/useMessage';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
@@ -31,7 +31,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-import EditMilestoneForm from '../EditMilestoneForm';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 const ITSystemsTable = () => {
@@ -39,24 +38,9 @@ const ITSystemsTable = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
+  const { openEditMilestoneModal } = useContext(EditMTOMilestoneContext);
+
   const { showMessage: setError } = useMessage();
-
-  const history = useHistory();
-
-  const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history]
-  );
-
-  const milestoneParam = params.get('edit-milestone');
-
-  const [isModalOpen, setIsModalOpen] = useState(!!milestoneParam);
-
-  // const [isModalOpen, setIsModalOpen] = useState(
-  //   milestoneParam === milestoneID
-  // );
-
-  const submitted = useRef<boolean>(false);
 
   const { data, loading, error } = useGetMtoSolutionsAndMilestonesQuery({
     variables: { id: modelID }
@@ -106,14 +90,23 @@ const ITSystemsTable = () => {
         Header: t<string, {}, string>('table.relatedMilestones'),
         accessor: 'milestones',
         Cell: ({ row }: any) => {
-          if (row.milestones.length === 0)
+          if (!row.milestones || row.milestones?.length === 0)
             return t('table.noRelatedMilestones');
 
           return (
             <>
               {row.milestones[0].name}{' '}
               {row.milestone.length > 1 && (
-                <Button type="button">+{row.milestones.length - 1}</Button>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    // TODO: Open edit solution panel
+                  }}
+                >
+                  {t('table.moreMilestones', {
+                    count: row.milestones.length - 1
+                  })}
+                </Button>
               )}
             </>
           );
@@ -216,36 +209,8 @@ const ITSystemsTable = () => {
   // `Column.Cell` is available during filtering
   rows.map(row => prepareRow(row));
 
-  const closeModal = () => {
-    if (isDirty && !submitted.current) {
-      setLeavePage(true);
-    } else if (!isDirty || submitted.current) {
-      params.delete('edit-milestone');
-      params.delete('select-solutions');
-      history.push({ search: params.toString() });
-      setLeavePage(false);
-      setIsModalOpen(false);
-      submitted.current = false;
-    }
-  };
-
   return (
     <div className={classNames('model-plan-table')}>
-      <Sidepanel
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        ariaLabel={t('milestoneLibrary.aboutThisMilestone')}
-        testid="edit-milestone-sidepanel"
-        modalHeading={t('milestoneLibrary.aboutThisMilestone')}
-        noScrollable
-      >
-        <EditMilestoneForm
-          closeModal={closeModal}
-          setIsDirty={setIsDirty}
-          submitted={submitted}
-        />
-      </Sidepanel>
-
       <>
         <div className="mint-header__basic">
           <GlobalClientFilter

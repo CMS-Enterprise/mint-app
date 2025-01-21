@@ -17,6 +17,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
+import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { MTOModalProvider } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -205,51 +206,53 @@ const MTOHome = () => {
             </div>
           )}
 
-          {currentView === 'milestones' && (
-            <>
-              {loading ? (
-                <PageLoading />
-              ) : (
-                <MTOModalProvider>
-                  <MTOModal />
+          <EditMTOMilestoneProvider>
+            {currentView === 'milestones' && (
+              <>
+                {loading ? (
+                  <PageLoading />
+                ) : (
+                  <MTOModalProvider>
+                    <MTOModal />
 
-                  {isMatrixStarted ? (
-                    <>
-                      <MTOTableActions />
-                      <MTOTable
-                        queryData={data}
-                        loading={loading}
-                        error={error}
-                      />
-                    </>
-                  ) : (
-                    <MTOOptionsPanel />
-                  )}
-                </MTOModalProvider>
-              )}
-            </>
-          )}
+                    {isMatrixStarted ? (
+                      <>
+                        <MTOTableActions />
+                        <MTOTable
+                          queryData={data}
+                          loading={loading}
+                          error={error}
+                        />
+                      </>
+                    ) : (
+                      <MTOOptionsPanel />
+                    )}
+                  </MTOModalProvider>
+                )}
+              </>
+            )}
 
-          {currentView === 'solutions' && (
-            <>
-              {loading ? (
-                <PageLoading />
-              ) : (
-                <MTOModalProvider>
-                  <MTOModal />
+            {currentView === 'solutions' && (
+              <>
+                {loading ? (
+                  <PageLoading />
+                ) : (
+                  <MTOModalProvider>
+                    <MTOModal />
 
-                  {isMatrixStarted ? (
-                    <>
-                      <MTOTableActions />
-                      <ITSystemsTable />
-                    </>
-                  ) : (
-                    <MTOOptionsPanel />
-                  )}
-                </MTOModalProvider>
-              )}
-            </>
-          )}
+                    {isMatrixStarted ? (
+                      <>
+                        <MTOTableActions />
+                        <ITSystemsTable />
+                      </>
+                    ) : (
+                      <MTOOptionsPanel />
+                    )}
+                  </MTOModalProvider>
+                )}
+              </>
+            )}
+          </EditMTOMilestoneProvider>
         </div>
       </GridContainer>
     </>
