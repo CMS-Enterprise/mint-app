@@ -462,6 +462,7 @@ const SolutionLibrary = () => {
                     pageSize={itemsPerPage}
                     setPageSize={setItemsPerPage}
                     valueArray={[6, 9, 'all']}
+                    suffix={t('table.solutions')}
                   />
                 )}
               </div>
