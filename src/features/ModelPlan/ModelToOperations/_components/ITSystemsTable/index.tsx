@@ -1,17 +1,23 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Column, usePagination, useSortBy, useTable } from 'react-table';
 import { Button, Icon, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { NotFoundPartial } from 'features/NotFound';
 import {
   MtoRiskIndicator,
   useGetMtoSolutionsAndMilestonesQuery
 } from 'gql/generated/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import TablePagination from 'components/TablePagination';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -28,7 +34,15 @@ const ITSystemsTable = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { showMessage: setError } = useMessage();
+  const history = useHistory();
+
+  const { location } = history;
+
+  const { clearMessage } = useMessage();
+
+  const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
+
+  const { prevPathname, selectedSolution } = useModalSolutionState();
 
   const { data, loading, error } = useGetMtoSolutionsAndMilestonesQuery({
     variables: { id: modelID }
@@ -56,8 +70,6 @@ const ITSystemsTable = () => {
 
     return formattedSolutions;
   }, [data]);
-
-  console.log(solutions);
 
   const columns = useMemo<Column<any>[]>(() => {
     return [
@@ -91,16 +103,48 @@ const ITSystemsTable = () => {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
         Cell: ({ row }: any) => {
-          if (row.original.__typename === 'MTOMilestone') return <Button type="button">{t('table.edit')}</Button>;
+          if (row.original.__typename === 'MTOMilestone')
+            return (
+              <Button
+                type="button"
+                className="display-block text-bold"
+                unstyled
+                onClick={() => {
+                  if (clearMessage) clearMessage();
+                  if (setMTOModalState)
+                    setMTOModalState({
+                      modalType: 'selectSolution',
+                      milestoneID: row.id
+                    });
+                  if (setMTOModalOpen) setMTOModalOpen(true);
+                }}
+              >
+                {t('table.selectASolution')}
+                <Icon.ArrowForward className="top-05 margin-left-05" />
+              </Button>
+            );
 
-          return <>{row.original.name}</>;
+          const mappedSolution = helpSolutions.find(
+            s => s.enum === row.original.key
+          );
+
+          return (
+            <UswdsReactLink
+              to={`${location.pathname}${location.search}${
+                location.search ? '&' : '?'
+              }solution=${mappedSolution?.route}&section=about`}
+            >
+              {row.original.name}
+            </UswdsReactLink>
+          );
         }
       },
       {
         Header: t<string, {}, string>('table.relatedMilestones'),
         accessor: 'milestones',
         Cell: ({ row }: any) => {
-          if (row.original.__typename === 'MTOMilestone') return <>{row.original.name}</>;
+          if (row.original.__typename === 'MTOMilestone')
+            return <>{row.original.name}</>;
 
           const { milestones } = row.original;
 
@@ -130,8 +174,11 @@ const ITSystemsTable = () => {
         Header: t('table.facilitatedBy'),
         accessor: 'facilitatedBy',
         Cell: ({ row }: any) => {
-
-          if (!row?.orignal?.facilitatedBy || row.original.__typename === 'MTOMilestone') return <></>;
+          if (
+            !row?.orignal?.facilitatedBy ||
+            row.original.__typename === 'MTOMilestone'
+          )
+            return <></>;
 
           return (
             <>
@@ -174,7 +221,14 @@ const ITSystemsTable = () => {
         accessor: 'actions'
       }
     ];
-  }, [t]);
+  }, [
+    t,
+    clearMessage,
+    setMTOModalState,
+    setMTOModalOpen,
+    location.pathname,
+    location.search
+  ]);
 
   const {
     getTableProps,
@@ -222,6 +276,10 @@ const ITSystemsTable = () => {
     return <PageLoading />;
   }
 
+  if (error) {
+    return <NotFoundPartial />;
+  }
+
   // Temp fix for `globalFilterCellText` to work with `page` rows
   // The filter function requires all rows to be prepped so that
   // `Column.Cell` is available during filtering
@@ -229,6 +287,26 @@ const ITSystemsTable = () => {
 
   return (
     <div className={classNames('model-plan-table margin-top-4')}>
+      {/* {renderModal && selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={() => {
+            params.delete('solution');
+            params.delete('section');
+            return `${history.location.pathname}`;
+          }}
+        />
+      )} */}
+
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute={location.pathname}
+        />
+      )}
+
       <Table bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>
           {headerGroups.map(headerGroup => (
