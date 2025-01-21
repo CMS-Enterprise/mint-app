@@ -12,6 +12,7 @@ import {
   useGetMtoSolutionsAndMilestonesQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import TablePagination from 'components/TablePagination';
@@ -396,14 +397,13 @@ const ITSystemsTable = () => {
         {currentTableSortDescription(headerGroups[0])}
       </div>
 
-      {/* {operationalNeeds.length === 0 && (
-        <Alert
-          heading={opSolutionsMiscT('itSolutionsTable.noNeeds')}
-          type="info"
-        >
-          {opSolutionsMiscT('itSolutionsTable.noNeedsInfo')}
+      {solutions.length === 0 && (
+        <Alert type="info" slim>
+          {solutions.length === 0
+            ? t('table.alert.noSolutions')
+            : t('table.alert.noFilterSelections')}
         </Alert>
-      )} */}
+      )}
 
       {/* {filterSolutions && (
         <FilterViewSolutionsAlert

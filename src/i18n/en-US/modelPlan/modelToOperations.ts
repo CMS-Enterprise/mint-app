@@ -264,6 +264,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       standardCategories: 'Standard categories',
       addThisTemplate: 'Add this template',
       addCustomCategory: 'or, add a custom category'
+    },
+    alert: {
+      noSolutions:
+        'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',
+      noFilterSelections:
+        'There are no operational solutions that match your filter selections.'
     }
   },
   errorReorder: 'Failed to reorder the MTO matrix.  Please try again.',

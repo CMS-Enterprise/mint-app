@@ -239,15 +239,8 @@ const MTOHome = () => {
                 ) : (
                   <MTOModalProvider>
                     <MTOModal />
-
-                    {isMatrixStarted ? (
-                      <>
-                        <MTOTableActions />
-                        <ITSystemsTable />
-                      </>
-                    ) : (
-                      <MTOOptionsPanel />
-                    )}
+                    <MTOTableActions />
+                    <ITSystemsTable />
                   </MTOModalProvider>
                 )}
               </>
