@@ -1,19 +1,27 @@
 import React from 'react';
 import {
   Controller,
-  Form,
   FormProvider,
   SubmitHandler,
   useForm
 } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button, Fieldset, FormGroup, Label } from '@trussworks/react-uswds';
 import {
+  Button,
+  Fieldset,
+  Form,
+  FormGroup,
+  Label
+} from '@trussworks/react-uswds';
+import {
+  GetMtoCommonSolutionsDocument,
   MtoCommonSolutionKey,
+  useCreateMtoSolutionCommonMutation,
   useGetModelToOperationsMatrixQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import Spinner from 'components/Spinner';
@@ -40,7 +48,8 @@ const AddToExistingMilestoneForm = ({
   const params = new URLSearchParams(history.location.search);
   const solutionKey = params.get('add-solution') as MtoCommonSolutionKey;
 
-  const { message, showMessage, clearMessage } = useMessage();
+  const { message, showMessage, clearMessage, showErrorMessageInModal } =
+    useMessage();
 
   const { data, loading } = useGetModelToOperationsMatrixQuery({
     variables: {
@@ -67,34 +76,60 @@ const AddToExistingMilestoneForm = ({
     formState: { isDirty }
   } = methods;
 
+  const [create] = useCreateMtoSolutionCommonMutation({
+    refetchQueries: [
+      {
+        query: GetMtoCommonSolutionsDocument,
+        variables: { id: modelID }
+      }
+    ]
+  });
+
   const onSubmit: SubmitHandler<FormValues> = ({ linkedSolutions }) => {
-    // TODO: Update
-    console.log(linkedSolutions);
-    // if (!milestoneKey) return;
-    // create({
-    //   variables: {
-    //     modelPlanID: modelID,
-    //     commonMilestoneKey: milestoneKey,
-    //     commonSolutions: formData.commonSolutions
-    //   }
-    // })
-    //   .then(response => {
-    //     if (!response?.errors) {
-    //       closeModal();
-    //     }
-    //   })
-    //   .catch(() => {
-    //     showMessage(
-    //       <Alert
-    //         type="error"
-    //         slim
-    //         data-testid="error-alert"
-    //         className="margin-y-4"
-    //       >
-    //         {t('modal.solution.alert.error')}
-    //       </Alert>
-    //     );
-    //   });
+    create({
+      variables: {
+        modelPlanID: modelID,
+        milestonesToLink: linkedSolutions || [],
+        key: solutionKey
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  <Trans
+                    i18nKey={t('modal.addToExistingMilestone.alert.success')}
+                    components={{
+                      b: <span className="text-bold" />
+                    }}
+                    values={{ solution: solutionKey }}
+                  />
+                </span>
+              </Alert>
+            </>
+          );
+          closeModal();
+        }
+      })
+      .catch(() => {
+        showErrorMessageInModal(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {t('modal.addToExistingMilestone.alert.error')}
+          </Alert>
+        );
+      });
   };
 
   if (loading || !milestones || !solutionKey) {
