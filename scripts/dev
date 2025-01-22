@@ -417,6 +417,9 @@ namespace :test do
     task :only => ["db:clean", :consume_args] do |t, args|
       sh "go", "test", "-short", "-count=1", "-v", "-p=1", *args
     end
+    task :resolvers => "db:clean" do
+      sh "go test -short -count=1 -p=1 ./pkg/graph/resolvers"
+    end
   end
 
   desc "Run JS tests (pass path to scope to that location)"
