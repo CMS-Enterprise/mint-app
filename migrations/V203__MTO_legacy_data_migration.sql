@@ -141,6 +141,7 @@ inserted_solutions AS ( --noqa
         mto_solution.created_by
         -- s.operational_need_id;
 ),
+-- Adjust this, we also need to see if there are any duplicate solutions that must be addressed
 
 linkMapping AS (
     SELECT 
@@ -154,7 +155,7 @@ linkMapping AS (
     LEFT JOIN inserted_solutions ON inserted_solutions.id = solutions.id
 ),
 
-insertedLinks AS (
+inserted_links AS (
     INSERT INTO mto_milestone_solution_link (
         milestone_id,
         solution_id,
@@ -165,7 +166,15 @@ insertedLinks AS (
         linkMapping.solution_id,
         linkMapping.created_by
     FROM linkMapping
+    WHERE linkMapping.milestone_id IS NOT NULL AND linkMapping.solution_id IS NOT NULL
     RETURNING *
 )
 
-SELECT * FROM insertedLinks
+
+SELECT * FROM inserted_links
+--SELECT * FROM linkMapping
+/*
+DELETE FROM mto_milestone_solution_link;
+DELETE FROM mto_milestone;
+DELETE FROM mto_solution;
+*/
