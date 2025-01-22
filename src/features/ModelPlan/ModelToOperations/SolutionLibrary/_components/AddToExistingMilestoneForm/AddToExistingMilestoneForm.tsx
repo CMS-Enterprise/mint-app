@@ -132,7 +132,7 @@ const AddToExistingMilestoneForm = ({
       });
   };
 
-  if (loading || !milestones || !solutionKey) {
+  if (loading || !milestones) {
     return (
       <div className="padding-left-4 padding-top-3">
         <Spinner />
