@@ -177,6 +177,11 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 }
 
 func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// handle the special case when the key is nil, and return Uncategorized (Uncategorized)
+	if key == nil {
+		return formatCategoryTranslation(models.UncategorizedMTOName, nil), nil
+
+	}
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
