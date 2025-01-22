@@ -515,9 +515,9 @@ const ITSystemsTable = () => {
         {currentTableSortDescription(headerGroups[0])}
       </div>
 
-      {solutionsAndMilestones.length === 0 && (
+      {filteredView.length === 0 && (
         <Alert type="info" slim>
-          {solutionsAndMilestones.length === 0
+          {viewParam === 'all'
             ? t('table.alert.noSolutions')
             : t('table.alert.noFilterSelections')}
         </Alert>
