@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -63,7 +63,7 @@ const ITSystemsTable = () => {
 
   if (params.get('view')) {
     const view = params.get('type') as SolutionViewType;
-    if (['all', 'it-systems', 'contracts', 'cross-cut'].includes(view)) {
+    if (['all', 'it-systems', 'contracts', 'other-solutions'].includes(view)) {
       viewParam = view;
     }
   }
@@ -133,10 +133,10 @@ const ITSystemsTable = () => {
     [solutions]
   );
 
-  const crossCutSolutions = useMemo(
+  const otherSolutions = useMemo(
     () =>
       solutions.filter(item => {
-        return item.type === MtoSolutionType.CROSS_CUTTING_GROUP;
+        return item.type === MtoSolutionType.OTHER;
       }),
     [solutions]
   );
@@ -145,7 +145,8 @@ const ITSystemsTable = () => {
     const views = {
       'it-systems': itSystemsSolutions,
       contracts: contractsSolutions,
-      'cross-cut': crossCutSolutions,
+      'other-solutions': otherSolutions,
+      'cross-cut': [],
       all: solutionsAndMilestones
     };
     return views[viewParam];
@@ -153,7 +154,7 @@ const ITSystemsTable = () => {
     viewParam,
     itSystemsSolutions,
     contractsSolutions,
-    crossCutSolutions,
+    otherSolutions,
     solutionsAndMilestones
   ]);
 
@@ -226,6 +227,7 @@ const ITSystemsTable = () => {
               {milestones.length > 1 && (
                 <Button
                   type="button"
+                  unstyled
                   onClick={() => {
                     // TODO: Open edit solution panel
                   }}
@@ -330,8 +332,6 @@ const ITSystemsTable = () => {
       globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
       autoResetPage: true,
-      // Remove sort on filterSolutions because its accessor is a function and can't be passed a proper id for initial sort.
-      // https://github.com/TanStack/table/issues/2641
       initialState: {
         pageIndex: 0,
         pageSize: 6
@@ -370,12 +370,12 @@ const ITSystemsTable = () => {
       >
         <SolutionViewSelector
           viewParam={viewParam}
-          viewParamName="type"
+          type="table"
           usePages={false}
           allSolutions={solutionsAndMilestones}
           itSystemsSolutions={itSystemsSolutions}
           contractsSolutions={contractsSolutions}
-          crossCutSolutions={crossCutSolutions}
+          otherSolutions={otherSolutions}
         />
 
         <CheckboxField
@@ -414,7 +414,7 @@ const ITSystemsTable = () => {
                     paddingBottom: '.5rem',
                     position: 'relative',
                     paddingLeft: index === 0 ? '.5em' : '0px',
-                    width: index === 0 ? '60px' : 'auto'
+                    width: index === 2 ? '260px' : 'auto'
                   }}
                   key={column.id}
                 >

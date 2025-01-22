@@ -151,6 +151,8 @@ const MTOHome = () => {
                   <button
                     type="button"
                     onClick={() => {
+                      params.delete('type');
+                      params.delete('hide-milestones-without-solutions');
                       params.set('view', item);
                       history.push({ search: params.toString() });
                     }}

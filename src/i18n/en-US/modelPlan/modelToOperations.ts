@@ -234,7 +234,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     milestones: 'milestones',
     selectASolution: 'Select a solution',
     noRelatedMilestones: 'No related milestones',
-    moreMilestones: '+ {{count}} more milestones',
+    moreMilestones: '+ {{count}} more milestone',
+    moreMilestones_other: '+ {{count}} more milestones',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',
@@ -593,6 +594,14 @@ export const modelToOperationsMisc: Record<string, any> = {
           body: 'a cross-cutting group'
         }
       }
+    }
+  },
+  solutionTable: {
+    tabs: {
+      allSolutions: 'All common solutions ({{count}})',
+      itSystems: 'IT systems ({{count}})',
+      contracts: 'Contracts and contractors ({{count}})',
+      other: 'Other solutions ({{count}})'
     }
   },
   validation: {

@@ -9,26 +9,33 @@ import { SolutionCardType, SolutionViewType } from '../../SolutionLibrary';
 import { SolutionType } from '../ITSystemsTable';
 
 const SolutionViewSelector = ({
+  type,
   viewParam,
-  viewParamName = 'view',
   usePages = true,
   allSolutions,
   itSystemsSolutions,
   contractsSolutions,
-  crossCutSolutions
+  crossCutSolutions,
+  otherSolutions
 }: {
+  type: 'table' | 'library';
   viewParam: SolutionViewType;
-  viewParamName?: string;
   usePages?: boolean;
   allSolutions: SolutionCardType[] | SolutionType[];
   itSystemsSolutions: SolutionCardType[] | SolutionType[];
   contractsSolutions: SolutionCardType[] | SolutionType[];
-  crossCutSolutions: SolutionCardType[] | SolutionType[];
+  crossCutSolutions?: SolutionCardType[];
+  otherSolutions?: SolutionType[];
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
+
+  const viewParamName = type === 'table' ? 'type' : 'view';
+
+  const translationNamespace =
+    type === 'table' ? 'solutionTable' : 'solutionLibrary';
 
   return (
     <>
@@ -37,6 +44,7 @@ const SolutionViewSelector = ({
           <Label htmlFor="select-view" className="text-normal maxw-none">
             {t('documentsMisc:documentTable.view')}
           </Label>
+
           <Select
             id="select-view"
             name="select-view"
@@ -48,25 +56,34 @@ const SolutionViewSelector = ({
             }}
           >
             <option value="all">
-              {t('solutionLibrary.tabs.allSolutions', {
+              {t(`${translationNamespace}.tabs.allSolutions`, {
                 count: allSolutions.length
               })}
             </option>
             <option value="it-systems">
-              {t('solutionLibrary.tabs.itSystems', {
+              {t(`${translationNamespace}.tabs.itSystems`, {
                 count: itSystemsSolutions.length
               })}
             </option>
             <option value="contracts">
-              {t('solutionLibrary.tabs.contracts', {
+              {t(`${translationNamespace}.tabs.contracts`, {
                 count: contractsSolutions.length
               })}
             </option>
-            <option value="cross-cut">
-              {t('solutionLibrary.tabs.crossCutting', {
-                count: crossCutSolutions.length
-              })}
-            </option>
+            {type === 'library' && crossCutSolutions && (
+              <option value="cross-cut">
+                {t(`${translationNamespace}.tabs.crossCutting`, {
+                  count: crossCutSolutions.length
+                })}
+              </option>
+            )}
+            {type === 'table' && otherSolutions && (
+              <option value="other">
+                {t(`${translationNamespace}.tabs.other`, {
+                  count: otherSolutions.length
+                })}
+              </option>
+            )}
           </Select>
         </div>
       ) : (
@@ -80,7 +97,7 @@ const SolutionViewSelector = ({
               history.replace({ search: params.toString() });
             }}
           >
-            {t('solutionLibrary.tabs.allSolutions', {
+            {t(`${translationNamespace}.tabs.allSolutions`, {
               count: allSolutions.length
             })}
           </Button>
@@ -93,7 +110,7 @@ const SolutionViewSelector = ({
               history.replace({ search: params.toString() });
             }}
           >
-            {t('solutionLibrary.tabs.itSystems', {
+            {t(`${translationNamespace}.tabs.itSystems`, {
               count: itSystemsSolutions.length
             })}
           </Button>
@@ -106,23 +123,40 @@ const SolutionViewSelector = ({
               history.replace({ search: params.toString() });
             }}
           >
-            {t('solutionLibrary.tabs.contracts', {
+            {t(`${translationNamespace}.tabs.contracts`, {
               count: contractsSolutions.length
             })}
           </Button>
-          <Button
-            type="button"
-            outline={viewParam !== 'cross-cut'}
-            onClick={() => {
-              params.set(viewParamName, 'cross-cut');
-              if (usePages) params.set('page', '1');
-              history.replace({ search: params.toString() });
-            }}
-          >
-            {t('solutionLibrary.tabs.crossCutting', {
-              count: crossCutSolutions.length
-            })}
-          </Button>
+          {type === 'library' && crossCutSolutions && (
+            <Button
+              type="button"
+              outline={viewParam !== 'cross-cut'}
+              onClick={() => {
+                params.set(viewParamName, 'cross-cut');
+                if (usePages) params.set('page', '1');
+                history.replace({ search: params.toString() });
+              }}
+            >
+              {t(`${translationNamespace}.tabs.crossCutting`, {
+                count: crossCutSolutions.length
+              })}
+            </Button>
+          )}
+          {type === 'table' && otherSolutions && (
+            <Button
+              type="button"
+              outline={viewParam !== 'other-solutions'}
+              onClick={() => {
+                params.set(viewParamName, 'other-solutions');
+                if (usePages) params.set('page', '1');
+                history.replace({ search: params.toString() });
+              }}
+            >
+              {t(`${translationNamespace}.tabs.other`, {
+                count: otherSolutions.length
+              })}
+            </Button>
+          )}
         </ButtonGroup>
       )}
     </>

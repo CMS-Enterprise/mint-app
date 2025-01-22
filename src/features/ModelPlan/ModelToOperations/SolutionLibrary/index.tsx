@@ -38,7 +38,12 @@ import MTOSolutionCard from './_components/MTOSolutionCard';
 export type SolutionCardType =
   GetMtoCommonSolutionsQuery['modelPlan']['mtoMatrix']['commonSolutions'][0];
 
-export type SolutionViewType = 'all' | 'it-systems' | 'contracts' | 'cross-cut';
+export type SolutionViewType =
+  | 'all'
+  | 'it-systems'
+  | 'contracts'
+  | 'cross-cut'
+  | 'other-solutions';
 
 const SolutionLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -155,6 +160,7 @@ const SolutionLibrary = () => {
       'it-systems': itSystemsSolutions,
       contracts: contractsSolutions,
       'cross-cut': crossCutSolutions,
+      'other-solutions': [],
       all: allSolutions
     };
     return views[viewParam];
@@ -264,6 +270,7 @@ const SolutionLibrary = () => {
                   >
                     <SolutionViewSelector
                       viewParam={viewParam}
+                      type="library"
                       allSolutions={allSolutions}
                       itSystemsSolutions={itSystemsSolutions}
                       contractsSolutions={contractsSolutions}
