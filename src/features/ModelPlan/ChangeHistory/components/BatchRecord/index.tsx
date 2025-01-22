@@ -436,24 +436,24 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             <>
               {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
               {databaseAction !== DatabaseOperation.DELETE &&
-                !!fieldsToMap.find(field => field.old) && (
+                !!fieldsToMap.find(field => field.oldTranslated) && (
                   <div className="text-bold padding-top-105 padding-bottom-1">
                     {t('previousDetails')}
                   </div>
                 )}
 
               {fieldsToMap.map(field => {
-                if (!field.old) return <div key={field.id} />;
+                if (!field.oldTranslated) return <div key={field.id} />;
 
                 return (
                   <div key={field.id}>
-                    {field.old && (
+                    {field.oldTranslated && (
                       <>
                         <span>{field.fieldNameTranslated}: </span>
                         <RenderChangeValue
                           change={field}
                           valueType="oldTranslated"
-                          previous={!!field.old}
+                          previous={!!field.oldTranslated}
                         />
                       </>
                     )}
