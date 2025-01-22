@@ -19,7 +19,7 @@ const DataNotAvailableMessage = "Data not available"
 //Future Enhancement: allow faktory workers to take a dataloader
 
 func translateForeignKey(ctx context.Context, store *storage.Store, value interface{}, tableReference models.TableName) (interface{}, error) {
-	if value == nil {
+	if value == nil && tableReference != models.TNMTOCategory {
 		return nil, nil
 	}
 	if store == nil {
