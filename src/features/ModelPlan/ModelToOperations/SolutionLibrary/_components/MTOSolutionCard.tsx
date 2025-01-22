@@ -20,7 +20,7 @@ import useMessage from 'hooks/useMessage';
 
 import { SolutionCardType } from '..';
 
-import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
+import AddToExistingMilestoneForm from './AddToExistingMilestoneForm/AddToExistingMilestoneForm';
 
 const MTOSolutionCard = ({
   className,
@@ -112,6 +112,7 @@ const MTOSolutionCard = ({
               onClick={() => {
                 params.set('add-solution', solution.key);
                 history.replace({ search: params.toString() });
+                clearMessage();
                 setIsModalOpen(true);
               }}
             >
