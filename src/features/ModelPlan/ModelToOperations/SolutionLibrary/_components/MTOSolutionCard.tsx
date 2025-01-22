@@ -66,7 +66,7 @@ const MTOSolutionCard = ({
 
         {errorMessageInModal}
 
-        <AddToExistingMilestoneForm />
+        <AddToExistingMilestoneForm closeModal={() => setIsModalOpen(false)} />
 
         {/* <AddSolutionToMilestoneForm
           closeModal={() => {
@@ -120,7 +120,6 @@ const MTOSolutionCard = ({
               onClick={() => {
                 params.set('add-solution', solution.key);
                 history.replace({ search: params.toString() });
-                // TODO: to open "Add to existing milestone" modal
                 setIsModalOpen(true);
               }}
             >

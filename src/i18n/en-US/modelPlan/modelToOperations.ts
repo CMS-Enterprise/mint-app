@@ -509,6 +509,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       title: 'Add to existing milestone?',
       description:
         'You may choose to add this solution to existing milestones in your MTO, or you may do so later.',
+      label: 'Milestones',
+      helpText: 'Select all that apply.',
+      selectedLabel: 'Selected milestones',
       cta: {
         empty: 'Add to existing milestone',
         add: 'Add with {{count}} milestone',
