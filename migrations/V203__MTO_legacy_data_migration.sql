@@ -36,7 +36,7 @@ solutions AS (
         solution.operational_need_id,
         need.model_plan_id,
         CASE 
-            WHEN possible.sol_key  IN (INTERNAL_STAFF, OTHER_NEW_PROCESS, CONTRACTOR, CROSS_MODEL_CONTRACT)
+            WHEN possible.sol_key  IN ('INTERNAL_STAFF', 'OTHER_NEW_PROCESS', 'CONTRACTOR', 'CROSS_MODEL_CONTRACT')
                 THEN NULL
             ELSE possible.sol_key         
         END AS possible_solution_type, --TODO, use the data Zoë provided to map the types
@@ -122,8 +122,35 @@ inserted_solutions AS ( --noqa
         s.created_by
     FROM solutions s
     RETURNING
-        mto_solution.id AS solution_id
+        mto_solution.id,
+        mto_solution.created_by
         -- s.operational_need_id;
+),
+
+linkMapping AS (
+    SELECT 
+        inserted_milestones.id AS milestone_id,
+        inserted_solutions.id AS solution_id, --noqa
+        inserted_solutions.created_by
+    FROM inserted_milestones
+    -- We use the operational need id as the milestone id to enable easier joins and linking
+    LEFT JOIN  solutions ON solutions.operational_need_id = inserted_milestones.id
+    -- We use the operational_solution id as the same as the mto_solution ID, so we can join this way
+    LEFT JOIN inserted_solutions ON inserted_solutions.id = solutions.id
+),
+
+insertedLinks AS (
+    INSERT INTO mto_milestone_solution_link (
+        milestone_id,
+        solution_id,
+        created_by
+    )
+    SELECT
+        linkMapping.milestone_id,
+        linkMapping.solution_id,
+        linkMapping.created_by
+    FROM linkMapping
+    RETURNING *
 )
 
-SELECT * FROM inserted_milestones
+SELECT * FROM insertedLinks
