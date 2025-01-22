@@ -139,6 +139,11 @@ const AddToExistingMilestoneForm = ({
       <p className="mint-body-normal">
         {t('modal.addToExistingMilestone.description')}
       </p>
+      {milestones.length === 0 && (
+        <Alert type="info" className="margin-bottom-2">
+          {t('modal.addToExistingMilestone.noMilestone')}
+        </Alert>
+      )}
       <FormProvider {...methods}>
         {message}
         <Form

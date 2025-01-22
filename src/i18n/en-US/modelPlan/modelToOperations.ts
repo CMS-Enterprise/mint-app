@@ -512,6 +512,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Milestones',
       helpText: 'Select all that apply.',
       selectedLabel: 'Selected milestones',
+      noMilestone:
+        'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
       cta: {
         empty: 'Add without milestone',
         add: 'Add with {{count}} milestone',
