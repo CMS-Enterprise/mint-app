@@ -522,13 +522,6 @@ const ITSystemsTable = () => {
             : t('table.alert.noFilterSelections')}
         </Alert>
       )}
-
-      {/* {filterSolutions && (
-        <FilterViewSolutionsAlert
-          filterSolutions={filterSolutions}
-          operationalNeeds={operationalNeeds}
-        />
-      )} */}
     </div>
   );
 };

@@ -5,12 +5,14 @@ import {
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
+  GetMtoSolutionsAndMilestonesDocument,
   GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoCommonSolutionSubject,
   MtoMilestoneStatus,
   MtoRiskIndicator,
+  MtoSolutionStatus,
   MtoSolutionType,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
@@ -334,11 +336,62 @@ export const suggestedMilestonesMock = [
   }
 ];
 
+export const solutionAndMilestoneMock = [
+  {
+    request: {
+      query: GetMtoSolutionsAndMilestonesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: '123',
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            solutions: [
+              {
+                __typename: 'MTOSolution',
+                id: '1',
+                key: MtoCommonSolutionKey.ACO_OS,
+                name: 'Solution 1',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                type: MtoSolutionType.IT_SYSTEM,
+                status: MtoSolutionStatus.IN_PROGRESS,
+                facilitatedBy: [],
+                neededBy: '',
+                milestones: [
+                  {
+                    __typename: 'MTOMilestone',
+                    id: '1',
+                    name: 'Milestone 1'
+                  }
+                ]
+              }
+            ],
+            milestonesWithNoLinkedSolutions: [
+              {
+                __typename: 'MTOMilestone',
+                id: '1',
+                name: 'Milestone 1'
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
 const allMocks = [
   ...suggestedMilestonesMock,
   ...commonMilestonesMock,
   ...milestoneMock(modelID),
-  ...categoryMock
+  ...categoryMock,
+  ...solutionAndMilestoneMock
 ];
 
 export default allMocks;
