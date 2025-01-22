@@ -81,7 +81,7 @@ ranked_solutions AS (
             PARTITION BY model_plan_id, final_name
         ) AS all_operational_need_ids
     FROM solutions
-)
+),
 --  SELECT * FROM ranked_solutions WHERE row_num = 1;
 
 inserted_milestones AS ( --noqa
