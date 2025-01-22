@@ -34,6 +34,8 @@ export default gql(/* GraphQL */ `
         }
         milestones {
           id
+          key
+          name
         }
         commonMilestones {
           isSuggested
