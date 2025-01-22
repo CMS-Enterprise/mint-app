@@ -36,10 +36,24 @@ solutions AS (
         solution.operational_need_id,
         need.model_plan_id,
         CASE 
-            WHEN possible.sol_key  IN ('INTERNAL_STAFF', 'OTHER_NEW_PROCESS', 'CONTRACTOR', 'CROSS_MODEL_CONTRACT')
+            WHEN possible.sol_key  IN ('INTERNAL_STAFF', 'EXISTING_CMS_DATA_AND_PROCESS', 'OTHER_NEW_PROCESS', 'CONTRACTOR', 'CROSS_MODEL_CONTRACT')
                 THEN NULL
             ELSE possible.sol_key         
         END AS possible_solution_type, --TODO, use the data Zoë provided to map the types
+        possible.sol_key AS raw_possible_solution_type,
+        CASE
+            WHEN possible.sol_key = 'CONTRACTOR'
+                THEN 'Contractor: ' || COALESCE(solution.other_header, '')
+            WHEN possible.sol_key = 'CROSS_MODEL_CONTRACT'
+                THEN 'Cross model contract: ' || COALESCE(solution.other_header, '')
+            WHEN possible.sol_key = 'OTHER_NEW_PROCESS'
+                THEN 'Other new process: ' || COALESCE(solution.other_header, '')
+            WHEN possible.sol_key = 'EXISTING_CMS_DATA_AND_PROCESS'
+                THEN 'Existing CMS data and process: ' || COALESCE(solution.other_header, '')
+            WHEN possible.sol_key = 'INTERNAL_STAFF'
+                THEN 'Internal staff: ' || COALESCE(solution.other_header, '')
+            ELSE solution.name_other
+        END AS final_name,
         solution.name_other,
         solution.poc_email,
         solution.poc_name,
@@ -101,7 +115,8 @@ inserted_solutions AS ( --noqa
     SELECT
         s.id,
         s.model_plan_id,
-        s.name_other,
+        s.final_name,
+
         (s.possible_solution_type::TEXT)::MTO_COMMON_SOLUTION_KEY AS common_solution_key,
         CASE
             WHEN s.possible_solution_type IS NOT NULL THEN NULL --Don't add POC info for common solutions
