@@ -69,6 +69,20 @@ solutions AS (
     LEFT JOIN possible_operational_solution AS possible ON solution.solution_type = possible.id
     WHERE solution.needed = TRUE
 ),
+-- TODO (mto) verify this, the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
+ranked_solutions AS (
+    SELECT 
+        solutions.*,
+        ROW_NUMBER() OVER (
+            PARTITION BY model_plan_id, final_name
+            ORDER BY COALESCE(modified_dts, created_dts) DESC
+        ) AS row_num,
+        ARRAY_AGG(operational_need_id) OVER (
+            PARTITION BY model_plan_id, final_name
+        ) AS all_operational_need_ids
+    FROM solutions
+)
+--  SELECT * FROM ranked_solutions WHERE row_num = 1;
 
 inserted_milestones AS ( --noqa
     INSERT INTO mto_milestone (
@@ -97,7 +111,7 @@ inserted_milestones AS ( --noqa
 ),
 --
 ----SELECT * FROM needs;
---SELECT solutions.* FROM solutions
+--SELECT * FROM ranked_solutions WHERE row_num = 1;
 --LEFT JOIN needs ON solutions.operational_need_id = needs.id;
 
 inserted_solutions AS ( --noqa
