@@ -9,6 +9,7 @@ import {
   TranslatedAuditMetaDiscussionReply,
   TranslatedAuditMetaDocumentSolutionLink,
   TranslatedAuditMetaGeneric,
+  TranslatedAuditMetaMtoCategory,
   TranslatedAuditMetaOperationalSolution,
   TranslatedAuditMetaOperationalSolutionSubtask,
   TranslationDataType,
@@ -57,6 +58,11 @@ export type TranslationTables =
   | TableName.PLAN_DATA_EXCHANGE_APPROACH
   | TableName.PLAN_DISCUSSION
   | TableName.DISCUSSION_REPLY
+  | TableName.MTO_CATEGORY
+  | TableName.MTO_INFO
+  | TableName.MTO_MILESTONE
+  | TableName.MTO_MILESTONE_SOLUTION_LINK
+  | TableName.MTO_SOLUTION
   | TableName.PLAN_DOCUMENT
   | TableName.PLAN_CR
   | TableName.PLAN_TDL
@@ -129,6 +135,14 @@ export const isSolutionDocumentLinkWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaDocumentSolutionLink';
 };
 
+// Type guard to check mto categoryunion type
+export const isMTOCategoryWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaMtoCategory => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaMTOCategory';
+};
+
 export const datesWithNoDay: string[] = ['date_implemented'];
 
 // Fields that are not displayed in the change history
@@ -165,23 +179,59 @@ const unneededFields: HiddenFieldTypes[] = [
   {
     table: TableName.PLAN_DATA_EXCHANGE_APPROACH,
     fields: ['marked_complete_by', 'marked_complete_dts']
+  },
+  {
+    table: TableName.MTO_CATEGORY,
+    fields: ['position']
   }
 ];
 
-export const hiddenFields: string[] = ['is_link'];
+export const hiddenFields: HiddenFieldTypes[] = [
+  {
+    table: TableName.PLAN_DOCUMENT,
+    fields: ['is_link']
+  },
+  {
+    table: TableName.MTO_MILESTONE_SOLUTION_LINK,
+    fields: ['solution_id']
+  },
+  {
+    table: TableName.MTO_MILESTONE,
+    fields: ['mto_common_milestone_key', 'name']
+  },
+  {
+    table: TableName.MTO_SOLUTION,
+    fields: ['mto_common_solution_key', 'name']
+  }
+];
+
+export const mtoTables: TableName[] = [
+  TableName.MTO_INFO,
+  TableName.MTO_CATEGORY,
+  TableName.MTO_MILESTONE,
+  TableName.MTO_SOLUTION,
+  TableName.MTO_MILESTONE_SOLUTION_LINK
+];
 
 // Tables where similar audits are batched together
 export const batchedTables: TableName[] = [
   TableName.OPERATIONAL_SOLUTION,
   TableName.OPERATIONAL_SOLUTION_SUBTASK,
   TableName.PLAN_DOCUMENT_SOLUTION_LINK,
-  TableName.EXISTING_MODEL_LINK
+  TableName.EXISTING_MODEL_LINK,
+  TableName.MTO_SOLUTION,
+  TableName.MTO_CATEGORY,
+  TableName.MTO_MILESTONE_SOLUTION_LINK,
+  TableName.MTO_MILESTONE,
+  TableName.MTO_INFO
 ];
 
 // Tables where audits are batch with a different table
 export const doubleBatchedTables: TableName[] = [
   TableName.PLAN_DOCUMENT,
-  TableName.PLAN_DOCUMENT_SOLUTION_LINK
+  TableName.PLAN_DOCUMENT_SOLUTION_LINK,
+  TableName.MTO_SOLUTION,
+  TableName.MTO_MILESTONE_SOLUTION_LINK
 ];
 
 // Fields that are connected to other tables
@@ -315,6 +365,15 @@ export const getOperationalMetadata = (
   return '';
 };
 
+export const getTranslatedFieldValue = (
+  change: ChangeRecordType,
+  fieldName: string
+) =>
+  change.translatedFields.find(field => field.fieldName === fieldName)
+    ?.newTranslated ||
+  change.translatedFields.find(field => field.fieldName === fieldName)
+    ?.oldTranslated;
+
 /* 
   Returns the operation status of the solution.  
   Solutions are not deleted, they are marked as not needed/needed
@@ -441,6 +500,9 @@ const readyForReviewFields = [
 
 // Removes the fields that are ready for review from the list of translatedFields changes
 export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
+  // Allow MTO_INFO changes to pass through, as there is no official status, but calculated on FE by ready for review fields
+  if (changes[0]?.tableName === TableName.MTO_INFO) return changes;
+
   const filteredReviewChanges: ChangeRecordType[] = [];
 
   changes.forEach(change => {

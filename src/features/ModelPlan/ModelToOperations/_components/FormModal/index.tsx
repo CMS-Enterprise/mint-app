@@ -6,13 +6,14 @@ import PageHeading from 'components/PageHeading';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
-import CategoryForm from '../AddCustomCategoryForm';
-import MilestoneForm from '../AddCustomMilestoneForm';
-import SolutionForm from '../AddCustomSolutionForm';
+import CustomCategoryForm from '../AddCustomCategoryForm';
+import CustomMilestoneForm from '../AddCustomMilestoneForm';
+import CustomSolutionForm from '../AddCustomSolutionForm';
 import AddTemplateModal from '../AddTemplateModal';
 import EditCategoryTitleForm from '../EditCategoryTitleForm';
 import MoveSubCategoryForm from '../MoveSubCategoryForm';
 import RemoveCategoryForm from '../RemoveCategoryForm';
+import SelectSolutionForm from '../SelectSolutionForm';
 
 export type MTOModalType =
   | 'category'
@@ -23,13 +24,16 @@ export type MTOModalType =
   | 'editCategoryTitle'
   | 'removeCategory'
   | 'removeSubcategory'
-  | 'addTemplate';
+  | 'addTemplate'
+  | 'selectSolution';
 
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
   'removeSubcategory',
   'addTemplate'
 ];
+
+const shouldNotCloseModals: string[] = ['selectSolution'];
 
 const MTOModal = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -51,7 +55,7 @@ const MTOModal = () => {
         resetMTOModalState();
         setMTOModalOpen(false);
       }}
-      shouldCloseOnOverlayClick
+      shouldCloseOnOverlayClick={!shouldNotCloseModals.includes(modalType)}
       className="tablet:width-mobile-lg mint-body-normal"
     >
       <div className="margin-bottom-2">
@@ -73,15 +77,15 @@ const MTOModal = () => {
 
       {errorMessageInModal}
 
-      {/* if type is category, then render CategoryForm */}
-      {modalType === 'category' && <CategoryForm />}
-      {modalType === 'milestone' && <MilestoneForm />}
-      {modalType === 'solution' && <SolutionForm />}
+      {modalType === 'category' && <CustomCategoryForm />}
+      {modalType === 'milestone' && <CustomMilestoneForm />}
+      {modalType === 'solution' && <CustomSolutionForm />}
       {modalType === 'moveSubCategory' && <MoveSubCategoryForm />}
       {modalType === 'editCategoryTitle' && <EditCategoryTitleForm />}
       {(modalType === 'removeCategory' ||
         modalType === 'removeSubcategory') && <RemoveCategoryForm />}
       {modalType === 'addTemplate' && <AddTemplateModal />}
+      {modalType === 'selectSolution' && <SelectSolutionForm />}
     </Modal>
   );
 };

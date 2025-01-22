@@ -1,13 +1,18 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
+  GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
+  GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
+  MtoCommonSolutionSubject,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  MtoSolutionType,
+  OperationalSolutionKey
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -69,11 +74,23 @@ export const commonSolutionsMock = [
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',
-                name: 'common solution 1'
+                name: 'common solution 1',
+                isAdded: false,
+                key: MtoCommonSolutionKey.ACO_OS,
+                type: MtoSolutionType.CONTRACTOR,
+                subjects: [
+                  MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+                ]
               },
               {
                 __typename: 'MTOCommonSolution',
-                name: 'common solution 2'
+                name: 'common solution 2',
+                isAdded: false,
+                key: MtoCommonSolutionKey.APPS,
+                type: MtoSolutionType.CROSS_CUTTING_GROUP,
+                subjects: [
+                  MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+                ]
               }
             ]
           }
@@ -83,12 +100,83 @@ export const commonSolutionsMock = [
   }
 ];
 
-export const milestoneMock = [
+export const possibleSolutionsMock = [
+  {
+    request: {
+      query: GetPossibleSolutionsDocument
+    },
+    results: {
+      data: {
+        possibleOperationalSolutions: [
+          {
+            id: '123',
+            key: OperationalSolutionKey.ACO_OS,
+            pointsOfContact: [
+              {
+                __typename: 'PossibleOperationalSolutionContact',
+                id: '123',
+                name: 'test',
+                email: 'email@email.com',
+                isTeam: true,
+                isPrimary: true,
+                role: 'role'
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+];
+
+export const allMTOSolutionsMock = [
+  {
+    request: {
+      query: GetMtoAllSolutionsDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            commonSolutions: [
+              {
+                __typename: 'MTOCommonSolution',
+                key: MtoCommonSolutionKey.BCDA,
+                name: 'common solution 1'
+              },
+              {
+                __typename: 'MTOCommonSolution',
+                key: MtoCommonSolutionKey.BCDA,
+                name: 'common solution 2'
+              }
+            ],
+            solutions: [
+              {
+                __typename: 'MtoSolution',
+                id: '1',
+                name: 'Solution 1',
+                key: MtoCommonSolutionKey.BCDA
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+export const milestoneMock = (id: string) => [
   {
     request: {
       query: GetMtoMilestoneDocument,
       variables: {
-        id: '123'
+        id
       }
     },
     result: {
@@ -113,6 +201,16 @@ export const milestoneMock = [
               __typename: 'MtoSubcategory',
               id: '2'
             }
+          },
+          commonMilestone: {
+            __typename: 'MTOCommonMilestone',
+            key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+            commonSolutions: [
+              {
+                __typename: 'MTOCommonSolution',
+                key: MtoCommonSolutionKey.BCDA
+              }
+            ]
           },
           solutions: [
             {
@@ -239,7 +337,7 @@ export const suggestedMilestonesMock = [
 const allMocks = [
   ...suggestedMilestonesMock,
   ...commonMilestonesMock,
-  ...milestoneMock,
+  ...milestoneMock(modelID),
   ...categoryMock
 ];
 

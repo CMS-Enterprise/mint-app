@@ -52,7 +52,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -153,7 +153,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -254,7 +254,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Medicare Advantage and Part D
@@ -352,7 +352,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -453,7 +453,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       href="/help-and-knowledge/operational-solutions?category=data"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Data
@@ -563,7 +563,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                       href="/help-and-knowledge/operational-solutions?category=data"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Data
@@ -660,7 +660,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                       href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Communication tools and help desk
@@ -753,7 +753,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -854,7 +854,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                       href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Communication tools and help desk

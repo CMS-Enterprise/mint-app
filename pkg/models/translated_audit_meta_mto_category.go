@@ -19,7 +19,7 @@ type TranslatedAuditMetaMTOCategory struct {
 func NewTranslatedAuditMetaMTOCategory(version int, parentCategoryName *string, parentCategoryID *uuid.UUID) TranslatedAuditMetaMTOCategory {
 
 	return TranslatedAuditMetaMTOCategory{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalNeed, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNMTOCategory, version),
 		ParentCategoryID:              parentCategoryID,
 		ParentCategoryName:            parentCategoryName,
 	}

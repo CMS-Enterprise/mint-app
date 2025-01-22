@@ -1,14 +1,18 @@
 import React from 'react';
-import { Icon } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import {
   MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  OperationalSolutionKey
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { MTOModalState } from 'contexts/MTOModalContext';
 import { formatDateUtc } from 'utils/date';
 
 import MilestoneStatusTag from '../MTOStatusTag';
@@ -23,13 +27,19 @@ export type ColumnSortType = {
 
 export type MTORowType = 'category' | 'subcategory' | 'milestone';
 
+type MtoSolutionType = {
+  id: string;
+  key?: OperationalSolutionKey | null;
+  name?: string | null;
+};
+
 export type MilestoneType = {
   __typename: 'MTOMilestone';
   id: string;
   riskIndicator: MtoRiskIndicator;
   name: string;
   facilitatedBy: MtoFacilitator[] | null;
-  solutions: string[];
+  solutions: MtoSolutionType[];
   needBy: string | null;
   status: MtoMilestoneStatus;
   actions: any;
@@ -38,6 +48,10 @@ export type MilestoneType = {
   isUncategorized?: boolean;
   key?: MtoCommonMilestoneKey | null;
 };
+
+export function isMilestoneType(data: RowType): data is MilestoneType {
+  return data.__typename === 'MTOMilestone'; // eslint-disable-line no-underscore-dangle
+}
 
 export type SubCategoryType = {
   __typename: 'MTOSubcategory';
@@ -87,6 +101,14 @@ type RowProps = {
   expanded?: boolean;
 };
 
+type ExtendedRowProps = RowProps & {
+  clearMessage?: () => void;
+  setMTOModalOpen?: (open: boolean) => void;
+  setMTOModalState?: (state: Partial<MTOModalState>) => void;
+  initLocation?: string;
+  search?: string;
+};
+
 export type ColumnType = {
   Header: string | React.ReactNode;
   accessor: string;
@@ -97,7 +119,7 @@ export type ColumnType = {
     direction: 'ASC' | 'DESC',
     accessor: keyof MilestoneType
   ) => CategoryType[];
-  Cell?: (cellRow: RowProps) => JSX.Element;
+  Cell?: (cellRow: RowProps | ExtendedRowProps) => JSX.Element;
 };
 
 const sortNested = (
@@ -237,17 +259,71 @@ export const columns: ColumnType[] = [
       });
       return copyData;
     },
-    Cell: ({ row, rowType, expanded }: RowProps) => {
+    Cell: ({
+      row,
+      rowType,
+      expanded,
+      clearMessage,
+      setMTOModalOpen,
+      setMTOModalState,
+      initLocation,
+      search
+    }: ExtendedRowProps) => {
       if (rowType !== 'milestone') return <></>;
-      if (row.solutions.length === 0)
-        return (
-          <UswdsReactLink to="#">
-            Select a solution{' '}
-            <Icon.ArrowForward className="top-05 margin-left-05" />
-          </UswdsReactLink>
-        );
+      if (isMilestoneType(row)) {
+        if (row.solutions.length === 0)
+          return (
+            <>
+              <Button
+                type="button"
+                className="display-block"
+                unstyled
+                onClick={() => {
+                  if (clearMessage) clearMessage();
+                  if (setMTOModalState)
+                    setMTOModalState({
+                      modalType: 'selectSolution',
+                      milestoneID: row.id
+                    });
+                  if (setMTOModalOpen) setMTOModalOpen(true);
+                }}
+              >
+                {i18next.t('modelToOperationsMisc:table.selectASolution')}
+                <Icon.ArrowForward className="top-05 margin-left-05" />
+              </Button>
+            </>
+          );
 
-      return <>{row.solutions.join(', ')}</>;
+        return (
+          <>
+            {row.solutions.map((solution, index) => {
+              const solutionMap = findSolutionByKey(
+                solution.key!,
+                helpSolutions
+              );
+
+              const detailRoute = solutionMap?.route
+                ? `${initLocation}${search}${
+                    search ? '&' : '?'
+                  }solution=${solutionMap?.route || ''}&section=about`
+                : `${initLocation}${search}`;
+              return (
+                <React.Fragment key={solution.id}>
+                  {solution.key !== null ? (
+                    <UswdsReactLink to={detailRoute}>
+                      {solutionMap?.acronym ?? solutionMap?.name}
+                    </UswdsReactLink>
+                  ) : (
+                    solution.name
+                  )}
+                  {index < row.solutions.length - 1 && ', '}
+                </React.Fragment>
+              );
+            })}
+          </>
+        );
+      }
+      return <></>;
     }
   },
   {

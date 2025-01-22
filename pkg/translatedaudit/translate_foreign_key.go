@@ -2,6 +2,7 @@ package translatedaudit
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -12,6 +13,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+const DataNotAvailableMessage = "Data not available"
 
 //Future Enhancement: allow faktory workers to take a dataloader
 
@@ -173,7 +176,7 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 	return solution.ID.String(), nil
 }
 
-func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -183,30 +186,37 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	// get the Category
 	category, err := loaders.MTOCategory.ByID.Load(ctx, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+		}
 	}
 
 	if category == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+		return DataNotAvailableMessage, nil
 	}
 	// default to the name of the category
-	name := category.Name
+
+	var parentCategoryName *string
 
 	// Check to see if this is a subCategory (has a parent), if so, just return the name of the parent as well
 	// ex ParentCategory (subCategory)
 	// get the Category
 	if category.ParentID != nil {
 		parentCategory, err := loaders.MTOCategory.ByID.Load(ctx, *category.ParentID)
-		if err != nil {
-			return nil, fmt.Errorf("there was an issue getting the parent category for mto category. err %w", err)
+		if err != nil { // only error if there is another issue fetching the data
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return "", fmt.Errorf("there was an issue translating the mto category foreign key reference. err %w", err)
+			}
 		}
+
 		if parentCategory != nil {
-			name = parentCategory.Name + " (" + category.Name + ")"
+			parentCategoryName = &parentCategory.Name
 		}
 	}
+	name := formatCategoryTranslation(category.Name, parentCategoryName)
 	return name, nil
 }
-func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to key
 	enumKey, err := parseInterfaceToEnum[models.MTOCommonMilestoneKey](key)
 	if err != nil {
@@ -225,7 +235,7 @@ func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storag
 	return commonMilestone.Name, nil
 }
 
-func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
 	enumKey, err := parseInterfaceToEnum[models.MTOCommonSolutionKey](key)
 	if err != nil {
@@ -243,7 +253,8 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 	}
 	return commonSolution.Name, nil
 }
-func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+
 	// cast interface to key
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -253,16 +264,20 @@ func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Stor
 	// get the  milestone
 	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the mto  milestone foreign key reference. err %w", err)
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return "", fmt.Errorf("there was an issue getting the mto milestone for translation. err %w", err)
+		}
 	}
-
-	if milestone == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	if milestone == nil { // expect that a nil milestone can be returned, since they can be deleted
+		return DataNotAvailableMessage, nil
 	}
-	return milestone.Name, nil
+	if milestone.Name == nil {
+		return DataNotAvailableMessage, nil
+	}
+	return *milestone.Name, nil
 }
 
-func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (interface{}, error) {
+func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -271,13 +286,18 @@ func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store
 	// get the  solution
 	solution, err := loaders.MTOSolution.ByID.Load(ctx, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the mto  Solution foreign key reference. err %w", err)
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return "", fmt.Errorf("there was an issue getting the mto solution for translation. err %w", err)
+		}
 	}
 
-	if solution == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", uuidKey)
+	if solution == nil { // expect that a nil solution can be returned, since they can be deleted
+		return DataNotAvailableMessage, nil
 	}
-	return solution.Name, nil
+	if solution.Name == nil {
+		return DataNotAvailableMessage, nil
+	}
+	return *solution.Name, nil
 }
 
 func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {

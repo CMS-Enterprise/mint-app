@@ -3572,7 +3572,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        status\n        recentEdit{\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            position\n            name\n            isUncategorized\n            subCategories {\n                id\n                position\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        status\n        milestonesWithNoLinkedSolutions {\n            name\n        }\n        recentEdit{\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            position\n            name\n            isUncategorized\n            subCategories {\n                id\n                position\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -3781,6 +3781,39 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    milestonesToLink: [\"{{mtoMilestoneID}}\"]\n    key: INNOVATION\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteMTOSolution",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation deleteMTOSolution {\n    deleteMTOSolution(id: \"{{mtoSolutionID}}\")\n}",
 										"variables": ""
 									}
 								},
