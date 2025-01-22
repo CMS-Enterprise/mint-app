@@ -128,10 +128,9 @@ exports[`Custom Catergory form > runs without errors and matches snapshot 1`] = 
       <button
         class="usa-button margin-right-3"
         data-testid="button"
-        disabled=""
         type="submit"
       >
-        Add with 0 milestones
+        Add without milestone
       </button>
       <button
         class="usa-button usa-button usa-button--unstyled"
