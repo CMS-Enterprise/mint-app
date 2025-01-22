@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -36,17 +36,17 @@ type FormValues = {
 };
 
 const AddToExistingMilestoneForm = ({
-  closeModal
+  closeModal,
+  solutionName,
+  solutionKey
 }: {
   closeModal: () => void;
+  solutionName?: string;
+  solutionKey: MtoCommonSolutionKey;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
-
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
-  const solutionKey = params.get('add-solution') as MtoCommonSolutionKey;
 
   const { message, showMessage, clearMessage, showErrorMessageInModal } =
     useMessage();
@@ -109,7 +109,7 @@ const AddToExistingMilestoneForm = ({
                     components={{
                       b: <span className="text-bold" />
                     }}
-                    values={{ solution: solutionKey }}
+                    values={{ title: solutionName }}
                   />
                 </span>
               </Alert>
@@ -192,7 +192,7 @@ const AddToExistingMilestoneForm = ({
             />
           </Fieldset>
 
-          <div className="margin-top-3">
+          <div className="margin-top-0">
             <Button
               type="submit"
               disabled={!isDirty}

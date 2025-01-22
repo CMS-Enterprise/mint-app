@@ -18,7 +18,6 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
-// import useMessage from 'hooks/useMessage';
 import { SolutionCardType } from '..';
 
 import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
@@ -66,18 +65,11 @@ const MTOSolutionCard = ({
 
         {errorMessageInModal}
 
-        <AddToExistingMilestoneForm closeModal={() => setIsModalOpen(false)} />
-
-        {/* <AddSolutionToMilestoneForm
-          closeModal={() => {
-            params.delete('add-solution', solution.key);
-            params.delete('solution', solution.key);
-            history.replace({ search: params.toString() });
-            clearMessage();
-            setIsModalOpen(false);
-          }}
-          milestone={milestone}
-        /> */}
+        <AddToExistingMilestoneForm
+          closeModal={() => setIsModalOpen(false)}
+          solutionName={mappedSolution?.name}
+          solutionKey={solution.key}
+        />
       </Modal>
       <Card
         containerProps={{
