@@ -16,10 +16,12 @@ import Sidepanel from 'components/Sidepanel';
 
 interface EditMTOMilestoneContextType {
   openEditMilestoneModal: (milestoneID: string) => void;
+  setMilestoneID: (milestoneID: string) => void;
 }
 
 const EditMTOMilestoneContext = createContext<EditMTOMilestoneContextType>({
-  openEditMilestoneModal: () => {}
+  openEditMilestoneModal: () => {},
+  setMilestoneID: () => {}
 });
 
 const EditMTOMilestoneProvider = ({
@@ -38,13 +40,15 @@ const EditMTOMilestoneProvider = ({
 
   const milestoneParam = params.get('edit-milestone');
 
-  //   useEffect(() => {
-  //     if (milestoneParam === milestoneID) {
-  //       setIsModalOpen(true);
-  //     }
-  //   }, [milestoneParam, milestoneID, setIsModalOpen]);
-
   const [isModalOpen, setIsModalOpen] = useState(!!milestoneParam);
+
+  const [milestoneID, setMilestoneID] = useState<string>('');
+
+  useEffect(() => {
+    if (milestoneParam === milestoneID) {
+      setIsModalOpen(true);
+    }
+  }, [milestoneParam, milestoneID, setIsModalOpen]);
 
   const submitted = useRef<boolean>(false);
 
@@ -65,8 +69,8 @@ const EditMTOMilestoneProvider = ({
     }
   };
 
-  const openEditMilestoneModal = (milestoneID: string) => {
-    params.set('edit-milestone', milestoneID);
+  const openEditMilestoneModal = (id: string) => {
+    params.set('edit-milestone', id);
     history.push({ search: params.toString() });
     setIsModalOpen(true);
   };
@@ -74,7 +78,8 @@ const EditMTOMilestoneProvider = ({
   return (
     <EditMTOMilestoneContext.Provider
       value={{
-        openEditMilestoneModal
+        openEditMilestoneModal,
+        setMilestoneID
       }}
     >
       <>

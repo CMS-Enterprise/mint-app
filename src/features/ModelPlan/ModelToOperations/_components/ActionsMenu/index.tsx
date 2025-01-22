@@ -33,7 +33,9 @@ const ActionMenu = ({
 
   const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
-  const { openEditMilestoneModal } = useContext(EditMTOMilestoneContext);
+  const { openEditMilestoneModal, setMilestoneID } = useContext(
+    EditMTOMilestoneContext
+  );
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -229,6 +231,7 @@ const ActionMenu = ({
         unstyled
         className="margin-right-2"
         onClick={() => {
+          setMilestoneID(milestoneID);
           openEditMilestoneModal(milestoneID);
         }}
       >
