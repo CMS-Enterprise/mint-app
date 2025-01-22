@@ -513,7 +513,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       helpText: 'Select all that apply.',
       selectedLabel: 'Selected milestones',
       cta: {
-        empty: 'Add to existing milestone',
+        empty: 'Add without milestone',
         add: 'Add with {{count}} milestone',
         add_other: 'Add with {{count}} milestones'
       },

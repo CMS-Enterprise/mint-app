@@ -68,13 +68,7 @@ const AddToExistingMilestoneForm = ({
     },
     mode: 'onBlur'
   });
-  const {
-    control,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { isDirty }
-  } = methods;
+  const { control, handleSubmit, reset, watch } = methods;
 
   const [create] = useCreateMtoSolutionCommonMutation({
     refetchQueries: [
@@ -170,6 +164,7 @@ const AddToExistingMilestoneForm = ({
 
                   <MultiSelect
                     {...field}
+                    disabled={milestones.length === 0}
                     id={convertCamelCaseToKebabCase('multiSourceDataToCollect')}
                     ariaLabel={convertCamelCaseToKebabCase('linkedSolutions')}
                     ariaLabelText={t('modal.addToExistingMilestone.label')}
@@ -193,14 +188,12 @@ const AddToExistingMilestoneForm = ({
           </Fieldset>
 
           <div className="margin-top-0">
-            <Button
-              type="submit"
-              disabled={!isDirty}
-              className="margin-right-3"
-            >
-              {t('modal.addToExistingMilestone.cta.add', {
-                count: watch('linkedSolutions')?.length || 0
-              })}
+            <Button type="submit" className="margin-right-3">
+              {watch('linkedSolutions')?.length === 0
+                ? t('modal.addToExistingMilestone.cta.empty')
+                : t('modal.addToExistingMilestone.cta.add', {
+                    count: watch('linkedSolutions')?.length
+                  })}
             </Button>
 
             <Button
