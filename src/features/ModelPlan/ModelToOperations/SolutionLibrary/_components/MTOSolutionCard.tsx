@@ -65,7 +65,12 @@ const MTOSolutionCard = ({
         {errorMessageInModal}
 
         <AddToExistingMilestoneForm
-          closeModal={() => setIsModalOpen(false)}
+          closeModal={() => {
+            params.delete('add-solution', solution.key);
+            history.replace({ search: params.toString() });
+            clearMessage();
+            setIsModalOpen(false);
+          }}
           solutionName={mappedSolution?.name}
           solutionKey={solution.key}
         />
