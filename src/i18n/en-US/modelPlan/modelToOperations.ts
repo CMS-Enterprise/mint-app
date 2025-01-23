@@ -598,11 +598,12 @@ export const modelToOperationsMisc: Record<string, any> = {
   },
   solutionTable: {
     tabs: {
-      allSolutions: 'All common solutions ({{count}})',
+      allSolutions: 'All solutions ({{count}})',
       itSystems: 'IT systems ({{count}})',
       contracts: 'Contracts and contractors ({{count}})',
       other: 'Other solutions ({{count}})'
-    }
+    },
+    hideAdded: 'Hide milestones without solutions ({{count}})'
   },
   validation: {
     fillOut: 'Please fill out the required field.'

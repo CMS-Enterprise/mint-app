@@ -381,7 +381,7 @@ const ITSystemsTable = () => {
         <CheckboxField
           id="hide-added-solutions"
           name="hide-added-solutions"
-          label={t('solutionLibrary.hideAdded', {
+          label={t('solutionTable.hideAdded', {
             count: milestonesWithoutSolutions.length
           })}
           value="true"

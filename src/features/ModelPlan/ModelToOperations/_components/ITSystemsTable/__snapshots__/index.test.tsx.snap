@@ -20,7 +20,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
             data-testid="button"
             type="button"
           >
-            All common solutions (2)
+            All solutions (2)
           </button>
         </li>
         <li
@@ -74,7 +74,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
           class="usa-checkbox__label"
           for="hide-added-solutions"
         >
-          Hide added solutions (1)
+          Hide milestones without solutions (1)
         </label>
         <p
           class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
