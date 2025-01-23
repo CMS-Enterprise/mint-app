@@ -70,7 +70,7 @@ const EditCategoryTitleForm = () => {
   const onSubmit: SubmitHandler<FormValues> = formData => {
     rename({
       variables: {
-        id: subCategoryID ?? categoryID,
+        id: subCategoryID || categoryID,
         name: formData.name
       }
     })
@@ -124,7 +124,8 @@ const EditCategoryTitleForm = () => {
             name="name"
             control={control}
             rules={{
-              required: true
+              required: true,
+              validate: value => !!value.trim()
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-y-0">

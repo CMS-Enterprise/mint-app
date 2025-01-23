@@ -7,7 +7,7 @@ import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import SolutionForm from './index';
+import CustomSolutionForm from './index';
 
 describe('Custom Solution form', () => {
   it('matches snapshot', async () => {
@@ -16,7 +16,7 @@ describe('Custom Solution form', () => {
         <MessageProvider>
           <VerboseMockedProvider mocks={[...categoryMock]} addTypename={false}>
             <Route path="/models/:modelID/">
-              <SolutionForm />
+              <CustomSolutionForm />
             </Route>
           </VerboseMockedProvider>
         </MessageProvider>

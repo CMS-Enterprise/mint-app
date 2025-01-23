@@ -2,6 +2,8 @@ package loaders
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/google/uuid"
 
@@ -23,6 +25,8 @@ type mtoMilestoneLoaders struct {
 	ByID LoaderWrapper[uuid.UUID, *models.MTOMilestone]
 	// BySolutionID Gets a list of mto Milestone records associated with a solution by the supplied solution id.
 	BySolutionID LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
+	// ByModelPlanIDNoLinkedSolution Gets a list of mto Milestone records associated with a model plan by the supplied model plan id that are not linked to a solution
+	ByModelPlanIDNoLinkedSolution LoaderWrapper[uuid.UUID, []*models.MTOMilestone]
 }
 
 // MTOMilestone is the singleton instance of all LoaderWrappers related to MTO Milestones
@@ -31,6 +35,7 @@ var MTOMilestone = &mtoMilestoneLoaders{
 	ByModelPlanIDAndMTOCategoryID: NewLoaderWrapper(batchMTOMilestoneGetByModelPlanIDAndMTOCategoryID),
 	ByID:                          NewLoaderWrapper(batchMTOMilestoneGetByID),
 	BySolutionID:                  NewLoaderWrapper(batchMTOMilestoneGetBySolutionID),
+	ByModelPlanIDNoLinkedSolution: NewLoaderWrapper(batchMTOMilestoneGetByModelPlanIDNoLinkedSolution),
 }
 
 func batchMTOMilestoneGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOMilestone] {
@@ -106,7 +111,10 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 
 	data, err := storage.MTOMilestoneGetBySolutionIDLoader(loaders.DataReader.Store, logger, solutionIDs)
 	if err != nil {
-		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
+		if !errors.Is(err, sql.ErrNoRows) { // don't error if there are no results, this could be expected
+			return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
+		}
+
 	}
 
 	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOMilestoneWithSolutionID) ([]*models.MTOMilestone, bool) {
@@ -127,4 +135,23 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 
 	return oneToManyWithCustomKeyDataLoader(solutionIDs, data, getKeyFunc, getResFunc)
 
+}
+
+func batchMTOMilestoneGetByModelPlanIDNoLinkedSolution(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOMilestone] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](modelPlanIDs, err)
+	}
+
+	data, err := storage.MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(loaders.DataReader.Store, logger, modelPlanIDs)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](modelPlanIDs, err)
+	}
+	getKeyFunc := func(data *models.MTOMilestone) uuid.UUID {
+		return data.ModelPlanID
+	}
+
+	// implement one to many
+	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 }

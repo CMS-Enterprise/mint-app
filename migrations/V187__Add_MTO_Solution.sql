@@ -9,6 +9,7 @@ CREATE TYPE MTO_SOLUTION_STATUS AS ENUM (
 COMMENT ON TYPE MTO_SOLUTION_STATUS IS
 'Defines the stages of progress for solutions within the model plan, from not started to completion.';
 
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_solution';
 
 CREATE TABLE mto_solution(
     id UUID PRIMARY KEY,

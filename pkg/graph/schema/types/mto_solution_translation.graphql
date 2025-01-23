@@ -8,5 +8,9 @@ type MTOSolutionTranslation {
   pocName: TranslationField! @goTag(key: "db", value: "poc_name")
   pocEmail: TranslationField! @goTag(key: "db", value: "poc_email")
   solutionType: TranslationFieldWithOptions! @goTag(key: "db", value: "type")
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  key: TranslationField! @goTag(key: "db", value: "mto_common_solution_key")
+  riskIndicator: TranslationFieldWithOptions! @goTag(key: "db", value: "risk_indicator")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status") #MTOSolutionStatus
+  neededBy: TranslationField! @goTag(key: "db", value: "needed_by")
+  facilitatedBy: TranslationFieldWithOptions! @goTag(key: "db", value: "facilitated_by")
 }

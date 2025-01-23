@@ -86,6 +86,17 @@ func (r *mutationResolver) MtoSolutionUpdateLinkedMilestones(ctx context.Context
 	return MTOSolutionUpdateLinkedMilestones(logger, r.store, principal, id, milestoneLinks)
 }
 
+// DeleteMTOSolution is the resolver for the deleteMTOSolution field.
+func (r *mutationResolver) DeleteMTOSolution(ctx context.Context, id uuid.UUID) (bool, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	err := MTOSolutionDelete(ctx, logger, principal, r.store, id)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
 // MTOSolution returns generated.MTOSolutionResolver implementation.
 func (r *Resolver) MTOSolution() generated.MTOSolutionResolver { return &mTOSolutionResolver{r} }
 

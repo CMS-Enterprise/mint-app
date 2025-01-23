@@ -1,3 +1,5 @@
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_milestone_solution_link';
+
 CREATE TABLE mto_milestone_solution_link(
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     milestone_id UUID NOT NULL REFERENCES mto_milestone(id) ON DELETE CASCADE,

@@ -149,6 +149,14 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 		suite.Len(milestoneLinks, 1, "Each milestone should have exactly 1 solution linked")
 		suite.Equal(solution.ID, milestoneLinks[0].SolutionID, "The solution linked should match the one we created")
 	}
+
+	// finally, delete the solution and ensure the links are removed (due to the `ON CASCADE DELETE`)
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solution.ID)
+	suite.NoError(err)
+	milestonesAfterDelete, err := MTOMilestoneGetBySolutionIDLOADER(suite.testConfigs.Context, solution.ID)
+	suite.NoError(err)
+	suite.Len(milestonesAfterDelete, 0, "After deleting the solution, there should be no linked milestones")
+
 }
 
 func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMilestoneID() {

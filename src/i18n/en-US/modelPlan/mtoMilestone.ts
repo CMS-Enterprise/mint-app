@@ -1,6 +1,7 @@
 import { TranslationMTOMilestoneCustom } from 'types/translation';
 
 import {
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -22,12 +23,13 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     label: 'Check if this milestone is a draft milestone',
     sublabel:
       'The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
+    exportLabel: 'Is this a draft milestone?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
     order: 1.01,
     options: {
-      true: 'Draft',
-      false: ''
+      true: 'Yes',
+      false: ' No'
     }
   },
   facilitatedBy: {
@@ -208,6 +210,27 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     readonlyOptions: {
       INNOVATION: '4i'
     }
+  },
+  key: {
+    gqlField: 'key',
+    goField: 'Key',
+    dbField: 'mto_common_milestone_key',
+    label: 'Key',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.0,
+    tableReference: TableName.MTO_COMMON_MILESTONE
+  },
+  mtoCategoryID: {
+    gqlField: 'mtoCategoryID',
+    goField: 'MTOCategoryID',
+    dbField: 'mto_category_id',
+    label: 'MTO Category ID',
+    exportLabel: 'Category',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    order: 4.0,
+    tableReference: TableName.MTO_CATEGORY
   }
 };
 

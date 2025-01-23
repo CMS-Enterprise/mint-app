@@ -6,10 +6,20 @@ RETURNS TRIGGER AS $$
 DECLARE
   cat_ids UUID[];
   extra_levels INT;
+  deleted_user_uuid UUID = '00000000-0000-0000-0000-000000000000'; -- default to unknown user
 BEGIN
   IF pg_trigger_depth() > 1 THEN
     RETURN OLD;
   END IF;
+
+  BEGIN
+    -- we need to use session scope to determine who did this action, because we need to set the user who modifies child rows
+    deleted_user_uuid = COALESCE(current_setting('app.current_user',TRUE),'00000000-0000-0000-0000-000000000000'); --Try to get user from variable, if not will default to unknown
+  EXCEPTION
+    WHEN OTHERS THEN 
+      RAISE NOTICE 'there was an issue getting the user id for this delete operation';
+      RETURN OLD;
+  END;
 
   -- Collect the category being deleted and its direct children
   SELECT array_agg(id) INTO cat_ids
@@ -28,7 +38,9 @@ BEGIN
 
   -- Reassign all milestones that referenced these categories to OLD.parent_id
   UPDATE mto_milestone
-  SET mto_category_id = OLD.parent_id
+  SET mto_category_id = OLD.parent_id,
+  modified_by = deleted_user_uuid,
+  modified_dts = CURRENT_TIMESTAMP
   WHERE mto_category_id = ANY(cat_ids);
 
   -- Delete all direct subcategories, excluding the category currently being deleted

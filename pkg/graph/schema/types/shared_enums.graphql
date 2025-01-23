@@ -201,4 +201,13 @@ enum TableName {
   user_notification
   user_notification_preferences
   user_view_customization
+
+  mto_category
+  mto_milestone
+  mto_solution
+  mto_milestone_solution_link
+  mto_info
+  mto_common_milestone
+  mto_common_solution
+  mto_common_solution_contact
 }
