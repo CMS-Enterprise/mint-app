@@ -18,6 +18,7 @@ import {
 } from '@trussworks/react-uswds';
 import {
   GetModelToOperationsMatrixDocument,
+  GetMtoSolutionsAndMilestonesDocument,
   MtoSolutionType,
   useCreateMtoSolutionCustomMutation
 } from 'gql/generated/graphql';
@@ -75,6 +76,12 @@ const CustomSolutionForm = () => {
     refetchQueries: [
       {
         query: GetModelToOperationsMatrixDocument,
+        variables: {
+          id: modelID
+        }
+      },
+      {
+        query: GetMtoSolutionsAndMilestonesDocument,
         variables: {
           id: modelID
         }

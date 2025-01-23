@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
@@ -33,10 +27,7 @@ const EditMTOMilestoneProvider = ({
 
   const history = useHistory();
 
-  const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history]
-  );
+  const params = new URLSearchParams(history.location.search);
 
   const milestoneParam = params.get('edit-milestone');
 

@@ -78,7 +78,7 @@ const SolutionViewSelector = ({
               </option>
             )}
             {type === 'table' && otherSolutions && (
-              <option value="other">
+              <option value="other-solutions">
                 {t(`${translationNamespace}.tabs.other`, {
                   count: otherSolutions.length
                 })}
