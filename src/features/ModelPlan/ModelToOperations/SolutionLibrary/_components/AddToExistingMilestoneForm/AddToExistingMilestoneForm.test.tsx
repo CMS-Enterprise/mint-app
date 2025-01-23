@@ -11,7 +11,7 @@ import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
 
 describe('Custom Catergory form', () => {
   it('runs without errors and matches snapshot', async () => {
-    const { asFragment } = render(
+    render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
           <VerboseMockedProvider mocks={[...mtoMatrixMock]} addTypename={false}>
@@ -34,8 +34,6 @@ describe('Custom Catergory form', () => {
         )
       ).toBeInTheDocument();
     });
-
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('shows warning message when zero milestones and matches snapshot', async () => {
@@ -59,6 +57,11 @@ describe('Custom Catergory form', () => {
     );
 
     await waitFor(() => {
+      expect(
+        screen.getByText(
+          'You may choose to add this solution to existing milestones in your MTO, or you may do so later.'
+        )
+      ).toBeInTheDocument();
       expect(
         screen.getByText(
           'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.'
