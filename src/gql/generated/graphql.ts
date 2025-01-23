@@ -971,7 +971,6 @@ export type MtoMilestoneChanges = {
 };
 
 export type MtoMilestoneLinks = {
-  commonMilestoneKeys?: InputMaybe<Array<MtoCommonMilestoneKey>>;
   milestoneIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
 };
 

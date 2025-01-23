@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -148,4 +149,51 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 		suite.Len(milestoneLinks, 1, "Each milestone should have exactly 1 solution linked")
 		suite.Equal(solution.ID, milestoneLinks[0].SolutionID, "The solution linked should match the one we created")
 	}
+}
+
+func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMilestoneID() {
+	plan := suite.createModelPlan("plan for adding milestones by milestone ID")
+
+	// Create a milestone with no linked solutions
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone", plan.ID, nil)
+	suite.NoError(err)
+
+	// Create a custom solution
+	solName := "Custom Solution 1"
+	solType := models.MTOSolutionTypeOther
+	sol, err := MTOSolutionCreateCustom(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		plan.ID,
+		nil,
+		solName,
+		solType,
+		nil,
+		"POC Name",
+		"poc@example.com",
+	)
+	suite.NoError(err)
+
+	// Add the solution to the milestone by solution ID
+	milestoneLinks := &model.MTOMilestoneLinks{
+		MilestoneIDs: []uuid.UUID{milestone.ID},
+	}
+
+	_, err = MTOSolutionUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		sol.ID,
+		map[string]interface{}{},
+		milestoneLinks,
+	)
+	suite.NoError(err)
+
+	// Verify the solution is linked now
+	linkedSolutions, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
+	suite.NoError(err)
+	suite.Len(linkedSolutions, 1)
+	suite.Equal(sol.ID, linkedSolutions[0].SolutionID)
 }

@@ -46,7 +46,6 @@ input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
 
 input MTOMilestoneLinks {
   milestoneIDs: [UUID!]
-  commonMilestoneKeys: [MTOCommonMilestoneKey!]
 }
 
 extend type Mutation {

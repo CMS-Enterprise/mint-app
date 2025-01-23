@@ -73,8 +73,7 @@ type MTOInfoTranslation struct {
 }
 
 type MTOMilestoneLinks struct {
-	MilestoneIDs        []uuid.UUID                    `json:"milestoneIDs,omitempty"`
-	CommonMilestoneKeys []models.MTOCommonMilestoneKey `json:"commonMilestoneKeys,omitempty"`
+	MilestoneIDs []uuid.UUID `json:"milestoneIDs,omitempty"`
 }
 
 // Represents MTO Custom Milestone translation data
