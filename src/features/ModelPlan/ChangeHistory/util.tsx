@@ -497,7 +497,8 @@ const readyForReviewFields = [
 // Removes the fields that are ready for review from the list of translatedFields changes
 export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   // Allow MTO_INFO changes to pass through, as there is no official status, but calculated on FE by ready for review fields
-  if (changes[0]?.tableName === TableName.MTO_INFO) return changes;
+  if (changes.find(change => change.tableName === TableName.MTO_INFO))
+    return changes;
 
   const filteredReviewChanges: ChangeRecordType[] = [];
 
