@@ -143,3 +143,158 @@ exports[`Custom Catergory form > runs without errors and matches snapshot 1`] = 
   </form>
 </DocumentFragment>
 `;
+
+exports[`Custom Catergory form > shows warning message when zero milestones and matches snapshot 1`] = `
+<DocumentFragment>
+  <p
+    class="mint-body-normal"
+  >
+    You may choose to add this solution to existing milestones in your MTO, or you may do so later.
+  </p>
+  <div
+    class="usa-alert usa-alert--info flex margin-bottom-2"
+    data-testid="alert"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        <span>
+          You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.
+        </span>
+      </p>
+    </div>
+  </div>
+  <form
+    class="usa-form maxw-none"
+    data-testid="form"
+    id="add-to-existing-milestone-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-0"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="linked-solutions"
+        >
+          Milestones
+        </label>
+        <div
+          class="mint-help-text margin-top-1"
+        >
+          Select all that apply.
+        </div>
+        <div>
+          <div
+            class="easi-multiselect usa-combo-box margin-top-1 css-3iigni-container"
+            id="multi-source-data-to-collect"
+          >
+            <span
+              class="css-1f43avz-a11yText-A11yText"
+              id="react-select-3-live-region"
+            />
+            <span
+              aria-atomic="false"
+              aria-live="polite"
+              aria-relevant="additions text"
+              class="css-1f43avz-a11yText-A11yText"
+              role="log"
+            />
+            <div
+              aria-disabled="true"
+              class=" css-5f0fg1-control"
+            >
+              <div
+                class=" css-1fdsijx-ValueContainer"
+              >
+                <div
+                  class=" css-1jqq78o-placeholder"
+                  id="react-select-3-placeholder"
+                >
+                  0 selected
+                </div>
+                <div
+                  class=" css-1h01tm3-Input"
+                  data-value=""
+                >
+                  <input
+                    aria-activedescendant=""
+                    aria-autocomplete="list"
+                    aria-describedby="react-select-3-placeholder"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-label="Milestones"
+                    aria-labelledby="linked-solutions"
+                    autocapitalize="none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    class=""
+                    disabled=""
+                    id="react-select-3-input"
+                    role="combobox"
+                    spellcheck="false"
+                    style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                    tabindex="0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class=" css-1hb7zxy-IndicatorsContainer"
+              >
+                <span
+                  class=" css-1ck7a90-indicatorSeparator"
+                />
+                <div
+                  aria-hidden="true"
+                  class=" css-gjng1h-indicatorContainer"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="css-tj5bde-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div
+      class="margin-top-0"
+    >
+      <button
+        class="usa-button margin-right-3"
+        data-testid="button"
+        type="submit"
+      >
+        Add without milestone
+      </button>
+      <button
+        class="usa-button usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;
