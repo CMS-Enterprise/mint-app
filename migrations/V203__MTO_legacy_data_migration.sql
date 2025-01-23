@@ -162,7 +162,7 @@ inserted_solutions AS ( --noqa
 ),
 -- Adjust this, we also need to see if there are any duplicate solutions that must be addressed
 
-linkMapping AS (
+link_mapping AS (
     SELECT 
         inserted_solutions.id AS solution_id, --noqa
         inserted_solutions.created_by,
@@ -171,8 +171,10 @@ linkMapping AS (
         ranked_solutions.all_operational_need_ids
     FROM inserted_solutions
     JOIN ranked_solutions ON ranked_solutions.id = inserted_solutions.id
+    /* Group the data as */
+    GROUP BY inserted_solutions.id, inserted_solutions.created_by, ranked_solutions.all_operational_need_ids, milestone_id
 ),
--- SELECT * FROM linkMapping
+--SELECT * FROM link_mapping
 
 inserted_links AS (
     INSERT INTO mto_milestone_solution_link (
@@ -181,17 +183,17 @@ inserted_links AS (
         created_by
     )
     SELECT
-        linkMapping.milestone_id,
-        linkMapping.solution_id,
-        linkMapping.created_by
-    FROM linkMapping
-    WHERE linkMapping.milestone_id IS NOT NULL AND linkMapping.solution_id IS NOT NULL
+        link_mapping.milestone_id,
+        link_mapping.solution_id,
+        link_mapping.created_by
+    FROM link_mapping
+    WHERE link_mapping.milestone_id IS NOT NULL AND link_mapping.solution_id IS NOT NULL
     RETURNING *
 )
 
 
 SELECT * FROM inserted_links
---SELECT * FROM linkMapping
+--SELECT * FROM link_mapping
 /*
 DELETE FROM mto_milestone_solution_link;
 DELETE FROM mto_milestone;
