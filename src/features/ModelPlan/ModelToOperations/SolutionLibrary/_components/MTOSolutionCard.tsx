@@ -48,7 +48,6 @@ const MTOSolutionCard = ({
     <>
       <Modal
         isOpen={isModalOpen}
-        shouldCloseOnOverlayClick
         closeModal={() => {
           params.delete('add-solution', solution.key);
           history.replace({ search: params.toString() });
