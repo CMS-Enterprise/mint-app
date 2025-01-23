@@ -277,27 +277,6 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             );
           })()}
 
-        {/* MTO info header */}
-        {change.tableName === TableName.MTO_INFO &&
-          (() => {
-            const status = change.translatedFields.find(
-              field => field.fieldName === 'ready_for_review_by'
-            )?.newTranslated
-              ? t('readyForReview')
-              : t('inProgress');
-
-            return (
-              <span className="text-bold">
-                {t('status')}{' '}
-                <span className="text-normal">
-                  {t(`auditUpdateType.${change.action}`)}
-                  {': '}
-                </span>
-                {status || t('dataNotAvailable')}
-              </span>
-            );
-          })()}
-
         {/* MTO category header */}
         {change.tableName === TableName.MTO_CATEGORY &&
           (() => {
@@ -385,16 +364,17 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO solution link  header */}
         {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
           (() => {
-            const solutionName = getTranslatedFieldValue(change, 'name');
-
             return (
-              <span className="text-bold">
-                {properlyCapitalizeInitiator(t('solution'))}{' '}
-                <span className="text-normal">
-                  {t(`solutionLinkType.${change.action}`)}
-                </span>{' '}
-                : {solutionName}
-              </span>
+              <Trans
+                shouldUnescape
+                i18nKey="changeHistory:milestoneAndSolution"
+                values={{
+                  action: t(`solutionLinkType.${change.action}`)
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
             );
           })()}
       </div>
@@ -436,24 +416,24 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             <>
               {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
               {databaseAction !== DatabaseOperation.DELETE &&
-                !!fieldsToMap.find(field => field.old) && (
+                !!fieldsToMap.find(field => field.oldTranslated) && (
                   <div className="text-bold padding-top-105 padding-bottom-1">
                     {t('previousDetails')}
                   </div>
                 )}
 
               {fieldsToMap.map(field => {
-                if (!field.old) return <div key={field.id} />;
+                if (!field.oldTranslated) return <div key={field.id} />;
 
                 return (
                   <div key={field.id}>
-                    {field.old && (
+                    {field.oldTranslated && (
                       <>
                         <span>{field.fieldNameTranslated}: </span>
                         <RenderChangeValue
                           change={field}
                           valueType="oldTranslated"
-                          previous={!!field.old}
+                          previous={!!field.oldTranslated}
                         />
                       </>
                     )}
@@ -640,29 +620,6 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                   );
                 })()}
 
-              {/* MTO info audits */}
-              {change.tableName === TableName.MTO_INFO &&
-                (() => {
-                  const status = getTranslatedFieldValue(
-                    change,
-                    'ready_for_review_by'
-                  )
-                    ? t('readyForReview')
-                    : t('inProgress');
-
-                  return (
-                    <Trans
-                      shouldUnescape
-                      i18nKey="changeHistory:mtoUpdate"
-                      values={{
-                        action: t(`auditUpdateType.${change.action}`),
-                        mtoType: t('status'),
-                        name: status || t('dataNotAvailable')
-                      }}
-                    />
-                  );
-                })()}
-
               {/* MTO category audits */}
               {change.tableName === TableName.MTO_CATEGORY &&
                 (() => {
@@ -757,22 +714,12 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO solution link audits */}
               {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
                 (() => {
-                  const solutionName =
-                    change.translatedFields.find(
-                      field => field.fieldName === 'solution_id'
-                    )?.newTranslated ||
-                    change.translatedFields.find(
-                      field => field.fieldName === 'solution_id'
-                    )?.oldTranslated;
-
                   return (
                     <Trans
                       shouldUnescape
-                      i18nKey="changeHistory:mtoUpdate"
+                      i18nKey="changeHistory:mtoLinkUpdate"
                       values={{
-                        action: t(`solutionLinkType.${change.action}`),
-                        mtoType: properlyCapitalizeInitiator(t('solution')),
-                        name: solutionName || t('dataNotAvailable')
+                        action: t(`solutionLinkType.${change.action}`)
                       }}
                     />
                   );

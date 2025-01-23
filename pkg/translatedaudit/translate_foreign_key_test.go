@@ -211,5 +211,14 @@ func (suite *TAuditSuite) TestGetMTOCategoryForeignKeyReferencen() {
 		suite.EqualValues(expectedName, translatedCategoryName)
 
 	})
+	suite.Run("A nil category ID returns Uncategorized, regardless of the operation", func() {
+		translatedCategoryName, err := getMTOCategoryForeignKeyReference(suite.testConfigs.Context, suite.testConfigs.Store, nil)
+		suite.NoError(err)
+
+		expectedName := formatCategoryTranslation(models.UncategorizedMTOName, nil)
+
+		suite.EqualValues(expectedName, translatedCategoryName)
+
+	})
 
 }

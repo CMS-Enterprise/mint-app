@@ -19,7 +19,7 @@ const DataNotAvailableMessage = "Data not available"
 //Future Enhancement: allow faktory workers to take a dataloader
 
 func translateForeignKey(ctx context.Context, store *storage.Store, value interface{}, tableReference models.TableName) (interface{}, error) {
-	if value == nil {
+	if value == nil && tableReference != models.TNMTOCategory {
 		return nil, nil
 	}
 	if store == nil {
@@ -177,6 +177,11 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 }
 
 func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// handle the special case when the key is nil, and return Uncategorized (Uncategorized)
+	if key == nil {
+		return formatCategoryTranslation(models.UncategorizedMTOName, nil), nil
+
+	}
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
