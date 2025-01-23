@@ -80,7 +80,7 @@ ranked_solutions AS (
             ORDER BY COALESCE(modified_dts, created_dts) DESC
         ) AS row_num,
         ARRAY_AGG(operational_need_id) OVER (
-            PARTITION BY model_plan_id, final_name
+            PARTITION BY model_plan_id, final_name --TODO, this duplicates needs if there are duplicates
         ) AS all_operational_need_ids
     FROM solutions
 ),
@@ -154,6 +154,7 @@ inserted_solutions AS ( --noqa
         s.needed_by,
         s.created_by
     FROM ranked_solutions s
+    WHERE  s.row_num = 1 -- only insert the most recent solutions in case of duplicates
     RETURNING
         mto_solution.id,
         mto_solution.created_by
@@ -166,10 +167,12 @@ linkMapping AS (
         inserted_solutions.id AS solution_id, --noqa
         inserted_solutions.created_by,
         -- we use the operational need id as the milestone id to enable easier joins and linking
-        UNNEST(ranked_solutions.all_operational_need_ids) AS milestone_id
+        UNNEST(ranked_solutions.all_operational_need_ids) AS milestone_id,
+        ranked_solutions.all_operational_need_ids
     FROM inserted_solutions
     JOIN ranked_solutions ON ranked_solutions.id = inserted_solutions.id
 ),
+-- SELECT * FROM linkMapping
 
 inserted_links AS (
     INSERT INTO mto_milestone_solution_link (
