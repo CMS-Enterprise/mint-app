@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -50,6 +50,10 @@ const AddToExistingMilestoneForm = ({
 
   const { message, showMessage, clearMessage, showErrorMessageInModal } =
     useMessage();
+
+  const history = useHistory();
+
+  const params = new URLSearchParams(history.location.search);
 
   const { data, loading } = useGetModelToOperationsMatrixQuery({
     variables: {
@@ -109,6 +113,8 @@ const AddToExistingMilestoneForm = ({
               </Alert>
             </>
           );
+          params.delete('add-solution', solutionKey);
+          history.replace({ search: params.toString() });
           closeModal();
         }
       })
