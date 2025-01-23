@@ -59,6 +59,7 @@ solutions AS (
         solution.poc_name,
         solution.is_other,
         solution.other_header,
+        solution.must_finish_dts AS needed_by,
         solution.created_by,
         solution.created_dts,
         solution.modified_by,
@@ -69,6 +70,7 @@ solutions AS (
     LEFT JOIN possible_operational_solution AS possible ON solution.solution_type = possible.id
     WHERE solution.needed = TRUE
 ),
+
 -- TODO (mto) verify this, the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
 ranked_solutions AS (
     SELECT 
@@ -124,6 +126,7 @@ inserted_solutions AS ( --noqa
         poc_name,
         type,
         status,
+        needed_by,
         created_by
     )
     SELECT
@@ -148,8 +151,9 @@ inserted_solutions AS ( --noqa
             WHEN        s.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
             ELSE 'NOT_STARTED'::MTO_SOLUTION_STATUS
         END AS status,
+        s.needed_by,
         s.created_by
-    FROM solutions s
+    FROM ranked_solutions s
     RETURNING
         mto_solution.id,
         mto_solution.created_by
@@ -159,14 +163,12 @@ inserted_solutions AS ( --noqa
 
 linkMapping AS (
     SELECT 
-        inserted_milestones.id AS milestone_id,
         inserted_solutions.id AS solution_id, --noqa
-        inserted_solutions.created_by
-    FROM inserted_milestones
-    -- We use the operational need id as the milestone id to enable easier joins and linking
-    LEFT JOIN  solutions ON solutions.operational_need_id = inserted_milestones.id
-    -- We use the operational_solution id as the same as the mto_solution ID, so we can join this way
-    LEFT JOIN inserted_solutions ON inserted_solutions.id = solutions.id
+        inserted_solutions.created_by,
+        -- we use the operational need id as the milestone id to enable easier joins and linking
+        UNNEST(ranked_solutions.all_operational_need_ids) AS milestone_id
+    FROM inserted_solutions
+    JOIN ranked_solutions ON ranked_solutions.id = inserted_solutions.id
 ),
 
 inserted_links AS (
