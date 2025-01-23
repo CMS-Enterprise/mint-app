@@ -66,9 +66,9 @@ solutions AS (
         solution.modified_dts
         
     FROM operational_solution AS solution
-    JOIN operational_need AS need ON solution.operational_need_id = need.id -- TODO should we disregard solutions that are for needs that are not needed? or still add any solutions that are needed? They might currently be hidden in the front end 
+    JOIN operational_need AS need ON solution.operational_need_id = need.id 
     LEFT JOIN possible_operational_solution AS possible ON solution.solution_type = possible.id
-    WHERE solution.needed = TRUE
+    WHERE solution.needed = TRUE AND need.needed = TRUE -- A solution must be needed itself, and the parent need it's associated with must be needed in order to be inserted
 ),
 
 -- TODO (mto) verify this, the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
@@ -174,7 +174,7 @@ link_mapping AS (
     /* Group the data as */
     GROUP BY inserted_solutions.id, inserted_solutions.created_by, ranked_solutions.all_operational_need_ids, milestone_id
 ),
---SELECT * FROM link_mapping
+-- SELECT * FROM link_mapping
 
 inserted_links AS (
     INSERT INTO mto_milestone_solution_link (
