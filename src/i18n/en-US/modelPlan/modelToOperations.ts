@@ -221,6 +221,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     modelMilestone: 'Model milestone',
     facilitatedBy: 'Facilitated by',
     solutions: 'Solutions',
+    solution: 'Solution',
+    relatedMilestones: 'Related milestones',
     needBy: 'Need by',
     status: 'Status',
     actions: 'Actions',
@@ -231,6 +233,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     editDetails: 'Edit details',
     milestones: 'milestones',
     selectASolution: 'Select a solution',
+    noRelatedMilestones: 'No related milestones',
+    moreMilestones: '+ {{count}} more milestone',
+    moreMilestones_other: '+ {{count}} more milestones',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',
@@ -260,6 +265,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       standardCategories: 'Standard categories',
       addThisTemplate: 'Add this template',
       addCustomCategory: 'or, add a custom category'
+    },
+    alert: {
+      noSolutions:
+        'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',
+      noFilterSelections:
+        'There are no operational solutions that match your filter selections.'
     }
   },
   errorReorder: 'Failed to reorder the MTO matrix.  Please try again.',
@@ -584,6 +595,15 @@ export const modelToOperationsMisc: Record<string, any> = {
         }
       }
     }
+  },
+  solutionTable: {
+    tabs: {
+      allSolutions: 'All solutions ({{count}})',
+      itSystems: 'IT systems ({{count}})',
+      contracts: 'Contracts and contractors ({{count}})',
+      other: 'Other solutions ({{count}})'
+    },
+    hideAdded: 'Hide milestones without solutions ({{count}})'
   },
   validation: {
     fillOut: 'Please fill out the required field.'

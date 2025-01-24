@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -26,6 +26,7 @@ import Sidepanel from 'components/Sidepanel';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
 import TableResults from 'components/TableResults';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
@@ -124,7 +125,11 @@ const MilstoneCardGroup = ({
 
   const { clearMessage, message } = useMessage();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    setMTOModalOpen: setIsModalOpen,
+    setMTOModalState,
+    isMTOModalOpen
+  } = useContext(MTOModalContext);
 
   // Query parameters
   const params = new URLSearchParams(history.location.search);
@@ -250,7 +255,7 @@ const MilstoneCardGroup = ({
         {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
       </Sidepanel>
 
-      {!isModalOpen && message && <Expire delay={45000}>{message}</Expire>}
+      {!isMTOModalOpen && message && <Expire delay={45000}>{message}</Expire>}
 
       <div className="milestone-card-group">
         <div className="margin-top-2 margin-bottom-4">
@@ -375,6 +380,7 @@ const MilstoneCardGroup = ({
                   className="margin-x-05"
                   onClick={() => {
                     clearMessage();
+                    setMTOModalState({ modalType: 'milestone' });
                     setIsModalOpen(true);
                   }}
                 >

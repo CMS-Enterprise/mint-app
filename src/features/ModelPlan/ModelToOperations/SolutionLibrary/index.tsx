@@ -31,13 +31,19 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
+import SolutionViewSelector from '../_components/SolutionViewSelector';
+
 import MTOSolutionCard from './_components/MTOSolutionCard';
-import ViewSelector from './_components/ViewSelector';
 
 export type SolutionCardType =
   GetMtoCommonSolutionsQuery['modelPlan']['mtoMatrix']['commonSolutions'][0];
 
-export type SolutionViewType = 'all' | 'it-systems' | 'contracts' | 'cross-cut';
+export type SolutionViewType =
+  | 'all'
+  | 'it-systems'
+  | 'contracts'
+  | 'cross-cut'
+  | 'other-solutions';
 
 const SolutionLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -154,6 +160,7 @@ const SolutionLibrary = () => {
       'it-systems': itSystemsSolutions,
       contracts: contractsSolutions,
       'cross-cut': crossCutSolutions,
+      'other-solutions': [],
       all: allSolutions
     };
     return views[viewParam];
@@ -261,8 +268,9 @@ const SolutionLibrary = () => {
                     desktop={{ col: 12 }}
                     className="desktop:display-flex flex-wrap margin-bottom-2"
                   >
-                    <ViewSelector
+                    <SolutionViewSelector
                       viewParam={viewParam}
+                      type="library"
                       allSolutions={allSolutions}
                       itSystemsSolutions={itSystemsSolutions}
                       contractsSolutions={contractsSolutions}

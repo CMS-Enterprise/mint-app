@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MTORiskIndicatorTag Component > renders correctly and matches snapshot for AT_RISK indicator 1`] = `
+<DocumentFragment>
+  <div>
+    <span
+      class="usa-tooltip"
+      data-testid="tooltipWrapper"
+    >
+      <div
+        aria-describedby="tooltip-550000"
+        class="usa-tooltip__trigger"
+        data-testid="triggerElement"
+        position="right"
+        tabindex="0"
+        title=""
+      >
+        <svg
+          class="usa-icon usa-icon--size-3 text-error-dark top-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+          />
+        </svg>
+      </div>
+      <span
+        aria-hidden="true"
+        class="usa-tooltip__body"
+        data-testid="tooltipBody"
+        id="tooltip-550000"
+        role="tooltip"
+        title="Significantly at risk"
+      >
+        Significantly at risk
+      </span>
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MTORiskIndicatorTag Component > renders correctly and matches snapshot for OFF_TRACK indicator 1`] = `
+<DocumentFragment>
+  <div>
+    <span
+      class="usa-tooltip"
+      data-testid="tooltipWrapper"
+    >
+      <div
+        aria-describedby="tooltip-550000"
+        class="usa-tooltip__trigger"
+        data-testid="triggerElement"
+        position="right"
+        tabindex="0"
+        title=""
+      >
+        <svg
+          class="usa-icon usa-icon--size-3 text-warning-dark top-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+          />
+        </svg>
+      </div>
+      <span
+        aria-hidden="true"
+        class="usa-tooltip__body"
+        data-testid="tooltipBody"
+        id="tooltip-550000"
+        role="tooltip"
+        title="Some risk (off track)"
+      >
+        Some risk (off track)
+      </span>
+    </span>
+  </div>
+</DocumentFragment>
+`;
