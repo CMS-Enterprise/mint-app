@@ -83,7 +83,14 @@ func (r *mutationResolver) MtoSolutionUpdateLinkedMilestones(ctx context.Context
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return MTOSolutionUpdateLinkedMilestones(logger, r.store, principal, id, milestoneLinks)
+	return MTOSolutionLinkMilestones(
+		ctx,
+		principal,
+		logger,
+		r.store,
+		id,
+		milestoneLinks.MilestoneIDs,
+	)
 }
 
 // DeleteMTOSolution is the resolver for the deleteMTOSolution field.
