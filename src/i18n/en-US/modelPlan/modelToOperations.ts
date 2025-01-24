@@ -221,6 +221,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     modelMilestone: 'Model milestone',
     facilitatedBy: 'Facilitated by',
     solutions: 'Solutions',
+    solution: 'Solution',
+    relatedMilestones: 'Related milestones',
     needBy: 'Need by',
     status: 'Status',
     actions: 'Actions',
@@ -231,6 +233,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     editDetails: 'Edit details',
     milestones: 'milestones',
     selectASolution: 'Select a solution',
+    noRelatedMilestones: 'No related milestones',
+    moreMilestones: '+ {{count}} more milestone',
+    moreMilestones_other: '+ {{count}} more milestones',
     menu: {
       close: 'Close menu',
       moveCategoryUp: 'Move category up',
@@ -260,6 +265,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       standardCategories: 'Standard categories',
       addThisTemplate: 'Add this template',
       addCustomCategory: 'or, add a custom category'
+    },
+    alert: {
+      noSolutions:
+        'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',
+      noFilterSelections:
+        'There are no operational solutions that match your filter selections.'
     }
   },
   errorReorder: 'Failed to reorder the MTO matrix.  Please try again.',
@@ -504,6 +515,28 @@ export const modelToOperationsMisc: Record<string, any> = {
         'There was an error adding this template. Please try again. If the error persists, please try again another time.',
       addTemplate: 'Add template',
       dontAdd: 'Don’t add template'
+    },
+    addToExistingMilestone: {
+      title: 'Add to existing milestone?',
+      description:
+        'You may choose to add this solution to existing milestones in your MTO, or you may do so later.',
+      label: 'Milestones',
+      helpText: 'Select all that apply.',
+      selectedLabel: 'Selected milestones',
+      noMilestone:
+        'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
+      cta: {
+        empty: 'Add without milestone',
+        add: 'Add with {{count}} milestone',
+        add_other: 'Add with {{count}} milestones'
+      },
+      alert: {
+        error:
+          'There was an error adding your solution and any milestone(s) you selected for it. Please try again. If the error persists, please try again another time.',
+        info: 'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
+        success:
+          'Your solution (<b>{{title}}</b>) has been added and will be visible on your MTO.'
+      }
     }
   },
   milestoneLibrary: {
@@ -584,6 +617,15 @@ export const modelToOperationsMisc: Record<string, any> = {
         }
       }
     }
+  },
+  solutionTable: {
+    tabs: {
+      allSolutions: 'All solutions ({{count}})',
+      itSystems: 'IT systems ({{count}})',
+      contracts: 'Contracts and contractors ({{count}})',
+      other: 'Other solutions ({{count}})'
+    },
+    hideAdded: 'Hide milestones without solutions ({{count}})'
   },
   validation: {
     fillOut: 'Please fill out the required field.'
