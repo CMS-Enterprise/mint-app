@@ -1,5 +1,6 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
+  GetModelToOperationsMatrixDocument,
   GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
@@ -14,10 +15,46 @@ import {
   MtoRiskIndicator,
   MtoSolutionStatus,
   MtoSolutionType,
+  MtoStatus,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
+export const mtoMatrixMock = [
+  {
+    request: {
+      query: GetModelToOperationsMatrixDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.IN_PROGRESS,
+            categories: [],
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '123',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                name: 'Milestone 1'
+              }
+            ],
+
+            commonMilestones: [],
+            recentEdit: null
+          }
+        }
+      }
+    }
+  }
+];
 
 export const commonMilestonesMock = [
   {

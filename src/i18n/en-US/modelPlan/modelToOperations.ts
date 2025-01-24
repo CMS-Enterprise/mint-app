@@ -515,6 +515,28 @@ export const modelToOperationsMisc: Record<string, any> = {
         'There was an error adding this template. Please try again. If the error persists, please try again another time.',
       addTemplate: 'Add template',
       dontAdd: 'Don’t add template'
+    },
+    addToExistingMilestone: {
+      title: 'Add to existing milestone?',
+      description:
+        'You may choose to add this solution to existing milestones in your MTO, or you may do so later.',
+      label: 'Milestones',
+      helpText: 'Select all that apply.',
+      selectedLabel: 'Selected milestones',
+      noMilestone:
+        'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
+      cta: {
+        empty: 'Add without milestone',
+        add: 'Add with {{count}} milestone',
+        add_other: 'Add with {{count}} milestones'
+      },
+      alert: {
+        error:
+          'There was an error adding your solution and any milestone(s) you selected for it. Please try again. If the error persists, please try again another time.',
+        info: 'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
+        success:
+          'Your solution (<b>{{title}}</b>) has been added and will be visible on your MTO.'
+      }
     }
   },
   milestoneLibrary: {
