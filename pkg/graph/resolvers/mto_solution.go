@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -27,6 +29,7 @@ func MTOSolutionUpdate(
 	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
+	milestoneLinks *model.MTOMilestoneLinks,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -49,7 +52,30 @@ func MTOSolutionUpdate(
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOSolutionUpdate(store, logger, existing)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		updatedSolution, err := storage.MTOSolutionUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update solution: %w", err)
+		}
+
+		// Update linked milestones
+		if milestoneLinks.MilestoneIDs != nil {
+			_, err := MTOSolutionLinkMilestonesWithTX(
+				ctx,
+				principal,
+				logger,
+				tx,
+				updatedSolution.ID,
+				milestoneLinks.MilestoneIDs,
+			)
+			if err != nil {
+				return nil, fmt.Errorf("failed to update linked milestones: %w", err)
+			}
+		}
+
+		return updatedSolution, nil
+	})
 }
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
@@ -138,6 +164,31 @@ func MTOSolutionCreateCommon(
 	})
 }
 
+// MTOSolutionLinkMilestones handles linking milestones to a solution
+func MTOSolutionLinkMilestones(
+	ctx context.Context,
+	principal authentication.Principal,
+	logger *zap.Logger,
+	store *storage.Store,
+	solutionID uuid.UUID,
+	milestonesToLink []uuid.UUID,
+) ([]*models.MTOMilestone, error) {
+
+	retVals, err := sqlutils.WithTransaction[[]*models.MTOMilestone](store, func(tx *sqlx.Tx) (*[]*models.MTOMilestone, error) {
+		result, err := MTOSolutionLinkMilestonesWithTX(ctx, principal, logger, tx, solutionID, milestonesToLink)
+		if err != nil {
+			return nil, fmt.Errorf("failed to link milestones to solution: %w", err)
+		}
+		return &result, err
+	})
+
+	if err != nil || retVals == nil {
+		return nil, err
+	}
+
+	return *retVals, err
+}
+
 // MTOSolutionLinkMilestonesWithTX handles linking milestones to a solution in a single transaction
 func MTOSolutionLinkMilestonesWithTX(
 	ctx context.Context,
@@ -149,7 +200,6 @@ func MTOSolutionLinkMilestonesWithTX(
 ) ([]*models.MTOMilestone, error) {
 	// Prepare data for batch insertion
 	/*links := lo.Map(milestonesToLink, func(milestoneID uuid.UUID, _ int) *models.MTOMilestoneSolutionLink {
-		return models.NewMTOMilestoneSolutionLink(principal.Account().ID, milestoneID, solutionID)
 	})*/
 
 	// Insert or update links in bulk
