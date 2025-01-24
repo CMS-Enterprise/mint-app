@@ -14,6 +14,7 @@
   "plugins": ["cypress", "simple-import-sort"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "no-underscore-dangle":  ["error", { "allow": ["__typename"] }],
     "jsx-a11y/label-has-associated-control": [
       "error",
       {

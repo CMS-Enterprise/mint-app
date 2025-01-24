@@ -73,6 +73,7 @@ import {
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkSolutionForm from '../LinkSolutionForm';
+import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import './index.scss';
@@ -601,23 +602,13 @@ const EditMilestoneForm = ({
         Cell: ({ row }: { row: Row<SolutionType> }) => {
           const { riskIndicator } = row.original;
 
+          if (!riskIndicator) return <></>;
+
           return (
-            <span className="text-bold text-base-lighter">
-              {(() => {
-                if (riskIndicator === MtoRiskIndicator.AT_RISK)
-                  return (
-                    <Icon.Error className="text-error-dark top-05" size={3} />
-                  );
-                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
-                  return (
-                    <Icon.Warning
-                      className="text-warning-dark top-05"
-                      size={3}
-                    />
-                  );
-                return '';
-              })()}
-            </span>
+            <MTORiskIndicatorTag
+              riskIndicator={riskIndicator}
+              showTooltip={false}
+            />
           );
         }
       }
