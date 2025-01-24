@@ -202,7 +202,6 @@ func MTOSolutionLinkMilestonesWithTX(
 ) ([]*models.MTOMilestone, error) {
 	// Prepare data for batch insertion
 	/*links := lo.Map(milestonesToLink, func(milestoneID uuid.UUID, _ int) *models.MTOMilestoneSolutionLink {
-		return models.NewMTOMilestoneSolutionLink(principal.Account().ID, milestoneID, solutionID)
 	})*/
 
 	// Insert or update links in bulk
