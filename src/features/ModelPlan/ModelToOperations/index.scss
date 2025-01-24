@@ -54,3 +54,12 @@
         box-shadow: 0px 4px 15px rgba(115, 179, 231, 0.75) !important;
     }
 }
+
+.save-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding-right: 2rem;
+    margin-top: -3rem;
+    margin-bottom: .9rem;
+}
