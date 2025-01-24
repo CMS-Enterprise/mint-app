@@ -17,11 +17,13 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
+import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
+import ITSystemsTable from '../_components/ITSystemsTable';
 import MTOTable, { isMatrixStartedFc } from '../_components/MatrixTable';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
@@ -148,6 +150,8 @@ const MTOHome = () => {
                   <button
                     type="button"
                     onClick={() => {
+                      params.delete('type');
+                      params.delete('hide-milestones-without-solutions');
                       params.set('view', item);
                       history.push({ search: params.toString() });
                     }}
@@ -202,28 +206,43 @@ const MTOHome = () => {
             </div>
           )}
 
-          {currentView === 'milestones' && (
-            <>
-              {loading ? (
-                <PageLoading />
-              ) : (
-                <>
-                  {isMatrixStarted ? (
-                    <>
-                      <MTOTableActions />
-                      <MTOTable
-                        queryData={data}
-                        loading={loading}
-                        error={error}
-                      />
-                    </>
-                  ) : (
-                    <MTOOptionsPanel />
-                  )}
-                </>
-              )}
-            </>
-          )}
+          <EditMTOMilestoneProvider>
+            {currentView === 'milestones' && (
+              <>
+                {loading ? (
+                  <PageLoading />
+                ) : (
+                  <>
+                    {isMatrixStarted ? (
+                      <>
+                        <MTOTableActions />
+                        <MTOTable
+                          queryData={data}
+                          loading={loading}
+                          error={error}
+                        />
+                      </>
+                    ) : (
+                      <MTOOptionsPanel />
+                    )}
+                  </>
+                )}
+              </>
+            )}
+
+            {currentView === 'solutions' && (
+              <>
+                {loading ? (
+                  <PageLoading />
+                ) : (
+                  <>
+                    <MTOTableActions />
+                    <ITSystemsTable />
+                  </>
+                )}
+              </>
+            )}
+          </EditMTOMilestoneProvider>
         </div>
       </GridContainer>
     </>

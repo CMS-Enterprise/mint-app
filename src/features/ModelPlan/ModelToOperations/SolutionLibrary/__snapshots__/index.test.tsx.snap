@@ -202,6 +202,9 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                   Cross-cutting groups (1)
                 </button>
               </li>
+              <li
+                class="usa-button-group__item"
+              />
             </ul>
             <div
               class="mint-checkbox usa-checkbox"

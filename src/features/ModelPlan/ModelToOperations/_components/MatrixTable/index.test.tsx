@@ -704,7 +704,9 @@ describe('isMatrixStartedFc', () => {
     mockData.milestones = [
       {
         __typename: 'MTOMilestone',
-        id: '789'
+        id: '789',
+        name: 'Milestone 1',
+        key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
       }
     ];
     mockData.categories = [

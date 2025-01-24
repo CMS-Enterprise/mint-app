@@ -1,21 +1,60 @@
 import {
   GetMilestoneSuggestedAnswerDocument,
+  GetModelToOperationsMatrixDocument,
   GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
+  GetMtoSolutionsAndMilestonesDocument,
   GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoCommonSolutionSubject,
   MtoMilestoneStatus,
   MtoRiskIndicator,
+  MtoSolutionStatus,
   MtoSolutionType,
+  MtoStatus,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
+export const mtoMatrixMock = [
+  {
+    request: {
+      query: GetModelToOperationsMatrixDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.IN_PROGRESS,
+            categories: [],
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '123',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                name: 'Milestone 1'
+              }
+            ],
+
+            commonMilestones: [],
+            recentEdit: null
+          }
+        }
+      }
+    }
+  }
+];
 
 export const commonMilestonesMock = [
   {
@@ -334,11 +373,62 @@ export const suggestedMilestonesMock = [
   }
 ];
 
+export const solutionAndMilestoneMock = [
+  {
+    request: {
+      query: GetMtoSolutionsAndMilestonesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: '123',
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            solutions: [
+              {
+                __typename: 'MTOSolution',
+                id: '1',
+                key: MtoCommonSolutionKey.ACO_OS,
+                name: 'Solution 1',
+                riskIndicator: MtoRiskIndicator.AT_RISK,
+                type: MtoSolutionType.IT_SYSTEM,
+                status: MtoSolutionStatus.IN_PROGRESS,
+                facilitatedBy: [],
+                neededBy: '',
+                milestones: [
+                  {
+                    __typename: 'MTOMilestone',
+                    id: '1',
+                    name: 'Milestone 1'
+                  }
+                ]
+              }
+            ],
+            milestonesWithNoLinkedSolutions: [
+              {
+                __typename: 'MTOMilestone',
+                id: '1',
+                name: 'Milestone 1'
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
 const allMocks = [
   ...suggestedMilestonesMock,
   ...commonMilestonesMock,
   ...milestoneMock(modelID),
-  ...categoryMock
+  ...categoryMock,
+  ...solutionAndMilestoneMock
 ];
 
 export default allMocks;
