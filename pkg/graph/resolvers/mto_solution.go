@@ -53,8 +53,6 @@ func MTOSolutionUpdate(
 		return nil, err
 	}
 
-	// return storage.MTOSolutionUpdate(store, logger, existing)
-
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
 		updatedSolution, err := storage.MTOSolutionUpdate(tx, logger, existing)
 		if err != nil {
