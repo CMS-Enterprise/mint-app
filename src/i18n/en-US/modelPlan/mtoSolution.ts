@@ -70,9 +70,9 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
-      AT_RISK: 'At risk',
+      ON_TRACK: 'On track',
       OFF_TRACK: 'Off track',
-      ON_TRACK: 'On track'
+      AT_RISK: 'At risk'
     },
     order: 1.5
   },
