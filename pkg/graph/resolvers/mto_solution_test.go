@@ -183,7 +183,7 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 	)
 	suite.NoError(err)
 
-	// Add the solution to the milestone by solution ID
+	// Add the milestone to the solution by milestone ID
 	milestoneLinks := &model.MTOMilestoneLinks{
 		MilestoneIDs: []uuid.UUID{milestone.ID},
 	}
@@ -204,4 +204,25 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 	suite.NoError(err)
 	suite.Len(linkedSolutions, 1)
 	suite.Equal(sol.ID, linkedSolutions[0].SolutionID)
+
+	// Unlink all milestones from the solution
+	milestoneLinks = &model.MTOMilestoneLinks{
+		MilestoneIDs: []uuid.UUID{},
+	}
+
+	_, err = MTOSolutionUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		sol.ID,
+		map[string]interface{}{},
+		milestoneLinks,
+	)
+	suite.NoError(err)
+
+	// Verify the solution is linked now
+	linkedSolutions, err = storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
+	suite.NoError(err)
+	suite.Len(linkedSolutions, 0)
 }
