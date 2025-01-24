@@ -407,7 +407,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       backToMilestone: 'Back to milestone details'
     },
     editSolution: {
-      milestoneTitle: 'Solution details',
+      solutionTitle: 'Solution details',
+      learnMore: 'Learn more abou this solution',
       alert: {
         info: 'Before adding this solution, consider checking the <s>solution library</s> to see if MINT offers a similar preset solution.',
         success: 'Your milestone ({{solution}}) has been updated.',
@@ -695,6 +696,31 @@ export const modelToOperationsMisc: Record<string, any> = {
   },
   validation: {
     fillOut: 'Please fill out the required field.'
+  },
+  solutionStatusButton: 'Solution implementation statuses',
+  solutionStatuses: {
+    NOT_STARTED: {
+      status: 'Not started',
+      description: 'No work has started on this IT system or solution'
+    },
+    ONBOARDING: {
+      status: 'Onboarding',
+      description:
+        'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
+    },
+    BACKLOG: {
+      status: 'Not started',
+      description: 'Model work is on the project team’s backlog'
+    },
+    IN_PROGRESS: {
+      status: 'Not started',
+      description:
+        'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
+    },
+    COMPLETED: {
+      status: 'Not started',
+      description: 'Work related to this model is finished'
+    }
   }
 };
 

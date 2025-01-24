@@ -111,25 +111,25 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     options: {
-      APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
-      CONTRACTING_OFFICERS_REPRESENTATIVE:
-        'Contracting officers representative',
-      EVALUATION_CONTRACTOR: 'Evaluation contractor',
-      IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
-      IT_LEAD: 'It lead',
-      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'It system team or product owner',
-      LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group',
-      LEARNING_CONTRACTOR: 'Learning contractor',
-      MODEL_LEAD: 'Model lead',
       MODEL_TEAM: 'Model team',
-      MONITORING_CONTRACTOR: 'Monitoring contractor',
-      OTHER: 'Other',
+      MODEL_LEAD: 'Model lead',
+      IT_LEAD: 'It lead',
+      SOLUTION_ARCHITECT: 'Solution architect',
+      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'It system team or product owner',
       PARTICIPANTS: 'Participants',
+      APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
+      IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
+      EVALUATION_CONTRACTOR: 'Evaluation contractor',
       QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR:
         'Quality measures development contractor',
+      LEARNING_CONTRACTOR: 'Learning contractor',
+      MONITORING_CONTRACTOR: 'Monitoring contractor',
+      CONTRACTING_OFFICERS_REPRESENTATIVE:
+        'Contracting officers representative',
+      LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group',
       RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
         'Research and rapid cycle evaluation group',
-      SOLUTION_ARCHITECT: 'Solution architect'
+      OTHER: 'Other'
     },
     order: 1.8
   }

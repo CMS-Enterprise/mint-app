@@ -52,7 +52,7 @@ const EditMTOSolutionProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       params.delete('edit-solution');
-      params.delete('select-solutions');
+      params.delete('select-milestones');
       history.push({ search: params.toString() });
       setLeavePage(false);
       setIsModalOpen(false);
@@ -77,12 +77,10 @@ const EditMTOSolutionProvider = ({
         <Sidepanel
           isOpen={isModalOpen}
           closeModal={closeModal}
-          ariaLabel={modelToOperationsMiscT(
-            'solutionLibrary.aboutThisSolution'
-          )}
+          ariaLabel={modelToOperationsMiscT('modal.editSolution.solutionTitle')}
           testid="edit-solution-sidepanel"
           modalHeading={modelToOperationsMiscT(
-            'solutionLibrary.aboutThisSolution'
+            'modal.editSolution.solutionTitle'
           )}
           noScrollable
         >

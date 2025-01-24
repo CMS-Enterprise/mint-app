@@ -24,12 +24,14 @@ import {
   GridContainer,
   Icon,
   Label,
+  Link,
   Radio,
   Select,
   Table as UswdsTable,
   TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
   GetMtoAllSolutionsQuery,
@@ -56,6 +58,7 @@ import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
+import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
 import PageHeading from 'components/PageHeading';
@@ -75,6 +78,7 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import ImplementationStatuses from '../ImplementationStatus';
 import LinkSolutionForm from '../LinkSolutionForm';
 import MilestoneStatusTag from '../MTOStatusTag';
 
@@ -154,6 +158,10 @@ const EditSolutionForm = ({
   const solution = useMemo(() => {
     return data?.mtoSolution;
   }, [data]);
+
+  const solutionRoute: string | undefined = helpSolutions.find(
+    sol => sol.enum === solution?.key
+  )?.route;
 
   // const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
   //   variables: {
@@ -713,9 +721,34 @@ const EditSolutionForm = ({
               >
                 <ConfirmLeaveRHF />
 
-                <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
-                  {solution.name}
-                </h2>
+                <div className="border-bottom-1px border-base-lighter padding-bottom-3 margin-bottom-3">
+                  <h2
+                    className={classNames(
+                      'margin-y-2 margin-bottom-2 line-height-large',
+                      {
+                        'margin-top-0': solution.addedFromSolutionLibrary
+                      }
+                    )}
+                  >
+                    {solution.name}
+                  </h2>
+
+                  <p className="text-base margin-bottom-0">
+                    {mtoSolutionT(`solutionType.options.${solution.type}`)}
+                  </p>
+
+                  {solution.addedFromSolutionLibrary && (
+                    <div className="margin-top-2">
+                      <UswdsReactLink
+                        to={`/help-and-knowledge/operational-solutions?page=1&solution=${solutionRoute}&section=about`}
+                        target="_blank"
+                        variant="external"
+                      >
+                        {modelToOperationsMiscT('modal.editSolution.learnMore')}
+                      </UswdsReactLink>
+                    </div>
+                  )}
+                </div>
 
                 <Fieldset disabled={loading}>
                   <p className="margin-top-0 margin-bottom-3 text-base">
@@ -875,6 +908,8 @@ const EditSolutionForm = ({
                       </FormGroup>
                     )}
                   />
+
+                  <ImplementationStatuses className="margin-bottom-4" />
 
                   <Controller
                     name="riskIndicator"
