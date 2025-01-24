@@ -88,6 +88,11 @@ func (r *mutationResolver) DeleteMTOSolution(ctx context.Context, id uuid.UUID) 
 	return true, nil
 }
 
+// MtoSolution is the resolver for the mtoSolution field.
+func (r *queryResolver) MtoSolution(ctx context.Context, id uuid.UUID) (*models.MTOSolution, error) {
+	return MTOSolutionGetByIDLOADER(ctx, id)
+}
+
 // MTOSolution returns generated.MTOSolutionResolver implementation.
 func (r *Resolver) MTOSolution() generated.MTOSolutionResolver { return &mTOSolutionResolver{r} }
 

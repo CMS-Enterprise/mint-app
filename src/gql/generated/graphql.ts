@@ -3910,6 +3910,7 @@ export type Query = {
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoMilestone: MtoMilestone;
+  mtoSolution: MtoSolution;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
   operationalSolution: OperationalSolution;
@@ -3980,6 +3981,12 @@ export type QueryModelPlansByOperationalSolutionKeyArgs = {
 
 /** Query definition for the schema */
 export type QueryMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoSolutionArgs = {
   id: Scalars['UUID']['input'];
 };
 

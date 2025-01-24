@@ -56,3 +56,8 @@ extend type Mutation {
   deleteMTOSolution(id: UUID!): Boolean!
   @hasRole(role: MINT_USER)
 }
+
+extend type Query {
+  mtoSolution(id: UUID!): MTOSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+}
