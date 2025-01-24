@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
           neededBy
           status
           riskIndicator
+          addedFromSolutionLibrary
           milestones {
             id
             name

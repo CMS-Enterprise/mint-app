@@ -66,6 +66,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'RiskIndicator',
     dbField: 'risk_indicator',
     label: 'Risk Indicator',
+    sublabel: 'Choose the applicable risk status for this solution.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
@@ -95,7 +96,9 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'neededBy',
     goField: 'NeededBy',
     dbField: 'needed_by',
-    label: 'Needed By',
+    label: 'Need By',
+    sublabel:
+      'Choose the date when onboarding and implementation work for this solutions should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.TEXT,
     order: 1.7

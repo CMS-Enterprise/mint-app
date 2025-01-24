@@ -41,9 +41,12 @@ import {
   MtoSolution,
   MtoSolutionStatus,
   useDeleteMtoMilestoneMutation,
+  useDeleteMtoSolutionMutation,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
-  useUpdateMtoMilestoneMutation
+  useGetMtoSolutionQuery,
+  useUpdateMtoMilestoneMutation,
+  useUpdateMtoSolutionMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -77,30 +80,21 @@ import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
 
-export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
+// export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 
 type FormValues = {
-  isDraft: boolean;
   name: string;
-  categories: {
-    category: {
-      id: string;
-    };
-    subCategory: {
-      id: string;
-    };
-  };
   facilitatedBy?: MtoFacilitator[];
-  needBy?: string;
-  status: MtoMilestoneStatus;
-  riskIndicator: MtoRiskIndicator;
-};
-
-type TableSolutionType = {
-  name: string;
+  neededBy?: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
 };
+
+// type TableSolutionType = {
+//   name: string;
+//   status: MtoSolutionStatus;
+//   riskIndicator: MtoRiskIndicator;
+// };
 
 type EditSolutionFormProps = {
   closeModal: () => void;
@@ -113,7 +107,7 @@ const EditSolutionForm = ({
   setIsDirty,
   submitted
 }: EditSolutionFormProps) => {
-  const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
+  const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
@@ -124,7 +118,7 @@ const EditSolutionForm = ({
     facilitatedBy: facilitatedByConfig,
     status: stausConfig,
     riskIndicator: riskIndicatorConfig
-  } = usePlanTranslation('mtoMilestone');
+  } = usePlanTranslation('mtoSolution');
 
   const history = useHistory();
 
@@ -132,7 +126,7 @@ const EditSolutionForm = ({
 
   const params = new URLSearchParams(history.location.search);
 
-  const editMilestoneID = params.get('edit-milestone');
+  const editSolutionID = params.get('edit-solution');
 
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
@@ -151,177 +145,168 @@ const EditSolutionForm = ({
     data,
     loading,
     error: queryError
-  } = useGetMtoMilestoneQuery({
+  } = useGetMtoSolutionQuery({
     variables: {
-      id: editMilestoneID || ''
+      id: editSolutionID || ''
     }
   });
 
-  const milestone = useMemo(() => {
-    return data?.mtoMilestone;
+  const solution = useMemo(() => {
+    return data?.mtoSolution;
   }, [data]);
 
-  const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
-    variables: {
-      id: modelID
-    }
-  });
+  // const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
+  //   variables: {
+  //     id: modelID
+  //   }
+  // });
 
-  // Extracts all solutions from the query
-  const allSolutions = useMemo(() => {
-    return (
-      allSolutionData?.modelPlan.mtoMatrix || {
-        __typename: 'ModelsToOperationMatrix',
-        commonSolutions: [],
-        solutions: []
-      }
-    );
-  }, [allSolutionData]);
+  // // Extracts all solutions from the query
+  // const allSolutions = useMemo(() => {
+  //   return (
+  //     allSolutionData?.modelPlan.mtoMatrix || {
+  //       __typename: 'ModelsToOperationMatrix',
+  //       commonSolutions: [],
+  //       solutions: []
+  //     }
+  //   );
+  // }, [allSolutionData]);
 
-  // Combine all solutions from both custom and common solutions
-  const combinedSolutions = useMemo(
-    () => [
-      ...allSolutions?.solutions,
-      ...(allSolutions?.commonSolutions as MtoSolution[])
-    ],
-    [allSolutions]
-  );
+  // // Combine all solutions from both custom and common solutions
+  // const combinedSolutions = useMemo(
+  //   () => [
+  //     ...allSolutions?.solutions,
+  //     ...(allSolutions?.commonSolutions as MtoSolution[])
+  //   ],
+  //   [allSolutions]
+  // );
 
-  // Checks to see if a solution is a custom solution by its ID
-  const isCustomSolution = useCallback(
-    (id: string) => {
-      return combinedSolutions.find(solution => solution.id === id);
-    },
-    [combinedSolutions]
-  );
+  // // Checks to see if a solution is a custom solution by its ID
+  // const isCustomSolution = useCallback(
+  //   (id: string) => {
+  //     return combinedSolutions.find(solution => solution.id === id);
+  //   },
+  //   [combinedSolutions]
+  // );
 
-  // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
-  const formatSolutionForTable = useCallback(
-    (
-      solution: SolutionType | MtoCommonSolutionKey | string
-    ): TableSolutionType => {
-      if (typeof solution === 'string') {
-        return {
-          name: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
-            : combinedSolutions.find(sol => sol.key === solution)?.name || '',
-          status: MtoSolutionStatus.NOT_STARTED,
-          riskIndicator: MtoRiskIndicator.ON_TRACK
-        };
-      }
+  // // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
+  // const formatSolutionForTable = useCallback(
+  //   (
+  //     solution: SolutionType | MtoCommonSolutionKey | string
+  //   ): TableSolutionType => {
+  //     if (typeof solution === 'string') {
+  //       return {
+  //         name: isCustomSolution(solution)
+  //           ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
+  //           : combinedSolutions.find(sol => sol.key === solution)?.name || '',
+  //         status: MtoSolutionStatus.NOT_STARTED,
+  //         riskIndicator: MtoRiskIndicator.ON_TRACK
+  //       };
+  //     }
 
-      return {
-        name: solution.name || '',
-        status: solution.status,
-        riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
-      };
-    },
-    [combinedSolutions, isCustomSolution]
-  );
+  //     return {
+  //       name: solution.name || '',
+  //       status: solution.status,
+  //       riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
+  //     };
+  //   },
+  //   [combinedSolutions, isCustomSolution]
+  // );
 
-  // Common solution state
-  const [commonSolutionKeys, setCommonSolutionKeys] = useState<
-    MtoCommonSolutionKey[]
-  >(
-    data?.mtoMilestone.solutions
-      .filter(solution => !!solution.key)
-      .map(solution => solution.key!) || []
-  );
+  // // Common solution state
+  // const [commonSolutionKeys, setCommonSolutionKeys] = useState<
+  //   MtoCommonSolutionKey[]
+  // >(
+  //   data?.mtoMilestone.solutions
+  //     .filter(solution => !!solution.key)
+  //     .map(solution => solution.key!) || []
+  // );
 
-  // Common solution initial state
-  const [commonSolutionKeysInitial, setCommonSolutionKeysInitial] = useState<
-    MtoCommonSolutionKey[]
-  >(
-    data?.mtoMilestone.solutions
-      .filter(solution => !!solution.key)
-      .map(solution => solution.key!) || []
-  );
+  // // Common solution initial state
+  // const [commonSolutionKeysInitial, setCommonSolutionKeysInitial] = useState<
+  //   MtoCommonSolutionKey[]
+  // >(
+  //   data?.mtoMilestone.solutions
+  //     .filter(solution => !!solution.key)
+  //     .map(solution => solution.key!) || []
+  // );
 
-  // Sets initial solution IDs from milestone from async data
-  useEffect(() => {
-    setCommonSolutionKeys(
-      data?.mtoMilestone.solutions
-        .filter(solution => !!solution.key)
-        .map(solution => solution.key!) || []
-    );
-    setCommonSolutionKeysInitial(
-      data?.mtoMilestone.solutions
-        .filter(solution => !!solution.key)
-        .map(solution => solution.key!) || []
-    );
-  }, [data]);
+  // // Sets initial solution IDs from milestone from async data
+  // useEffect(() => {
+  //   setCommonSolutionKeys(
+  //     data?.mtoMilestone.solutions
+  //       .filter(solution => !!solution.key)
+  //       .map(solution => solution.key!) || []
+  //   );
+  //   setCommonSolutionKeysInitial(
+  //     data?.mtoMilestone.solutions
+  //       .filter(solution => !!solution.key)
+  //       .map(solution => solution.key!) || []
+  //   );
+  // }, [data]);
 
-  // Custom solution state
-  const [solutionIDs, setSolutionIDs] = useState<string[]>(
-    data?.mtoMilestone.solutions
-      .filter(solution => !solution.key)
-      .map(solution => solution.id) || []
-  );
+  // // Custom solution state
+  // const [solutionIDs, setSolutionIDs] = useState<string[]>(
+  //   data?.mtoMilestone.solutions
+  //     .filter(solution => !solution.key)
+  //     .map(solution => solution.id) || []
+  // );
 
-  // Custom solution initial state
-  const [solutionIDsInitial, setSolutionIDsInitial] = useState<string[]>(
-    data?.mtoMilestone.solutions
-      .filter(solution => !solution.key)
-      .map(solution => solution.id) || []
-  );
+  // // Custom solution initial state
+  // const [solutionIDsInitial, setSolutionIDsInitial] = useState<string[]>(
+  //   data?.mtoMilestone.solutions
+  //     .filter(solution => !solution.key)
+  //     .map(solution => solution.id) || []
+  // );
 
-  // Sets initial solution IDs from milestone from async data
-  useEffect(() => {
-    setSolutionIDs(
-      data?.mtoMilestone.solutions
-        .filter(solution => !solution.key)
-        .map(solution => solution.id) || []
-    );
-    setSolutionIDsInitial(
-      data?.mtoMilestone.solutions
-        .filter(solution => !solution.key)
-        .map(solution => solution.id) || []
-    );
-  }, [data]);
+  // // Sets initial solution IDs from milestone from async data
+  // useEffect(() => {
+  //   setSolutionIDs(
+  //     data?.mtoMilestone.solutions
+  //       .filter(solution => !solution.key)
+  //       .map(solution => solution.id) || []
+  //   );
+  //   setSolutionIDsInitial(
+  //     data?.mtoMilestone.solutions
+  //       .filter(solution => !solution.key)
+  //       .map(solution => solution.id) || []
+  //   );
+  // }, [data]);
 
-  // Table state
-  const [selectedSolutions, setSelectedSolutions] = useState<
-    TableSolutionType[]
-  >([
-    ...solutionIDs.map(solution => formatSolutionForTable(solution)),
-    ...commonSolutionKeys.map(solution => formatSolutionForTable(solution))
-  ]);
+  // // Table state
+  // const [selectedSolutions, setSelectedSolutions] = useState<
+  //   TableSolutionType[]
+  // >([
+  //   ...solutionIDs.map(solution => formatSolutionForTable(solution)),
+  //   ...commonSolutionKeys.map(solution => formatSolutionForTable(solution))
+  // ]);
 
-  // Updates table data when solutions are added or removed
-  useEffect(() => {
-    const formattedCustomSolutions = solutionIDs.map(solution =>
-      formatSolutionForTable(solution)
-    );
+  // // Updates table data when solutions are added or removed
+  // useEffect(() => {
+  //   const formattedCustomSolutions = solutionIDs.map(solution =>
+  //     formatSolutionForTable(solution)
+  //   );
 
-    const formattedCommonSolutions = commonSolutionKeys.map(solution =>
-      formatSolutionForTable(solution)
-    );
+  //   const formattedCommonSolutions = commonSolutionKeys.map(solution =>
+  //     formatSolutionForTable(solution)
+  //   );
 
-    setSelectedSolutions([
-      ...formattedCustomSolutions,
-      ...formattedCommonSolutions
-    ]);
-  }, [data, solutionIDs, commonSolutionKeys, formatSolutionForTable]);
+  //   setSelectedSolutions([
+  //     ...formattedCustomSolutions,
+  //     ...formattedCommonSolutions
+  //   ]);
+  // }, [data, solutionIDs, commonSolutionKeys, formatSolutionForTable]);
 
   // Set default values for form
   const formValues = useMemo(
     () => ({
-      categories: {
-        category: {
-          id: milestone?.categories.category.id || 'default'
-        },
-        subCategory: {
-          id: milestone?.categories.subCategory.id || 'default'
-        }
-      },
-      name: milestone?.name || '',
-      facilitatedBy: milestone?.facilitatedBy || [],
-      needBy: milestone?.needBy || '',
-      status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
-      riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
-      isDraft: milestone?.isDraft || false
+      name: solution?.name || '',
+      facilitatedBy: solution?.facilitatedBy || [],
+      neededBy: solution?.neededBy || '',
+      status: solution?.status || MtoSolutionStatus.NOT_STARTED,
+      riskIndicator: solution?.riskIndicator || MtoRiskIndicator.ON_TRACK
     }),
-    [milestone]
+    [solution]
   );
 
   const methods = useForm<FormValues>({
@@ -350,21 +335,9 @@ const EditSolutionForm = ({
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Needed to address bug in datepicker that counts async default needBy as a change and affecting dirty count
+  // Needed to address bug in datepicker that counts async default neededBy as a change and affecting dirty count
   useEffect(() => {
-    const fieldsToCountSaved = { ...dirtyFields };
-
-    // Flatten categories to accurately count keys of dirty fields
-    const { categories, ...dirt } = fieldsToCountSaved;
-
-    // Flatten categories to accurately count keys of dirty fields
-    const flattenedDir = {
-      ...dirt,
-      ...(categories?.category && { categories: categories?.category }),
-      ...(categories?.subCategory && { subCategory: categories?.subCategory })
-    };
-
-    const { facilitatedBy, ...rest } = flattenedDir;
+    const { facilitatedBy, ...rest } = { ...dirtyFields };
 
     // Counts amount of changes in facilitatedBy array
     let facilitatedByChangeCount: number = 0;
@@ -380,33 +353,33 @@ const EditSolutionForm = ({
     setUnsavedChanges(totalChanges);
   }, [
     dirtyFields,
-    touchedFields.needBy,
+    touchedFields.neededBy,
     values,
-    formValues.needBy,
+    formValues.neededBy,
     formValues.facilitatedBy.length
   ]);
 
-  // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
-  useEffect(() => {
-    const solutionIDDifferenceCount = symmetricDifference(
-      solutionIDs,
-      solutionIDsInitial
-    ).length;
+  // // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
+  // useEffect(() => {
+  //   const solutionIDDifferenceCount = symmetricDifference(
+  //     solutionIDs,
+  //     solutionIDsInitial
+  //   ).length;
 
-    const commonSolutionKeysDifferenceCount = symmetricDifference(
-      commonSolutionKeys,
-      commonSolutionKeysInitial
-    ).length;
+  //   const commonSolutionKeysDifferenceCount = symmetricDifference(
+  //     commonSolutionKeys,
+  //     commonSolutionKeysInitial
+  //   ).length;
 
-    setUnsavedSolutionChanges(
-      solutionIDDifferenceCount + commonSolutionKeysDifferenceCount
-    );
-  }, [
-    solutionIDs,
-    solutionIDsInitial,
-    commonSolutionKeys,
-    commonSolutionKeysInitial
-  ]);
+  //   setUnsavedSolutionChanges(
+  //     solutionIDDifferenceCount + commonSolutionKeysDifferenceCount
+  //   );
+  // }, [
+  //   solutionIDs,
+  //   solutionIDsInitial,
+  //   commonSolutionKeys,
+  //   commonSolutionKeysInitial
+  // ]);
 
   // Sets dirty state based on changes in form to render the leave confirmation modal
   useEffect(() => {
@@ -417,17 +390,7 @@ const EditSolutionForm = ({
     }
   }, [unsavedChanges, unsavedSolutionChanges, setIsDirty]);
 
-  const {
-    selectOptionsAndMappedCategories,
-    mappedSubcategories,
-    selectOptions
-  } = useFormatMTOCategories({
-    modelID,
-    primaryCategory: watch('categories.category.id'),
-    hideUncategorized: false
-  });
-
-  const [updateMilestone] = useUpdateMtoMilestoneMutation({
+  const [updateSolution] = useUpdateMtoSolutionMutation({
     refetchQueries: [
       {
         query: GetModelToOperationsMatrixDocument,
@@ -438,49 +401,18 @@ const EditSolutionForm = ({
     ]
   });
 
-  const [deleteMilestone] = useDeleteMtoMilestoneMutation();
+  const [deleteSolution] = useDeleteMtoSolutionMutation();
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    let mtoCategoryID;
+    const { neededBy, name, ...formChanges } = dirtyInput(solution, formData);
 
-    const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
-
-    // Sets the mtoCategoryID based on the change of either category or subcategory
-    if (formData.categories.subCategory.id !== uncategorizedCategoryID) {
-      mtoCategoryID = formData.categories.subCategory.id;
-    } else if (formData.categories.category.id === uncategorizedCategoryID) {
-      mtoCategoryID = null;
-    } else {
-      mtoCategoryID = formData.categories.category.id;
-    }
-
-    const { categories, needBy, name, ...formChanges } = dirtyInput(
-      milestone,
-      formData
-    );
-
-    // Check if category has changed to determine if the category is dirty to add to payload
-    let isCategoryDirty: boolean = false;
-    if (
-      formData.categories.category.id !== milestone?.categories.category.id ||
-      formData.categories.subCategory.id !==
-        milestone?.categories.subCategory.id
-    ) {
-      isCategoryDirty = true;
-    }
-
-    updateMilestone({
+    updateSolution({
       variables: {
-        id: editMilestoneID || '',
+        id: editSolutionID || '',
         changes: {
           ...formChanges,
-          ...(isCategoryDirty && { mtoCategoryID }),
-          ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
-          ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
-        },
-        solutionLinks: {
-          commonSolutionKeys,
-          solutionIDs
+          ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
+          ...(!!name && !solution?.addedFromSolutionLibrary && { name })
         }
       }
     })
@@ -497,12 +429,12 @@ const EditSolutionForm = ({
                 <span className="mandatory-fields-alert__text">
                   <Trans
                     i18nKey={modelToOperationsMiscT(
-                      'modal.editMilestone.successUpdated'
+                      'modal.editSolution.successUpdated'
                     )}
                     components={{
                       b: <span className="text-bold" />
                     }}
-                    values={{ milestone: formData.name }}
+                    values={{ solution: formData.name }}
                   />
                 </span>
               </Alert>
@@ -522,16 +454,16 @@ const EditSolutionForm = ({
             data-testid="error-alert"
             className="margin-y-4"
           >
-            {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
+            {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
           </Alert>
         );
       });
   };
 
   const handleRemove = () => {
-    deleteMilestone({
+    deleteSolution({
       variables: {
-        id: editMilestoneID || ''
+        id: editSolutionID || ''
       },
       refetchQueries: [
         {
@@ -552,8 +484,8 @@ const EditSolutionForm = ({
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
               >
-                {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
-                  milestone: milestone?.name
+                {modelToOperationsMiscT('modal.editSolution.successRemoved', {
+                  solution: solution?.name
                 })}
               </Alert>
             </>
@@ -569,95 +501,95 @@ const EditSolutionForm = ({
             data-testid="error-alert"
             className="margin-y-4"
           >
-            {modelToOperationsMiscT('modal.editMilestone.errorRemoved')}
+            {modelToOperationsMiscT('modal.editSolution.errorRemoved')}
           </Alert>
         );
         setIsModalOpen(false);
       });
   };
 
-  const columns: Column<SolutionType>[] = useMemo(
-    () => [
-      {
-        Header: modelToOperationsMiscT('modal.editMilestone.solution'),
-        accessor: 'name'
-      },
-      {
-        Header: modelToOperationsMiscT('modal.editMilestone.status'),
-        accessor: 'status',
-        Cell: ({ row }: { row: Row<SolutionType> }) => {
-          return (
-            <MilestoneStatusTag
-              status={row.original.status}
-              classname="width-fit-content"
-            />
-          );
-        }
-      },
-      {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
-        accessor: 'riskIndicator',
-        Cell: ({ row }: { row: Row<SolutionType> }) => {
-          const { riskIndicator } = row.original;
+  // const columns: Column<SolutionType>[] = useMemo(
+  //   () => [
+  //     {
+  //       Header: modelToOperationsMiscT('modal.editSolution.solution'),
+  //       accessor: 'name'
+  //     },
+  //     {
+  //       Header: modelToOperationsMiscT('modal.editSolution.status'),
+  //       accessor: 'status',
+  //       Cell: ({ row }: { row: Row<SolutionType> }) => {
+  //         return (
+  //           <MilestoneStatusTag
+  //             status={row.original.status}
+  //             classname="width-fit-content"
+  //           />
+  //         );
+  //       }
+  //     },
+  //     {
+  //       Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+  //       accessor: 'riskIndicator',
+  //       Cell: ({ row }: { row: Row<SolutionType> }) => {
+  //         const { riskIndicator } = row.original;
 
-          return (
-            <span className="text-bold text-base-lighter">
-              {(() => {
-                if (riskIndicator === MtoRiskIndicator.AT_RISK)
-                  return (
-                    <Icon.Error className="text-error-dark top-05" size={3} />
-                  );
-                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
-                  return (
-                    <Icon.Warning
-                      className="text-warning-dark top-05"
-                      size={3}
-                    />
-                  );
-                return '';
-              })()}
-            </span>
-          );
-        }
-      }
-    ],
-    [modelToOperationsMiscT]
-  );
+  //         return (
+  //           <span className="text-bold text-base-lighter">
+  //             {(() => {
+  //               if (riskIndicator === MtoRiskIndicator.AT_RISK)
+  //                 return (
+  //                   <Icon.Error className="text-error-dark top-05" size={3} />
+  //                 );
+  //               if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
+  //                 return (
+  //                   <Icon.Warning
+  //                     className="text-warning-dark top-05"
+  //                     size={3}
+  //                   />
+  //                 );
+  //               return '';
+  //             })()}
+  //           </span>
+  //         );
+  //       }
+  //     }
+  //   ],
+  //   [modelToOperationsMiscT]
+  // );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    gotoPage,
-    headerGroups,
-    nextPage,
-    page,
-    pageOptions,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    pageCount,
-    setPageSize,
-    state,
-    rows,
-    prepareRow
-  } = useTable(
-    {
-      columns: columns as Column<object>[],
-      data: selectedSolutions,
-      initialState: { pageIndex: 0, pageSize: 5 }
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
+  // const {
+  //   getTableProps,
+  //   getTableBodyProps,
+  //   gotoPage,
+  //   headerGroups,
+  //   nextPage,
+  //   page,
+  //   pageOptions,
+  //   previousPage,
+  //   canNextPage,
+  //   canPreviousPage,
+  //   pageCount,
+  //   setPageSize,
+  //   state,
+  //   rows,
+  //   prepareRow
+  // } = useTable(
+  //   {
+  //     columns: columns as Column<object>[],
+  //     data: selectedSolutions,
+  //     initialState: { pageIndex: 0, pageSize: 5 }
+  //   },
+  //   useGlobalFilter,
+  //   useSortBy,
+  //   usePagination
+  // );
 
-  rows.map(row => prepareRow(row));
+  // rows.map(row => prepareRow(row));
 
-  if (loading && !milestone) {
+  if (loading && !solution) {
     return <PageLoading />;
   }
 
-  if (!milestone || queryError) {
+  if (!solution || queryError) {
     return null;
   }
 
@@ -672,11 +604,15 @@ const EditSolutionForm = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {modelToOperationsMiscT('modal.editMilestone.areYouSure')}
+          {modelToOperationsMiscT('modal.editSolution.areYouSure')}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
-          {modelToOperationsMiscT('modal.editMilestone.removeDescription')}
+          {solution.addedFromSolutionLibrary
+            ? modelToOperationsMiscT('modal.editSolution.removeDescription')
+            : modelToOperationsMiscT(
+                'modal.editSolution.removeCustomDescription'
+              )}
         </p>
 
         <Button
@@ -684,23 +620,23 @@ const EditSolutionForm = ({
           className="margin-right-4 bg-error"
           onClick={() => handleRemove()}
         >
-          {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
+          {modelToOperationsMiscT('modal.editSolution.removeSolution')}
         </Button>
 
         <Button type="button" unstyled onClick={() => setIsModalOpen(false)}>
-          {modelToOperationsMiscT('modal.editMilestone.goBack')}
+          {modelToOperationsMiscT('modal.editSolution.goBack')}
         </Button>
       </Modal>
-
-      {milestone && (
+      {/* 
+      {solution && (
         <Sidepanel
           isOpen={editSolutionsOpen}
           ariaLabel={modelToOperationsMiscT(
-            'modal.editMilestone.backToMilestone'
+            'modal.editSolution.backToMilestone'
           )}
           testid="edit-solutions-sidepanel"
           modalHeading={modelToOperationsMiscT(
-            'modal.editMilestone.backToMilestone'
+            'modal.editSolution.backToMilestone'
           )}
           backButton
           showScroll
@@ -720,7 +656,7 @@ const EditSolutionForm = ({
             }
           />
         </Sidepanel>
-      )}
+      )} */}
 
       {unsavedChanges + unsavedSolutionChanges > 0 && (
         <div
@@ -731,7 +667,7 @@ const EditSolutionForm = ({
           <div className="bg-warning-lighter padding-y-05 padding-x-1">
             <Icon.Warning className="margin-right-1 top-2px text-warning" />
             <p className="margin-0 display-inline margin-right-1">
-              {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
+              {modelToOperationsMiscT('modal.editSolution.unsavedChanges', {
                 count: unsavedChanges + unsavedSolutionChanges
               })}
             </p>
@@ -743,7 +679,7 @@ const EditSolutionForm = ({
               className="margin-x-1"
               unstyled
             >
-              {modelToOperationsMiscT('modal.editMilestone.save')}
+              {modelToOperationsMiscT('modal.editSolution.save')}
             </Button>
           </div>
         </div>
@@ -757,23 +693,13 @@ const EditSolutionForm = ({
       >
         <Grid row>
           <Grid col={10}>
-            {watch('isDraft') && (
-              <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
-                <Icon.Science
-                  className="margin-left-1"
-                  style={{ top: '2px' }}
-                />{' '}
-                {modelToOperationsMiscT('milestoneLibrary.isDraft')}
-              </span>
-            )}
-
-            {!milestone.addedFromMilestoneLibrary && (
+            {!solution.addedFromSolutionLibrary && (
               <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
                 <Icon.Construction
                   className="margin-left-1"
                   style={{ top: '2px' }}
                 />{' '}
-                {modelToOperationsMiscT('modal.editMilestone.custom')}
+                {modelToOperationsMiscT('modal.editSolution.custom')}
               </span>
             )}
 
@@ -782,13 +708,13 @@ const EditSolutionForm = ({
             <FormProvider {...methods}>
               <Form
                 className="maxw-none"
-                id="edit-milestone-form"
+                id="edit-solution-form"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <ConfirmLeaveRHF />
 
                 <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
-                  {milestone.name}
+                  {solution.name}
                 </h2>
 
                 <Fieldset disabled={loading}>
@@ -803,7 +729,7 @@ const EditSolutionForm = ({
                     />
                   </p>
 
-                  {!milestone.addedFromMilestoneLibrary && (
+                  {!solution.addedFromSolutionLibrary && (
                     <Controller
                       name="name"
                       control={control}
@@ -816,7 +742,7 @@ const EditSolutionForm = ({
                       }) => (
                         <FormGroup className="margin-bottom-3">
                           <Label requiredMarker htmlFor="name">
-                            {mtoMilestoneT('name.label')}
+                            {mtoSolutionT('name.label')}
                           </Label>
 
                           {!!error && (
@@ -833,143 +759,6 @@ const EditSolutionForm = ({
                       )}
                     />
                   )}
-
-                  <Controller
-                    name="isDraft"
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
-                        <CheckboxField
-                          {...field}
-                          id={field.name}
-                          value={field.name}
-                          checked={field.value}
-                          label={mtoMilestoneT('isDraft.label')}
-                          subLabel={mtoMilestoneT('isDraft.sublabel')}
-                        />
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="categories.category.id"
-                    control={control}
-                    rules={{
-                      required: modelToOperationsMiscT('validation.fillOut'),
-                      validate: value =>
-                        value !== 'default' ||
-                        modelToOperationsMiscT('validation.fillOut')
-                    }}
-                    render={({
-                      field: { ref, ...field },
-                      fieldState: { error }
-                    }) => (
-                      <FormGroup
-                        error={!!error}
-                        className="margin-top-0 margin-bottom-3"
-                      >
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
-                        >
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneCategory.label'
-                          )}
-                        </Label>
-
-                        <HelpText className="margin-top-05">
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneCategory.sublabel'
-                          )}
-                        </HelpText>
-
-                        {!!error && (
-                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                        )}
-
-                        <Select
-                          {...field}
-                          id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || 'default'}
-                          defaultValue="default"
-                          onChange={e => {
-                            field.onChange(e);
-                            // Reset subcategory when category changes
-                            setValue('categories.subCategory.id', 'default');
-                          }}
-                        >
-                          {selectOptionsAndMappedCategories.map(option => {
-                            return (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            );
-                          })}
-                        </Select>
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="categories.subCategory.id"
-                    control={control}
-                    rules={{
-                      required: modelToOperationsMiscT('validation.fillOut'),
-                      validate: value =>
-                        value !== 'default' ||
-                        modelToOperationsMiscT('validation.fillOut')
-                    }}
-                    render={({
-                      field: { ref, ...field },
-                      fieldState: { error }
-                    }) => (
-                      <FormGroup
-                        error={!!error}
-                        className="margin-top-0 margin-bottom-3"
-                      >
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
-                        >
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneSubcategory.label'
-                          )}
-                        </Label>
-
-                        <HelpText className="margin-top-05">
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneSubcategory.sublabel'
-                          )}
-                        </HelpText>
-
-                        {!!error && (
-                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                        )}
-
-                        <Select
-                          {...field}
-                          id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || 'default'}
-                          defaultValue="default"
-                          disabled={
-                            watch('categories.category.id') === 'default'
-                          }
-                        >
-                          {[selectOptions[0], ...mappedSubcategories].map(
-                            option => {
-                              return (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
-                                </option>
-                              );
-                            }
-                          )}
-                        </Select>
-                      </FormGroup>
-                    )}
-                  />
 
                   <Controller
                     name="facilitatedBy"
@@ -1009,36 +798,38 @@ const EditSolutionForm = ({
                   />
 
                   <Controller
-                    name="needBy"
+                    name="neededBy"
                     control={control}
                     render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-0 margin-bottom-3">
-                        <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
-                          {mtoMilestoneT('needBy.label')}
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase('neededBy')}
+                        >
+                          {mtoSolutionT('neededBy.label')}
                         </Label>
 
                         <HelpText className="margin-top-1">
-                          {mtoMilestoneT('needBy.sublabel')}
+                          {mtoSolutionT('neededBy.sublabel')}
                         </HelpText>
 
                         <div className="position-relative">
                           <DatePickerFormatted
                             {...field}
                             aria-labelledby={convertCamelCaseToKebabCase(
-                              'needBy'
+                              'neededBy'
                             )}
-                            id="milestone-need-by"
+                            id="solution-needed-by"
                             defaultValue={field.value}
                           />
 
-                          {isDateInPast(watch('needBy')) && (
+                          {isDateInPast(watch('neededBy')) && (
                             <DatePickerWarning
                               label={generalT('dateWarning')}
                             />
                           )}
                         </div>
 
-                        {isDateInPast(watch('needBy')) && (
+                        {isDateInPast(watch('neededBy')) && (
                           <Alert
                             type="warning"
                             className="margin-top-2"
@@ -1065,7 +856,7 @@ const EditSolutionForm = ({
                           className="maxw-none text-bold"
                           requiredMarker
                         >
-                          {mtoMilestoneT('status.label')}
+                          {mtoSolutionT('status.label')}
                         </Label>
 
                         <Select
@@ -1098,11 +889,11 @@ const EditSolutionForm = ({
                           className="maxw-none text-bold"
                           requiredMarker
                         >
-                          {mtoMilestoneT('riskIndicator.label')}
+                          {mtoSolutionT('riskIndicator.label')}
                         </Label>
 
                         <HelpText className="margin-top-1">
-                          {mtoMilestoneT('riskIndicator.sublabel')}
+                          {mtoSolutionT('riskIndicator.sublabel')}
                         </HelpText>
 
                         {getKeys(riskIndicatorConfig.options).map(value => (
@@ -1119,16 +910,16 @@ const EditSolutionForm = ({
                     )}
                   />
 
-                  <div className="border-top-1px border-base-lighter padding-y-4">
+                  {/* <div className="border-top-1px border-base-lighter padding-y-4">
                     <h3 className="margin-0 margin-bottom-1">
                       {modelToOperationsMiscT(
-                        'modal.editMilestone.selectedSolutions'
+                        'modal.editSolution.selectedSolutions'
                       )}
                     </h3>
 
                     <p className="margin-0 margin-bottom-1">
                       {modelToOperationsMiscT(
-                        'modal.editMilestone.selectedSolutionsCount',
+                        'modal.editSolution.selectedSolutionsCount',
                         {
                           count: selectedSolutions?.length || 0
                         }
@@ -1144,7 +935,7 @@ const EditSolutionForm = ({
                       className="margin-0 display-flex"
                     >
                       {modelToOperationsMiscT(
-                        'modal.editMilestone.editSolutions'
+                        'modal.editSolution.editSolutions'
                       )}
                       <Icon.ArrowForward className="top-2px" />
                     </Button>
@@ -1152,7 +943,7 @@ const EditSolutionForm = ({
                     {selectedSolutions.length === 0 ? (
                       <Alert type="info" slim>
                         {modelToOperationsMiscT(
-                          'modal.editMilestone.noSolutions'
+                          'modal.editSolution.noSolutions'
                         )}
                       </Alert>
                     ) : (
@@ -1239,7 +1030,7 @@ const EditSolutionForm = ({
                         )}
                       </>
                     )}
-                  </div>
+                  </div> */}
                 </Fieldset>
 
                 <div className="border-top-1px border-base-lighter padding-y-4">
@@ -1250,7 +1041,7 @@ const EditSolutionForm = ({
                     }
                     className="margin-bottom-2"
                   >
-                    {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+                    {modelToOperationsMiscT('modal.editSolution.saveChanges')}
                   </Button>
 
                   <Button
@@ -1260,7 +1051,7 @@ const EditSolutionForm = ({
                     onClick={() => setIsModalOpen(true)}
                   >
                     {modelToOperationsMiscT(
-                      'modal.editMilestone.removeMilestone'
+                      'modal.editSolution.removeSolution'
                     )}
                   </Button>
                 </div>

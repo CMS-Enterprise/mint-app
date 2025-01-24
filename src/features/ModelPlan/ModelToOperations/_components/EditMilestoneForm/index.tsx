@@ -76,7 +76,6 @@ import LinkSolutionForm from '../LinkSolutionForm';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MilestoneStatusTag from '../MTOStatusTag';
 
-import './index.scss';
 import '../../index.scss';
 
 export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];

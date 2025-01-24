@@ -18,6 +18,7 @@ import {
   MtoStatus,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
+import { add } from 'lodash';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
@@ -398,6 +399,7 @@ export const solutionAndMilestoneMock = [
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 type: MtoSolutionType.IT_SYSTEM,
                 status: MtoSolutionStatus.IN_PROGRESS,
+                addedFromSolutionLibrary: true,
                 facilitatedBy: [],
                 neededBy: '',
                 milestones: [

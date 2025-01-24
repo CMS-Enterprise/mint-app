@@ -25,6 +25,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
+import { EditMTOSolutionContext } from 'contexts/EditMTOSolutionContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -55,6 +56,10 @@ const ITSystemsTable = () => {
   const { location } = history;
 
   const params = new URLSearchParams(history.location.search);
+
+  const { openEditSolutionModal, setSolutionID } = useContext(
+    EditMTOSolutionContext
+  );
 
   const hideMilestonesWithoutSolutions =
     params.get('hide-milestones-without-solutions') === 'true';
@@ -198,6 +203,10 @@ const ITSystemsTable = () => {
             s => s.enum === row.original.key
           );
 
+          if (!row.original.addedFromSolutionLibrary) {
+            return <>{row.original.name}</>;
+          }
+
           return (
             <UswdsReactLink
               to={`${location.pathname}${location.search}${
@@ -289,7 +298,26 @@ const ITSystemsTable = () => {
       },
       {
         Header: t<string, {}, string>('table.actions'),
-        accessor: 'actions'
+        accessor: 'actions',
+        Cell: ({ row }: any) => {
+          if (row.original.__typename === 'MTOMilestone') return <></>;
+
+          return (
+            <div style={{ textAlign: 'right' }}>
+              <Button
+                type="button"
+                unstyled
+                className="margin-right-2"
+                onClick={() => {
+                  setSolutionID(row.original.id);
+                  openEditSolutionModal(row.original.id);
+                }}
+              >
+                {t('table.editDetails')}
+              </Button>
+            </div>
+          );
+        }
       }
     ];
   }, [
@@ -298,7 +326,9 @@ const ITSystemsTable = () => {
     setMTOModalState,
     setMTOModalOpen,
     location.pathname,
-    location.search
+    location.search,
+    openEditSolutionModal,
+    setSolutionID
   ]);
 
   const {

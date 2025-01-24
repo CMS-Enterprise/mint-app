@@ -18,6 +18,7 @@ import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
+import { EditMTOSolutionProvider } from 'contexts/EditMTOSolutionContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
@@ -207,41 +208,43 @@ const MTOHome = () => {
           )}
 
           <EditMTOMilestoneProvider>
-            {currentView === 'milestones' && (
-              <>
-                {loading ? (
-                  <PageLoading />
-                ) : (
-                  <>
-                    {isMatrixStarted ? (
-                      <>
-                        <MTOTableActions />
-                        <MTOTable
-                          queryData={data}
-                          loading={loading}
-                          error={error}
-                        />
-                      </>
-                    ) : (
-                      <MTOOptionsPanel />
-                    )}
-                  </>
-                )}
-              </>
-            )}
+            <EditMTOSolutionProvider>
+              {currentView === 'milestones' && (
+                <>
+                  {loading ? (
+                    <PageLoading />
+                  ) : (
+                    <>
+                      {isMatrixStarted ? (
+                        <>
+                          <MTOTableActions />
+                          <MTOTable
+                            queryData={data}
+                            loading={loading}
+                            error={error}
+                          />
+                        </>
+                      ) : (
+                        <MTOOptionsPanel />
+                      )}
+                    </>
+                  )}
+                </>
+              )}
 
-            {currentView === 'solutions' && (
-              <>
-                {loading ? (
-                  <PageLoading />
-                ) : (
-                  <>
-                    <MTOTableActions />
-                    <ITSystemsTable />
-                  </>
-                )}
-              </>
-            )}
+              {currentView === 'solutions' && (
+                <>
+                  {loading ? (
+                    <PageLoading />
+                  ) : (
+                    <>
+                      <MTOTableActions />
+                      <ITSystemsTable />
+                    </>
+                  )}
+                </>
+              )}
+            </EditMTOSolutionProvider>
           </EditMTOMilestoneProvider>
         </div>
       </GridContainer>
