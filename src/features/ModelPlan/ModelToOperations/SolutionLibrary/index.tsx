@@ -396,51 +396,49 @@ const SolutionLibrary = () => {
                   aria-live="polite"
                   className="margin-bottom-4"
                 >
-                  {query && (
-                    <Alert
-                      type="info"
-                      heading={t('solutionLibrary.emptyFilter.heading', {
-                        solution: t(
-                          `solutionLibrary.emptyFilter.solution.${viewParam}.heading`
+                  <Alert
+                    type="info"
+                    heading={t('solutionLibrary.emptyFilter.heading', {
+                      solution: t(
+                        `solutionLibrary.emptyFilter.solution.${viewParam}.heading`
+                      )
+                    })}
+                  >
+                    {t('solutionLibrary.emptyFilter.text-firstHalf')}
+                    <Trans
+                      t={t}
+                      i18nKey="solutionLibrary.emptyFilter.checkAllSolutions"
+                      components={{
+                        link1: (
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--unstyled"
+                            onClick={() => {
+                              setQuery('');
+                              params.set('view', 'all');
+                              history.replace({ search: params.toString() });
+                            }}
+                          >
+                            {' '}
+                          </Button>
                         )
-                      })}
-                    >
-                      {t('solutionLibrary.emptyFilter.text-firstHalf')}
-                      <Trans
-                        t={t}
-                        i18nKey="solutionLibrary.emptyFilter.checkAllSolutions"
-                        components={{
-                          link1: (
-                            <Button
-                              type="button"
-                              className="usa-button usa-button--unstyled"
-                              onClick={() => {
-                                setQuery('');
-                                params.set('view', 'all');
-                                history.replace({ search: params.toString() });
-                              }}
-                            >
-                              {' '}
-                            </Button>
-                          )
-                        }}
-                      />
-                      {t('solutionLibrary.emptyFilter.text-secondHalf', {
-                        solution: t(
-                          `solutionLibrary.emptyFilter.solution.${viewParam}.body`
+                      }}
+                    />
+                    {t('solutionLibrary.emptyFilter.text-secondHalf', {
+                      solution: t(
+                        `solutionLibrary.emptyFilter.solution.${viewParam}.body`
+                      )
+                    })}
+                    <Trans
+                      t={t}
+                      i18nKey="solutionLibrary.emptyFilter.email"
+                      components={{
+                        email1: (
+                          <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
                         )
-                      })}
-                      <Trans
-                        t={t}
-                        i18nKey="solutionLibrary.emptyFilter.email"
-                        components={{
-                          email1: (
-                            <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
-                          )
-                        }}
-                      />
-                    </Alert>
-                  )}
+                      }}
+                    />
+                  </Alert>
                 </div>
               ) : (
                 <CardGroup>
