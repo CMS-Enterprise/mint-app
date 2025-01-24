@@ -15,6 +15,7 @@ import NotFound from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
+  OperationalSolutionKey,
   useGetHomepageSettingsQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
@@ -64,7 +65,11 @@ const SettingsForm = () => {
       data?.userViewCustomization.possibleOperationalSolutions || [];
 
     return [...helpSolutions]
-      .filter(solution => possibleOperationalSolutions.includes(solution.enum))
+      .filter(solution =>
+        possibleOperationalSolutions.includes(
+          solution.enum as OperationalSolutionKey
+        )
+      )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
 

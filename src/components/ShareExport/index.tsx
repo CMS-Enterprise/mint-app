@@ -498,7 +498,7 @@ const ShareExportModal = ({
 
         <button
           type="button"
-          className="mint-modal__x-button text-base margin-right-0 margin-y-1 right-neg-1 position-relative"
+          className="mint-modal__x-button text-base right-neg-2 position-relative"
           aria-label="Close Modal"
           onClick={closeModal}
         >
