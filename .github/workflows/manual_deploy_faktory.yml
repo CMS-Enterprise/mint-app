@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.CONTRIBSYS_REPO_USERNAME }}
           password: ${{ secrets.CONTRIBSYS_REPO_PASSWORD }}
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.2
+        uses: aws-actions/configure-aws-credentials@v4.0.3
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1
