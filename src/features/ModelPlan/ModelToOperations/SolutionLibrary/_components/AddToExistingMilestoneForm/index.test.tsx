@@ -7,7 +7,7 @@ import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
+import AddToExistingMilestoneForm from '.';
 
 describe('Custom Catergory form', () => {
   it('runs without errors and matches snapshot', async () => {

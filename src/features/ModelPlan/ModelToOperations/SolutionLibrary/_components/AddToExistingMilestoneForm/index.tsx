@@ -24,7 +24,6 @@ import {
 import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
-import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import {
   composeMultiSelectOptions,
@@ -61,10 +60,11 @@ const AddToExistingMilestoneForm = ({
     }
   });
 
-  const milestones = data?.modelPlan?.mtoMatrix?.milestones.map(milestone => ({
-    value: milestone.id,
-    label: milestone.name
-  }));
+  const milestones =
+    data?.modelPlan?.mtoMatrix?.milestones.map(milestone => ({
+      value: milestone.id,
+      label: milestone.name
+    })) || [];
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -132,24 +132,18 @@ const AddToExistingMilestoneForm = ({
       });
   };
 
-  if (loading || !milestones) {
-    return (
-      <div className="padding-left-4 padding-top-3">
-        <Spinner />
-      </div>
-    );
-  }
-
   return (
     <>
       <p className="mint-body-normal">
         {t('modal.addToExistingMilestone.description')}
       </p>
-      {milestones.length === 0 && (
+
+      {!loading && milestones.length === 0 && (
         <Alert type="info" className="margin-bottom-2">
           {t('modal.addToExistingMilestone.noMilestone')}
         </Alert>
       )}
+
       <FormProvider {...methods}>
         {message}
         <Form
@@ -157,7 +151,7 @@ const AddToExistingMilestoneForm = ({
           id="add-to-existing-milestone-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Fieldset>
+          <Fieldset disabled={loading || milestones?.length === 0}>
             <Controller
               name="linkedSolutions"
               control={control}

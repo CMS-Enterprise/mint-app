@@ -20,7 +20,7 @@ import useMessage from 'hooks/useMessage';
 
 import { SolutionCardType } from '..';
 
-import AddToExistingMilestoneForm from './AddToExistingMilestoneForm/AddToExistingMilestoneForm';
+import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
 
 const MTOSolutionCard = ({
   className,

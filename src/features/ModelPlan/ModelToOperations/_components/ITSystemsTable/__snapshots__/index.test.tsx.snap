@@ -424,7 +424,19 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
             <td
               role="cell"
               style="padding-left: 0px; white-space: normal; max-width: auto;"
-            />
+            >
+              <div
+                style="text-align: right;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled margin-right-2"
+                  data-testid="button"
+                  type="button"
+                >
+                  Edit details
+                </button>
+              </div>
+            </td>
           </tr>
           <tr
             role="row"

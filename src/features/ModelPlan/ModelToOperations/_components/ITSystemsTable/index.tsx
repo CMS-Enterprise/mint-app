@@ -96,7 +96,8 @@ const ITSystemsTable = () => {
             milestones: [],
             facilitatedBy: [],
             neededBy: null,
-            status: null as any
+            status: null as any,
+            addedFromSolutionLibrary: false
           } as SolutionType;
         }
       ) || [],
