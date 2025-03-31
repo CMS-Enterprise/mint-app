@@ -983,6 +983,10 @@ export type MtoMilestoneChanges = {
   status?: InputMaybe<MtoMilestoneStatus>;
 };
 
+export type MtoMilestoneLinks = {
+  milestoneIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
 /** Represents MTO Milestone Solution Link translation data */
 export type MtoMilestoneSolutionLinkTranslation = {
   __typename: 'MTOMilestoneSolutionLinkTranslation';
@@ -1702,6 +1706,7 @@ export type MutationUpdateMtoMilestoneArgs = {
 export type MutationUpdateMtoSolutionArgs = {
   changes: MtoSolutionChanges;
   id: Scalars['UUID']['input'];
+  milestoneLinks?: InputMaybe<MtoMilestoneLinks>;
 };
 
 

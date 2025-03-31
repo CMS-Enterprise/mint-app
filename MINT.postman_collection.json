@@ -3685,39 +3685,6 @@
 					"name": "Solutions",
 					"item": [
 						{
-							"name": "UpdateMTOSolution",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation udpateMTOSolution {\nupdateMTOSolution(id: \"{{mtoSolutionID}}\",\nchanges: {\n    name: \"Postman MTO Solution\"\n    facilitatedBy: [IT_LEAD, OTHER],\n    neededBy: null,\n    status: IN_PROGRESS,\n    riskIndicator: AT_RISK,\n}\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n}\n}",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "NewMTOSolution (Custom)",
 							"event": [
 								{
@@ -3781,6 +3748,39 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    milestonesToLink: [\"{{mtoMilestoneID}}\"]\n    key: INNOVATION\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateMTOSolution",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation udpateMTOSolution {\nupdateMTOSolution(id: \"{{mtoSolutionID}}\",\n    changes: {\n        name: \"Postman MTO Solution\"\n        facilitatedBy: [IT_LEAD, OTHER],\n        neededBy: null,\n        status: IN_PROGRESS,\n        riskIndicator: AT_RISK,\n    }\n    ,milestoneLinks: {\n        milestoneIDs: [\n            \"{{mtoMilestoneID}}\"\n            ],\n    }\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  milestones {\n    id\n    name\n    key\n  }\n}\n}",
 										"variables": ""
 									}
 								},

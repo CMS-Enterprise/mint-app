@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -27,6 +29,7 @@ func MTOSolutionUpdate(
 	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
+	milestoneLinks *model.MTOMilestoneLinks,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -49,7 +52,30 @@ func MTOSolutionUpdate(
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOSolutionUpdate(store, logger, existing)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		updatedSolution, err := storage.MTOSolutionUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update solution: %w", err)
+		}
+
+		// Update linked milestones
+		if milestoneLinks != nil && milestoneLinks.MilestoneIDs != nil {
+			_, err := MTOSolutionLinkMilestonesWithTX(
+				ctx,
+				principal,
+				logger,
+				tx,
+				updatedSolution.ID,
+				milestoneLinks.MilestoneIDs,
+			)
+			if err != nil {
+				return nil, fmt.Errorf("failed to update linked milestones: %w", err)
+			}
+		}
+
+		return updatedSolution, nil
+	})
 }
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
@@ -147,10 +173,6 @@ func MTOSolutionLinkMilestonesWithTX(
 	solutionID uuid.UUID,
 	milestonesToLink []uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
-	// Prepare data for batch insertion
-	/*links := lo.Map(milestonesToLink, func(milestoneID uuid.UUID, _ int) *models.MTOMilestoneSolutionLink {
-		return models.NewMTOMilestoneSolutionLink(principal.Account().ID, milestoneID, solutionID)
-	})*/
 
 	// Insert or update links in bulk
 	linkedMilestones, err := storage.MTOMilestoneSolutionLinkMilestonesToSolution(tx, logger, solutionID, milestonesToLink, principal.Account().ID)
