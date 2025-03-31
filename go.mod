@@ -1,7 +1,6 @@
 module github.com/cms-enterprise/mint-app
 
 go 1.23.4
-toolchain go1.24.1
 
 require (
 	github.com/99designs/gqlgen v0.17.38
@@ -22,7 +21,7 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
 	github.com/stretchr/testify v1.10.0
-	github.com/vektah/gqlparser/v2 v2.5.23
+	github.com/vektah/gqlparser/v2 v2.5.21
 	go.uber.org/zap v1.27.0
 	golang.org/x/sync v0.12.0
 )
