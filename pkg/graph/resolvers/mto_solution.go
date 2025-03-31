@@ -60,7 +60,7 @@ func MTOSolutionUpdate(
 		}
 
 		// Update linked milestones
-		if milestoneLinks.MilestoneIDs != nil {
+		if milestoneLinks != nil && milestoneLinks.MilestoneIDs != nil {
 			_, err := MTOSolutionLinkMilestonesWithTX(
 				ctx,
 				principal,
