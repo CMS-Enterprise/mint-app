@@ -164,31 +164,6 @@ func MTOSolutionCreateCommon(
 	})
 }
 
-// MTOSolutionLinkMilestones handles linking milestones to a solution
-func MTOSolutionLinkMilestones(
-	ctx context.Context,
-	principal authentication.Principal,
-	logger *zap.Logger,
-	store *storage.Store,
-	solutionID uuid.UUID,
-	milestonesToLink []uuid.UUID,
-) ([]*models.MTOMilestone, error) {
-
-	retVals, err := sqlutils.WithTransaction[[]*models.MTOMilestone](store, func(tx *sqlx.Tx) (*[]*models.MTOMilestone, error) {
-		result, err := MTOSolutionLinkMilestonesWithTX(ctx, principal, logger, tx, solutionID, milestonesToLink)
-		if err != nil {
-			return nil, fmt.Errorf("failed to link milestones to solution: %w", err)
-		}
-		return &result, err
-	})
-
-	if err != nil || retVals == nil {
-		return nil, err
-	}
-
-	return *retVals, err
-}
-
 // MTOSolutionLinkMilestonesWithTX handles linking milestones to a solution in a single transaction
 func MTOSolutionLinkMilestonesWithTX(
 	ctx context.Context,
@@ -198,9 +173,6 @@ func MTOSolutionLinkMilestonesWithTX(
 	solutionID uuid.UUID,
 	milestonesToLink []uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
-	// Prepare data for batch insertion
-	/*links := lo.Map(milestonesToLink, func(milestoneID uuid.UUID, _ int) *models.MTOMilestoneSolutionLink {
-	})*/
 
 	// Insert or update links in bulk
 	linkedMilestones, err := storage.MTOMilestoneSolutionLinkMilestonesToSolution(tx, logger, solutionID, milestonesToLink, principal.Account().ID)

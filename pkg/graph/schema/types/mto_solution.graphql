@@ -55,8 +55,6 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
   updateMTOSolution(id: UUID!, changes: MTOSolutionChanges!, milestoneLinks: MTOMilestoneLinks): MTOSolution!
   @hasRole(role: MINT_USER)
-  mtoSolutionUpdateLinkedMilestones(id: UUID!, milestoneLinks: MTOMilestoneLinks!): [MTOMilestone!]
-  @hasRole(role: MINT_USER)
   deleteMTOSolution(id: UUID!): Boolean!
   @hasRole(role: MINT_USER)
 }
