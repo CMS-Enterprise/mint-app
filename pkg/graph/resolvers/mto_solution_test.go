@@ -221,7 +221,7 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 	)
 	suite.NoError(err)
 
-	// Verify the solution is linked now
+	// Verify the solution is unlinked now
 	linkedSolutions, err = storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
 	suite.NoError(err)
 	suite.Len(linkedSolutions, 0)
