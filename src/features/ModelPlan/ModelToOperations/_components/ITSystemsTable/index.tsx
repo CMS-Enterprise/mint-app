@@ -48,6 +48,7 @@ export type SolutionType =
 
 const ITSystemsTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: mtoSolutionT } = useTranslation('mtoSolution');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -169,6 +170,7 @@ const ITSystemsTable = () => {
       {
         Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
         accessor: 'riskIndicator',
+        width: 40,
         Cell: ({ row }: any) => {
           const { riskIndicator } = row.original;
 
@@ -255,17 +257,16 @@ const ITSystemsTable = () => {
         Header: t('table.facilitatedBy'),
         accessor: 'facilitatedBy',
         Cell: ({ row }: any) => {
-          if (
-            !row?.orignal?.facilitatedBy ||
-            row.original.__typename === 'MTOMilestone'
-          )
+          const { facilitatedBy } = row.original || {};
+
+          if (!facilitatedBy || row.original.__typename === 'MTOMilestone')
             return <></>;
 
           return (
             <>
-              {row.orignal.facilitatedBy
+              {facilitatedBy
                 .map((facilitator: any) =>
-                  t(`facilitatedBy.options.${facilitator}`)
+                  mtoSolutionT(`facilitatedBy.options.${facilitator}`)
                 )
                 .join(', ')}
             </>
@@ -278,10 +279,10 @@ const ITSystemsTable = () => {
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
-          if (!row.needBy)
+          if (!row.original.neededBy)
             return <span className="text-italic">{t('table.noneAdded')}</span>;
 
-          return <>{formatDateUtc(row.needBy, 'MM/dd/yyyy')}</>;
+          return <>{formatDateUtc(row.original.neededBy, 'MM/dd/yyyy')}</>;
         }
       },
       {
@@ -300,6 +301,7 @@ const ITSystemsTable = () => {
       {
         Header: t<string, {}, string>('table.actions'),
         accessor: 'actions',
+        width: 115,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -329,7 +331,8 @@ const ITSystemsTable = () => {
     location.pathname,
     location.search,
     openEditSolutionModal,
-    setSolutionID
+    setSolutionID,
+    mtoSolutionT
   ]);
 
   const {
@@ -445,7 +448,7 @@ const ITSystemsTable = () => {
                     paddingBottom: '.5rem',
                     position: 'relative',
                     paddingLeft: index === 0 ? '.5em' : '0px',
-                    width: index === 2 ? '260px' : 'auto'
+                    width: index === 2 ? '260px' : column.width || 'auto'
                   }}
                   key={column.id}
                 >

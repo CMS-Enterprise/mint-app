@@ -422,7 +422,8 @@ const EditSolutionForm = ({
           ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
           ...(!!name && !solution?.addedFromSolutionLibrary && { name })
         }
-      }
+      },
+      refetchQueries: [GetModelToOperationsMatrixDocument]
     })
       .then(response => {
         if (!response?.errors) {
@@ -473,14 +474,7 @@ const EditSolutionForm = ({
       variables: {
         id: editSolutionID || ''
       },
-      refetchQueries: [
-        {
-          query: GetModelToOperationsMatrixDocument,
-          variables: {
-            id: modelID
-          }
-        }
-      ]
+      refetchQueries: [GetModelToOperationsMatrixDocument]
     })
       .then(response => {
         if (!response?.errors) {
@@ -498,10 +492,14 @@ const EditSolutionForm = ({
               </Alert>
             </>
           );
+          // eslint-disable-next-line no-param-reassign
+          submitted.current = true;
+          setIsDirty(false);
+          closeModal();
           setIsModalOpen(false);
         }
       })
-      .catch(errors => {
+      .catch(() => {
         setMutationError(
           <Alert
             type="error"
@@ -767,7 +765,14 @@ const EditSolutionForm = ({
                       name="name"
                       control={control}
                       rules={{
-                        required: modelToOperationsMiscT('validation.fillOut')
+                        required: modelToOperationsMiscT('validation.fillOut'),
+                        validate: value => {
+                          const trimmedValue = value.trim();
+                          if (!trimmedValue) {
+                            return modelToOperationsMiscT('validation.fillOut');
+                          }
+                          return true;
+                        }
                       }}
                       render={({
                         field: { ref, ...field },

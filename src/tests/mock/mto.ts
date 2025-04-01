@@ -1,3 +1,4 @@
+import { MockedResponse } from '@apollo/client/testing';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
@@ -6,6 +7,9 @@ import {
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
+  GetMtoSolutionDocument,
+  GetMtoSolutionQuery,
+  GetMtoSolutionQueryVariables,
   GetMtoSolutionsAndMilestonesDocument,
   GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
@@ -18,7 +22,8 @@ import {
   MtoStatus,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
-import { add } from 'lodash';
+
+import mtoSolution from 'i18n/en-US/modelPlan/mtoSolution';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
@@ -275,6 +280,39 @@ export const milestoneMock = (id: string) => [
     }
   }
 ];
+
+export const solutionMock = (
+  id: string = '1',
+  addedFromSolutionLibrary: boolean = true
+): MockedResponse<GetMtoSolutionQuery, GetMtoSolutionQueryVariables> => {
+  return {
+    request: {
+      query: GetMtoSolutionDocument,
+      variables: {
+        id
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoSolution: {
+          __typename: 'MTOSolution',
+          id,
+          name: 'Solution 1',
+          key: addedFromSolutionLibrary ? MtoCommonSolutionKey.BCDA : null,
+          status: MtoSolutionStatus.COMPLETED,
+          riskIndicator: MtoRiskIndicator.AT_RISK,
+          addedFromSolutionLibrary,
+          facilitatedBy: null,
+          type: MtoSolutionType.IT_SYSTEM,
+          neededBy: '2121-08-01',
+          pocName: 'Test Name',
+          pocEmail: 'jon@oddball.io'
+        }
+      }
+    }
+  };
+};
 
 export const categoryMock = [
   {
