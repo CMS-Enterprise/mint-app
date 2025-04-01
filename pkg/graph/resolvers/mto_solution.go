@@ -201,7 +201,7 @@ func MTOSolutionsGetByModelPlanIDAndOptionalFilterView(ctx context.Context,
 func MTOSolutionsGetByModelPlanIDAndFilterView(ctx context.Context,
 	milestoneID uuid.UUID,
 	filterView models.ModelViewFilter) ([]*models.MTOSolution, error) {
-	return loaders.MTOSolution.ByModelPlanIDAndFilterView.Load(ctx, loaders.ModelPlanIDAndFilterView{
+	return loaders.MTOSolution.ByModelPlanIDAndFilterView.Load(ctx, storage.MTOSolutionByModelPlanIDAndFilterViewKey{
 		ModelPlanID: milestoneID,
 		FilterView:  filterView,
 	})

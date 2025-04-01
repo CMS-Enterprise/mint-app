@@ -13,15 +13,6 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-// ModelPlanIDAndFilterView is a struct that holds the model plan ID and filter view
-// TODO move to a key package
-type ModelPlanIDAndFilterView struct {
-	// ModelPlanID is the ID of the model plan
-	ModelPlanID uuid.UUID
-	// FilterView is the filter view to be applied
-	FilterView models.ModelViewFilter
-}
-
 // mtoSolutionLoaders is a struct that holds LoaderWrappers related to MTO Solutions
 type mtoSolutionLoaders struct {
 	// ByID Gets a list of mto Solution records by the supplied solution id.
@@ -29,7 +20,7 @@ type mtoSolutionLoaders struct {
 	// ByModelPlanID Gets a list of mto Solution records associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOSolution]
 	// ByModelPlanIDAndFilterView Gets a list of mto Solution records associated with a model plan as well as a filterView.
-	ByModelPlanIDAndFilterView LoaderWrapper[ModelPlanIDAndFilterView, []*models.MTOSolution]
+	ByModelPlanIDAndFilterView LoaderWrapper[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution]
 	// ByMilestoneID Gets a list of mto Solution records associated with a milestone by the supplied milestone id.
 	ByMilestoneID LoaderWrapper[uuid.UUID, []*models.MTOSolution]
 }
@@ -80,9 +71,9 @@ func batchMTOSolutionGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 }
 
-func batchMTOSolutionGetByModelPlanIDAndFilterView(ctx context.Context, idsAndKeys []ModelPlanIDAndFilterView) []*dataloader.Result[[]*models.MTOSolution] {
+func batchMTOSolutionGetByModelPlanIDAndFilterView(ctx context.Context, idsAndKeys []storage.MTOSolutionByModelPlanIDAndFilterViewKey) []*dataloader.Result[[]*models.MTOSolution] {
 	//TODO implement
-	return errorPerEachKey[ModelPlanIDAndFilterView, []*models.MTOSolution](idsAndKeys, fmt.Errorf("not implemented"))
+	return errorPerEachKey[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution](idsAndKeys, fmt.Errorf("not implemented"))
 }
 
 func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOSolution] {

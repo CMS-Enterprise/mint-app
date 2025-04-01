@@ -42,6 +42,24 @@ func MTOSolutionGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 
 }
 
+// MTOSolutionGetByModelPlanIDAndFilterViewLoader returns all solutions associated with a model plan id and filter view
+func MTOSolutionGetByModelPlanIDAndFilterViewLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []MTOSolutionByModelPlanIDAndFilterViewKey) ([]*models.MTOSolution, error) {
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+
+	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.GetByModelPlanIDAndFilterViewLoader, arg)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}
+
 // MTOSolutionGetByKeyLoader returns all solutions associated by a list of keys
 func MTOSolutionGetByKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.MTOSolution, error) {
 
