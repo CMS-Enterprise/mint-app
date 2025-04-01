@@ -34,17 +34,20 @@ import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
-  GetMtoAllSolutionsQuery,
+  GetMtoallMilestonesQuery,
   GetMtoMilestoneQuery,
+  MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoFacilitator,
+  MtoMilestone,
   MtoMilestoneStatus,
   MtoRiskIndicator,
   MtoSolution,
   MtoSolutionStatus,
   useDeleteMtoMilestoneMutation,
   useDeleteMtoSolutionMutation,
-  useGetMtoAllSolutionsQuery,
+  useGetMtoAllMilestonesQuery,
+  useGetMtoallMilestonesQuery,
   useGetMtoMilestoneQuery,
   useGetMtoSolutionQuery,
   useUpdateMtoMilestoneMutation,
@@ -80,6 +83,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import ImplementationStatuses from '../ImplementationStatus';
 import LinkSolutionForm from '../LinkSolutionForm';
+import { MilestoneType } from '../MatrixTable/columns';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
@@ -94,11 +98,11 @@ type FormValues = {
   riskIndicator: MtoRiskIndicator;
 };
 
-// type TableSolutionType = {
-//   name: string;
-//   status: MtoSolutionStatus;
-//   riskIndicator: MtoRiskIndicator;
-// };
+type TableMilestoneType = {
+  name: string;
+  status: MtoMilestoneStatus;
+  riskIndicator: MtoRiskIndicator;
+};
 
 type EditSolutionFormProps = {
   closeModal: () => void;
@@ -164,147 +168,147 @@ const EditSolutionForm = ({
     sol => sol.enum === solution?.key
   )?.route;
 
-  // const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
-  //   variables: {
-  //     id: modelID
-  //   }
-  // });
+  const { data: allMilestoneData } = useGetMtoAllMilestonesQuery({
+    variables: {
+      id: modelID
+    }
+  });
 
-  // // Extracts all solutions from the query
-  // const allSolutions = useMemo(() => {
-  //   return (
-  //     allSolutionData?.modelPlan.mtoMatrix || {
-  //       __typename: 'ModelsToOperationMatrix',
-  //       commonSolutions: [],
-  //       solutions: []
-  //     }
-  //   );
-  // }, [allSolutionData]);
+  // Extracts all milestones from the query
+  const allMilestones = useMemo(() => {
+    return (
+      allMilestoneData?.modelPlan.mtoMatrix || {
+        __typename: 'ModelsToOperationMatrix',
+        commonMilestones: [],
+        milestones: []
+      }
+    );
+  }, [allMilestoneData]);
 
-  // // Combine all solutions from both custom and common solutions
-  // const combinedSolutions = useMemo(
-  //   () => [
-  //     ...allSolutions?.solutions,
-  //     ...(allSolutions?.commonSolutions as MtoSolution[])
-  //   ],
-  //   [allSolutions]
-  // );
+  // Combine all milestones from both custom and common milestones
+  const combinedMilestones = useMemo(
+    () => [
+      ...allMilestones?.milestones,
+      ...(allMilestones?.commonMilestones as MtoMilestone[])
+    ],
+    [allMilestones]
+  );
 
-  // // Checks to see if a solution is a custom solution by its ID
-  // const isCustomSolution = useCallback(
-  //   (id: string) => {
-  //     return combinedSolutions.find(solution => solution.id === id);
-  //   },
-  //   [combinedSolutions]
-  // );
+  // Checks to see if a milestone is a custom milestone by its ID
+  const isCustomMilestone = useCallback(
+    (id: string) => {
+      return combinedMilestones.find(milestone => milestone.id === id);
+    },
+    [combinedMilestones]
+  );
 
-  // // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
-  // const formatSolutionForTable = useCallback(
-  //   (
-  //     solution: SolutionType | MtoCommonSolutionKey | string
-  //   ): TableSolutionType => {
-  //     if (typeof solution === 'string') {
-  //       return {
-  //         name: isCustomSolution(solution)
-  //           ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
-  //           : combinedSolutions.find(sol => sol.key === solution)?.name || '',
-  //         status: MtoSolutionStatus.NOT_STARTED,
-  //         riskIndicator: MtoRiskIndicator.ON_TRACK
-  //       };
-  //     }
+  // Format milestone for table from either a MtoCommonMilestoneKey or an UUID or MilestoneType
+  const formatMilestoneForTable = useCallback(
+    (
+      milestone: MilestoneType | MtoCommonMilestoneKey | string
+    ): TableMilestoneType => {
+      if (typeof milestone === 'string') {
+        return {
+          name: isCustomMilestone(milestone)
+            ? combinedMilestones.find(sol => sol.id === milestone)?.name || ''
+            : combinedMilestones.find(sol => sol.key === milestone)?.name || '',
+          status: MtoMilestoneStatus.NOT_STARTED,
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        };
+      }
 
-  //     return {
-  //       name: solution.name || '',
-  //       status: solution.status,
-  //       riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
-  //     };
-  //   },
-  //   [combinedSolutions, isCustomSolution]
-  // );
+      return {
+        name: milestone.name || '',
+        status: milestone.status,
+        riskIndicator: milestone.riskIndicator || MtoRiskIndicator.ON_TRACK
+      };
+    },
+    [combinedMilestones, isCustomMilestone]
+  );
 
-  // // Common solution state
-  // const [commonSolutionKeys, setCommonSolutionKeys] = useState<
-  //   MtoCommonSolutionKey[]
-  // >(
-  //   data?.mtoMilestone.solutions
-  //     .filter(solution => !!solution.key)
-  //     .map(solution => solution.key!) || []
-  // );
+  // Common milestone state
+  const [commonMilestoneKeys, setCommonMilestoneKeys] = useState<
+    MtoCommonMilestoneKey[]
+  >(
+    data?.mtoSolution.milestones
+      .filter(milestone => !!milestone.key)
+      .map(milestone => milestone.key!) || []
+  );
 
-  // // Common solution initial state
-  // const [commonSolutionKeysInitial, setCommonSolutionKeysInitial] = useState<
-  //   MtoCommonSolutionKey[]
-  // >(
-  //   data?.mtoMilestone.solutions
-  //     .filter(solution => !!solution.key)
-  //     .map(solution => solution.key!) || []
-  // );
+  // Common milestone initial state
+  const [commonMilestoneKeysInitial, setCommonMilestoneKeysInitial] = useState<
+    MtoCommonMilestoneKey[]
+  >(
+    data?.mtoSolution.milestones
+      .filter(milestone => !!milestone.key)
+      .map(milestone => milestone.key!) || []
+  );
 
-  // // Sets initial solution IDs from milestone from async data
-  // useEffect(() => {
-  //   setCommonSolutionKeys(
-  //     data?.mtoMilestone.solutions
-  //       .filter(solution => !!solution.key)
-  //       .map(solution => solution.key!) || []
-  //   );
-  //   setCommonSolutionKeysInitial(
-  //     data?.mtoMilestone.solutions
-  //       .filter(solution => !!solution.key)
-  //       .map(solution => solution.key!) || []
-  //   );
-  // }, [data]);
+  // Sets initial milestone IDs from solution from async data
+  useEffect(() => {
+    setCommonMilestoneKeys(
+      data?.mtoSolution.milestones
+        .filter(milestone => !!milestone.key)
+        .map(milestone => milestone.key!) || []
+    );
+    setCommonMilestoneKeysInitial(
+      data?.mtoSolution.milestones
+        .filter(milestone => !!milestone.key)
+        .map(milestone => milestone.key!) || []
+    );
+  }, [data]);
 
-  // // Custom solution state
-  // const [solutionIDs, setSolutionIDs] = useState<string[]>(
-  //   data?.mtoMilestone.solutions
-  //     .filter(solution => !solution.key)
-  //     .map(solution => solution.id) || []
-  // );
+  // Custom milestone state
+  const [milestoneIDs, setMilestoneIDs] = useState<string[]>(
+    data?.mtoSolution.milestones
+      .filter(milestone => !milestone.key)
+      .map(milestone => milestone.id) || []
+  );
 
-  // // Custom solution initial state
-  // const [solutionIDsInitial, setSolutionIDsInitial] = useState<string[]>(
-  //   data?.mtoMilestone.solutions
-  //     .filter(solution => !solution.key)
-  //     .map(solution => solution.id) || []
-  // );
+  // Custom milestone initial state
+  const [milestoneIDsInitial, setMilestoneIDsInitial] = useState<string[]>(
+    data?.mtoSolution.milestones
+      .filter(milestone => !milestone.key)
+      .map(milestone => milestone.id) || []
+  );
 
-  // // Sets initial solution IDs from milestone from async data
-  // useEffect(() => {
-  //   setSolutionIDs(
-  //     data?.mtoMilestone.solutions
-  //       .filter(solution => !solution.key)
-  //       .map(solution => solution.id) || []
-  //   );
-  //   setSolutionIDsInitial(
-  //     data?.mtoMilestone.solutions
-  //       .filter(solution => !solution.key)
-  //       .map(solution => solution.id) || []
-  //   );
-  // }, [data]);
+  // Sets initial milestone IDs from solution from async data
+  useEffect(() => {
+    setMilestoneIDs(
+      data?.mtoSolution.milestones
+        .filter(milestone => !milestone.key)
+        .map(milestone => milestone.id) || []
+    );
+    setMilestoneIDsInitial(
+      data?.mtoSolution.milestones
+        .filter(milestone => !milestone.key)
+        .map(milestone => milestone.id) || []
+    );
+  }, [data]);
 
-  // // Table state
-  // const [selectedSolutions, setSelectedSolutions] = useState<
-  //   TableSolutionType[]
-  // >([
-  //   ...solutionIDs.map(solution => formatSolutionForTable(solution)),
-  //   ...commonSolutionKeys.map(solution => formatSolutionForTable(solution))
-  // ]);
+  // Table state
+  const [selectedMilestones, setSelectedMilestones] = useState<
+    TableMilestoneType[]
+  >([
+    ...milestoneIDs.map(milestone => formatMilestoneForTable(milestone)),
+    ...commonMilestoneKeys.map(milestone => formatMilestoneForTable(milestone))
+  ]);
 
-  // // Updates table data when solutions are added or removed
-  // useEffect(() => {
-  //   const formattedCustomSolutions = solutionIDs.map(solution =>
-  //     formatSolutionForTable(solution)
-  //   );
+  // Updates table data when solutions are added or removed
+  useEffect(() => {
+    const formattedCustomMilestones = milestoneIDs.map(milestone =>
+      formatMilestoneForTable(milestone)
+    );
 
-  //   const formattedCommonSolutions = commonSolutionKeys.map(solution =>
-  //     formatSolutionForTable(solution)
-  //   );
+    const formattedCommonMilestones = commonMilestoneKeys.map(milestone =>
+      formatMilestoneForTable(milestone)
+    );
 
-  //   setSelectedSolutions([
-  //     ...formattedCustomSolutions,
-  //     ...formattedCommonSolutions
-  //   ]);
-  // }, [data, solutionIDs, commonSolutionKeys, formatSolutionForTable]);
+    setSelectedMilestones([
+      ...formattedCustomMilestones,
+      ...formattedCommonMilestones
+    ]);
+  }, [data, milestoneIDs, commonMilestoneKeys, formatMilestoneForTable]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -368,27 +372,27 @@ const EditSolutionForm = ({
     formValues.facilitatedBy.length
   ]);
 
-  // // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
-  // useEffect(() => {
-  //   const solutionIDDifferenceCount = symmetricDifference(
-  //     solutionIDs,
-  //     solutionIDsInitial
-  //   ).length;
+  // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
+  useEffect(() => {
+    const milestoneIDDifferenceCount = symmetricDifference(
+      milestoneIDs,
+      milestoneIDsInitial
+    ).length;
 
-  //   const commonSolutionKeysDifferenceCount = symmetricDifference(
-  //     commonSolutionKeys,
-  //     commonSolutionKeysInitial
-  //   ).length;
+    const commonMilestoneKeysDifferenceCount = symmetricDifference(
+      commonMilestoneKeys,
+      commonMilestoneKeysInitial
+    ).length;
 
-  //   setUnsavedSolutionChanges(
-  //     solutionIDDifferenceCount + commonSolutionKeysDifferenceCount
-  //   );
-  // }, [
-  //   solutionIDs,
-  //   solutionIDsInitial,
-  //   commonSolutionKeys,
-  //   commonSolutionKeysInitial
-  // ]);
+    setUnsavedSolutionChanges(
+      milestoneIDDifferenceCount + commonMilestoneKeysDifferenceCount
+    );
+  }, [
+    milestoneIDs,
+    milestoneIDsInitial,
+    commonMilestoneKeys,
+    commonMilestoneKeysInitial
+  ]);
 
   // Sets dirty state based on changes in form to render the leave confirmation modal
   useEffect(() => {
@@ -515,82 +519,82 @@ const EditSolutionForm = ({
       });
   };
 
-  // const columns: Column<SolutionType>[] = useMemo(
-  //   () => [
-  //     {
-  //       Header: modelToOperationsMiscT('modal.editSolution.solution'),
-  //       accessor: 'name'
-  //     },
-  //     {
-  //       Header: modelToOperationsMiscT('modal.editSolution.status'),
-  //       accessor: 'status',
-  //       Cell: ({ row }: { row: Row<SolutionType> }) => {
-  //         return (
-  //           <MilestoneStatusTag
-  //             status={row.original.status}
-  //             classname="width-fit-content"
-  //           />
-  //         );
-  //       }
-  //     },
-  //     {
-  //       Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
-  //       accessor: 'riskIndicator',
-  //       Cell: ({ row }: { row: Row<SolutionType> }) => {
-  //         const { riskIndicator } = row.original;
+  const columns: Column<MilestoneType>[] = useMemo(
+    () => [
+      {
+        Header: modelToOperationsMiscT('modal.editSolution.solution'),
+        accessor: 'name'
+      },
+      {
+        Header: modelToOperationsMiscT('modal.editSolution.status'),
+        accessor: 'status',
+        Cell: ({ row }: { row: Row<MilestoneType> }) => {
+          return (
+            <MilestoneStatusTag
+              status={row.original.status}
+              classname="width-fit-content"
+            />
+          );
+        }
+      },
+      {
+        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        accessor: 'riskIndicator',
+        Cell: ({ row }: { row: Row<MilestoneType> }) => {
+          const { riskIndicator } = row.original;
 
-  //         return (
-  //           <span className="text-bold text-base-lighter">
-  //             {(() => {
-  //               if (riskIndicator === MtoRiskIndicator.AT_RISK)
-  //                 return (
-  //                   <Icon.Error className="text-error-dark top-05" size={3} />
-  //                 );
-  //               if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
-  //                 return (
-  //                   <Icon.Warning
-  //                     className="text-warning-dark top-05"
-  //                     size={3}
-  //                   />
-  //                 );
-  //               return '';
-  //             })()}
-  //           </span>
-  //         );
-  //       }
-  //     }
-  //   ],
-  //   [modelToOperationsMiscT]
-  // );
+          return (
+            <span className="text-bold text-base-lighter">
+              {(() => {
+                if (riskIndicator === MtoRiskIndicator.AT_RISK)
+                  return (
+                    <Icon.Error className="text-error-dark top-05" size={3} />
+                  );
+                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
+                  return (
+                    <Icon.Warning
+                      className="text-warning-dark top-05"
+                      size={3}
+                    />
+                  );
+                return '';
+              })()}
+            </span>
+          );
+        }
+      }
+    ],
+    [modelToOperationsMiscT]
+  );
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   gotoPage,
-  //   headerGroups,
-  //   nextPage,
-  //   page,
-  //   pageOptions,
-  //   previousPage,
-  //   canNextPage,
-  //   canPreviousPage,
-  //   pageCount,
-  //   setPageSize,
-  //   state,
-  //   rows,
-  //   prepareRow
-  // } = useTable(
-  //   {
-  //     columns: columns as Column<object>[],
-  //     data: selectedSolutions,
-  //     initialState: { pageIndex: 0, pageSize: 5 }
-  //   },
-  //   useGlobalFilter,
-  //   useSortBy,
-  //   usePagination
-  // );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    gotoPage,
+    headerGroups,
+    nextPage,
+    page,
+    pageOptions,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageCount,
+    setPageSize,
+    state,
+    rows,
+    prepareRow
+  } = useTable(
+    {
+      columns: columns as Column<object>[],
+      data: selectedMilestones,
+      initialState: { pageIndex: 0, pageSize: 5 }
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
-  // rows.map(row => prepareRow(row));
+  rows.map(row => prepareRow(row));
 
   if (loading && !solution) {
     return <PageLoading />;
@@ -634,8 +638,8 @@ const EditSolutionForm = ({
           {modelToOperationsMiscT('modal.editSolution.goBack')}
         </Button>
       </Modal>
-      {/* 
-      {solution && (
+
+      {/* {solution && (
         <Sidepanel
           isOpen={editSolutionsOpen}
           ariaLabel={modelToOperationsMiscT(
@@ -654,12 +658,12 @@ const EditSolutionForm = ({
         >
           <LinkSolutionForm
             milestone={milestone}
-            commonSolutionKeys={commonSolutionKeys}
-            setCommonSolutionKeys={setCommonSolutionKeys}
-            solutionIDs={solutionIDs}
-            setSolutionIDs={setSolutionIDs}
-            allSolutions={
-              allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
+            commonMilestoneKeys={commonMilestoneKeys}
+            setCommonMilestoneKeys={setCommonMilestoneKeys}
+            milestoneIDs={milestoneIDs}
+            setMilestoneIDs={setMilestoneIDs}
+            allMilestones={
+              allMilestones as GetMtoallMilestonesQuery['modelPlan']['mtoMatrix']
             }
           />
         </Sidepanel>
@@ -975,18 +979,18 @@ const EditSolutionForm = ({
                     )}
                   />
 
-                  {/* <div className="border-top-1px border-base-lighter padding-y-4">
+                  <div className="border-top-1px border-base-lighter padding-y-4">
                     <h3 className="margin-0 margin-bottom-1">
                       {modelToOperationsMiscT(
-                        'modal.editSolution.selectedSolutions'
+                        'modal.editSolution.selectedMilestones'
                       )}
                     </h3>
 
                     <p className="margin-0 margin-bottom-1">
                       {modelToOperationsMiscT(
-                        'modal.editSolution.selectedSolutionsCount',
+                        'modal.editSolution.selectedMilestonesCount',
                         {
-                          count: selectedSolutions?.length || 0
+                          count: selectedMilestones?.length || 0
                         }
                       )}
                     </p>
@@ -1005,7 +1009,7 @@ const EditSolutionForm = ({
                       <Icon.ArrowForward className="top-2px" />
                     </Button>
 
-                    {selectedSolutions.length === 0 ? (
+                    {selectedMilestones.length === 0 ? (
                       <Alert type="info" slim>
                         {modelToOperationsMiscT(
                           'modal.editSolution.noSolutions'
@@ -1077,7 +1081,7 @@ const EditSolutionForm = ({
                           </tbody>
                         </UswdsTable>
 
-                        {selectedSolutions.length > 5 && (
+                        {selectedMilestones.length > 5 && (
                           <TablePagination
                             className="flex-justify-start margin-left-neg-05"
                             gotoPage={gotoPage}
@@ -1095,7 +1099,7 @@ const EditSolutionForm = ({
                         )}
                       </>
                     )}
-                  </div> */}
+                  </div>
                 </Fieldset>
 
                 <div className="border-top-1px border-base-lighter padding-y-4">
