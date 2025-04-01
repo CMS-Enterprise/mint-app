@@ -100,7 +100,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               colspan="1"
               role="columnheader"
               scope="col"
-              style="padding-bottom: .5rem; position: relative; padding-left: .5em; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: .5em; width: 40px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -143,7 +143,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               colspan="1"
               role="columnheader"
               scope="col"
-              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 250px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -205,7 +205,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               colspan="1"
               role="columnheader"
               scope="col"
-              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 150px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -236,7 +236,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               colspan="1"
               role="columnheader"
               scope="col"
-              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 150px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -267,7 +267,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               colspan="1"
               role="columnheader"
               scope="col"
-              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 150px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -298,7 +298,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               colspan="1"
               role="columnheader"
               scope="col"
-              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 120px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -537,14 +537,14 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
           name="tablePageSize"
         >
           <option
-            value="6"
+            value="5"
           >
-            Show 6 solutions
+            Show 5 solutions
           </option>
           <option
-            value="9"
+            value="10"
           >
-            Show 9 solutions
+            Show 10 solutions
           </option>
           <option
             value="100000"
