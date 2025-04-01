@@ -2,7 +2,6 @@ package loaders
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -71,9 +70,41 @@ func batchMTOSolutionGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
 }
 
-func batchMTOSolutionGetByModelPlanIDAndFilterView(ctx context.Context, idsAndKeys []storage.MTOSolutionByModelPlanIDAndFilterViewKey) []*dataloader.Result[[]*models.MTOSolution] {
-	//TODO implement
-	return errorPerEachKey[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution](idsAndKeys, fmt.Errorf("not implemented"))
+func batchMTOSolutionGetByModelPlanIDAndFilterView(ctx context.Context, keys []storage.MTOSolutionByModelPlanIDAndFilterViewKey) []*dataloader.Result[[]*models.MTOSolution] {
+	loaders, err := Loaders(ctx)
+	if err != nil {
+		return errorPerEachKey[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution](keys, err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	data, err := storage.MTOSolutionGetByModelPlanIDAndFilterViewLoader(loaders.DataReader.Store, logger, keys)
+	if err != nil {
+		return errorPerEachKey[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution](keys, err)
+	}
+	//TODO: we will need to extend this implementation as the return type doesn't have filter view,
+	// we need to use a custom implementation so that the data returns a solution with a filter view (that can never be nil)
+	getKeyFunc := func(data *models.MTOSolutionWithModelFilterView) storage.MTOSolutionByModelPlanIDAndFilterViewKey {
+		return storage.MTOSolutionByModelPlanIDAndFilterViewKey{
+			ModelPlanID: data.ModelPlanID,
+			FilterView:  data.FilterView,
+		}
+
+	}
+	// TODO: verify that this method works as expected since  storage.MTOSolutionByModelPlanIDAndFilterViewKey is complex
+	getResFunc := func(key storage.MTOSolutionByModelPlanIDAndFilterViewKey, resMap map[storage.MTOSolutionByModelPlanIDAndFilterViewKey][]*models.MTOSolutionWithModelFilterView) ([]*models.MTOSolution, bool) {
+		res, ok := resMap[key]
+		converted := make([]*models.MTOSolution, len(res))
+
+		for i, mtoWith := range res {
+			converted[i] = mtoWith.ToMTOSolution()
+		}
+		//iterate through and convert each
+		return converted, ok
+	}
+
+	// implement one to many
+	return oneToManyWithCustomKeyDataLoader(keys, data, getKeyFunc, getResFunc)
+
 }
 
 func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOSolution] {
