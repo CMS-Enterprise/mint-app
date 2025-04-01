@@ -1288,8 +1288,18 @@ export type ModelsToOperationMatrix = {
   milestones: Array<MtoMilestone>;
   milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
   recentEdit?: Maybe<RecentModification>;
+  /**
+   * Solutions returns solutions that are linked to a Model Plan's MTO.
+   *  -- filterView is used to return only solutions that are relevant to a specific ModelViewFilter
+   *   -- This relationship is from common solutions used as a source for the solution
+   */
   solutions: Array<MtoSolution>;
   status: MtoStatus;
+};
+
+
+export type ModelsToOperationMatrixSolutionsArgs = {
+  filterView?: InputMaybe<ModelViewFilter>;
 };
 
 export enum MonitoringFileType {

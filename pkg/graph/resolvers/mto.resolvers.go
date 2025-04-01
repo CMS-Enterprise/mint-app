@@ -35,8 +35,8 @@ func (r *modelsToOperationMatrixResolver) Milestones(ctx context.Context, obj *m
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOSolution, error) {
-	return MTOSolutionGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
+func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix, filterView *models.ModelViewFilter) ([]*models.MTOSolution, error) {
+	return MTOSolutionsGetByModelPlanIDAndOptionalFilterView(ctx, obj.ModelPlan.ID, filterView)
 }
 
 // Status is the resolver for the status field.
