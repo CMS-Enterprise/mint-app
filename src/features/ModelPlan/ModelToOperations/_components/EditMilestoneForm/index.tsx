@@ -76,7 +76,6 @@ import LinkSolutionForm from '../LinkSolutionForm';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MilestoneStatusTag from '../MTOStatusTag';
 
-import './index.scss';
 import '../../index.scss';
 
 export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
@@ -1098,14 +1097,38 @@ const EditMilestoneForm = ({
                         </HelpText>
 
                         {getKeys(riskIndicatorConfig.options).map(value => (
-                          <Radio
-                            {...field}
-                            key={value}
-                            id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
-                            value={value}
-                            label={riskIndicatorConfig.options[value]}
-                            checked={field.value === value}
-                          />
+                          <div className="display-flex" key={value}>
+                            <Radio
+                              {...field}
+                              id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
+                              value={value}
+                              label={riskIndicatorConfig.options[value]}
+                              checked={field.value === value}
+                              className="margin-right-1"
+                            />
+
+                            {(() => {
+                              if (value === MtoRiskIndicator.AT_RISK)
+                                return (
+                                  <Icon.Error
+                                    className="text-error-dark"
+                                    style={{ top: '10px' }}
+                                    size={3}
+                                  />
+                                );
+
+                              if (value === MtoRiskIndicator.OFF_TRACK)
+                                return (
+                                  <Icon.Warning
+                                    className="text-warning-dark"
+                                    style={{ top: '10px' }}
+                                    size={3}
+                                  />
+                                );
+
+                              return <></>;
+                            })()}
+                          </div>
                         ))}
                       </FormGroup>
                     )}

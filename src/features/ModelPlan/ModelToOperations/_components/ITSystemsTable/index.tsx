@@ -25,6 +25,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
+import { EditMTOSolutionContext } from 'contexts/EditMTOSolutionContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -47,6 +48,7 @@ export type SolutionType =
 
 const ITSystemsTable = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: mtoSolutionT } = useTranslation('mtoSolution');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -55,6 +57,10 @@ const ITSystemsTable = () => {
   const { location } = history;
 
   const params = new URLSearchParams(history.location.search);
+
+  const { openEditSolutionModal, setSolutionID } = useContext(
+    EditMTOSolutionContext
+  );
 
   const hideMilestonesWithoutSolutions =
     params.get('hide-milestones-without-solutions') === 'true';
@@ -91,7 +97,8 @@ const ITSystemsTable = () => {
             milestones: [],
             facilitatedBy: [],
             neededBy: null,
-            status: null as any
+            status: null as any,
+            addedFromSolutionLibrary: false
           } as SolutionType;
         }
       ) || [],
@@ -163,6 +170,7 @@ const ITSystemsTable = () => {
       {
         Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
         accessor: 'riskIndicator',
+        width: 40,
         Cell: ({ row }: any) => {
           const { riskIndicator } = row.original;
 
@@ -172,6 +180,7 @@ const ITSystemsTable = () => {
       {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
+        width: 250,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone')
             return (
@@ -197,6 +206,10 @@ const ITSystemsTable = () => {
           const mappedSolution = helpSolutions.find(
             s => s.enum === row.original.key
           );
+
+          if (!row.original.addedFromSolutionLibrary) {
+            return <>{row.original.name}</>;
+          }
 
           return (
             <UswdsReactLink
@@ -245,17 +258,16 @@ const ITSystemsTable = () => {
         Header: t('table.facilitatedBy'),
         accessor: 'facilitatedBy',
         Cell: ({ row }: any) => {
-          if (
-            !row?.orignal?.facilitatedBy ||
-            row.original.__typename === 'MTOMilestone'
-          )
+          const { facilitatedBy } = row.original || {};
+
+          if (!facilitatedBy || row.original.__typename === 'MTOMilestone')
             return <></>;
 
           return (
             <>
-              {row.orignal.facilitatedBy
+              {facilitatedBy
                 .map((facilitator: any) =>
-                  t(`facilitatedBy.options.${facilitator}`)
+                  mtoSolutionT(`facilitatedBy.options.${facilitator}`)
                 )
                 .join(', ')}
             </>
@@ -268,10 +280,10 @@ const ITSystemsTable = () => {
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
-          if (!row.needBy)
+          if (!row.original.neededBy)
             return <span className="text-italic">{t('table.noneAdded')}</span>;
 
-          return <>{formatDateUtc(row.needBy, 'MM/dd/yyyy')}</>;
+          return <>{formatDateUtc(row.original.neededBy, 'MM/dd/yyyy')}</>;
         }
       },
       {
@@ -289,7 +301,27 @@ const ITSystemsTable = () => {
       },
       {
         Header: t<string, {}, string>('table.actions'),
-        accessor: 'actions'
+        accessor: 'actions',
+        width: 120,
+        Cell: ({ row }: any) => {
+          if (row.original.__typename === 'MTOMilestone') return <></>;
+
+          return (
+            <div style={{ textAlign: 'right' }}>
+              <Button
+                type="button"
+                unstyled
+                className="margin-right-2"
+                onClick={() => {
+                  setSolutionID(row.original.id);
+                  openEditSolutionModal(row.original.id);
+                }}
+              >
+                {t('table.editDetails')}
+              </Button>
+            </div>
+          );
+        }
       }
     ];
   }, [
@@ -298,7 +330,10 @@ const ITSystemsTable = () => {
     setMTOModalState,
     setMTOModalOpen,
     location.pathname,
-    location.search
+    location.search,
+    openEditSolutionModal,
+    setSolutionID,
+    mtoSolutionT
   ]);
 
   const {
@@ -334,7 +369,7 @@ const ITSystemsTable = () => {
       autoResetPage: true,
       initialState: {
         pageIndex: 0,
-        pageSize: 6
+        pageSize: 5
       }
     },
     useSortBy,
@@ -414,7 +449,7 @@ const ITSystemsTable = () => {
                     paddingBottom: '.5rem',
                     position: 'relative',
                     paddingLeft: index === 0 ? '.5em' : '0px',
-                    width: index === 2 ? '260px' : 'auto'
+                    width: index === 2 ? '260px' : column.width || 'auto'
                   }}
                   key={column.id}
                 >
@@ -502,7 +537,7 @@ const ITSystemsTable = () => {
             className="margin-left-auto desktop:grid-col-auto"
             pageSize={state.pageSize}
             setPageSize={setPageSize}
-            valueArray={[6, 9, 'all']}
+            valueArray={[5, 10, 'all']}
             suffix={t('table.solutions').toLowerCase()}
           />
         )}
