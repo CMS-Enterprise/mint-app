@@ -180,6 +180,7 @@ const ITSystemsTable = () => {
       {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
+        width: 250,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone')
             return (
@@ -301,7 +302,7 @@ const ITSystemsTable = () => {
       {
         Header: t<string, {}, string>('table.actions'),
         accessor: 'actions',
-        width: 115,
+        width: 120,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -368,7 +369,7 @@ const ITSystemsTable = () => {
       autoResetPage: true,
       initialState: {
         pageIndex: 0,
-        pageSize: 6
+        pageSize: 5
       }
     },
     useSortBy,
@@ -536,7 +537,7 @@ const ITSystemsTable = () => {
             className="margin-left-auto desktop:grid-col-auto"
             pageSize={state.pageSize}
             setPageSize={setPageSize}
-            valueArray={[6, 9, 'all']}
+            valueArray={[5, 10, 'all']}
             suffix={t('table.solutions').toLowerCase()}
           />
         )}

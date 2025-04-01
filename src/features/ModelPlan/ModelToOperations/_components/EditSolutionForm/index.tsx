@@ -152,7 +152,8 @@ const EditSolutionForm = ({
   } = useGetMtoSolutionQuery({
     variables: {
       id: editSolutionID || ''
-    }
+    },
+    skip: !editSolutionID
   });
 
   const solution = useMemo(() => {
@@ -858,6 +859,7 @@ const EditSolutionForm = ({
                             )}
                             id="solution-needed-by"
                             defaultValue={field.value}
+                            suppressMilliseconds
                           />
 
                           {isDateInPast(watch('neededBy')) && (
