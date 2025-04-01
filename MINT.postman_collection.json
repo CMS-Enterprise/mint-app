@@ -3685,6 +3685,27 @@
 					"name": "Solutions",
 					"item": [
 						{
+							"name": "GetMTOSolutions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\n    modelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix {\n        solutions\n        # If you want to get only solutions for a view, uncomment the params below\n        # ( filterView: IDDOC)\n         {\n        id\n        name\n        facilitatedBy\n        neededBy\n        status\n        riskIndicator\n        key\n        type\n        pocName\n        pocEmail\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n        addedFromSolutionLibrary\n        commonSolution {\n            name\n            filterView\n        }\n        }\n    }\n    }\n}\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "NewMTOSolution (Custom)",
 							"event": [
 								{
