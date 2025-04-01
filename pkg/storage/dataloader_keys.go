@@ -25,7 +25,7 @@ type MTOMilestoneByModelPlanAndCategoryKey struct {
 // MTOSolutionByModelPlanIDAndFilterViewKey is a struct that holds the model plan ID and filter view
 type MTOSolutionByModelPlanIDAndFilterViewKey struct {
 	// ModelPlanID is the ID of the model plan
-	ModelPlanID uuid.UUID
+	ModelPlanID uuid.UUID `json:"model_plan_id"`
 	// FilterView is the filter view to be applied
-	FilterView models.ModelViewFilter
+	FilterView models.ModelViewFilter `json:"filter_view"`
 }
