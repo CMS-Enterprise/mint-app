@@ -88,6 +88,52 @@ func (suite *ResolverSuite) TestMTOSolutionGetByMilestoneIDLOADER() {
 		expectedResults, verifyFunc)
 }
 
+func (suite *ResolverSuite) TestMTOSolutionsGetByModelPlanIDAndFilterView() {
+	plan1 := suite.createModelPlan("model plan 1")
+	// Create solutions for for the first model plan for various filter views
+	ccwSolutionForCCW1 := suite.createMTOSolutionCommon(plan1.ID, models.MTOCSKCcw, nil)
+	innovationSolutionForIDDOC1 := suite.createMTOSolutionCommon(plan1.ID, models.MTOCSKInnovation, nil)
+	acosSolutionForIDDOC1 := suite.createMTOSolutionCommon(plan1.ID, models.MTOCSKAcoOs, nil)
+	// this solution is created to ensure it isn't returned by mistake in the loader
+	appsSolutionWithoutFilter1 := suite.createMTOSolutionCommon(plan1.ID, models.MTOCSKApps, nil)
+	_ = appsSolutionWithoutFilter1
+
+	// Make a second model to verify that the results are returned per model
+	plan2 := suite.createModelPlan("model plan 2")
+	ccwSolutionForCCW2 := suite.createMTOSolutionCommon(plan2.ID, models.MTOCSKCcw, nil)
+	innovationSolutionForIDDOC2 := suite.createMTOSolutionCommon(plan2.ID, models.MTOCSKInnovation, nil)
+
+	// make a model plan without solutions to test a nil case
+	plan3 := suite.createModelPlan("model plan 3")
+
+	expectedResults := []loaders.KeyAndExpected[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution]{
+		// CCW for model plan 1
+		{Key: storage.MTOSolutionByModelPlanIDAndFilterViewKey{ModelPlanID: plan1.ID, FilterView: models.ModelViewFilterChronicConditionsWarehouse}, Expected: []*models.MTOSolution{ccwSolutionForCCW1}},
+		// IDDOC for model plan 1
+		{Key: storage.MTOSolutionByModelPlanIDAndFilterViewKey{ModelPlanID: plan1.ID, FilterView: models.ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract}, Expected: []*models.MTOSolution{innovationSolutionForIDDOC1, acosSolutionForIDDOC1}},
+
+		// CCW for model plan 2
+		{Key: storage.MTOSolutionByModelPlanIDAndFilterViewKey{ModelPlanID: plan2.ID, FilterView: models.ModelViewFilterChronicConditionsWarehouse}, Expected: []*models.MTOSolution{ccwSolutionForCCW2}},
+		// IDDOC for model plan 2
+		{Key: storage.MTOSolutionByModelPlanIDAndFilterViewKey{ModelPlanID: plan2.ID, FilterView: models.ModelViewFilterInnovativeDesignDevelopmentAndOperationsContract}, Expected: []*models.MTOSolution{innovationSolutionForIDDOC2}},
+		// No solutions for model plan 3
+		{Key: storage.MTOSolutionByModelPlanIDAndFilterViewKey{ModelPlanID: plan3.ID, FilterView: models.ModelViewFilterChronicConditionsWarehouse}, Expected: []*models.MTOSolution{}},
+	}
+
+	verifyFunc := func(returnedSolutions []*models.MTOSolution, expected []*models.MTOSolution) bool {
+		// Map the IDs from the solutions, assert they match the expected returned result
+		returnedIDS := lo.Map(returnedSolutions, func(item *models.MTOSolution, _ int) *models.MTOSolution {
+			return item
+		})
+		expectedIDs := lo.Map(expected, func(item *models.MTOSolution, _ int) *models.MTOSolution {
+			return item
+		})
+		return suite.ElementsMatch(returnedIDS, expectedIDs)
+	}
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.MTOSolution.ByModelPlanIDAndFilterView, expectedResults, verifyFunc)
+
+}
+
 func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 	plan := suite.createModelPlan("Plan for testing CreateCommonSolutionAndLinkMilestones")
 	// We'll make two new, existing milestones to link to
