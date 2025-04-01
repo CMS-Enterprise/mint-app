@@ -29,4 +29,7 @@ SELECT
 FROM mto_solution
 INNER JOIN mto_common_solution ON mto_solution.mto_common_solution_key = mto_common_solution.key
 INNER JOIN QUERIED_IDS AS qIDs
-    ON mto_common_solution.filter_view = qIDs.filter_view;
+    ON (
+        mto_common_solution.filter_view = qIDs.filter_view
+        AND mto_solution.model_plan_id = qIDs.model_plan_id
+    );

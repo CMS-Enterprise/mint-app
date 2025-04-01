@@ -122,11 +122,11 @@ func (suite *ResolverSuite) TestMTOSolutionsGetByModelPlanIDAndFilterView() {
 
 	verifyFunc := func(returnedSolutions []*models.MTOSolution, expected []*models.MTOSolution) bool {
 		// Map the IDs from the solutions, assert they match the expected returned result
-		returnedIDS := lo.Map(returnedSolutions, func(item *models.MTOSolution, _ int) *models.MTOSolution {
-			return item
+		returnedIDS := lo.Map(returnedSolutions, func(item *models.MTOSolution, _ int) uuid.UUID {
+			return item.ID
 		})
-		expectedIDs := lo.Map(expected, func(item *models.MTOSolution, _ int) *models.MTOSolution {
-			return item
+		expectedIDs := lo.Map(expected, func(item *models.MTOSolution, _ int) uuid.UUID {
+			return item.ID
 		})
 		return suite.ElementsMatch(returnedIDS, expectedIDs)
 	}
