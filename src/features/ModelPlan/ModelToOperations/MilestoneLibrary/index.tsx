@@ -292,6 +292,7 @@ const MilstoneCardGroup = ({
                   type="button"
                   outline={viewParam !== 'suggested'}
                   onClick={() => {
+                    params.set('page', '1');
                     params.set('view', 'suggested');
                     history.replace({ search: params.toString() });
                   }}
@@ -306,6 +307,7 @@ const MilstoneCardGroup = ({
                   type="button"
                   outline={viewParam !== 'all'}
                   onClick={() => {
+                    params.set('page', '1');
                     params.set('view', 'all');
                     history.replace({ search: params.toString() });
                   }}

@@ -448,30 +448,30 @@ export const modelToOperationsMisc: Record<string, any> = {
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
       },
-      selectedMilestones: 'Selected solutions',
+      selectedMilestones: 'Selected milestones',
       selectedMilestonesCount:
-        '{{count}} solutions associated with this milestone',
+        '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:
-        '{{count}} solution associated with this milestone',
-      editMilestones: 'Edit solutions',
+        '{{count}} milestones associated with this solution',
+      editMilestones: 'Edit milestones',
       noMilestones:
-        'You haven’t selected any solutions or IT systems to implement this milestone.',
+        'You haven’t selected any milestones or IT systems to implement this milestone.',
       milestone: 'Milestone',
       status: 'Status',
-      selectedMilestoneCount_other: '{{count}} selected solutions',
+      selectedMilestoneCount_other: '{{count}} selected milestones',
       selectedMilestoneCount: '{{count}} selected solution',
-      suggestedMilestones: 'Suggested solutions',
+      suggestedMilestones: 'Suggested milestones',
       selectedMilestonesDescription:
-        'These solutions are commonly used for this milestone.',
+        'These milestones are commonly used for this solution.',
       selectThisMilestone: 'Select this solution',
       availableMilestonesDescription:
-        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
+        'Select from other operational milestones and IT systems included in MINT, including any custom milestones you may have added to your MTO. Select all that apply.',
       visitSolutionLibrary:
-        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
-      suggestedMilestone: 'Suggested solutions for this milestone',
-      customMilestone: 'Custom solutions added to this MTO',
-      otherMilestones: 'Other available solutions',
-      backToSolution: 'Back to milestone details'
+        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the milestones below.',
+      suggestedMilestone: 'Suggested milestones for this milestone',
+      customMilestone: 'Custom milestones added to this MTO',
+      otherMilestones: 'Other available milestones',
+      backToSolution: 'Back to solution details'
     },
     solution: {
       title: 'Add a new solution',

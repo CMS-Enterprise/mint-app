@@ -8,6 +8,9 @@ export default gql(/* GraphQL */ `
         commonMilestones {
           key
           name
+          commonSolutions {
+            key
+          }
         }
         milestones {
           id

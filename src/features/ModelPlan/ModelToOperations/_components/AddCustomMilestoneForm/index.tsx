@@ -264,6 +264,9 @@ const CustomMilestoneForm = () => {
                   type="button"
                   className="usa-button usa-button--unstyled margin-top-0"
                   onClick={() => {
+                    reset();
+                    clearMessage();
+                    setMTOModalOpen(false);
                     history.push(
                       `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
                     );

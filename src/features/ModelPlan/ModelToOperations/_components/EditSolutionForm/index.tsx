@@ -82,6 +82,7 @@ import {
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import ImplementationStatuses from '../ImplementationStatus';
+import LinkMilestoneForm from '../LinkMilestoneForm';
 import LinkSolutionForm from '../LinkSolutionForm';
 import { MilestoneType } from '../MatrixTable/columns';
 import MilestoneStatusTag from '../MTOStatusTag';
@@ -147,7 +148,7 @@ const EditSolutionForm = ({
 
   const { showMessage } = useMessage();
 
-  const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
+  const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
 
   const {
     data,
@@ -522,7 +523,7 @@ const EditSolutionForm = ({
   const columns: Column<MilestoneType>[] = useMemo(
     () => [
       {
-        Header: modelToOperationsMiscT('modal.editSolution.solution'),
+        Header: modelToOperationsMiscT('modal.editSolution.milestone'),
         accessor: 'name'
       },
       {
@@ -639,9 +640,9 @@ const EditSolutionForm = ({
         </Button>
       </Modal>
 
-      {/* {solution && (
+      {solution && (
         <Sidepanel
-          isOpen={editSolutionsOpen}
+          isOpen={editMilestonesOpen}
           ariaLabel={modelToOperationsMiscT(
             'modal.editSolution.backToMilestone'
           )}
@@ -652,12 +653,12 @@ const EditSolutionForm = ({
           backButton
           showScroll
           closeModal={() => {
-            setEditSolutionsOpen(false);
+            setEditMilestonesOpen(false);
           }}
           overlayClassName="bg-transparent"
         >
-          <LinkSolutionForm
-            milestone={milestone}
+          <LinkMilestoneForm
+            solution={solution}
             commonMilestoneKeys={commonMilestoneKeys}
             setCommonMilestoneKeys={setCommonMilestoneKeys}
             milestoneIDs={milestoneIDs}
@@ -667,7 +668,7 @@ const EditSolutionForm = ({
             }
           />
         </Sidepanel>
-      )} */}
+      )}
 
       {unsavedChanges + unsavedSolutionChanges > 0 && (
         <div
@@ -998,13 +999,13 @@ const EditSolutionForm = ({
                     <Button
                       type="button"
                       onClick={() => {
-                        setEditSolutionsOpen(true);
+                        setEditMilestonesOpen(true);
                       }}
                       unstyled
                       className="margin-0 display-flex"
                     >
                       {modelToOperationsMiscT(
-                        'modal.editSolution.editSolutions'
+                        'modal.editSolution.editMilestones'
                       )}
                       <Icon.ArrowForward className="top-2px" />
                     </Button>
@@ -1012,7 +1013,7 @@ const EditSolutionForm = ({
                     {selectedMilestones.length === 0 ? (
                       <Alert type="info" slim>
                         {modelToOperationsMiscT(
-                          'modal.editSolution.noSolutions'
+                          'modal.editSolution.noMilestones'
                         )}
                       </Alert>
                     ) : (
