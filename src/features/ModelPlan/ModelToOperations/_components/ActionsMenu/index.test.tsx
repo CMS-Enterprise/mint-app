@@ -9,6 +9,7 @@ import {
   modelID
 } from 'tests/mock/mto';
 
+import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
 import MessageProvider from 'contexts/MessageContext';
 
 import ActionMenu from '.';
@@ -37,11 +38,11 @@ describe('Component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('opens and closes the modal based on URL parameter', () => {
+  it('opens and closes the modal based on URL parameter', async () => {
     render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/collaboration-area/model-to-operations/matrix?edit-milestone=123`
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones&edit-milestone=123`
         ]}
       >
         <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
@@ -54,14 +55,16 @@ describe('Component', () => {
             addTypename={false}
           >
             <MessageProvider>
-              <ActionMenu
-                rowType="milestone"
-                milestoneID="123"
-                subCategoryID="1234"
-                primaryCategoryID="12345"
-                MoveDown={<></>}
-                MoveUp={<></>}
-              />
+              <EditMTOMilestoneProvider>
+                <ActionMenu
+                  rowType="milestone"
+                  milestoneID="123"
+                  subCategoryID="1234"
+                  primaryCategoryID="12345"
+                  MoveDown={<></>}
+                  MoveUp={<></>}
+                />
+              </EditMTOMilestoneProvider>
             </MessageProvider>
           </MockedProvider>
         </Route>

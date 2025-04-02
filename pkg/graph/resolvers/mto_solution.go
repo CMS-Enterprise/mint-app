@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -27,6 +29,7 @@ func MTOSolutionUpdate(
 	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
+	milestoneLinks *model.MTOMilestoneLinks,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -49,7 +52,30 @@ func MTOSolutionUpdate(
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOSolutionUpdate(store, logger, existing)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		updatedSolution, err := storage.MTOSolutionUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update solution: %w", err)
+		}
+
+		// Update linked milestones
+		if milestoneLinks != nil && milestoneLinks.MilestoneIDs != nil {
+			_, err := MTOSolutionLinkMilestonesWithTX(
+				ctx,
+				principal,
+				logger,
+				tx,
+				updatedSolution.ID,
+				milestoneLinks.MilestoneIDs,
+			)
+			if err != nil {
+				return nil, fmt.Errorf("failed to update linked milestones: %w", err)
+			}
+		}
+
+		return updatedSolution, nil
+	})
 }
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
@@ -147,10 +173,6 @@ func MTOSolutionLinkMilestonesWithTX(
 	solutionID uuid.UUID,
 	milestonesToLink []uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
-	// Prepare data for batch insertion
-	/*links := lo.Map(milestonesToLink, func(milestoneID uuid.UUID, _ int) *models.MTOMilestoneSolutionLink {
-		return models.NewMTOMilestoneSolutionLink(principal.Account().ID, milestoneID, solutionID)
-	})*/
 
 	// Insert or update links in bulk
 	linkedMilestones, err := storage.MTOMilestoneSolutionLinkMilestonesToSolution(tx, logger, solutionID, milestonesToLink, principal.Account().ID)
@@ -160,6 +182,30 @@ func MTOSolutionLinkMilestonesWithTX(
 	}
 
 	return linkedMilestones, nil
+}
+
+// MTOSolutionsGetByModelPlanIDAndOptionalFilterView is a wrapper function
+// that checks if the filterView is nil and calls the appropriate function
+// to get MTO solutions by model plan ID.
+func MTOSolutionsGetByModelPlanIDAndOptionalFilterView(ctx context.Context,
+	milestoneID uuid.UUID,
+	filterView *models.ModelViewFilter,
+) ([]*models.MTOSolution, error) {
+	if filterView == nil {
+		return MTOSolutionGetByModelPlanIDLOADER(ctx, milestoneID)
+	}
+	return MTOSolutionsGetByModelPlanIDAndFilterView(ctx, milestoneID, *filterView)
+}
+
+// MTOSolutionsGetByModelPlanIDAndFilterView implements resolver logic to get all MTO solutions by a model plan ID and filter view
+func MTOSolutionsGetByModelPlanIDAndFilterView(ctx context.Context,
+	milestoneID uuid.UUID,
+	filterView models.ModelViewFilter) ([]*models.MTOSolution, error) {
+	return loaders.MTOSolution.ByModelPlanIDAndFilterView.Load(ctx, storage.MTOSolutionByModelPlanIDAndFilterViewKey{
+		ModelPlanID: milestoneID,
+		FilterView:  filterView,
+	})
+
 }
 
 // MTOSolutionGetByModelPlanIDLOADER implements resolver logic to get all MTO solutions by a model plan ID using a data loader

@@ -5,7 +5,12 @@ type ModelsToOperationMatrix {
   commonMilestones: [MTOCommonMilestone!]!
   commonSolutions: [MTOCommonSolution!]!
   milestones: [MTOMilestone!]!
-  solutions: [MTOSolution!]! # Need to support solutions that _don't_ have milestones
+  """
+  Solutions returns solutions that are linked to a Model Plan's MTO.
+   -- filterView is used to return only solutions that are relevant to a specific ModelViewFilter
+    -- This relationship is from common solutions used as a source for the solution
+  """
+  solutions(filterView: ModelViewFilter): [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
   recentEdit: RecentModification #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
   milestonesWithNoLinkedSolutions: [MTOMilestone!]!

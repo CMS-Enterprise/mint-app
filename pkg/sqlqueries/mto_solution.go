@@ -23,6 +23,9 @@ var mtoSolutionGetByIDLoaderSQL string
 //go:embed SQL/mto/solution/get_by_model_plan_id_LOADER.sql
 var mtoSolutionGetByModelPlanIDLoaderSQL string
 
+//go:embed SQL/mto/solution/get_by_model_plan_id_and_filter_view_LOADER.sql
+var mtoSolutionGetByModelPlanIDAndFilterViewLoaderSQL string
+
 //go:embed SQL/mto/solution/get_by_milestone_id_LOADER.sql
 var mtoSolutionGetByMilestoneIDLoaderSQL string
 
@@ -34,6 +37,7 @@ type mtoSolutionScripts struct {
 	Delete                              string
 	GetByIDLoader                       string
 	GetByModelPlanIDLoader              string
+	GetByModelPlanIDAndFilterViewLoader string
 	GetByMilestoneIDLoader              string
 }
 
@@ -45,5 +49,6 @@ var MTOSolution = mtoSolutionScripts{
 	Delete:                              mtoSolutionDeleteSQL,
 	GetByIDLoader:                       mtoSolutionGetByIDLoaderSQL,
 	GetByModelPlanIDLoader:              mtoSolutionGetByModelPlanIDLoaderSQL,
+	GetByModelPlanIDAndFilterViewLoader: mtoSolutionGetByModelPlanIDAndFilterViewLoaderSQL,
 	GetByMilestoneIDLoader:              mtoSolutionGetByMilestoneIDLoaderSQL,
 }

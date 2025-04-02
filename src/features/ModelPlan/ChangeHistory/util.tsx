@@ -33,6 +33,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'mtoStatusUpdate'
   | 'teamUpdate'
   | 'discussionUpdate'
   | 'documentUpdate'
@@ -192,10 +193,6 @@ export const hiddenFields: HiddenFieldTypes[] = [
     fields: ['is_link']
   },
   {
-    table: TableName.MTO_MILESTONE_SOLUTION_LINK,
-    fields: ['solution_id']
-  },
-  {
     table: TableName.MTO_MILESTONE,
     fields: ['mto_common_milestone_key', 'name']
   },
@@ -222,8 +219,7 @@ export const batchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
-  TableName.MTO_MILESTONE,
-  TableName.MTO_INFO
+  TableName.MTO_MILESTONE
 ];
 
 // Tables where audits are batch with a different table
@@ -501,7 +497,8 @@ const readyForReviewFields = [
 // Removes the fields that are ready for review from the list of translatedFields changes
 export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   // Allow MTO_INFO changes to pass through, as there is no official status, but calculated on FE by ready for review fields
-  if (changes[0]?.tableName === TableName.MTO_INFO) return changes;
+  if (changes.find(change => change.tableName === TableName.MTO_INFO))
+    return changes;
 
   const filteredReviewChanges: ChangeRecordType[] = [];
 
@@ -748,6 +745,16 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
+  // If the change is an MTO ready for review update
+  if (
+    change.tableName === TableName.MTO_INFO &&
+    change.translatedFields.find(
+      field => field.fieldName === 'ready_for_review_by'
+    )
+  ) {
+    return 'mtoStatusUpdate';
+  }
+
   if (change.tableName === TableName.PLAN_COLLABORATOR) {
     return 'teamUpdate';
   }
@@ -830,6 +837,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       } else {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
+      break;
+    case 'mtoStatusUpdate':
+      headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       break;
     case 'teamUpdate':
       headerText = i18next.t(`changeHistory:team${teamChangeType}`);

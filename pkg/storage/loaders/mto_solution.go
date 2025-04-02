@@ -18,15 +18,18 @@ type mtoSolutionLoaders struct {
 	ByID LoaderWrapper[uuid.UUID, *models.MTOSolution]
 	// ByModelPlanID Gets a list of mto Solution records associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOSolution]
+	// ByModelPlanIDAndFilterView Gets a list of mto Solution records associated with a model plan as well as a filterView.
+	ByModelPlanIDAndFilterView LoaderWrapper[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution]
 	// ByMilestoneID Gets a list of mto Solution records associated with a milestone by the supplied milestone id.
 	ByMilestoneID LoaderWrapper[uuid.UUID, []*models.MTOSolution]
 }
 
 // MTOSolution is the singleton instance of all LoaderWrappers related to MTO Solutions
 var MTOSolution = &mtoSolutionLoaders{
-	ByID:          NewLoaderWrapper(batchMTOSolutionGetByID),
-	ByModelPlanID: NewLoaderWrapper(batchMTOSolutionGetByModelPlanID),
-	ByMilestoneID: NewLoaderWrapper(batchMTOSolutionGetByMilestoneID),
+	ByID:                       NewLoaderWrapper(batchMTOSolutionGetByID),
+	ByModelPlanID:              NewLoaderWrapper(batchMTOSolutionGetByModelPlanID),
+	ByModelPlanIDAndFilterView: NewLoaderWrapper(batchMTOSolutionGetByModelPlanIDAndFilterView),
+	ByMilestoneID:              NewLoaderWrapper(batchMTOSolutionGetByMilestoneID),
 }
 
 func batchMTOSolutionGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOSolution] {
@@ -65,6 +68,41 @@ func batchMTOSolutionGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 
 	// implement one to many
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
+}
+
+func batchMTOSolutionGetByModelPlanIDAndFilterView(ctx context.Context, keys []storage.MTOSolutionByModelPlanIDAndFilterViewKey) []*dataloader.Result[[]*models.MTOSolution] {
+	loaders, err := Loaders(ctx)
+	if err != nil {
+		return errorPerEachKey[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution](keys, err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	data, err := storage.MTOSolutionGetByModelPlanIDAndFilterViewLoader(loaders.DataReader.Store, logger, keys)
+	if err != nil {
+		return errorPerEachKey[storage.MTOSolutionByModelPlanIDAndFilterViewKey, []*models.MTOSolution](keys, err)
+	}
+
+	getKeyFunc := func(data *models.MTOSolutionWithModelFilterView) storage.MTOSolutionByModelPlanIDAndFilterViewKey {
+		return storage.MTOSolutionByModelPlanIDAndFilterViewKey{
+			ModelPlanID: data.ModelPlanID,
+			FilterView:  data.FilterView,
+		}
+
+	}
+
+	getResFunc := func(key storage.MTOSolutionByModelPlanIDAndFilterViewKey, resMap map[storage.MTOSolutionByModelPlanIDAndFilterViewKey][]*models.MTOSolutionWithModelFilterView) ([]*models.MTOSolution, bool) {
+		res, ok := resMap[key]
+		converted := make([]*models.MTOSolution, len(res))
+
+		for i, mtoWith := range res {
+			converted[i] = mtoWith.ToMTOSolution()
+		}
+		return converted, ok
+	}
+
+	// implement one to many
+	return oneToManyWithCustomKeyDataLoader(keys, data, getKeyFunc, getResFunc)
+
 }
 
 func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOSolution] {
