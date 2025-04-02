@@ -1,3 +1,4 @@
+import { MockedResponse } from '@apollo/client/testing';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
@@ -6,6 +7,9 @@ import {
   GetMtoCommonSolutionsDocument,
   GetMtoMilestoneDocument,
   GetMtoMilestonesDocument,
+  GetMtoSolutionDocument,
+  GetMtoSolutionQuery,
+  GetMtoSolutionQueryVariables,
   GetMtoSolutionsAndMilestonesDocument,
   GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
@@ -275,6 +279,39 @@ export const milestoneMock = (id: string) => [
   }
 ];
 
+export const solutionMock = (
+  id: string = '1',
+  addedFromSolutionLibrary: boolean = true
+): MockedResponse<GetMtoSolutionQuery, GetMtoSolutionQueryVariables> => {
+  return {
+    request: {
+      query: GetMtoSolutionDocument,
+      variables: {
+        id
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoSolution: {
+          __typename: 'MTOSolution',
+          id,
+          name: 'Solution 1',
+          key: addedFromSolutionLibrary ? MtoCommonSolutionKey.BCDA : null,
+          status: MtoSolutionStatus.COMPLETED,
+          riskIndicator: MtoRiskIndicator.AT_RISK,
+          addedFromSolutionLibrary,
+          facilitatedBy: null,
+          type: MtoSolutionType.IT_SYSTEM,
+          neededBy: '2121-08-01',
+          pocName: 'Test Name',
+          pocEmail: 'jon@oddball.io'
+        }
+      }
+    }
+  };
+};
+
 export const categoryMock = [
   {
     request: {
@@ -398,6 +435,7 @@ export const solutionAndMilestoneMock = [
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 type: MtoSolutionType.IT_SYSTEM,
                 status: MtoSolutionStatus.IN_PROGRESS,
+                addedFromSolutionLibrary: true,
                 facilitatedBy: [],
                 neededBy: '',
                 milestones: [

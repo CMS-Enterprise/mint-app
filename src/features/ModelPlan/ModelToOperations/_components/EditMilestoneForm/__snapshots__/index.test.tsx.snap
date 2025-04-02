@@ -442,59 +442,99 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                 Select the risk level for this milestone. This will help you and your team identify potential risks and plan accordingly.
               </div>
               <div
-                class="usa-radio"
-                data-testid="radio"
+                class="display-flex"
               >
-                <input
-                  checked=""
-                  class="usa-radio__input"
-                  id="risk-indicator-ON_TRACK"
-                  name="riskIndicator"
-                  type="radio"
-                  value="ON_TRACK"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="risk-indicator-ON_TRACK"
+                <div
+                  class="usa-radio margin-right-1"
+                  data-testid="radio"
                 >
-                  No risk (on track)
-                </label>
+                  <input
+                    checked=""
+                    class="usa-radio__input"
+                    id="risk-indicator-ON_TRACK"
+                    name="riskIndicator"
+                    type="radio"
+                    value="ON_TRACK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="risk-indicator-ON_TRACK"
+                  >
+                    No risk (on track)
+                  </label>
+                </div>
               </div>
               <div
-                class="usa-radio"
-                data-testid="radio"
+                class="display-flex"
               >
-                <input
-                  class="usa-radio__input"
-                  id="risk-indicator-OFF_TRACK"
-                  name="riskIndicator"
-                  type="radio"
-                  value="OFF_TRACK"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="risk-indicator-OFF_TRACK"
+                <div
+                  class="usa-radio margin-right-1"
+                  data-testid="radio"
                 >
-                  Some risk (off track)
-                </label>
+                  <input
+                    class="usa-radio__input"
+                    id="risk-indicator-OFF_TRACK"
+                    name="riskIndicator"
+                    type="radio"
+                    value="OFF_TRACK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="risk-indicator-OFF_TRACK"
+                  >
+                    Some risk (off track)
+                  </label>
+                </div>
+                <svg
+                  class="usa-icon usa-icon--size-3 text-warning-dark"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  style="top: 10px;"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                  />
+                </svg>
               </div>
               <div
-                class="usa-radio"
-                data-testid="radio"
+                class="display-flex"
               >
-                <input
-                  class="usa-radio__input"
-                  id="risk-indicator-AT_RISK"
-                  name="riskIndicator"
-                  type="radio"
-                  value="AT_RISK"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="risk-indicator-AT_RISK"
+                <div
+                  class="usa-radio margin-right-1"
+                  data-testid="radio"
                 >
-                  Significantly at risk
-                </label>
+                  <input
+                    class="usa-radio__input"
+                    id="risk-indicator-AT_RISK"
+                    name="riskIndicator"
+                    type="radio"
+                    value="AT_RISK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="risk-indicator-AT_RISK"
+                  >
+                    Significantly at risk
+                  </label>
+                </div>
+                <svg
+                  class="usa-icon usa-icon--size-3 text-error-dark"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  style="top: 10px;"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  />
+                </svg>
               </div>
             </div>
             <div

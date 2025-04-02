@@ -1,0 +1,454 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container padding-8"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="grid-col-10"
+        data-testid="grid"
+      >
+        <form
+          class="usa-form maxw-none"
+          data-testid="form"
+          id="edit-solution-form"
+        >
+          <div
+            class="border-bottom-1px border-base-lighter padding-bottom-3 margin-bottom-3"
+          >
+            <h2
+              class="margin-y-2 margin-bottom-2 line-height-large margin-top-0"
+            >
+              Solution 1
+            </h2>
+            <p
+              class="text-base margin-bottom-0"
+            >
+              IT System
+            </p>
+            <div
+              class="margin-top-2"
+            >
+              <a
+                class="usa-link usa-link--external"
+                href="/help-and-knowledge/operational-solutions?page=1&solution=beneficiary-claims-data-api&section=about"
+                target="_blank"
+              >
+                Learn more about this solution
+              </a>
+            </div>
+          </div>
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <p
+              class="margin-top-0 margin-bottom-3 text-base"
+            >
+              Fields marked with an asterisk ( 
+              <span
+                class="text-secondary-dark"
+              >
+                *
+              </span>
+               ) are required.
+            </p>
+            <div
+              class="usa-form-group margin-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="facilitated-by"
+              >
+                Facilitated By
+              </label>
+              <div
+                class="mint-help-text margin-top-1"
+              />
+              <div>
+                <div
+                  class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                  id="multi-source-data-to-collect"
+                >
+                  <span
+                    class="css-1f43avz-a11yText-A11yText"
+                    id="react-select-2-live-region"
+                  />
+                  <span
+                    aria-atomic="false"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                    class="css-1f43avz-a11yText-A11yText"
+                    role="log"
+                  />
+                  <div
+                    class=" css-1vl89cy-control"
+                  >
+                    <div
+                      class=" css-1fdsijx-ValueContainer"
+                    >
+                      <div
+                        class=" css-1jqq78o-placeholder"
+                        id="react-select-2-placeholder"
+                      >
+                        0 selected
+                      </div>
+                      <div
+                        class=" css-qbdosj-Input"
+                        data-value=""
+                      >
+                        <input
+                          aria-activedescendant=""
+                          aria-autocomplete="list"
+                          aria-describedby="react-select-2-placeholder"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          aria-label="Facilitated By"
+                          aria-labelledby="facilitated-by"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          autocorrect="off"
+                          class=""
+                          id="facilitated-by"
+                          role="combobox"
+                          spellcheck="false"
+                          style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                          tabindex="0"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class=" css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <span
+                        class=" css-16b81-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class=" css-gjng1h-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      name="facilitatedBy"
+                      type="hidden"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="needed-by"
+              >
+                Need By
+              </label>
+              <div
+                class="mint-help-text margin-top-1"
+              >
+                Choose the date when onboarding and implementation work for this solutions should be complete. Format: mm/dd/yyyy
+              </div>
+              <div
+                class="position-relative"
+              >
+                <div
+                  class="usa-date-picker usa-date-picker--initialized"
+                  data-testid="date-picker"
+                >
+                  <input
+                    aria-hidden="true"
+                    aria-labelledby="needed-by"
+                    class="usa-input usa-sr-only usa-date-picker__internal-input"
+                    data-testid="date-picker-internal-input"
+                    name="neededBy"
+                    readonly=""
+                    tabindex="-1"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="usa-date-picker__wrapper"
+                    tabindex="-1"
+                  >
+                    <input
+                      aria-labelledby="needed-by"
+                      class="usa-input usa-date-picker__external-input"
+                      data-testid="date-picker-external-input"
+                      id="solution-needed-by"
+                      type="text"
+                      value=""
+                    />
+                    <button
+                      aria-haspopup="true"
+                      aria-label="Toggle calendar"
+                      class="usa-date-picker__button"
+                      data-testid="date-picker-button"
+                      type="button"
+                    />
+                    <div
+                      aria-modal="true"
+                      class="usa-date-picker__calendar"
+                      data-testid="date-picker-calendar"
+                      hidden=""
+                      role="dialog"
+                      style="top: 0px;"
+                    />
+                    <div
+                      aria-live="polite"
+                      class="usa-sr-only usa-date-picker__status"
+                      data-testid="date-picker-status"
+                      role="status"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none text-bold"
+                data-testid="label"
+                for="status"
+              >
+                Status 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <select
+                class="usa-select"
+                data-testid="Select"
+                id="status"
+                name="status"
+              >
+                <option
+                  value="BACKLOG"
+                >
+                  Backlog
+                </option>
+                <option
+                  value="COMPLETED"
+                >
+                  Completed
+                </option>
+                <option
+                  value="IN_PROGRESS"
+                >
+                  In progress
+                </option>
+                <option
+                  value="NOT_STARTED"
+                >
+                  Not started
+                </option>
+                <option
+                  value="ONBOARDING"
+                >
+                  Onboarding
+                </option>
+              </select>
+            </div>
+            <div
+              class="desktop:grid-col-12 margin-bottom-4"
+              data-testid="grid"
+            >
+              <button
+                class="usa-button usa-button--unstyled display-flex flex-align-center text-ls-1 deep-underline margin-bottom-1 margin-top-3"
+                data-testid="toggle-need-answer"
+                type="button"
+              >
+                <svg
+                  class="usa-icon margin-right-05 needs-question__rotate"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                  />
+                </svg>
+                Solution implementation statuses
+              </button>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none text-bold"
+                data-testid="label"
+                for="risk-indicator"
+              >
+                Risk Indicator 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <div
+                class="mint-help-text margin-top-1"
+              >
+                Choose the applicable risk status for this solution.
+              </div>
+              <div
+                class="display-flex"
+              >
+                <div
+                  class="usa-radio margin-right-1"
+                  data-testid="radio"
+                >
+                  <input
+                    checked=""
+                    class="usa-radio__input"
+                    id="risk-indicator-ON_TRACK"
+                    name="riskIndicator"
+                    type="radio"
+                    value="ON_TRACK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="risk-indicator-ON_TRACK"
+                  >
+                    On track
+                  </label>
+                </div>
+              </div>
+              <div
+                class="display-flex"
+              >
+                <div
+                  class="usa-radio margin-right-1"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="risk-indicator-OFF_TRACK"
+                    name="riskIndicator"
+                    type="radio"
+                    value="OFF_TRACK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="risk-indicator-OFF_TRACK"
+                  >
+                    Off track
+                  </label>
+                </div>
+                <svg
+                  class="usa-icon usa-icon--size-3 text-warning-dark"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  style="top: 10px;"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="display-flex"
+              >
+                <div
+                  class="usa-radio margin-right-1"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="risk-indicator-AT_RISK"
+                    name="riskIndicator"
+                    type="radio"
+                    value="AT_RISK"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="risk-indicator-AT_RISK"
+                  >
+                    At risk
+                  </label>
+                </div>
+                <svg
+                  class="usa-icon usa-icon--size-3 text-error-dark"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  style="top: 10px;"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </fieldset>
+          <div
+            class="border-top-1px border-base-lighter padding-y-4"
+          >
+            <button
+              class="usa-button margin-bottom-2"
+              data-testid="button"
+              disabled=""
+              type="submit"
+            >
+              Save changes
+            </button>
+            <button
+              class="usa-button bg-error"
+              data-testid="button"
+              type="button"
+            >
+              Remove solution
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

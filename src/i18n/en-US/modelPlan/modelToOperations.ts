@@ -406,6 +406,73 @@ export const modelToOperationsMisc: Record<string, any> = {
       otherSolutions: 'Other available solutions',
       backToMilestone: 'Back to milestone details'
     },
+    editSolution: {
+      solutionTitle: 'Solution details',
+      learnMore: 'Learn more about this solution',
+      alert: {
+        info: 'Before adding this solution, consider checking the <s>solution library</s> to see if MINT offers a similar preset solution.',
+        success: 'Your milestone ({{solution}}) has been updated.',
+        error:
+          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
+      },
+      statusInfo: [
+        '<bold>Not started</bold>: No work has started on any part of this solution or any solution associated with it',
+        '<bold>In progress</bold>: Work for this solution and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)',
+        '<bold>Completed</bold>: Work for this solution and all of its selected solutions is finished'
+      ],
+      custom: 'Custom',
+      saveChanges: 'Save changes',
+      save: 'Save',
+      unsavedChanges: '{{count}} unsaved change',
+      unsavedChanges_other: '{{count}} unsaved changes',
+      removeSolution: 'Remove solution',
+      areYouSure: 'Are you sure you want to remove this solution?',
+      removeDescription:
+        'This action cannot be undone. You may add this solution again from the solution library, but you will lose any changes you have made. Any milestones associated with this solution will remain visible in the milestone view of your MTO, but will no longer be related to this solution.',
+      removeCustomDescription:
+        'This action cannot be undone. Any milestones associated with this solution will remain visible in the milestone view of your MTO, but will no longer be related to this solution.',
+      goBack: 'Go back',
+      leave: 'Are you sure you want to leave ?',
+      leaveDescription:
+        'You have made {{count}} changes that will not be saved if you navigate away from this view.',
+      successUpdated: 'Your solution ({{solution}}) has been updated.',
+      errorUpdated:
+        'There was an error updating your solution. Please try again. If the error persists, please try again another time.',
+      successRemoved: 'Your solution ({{solution}}) has been removed.',
+      errorRemoved:
+        'There was an error removing your solution. Please try again. If the error persists, please try again another time.',
+      leaveConfim: {
+        heading: 'Are you sure you want to leave?',
+        description:
+          'You have made changes that will not be saved if you navigate away from this view.',
+        confirm: 'Leave without saving',
+        dontLeave: 'Don’t leave'
+      },
+      selectedMilestones: 'Selected solutions',
+      selectedMilestonesCount:
+        '{{count}} solutions associated with this milestone',
+      selectedMilestonesCount_other:
+        '{{count}} solution associated with this milestone',
+      editMilestones: 'Edit solutions',
+      noMilestones:
+        'You haven’t selected any solutions or IT systems to implement this milestone.',
+      milestone: 'Milestone',
+      status: 'Status',
+      selectedMilestoneCount_other: '{{count}} selected solutions',
+      selectedMilestoneCount: '{{count}} selected solution',
+      suggestedMilestones: 'Suggested solutions',
+      selectedMilestonesDescription:
+        'These solutions are commonly used for this milestone.',
+      selectThisMilestone: 'Select this solution',
+      availableMilestonesDescription:
+        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
+      visitSolutionLibrary:
+        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
+      suggestedMilestone: 'Suggested solutions for this milestone',
+      customMilestone: 'Custom solutions added to this MTO',
+      otherMilestones: 'Other available solutions',
+      backToSolution: 'Back to milestone details'
+    },
     solution: {
       title: 'Add a new solution',
       label: {
@@ -629,6 +696,31 @@ export const modelToOperationsMisc: Record<string, any> = {
   },
   validation: {
     fillOut: 'Please fill out the required field.'
+  },
+  solutionStatusButton: 'Solution implementation statuses',
+  solutionStatuses: {
+    NOT_STARTED: {
+      status: 'Not started',
+      description: 'No work has started on this IT system or solution'
+    },
+    ONBOARDING: {
+      status: 'Onboarding',
+      description:
+        'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
+    },
+    BACKLOG: {
+      status: 'Not started',
+      description: 'Model work is on the project team’s backlog'
+    },
+    IN_PROGRESS: {
+      status: 'Not started',
+      description:
+        'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
+    },
+    COMPLETED: {
+      status: 'Not started',
+      description: 'Work related to this model is finished'
+    }
   }
 };
 
