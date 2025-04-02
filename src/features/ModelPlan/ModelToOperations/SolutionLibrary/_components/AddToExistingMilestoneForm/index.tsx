@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Controller,
   FormProvider,
@@ -18,7 +18,7 @@ import {
   GetMtoCommonSolutionsDocument,
   MtoCommonSolutionKey,
   useCreateMtoSolutionCommonMutation,
-  useGetModelToOperationsMatrixQuery
+  useGetMtoAllMilestonesQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -31,7 +31,7 @@ import {
 } from 'utils/modelPlan';
 
 type FormValues = {
-  linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
+  linkedMilestones: MtoCommonSolutionKey[] | string[] | undefined;
 };
 
 const AddToExistingMilestoneForm = ({
@@ -52,23 +52,40 @@ const AddToExistingMilestoneForm = ({
 
   const history = useHistory();
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(() => {
+    return new URLSearchParams(history.location.search);
+  }, [history.location.search]);
 
-  const { data, loading } = useGetModelToOperationsMatrixQuery({
+  const { data, loading } = useGetMtoAllMilestonesQuery({
     variables: {
       id: modelID
     }
   });
 
-  const milestones =
-    data?.modelPlan?.mtoMatrix?.milestones.map(milestone => ({
-      value: milestone.id,
-      label: milestone.name
-    })) || [];
+  const milestones = useMemo(() => {
+    return (
+      data?.modelPlan?.mtoMatrix?.milestones.map(milestone => ({
+        value: milestone.id,
+        label: milestone.name
+      })) || []
+    );
+  }, [data]);
+
+  const multiSelectOptions = useMemo(() => {
+    return composeMultiSelectOptions(
+      milestones.reduce(
+        (acc, milestone) => {
+          acc[milestone.value] = milestone.label;
+          return acc;
+        },
+        {} as Record<string, string>
+      )
+    );
+  }, [milestones]);
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      linkedSolutions: []
+      linkedMilestones: []
     },
     mode: 'onBlur'
   });
@@ -83,11 +100,11 @@ const AddToExistingMilestoneForm = ({
     ]
   });
 
-  const onSubmit: SubmitHandler<FormValues> = ({ linkedSolutions }) => {
+  const onSubmit: SubmitHandler<FormValues> = ({ linkedMilestones }) => {
     create({
       variables: {
         modelPlanID: modelID,
-        milestonesToLink: linkedSolutions || [],
+        milestonesToLink: linkedMilestones || [],
         key: solutionKey
       }
     })
@@ -153,12 +170,12 @@ const AddToExistingMilestoneForm = ({
         >
           <Fieldset disabled={loading || milestones?.length === 0}>
             <Controller
-              name="linkedSolutions"
+              name="linkedMilestones"
               control={control}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-0">
                   <Label
-                    htmlFor={convertCamelCaseToKebabCase('linkedSolutions')}
+                    htmlFor={convertCamelCaseToKebabCase('linkedMilestones')}
                   >
                     {t('modal.addToExistingMilestone.label')}
                   </Label>
@@ -170,22 +187,15 @@ const AddToExistingMilestoneForm = ({
                   <MultiSelect
                     {...field}
                     disabled={milestones.length === 0}
-                    id={convertCamelCaseToKebabCase('multiSourceDataToCollect')}
-                    ariaLabel={convertCamelCaseToKebabCase('linkedSolutions')}
+                    id={convertCamelCaseToKebabCase('linkedMilestones')}
+                    ariaLabel={convertCamelCaseToKebabCase('linkedMilestones')}
                     ariaLabelText={t('modal.addToExistingMilestone.label')}
-                    options={composeMultiSelectOptions(
-                      milestones.reduce(
-                        (acc, milestone) => {
-                          acc[milestone.value] = milestone.label;
-                          return acc;
-                        },
-                        {} as Record<string, string>
-                      )
-                    )}
+                    options={multiSelectOptions}
                     selectedLabel={t(
                       'modal.addToExistingMilestone.selectedLabel'
                     )}
-                    initialValues={watch('linkedSolutions')}
+                    onChange={() => field.onChange(watch('linkedMilestones'))}
+                    initialValues={watch('linkedMilestones')}
                   />
                 </FormGroup>
               )}
@@ -194,10 +204,10 @@ const AddToExistingMilestoneForm = ({
 
           <div className="margin-top-0">
             <Button type="submit" className="margin-right-3">
-              {watch('linkedSolutions')?.length === 0
+              {watch('linkedMilestones')?.length === 0
                 ? t('modal.addToExistingMilestone.cta.empty')
                 : t('modal.addToExistingMilestone.cta.add', {
-                    count: watch('linkedSolutions')?.length
+                    count: watch('linkedMilestones')?.length
                   })}
             </Button>
 

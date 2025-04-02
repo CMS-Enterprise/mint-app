@@ -56,7 +56,6 @@ const MilestoneCard = ({
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
-          params.delete('milestone', milestone.key);
           history.replace({ search: params.toString() });
           clearMessage();
           setIsModalOpen(false);
@@ -74,7 +73,6 @@ const MilestoneCard = ({
         <AddSolutionToMilestoneForm
           closeModal={() => {
             params.delete('add-milestone', milestone.key);
-            params.delete('milestone', milestone.key);
             history.replace({ search: params.toString() });
             clearMessage();
             setIsModalOpen(false);
