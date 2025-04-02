@@ -30,7 +30,7 @@ const ImplementationStatuses = ({
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
 
   // Fetches statuses and translations as object to map through and render as list
-  const implentationStatuses = tObject<
+  const implementationStatuses = tObject<
     keyof ImplementationStatus,
     Record<string, string>
   >('modelToOperationsMisc:solutionStatuses');
@@ -60,14 +60,14 @@ const ImplementationStatuses = ({
         <div className="margin-left-neg-2px padding-1">
           <div className="border-left-05 border-base-dark padding-left-2 padding-y-0">
             <ul className="padding-left-2 margin-0">
-              {Object.keys(implentationStatuses).map((status: string) => (
+              {Object.keys(implementationStatuses).map((status: string) => (
                 <li className="margin-y-1" key={status}>
                   <span className="text-bold">
-                    {implentationStatuses[status].status}
+                    {implementationStatuses[status].status}
                   </span>
                   :
                   <span className="margin-left-1">
-                    {implentationStatuses[status].description}
+                    {implementationStatuses[status].description}
                   </span>
                 </li>
               ))}

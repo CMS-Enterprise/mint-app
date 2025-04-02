@@ -15,6 +15,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoSolutionsAndMilestonesQuery,
   MtoRiskIndicator,
+  MtoSolutionStatus,
   MtoSolutionType,
   useGetMtoSolutionsAndMilestonesQuery
 } from 'gql/generated/graphql';
@@ -87,9 +88,9 @@ const ITSystemsTable = () => {
   const milestonesWithoutSolutions = useMemo(
     () =>
       data?.modelPlan.mtoMatrix.milestonesWithNoLinkedSolutions.map(
-        (milestone: any) => {
+        milestone => {
           // Format milestones with no linked solutions to display in the table as solutions
-          return {
+          const formattedTableMilestone: SolutionType = {
             __typename: 'MTOMilestone' as 'MTOSolution',
             id: milestone.id,
             name: milestone.name,
@@ -97,9 +98,10 @@ const ITSystemsTable = () => {
             milestones: [],
             facilitatedBy: [],
             neededBy: null,
-            status: null as any,
+            status: MtoSolutionStatus.NOT_STARTED,
             addedFromSolutionLibrary: false
-          } as SolutionType;
+          };
+          return formattedTableMilestone;
         }
       ) || [],
     [data?.modelPlan.mtoMatrix.milestonesWithNoLinkedSolutions]

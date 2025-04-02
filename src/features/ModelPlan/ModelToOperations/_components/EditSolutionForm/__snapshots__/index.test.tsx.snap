@@ -40,7 +40,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 href="/help-and-knowledge/operational-solutions?page=1&solution=beneficiary-claims-data-api&section=about"
                 target="_blank"
               >
-                Learn more abou this solution
+                Learn more about this solution
               </a>
             </div>
           </div>
