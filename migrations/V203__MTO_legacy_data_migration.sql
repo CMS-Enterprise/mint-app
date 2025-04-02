@@ -54,6 +54,18 @@ solutions AS (
                 THEN 'Internal staff: ' || COALESCE(solution.other_header, '')
             ELSE solution.name_other
         END AS final_name,
+        CASE 
+            -- This is for old types that become custom types for MTO
+            WHEN possible.sol_key  IN ('INTERNAL_STAFF', 'EXISTING_CMS_DATA_AND_PROCESS', 'OTHER_NEW_PROCESS')
+                THEN 'OTHER'::MTO_SOLUTION_TYPE
+            WHEN possible.sol_key  IN ('CONTRACTOR', 'CROSS_MODEL_CONTRACT')
+                THEN 'CONTRACTOR'::MTO_SOLUTION_TYPE
+            -- Custom operational solutions become other
+            WHEN possible.sol_key IS  NULL
+                THEN 'OTHER'::MTO_SOLUTION_TYPE
+            -- Any other defined type get mapped based on the mto common solution type, so set null here
+            ELSE  NULL 
+        END AS type,
         solution.name_other,
         solution.poc_email,
         solution.poc_name,
@@ -143,10 +155,7 @@ inserted_solutions AS ( --noqa
             WHEN s.possible_solution_type IS NOT NULL THEN NULL --Don't add POC info for common solutions
             ELSE s.poc_name
         END AS poc_name,
-        CASE
-            WHEN s.possible_solution_type IS NOT NULL THEN NULL 
-            ELSE 'IT_SYSTEM'::MTO_SOLUTION_TYPE 
-        END AS  type, --TODO Adjust this to try to determine what the type should be for a custom type
+        s.type, 
         CASE
             WHEN        s.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
             ELSE 'NOT_STARTED'::MTO_SOLUTION_STATUS
