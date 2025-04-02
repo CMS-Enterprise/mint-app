@@ -408,7 +408,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     editSolution: {
       solutionTitle: 'Solution details',
-      learnMore: 'Learn more abou this solution',
+      learnMore: 'Learn more about this solution',
       alert: {
         info: 'Before adding this solution, consider checking the <s>solution library</s> to see if MINT offers a similar preset solution.',
         success: 'Your milestone ({{solution}}) has been updated.',
