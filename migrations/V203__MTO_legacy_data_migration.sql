@@ -8,9 +8,19 @@ This migration migrates operational solution data to mto solution data. It does 
     b. a possible operational solution becomes a common mto solution when possible
     c. a custom operational solution becomes a custom mto solution
 
-3. The following concepts from IT solutions are not applicable in the models to operations matrix.
+3.  It will then create a link between the mto milestone and the mto solution.
+
+4. Duplicate custom solutions.
+   a. this migration will get the most recent one and insert that. It will ignore another custom solution on that model plan  with the same name.
+
+
+
+The following concepts from IT solutions are not applicable in the models to operations matrix.
    a. solution sub tasks
    b. document solution links
+
+
+Note: the newly created milestones are also not categorized, and do not have facilitated by populated
 **/
 
 
