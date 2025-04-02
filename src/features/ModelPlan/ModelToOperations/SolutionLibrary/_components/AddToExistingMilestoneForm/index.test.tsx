@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
-import { modelID, mtoMatrixMock } from 'tests/mock/mto';
+import { allMilestoneMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -14,7 +14,7 @@ describe('Custom Catergory form', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
-          <VerboseMockedProvider mocks={[...mtoMatrixMock]} addTypename={false}>
+          <VerboseMockedProvider mocks={allMilestoneMock} addTypename={false}>
             <Route path="/models/:modelID/">
               <AddToExistingMilestoneForm
                 closeModal={() => {}}
@@ -38,12 +38,20 @@ describe('Custom Catergory form', () => {
 
   it('shows warning message when zero milestones and matches snapshot', async () => {
     // Set milestone array to empty
-    mtoMatrixMock[0].result.data.modelPlan.mtoMatrix.milestones = [];
+    if (
+      allMilestoneMock[0] &&
+      'result' in allMilestoneMock[0] &&
+      allMilestoneMock[0].result &&
+      'data' in allMilestoneMock[0].result &&
+      allMilestoneMock[0].result.data?.modelPlan?.mtoMatrix
+    ) {
+      allMilestoneMock[0].result.data.modelPlan.mtoMatrix.milestones = [];
+    }
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
-          <VerboseMockedProvider mocks={[...mtoMatrixMock]} addTypename={false}>
+          <VerboseMockedProvider mocks={allMilestoneMock} addTypename={false}>
             <Route path="/models/:modelID/">
               <AddToExistingMilestoneForm
                 closeModal={() => {}}

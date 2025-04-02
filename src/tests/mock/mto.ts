@@ -2,6 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
+  GetMtoAllMilestonesDocument,
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables,
   GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
@@ -53,6 +56,41 @@ export const mtoMatrixMock = [
 
             commonMilestones: [],
             recentEdit: null
+          }
+        }
+      }
+    }
+  }
+];
+
+export const allMilestoneMock: MockedResponse<
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoAllMilestonesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: '123',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                name: 'Milestone 1'
+              }
+            ],
+            commonMilestones: []
           }
         }
       }
