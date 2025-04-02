@@ -88,7 +88,7 @@ const ITSystemsTable = () => {
   const milestonesWithoutSolutions = useMemo(
     () =>
       data?.modelPlan.mtoMatrix.milestonesWithNoLinkedSolutions.map(
-        (milestone: any) => {
+        milestone => {
           // Format milestones with no linked solutions to display in the table as solutions
           const formattedTableMilestone: SolutionType = {
             __typename: 'MTOMilestone' as 'MTOSolution',
