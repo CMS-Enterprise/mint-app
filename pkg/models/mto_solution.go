@@ -16,6 +16,19 @@ func (mto *MTOSolutionWithMilestoneID) ToMTOSolution() *MTOSolution {
 	return &mto.MTOSolution
 }
 
+// MTOSolutionWithModelFilterView wraps MTOSolution
+// it also includes a filter view. Note, this is only meant to be used as a return type
+// for solutions that are associated with filter view.
+type MTOSolutionWithModelFilterView struct {
+	MTOSolution
+	FilterView ModelViewFilter `json:"filterView" db:"filter_view"`
+}
+
+// ToMTOSolution returns the MTOSolution object from the MTOSolutionWithModelFilterView
+func (mto *MTOSolutionWithModelFilterView) ToMTOSolution() *MTOSolution {
+	return &mto.MTOSolution
+}
+
 type MTOSolution struct {
 	baseStruct
 	modelPlanRelation

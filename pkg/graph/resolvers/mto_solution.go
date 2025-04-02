@@ -184,6 +184,30 @@ func MTOSolutionLinkMilestonesWithTX(
 	return linkedMilestones, nil
 }
 
+// MTOSolutionsGetByModelPlanIDAndOptionalFilterView is a wrapper function
+// that checks if the filterView is nil and calls the appropriate function
+// to get MTO solutions by model plan ID.
+func MTOSolutionsGetByModelPlanIDAndOptionalFilterView(ctx context.Context,
+	milestoneID uuid.UUID,
+	filterView *models.ModelViewFilter,
+) ([]*models.MTOSolution, error) {
+	if filterView == nil {
+		return MTOSolutionGetByModelPlanIDLOADER(ctx, milestoneID)
+	}
+	return MTOSolutionsGetByModelPlanIDAndFilterView(ctx, milestoneID, *filterView)
+}
+
+// MTOSolutionsGetByModelPlanIDAndFilterView implements resolver logic to get all MTO solutions by a model plan ID and filter view
+func MTOSolutionsGetByModelPlanIDAndFilterView(ctx context.Context,
+	milestoneID uuid.UUID,
+	filterView models.ModelViewFilter) ([]*models.MTOSolution, error) {
+	return loaders.MTOSolution.ByModelPlanIDAndFilterView.Load(ctx, storage.MTOSolutionByModelPlanIDAndFilterViewKey{
+		ModelPlanID: milestoneID,
+		FilterView:  filterView,
+	})
+
+}
+
 // MTOSolutionGetByModelPlanIDLOADER implements resolver logic to get all MTO solutions by a model plan ID using a data loader
 func MTOSolutionGetByModelPlanIDLOADER(
 	ctx context.Context,
