@@ -307,6 +307,8 @@ export const allMilestonesMock: MockedResponse<
               id: '123',
               key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
               name: 'Milestone 1',
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
               solutions: []
             }
           ]

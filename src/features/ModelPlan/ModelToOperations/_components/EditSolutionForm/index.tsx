@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -35,10 +35,7 @@ import {
   GetModelToOperationsMatrixDocument,
   GetMtoAllMilestonesQuery,
   GetMtoSolutionsAndMilestonesDocument,
-  MtoCommonMilestoneKey,
   MtoFacilitator,
-  MtoMilestone,
-  MtoMilestoneStatus,
   MtoRiskIndicator,
   MtoSolutionStatus,
   useDeleteMtoSolutionMutation,
@@ -89,11 +86,8 @@ type FormValues = {
   riskIndicator: MtoRiskIndicator;
 };
 
-type TableMilestoneType = {
-  name: string;
-  status: MtoMilestoneStatus;
-  riskIndicator: MtoRiskIndicator;
-};
+type TableMilestoneType =
+  GetMtoAllMilestonesQuery['modelPlan']['mtoMatrix']['milestones'][number];
 
 type EditSolutionFormProps = {
   closeModal: () => void;
@@ -165,7 +159,8 @@ const EditSolutionForm = ({
     }
   });
 
-  // Extracts all milestones from the query
+  // Gets all existing milestones from the MTO matrix
+  // This is used to populate the milestone select options and map to milestones that are associated to the solution
   const allMilestones = useMemo(() => {
     return (
       allMilestoneData?.modelPlan.mtoMatrix || {
@@ -176,53 +171,12 @@ const EditSolutionForm = ({
     );
   }, [allMilestoneData]);
 
-  // Combine all milestones from both custom and common milestones
-  const combinedMilestones = useMemo(
-    () => [
-      ...allMilestones?.milestones,
-      ...(allMilestones?.commonMilestones as MtoMilestone[])
-    ],
-    [allMilestones]
-  );
-
-  // Checks to see if a milestone is a custom milestone by its ID
-  const isCustomMilestone = useCallback(
-    (id: string) => {
-      return combinedMilestones.find(milestone => milestone.id === id);
-    },
-    [combinedMilestones]
-  );
-
-  // Format milestone for table from either a MtoCommonMilestoneKey or an UUID or MilestoneType
-  const formatMilestoneForTable = useCallback(
-    (
-      milestone: MilestoneType | MtoCommonMilestoneKey | string
-    ): TableMilestoneType => {
-      if (typeof milestone === 'string') {
-        return {
-          name: isCustomMilestone(milestone)
-            ? combinedMilestones.find(sol => sol.id === milestone)?.name || ''
-            : combinedMilestones.find(sol => sol.key === milestone)?.name || '',
-          status: MtoMilestoneStatus.NOT_STARTED,
-          riskIndicator: MtoRiskIndicator.ON_TRACK
-        };
-      }
-
-      return {
-        name: milestone.name || '',
-        status: milestone.status,
-        riskIndicator: milestone.riskIndicator || MtoRiskIndicator.ON_TRACK
-      };
-    },
-    [combinedMilestones, isCustomMilestone]
-  );
-
-  // Milestone state
+  // Milestone list of IDs state
   const [milestoneIDs, setMilestoneIDs] = useState<string[]>(
     data?.mtoSolution.milestones.map(milestone => milestone.id) || []
   );
 
-  // Milestone initial state
+  // Milestone IDs input mutation initial state - used to calculate amount of changed milestones
   const [milestoneIDsInitial, setMilestoneIDsInitial] = useState<string[]>(
     data?.mtoSolution.milestones.map(milestone => milestone.id) || []
   );
@@ -237,19 +191,27 @@ const EditSolutionForm = ({
     );
   }, [data]);
 
-  // Table state
-  const [selectedMilestones, setSelectedMilestones] = useState<
-    TableMilestoneType[]
-  >([...milestoneIDs.map(milestone => formatMilestoneForTable(milestone))]);
+  // Sets the inital milestones that exist for the solution
+  const initialMilestones = useMemo(
+    () =>
+      allMilestones.milestones.filter(milestone =>
+        milestoneIDs.includes(milestone.id)
+      ) || [],
+    [allMilestones.milestones, milestoneIDs]
+  );
 
-  // Updates table data when solutions are added or removed
+  // Sets the table milestones to the initial milestones
+  const [tableMilestones, setTableMilestones] =
+    useState<TableMilestoneType[]>(initialMilestones);
+
+  // Updates the table items after the linking milestone modal is closed
   useEffect(() => {
-    const formattedCustomMilestones = milestoneIDs.map(milestone =>
-      formatMilestoneForTable(milestone)
+    const updatedMilestones = allMilestones.milestones.filter(milestone =>
+      milestoneIDs.includes(milestone.id)
     );
 
-    setSelectedMilestones([...formattedCustomMilestones]);
-  }, [data, milestoneIDs, formatMilestoneForTable]);
+    setTableMilestones(updatedMilestones);
+  }, [allMilestones.milestones, milestoneIDs]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -272,21 +234,10 @@ const EditSolutionForm = ({
     control,
     handleSubmit,
     watch,
-    reset,
     formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
   } = methods;
 
   const values = watch();
-
-  // Hacky hook to reset form values after loading due to DatePicker needing to use the onchange handler to update the default value
-  // This is needed to prevent the form from being dirty on load
-  useEffect(() => {
-    if (!loading) {
-      setTimeout(() => {
-        reset(formValues);
-      }, 0);
-    }
-  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Needed to address bug in datepicker that counts async default neededBy as a change and affecting dirty count
   useEffect(() => {
@@ -511,7 +462,7 @@ const EditSolutionForm = ({
   } = useTable(
     {
       columns: columns as Column<object>[],
-      data: selectedMilestones,
+      data: tableMilestones,
       initialState: { pageIndex: 0, pageSize: 5 }
     },
     useGlobalFilter,
@@ -913,7 +864,7 @@ const EditSolutionForm = ({
                       {modelToOperationsMiscT(
                         'modal.editSolution.selectedMilestonesCount',
                         {
-                          count: selectedMilestones?.length || 0
+                          count: tableMilestones?.length || 0
                         }
                       )}
                     </p>
@@ -932,7 +883,7 @@ const EditSolutionForm = ({
                       <Icon.ArrowForward className="top-2px" />
                     </Button>
 
-                    {selectedMilestones.length === 0 ? (
+                    {tableMilestones.length === 0 ? (
                       <Alert type="info" slim>
                         {modelToOperationsMiscT(
                           'modal.editSolution.noMilestones'
@@ -1004,7 +955,7 @@ const EditSolutionForm = ({
                           </tbody>
                         </UswdsTable>
 
-                        {selectedMilestones.length > 5 && (
+                        {tableMilestones.length > 5 && (
                           <TablePagination
                             className="flex-justify-start margin-left-neg-05"
                             gotoPage={gotoPage}

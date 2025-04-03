@@ -622,11 +622,11 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                       role="cell"
                     >
                       <div
-                        class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-white border-2px text-base width-fit-content"
+                        class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
                         data-testid="tasklist-tag"
                       >
                         <span>
-                          Not started
+                          Completed
                         </span>
                       </div>
                     </td>
@@ -636,7 +636,21 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                     >
                       <span
                         class="text-bold text-base-lighter"
-                      />
+                      >
+                        <svg
+                          class="usa-icon usa-icon--size-3 text-error-dark top-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                          />
+                        </svg>
+                      </span>
                     </td>
                   </tr>
                 </tbody>
