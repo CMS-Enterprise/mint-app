@@ -16,6 +16,9 @@ export default gql(/* GraphQL */ `
           id
           key
           name
+          solutions {
+            key
+          }
         }
       }
     }

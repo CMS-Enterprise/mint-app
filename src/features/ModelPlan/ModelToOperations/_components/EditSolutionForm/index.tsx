@@ -24,7 +24,6 @@ import {
   GridContainer,
   Icon,
   Label,
-  Link,
   Radio,
   Select,
   Table as UswdsTable,
@@ -34,28 +33,21 @@ import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
-  GetMtoallMilestonesQuery,
-  GetMtoMilestoneQuery,
+  GetMtoAllMilestonesQuery,
+  GetMtoSolutionsAndMilestonesDocument,
   MtoCommonMilestoneKey,
-  MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestone,
   MtoMilestoneStatus,
   MtoRiskIndicator,
-  MtoSolution,
   MtoSolutionStatus,
-  useDeleteMtoMilestoneMutation,
   useDeleteMtoSolutionMutation,
   useGetMtoAllMilestonesQuery,
-  useGetMtoallMilestonesQuery,
-  useGetMtoMilestoneQuery,
   useGetMtoSolutionQuery,
-  useUpdateMtoMilestoneMutation,
   useUpdateMtoSolutionMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
@@ -69,7 +61,6 @@ import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -83,7 +74,6 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import ImplementationStatuses from '../ImplementationStatus';
 import LinkMilestoneForm from '../LinkMilestoneForm';
-import LinkSolutionForm from '../LinkSolutionForm';
 import { MilestoneType } from '../MatrixTable/columns';
 import MilestoneStatusTag from '../MTOStatusTag';
 
@@ -227,73 +217,30 @@ const EditSolutionForm = ({
     [combinedMilestones, isCustomMilestone]
   );
 
-  // Common milestone state
-  const [commonMilestoneKeys, setCommonMilestoneKeys] = useState<
-    MtoCommonMilestoneKey[]
-  >(
-    data?.mtoSolution.milestones
-      .filter(milestone => !!milestone.key)
-      .map(milestone => milestone.key!) || []
-  );
-
-  // Common milestone initial state
-  const [commonMilestoneKeysInitial, setCommonMilestoneKeysInitial] = useState<
-    MtoCommonMilestoneKey[]
-  >(
-    data?.mtoSolution.milestones
-      .filter(milestone => !!milestone.key)
-      .map(milestone => milestone.key!) || []
-  );
-
-  // Sets initial milestone IDs from solution from async data
-  useEffect(() => {
-    setCommonMilestoneKeys(
-      data?.mtoSolution.milestones
-        .filter(milestone => !!milestone.key)
-        .map(milestone => milestone.key!) || []
-    );
-    setCommonMilestoneKeysInitial(
-      data?.mtoSolution.milestones
-        .filter(milestone => !!milestone.key)
-        .map(milestone => milestone.key!) || []
-    );
-  }, [data]);
-
-  // Custom milestone state
+  // Milestone state
   const [milestoneIDs, setMilestoneIDs] = useState<string[]>(
-    data?.mtoSolution.milestones
-      .filter(milestone => !milestone.key)
-      .map(milestone => milestone.id) || []
+    data?.mtoSolution.milestones.map(milestone => milestone.id) || []
   );
 
-  // Custom milestone initial state
+  // Milestone initial state
   const [milestoneIDsInitial, setMilestoneIDsInitial] = useState<string[]>(
-    data?.mtoSolution.milestones
-      .filter(milestone => !milestone.key)
-      .map(milestone => milestone.id) || []
+    data?.mtoSolution.milestones.map(milestone => milestone.id) || []
   );
 
   // Sets initial milestone IDs from solution from async data
   useEffect(() => {
     setMilestoneIDs(
-      data?.mtoSolution.milestones
-        .filter(milestone => !milestone.key)
-        .map(milestone => milestone.id) || []
+      data?.mtoSolution.milestones.map(milestone => milestone.id) || []
     );
     setMilestoneIDsInitial(
-      data?.mtoSolution.milestones
-        .filter(milestone => !milestone.key)
-        .map(milestone => milestone.id) || []
+      data?.mtoSolution.milestones.map(milestone => milestone.id) || []
     );
   }, [data]);
 
   // Table state
   const [selectedMilestones, setSelectedMilestones] = useState<
     TableMilestoneType[]
-  >([
-    ...milestoneIDs.map(milestone => formatMilestoneForTable(milestone)),
-    ...commonMilestoneKeys.map(milestone => formatMilestoneForTable(milestone))
-  ]);
+  >([...milestoneIDs.map(milestone => formatMilestoneForTable(milestone))]);
 
   // Updates table data when solutions are added or removed
   useEffect(() => {
@@ -301,15 +248,8 @@ const EditSolutionForm = ({
       formatMilestoneForTable(milestone)
     );
 
-    const formattedCommonMilestones = commonMilestoneKeys.map(milestone =>
-      formatMilestoneForTable(milestone)
-    );
-
-    setSelectedMilestones([
-      ...formattedCustomMilestones,
-      ...formattedCommonMilestones
-    ]);
-  }, [data, milestoneIDs, commonMilestoneKeys, formatMilestoneForTable]);
+    setSelectedMilestones([...formattedCustomMilestones]);
+  }, [data, milestoneIDs, formatMilestoneForTable]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -332,7 +272,6 @@ const EditSolutionForm = ({
     control,
     handleSubmit,
     watch,
-    setValue,
     reset,
     formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
   } = methods;
@@ -380,20 +319,8 @@ const EditSolutionForm = ({
       milestoneIDsInitial
     ).length;
 
-    const commonMilestoneKeysDifferenceCount = symmetricDifference(
-      commonMilestoneKeys,
-      commonMilestoneKeysInitial
-    ).length;
-
-    setUnsavedSolutionChanges(
-      milestoneIDDifferenceCount + commonMilestoneKeysDifferenceCount
-    );
-  }, [
-    milestoneIDs,
-    milestoneIDsInitial,
-    commonMilestoneKeys,
-    commonMilestoneKeysInitial
-  ]);
+    setUnsavedSolutionChanges(milestoneIDDifferenceCount);
+  }, [milestoneIDs, milestoneIDsInitial]);
 
   // Sets dirty state based on changes in form to render the leave confirmation modal
   useEffect(() => {
@@ -404,16 +331,7 @@ const EditSolutionForm = ({
     }
   }, [unsavedChanges, unsavedSolutionChanges, setIsDirty]);
 
-  const [updateSolution] = useUpdateMtoSolutionMutation({
-    refetchQueries: [
-      {
-        query: GetModelToOperationsMatrixDocument,
-        variables: {
-          id: modelID
-        }
-      }
-    ]
-  });
+  const [updateSolution] = useUpdateMtoSolutionMutation();
 
   const [deleteSolution] = useDeleteMtoSolutionMutation();
 
@@ -427,9 +345,15 @@ const EditSolutionForm = ({
           ...formChanges,
           ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
           ...(!!name && !solution?.addedFromSolutionLibrary && { name })
+        },
+        milestoneLinks: {
+          milestoneIDs
         }
       },
-      refetchQueries: [GetModelToOperationsMatrixDocument]
+      refetchQueries: [
+        GetModelToOperationsMatrixDocument,
+        GetMtoSolutionsAndMilestonesDocument
+      ]
     })
       .then(response => {
         if (!response?.errors) {
@@ -644,11 +568,11 @@ const EditSolutionForm = ({
         <Sidepanel
           isOpen={editMilestonesOpen}
           ariaLabel={modelToOperationsMiscT(
-            'modal.editSolution.backToMilestone'
+            'modal.editSolution.backToSolution'
           )}
           testid="edit-solutions-sidepanel"
           modalHeading={modelToOperationsMiscT(
-            'modal.editSolution.backToMilestone'
+            'modal.editSolution.backToSolution'
           )}
           backButton
           showScroll
@@ -659,12 +583,10 @@ const EditSolutionForm = ({
         >
           <LinkMilestoneForm
             solution={solution}
-            commonMilestoneKeys={commonMilestoneKeys}
-            setCommonMilestoneKeys={setCommonMilestoneKeys}
             milestoneIDs={milestoneIDs}
             setMilestoneIDs={setMilestoneIDs}
             allMilestones={
-              allMilestones as GetMtoallMilestonesQuery['modelPlan']['mtoMatrix']
+              allMilestones as GetMtoAllMilestonesQuery['modelPlan']['mtoMatrix']
             }
           />
         </Sidepanel>

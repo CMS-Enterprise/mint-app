@@ -305,7 +305,8 @@ export const solutionMock = (
           type: MtoSolutionType.IT_SYSTEM,
           neededBy: '2121-08-01',
           pocName: 'Test Name',
-          pocEmail: 'jon@oddball.io'
+          pocEmail: 'jon@oddball.io',
+          milestones: []
         }
       }
     }

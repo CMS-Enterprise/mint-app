@@ -459,18 +459,17 @@ export const modelToOperationsMisc: Record<string, any> = {
       milestone: 'Milestone',
       status: 'Status',
       selectedMilestoneCount_other: '{{count}} selected milestones',
-      selectedMilestoneCount: '{{count}} selected solution',
+      selectedMilestoneCount: '{{count}} selected milestone',
       suggestedMilestones: 'Suggested milestones',
       selectedMilestonesDescription:
         'These milestones are commonly used for this solution.',
-      selectThisMilestone: 'Select this solution',
+      selectThisMilestone: 'Select this milestone',
       availableMilestonesDescription:
         'Select from other operational milestones and IT systems included in MINT, including any custom milestones you may have added to your MTO. Select all that apply.',
-      visitSolutionLibrary:
-        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the milestones below.',
-      suggestedMilestone: 'Suggested milestones for this milestone',
-      customMilestone: 'Custom milestones added to this MTO',
-      otherMilestones: 'Other available milestones',
+      visitMilestoneLibrary:
+        'You may add additional milestones to your MTO from the <milestone>milestone library</milestone> or by adding a custom milestone from the main page of your MTO.',
+      customMilestone: 'Milestones in your MTO that often use this solution',
+      otherMilestones: 'Other milestones in your MTO',
       backToSolution: 'Back to solution details'
     },
     solution: {
