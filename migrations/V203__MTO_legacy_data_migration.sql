@@ -49,7 +49,7 @@ solutions AS (
             WHEN possible.sol_key  IN ('INTERNAL_STAFF', 'EXISTING_CMS_DATA_AND_PROCESS', 'OTHER_NEW_PROCESS', 'CONTRACTOR', 'CROSS_MODEL_CONTRACT')
                 THEN NULL
             ELSE possible.sol_key         
-        END AS possible_solution_type, --TODO, use the data Zoë provided to map the types
+        END AS possible_solution_type,
         possible.sol_key AS raw_possible_solution_type,
         CASE
             WHEN possible.sol_key = 'CONTRACTOR'
