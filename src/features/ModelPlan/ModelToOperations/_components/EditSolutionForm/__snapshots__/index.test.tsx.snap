@@ -3,6 +3,40 @@
 exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
+    class="save-tag"
+  >
+    <div
+      class="bg-warning-lighter padding-y-05 padding-x-1"
+    >
+      <svg
+        class="usa-icon margin-right-1 top-2px text-warning"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+        />
+      </svg>
+      <p
+        class="margin-0 display-inline margin-right-1"
+      >
+        1 unsaved change
+      </p>
+      -
+      <button
+        class="usa-button usa-button--unstyled margin-x-1"
+        data-testid="button"
+        type="button"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+  <div
     class="grid-container padding-8"
     data-testid="gridContainer"
   >
@@ -194,7 +228,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                     readonly=""
                     tabindex="-1"
                     type="text"
-                    value=""
+                    value="2121-08-01T00:00:00Z"
                   />
                   <div
                     class="usa-date-picker__wrapper"
@@ -206,7 +240,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                       data-testid="date-picker-external-input"
                       id="solution-needed-by"
                       type="text"
-                      value=""
+                      value="08/01/2121"
                     />
                     <button
                       aria-haspopup="true"
@@ -426,6 +460,188 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 </svg>
               </div>
             </div>
+            <div
+              class="border-top-1px border-base-lighter padding-y-4"
+            >
+              <h3
+                class="margin-0 margin-bottom-1"
+              >
+                Selected milestones
+              </h3>
+              <p
+                class="margin-0 margin-bottom-1"
+              >
+                1 milestone associated with this solution
+              </p>
+              <button
+                class="usa-button usa-button--unstyled margin-0 display-flex"
+                data-testid="button"
+                type="button"
+              >
+                Edit milestones
+                <svg
+                  class="usa-icon top-2px"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </button>
+              <table
+                class="usa-table usa-table--borderless width-full margin-top-0"
+                data-testid="table"
+              >
+                <thead>
+                  <tr
+                    role="row"
+                  >
+                    <th
+                      class="padding-left-0 padding-bottom-0"
+                      colspan="1"
+                      role="columnheader"
+                      scope="col"
+                      style="width: auto;"
+                    >
+                      <button
+                        class="usa-button usa-button--unstyled position-relative"
+                        style="cursor: pointer;"
+                        title="Toggle SortBy"
+                        type="button"
+                      >
+                        Milestone
+                        <svg
+                          class="usa-icon margin-left-05"
+                          data-testid="caret--sort"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                          />
+                        </svg>
+                      </button>
+                    </th>
+                    <th
+                      class="padding-left-0 padding-bottom-0"
+                      colspan="1"
+                      role="columnheader"
+                      scope="col"
+                      style="width: 150px;"
+                    >
+                      <button
+                        class="usa-button usa-button--unstyled position-relative"
+                        style="cursor: pointer;"
+                        title="Toggle SortBy"
+                        type="button"
+                      >
+                        Status
+                        <svg
+                          class="usa-icon margin-left-05"
+                          data-testid="caret--sort"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                          />
+                        </svg>
+                      </button>
+                    </th>
+                    <th
+                      class="padding-left-0 padding-bottom-0"
+                      colspan="1"
+                      role="columnheader"
+                      scope="col"
+                      style="width: auto;"
+                    >
+                      <button
+                        class="usa-button usa-button--unstyled position-relative"
+                        style="cursor: pointer;"
+                        title="Toggle SortBy"
+                        type="button"
+                      >
+                        <svg
+                          class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                          />
+                        </svg>
+                        <svg
+                          class="usa-icon margin-left-05"
+                          data-testid="caret--sort"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                          />
+                        </svg>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  role="rowgroup"
+                >
+                  <tr
+                    role="row"
+                  >
+                    <td
+                      class="padding-left-0"
+                      role="cell"
+                    >
+                      Milestone 1
+                    </td>
+                    <td
+                      class="padding-left-0"
+                      role="cell"
+                    >
+                      <div
+                        class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-white border-2px text-base width-fit-content"
+                        data-testid="tasklist-tag"
+                      >
+                        <span>
+                          Not started
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      class="padding-left-0"
+                      role="cell"
+                    >
+                      <span
+                        class="text-bold text-base-lighter"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </fieldset>
           <div
             class="border-top-1px border-base-lighter padding-y-4"
@@ -433,7 +649,6 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
             <button
               class="usa-button margin-bottom-2"
               data-testid="button"
-              disabled=""
               type="submit"
             >
               Save changes

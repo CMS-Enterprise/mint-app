@@ -2,6 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
+  GetMtoAllMilestonesDocument,
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables,
   GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
@@ -279,6 +282,40 @@ export const milestoneMock = (id: string) => [
   }
 ];
 
+export const allMilestonesMock: MockedResponse<
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables
+> = {
+  request: {
+    query: GetMtoAllMilestonesDocument,
+    variables: {
+      id: modelID
+    }
+  },
+  result: {
+    data: {
+      __typename: 'Query',
+      modelPlan: {
+        __typename: 'ModelPlan',
+        id: modelID,
+        mtoMatrix: {
+          __typename: 'ModelsToOperationMatrix',
+          commonMilestones: [],
+          milestones: [
+            {
+              __typename: 'MTOMilestone',
+              id: '123',
+              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              name: 'Milestone 1',
+              solutions: []
+            }
+          ]
+        }
+      }
+    }
+  }
+};
+
 export const solutionMock = (
   id: string = '1',
   addedFromSolutionLibrary: boolean = true
@@ -306,7 +343,22 @@ export const solutionMock = (
           neededBy: '2121-08-01',
           pocName: 'Test Name',
           pocEmail: 'jon@oddball.io',
-          milestones: []
+          milestones: [
+            {
+              __typename: 'MTOMilestone',
+              id: '123',
+              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              name: 'Milestone 1',
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
+              commonMilestone: {
+                __typename: 'MTOCommonMilestone',
+                name: 'Common Milestone 1',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                isAdded: true
+              }
+            }
+          ]
         }
       }
     }
