@@ -98,7 +98,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dbField: 'needed_by',
     label: 'Need By',
     sublabel:
-      'Choose the date when onboarding and implementation work for this solutions should be complete. Format: mm/dd/yyyy',
+      'Choose the date when onboarding and implementation work for this solution should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.TEXT,
     order: 1.7
@@ -108,6 +108,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'FacilitatedBy',
     dbField: 'facilitated_by',
     label: 'Facilitated By',
+    sublabel: 'Choose the role or group responsible for this work.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     options: {

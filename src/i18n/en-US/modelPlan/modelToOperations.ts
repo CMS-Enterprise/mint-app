@@ -453,7 +453,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:
         '{{count}} milestones associated with this solution',
-      editMilestones: 'Edit milestones',
+      editMilestones: 'Edit related milestones',
       noMilestones:
         'You haven’t selected any milestones or IT systems to implement this milestone.',
       milestone: 'Milestone',
@@ -708,16 +708,16 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
     },
     BACKLOG: {
-      status: 'Not started',
+      status: 'Backlog',
       description: 'Model work is on the project team’s backlog'
     },
     IN_PROGRESS: {
-      status: 'Not started',
+      status: 'In progress',
       description:
         'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
     },
     COMPLETED: {
-      status: 'Not started',
+      status: 'Completed',
       description: 'Work related to this model is finished'
     }
   }

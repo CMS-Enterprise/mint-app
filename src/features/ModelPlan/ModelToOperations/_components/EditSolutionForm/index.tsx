@@ -408,11 +408,13 @@ const EditSolutionForm = ({
     () => [
       {
         Header: modelToOperationsMiscT('modal.editSolution.milestone'),
-        accessor: 'name'
+        accessor: 'name',
+        width: 300
       },
       {
         Header: modelToOperationsMiscT('modal.editSolution.status'),
         accessor: 'status',
+        width: 150,
         Cell: ({ row }: { row: Row<MilestoneType> }) => {
           return (
             <MilestoneStatusTag
@@ -425,6 +427,8 @@ const EditSolutionForm = ({
       {
         Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
         accessor: 'riskIndicator',
+        disableSortBy: true,
+        width: 50,
         Cell: ({ row }: { row: Row<MilestoneType> }) => {
           const { riskIndicator } = row.original;
 
@@ -922,10 +926,7 @@ const EditSolutionForm = ({
                                     key={column.id}
                                     className="padding-left-0 padding-bottom-0"
                                     style={{
-                                      width:
-                                        column.id === 'status'
-                                          ? '150px'
-                                          : 'auto'
+                                      width: column.width
                                     }}
                                   >
                                     <button
@@ -934,7 +935,8 @@ const EditSolutionForm = ({
                                       {...column.getSortByToggleProps()}
                                     >
                                       {column.render('Header')}
-                                      {getHeaderSortIcon(column, false)}
+                                      {column.canSort &&
+                                        getHeaderSortIcon(column, false)}
                                     </button>
                                   </th>
                                 ))}

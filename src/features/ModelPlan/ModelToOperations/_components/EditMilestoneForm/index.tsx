@@ -598,6 +598,7 @@ const EditMilestoneForm = ({
       {
         Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
         accessor: 'riskIndicator',
+        disableSortBy: true,
         Cell: ({ row }: { row: Row<SolutionType> }) => {
           const { riskIndicator } = row.original;
 
@@ -1206,7 +1207,8 @@ const EditMilestoneForm = ({
                                       {...column.getSortByToggleProps()}
                                     >
                                       {column.render('Header')}
-                                      {getHeaderSortIcon(column, false)}
+                                      {column.canSort &&
+                                        getHeaderSortIcon(column, false)}
                                     </button>
                                   </th>
                                 ))}
