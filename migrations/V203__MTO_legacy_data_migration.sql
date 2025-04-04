@@ -102,7 +102,8 @@ ranked_solutions AS (
             ORDER BY COALESCE(modified_dts, created_dts) DESC
         ) AS row_num,
         ARRAY_AGG(operational_need_id) OVER (
-            PARTITION BY model_plan_id, final_name --TODO, this duplicates needs if there are duplicates
+            PARTITION BY model_plan_id, final_name --TODO, this duplicates needs if there are multiple needs that are not custom (because final name is null),
+            --  this effectively means that the solution is missed. We need to ignore them in the partition
         ) AS all_operational_need_ids
     FROM solutions
 ),
@@ -123,6 +124,7 @@ inserted_milestones AS ( --noqa
         needs.model_plan_id,
         needs.name_other,
         (needs.possible_need_type::TEXT)::MTO_COMMON_MILESTONE_KEY AS common_milestone_key, --TODO, this must be translated to a common milestone type, or handled individually
+        -- Update, I don't think this matters as the keys match for operational needs to milestones
         CASE
             WHEN        needs.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_MILESTONE_STATUS
             ELSE 'NOT_STARTED'::MTO_MILESTONE_STATUS
