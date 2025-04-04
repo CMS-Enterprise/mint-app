@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -121,6 +121,9 @@ const EditSolutionForm = ({
 
   const editSolutionID = params.get('edit-solution');
 
+  const shouldScrollToBottom = params.get('scroll-to-bottom') === 'true';
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -133,6 +136,12 @@ const EditSolutionForm = ({
   const { showMessage } = useMessage();
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (shouldScrollToBottom) {
+      scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [shouldScrollToBottom]);
 
   const {
     data,
@@ -890,7 +899,7 @@ const EditSolutionForm = ({
                         )}
                       </Alert>
                     ) : (
-                      <>
+                      <div ref={scrollRef}>
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}
@@ -971,7 +980,7 @@ const EditSolutionForm = ({
                             page={[]}
                           />
                         )}
-                      </>
+                      </div>
                     )}
                   </div>
                 </Fieldset>
