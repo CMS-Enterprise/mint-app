@@ -3,7 +3,16 @@ const scrollBlackList: string[] = [
   'sample-model-plan',
   '/help-and-knowledge/operational-solutions',
   '?solution=',
-  '&solution='
+  '&solution=',
+  '?milestone=',
+  '&milestone=',
+  '?add-milestone=',
+  '&add-milestone=',
+  '?edit-milestone=',
+  '&edit-milestone=',
+  '&hide-added-milestones',
+  '&type=',
+  '&hide-milestones-without-solutions'
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {

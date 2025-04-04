@@ -17,7 +17,6 @@ import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpB
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
@@ -43,8 +42,7 @@ const SixPagerMeeting = () => {
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const { prevPathname, selectedSolution, renderModal, loading } =
-    useModalSolutionState(OperationalSolutionKey.LDG);
+  const { prevPathname, selectedSolution, loading } = useModalSolutionState();
 
   const ldgRoute = `${initLocation}${location.search}${
     location.search ? '&' : '?'
@@ -116,7 +114,7 @@ const SixPagerMeeting = () => {
 
   return (
     <>
-      {renderModal && selectedSolution && (
+      {selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}

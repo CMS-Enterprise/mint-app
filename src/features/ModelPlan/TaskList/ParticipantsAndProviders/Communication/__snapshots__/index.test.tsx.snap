@@ -75,7 +75,8 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
   </p>
   <div>
     <div
-      class="padding-2 bg-primary-lighter"
+      class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
+      style="gap: 1rem;"
     >
       <div
         class="display-flex"

@@ -1,0 +1,22 @@
+{
+  "milestoneID": {
+    "gqlField": "milestoneID",
+    "goField": "MilestoneID",
+    "dbField": "milestone_id",
+    "label": "Milestone",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 1,
+    "tableReference": "mto_milestone"
+  },
+  "solutionID": {
+    "gqlField": "solutionID",
+    "goField": "SolutionID",
+    "dbField": "solution_id",
+    "label": "Solution",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 1.01,
+    "tableReference": "mto_solution"
+  }
+}
