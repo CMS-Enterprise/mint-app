@@ -28,7 +28,7 @@ WITH needs AS ( --noqa
     SELECT 
         need.id,
         need.model_plan_id,
-        possible.need_key AS possible_need_type, --TODO, this must be translated to a common milestone type, or handled individually
+        possible.need_key AS possible_need_type, -- This is later categorized into a common milestone type
         need.name_other,
         need.created_by,
         need.created_dts,
@@ -93,7 +93,6 @@ solutions AS (
     WHERE solution.needed = TRUE AND need.needed = TRUE -- A solution must be needed itself, and the parent need it's associated with must be needed in order to be inserted
 ),
 
---SELECT * FROM solutions
 
 --the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
 -- --We use gen_random_uuid to ensure that we get a unique value for the partition by clause, so that null values are not grouped together. Otherwise, only one common solution would be inserted
@@ -120,7 +119,6 @@ ranked_solutions AS (
         ) AS all_operational_need_ids
     FROM solutions
 ),
---   SELECT * FROM ranked_solutions WHERE row_num = 1;
 
 inserted_milestones AS ( --noqa
     INSERT INTO mto_milestone (
@@ -129,15 +127,14 @@ inserted_milestones AS ( --noqa
         name,
         mto_common_milestone_key,
         status,
-        created_by  --todo should we add modified and dates etc?
+        created_by  --todo should we add modified and dates etc? Currently, it will just add a new created date of the day we run the migration.
         
     )
     SELECT
         needs.id, --insert the same id as the operational need
         needs.model_plan_id,
         needs.name_other,
-        (needs.possible_need_type::TEXT)::MTO_COMMON_MILESTONE_KEY AS common_milestone_key, --TODO, this must be translated to a common milestone type, or handled individually
-        -- Update, I don't think this matters as the keys match for operational needs to milestones
+        (needs.possible_need_type::TEXT)::MTO_COMMON_MILESTONE_KEY AS common_milestone_key, -- Cast to the common milestone key
         CASE
             WHEN        needs.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_MILESTONE_STATUS
             ELSE 'NOT_STARTED'::MTO_MILESTONE_STATUS
@@ -148,10 +145,7 @@ inserted_milestones AS ( --noqa
     FROM needs
     RETURNING *
 ),
---
-----SELECT * FROM needs;
---SELECT * FROM ranked_solutions WHERE row_num = 1;
---LEFT JOIN needs ON solutions.operational_need_id = needs.id;
+
 
 inserted_solutions AS ( --noqa
     INSERT INTO mto_solution (
@@ -188,13 +182,12 @@ inserted_solutions AS ( --noqa
         s.needed_by,
         s.created_by
     FROM ranked_solutions s
-    WHERE  s.row_num = 1 -- only insert the most recent solutions in case of duplicates
+    WHERE  s.row_num = 1 -- only insert the most recent solutions in case of duplicates. 
     RETURNING
         mto_solution.id,
         mto_solution.created_by
         -- s.operational_need_id;
 ),
--- Adjust this, we also need to see if there are any duplicate solutions that must be addressed
 
 link_mapping AS (
     SELECT 
@@ -208,8 +201,8 @@ link_mapping AS (
     /* Group the data as */
     GROUP BY inserted_solutions.id, inserted_solutions.created_by, ranked_solutions.all_operational_need_ids, milestone_id
 ),
--- SELECT * FROM link_mapping
 
+-- this is the final insert statement that will link the solutions to the milestones
 inserted_links AS (
     INSERT INTO mto_milestone_solution_link (
         milestone_id,
