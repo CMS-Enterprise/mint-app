@@ -105,8 +105,11 @@ const searchMilestones = (
   query: string,
   items: MilestoneCardType[]
 ): MilestoneCardType[] => {
-  return items.filter(milestone =>
-    milestone.name.toLowerCase().includes(query.toLowerCase())
+  return items.filter(
+    milestone =>
+      milestone.name.toLowerCase().includes(query.toLowerCase()) ||
+      milestone.categoryName.toLowerCase().includes(query.toLowerCase()) ||
+      milestone.subCategoryName?.toLowerCase().includes(query.toLowerCase())
   );
 };
 
@@ -365,6 +368,7 @@ const MilstoneCardGroup = ({
                         className="margin-x-05"
                         onClick={() => {
                           clearMessage();
+                          setMTOModalState({ modalType: 'milestone' });
                           setIsModalOpen(true);
                         }}
                       >
