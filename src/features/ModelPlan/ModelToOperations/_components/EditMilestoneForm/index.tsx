@@ -695,6 +695,7 @@ const EditMilestoneForm = ({
           )}
           backButton
           showScroll
+          noScrollable={false}
           closeModal={() => {
             setEditSolutionsOpen(false);
           }}

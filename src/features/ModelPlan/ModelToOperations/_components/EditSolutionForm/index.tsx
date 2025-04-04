@@ -536,6 +536,7 @@ const EditSolutionForm = ({
           )}
           backButton
           showScroll
+          noScrollable={false}
           closeModal={() => {
             setEditMilestonesOpen(false);
           }}
