@@ -93,21 +93,25 @@ solutions AS (
     WHERE solution.needed = TRUE AND need.needed = TRUE -- A solution must be needed itself, and the parent need it's associated with must be needed in order to be inserted
 ),
 
--- TODO (mto) verify this, the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
+--the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
+-- --We use gen_random_uuid to ensure that we get a unique value for the partition by clause, so that null values are not grouped together. Otherwise, only one common solution would be inserted
 ranked_solutions AS (
     SELECT 
         solutions.*,
         ROW_NUMBER() OVER (
-            PARTITION BY model_plan_id, final_name
+            PARTITION BY
+                model_plan_id, 
+                CASE WHEN final_name IS NULL THEN GEN_RANDOM_UUID() ELSE final_name END
             ORDER BY COALESCE(modified_dts, created_dts) DESC
         ) AS row_num,
         ARRAY_AGG(operational_need_id) OVER (
-            PARTITION BY model_plan_id, final_name --TODO, this duplicates needs if there are multiple needs that are not custom (because final name is null),
-            --  this effectively means that the solution is missed. We need to ignore them in the partition
+            PARTITION BY
+                model_plan_id, 
+                CASE WHEN final_name IS NULL THEN GEN_RANDOM_UUID() ELSE final_name END
         ) AS all_operational_need_ids
     FROM solutions
 ),
---  SELECT * FROM ranked_solutions WHERE row_num = 1;
+--   SELECT * FROM ranked_solutions WHERE row_num = 1;
 
 inserted_milestones AS ( --noqa
     INSERT INTO mto_milestone (
