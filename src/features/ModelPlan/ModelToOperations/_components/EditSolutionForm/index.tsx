@@ -498,6 +498,7 @@ const EditSolutionForm = ({
       <Modal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
+        noScrollable={false}
         className="confirmation-modal"
       >
         <PageHeading
