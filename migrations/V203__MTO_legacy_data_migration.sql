@@ -95,19 +95,26 @@ solutions AS (
 
 --the partition by logic should get the most recently updated row as the standard row in the case of duplicates. Use this to only insert ones where row_num =1, but links should unnest the all_operational_need_ids property
 -- --We use gen_random_uuid to ensure that we get a unique value for the partition by clause, so that null values are not grouped together. Otherwise, only one common solution would be inserted
+-- we use the final_name instead of name other in case a treat as other solution is used
 ranked_solutions AS (
     SELECT 
         solutions.*,
         ROW_NUMBER() OVER (
             PARTITION BY
                 model_plan_id, 
-                CASE WHEN final_name IS NULL THEN GEN_RANDOM_UUID() ELSE final_name END
+                CASE 
+                    WHEN final_name IS NULL THEN GEN_RANDOM_UUID()::TEXT 
+                    ELSE final_name 
+                END
             ORDER BY COALESCE(modified_dts, created_dts) DESC
         ) AS row_num,
         ARRAY_AGG(operational_need_id) OVER (
             PARTITION BY
                 model_plan_id, 
-                CASE WHEN final_name IS NULL THEN GEN_RANDOM_UUID() ELSE final_name END
+                CASE 
+                    WHEN final_name IS NULL THEN GEN_RANDOM_UUID()::TEXT 
+                    ELSE final_name 
+                END
         ) AS all_operational_need_ids
     FROM solutions
 ),
