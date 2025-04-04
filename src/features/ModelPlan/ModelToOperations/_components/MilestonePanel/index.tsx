@@ -1,16 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
 
-import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
-import useMessage from 'hooks/useMessage';
-
 import { MilestoneCardType } from '../../MilestoneLibrary';
-import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 import { SolutionCard } from '../SolutionCard';
 
 import '../../index.scss';
@@ -22,26 +17,12 @@ type MilestonePanelProps = {
 const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { errorMessageInModal, clearMessage } = useMessage();
-
   const history = useHistory();
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
     [history]
   );
-
-  const milestoneParam = params.get('add-milestone');
-
-  const [isModalOpen, setIsModalOpen] = useState(
-    milestoneParam === milestone.key
-  );
-
-  useEffect(() => {
-    if (milestoneParam === milestone.key) {
-      setIsModalOpen(true);
-    }
-  }, [milestoneParam, milestone.key, setIsModalOpen]);
 
   // Map the common solutions to the FE help solutions
   const mappedSolutions = milestone.commonSolutions.map(solution => {
@@ -55,32 +36,6 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
 
   return (
     <>
-      <Modal
-        isOpen={isModalOpen}
-        closeModal={() => {
-          params.delete('add-milestone', milestone.key);
-          params.delete('milestone', milestone.key);
-          history.replace({ search: params.toString() });
-          clearMessage();
-          setIsModalOpen(false);
-        }}
-        shouldCloseOnOverlayClick
-        className="tablet:width-mobile-lg mint-body-normal"
-      >
-        <div className="margin-bottom-2">
-          <PageHeading headingLevel="h3" className="margin-y-0">
-            {t('modal.solutionToMilestone.title')}
-          </PageHeading>
-        </div>
-
-        {errorMessageInModal}
-
-        <AddSolutionToMilestoneForm
-          closeModal={() => setIsModalOpen(false)}
-          milestone={milestone}
-        />
-      </Modal>
-
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={12}>
@@ -124,7 +79,6 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                   onClick={() => {
                     params.set('add-milestone', milestone.key);
                     history.replace({ search: params.toString() });
-                    setIsModalOpen(true);
                   }}
                 >
                   {t('milestoneLibrary.addToMatrix')}

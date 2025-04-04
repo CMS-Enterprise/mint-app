@@ -40,7 +40,7 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
         <label
           class="usa-label"
           data-testid="label"
-          for="linked-solutions"
+          for="linked-milestones"
         >
           Milestones
         </label>
@@ -52,7 +52,7 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
         <div>
           <div
             class="easi-multiselect usa-combo-box margin-top-1 css-3iigni-container"
-            id="multi-source-data-to-collect"
+            id="linked-milestones"
           >
             <span
               class="css-1f43avz-a11yText-A11yText"
@@ -89,7 +89,7 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
                     aria-expanded="false"
                     aria-haspopup="true"
                     aria-label="Milestones"
-                    aria-labelledby="linked-solutions"
+                    aria-labelledby="linked-milestones"
                     autocapitalize="none"
                     autocomplete="off"
                     autocorrect="off"
