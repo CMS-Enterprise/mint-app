@@ -137,12 +137,6 @@ const EditSolutionForm = ({
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (shouldScrollToBottom) {
-      scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [shouldScrollToBottom]);
-
   const {
     data,
     loading,
@@ -221,6 +215,15 @@ const EditSolutionForm = ({
 
     setTableMilestones(updatedMilestones);
   }, [allMilestones.milestones, milestoneIDs]);
+
+  useEffect(() => {
+    if (shouldScrollToBottom) {
+      // setTimeout Hack to force scroll to bottom - buggy without the timeout
+      setTimeout(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    }
+  }, [shouldScrollToBottom, loading]);
 
   // Set default values for form
   const formValues = useMemo(
