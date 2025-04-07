@@ -49,6 +49,8 @@ const MTOHome = () => {
 
   const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
 
+  const dataAvalilable: boolean = !loading || !!modelToOperationsMatrix;
+
   const suggestedMilestones =
     modelToOperationsMatrix?.commonMilestones.filter(
       obj => obj.isSuggested && !obj.isAdded
@@ -102,7 +104,7 @@ const MTOHome = () => {
             <Grid desktop={{ col: 9 }}>
               <h1 className="margin-y-0 line-height-large">{t('heading')}</h1>
 
-              {!loading && (
+              {dataAvalilable && (
                 <p className="mint-body-large margin-bottom-2 margin-top-05">
                   {t('forModel', {
                     modelName
@@ -110,7 +112,7 @@ const MTOHome = () => {
                 </p>
               )}
 
-              {!loading && (
+              {dataAvalilable && (
                 <div className="margin-bottom-3">
                   <MTOStatusBanner
                     status={modelToOperationsMatrix?.status}
@@ -211,7 +213,7 @@ const MTOHome = () => {
             <EditMTOSolutionProvider>
               {currentView === 'milestones' && (
                 <>
-                  {loading ? (
+                  {!dataAvalilable ? (
                     <PageLoading />
                   ) : (
                     <>
@@ -220,7 +222,7 @@ const MTOHome = () => {
                           <MTOTableActions />
                           <MTOTable
                             queryData={data}
-                            loading={loading}
+                            loading={dataAvalilable}
                             error={error}
                           />
                         </>
@@ -234,7 +236,7 @@ const MTOHome = () => {
 
               {currentView === 'solutions' && (
                 <>
-                  {loading ? (
+                  {!dataAvalilable ? (
                     <PageLoading />
                   ) : (
                     <>

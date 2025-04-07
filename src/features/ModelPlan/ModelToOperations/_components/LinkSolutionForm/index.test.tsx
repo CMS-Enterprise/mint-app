@@ -96,6 +96,10 @@ describe('LinkSolutionForm', () => {
                 allSolutions={{
                   __typename: 'ModelsToOperationMatrix',
                   commonSolutions: [],
+                  info: {
+                    __typename: 'MTOInfo',
+                    id: '123'
+                  },
                   solutions: []
                 }}
               />

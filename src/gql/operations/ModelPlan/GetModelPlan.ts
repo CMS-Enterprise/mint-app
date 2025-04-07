@@ -149,6 +149,10 @@ export default gql(/* GraphQL */ `
         modifiedDts: latestClearanceDts
       }
       mtoMatrix {
+        # Used to cache the mto matrix - always include
+        info {
+          id
+        }
         status
         recentEdit {
           modifiedDts

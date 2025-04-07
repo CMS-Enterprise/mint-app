@@ -52,6 +52,7 @@ const EditMTOSolutionProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       params.delete('edit-solution');
+      params.delete('scroll-to-bottom');
       params.delete('select-milestones');
       history.push({ search: params.toString() });
       setLeavePage(false);

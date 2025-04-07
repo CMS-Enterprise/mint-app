@@ -50,6 +50,8 @@ const MilestoneLibrary = () => {
     }
   });
 
+  const dataAvalilable: boolean = !loading || !!data?.modelPlan?.mtoMatrix;
+
   const milestones = useMemo(
     () =>
       data?.modelPlan?.mtoMatrix?.commonMilestones ||
@@ -92,7 +94,7 @@ const MilestoneLibrary = () => {
         </UswdsReactLink>
       </div>
 
-      {loading ? (
+      {!dataAvalilable ? (
         <PageLoading />
       ) : (
         <MilstoneCardGroup milestones={milestones} />
@@ -105,8 +107,11 @@ const searchMilestones = (
   query: string,
   items: MilestoneCardType[]
 ): MilestoneCardType[] => {
-  return items.filter(milestone =>
-    milestone.name.toLowerCase().includes(query.toLowerCase())
+  return items.filter(
+    milestone =>
+      milestone.name.toLowerCase().includes(query.toLowerCase()) ||
+      milestone.categoryName.toLowerCase().includes(query.toLowerCase()) ||
+      milestone.subCategoryName?.toLowerCase().includes(query.toLowerCase())
   );
 };
 
@@ -292,6 +297,7 @@ const MilstoneCardGroup = ({
                   type="button"
                   outline={viewParam !== 'suggested'}
                   onClick={() => {
+                    params.set('page', '1');
                     params.set('view', 'suggested');
                     history.replace({ search: params.toString() });
                   }}
@@ -306,6 +312,7 @@ const MilstoneCardGroup = ({
                   type="button"
                   outline={viewParam !== 'all'}
                   onClick={() => {
+                    params.set('page', '1');
                     params.set('view', 'all');
                     history.replace({ search: params.toString() });
                   }}
@@ -365,6 +372,7 @@ const MilstoneCardGroup = ({
                         className="margin-x-05"
                         onClick={() => {
                           clearMessage();
+                          setMTOModalState({ modalType: 'milestone' });
                           setIsModalOpen(true);
                         }}
                       >

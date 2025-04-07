@@ -386,7 +386,7 @@ const MTOTable = ({
       }
 
       return (
-        <tr id={milestone.id} key={milestone.id}>
+        <tr id={milestone.id} key={milestone.id} className="border-top-1px">
           <RenderCells
             row={milestone}
             rowType="milestone"
@@ -437,7 +437,7 @@ const MTOTable = ({
             style={{
               backgroundColor: '#F0F0F0',
               fontWeight: 'bold',
-              borderBottom: '1px solid black',
+              borderTop: '1px solid black',
               cursor: 'pointer'
             }}
             isDraggable={!subCategory.isUncategorized}
@@ -491,6 +491,7 @@ const MTOTable = ({
               cursor: 'pointer',
               backgroundColor: '#E1F3F8',
               borderBottom: '1px solid black',
+              borderTop: '1px solid black',
               fontWeight: 'bold',
               fontSize: '1.25em'
             }}

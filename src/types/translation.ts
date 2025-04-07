@@ -45,6 +45,7 @@ import {
   ModelViewFilter,
   MonitoringFileType,
   MtoCategoryTranslation,
+  MtoCommonMilestoneKey,
   MtoCommonSolutionContactTranslation,
   MtoCommonSolutionKey,
   MtoFacilitator,
@@ -1322,6 +1323,7 @@ export type TranslationMTOSolutionCustomForm = {
   status: TranslationFieldPropertiesWithOptions<MtoSolutionStatus>;
   neededBy: TranslationFieldProperties;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  milestones: TranslationFieldPropertiesWithOptions<MtoCommonMilestoneKey>;
 };
 
 type TranslationMTOSolutionCustomGQL = Omit<

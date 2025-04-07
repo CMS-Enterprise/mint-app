@@ -76,6 +76,8 @@ const SolutionLibrary = () => {
     variables: { id: modelID }
   });
 
+  const dataAvalilable: boolean = !loading || !!data?.modelPlan?.mtoMatrix;
+
   const solutions = useMemo(
     () =>
       data?.modelPlan?.mtoMatrix.commonSolutions || ([] as SolutionCardType[]),
@@ -230,7 +232,7 @@ const SolutionLibrary = () => {
           </UswdsReactLink>
         </div>
 
-        {loading ? (
+        {!dataAvalilable ? (
           <PageLoading />
         ) : (
           <>

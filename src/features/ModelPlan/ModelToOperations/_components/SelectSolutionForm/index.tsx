@@ -17,6 +17,7 @@ import {
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
+  GetMtoSolutionsAndMilestonesDocument,
   MtoCommonSolutionKey,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
@@ -150,7 +151,8 @@ const SelectSolutionForm = () => {
         variables: {
           id: modelID
         }
-      }
+      },
+      GetMtoSolutionsAndMilestonesDocument
     ]
   });
 

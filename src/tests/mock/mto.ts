@@ -2,6 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
+  GetMtoAllMilestonesDocument,
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables,
   GetMtoAllSolutionsDocument,
   GetMtoCategoriesDocument,
   GetMtoCommonSolutionsDocument,
@@ -279,6 +282,46 @@ export const milestoneMock = (id: string) => [
   }
 ];
 
+export const allMilestonesMock: MockedResponse<
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables
+> = {
+  request: {
+    query: GetMtoAllMilestonesDocument,
+    variables: {
+      id: modelID
+    }
+  },
+  result: {
+    data: {
+      __typename: 'Query',
+      modelPlan: {
+        __typename: 'ModelPlan',
+        id: modelID,
+        mtoMatrix: {
+          __typename: 'ModelsToOperationMatrix',
+          info: {
+            __typename: 'MTOInfo',
+            id: '123'
+          },
+          commonMilestones: [],
+          milestones: [
+            {
+              __typename: 'MTOMilestone',
+              id: '123',
+              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              name: 'Milestone 1',
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
+              solutions: []
+            }
+          ]
+        }
+      }
+    }
+  }
+};
+
 export const solutionMock = (
   id: string = '1',
   addedFromSolutionLibrary: boolean = true
@@ -305,7 +348,23 @@ export const solutionMock = (
           type: MtoSolutionType.IT_SYSTEM,
           neededBy: '2121-08-01',
           pocName: 'Test Name',
-          pocEmail: 'jon@oddball.io'
+          pocEmail: 'jon@oddball.io',
+          milestones: [
+            {
+              __typename: 'MTOMilestone',
+              id: '123',
+              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              name: 'Milestone 1',
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
+              commonMilestone: {
+                __typename: 'MTOCommonMilestone',
+                name: 'Common Milestone 1',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                isAdded: true
+              }
+            }
+          ]
         }
       }
     }

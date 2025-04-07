@@ -24,6 +24,10 @@ const mtoCardMock: MtoCardProps = {
   mtoMatrix: {
     __typename: 'ModelsToOperationMatrix',
     status: MtoStatus.IN_PROGRESS,
+    info: {
+      __typename: 'MTOInfo',
+      id: '123'
+    },
     recentEdit: {
       __typename: 'RecentModification',
       modifiedDts: null,
