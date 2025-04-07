@@ -2,6 +2,7 @@ import React from 'react';
 import {
   DataExchangeApproachStatus,
   ModelStatus,
+  MtoStatus,
   TaskStatus
 } from 'gql/generated/graphql';
 
@@ -13,7 +14,7 @@ type TitleAndStatusProps = {
   clearanceTitle: string;
   heading: string;
   isViewingFilteredView?: boolean;
-  status: ModelStatus | TaskStatus | DataExchangeApproachStatus;
+  status: ModelStatus | TaskStatus | DataExchangeApproachStatus | MtoStatus;
   modifiedOrCreatedDts?: string | null;
 };
 

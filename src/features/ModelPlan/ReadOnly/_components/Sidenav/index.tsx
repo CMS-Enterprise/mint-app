@@ -3,19 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
 
-import { subComponentsProps } from '../..';
+import { ReadOnlyComponents } from '../..';
 
 import './index.scss';
 
 interface SideNavProps {
-  subComponents: subComponentsProps;
+  modelID: string;
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
 }
 
 const SideNav = ({
-  subComponents,
+  modelID,
   isHelpArticle,
   solutionNavigation,
   paramActive
@@ -24,6 +24,26 @@ const SideNav = ({
   const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
   const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
+
+  const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
+
+  const modelPlanSections = Object.keys(subComponents).filter(
+    key => subComponents[key].group === 'model-plan'
+  );
+
+  console.log(modelPlanSections);
+
+  const modelDesignSections = Object.keys(subComponents).filter(
+    key => subComponents[key].group === 'model-design-activities'
+  );
+
+  const modelToOperationsSections = Object.keys(subComponents).filter(
+    key => subComponents[key].group === 'model-to-operations'
+  );
+
+  const otherModelInfoSections = Object.keys(subComponents).filter(
+    key => subComponents[key].group === 'other-model-info'
+  );
 
   const scrollToAboveReadOnlyBodyContent = () => {
     setTimeout(() => {

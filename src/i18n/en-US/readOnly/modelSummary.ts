@@ -17,7 +17,7 @@ const modelSummary = {
     'operations-evaluation-and-learning':
       'Operations, evaluation, and learning',
     payment: 'Payment',
-    'it-solutions': 'Operational solutions',
+    'model-to-operations': 'Model-to-operations matrix',
     team: 'Team',
     discussions: 'Discussions',
     documents: 'Documents',
