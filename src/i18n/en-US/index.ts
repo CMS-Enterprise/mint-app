@@ -30,6 +30,12 @@ import {
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
+import modelToOperations, {
+  modelToOperationsMisc
+} from './modelPlan/modelToOperations';
+import mtoCategory from './modelPlan/mtoCategory';
+import mtoMilestone from './modelPlan/mtoMilestone';
+import mtoSolution from './modelPlan/mtoSolution';
 import operationalNeeds from './modelPlan/operationalNeeds';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
@@ -105,6 +111,11 @@ const enUS = {
   opsEvalAndLearningMisc,
   payments,
   paymentsMisc,
+  modelToOperations,
+  modelToOperationsMisc,
+  mtoCategory,
+  mtoMilestone,
+  mtoSolution,
   operationalNeeds,
   solutions,
   operationalSolutionSubtasks,

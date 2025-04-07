@@ -74,8 +74,8 @@ const CheckboxCard = ({
   const {
     prevPathname,
     selectedSolution,
-    renderModal,
-    loading: modalLoading
+    loading: modalLoading,
+    renderModal
   } = useModalSolutionState(solution.key!);
 
   const { helpSolutions, loading } = useHelpSolution();
@@ -91,11 +91,12 @@ const CheckboxCard = ({
     contact => contact.isPrimary
   );
 
-  const detailRoute = solutionMap?.route
-    ? `${initLocation}${location.search}${
-        location.search ? '&' : '?'
-      }solution=${solutionMap?.route || ''}&section=about`
-    : `${initLocation}${location.search}`;
+  const params = new URLSearchParams(history.location.search);
+
+  params.set('solution', solutionMap?.route || '');
+  params.set('section', 'about');
+
+  const detailRoute = `${initLocation}?${params}`;
 
   const isDefaultSolutionOptions =
     (solution.name !== null && solution.pocEmail === null) ||
@@ -164,7 +165,7 @@ const CheckboxCard = ({
 
   return (
     <Grid tablet={{ col: 6 }} desktop={{ col: 4 }} className="display-flex">
-      {renderModal && selectedSolution && (
+      {selectedSolution && renderModal && (
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}

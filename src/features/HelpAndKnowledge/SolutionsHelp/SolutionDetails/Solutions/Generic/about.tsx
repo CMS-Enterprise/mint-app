@@ -1,11 +1,12 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import ExternalLink from 'components/ExternalLink';
-import UswdsReactLink from 'components/LinkWrapper';
 
 import '../index.scss';
 
@@ -67,16 +68,53 @@ Used with <link1>, <link2>, etc embedded tags in translation file
 */
 export const getTransLinkComponents = (links?: LinkType[]) => {
   const linkObj: Record<string, React.ReactNode> = {};
+
+  const { search } = window.location;
+
+  const params = new URLSearchParams(search);
+
   if (links) {
     links.forEach((link, index) => {
-      linkObj[`link${index + 1}`] = link.external ? (
-        <ExternalLink href={link.link}>link</ExternalLink>
-      ) : (
-        <UswdsReactLink to={link.link}>link</UswdsReactLink>
-      );
+      if (link.external) {
+        linkObj[`link${index + 1}`] = (
+          <ExternalLink href={link.link}>link</ExternalLink>
+        );
+      } else {
+        params.set('solution', link.link);
+        linkObj[`link${index + 1}`] = (
+          <InternalSolutionButton params={params}>link</InternalSolutionButton>
+        );
+      }
     });
   }
   return linkObj;
+};
+
+// Button to link to another solution panel and scroll to the top
+const InternalSolutionButton = ({
+  params,
+  children
+}: {
+  params: URLSearchParams;
+  children: React.ReactChild;
+}) => {
+  const history = useHistory();
+
+  return (
+    <Button
+      type="button"
+      unstyled
+      onClick={() => {
+        const modalCon = document?.getElementsByClassName(
+          'ReactModal__Overlay'
+        )?.[1];
+        modalCon.scrollTo(0, 0);
+        history.push({ search: params.toString() });
+      }}
+    >
+      {children}
+    </Button>
+  );
 };
 
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {

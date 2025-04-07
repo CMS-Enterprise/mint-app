@@ -125,6 +125,11 @@ func ModelPlanCreate(
 		if err != nil {
 			return nil, err
 		}
+		mtoInfo := models.NewMTOInfo(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+		_, err = storage.MTOInfoCreate(tx, logger, mtoInfo)
+		if err != nil {
+			return nil, err
+		}
 
 		//Create default Operational Needs
 		_, err = store.OperationalNeedInsertAllPossible(tx, logger, createdPlan.ID, principal.Account().ID)

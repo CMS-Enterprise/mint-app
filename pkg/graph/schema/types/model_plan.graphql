@@ -93,6 +93,10 @@ type ModelPlan {
   operationalNeeds: [OperationalNeed!]!
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
+
+  # MTO Fields (START)
+  mtoMatrix: ModelsToOperationMatrix!
+  # MTO Fields (END)
 }
 
 """
