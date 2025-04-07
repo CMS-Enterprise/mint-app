@@ -215,7 +215,7 @@ link_mapping AS (
     FROM inserted_solutions
     JOIN ranked_solutions ON ranked_solutions.id = inserted_solutions.id
     /* Group the data as */
-    GROUP BY inserted_solutions.id, inserted_solutions.created_by, ranked_solutions.all_operational_need_ids, milestone_id
+    GROUP BY inserted_solutions.id, inserted_solutions.created_by, inserted_solutions.created_dts, inserted_solutions.modified_by, inserted_solutions.modified_dts, ranked_solutions.all_operational_need_ids, milestone_id
 ),
 
 -- this is the final insert statement that will link the solutions to the milestones
