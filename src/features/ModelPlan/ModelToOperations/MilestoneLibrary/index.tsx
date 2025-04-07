@@ -50,6 +50,8 @@ const MilestoneLibrary = () => {
     }
   });
 
+  const dataAvalilable: boolean = !loading || !!data?.modelPlan?.mtoMatrix;
+
   const milestones = useMemo(
     () =>
       data?.modelPlan?.mtoMatrix?.commonMilestones ||
@@ -92,7 +94,7 @@ const MilestoneLibrary = () => {
         </UswdsReactLink>
       </div>
 
-      {loading ? (
+      {!dataAvalilable ? (
         <PageLoading />
       ) : (
         <MilstoneCardGroup milestones={milestones} />
