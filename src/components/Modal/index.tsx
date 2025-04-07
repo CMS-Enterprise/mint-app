@@ -16,6 +16,7 @@ type ModalProps = {
   modalHeading?: string;
   openModal?: () => void;
   closeModal: () => void;
+  noScrollable?: boolean;
 };
 
 const Modal = ({
@@ -27,7 +28,8 @@ const Modal = ({
   shouldCloseOnOverlayClick = false,
   modalHeading,
   openModal,
-  closeModal
+  closeModal,
+  noScrollable = true
 }: ModalProps) => {
   const handleOpenModal = () => {
     if (!scroll) noScroll.on();
@@ -43,7 +45,11 @@ const Modal = ({
       overlayClassName="mint-modal__overlay overflow-y-scroll"
       className={classNames('mint-modal__content', className)}
       onAfterOpen={handleOpenModal}
-      onAfterClose={noScroll.off}
+      onAfterClose={() => {
+        if (noScrollable) {
+          noScroll.off();
+        }
+      }}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}

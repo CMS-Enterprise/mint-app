@@ -336,7 +336,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       },
       milestoneTitle: 'Milestone title',
       alert: {
-        info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
+        info: 'Before adding this milestone, consider checking the <milestoneLibrary>milestone library</milestoneLibrary> to see if MINT offers a similar preset milestone.',
+        infoLibrary:
+          'Once you create this custom milestone, it will be visible in your MTO but will not be visible in the milestone library.',
         success: 'Your milestone ({{milestone}}) has been added.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
@@ -448,30 +450,29 @@ export const modelToOperationsMisc: Record<string, any> = {
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
       },
-      selectedMilestones: 'Selected solutions',
+      selectedMilestones: 'Selected milestones',
       selectedMilestonesCount:
-        '{{count}} solutions associated with this milestone',
+        '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:
-        '{{count}} solution associated with this milestone',
-      editMilestones: 'Edit solutions',
+        '{{count}} milestones associated with this solution',
+      editMilestones: 'Edit related milestones',
       noMilestones:
-        'You haven’t selected any solutions or IT systems to implement this milestone.',
+        'You haven’t selected any milestones or IT systems to implement this milestone.',
       milestone: 'Milestone',
       status: 'Status',
-      selectedMilestoneCount_other: '{{count}} selected solutions',
-      selectedMilestoneCount: '{{count}} selected solution',
-      suggestedMilestones: 'Suggested solutions',
+      selectedMilestoneCount_other: '{{count}} selected milestones',
+      selectedMilestoneCount: '{{count}} selected milestone',
+      suggestedMilestones: 'Suggested milestones',
       selectedMilestonesDescription:
-        'These solutions are commonly used for this milestone.',
-      selectThisMilestone: 'Select this solution',
+        'These milestones are commonly used for this solution.',
+      selectThisMilestone: 'Select this milestone',
       availableMilestonesDescription:
-        'Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.',
-      visitSolutionLibrary:
-        'You may visit the <solution>solution library</solution> or <help>help center</help> to learn more about the solutions below.',
-      suggestedMilestone: 'Suggested solutions for this milestone',
-      customMilestone: 'Custom solutions added to this MTO',
-      otherMilestones: 'Other available solutions',
-      backToSolution: 'Back to milestone details'
+        'Select from other operational milestones and IT systems included in MINT, including any custom milestones you may have added to your MTO. Select all that apply.',
+      visitMilestoneLibrary:
+        'You may add additional milestones to your MTO from the <milestone>milestone library</milestone> or by adding a custom milestone from the main page of your MTO.',
+      customMilestone: 'Milestones in your MTO that often use this solution',
+      otherMilestones: 'Other milestones in your MTO',
+      backToSolution: 'Back to solution details'
     },
     solution: {
       title: 'Add a new solution',
@@ -709,16 +710,16 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
     },
     BACKLOG: {
-      status: 'Not started',
+      status: 'Backlog',
       description: 'Model work is on the project team’s backlog'
     },
     IN_PROGRESS: {
-      status: 'Not started',
+      status: 'In progress',
       description:
         'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
     },
     COMPLETED: {
-      status: 'Not started',
+      status: 'Completed',
       description: 'Work related to this model is finished'
     }
   }

@@ -130,6 +130,10 @@ const modelPlan: GetModelPlanTypes = {
     __typename: 'ModelsToOperationMatrix',
     status: MtoStatus.IN_PROGRESS,
     recentEdit: null,
+    info: {
+      __typename: 'MTOInfo',
+      id: '123'
+    },
     milestones: []
   },
   dataExchangeApproach: {

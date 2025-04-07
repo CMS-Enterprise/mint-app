@@ -5,6 +5,10 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       mtoMatrix {
+        # Used to cache the mto matrix - always include
+        info {
+          id
+        }
         commonMilestones {
           key
           name
@@ -16,6 +20,11 @@ export default gql(/* GraphQL */ `
           id
           key
           name
+          status
+          riskIndicator
+          solutions {
+            key
+          }
         }
       }
     }
