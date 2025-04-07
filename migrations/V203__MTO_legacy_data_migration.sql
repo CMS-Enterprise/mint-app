@@ -127,7 +127,10 @@ inserted_milestones AS ( --noqa
         name,
         mto_common_milestone_key,
         status,
-        created_by  --todo should we add modified and dates etc? Currently, it will just add a new created date of the day we run the migration.
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
         
     )
     SELECT
@@ -139,8 +142,10 @@ inserted_milestones AS ( --noqa
             WHEN        needs.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_MILESTONE_STATUS
             ELSE 'NOT_STARTED'::MTO_MILESTONE_STATUS
         END AS status,
-        needs.created_by
-        
+        needs.created_by,
+        needs.created_dts,
+        needs.modified_by,
+        needs.modified_dts
 
     FROM needs
     RETURNING *
@@ -158,7 +163,10 @@ inserted_solutions AS ( --noqa
         type,
         status,
         needed_by,
-        created_by
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
     )
     SELECT
         s.id,
@@ -180,19 +188,27 @@ inserted_solutions AS ( --noqa
             ELSE 'NOT_STARTED'::MTO_SOLUTION_STATUS
         END AS status,
         s.needed_by,
-        s.created_by
+        s.created_by,
+        s.created_dts,
+        s.modified_by,
+        s.modified_dts
     FROM ranked_solutions s
     WHERE  s.row_num = 1 -- only insert the most recent solutions in case of duplicates. 
     RETURNING
         mto_solution.id,
-        mto_solution.created_by
-        -- s.operational_need_id;
+        mto_solution.created_by,
+        mto_solution.created_dts,
+        mto_solution.modified_by,
+        mto_solution.modified_dts
 ),
 
 link_mapping AS (
     SELECT 
         inserted_solutions.id AS solution_id, --noqa
         inserted_solutions.created_by,
+        inserted_solutions.created_dts,
+        inserted_solutions.modified_by,
+        inserted_solutions.modified_dts,
         -- we use the operational need id as the milestone id to enable easier joins and linking
         UNNEST(ranked_solutions.all_operational_need_ids) AS milestone_id,
         ranked_solutions.all_operational_need_ids
@@ -207,12 +223,18 @@ inserted_links AS (
     INSERT INTO mto_milestone_solution_link (
         milestone_id,
         solution_id,
-        created_by
+        created_by,
+        created_dts,
+        modified_by,
+        modified_dts
     )
     SELECT
         link_mapping.milestone_id,
         link_mapping.solution_id,
-        link_mapping.created_by
+        link_mapping.created_by,
+        link_mapping.created_dts,
+        link_mapping.modified_by,
+        link_mapping.modified_dts
     FROM link_mapping
     WHERE link_mapping.milestone_id IS NOT NULL AND link_mapping.solution_id IS NOT NULL
     RETURNING *
