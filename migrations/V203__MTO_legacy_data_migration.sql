@@ -24,7 +24,7 @@ Note: the newly created milestones are also not categorized, and do not have fac
 **/
 
 
-WITH needs AS ( --noqa
+WITH needs AS (
     SELECT 
         need.id,
         need.model_plan_id,
@@ -204,7 +204,7 @@ inserted_solutions AS ( --noqa
 
 link_mapping AS (
     SELECT 
-        inserted_solutions.id AS solution_id, --noqa
+        inserted_solutions.id AS solution_id,
         inserted_solutions.created_by,
         inserted_solutions.created_dts,
         inserted_solutions.modified_by,
