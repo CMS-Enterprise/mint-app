@@ -336,7 +336,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       },
       milestoneTitle: 'Milestone title',
       alert: {
-        info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
+        info: 'Before adding this milestone, consider checking the <milestoneLibrary>milestone library</milestoneLibrary> to see if MINT offers a similar preset milestone.',
+        infoLibrary:
+          'Once you create this custom milestone, it will be visible in your MTO but will not be visible in the milestone library.',
         success: 'Your milestone ({{milestone}}) has been added.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'

@@ -132,6 +132,9 @@ const client = new ApolloClient({
       },
       LockableSectionLockStatus: {
         keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
+      },
+      ModelsToOperationMatrix: {
+        keyFields: ['info', ['id']]
       }
     }
   }),

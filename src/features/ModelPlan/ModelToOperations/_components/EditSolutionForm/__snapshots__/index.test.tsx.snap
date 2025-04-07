@@ -106,7 +106,9 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
               </label>
               <div
                 class="mint-help-text margin-top-1"
-              />
+              >
+                Choose the role or group responsible for this work.
+              </div>
               <div>
                 <div
                   class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
@@ -210,7 +212,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
               <div
                 class="mint-help-text margin-top-1"
               >
-                Choose the date when onboarding and implementation work for this solutions should be complete. Format: mm/dd/yyyy
+                Choose the date when onboarding and implementation work for this solution should be complete. Format: mm/dd/yyyy
               </div>
               <div
                 class="position-relative"
@@ -478,7 +480,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 data-testid="button"
                 type="button"
               >
-                Edit milestones
+                Edit related milestones
                 <svg
                   class="usa-icon top-2px"
                   focusable="false"
@@ -493,168 +495,154 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                   />
                 </svg>
               </button>
-              <table
-                class="usa-table usa-table--borderless width-full margin-top-0"
-                data-testid="table"
-              >
-                <thead>
-                  <tr
-                    role="row"
-                  >
-                    <th
-                      class="padding-left-0 padding-bottom-0"
-                      colspan="1"
-                      role="columnheader"
-                      scope="col"
-                      style="width: auto;"
-                    >
-                      <button
-                        class="usa-button usa-button--unstyled position-relative"
-                        style="cursor: pointer;"
-                        title="Toggle SortBy"
-                        type="button"
-                      >
-                        Milestone
-                        <svg
-                          class="usa-icon margin-left-05"
-                          data-testid="caret--sort"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                          />
-                        </svg>
-                      </button>
-                    </th>
-                    <th
-                      class="padding-left-0 padding-bottom-0"
-                      colspan="1"
-                      role="columnheader"
-                      scope="col"
-                      style="width: 150px;"
-                    >
-                      <button
-                        class="usa-button usa-button--unstyled position-relative"
-                        style="cursor: pointer;"
-                        title="Toggle SortBy"
-                        type="button"
-                      >
-                        Status
-                        <svg
-                          class="usa-icon margin-left-05"
-                          data-testid="caret--sort"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                          />
-                        </svg>
-                      </button>
-                    </th>
-                    <th
-                      class="padding-left-0 padding-bottom-0"
-                      colspan="1"
-                      role="columnheader"
-                      scope="col"
-                      style="width: auto;"
-                    >
-                      <button
-                        class="usa-button usa-button--unstyled position-relative"
-                        style="cursor: pointer;"
-                        title="Toggle SortBy"
-                        type="button"
-                      >
-                        <svg
-                          class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
-                          />
-                        </svg>
-                        <svg
-                          class="usa-icon margin-left-05"
-                          data-testid="caret--sort"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                          />
-                        </svg>
-                      </button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  role="rowgroup"
+              <div>
+                <table
+                  class="usa-table usa-table--borderless width-full margin-top-0"
+                  data-testid="table"
                 >
-                  <tr
-                    role="row"
-                  >
-                    <td
-                      class="padding-left-0"
-                      role="cell"
+                  <thead>
+                    <tr
+                      role="row"
                     >
-                      Milestone 1
-                    </td>
-                    <td
-                      class="padding-left-0"
-                      role="cell"
-                    >
-                      <div
-                        class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
-                        data-testid="tasklist-tag"
+                      <th
+                        class="padding-left-0 padding-bottom-0"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="width: 300px;"
                       >
-                        <span>
-                          Completed
-                        </span>
-                      </div>
-                    </td>
-                    <td
-                      class="padding-left-0"
-                      role="cell"
-                    >
-                      <span
-                        class="text-bold text-base-lighter"
-                      >
-                        <svg
-                          class="usa-icon usa-icon--size-3 text-error-dark top-05"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
                         >
-                          <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-                          />
-                        </svg>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          Milestone
+                          <svg
+                            class="usa-icon margin-left-05"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        class="padding-left-0 padding-bottom-0"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="width: 150px;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Status
+                          <svg
+                            class="usa-icon margin-left-05"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        class="padding-left-0 padding-bottom-0"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="width: 50px;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          type="button"
+                        >
+                          <svg
+                            class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    role="rowgroup"
+                  >
+                    <tr
+                      role="row"
+                    >
+                      <td
+                        class="padding-left-0"
+                        role="cell"
+                      >
+                        Milestone 1
+                      </td>
+                      <td
+                        class="padding-left-0"
+                        role="cell"
+                      >
+                        <div
+                          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
+                          data-testid="tasklist-tag"
+                        >
+                          <span>
+                            Completed
+                          </span>
+                        </div>
+                      </td>
+                      <td
+                        class="padding-left-0"
+                        role="cell"
+                      >
+                        <span
+                          class="text-bold text-base-lighter"
+                        >
+                          <svg
+                            class="usa-icon usa-icon--size-3 text-error-dark top-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                            />
+                          </svg>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </fieldset>
           <div

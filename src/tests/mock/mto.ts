@@ -300,6 +300,10 @@ export const allMilestonesMock: MockedResponse<
         id: modelID,
         mtoMatrix: {
           __typename: 'ModelsToOperationMatrix',
+          info: {
+            __typename: 'MTOInfo',
+            id: '123'
+          },
           commonMilestones: [],
           milestones: [
             {
