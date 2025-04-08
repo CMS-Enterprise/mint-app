@@ -10,10 +10,13 @@ This migration migrates operational solution data to mto solution data. It does 
 
 3.  It will then create a link between the mto milestone and the mto solution.
 
-4. Duplicate 
+4. Duplicate Solutions
    a. this migration will get the most recent one and insert that. It will ignore another custom solution on that model plan  with the same name.
    b. Similar to the above, if a common solution is used for two operational needs, it will only insert one record and link it to both of the new mto milestones
-
+5. Solution Status
+    a. we remove AT_RISK and set it to IN_PROGRESS.
+    b. if it was AT_RISK, we set the risk indicator to AT_RISK (otherwise we set the default value.)
+    c. Currently, there is no value that gets set to OFF_track
 
 
 The following concepts from IT solutions are not applicable in the models to operations matrix.
@@ -83,6 +86,17 @@ solutions AS (
         solution.is_other,
         solution.other_header,
         solution.must_finish_dts AS needed_by,
+        CASE
+            WHEN solution.status = 'AT_RISK' THEN 'ON_TRACK'::MTO_RISK_INDICATOR
+            ELSE 'ON_TRACK'::MTO_RISK_INDICATOR
+            --TODO is there anyway to track the OFF_TRACK status?
+        END AS risk_indicator,
+        CASE
+            WHEN solution.status = 'AT_RISK' THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
+            ELSE solution.status::TEXT::MTO_SOLUTION_STATUS
+        END AS status,
+        
+
         solution.created_by,
         solution.created_dts,
         solution.modified_by,
@@ -163,6 +177,7 @@ inserted_solutions AS ( --noqa
         poc_name,
         type,
         status,
+        risk_indicator,
         needed_by,
         created_by,
         created_dts,
@@ -186,10 +201,8 @@ inserted_solutions AS ( --noqa
             ELSE COALESCE(s.poc_name, 'To be determined')
         END AS poc_name,
         s.type, 
-        CASE
-            WHEN        s.modified_by IS NOT NULL THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
-            ELSE 'NOT_STARTED'::MTO_SOLUTION_STATUS
-        END AS status,
+        s.status,
+        s.risk_indicator,
         s.needed_by,
         s.created_by,
         s.created_dts,
