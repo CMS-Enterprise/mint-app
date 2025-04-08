@@ -176,11 +176,13 @@ inserted_solutions AS ( --noqa
         (s.possible_solution_type::TEXT)::MTO_COMMON_SOLUTION_KEY AS common_solution_key,
         CASE
             WHEN s.possible_solution_type IS NOT NULL THEN NULL --Don't add POC info for common solutions
-            ELSE s.poc_email
+            -- If the email is unknown, add a placeholder unknown
+            ELSE COALESCE( s.poc_email, 'tbd@unknown.unknown')
         END AS poc_email,
         CASE
             WHEN s.possible_solution_type IS NOT NULL THEN NULL --Don't add POC info for common solutions
-            ELSE s.poc_name
+            -- If the name is unknown, add a placeholder unknown
+            ELSE COALESCE(s.poc_name, 'To be determined')
         END AS poc_name,
         s.type, 
         CASE
