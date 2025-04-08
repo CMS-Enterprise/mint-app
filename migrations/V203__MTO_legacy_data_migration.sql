@@ -87,9 +87,9 @@ solutions AS (
         solution.other_header,
         solution.must_finish_dts AS needed_by,
         CASE
-            WHEN solution.status = 'AT_RISK' THEN 'ON_TRACK'::MTO_RISK_INDICATOR
+            WHEN solution.status = 'AT_RISK' THEN 'AT_RISK'::MTO_RISK_INDICATOR
             ELSE 'ON_TRACK'::MTO_RISK_INDICATOR
-            --TODO is there anyway to track the OFF_TRACK status?
+            --OFF_TRACK is not represented as a status in operational needs and solutions
         END AS risk_indicator,
         CASE
             WHEN solution.status = 'AT_RISK' THEN 'IN_PROGRESS'::MTO_SOLUTION_STATUS
