@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import { subComponentsProps } from '../..';
 
@@ -12,13 +13,15 @@ interface SideNavProps {
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
+  isMobile?: boolean;
 }
 
 const SideNav = ({
   subComponents,
   isHelpArticle,
   solutionNavigation,
-  paramActive
+  paramActive,
+  isMobile
 }: SideNavProps) => {
   const { t: modelSumamryT } = useTranslation('modelSummary');
   const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
@@ -88,7 +91,10 @@ const SideNav = ({
         }
         key={key}
         isActive={(_, location) => isActive(key, location)}
-        activeClassName="usa-current"
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -109,7 +115,10 @@ const SideNav = ({
         }
         key={key}
         isActive={(_, location) => isActive(key, location)}
-        activeClassName="usa-current"
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -128,7 +137,10 @@ const SideNav = ({
         }
         key={key}
         isActive={(_, location) => isActive(key, location)}
-        activeClassName="usa-current"
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -147,7 +159,10 @@ const SideNav = ({
         }
         key={key}
         isActive={(_, location) => isActive(key, location)}
-        activeClassName="usa-current"
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -169,6 +184,56 @@ const SideNav = ({
     )
   );
 
+  const classGroup = classNames(
+    'text-bold border-top margin-0 margin-y-1 padding-top-3',
+    {
+      'text-white border-top-mint-blue': isMobile,
+      'text-base-darkest border-base-lighter': !isMobile
+    }
+  );
+
+  const SideNavLinks = (
+    <>
+      <div className="margin-bottom-3">
+        <p
+          className={classNames('text-bold margin-y-1', {
+            'text-white': isMobile,
+            'text-base-darkest': !isMobile
+          })}
+        >
+          {modelSumamryT('navigationGroups.model-plan')}
+        </p>
+        <TrussSideNav items={modelPlanLinks} />
+      </div>
+
+      <div className="margin-bottom-3">
+        <p className={classGroup}>
+          {modelSumamryT('navigationGroups.model-design-activities')}
+        </p>
+        <TrussSideNav items={modelDesignLinks} />
+      </div>
+
+      <div className="margin-bottom-3">
+        <p className={classGroup}>
+          {modelSumamryT('navigationGroups.model-to-operations')}
+        </p>
+        <TrussSideNav items={mtoLinks} />
+      </div>
+
+      <div className="margin-bottom-3">
+        <p className={classGroup}>
+          {modelSumamryT('navigationGroups.other-model-info')}
+        </p>
+        <TrussSideNav items={otherModelPlanLinks} />
+      </div>
+    </>
+  );
+
+  // If mobile return links to plug in to <MobileNav /> wrapper
+  if (isMobile) {
+    return SideNavLinks;
+  }
+
   return (
     <div
       id="read-only-side-nav__wrapper"
@@ -177,35 +242,7 @@ const SideNav = ({
       {solutionNavigation ? (
         <TrussSideNav items={helpNavigationLinks} />
       ) : (
-        <>
-          <div className="margin-bottom-3">
-            <p className="text-base-darkest text-bold margin-y-1">
-              {modelSumamryT('navigationGroups.model-plan')}
-            </p>
-            <TrussSideNav items={modelPlanLinks} />
-          </div>
-
-          <div className="margin-bottom-3">
-            <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
-              {modelSumamryT('navigationGroups.model-design-activities')}
-            </p>
-            <TrussSideNav items={modelDesignLinks} />
-          </div>
-
-          <div className="margin-bottom-3">
-            <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
-              {modelSumamryT('navigationGroups.model-to-operations')}
-            </p>
-            <TrussSideNav items={mtoLinks} />
-          </div>
-
-          <div className="margin-bottom-3">
-            <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
-              {modelSumamryT('navigationGroups.other-model-info')}
-            </p>
-            <TrussSideNav items={otherModelPlanLinks} />
-          </div>
-        </>
+        SideNavLinks
       )}
     </div>
   );

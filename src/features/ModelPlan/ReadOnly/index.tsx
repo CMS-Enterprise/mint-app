@@ -73,7 +73,7 @@ export type ReadViewGroupType = (typeof readViewGroup)[number];
 export type subComponentProps = {
   route: string;
   helpRoute: string;
-  group: ReadViewGroupType;
+  group?: ReadViewGroupType;
   component: React.ReactNode;
 };
 
