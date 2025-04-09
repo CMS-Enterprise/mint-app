@@ -296,3 +296,30 @@ func TestModelBySolutionStatus(t *testing.T) {
 	}
 
 }
+
+func (suite *ResolverSuite) TestModelPlansByMTOSolutionKey() {
+	plan1 := suite.createModelPlan("plan1")
+	plan2 := suite.createModelPlan("plan2")
+
+	// Check that no plans are using this solution
+	plans, err := ModelPlansByMTOSolutionKey(suite.testConfigs.Logger, suite.testConfigs.Store, models.MTOCSKInnovation)
+	suite.NoError(err)
+	suite.Len(plans, 0)
+
+	// add solution to plan 1
+	suite.createMTOSolutionCommon(plan1.ID, models.MTOCSKInnovation, []uuid.UUID{})
+
+	// Check that no plans are using this solution
+	plans, err = ModelPlansByMTOSolutionKey(suite.testConfigs.Logger, suite.testConfigs.Store, models.MTOCSKInnovation)
+	suite.NoError(err)
+	if suite.Len(plans, 1) {
+		plans[0].ModelPlanID = plan1.ID
+	}
+	// add solution to plan 2
+	suite.createMTOSolutionCommon(plan2.ID, models.MTOCSKInnovation, []uuid.UUID{})
+	// Check that no plans are using this solution
+	plans, err = ModelPlansByMTOSolutionKey(suite.testConfigs.Logger, suite.testConfigs.Store, models.MTOCSKInnovation)
+	suite.NoError(err)
+	suite.Len(plans, 2)
+
+}
