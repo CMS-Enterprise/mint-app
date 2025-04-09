@@ -57,15 +57,25 @@ solutions AS (
         possible.sol_key AS raw_possible_solution_type,
         CASE
             WHEN possible.sol_key = 'CONTRACTOR'
-                THEN 'Contractor: ' || COALESCE(solution.other_header, '')
+                THEN
+                    'Contractor' || 
+                    CASE WHEN solution.other_header IS NOT NULL THEN ': ' || solution.other_header ELSE '' END
             WHEN possible.sol_key = 'CROSS_MODEL_CONTRACT'
-                THEN 'Cross model contract: ' || COALESCE(solution.other_header, '')
+                THEN
+                    'Cross model contract' || 
+                    CASE WHEN solution.other_header IS NOT NULL THEN ': ' || solution.other_header ELSE '' END
             WHEN possible.sol_key = 'OTHER_NEW_PROCESS'
-                THEN 'Other new process: ' || COALESCE(solution.other_header, '')
+                THEN
+                    'Other new process' || 
+                    CASE WHEN solution.other_header IS NOT NULL THEN ': ' || solution.other_header ELSE '' END
             WHEN possible.sol_key = 'EXISTING_CMS_DATA_AND_PROCESS'
-                THEN 'Existing CMS data and process: ' || COALESCE(solution.other_header, '')
+                THEN
+                    'Existing CMS data and process' || 
+                    CASE WHEN solution.other_header IS NOT NULL THEN ': ' || solution.other_header ELSE '' END
             WHEN possible.sol_key = 'INTERNAL_STAFF'
-                THEN 'Internal staff: ' || COALESCE(solution.other_header, '')
+                THEN
+                    'Internal staff' || 
+                    CASE WHEN solution.other_header IS NOT NULL THEN ': ' || solution.other_header ELSE '' END
             ELSE solution.name_other
         END AS final_name,
         CASE 
