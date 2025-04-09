@@ -11,7 +11,7 @@ import PageLoading from 'components/PageLoading';
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 
-const ReadOnlyModelToOperations = ({ modelID }: { modelID: string }) => {
+const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('opSolutionsMisc');
 
   const { data, loading, error } = useGetModelToOperationsMatrixQuery({
@@ -52,4 +52,4 @@ const ReadOnlyModelToOperations = ({ modelID }: { modelID: string }) => {
   );
 };
 
-export default ReadOnlyModelToOperations;
+export default ReadOnlyMTOMilestones;

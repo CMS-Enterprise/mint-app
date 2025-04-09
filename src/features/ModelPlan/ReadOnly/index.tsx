@@ -52,7 +52,8 @@ import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDataExchangeApproach from './DataExchangeapproach';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
-import ReadOnlyModelToOperations from './ModelToOperations';
+import ReadOnlyMTOMilestones from './MTOMilestones';
+import ReadOnlyMTOSolutions from './MTOSolutions';
 import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
@@ -89,6 +90,7 @@ const listOfSubpageKey: string[] = [
   'operations-evaluation-and-learning',
   'payment',
   'milestones',
+  'it-systems-and-solutions',
   'team',
   'discussions',
   'documents',
@@ -148,8 +150,15 @@ export const ReadOnlyComponents = (
     },
     milestones: {
       route: `/models/${modelID}/read-only/milestones`,
-      component: <ReadOnlyModelToOperations modelID={modelID} />,
+      component: <ReadOnlyMTOMilestones modelID={modelID} />,
       helpRoute: '/help-and-knowledge/sample-model-plan/milestones',
+      group: 'model-to-operations'
+    },
+    'it-systems-and-solutions': {
+      route: `/models/${modelID}/read-only/it-systems-and-solutions`,
+      component: <ReadOnlyMTOSolutions modelID={modelID} />,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/it-systems-and-solutions',
       group: 'model-to-operations'
     },
     team: {
@@ -193,11 +202,6 @@ const isSubpage = (
       .filter(subpage => subpage !== 'discussions')
       .includes(x);
   }
-  // if (flags.hideITLeadExperience) {
-  //   return listOfSubpageKey
-  //     .filter(subpage => subpage !== 'milestones')
-  //     .includes(x);
-  // }
   return listOfSubpageKey.includes(x);
 };
 
@@ -296,10 +300,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
 
   if (isHelpArticle) delete subComponents.discussions;
-
-  // if (flags.hideITLeadExperience) {
-  //   delete subComponents.milestones;
-  // }
 
   const subComponent = subComponents[subinfo];
 
@@ -524,7 +524,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                             col:
                               subinfo === 'documents' ||
                               subinfo === 'crs-and-tdl' ||
-                              subinfo === 'milestones'
+                              subinfo === 'milestones' ||
+                              subinfo === 'it-systems-and-solutions'
                                 ? 12
                                 : 8
                           }}
@@ -534,7 +535,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         {/* Contact info sidebar */}
                         {subinfo !== 'documents' &&
                           subinfo !== 'crs-and-tdl' &&
-                          subinfo !== 'milestones' && (
+                          subinfo !== 'milestones' &&
+                          subinfo !== 'it-systems-and-solutions' && (
                             <Grid
                               desktop={{ col: 4 }}
                               className={classnames({
