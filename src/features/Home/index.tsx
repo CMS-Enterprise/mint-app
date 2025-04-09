@@ -50,8 +50,7 @@ const Home = () => {
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
-  const operationalSolutionKeys =
-    data?.userViewCustomization.possibleOperationalSolutions || [];
+  const operationalSolutionKeys = data?.userViewCustomization.solutions || [];
 
   const {
     data: favoritesData,
@@ -185,20 +184,18 @@ const Home = () => {
         <ModelsApproachingClearance />
       </>
     ),
-    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
+    [ViewCustomizationType.MODELS_BY_SOLUTION]: (
       <>
         <Divider className="margin-y-6" />
 
         <h2 className="margin-top-0 margin-bottom-2">
-          {t(
-            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.heading`
-          )}
+          {t(`settings.${ViewCustomizationType.MODELS_BY_SOLUTION}.heading`)}
         </h2>
 
         {operationalSolutionKeys.length > 0 && (
           <p>
             {t(
-              `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
+              `settings.${ViewCustomizationType.MODELS_BY_SOLUTION}.description`
             )}
           </p>
         )}

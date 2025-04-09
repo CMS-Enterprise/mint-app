@@ -31,10 +31,10 @@ const settings: HomepageSettingsType = {
     description:
       'This simplified section displays the models within six months of clearance organized chronologically.'
   },
-  [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
-    heading: 'Models using specific operational solutions',
+  [ViewCustomizationType.MODELS_BY_SOLUTION]: {
+    heading: 'Models using specific solutions',
     description:
-      'This tabbed section displays the models using the operational solutions you care about.'
+      'This tabbed section displays the models using the solutions you care about.'
   }
 };
 

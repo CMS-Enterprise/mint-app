@@ -19,6 +19,6 @@ const (
 type UserViewCustomization struct {
 	baseStruct
 	userIDRelation
-	ViewCustomization            pq.StringArray `json:"viewCustomization" db:"view_customization"`
-	PossibleOperationalSolutions pq.StringArray `json:"possibleOperationalSolutions" db:"possible_operational_solutions"`
+	ViewCustomization pq.StringArray `json:"viewCustomization" db:"view_customization"`
+	Solutions         pq.StringArray `json:"solutions" db:"solutions"`
 }

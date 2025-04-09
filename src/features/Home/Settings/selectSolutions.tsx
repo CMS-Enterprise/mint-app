@@ -35,7 +35,7 @@ import {
 import './index.scss';
 
 type SettingsFormType = {
-  possibleOperationalSolutions: GetHomepageSettingsQuery['userViewCustomization']['possibleOperationalSolutions'];
+  possibleOperationalSolutions: GetHomepageSettingsQuery['userViewCustomization']['solutions'];
 };
 
 const SelectSolutionSettings = () => {
@@ -121,13 +121,13 @@ const SelectSolutionSettings = () => {
           formikRef.current?.values?.possibleOperationalSolutions &&
           formikRef.current?.values?.possibleOperationalSolutions.length > 0 &&
           !selectedSettings?.viewCustomization.includes(
-            ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION
+            ViewCustomizationType.MODELS_BY_SOLUTION
           )
         ) {
           setSelectedSettings({
             viewCustomization: [
               ...(selectedSettings?.viewCustomization || []),
-              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION
+              ViewCustomizationType.MODELS_BY_SOLUTION
             ]
           });
         }
@@ -141,8 +141,7 @@ const SelectSolutionSettings = () => {
   };
 
   const initialValues: SettingsFormType = {
-    possibleOperationalSolutions:
-      data?.userViewCustomization.possibleOperationalSolutions || []
+    possibleOperationalSolutions: data?.userViewCustomization.solutions || []
   };
 
   return (
