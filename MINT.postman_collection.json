@@ -2728,7 +2728,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        solutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -2749,8 +2749,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
-								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"ACO_OS\"]\n    }\n}"
+								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        solutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"solutions\": [\"ACO_OS\"]\n    }\n}"
 							}
 						},
 						"url": {
