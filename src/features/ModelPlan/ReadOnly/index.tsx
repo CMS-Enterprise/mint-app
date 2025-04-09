@@ -88,7 +88,7 @@ const listOfSubpageKey: string[] = [
   'beneficiaries',
   'operations-evaluation-and-learning',
   'payment',
-  'model-to-operations',
+  'milestones',
   'team',
   'discussions',
   'documents',
@@ -146,10 +146,10 @@ export const ReadOnlyComponents = (
       component: <ReadOnlyDataExchangeApproach modelID={modelID} />,
       group: 'model-design-activities'
     },
-    'model-to-operations': {
-      route: `/models/${modelID}/read-only/model-to-operations`,
+    milestones: {
+      route: `/models/${modelID}/read-only/milestones`,
       component: <ReadOnlyModelToOperations modelID={modelID} />,
-      helpRoute: '/help-and-knowledge/sample-model-plan/model-to-operations',
+      helpRoute: '/help-and-knowledge/sample-model-plan/milestones',
       group: 'model-to-operations'
     },
     team: {
@@ -193,11 +193,11 @@ const isSubpage = (
       .filter(subpage => subpage !== 'discussions')
       .includes(x);
   }
-  if (flags.hideITLeadExperience) {
-    return listOfSubpageKey
-      .filter(subpage => subpage !== 'model-to-operations')
-      .includes(x);
-  }
+  // if (flags.hideITLeadExperience) {
+  //   return listOfSubpageKey
+  //     .filter(subpage => subpage !== 'milestones')
+  //     .includes(x);
+  // }
   return listOfSubpageKey.includes(x);
 };
 
@@ -297,9 +297,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if (isHelpArticle) delete subComponents.discussions;
 
-  if (flags.hideITLeadExperience) {
-    delete subComponents['model-to-operations'];
-  }
+  // if (flags.hideITLeadExperience) {
+  //   delete subComponents.milestones;
+  // }
 
   const subComponent = subComponents[subinfo];
 
@@ -501,7 +501,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     desktop={{ col: 3 }}
                     className="padding-right-4 sticky-nav"
                   >
-                    <SideNav isHelpArticle={isHelpArticle} modelID={modelID} />
+                    <SideNav
+                      isHelpArticle={isHelpArticle}
+                      subComponents={subComponents}
+                    />
                   </Grid>
                 )}
 
@@ -521,7 +524,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                             col:
                               subinfo === 'documents' ||
                               subinfo === 'crs-and-tdl' ||
-                              subinfo === 'model-to-operations'
+                              subinfo === 'milestones'
                                 ? 12
                                 : 8
                           }}
@@ -531,7 +534,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         {/* Contact info sidebar */}
                         {subinfo !== 'documents' &&
                           subinfo !== 'crs-and-tdl' &&
-                          subinfo !== 'model-to-operations' && (
+                          subinfo !== 'milestones' && (
                             <Grid
                               desktop={{ col: 4 }}
                               className={classnames({

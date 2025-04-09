@@ -3,19 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
 
-import { ReadOnlyComponents, readViewGroup, ReadViewGroupType } from '../..';
+import { subComponentsProps } from '../..';
 
 import './index.scss';
 
 interface SideNavProps {
-  modelID: string;
+  subComponents: subComponentsProps;
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
 }
 
 const SideNav = ({
-  modelID,
+  subComponents,
   isHelpArticle,
   solutionNavigation,
   paramActive
@@ -24,24 +24,6 @@ const SideNav = ({
   const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
   const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
-
-  const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
-
-  // const navigationSections: Record<
-  //   ReadViewGroupType,
-  //   (typeof subComponents)[keyof typeof subComponents][]
-  // > = {
-  //   'model-plan': [],
-  //   'model-design-activities': [],
-  //   'model-to-operations': [],
-  //   'other-model-info': []
-  // };
-
-  // // Group subcomponents by their group
-  // Object.keys(subComponents).forEach(key => {
-  //   const { group } = subComponents[key];
-  //   navigationSections[group].push(subComponents[key]);
-  // });
 
   const scrollToAboveReadOnlyBodyContent = () => {
     setTimeout(() => {
@@ -172,38 +154,59 @@ const SideNav = ({
       </NavLink>
     ));
 
+  // Mapping of all sub navigation links
+  const helpNavigationLinks: React.ReactNode[] = Object.keys(subComponents).map(
+    (key: string) => (
+      <NavLink
+        to={subComponents[key].helpRoute}
+        key={key}
+        isActive={(_, location) => isActive(key, location)}
+        activeClassName="usa-current"
+        onClick={scrollToAboveReadOnlyBodyContent}
+      >
+        {translationKey(`navigation.${key}`)}
+      </NavLink>
+    )
+  );
+
   return (
     <div
       id="read-only-side-nav__wrapper"
       data-testid="read-only-side-nav__wrapper"
     >
-      <div className="margin-bottom-3">
-        <p className="text-base-darkest text-bold margin-y-1">
-          {modelSumamryT('navigationGroups.model-plan')}
-        </p>
-        <TrussSideNav items={modelPlanLinks} />
-      </div>
+      {solutionNavigation ? (
+        <TrussSideNav items={helpNavigationLinks} />
+      ) : (
+        <>
+          <div className="margin-bottom-3">
+            <p className="text-base-darkest text-bold margin-y-1">
+              {modelSumamryT('navigationGroups.model-plan')}
+            </p>
+            <TrussSideNav items={modelPlanLinks} />
+          </div>
 
-      <div className="margin-bottom-3">
-        <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
-          {modelSumamryT('navigationGroups.model-design-activities')}
-        </p>
-        <TrussSideNav items={modelDesignLinks} />
-      </div>
+          <div className="margin-bottom-3">
+            <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
+              {modelSumamryT('navigationGroups.model-design-activities')}
+            </p>
+            <TrussSideNav items={modelDesignLinks} />
+          </div>
 
-      <div className="margin-bottom-3">
-        <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
-          {modelSumamryT('navigationGroups.model-to-operations')}
-        </p>
-        <TrussSideNav items={mtoLinks} />
-      </div>
+          <div className="margin-bottom-3">
+            <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
+              {modelSumamryT('navigationGroups.model-to-operations')}
+            </p>
+            <TrussSideNav items={mtoLinks} />
+          </div>
 
-      <div className="margin-bottom-3">
-        <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
-          {modelSumamryT('navigationGroups.other-model-info')}
-        </p>
-        <TrussSideNav items={otherModelPlanLinks} />
-      </div>
+          <div className="margin-bottom-3">
+            <p className="text-base-darkest text-bold border-top border-base-lighter margin-0 margin-y-1 padding-top-3">
+              {modelSumamryT('navigationGroups.other-model-info')}
+            </p>
+            <TrussSideNav items={otherModelPlanLinks} />
+          </div>
+        </>
+      )}
     </div>
   );
 };

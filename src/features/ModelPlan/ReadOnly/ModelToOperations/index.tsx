@@ -2,7 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
 import { NotFoundPartial } from 'features/NotFound';
-import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
+import {
+  GetModelToOperationsMatrixQuery,
+  useGetModelToOperationsMatrixQuery
+} from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
 
@@ -17,7 +20,9 @@ const ReadOnlyModelToOperations = ({ modelID }: { modelID: string }) => {
     }
   });
 
-  const modelToOperationsMatrix = data?.modelPlan?.mtoMatrix;
+  const modelToOperationsMatrix =
+    data?.modelPlan?.mtoMatrix ||
+    ({} as GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']);
 
   if (loading && !modelToOperationsMatrix) {
     <PageLoading />;
@@ -29,8 +34,8 @@ const ReadOnlyModelToOperations = ({ modelID }: { modelID: string }) => {
 
   return (
     <div
-      className="read-only-model-plan--operational-needs"
-      data-testid="read-only-model-plan--operational-needs"
+      className="read-only-model-plan--mto-milestones"
+      data-testid="read-only-model-plan--mto-milestones"
     >
       <TitleAndStatus
         clearance={false}
