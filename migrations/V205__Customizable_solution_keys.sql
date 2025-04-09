@@ -33,7 +33,7 @@ ALTER TABLE user_view_customization
 ALTER COLUMN solutions SET DEFAULT '{}'::MTO_COMMON_SOLUTION_KEY[];
 
 
-COMMENT ON COLUMN user_view_customization.solutions IS 'This column represents a list of Solution Keys that the user has selected to view. This selection is used when the user has also selected MODELS_BY_SOLUTION as a view type.'
+COMMENT ON COLUMN user_view_customization.solutions IS 'This column represents a list of Solution Keys that the user has selected to view. This selection is used when the user has also selected MODELS_BY_SOLUTION as a view type.';
 
 -- Rename the value to be more generic as the data is no longer called an operational solution
 ALTER TYPE view_customization_type
