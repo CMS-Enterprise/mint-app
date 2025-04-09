@@ -1195,6 +1195,14 @@ export type ModelPlanNameHistoryArgs = {
   sort?: SortDirection;
 };
 
+export type ModelPlanAndMtoCommonSolution = {
+  __typename: 'ModelPlanAndMTOCommonSolution';
+  key: MtoCommonSolutionKey;
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  mtoCommonSolution: MtoCommonSolution;
+};
+
 export type ModelPlanAndPossibleOperationalSolution = {
   __typename: 'ModelPlanAndPossibleOperationalSolution';
   key: OperationalSolutionKey;
@@ -3923,6 +3931,7 @@ export type Query = {
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
+  modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoMilestone: MtoMilestone;
@@ -3986,6 +3995,12 @@ export type QueryModelPlanArgs = {
 /** Query definition for the schema */
 export type QueryModelPlanCollectionArgs = {
   filter?: ModelPlanFilter;
+};
+
+
+/** Query definition for the schema */
+export type QueryModelPlansByMtoSolutionKeyArgs = {
+  solutionKey: MtoCommonSolutionKey;
 };
 
 
