@@ -25,7 +25,7 @@ const mocks = [
         userViewCustomization: {
           id: '3b29f11e-7dd4-4385-8056-27468d3dd562',
           viewCustomization: [
-            ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION,
+            ViewCustomizationType.MODELS_BY_SOLUTION,
             ViewCustomizationType.MODELS_WITH_CR_TDL
           ],
           possibleOperationalSolutions: [
