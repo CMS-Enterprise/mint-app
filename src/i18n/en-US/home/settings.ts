@@ -65,10 +65,10 @@ const homepageSettings = {
     'There was a problem saving your selected solutions. Please try again.',
   settingsError:
     'There was a problem saving your selected settings. Please try again.',
-  solutionsHeading: 'Select operational solutions',
+  solutionsHeading: 'Select solutions',
   solutionDescription:
-    'Models using the operational solutions chosen below will show in a tabbed section.',
-  operationalSolutions: 'Operational solutions',
+    'Models using the solutions chosen below will show in a tabbed section.',
+  operationalSolutions: 'Solutions',
   startTyping: 'Start typing the name of the solution',
   multiselectLabel: 'Solutions',
   save: 'Save',

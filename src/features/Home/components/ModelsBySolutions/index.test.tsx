@@ -6,6 +6,7 @@ import {
   GetModelsBySolutionDocument,
   ModelBySolutionStatus,
   ModelStatus,
+  MtoCommonSolutionKey,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
 import setup from 'tests/util';
@@ -160,7 +161,7 @@ describe('ModelsBySolution Table and Card', () => {
         <Route path="/">
           <MockedProvider mocks={mocks} addTypename={false}>
             <ModelsBySolutionTable
-              operationalSolutionKey={OperationalSolutionKey.INNOVATION}
+              solutionKey={MtoCommonSolutionKey.INNOVATION}
             />
           </MockedProvider>
         </Route>

@@ -116,7 +116,7 @@ const SelectSolutionSettings = () => {
       }
     })
       .then(() => {
-        // Checks if MODELS_BY_OPERATIONAL_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
+        // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
         if (
           formikRef.current?.values?.possibleOperationalSolutions &&
           formikRef.current?.values?.possibleOperationalSolutions.length > 0 &&

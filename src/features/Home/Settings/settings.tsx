@@ -194,9 +194,9 @@ const SettingsForm = () => {
                               {settingOptions[settionOption].description}
                             </p>
 
-                            {/* If MODELS_BY_OPERATIONAL_SOLUTION and no selected solutions render out a link to add solutions  */}
+                            {/* If MODELS_BY_SOLUTION and no selected solutions render out a link to add solutions  */}
                             {settionOption ===
-                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                              ViewCustomizationType.MODELS_BY_SOLUTION &&
                               selectedSolutions.length === 0 && (
                                 <UswdsReactLink
                                   to={{
@@ -215,9 +215,9 @@ const SettingsForm = () => {
                                 </UswdsReactLink>
                               )}
 
-                            {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solution and link to update  */}
+                            {/* If MODELS_BY_SOLUTION selected solutions, render solution and link to update  */}
                             {settionOption ===
-                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                              ViewCustomizationType.MODELS_BY_SOLUTION &&
                               selectedSolutions.length > 0 && (
                                 <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
                                   <p

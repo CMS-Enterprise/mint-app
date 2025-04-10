@@ -50,7 +50,7 @@ const Home = () => {
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
-  const operationalSolutionKeys = data?.userViewCustomization.solutions || [];
+  const solutionKeys = data?.userViewCustomization.solutions || [];
 
   const {
     data: favoritesData,
@@ -192,7 +192,7 @@ const Home = () => {
           {t(`settings.${ViewCustomizationType.MODELS_BY_SOLUTION}.heading`)}
         </h2>
 
-        {operationalSolutionKeys.length > 0 && (
+        {solutionKeys.length > 0 && (
           <p>
             {t(
               `settings.${ViewCustomizationType.MODELS_BY_SOLUTION}.description`
@@ -200,7 +200,7 @@ const Home = () => {
           </p>
         )}
 
-        <ModelsBySolutions operationalSolutionKeys={operationalSolutionKeys} />
+        <ModelsBySolutions solutionKeys={solutionKeys} />
       </>
     )
   };
