@@ -14,6 +14,18 @@ export default gql(/* GraphQL */ `
       pocName
       pocEmail
       type
+      milestones {
+        id
+        name
+        key
+        status
+        riskIndicator
+        commonMilestone {
+          name
+          key
+          isAdded
+        }
+      }
     }
   }
 `);

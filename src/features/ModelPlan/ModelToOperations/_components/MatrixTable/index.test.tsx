@@ -635,6 +635,10 @@ describe('isMatrixStartedFc', () => {
     __typename: 'ModelsToOperationMatrix',
     status: MtoStatus.IN_PROGRESS,
     milestones: [],
+    info: {
+      __typename: 'MTOInfo',
+      id: '123'
+    },
     recentEdit: null,
     categories: [
       {

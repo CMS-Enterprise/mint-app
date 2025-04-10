@@ -124,6 +124,7 @@ type MTOSolutionTranslation struct {
 	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
 	NeededBy      models.TranslationField            `json:"neededBy" db:"needed_by"`
 	FacilitatedBy models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
+	Milestones    models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
 // Represents model plan base translation data

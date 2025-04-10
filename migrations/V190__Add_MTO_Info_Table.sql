@@ -11,3 +11,8 @@ CREATE TABLE mto_info (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
+
+-- Insert a mto_info entry for all existing model plans. We use the model plan creator and id
+INSERT INTO mto_info(id, model_plan_id, created_by, created_dts)
+SELECT id, id AS model_plan_id, created_by, created_dts
+FROM model_plan;

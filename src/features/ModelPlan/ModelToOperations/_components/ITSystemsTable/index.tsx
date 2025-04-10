@@ -244,7 +244,15 @@ const ITSystemsTable = () => {
                   type="button"
                   unstyled
                   onClick={() => {
-                    // TODO: Open edit solution panel
+                    setSolutionID(row.original.id);
+                    openEditSolutionModal(row.original.id);
+
+                    // Adds scroll param to existing params
+                    const existingParams = new URLSearchParams(
+                      history.location.search
+                    );
+                    existingParams.set('scroll-to-bottom', 'true');
+                    history.replace({ search: existingParams.toString() });
                   }}
                 >
                   {t('table.moreMilestones', {
@@ -335,7 +343,8 @@ const ITSystemsTable = () => {
     location.search,
     openEditSolutionModal,
     setSolutionID,
-    mtoSolutionT
+    mtoSolutionT,
+    history
   ]);
 
   const {
