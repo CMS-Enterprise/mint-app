@@ -63,6 +63,104 @@ export const mtoMatrixMock = [
   }
 ];
 
+export const mtoMatrixMockFull = [
+  {
+    request: {
+      query: GetModelToOperationsMatrixDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.IN_PROGRESS,
+            categories: [
+              {
+                __typename: 'MTOCategory',
+                id: '00000000-0000-0000-0000-000000000000',
+                name: 'Uncategorized',
+                isUncategorized: true,
+                subCategories: [
+                  {
+                    __typename: 'MTOSubcategory',
+                    id: '00000000-0000-0000-0000-000000000000',
+                    name: 'Uncategorized',
+                    isUncategorized: true,
+                    milestones: [
+                      {
+                        __typename: 'MTOMilestone',
+                        id: 'ca2f9f0d-1048-463e-a584-8ec0481122f9',
+                        name: 'Acquire a learning contractor',
+                        key: 'ACQUIRE_A_LEARN_CONT',
+                        facilitatedBy: [
+                          'MODEL_TEAM',
+                          'MODEL_LEAD',
+                          'LEARNING_CONTRACTOR',
+                          'CONTRACTING_OFFICERS_REPRESENTATIVE',
+                          'LEARNING_AND_DIFFUSION_GROUP'
+                        ],
+                        needBy: null,
+                        status: 'NOT_STARTED',
+                        riskIndicator: 'ON_TRACK',
+                        addedFromMilestoneLibrary: true,
+                        isDraft: true,
+                        solutions: [
+                          {
+                            __typename: 'MTOSolution',
+                            id: 'a38fc2fa-30ab-45fe-b864-aff03348f56e',
+                            name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+                            key: 'RMADA'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            milestones: [
+              {
+                __typename: 'MTOMilestone',
+                id: 'ca2f9f0d-1048-463e-a584-8ec0481122f9',
+                name: 'Acquire a learning contractor',
+                key: 'ACQUIRE_A_LEARN_CONT',
+                facilitatedBy: [
+                  'MODEL_TEAM',
+                  'MODEL_LEAD',
+                  'LEARNING_CONTRACTOR',
+                  'CONTRACTING_OFFICERS_REPRESENTATIVE',
+                  'LEARNING_AND_DIFFUSION_GROUP'
+                ],
+                needBy: null,
+                status: 'NOT_STARTED',
+                riskIndicator: 'ON_TRACK',
+                addedFromMilestoneLibrary: true,
+                isDraft: true,
+                solutions: [
+                  {
+                    __typename: 'MTOSolution',
+                    id: 'a38fc2fa-30ab-45fe-b864-aff03348f56e',
+                    name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+                    key: 'RMADA'
+                  }
+                ]
+              }
+            ],
+
+            commonMilestones: [],
+            recentEdit: null
+          }
+        }
+      }
+    }
+  }
+];
+
 export const allMilestoneMock: MockedResponse<
   GetMtoAllMilestonesQuery,
   GetMtoAllMilestonesQueryVariables
