@@ -68,7 +68,7 @@ func sendSolutionSelectedForUseByModelEmail(
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SolutionSelectedTemplateName)
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.OperationalSolutionSelectedTemplateName)
 	if err != nil {
 		return err
 	}

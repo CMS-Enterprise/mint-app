@@ -130,14 +130,14 @@ var sendFeedbackBodyTemplate string
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
 
-// SolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
-const SolutionSelectedTemplateName string = "solution_selected"
+// OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
+const OperationalSolutionSelectedTemplateName string = "solution_selected"
 
-//go:embed templates/solution_selected_body.html
-var solutionSelectedBodyTemplate string
+//go:embed templates/operational_solution_selected_body.html
+var operationalSolutionSelectedBodyTemplate string
 
-//go:embed templates/solution_selected_subject.html
-var solutionSelectedSubjectTemplate string
+//go:embed templates/operational_solution_selected_subject.html
+var operationalSolutionSelectedSubjectTemplate string
 
 // ModelPlanSuggestedPhaseTemplateName is the template name for the model plan suggested phase email
 const ModelPlanSuggestedPhaseTemplateName string = "model_plan_suggested_phase"
@@ -239,7 +239,7 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(SolutionSelectedTemplateName, solutionSelectedSubjectTemplate, solutionSelectedBodyTemplate)
+	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
 	if err != nil {
 		return err
 	}

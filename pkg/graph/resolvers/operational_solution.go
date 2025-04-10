@@ -124,7 +124,7 @@ func sendOperationalSolutionSelectedEmails(
 		return err
 	}
 
-	err = sendSolutionSelectedForUseByModelEmail(
+	err = sendOperationalSolutionSelectedForUseByModelEmail(
 		emailService,
 		emailTemplateService,
 		addressBook,
@@ -135,8 +135,8 @@ func sendOperationalSolutionSelectedEmails(
 	return err
 }
 
-// sendSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
-func sendSolutionSelectedForUseByModelEmail(
+// sendOperationalSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
+func sendOperationalSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -148,7 +148,7 @@ func sendSolutionSelectedForUseByModelEmail(
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SolutionSelectedTemplateName)
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.OperationalSolutionSelectedTemplateName)
 	if err != nil {
 		return err
 	}

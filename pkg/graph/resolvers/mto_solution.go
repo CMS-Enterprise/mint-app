@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/jmoiron/sqlx"
 
@@ -264,4 +266,95 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		}
 		return nil
 	})
+}
+
+// sendSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
+func sendSolutionSelectedEmails(
+	ctx context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	solution *models.MTOSolution,
+
+) error {
+	if emailService == nil || emailTemplateService == nil || solution == nil {
+		return nil
+	}
+	if solution.Key == nil {
+		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
+		return nil
+	}
+	solSelectedDB, err := store.GetSolutionSelectedDetails(solution.ID)
+	if err != nil {
+		return err
+	}
+
+	pocInfo, err := MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, *solution.Key)
+	if err != nil {
+		return err
+	}
+	//TODO, at this point, transform to get all the email addresses. Look at previous functionality, but also rely on the fact that this is a struct.
+	// NOTE figma asks for the email to be sent to the POC in the to field, and all the others in the cc field.
+
+	if len(pocInfo.PointsOfContact) < 1 {
+		logger.Info(" solution doesn't have any defined points of contact, no solution selected email being sent", zap.Any("solution", solution))
+		// Note, if we support this in the future, we potentially look at the solution POC information in the actual solution.
+		return nil // Don't send an email if there aren't any recipients (Note, custom solutions do not have pocs configured in the db)
+	}
+	pocEmailAddress, err := models.GetPOCEmailAddresses(pocs, emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
+	if err != nil {
+		return err
+	}
+
+	err = sendSolutionSelectedForUseByModelEmail(
+		emailService,
+		emailTemplateService,
+		addressBook,
+		solSelectedDB,
+		pocEmailAddress,
+	)
+
+	return err
+}
+
+// sendSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
+func sendSolutionSelectedForUseByModelEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	solutionSelectedDB *email.SolutionSelectedDB,
+	pocEmailAddress []string,
+) error {
+
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.OperationalSolutionSelectedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
+		ModelName:    solutionSelectedDB.ModelName,
+		SolutionName: solutionSelectedDB.SolutionName,
+	})
+	if err != nil {
+		return err
+	}
+	bodyContent := solutionSelectedDB.ToSolutionSelectedBodyContent(emailService.GetConfig().GetClientAddress())
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
