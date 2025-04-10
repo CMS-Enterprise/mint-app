@@ -170,6 +170,10 @@ export const modelToOperationsMisc: Record<string, any> = {
   isMTOInProgress: 'Is this MTO still in progress',
   lastUpdated: 'MTO last updated {{date}}',
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
+  emptyMTOReadView:
+    'The model-to-operations matrix (MTO) for this model hasn’t been started yet. Check back again later for updates.',
+  noMilestonesReadView:
+    'There are not yet any milestones added to this matrix.',
   emptyMTOdescription: 'Choose an option below to get started.',
   returnToCollaboration: 'Return to model collaboration area',
   returnToMTO: 'Return to model-to-operations matrix',

@@ -4,15 +4,17 @@ import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTab
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixQuery,
+  MtoStatus,
   useGetModelToOperationsMatrixQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 
 const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
-  const { t } = useTranslation('opSolutionsMisc');
+  const { t } = useTranslation('modelToOperationsMisc');
 
   const { data, loading, error } = useGetModelToOperationsMatrixQuery({
     variables: {
@@ -23,6 +25,10 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
   const modelToOperationsMatrix =
     data?.modelPlan?.mtoMatrix ||
     ({} as GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']);
+
+  const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
+
+  const hasNoMilestones = modelToOperationsMatrix.milestones?.length === 0;
 
   if (loading && !modelToOperationsMatrix) {
     <PageLoading />;
@@ -41,13 +47,28 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
         clearance={false}
         clearanceTitle=""
         heading={t('heading')}
+        subHeading={t('milestones')}
         isViewingFilteredView={false}
         status={modelToOperationsMatrix.status}
         modelID={modelID}
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.modifiedDts}
       />
 
-      <MTOTable queryData={data} loading={loading} error={error} />
+      {hasNoMilestones ? (
+        <>
+          {mtoNotStarted ? (
+            <Alert type="info" slim className="margin-bottom-2">
+              {t('emptyMTOReadView')}
+            </Alert>
+          ) : (
+            <Alert type="info" slim className="margin-bottom-2">
+              {t('noMilestonesReadView')}
+            </Alert>
+          )}
+        </>
+      ) : (
+        <MTOTable queryData={data} loading={loading} error={error} readView />
+      )}
     </div>
   );
 };
