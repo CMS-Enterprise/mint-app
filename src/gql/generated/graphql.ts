@@ -3934,6 +3934,7 @@ export type Query = {
   modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
   modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
   ndaInfo: NdaInfo;
