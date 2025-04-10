@@ -269,7 +269,9 @@ export const columns: ColumnType[] = [
           return (
             <>
               {readView ? (
-                i18next.t('modelToOperationsMisc:table.noneAdded')
+                <div className="text-italic">
+                  {i18next.t('modelToOperationsMisc:table.noneAdded')}
+                </div>
               ) : (
                 <Button
                   type="button"

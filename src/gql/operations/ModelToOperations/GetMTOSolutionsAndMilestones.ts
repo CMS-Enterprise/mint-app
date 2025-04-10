@@ -5,6 +5,10 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       mtoMatrix {
+        status
+        recentEdit {
+          modifiedDts
+        }
         # Used to cache the mto matrix - always include
         info {
           id

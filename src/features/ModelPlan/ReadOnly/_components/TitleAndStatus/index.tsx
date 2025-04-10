@@ -37,7 +37,7 @@ const TitleAndStatus = ({
         </h2>
 
         {subHeading && (
-          <p className="mint-body-large text-base-darkest margin-y-0 flex-align-self-end">
+          <p className="mint-body-large text-base-dark margin-y-0 flex-align-self-end">
             {subHeading}
           </p>
         )}
