@@ -145,7 +145,7 @@ func MTOSolutionCreateCommon(
 	}
 
 	// Use a transaction for atomic operations
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+	retSol, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
 		// Step 1: Create the solution
 		solution, err := storage.MTOSolutionCreate(tx, logger, mtoSolution)
 		if err != nil {
@@ -162,6 +162,11 @@ func MTOSolutionCreateCommon(
 
 		return solution, nil
 	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create and link solutions: %w", err)
+	}
+
+	return retSol, nil
 }
 
 // MTOSolutionLinkMilestonesWithTX handles linking milestones to a solution in a single transaction

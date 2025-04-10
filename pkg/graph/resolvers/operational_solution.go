@@ -41,7 +41,7 @@ func OperationalSolutionCreate(
 
 	// Send an email to the selected POCs
 	go func() {
-		sendEmailErr := sendSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
+		sendEmailErr := sendOperationalSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
 		if sendEmailErr != nil {
 			logger.Error("error sending solution selected emails",
 				zap.String("solutionID", sol.ID.String()),
@@ -87,8 +87,8 @@ func OperationalSolutionGetByIDLOADER(ctx context.Context, id uuid.UUID) (*model
 	return loaders.OperationalSolutions.ByID.Load(ctx, id)
 }
 
-// sendSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
-func sendSolutionSelectedEmails(
+// sendOperationalSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
+func sendOperationalSolutionSelectedEmails(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
