@@ -562,6 +562,11 @@ export const solutionAndMilestoneMock = [
           id: '123',
           mtoMatrix: {
             __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.READY_FOR_REVIEW,
+            recentEdit: {
+              __typename: 'ModelPlanEdit',
+              modifiedDts: '2022-05-12T15:01:39.190679Z'
+            },
             solutions: [
               {
                 __typename: 'MTOSolution',
