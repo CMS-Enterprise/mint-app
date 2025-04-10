@@ -50,11 +50,13 @@ type GetModelToOperationsMatrixCategoryType =
 const MTOTable = ({
   queryData,
   loading,
-  error
+  error,
+  readView = false
 }: {
   queryData?: GetModelToOperationsMatrixQuery;
   loading: boolean;
   error?: ApolloError;
+  readView?: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -85,6 +87,14 @@ const MTOTable = ({
 
   const { helpSolutions } = useHelpSolution();
   const { prevPathname, selectedSolution: solution } = useModalSolutionState();
+
+  const filteredColumns = useMemo(() => {
+    if (readView) {
+      // Remove the Actions from the columns array if in readview
+      return columns.slice(0, -1);
+    }
+    return columns;
+  }, [readView]);
 
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(
@@ -249,7 +259,7 @@ const MTOTable = ({
 
     return (
       <>
-        {columns.map((column, index) => {
+        {filteredColumns.map((column, index) => {
           const RenderCell = column?.Cell ?? '';
 
           const setIndexes =
@@ -356,6 +366,7 @@ const MTOTable = ({
                         setMTOModalState={setMTOModalState}
                         initLocation={initLocation}
                         search={location.search}
+                        readView={readView}
                       />
                     </>
                   ) : (
@@ -440,7 +451,7 @@ const MTOTable = ({
               borderTop: '1px solid black',
               cursor: 'pointer'
             }}
-            isDraggable={!subCategory.isUncategorized}
+            isDraggable={!subCategory.isUncategorized && !readView}
           >
             <RenderCells
               row={subCategory}
@@ -495,7 +506,7 @@ const MTOTable = ({
               fontWeight: 'bold',
               fontSize: '1.25em'
             }}
-            isDraggable={!category.isUncategorized}
+            isDraggable={!category.isUncategorized && !readView}
           >
             <RenderCells
               row={category}
@@ -567,7 +578,7 @@ const MTOTable = ({
           >
             <thead>
               <tr>
-                {columns.map((column, index) => (
+                {filteredColumns.map((column, index) => (
                   <th
                     key={column.accessor}
                     style={{

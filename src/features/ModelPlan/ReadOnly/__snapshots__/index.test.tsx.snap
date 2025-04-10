@@ -448,132 +448,181 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
               data-testid="read-only-side-nav__wrapper"
               id="read-only-side-nav__wrapper"
             >
-              <ul
-                class="usa-sidenav"
-                data-testid="sidenav"
+              <div
+                class="margin-bottom-3"
               >
-                <li
-                  class="usa-sidenav__item"
+                <p
+                  class="text-bold margin-y-1 text-base-darkest"
                 >
-                  <a
-                    aria-current="page"
-                    class="usa-current"
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics"
-                  >
-                    Model basics
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                  Model plan
+                </p>
+                <ul
+                  class="usa-sidenav"
+                  data-testid="sidenav"
                 >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/general-characteristics"
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    General characteristics
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                    <a
+                      aria-current="page"
+                      class="usa-current"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics"
+                    >
+                      Model basics
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/general-characteristics"
+                    >
+                      General characteristics
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/participants-and-providers"
+                    >
+                      Participants and providers
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/beneficiaries"
+                    >
+                      Beneficiaries
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/operations-evaluation-and-learning"
+                    >
+                      Operations, evaluation, and learning
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/payment"
+                    >
+                      Payment
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="margin-bottom-3"
+              >
+                <p
+                  class="text-bold border-top margin-0 margin-y-1 padding-top-3 text-base-darkest border-base-lighter"
                 >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/participants-and-providers"
-                  >
-                    Participants and providers
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                  Model design activities
+                </p>
+                <ul
+                  class="usa-sidenav"
+                  data-testid="sidenav"
                 >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/beneficiaries"
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    Beneficiaries
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/data-exchange-approach"
+                    >
+                      Data exchange approach
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="margin-bottom-3"
+              >
+                <p
+                  class="text-bold border-top margin-0 margin-y-1 padding-top-3 text-base-darkest border-base-lighter"
                 >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/operations-evaluation-and-learning"
-                  >
-                    Operations, evaluation, and learning
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                  Model to operations matrix
+                </p>
+                <ul
+                  class="usa-sidenav"
+                  data-testid="sidenav"
                 >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/payment"
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    Payment
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/milestones"
+                    >
+                      Milestones
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/it-systems-and-solutions"
+                    >
+                      IT systems and solutions
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="margin-bottom-3"
+              >
+                <p
+                  class="text-bold border-top margin-0 margin-y-1 padding-top-3 text-base-darkest border-base-lighter"
                 >
-                  <a
-                    class="nav-group-border"
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/it-solutions"
-                  >
-                    Operational solutions
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
+                  Other model information
+                </p>
+                <ul
+                  class="usa-sidenav"
+                  data-testid="sidenav"
                 >
-                  <a
-                    class="nav-group-border"
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/data-exchange-approach"
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    Data exchange approach
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
-                >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/team"
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/team"
+                    >
+                      Team
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    Team
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
-                >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/discussions"
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/discussions"
+                    >
+                      Discussions
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    Discussions
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
-                >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/documents"
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/documents"
+                    >
+                      Documents
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
                   >
-                    Documents
-                  </a>
-                </li>
-                <li
-                  class="usa-sidenav__item"
-                >
-                  <a
-                    class=""
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/crs-and-tdl"
-                  >
-                    FFS CRs and TDLs
-                  </a>
-                </li>
-              </ul>
+                    <a
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/crs-and-tdl"
+                    >
+                      FFS CRs and TDLs
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <div
@@ -600,11 +649,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       data-testid="read-only-model-plan--model-basics"
                     >
                       <div>
-                        <h2
-                          class="margin-top-0 margin-bottom-2"
+                        <div
+                          class="display-flex margin-bottom-2 "
                         >
-                          Model basics
-                        </h2>
+                          <h2
+                            class="margin-y-0 margin-right-2"
+                          >
+                            Model basics
+                          </h2>
+                        </div>
                         <div
                           class="padding-0 margin-bottom-4"
                           data-testid="task-list-status-condensed"

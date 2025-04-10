@@ -108,6 +108,7 @@ type ExtendedRowProps = RowProps & {
   setMTOModalState?: (state: Partial<MTOModalState>) => void;
   initLocation?: string;
   search?: string;
+  readView?: boolean;
 };
 
 export type ColumnType = {
@@ -259,30 +260,35 @@ export const columns: ColumnType[] = [
       setMTOModalOpen,
       setMTOModalState,
       initLocation,
-      search
+      search,
+      readView
     }: ExtendedRowProps) => {
       if (rowType !== 'milestone') return <></>;
       if (isMilestoneType(row)) {
         if (row.solutions.length === 0)
           return (
             <>
-              <Button
-                type="button"
-                className="display-block"
-                unstyled
-                onClick={() => {
-                  if (clearMessage) clearMessage();
-                  if (setMTOModalState)
-                    setMTOModalState({
-                      modalType: 'selectSolution',
-                      milestoneID: row.id
-                    });
-                  if (setMTOModalOpen) setMTOModalOpen(true);
-                }}
-              >
-                {i18next.t('modelToOperationsMisc:table.selectASolution')}
-                <Icon.ArrowForward className="top-05 margin-left-05" />
-              </Button>
+              {readView ? (
+                i18next.t('modelToOperationsMisc:table.noneAdded')
+              ) : (
+                <Button
+                  type="button"
+                  className="display-block"
+                  unstyled
+                  onClick={() => {
+                    if (clearMessage) clearMessage();
+                    if (setMTOModalState)
+                      setMTOModalState({
+                        modalType: 'selectSolution',
+                        milestoneID: row.id
+                      });
+                    if (setMTOModalOpen) setMTOModalOpen(true);
+                  }}
+                >
+                  {i18next.t('modelToOperationsMisc:table.selectASolution')}
+                  <Icon.ArrowForward className="top-05 margin-left-05" />
+                </Button>
+              )}
             </>
           );
 

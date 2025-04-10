@@ -9,6 +9,12 @@ const modelSummary = {
     noneEntered: 'None entered',
     tBD: 'To be determined'
   },
+  navigationGroups: {
+    'model-plan': 'Model plan',
+    'model-design-activities': 'Model design activities',
+    'model-to-operations': 'Model to operations matrix',
+    'other-model-info': 'Other model information'
+  },
   navigation: {
     'model-basics': 'Model basics',
     'general-characteristics': 'General characteristics',
@@ -17,7 +23,8 @@ const modelSummary = {
     'operations-evaluation-and-learning':
       'Operations, evaluation, and learning',
     payment: 'Payment',
-    'it-solutions': 'Operational solutions',
+    milestones: 'Milestones',
+    'it-systems-and-solutions': 'IT systems and solutions',
     team: 'Team',
     discussions: 'Discussions',
     documents: 'Documents',
