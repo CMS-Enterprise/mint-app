@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
-import { allMilestoneMock, modelID } from 'tests/mock/mto';
+import { allMilestonesMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -14,7 +14,10 @@ describe('Custom Catergory form', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
-          <VerboseMockedProvider mocks={allMilestoneMock} addTypename={false}>
+          <VerboseMockedProvider
+            mocks={[allMilestonesMock]}
+            addTypename={false}
+          >
             <Route path="/models/:modelID/">
               <AddToExistingMilestoneForm
                 closeModal={() => {}}
@@ -39,19 +42,22 @@ describe('Custom Catergory form', () => {
   it('shows warning message when zero milestones and matches snapshot', async () => {
     // Set milestone array to empty
     if (
-      allMilestoneMock[0] &&
-      'result' in allMilestoneMock[0] &&
-      allMilestoneMock[0].result &&
-      'data' in allMilestoneMock[0].result &&
-      allMilestoneMock[0].result.data?.modelPlan?.mtoMatrix
+      allMilestonesMock &&
+      'result' in allMilestonesMock &&
+      allMilestonesMock.result &&
+      'data' in allMilestonesMock.result &&
+      allMilestonesMock.result.data?.modelPlan?.mtoMatrix
     ) {
-      allMilestoneMock[0].result.data.modelPlan.mtoMatrix.milestones = [];
+      allMilestonesMock.result.data.modelPlan.mtoMatrix.milestones = [];
     }
 
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
-          <VerboseMockedProvider mocks={allMilestoneMock} addTypename={false}>
+          <VerboseMockedProvider
+            mocks={[allMilestonesMock]}
+            addTypename={false}
+          >
             <Route path="/models/:modelID/">
               <AddToExistingMilestoneForm
                 closeModal={() => {}}

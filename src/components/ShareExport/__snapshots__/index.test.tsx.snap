@@ -233,11 +233,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--model-basics"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Model basics
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Model basics
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -1174,11 +1178,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--general-characteristics"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                General characteristics
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  General characteristics
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -2932,11 +2940,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--participants-and-providers"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Participants and providers
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Participants and providers
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -4575,11 +4587,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--beneficiaries"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Beneficiaries
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Beneficiaries
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -5285,11 +5301,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--ops-eval-and-learning"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Operations, evaluation, and learning
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Operations, evaluation, and learning
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -7879,11 +7899,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--payments"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Payment
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Payment
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -9820,11 +9844,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--beneficiaries"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Data exchange approach
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Data exchange approach
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"
@@ -10459,6 +10487,90 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           </div>
         </div>
         <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="margin-y-7"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1"
+              tabindex="-1"
+            >
+              This page cannot be found.
+            </h1>
+            <p>
+              Here is a list of things you could try to check and fix:
+            </p>
+            <ul
+              class="mint-not-found__error_suggestions"
+            >
+              <li>
+                Please check if the address you typed in is correct.
+              </li>
+              <li>
+                If you've typed the address correctly, check the spelling.
+              </li>
+              <li>
+                If you've copied and pasted the address, check that you've copied the entire address.
+              </li>
+            </ul>
+            <p
+              class="margin-bottom-5"
+            >
+              If none of the above have solved the problem, please return to the home page and try again.
+            </p>
+            <a
+              class="usa-button"
+              href="/"
+            >
+              Go back to the home page
+            </a>
+          </div>
+        </div>
+        <div
+          class="page-break margin-top-6"
+        >
+          <div
+            class="margin-y-7"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1"
+              tabindex="-1"
+            >
+              This page cannot be found.
+            </h1>
+            <p>
+              Here is a list of things you could try to check and fix:
+            </p>
+            <ul
+              class="mint-not-found__error_suggestions"
+            >
+              <li>
+                Please check if the address you typed in is correct.
+              </li>
+              <li>
+                If you've typed the address correctly, check the spelling.
+              </li>
+              <li>
+                If you've copied and pasted the address, check that you've copied the entire address.
+              </li>
+            </ul>
+            <p
+              class="margin-bottom-5"
+            >
+              If none of the above have solved the problem, please return to the home page and try again.
+            </p>
+            <a
+              class="usa-button"
+              href="/"
+            >
+              Go back to the home page
+            </a>
+          </div>
+        </div>
+        <div
           class="margin-top-6"
         >
           <div
@@ -10466,11 +10578,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             data-testid="read-only-model-plan--operational-needs"
           >
             <div>
-              <h2
-                class="margin-top-0 margin-bottom-2"
+              <div
+                class="display-flex margin-bottom-2 "
               >
-                Operational solutions
-              </h2>
+                <h2
+                  class="margin-y-0 margin-right-2"
+                >
+                  Operational solutions
+                </h2>
+              </div>
               <div
                 class="padding-0 margin-bottom-4"
                 data-testid="task-list-status-condensed"

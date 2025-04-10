@@ -194,8 +194,6 @@ const AddToExistingMilestoneForm = ({
                     selectedLabel={t(
                       'modal.addToExistingMilestone.selectedLabel'
                     )}
-                    onChange={() => field.onChange(watch('linkedMilestones'))}
-                    initialValues={watch('linkedMilestones')}
                   />
                 </FormGroup>
               )}

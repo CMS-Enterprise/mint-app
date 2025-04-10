@@ -2,22 +2,35 @@ import { MockedResponse } from '@apollo/client/testing';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
+  GetModelToOperationsMatrixQuery,
+  GetModelToOperationsMatrixQueryVariables,
   GetMtoAllMilestonesDocument,
   GetMtoAllMilestonesQuery,
   GetMtoAllMilestonesQueryVariables,
   GetMtoAllSolutionsDocument,
+  GetMtoAllSolutionsQuery,
+  GetMtoAllSolutionsQueryVariables,
   GetMtoCategoriesDocument,
+  GetMtoCategoriesQuery,
+  GetMtoCategoriesQueryVariables,
   GetMtoCommonSolutionsDocument,
+  GetMtoCommonSolutionsQuery,
+  GetMtoCommonSolutionsQueryVariables,
   GetMtoMilestoneDocument,
+  GetMtoMilestoneQuery,
+  GetMtoMilestoneQueryVariables,
   GetMtoMilestonesDocument,
   GetMtoSolutionDocument,
   GetMtoSolutionQuery,
   GetMtoSolutionQueryVariables,
   GetMtoSolutionsAndMilestonesDocument,
+  GetMtoSolutionsAndMilestonesQuery,
+  GetMtoSolutionsAndMilestonesQueryVariables,
   GetPossibleSolutionsDocument,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoCommonSolutionSubject,
+  MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
   MtoSolutionStatus,
@@ -28,7 +41,10 @@ import {
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
-export const mtoMatrixMock = [
+export const mtoMatrixMock: MockedResponse<
+  GetModelToOperationsMatrixQuery,
+  GetModelToOperationsMatrixQueryVariables
+>[] = [
   {
     request: {
       query: GetModelToOperationsMatrixDocument,
@@ -38,6 +54,7 @@ export const mtoMatrixMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
@@ -45,6 +62,10 @@ export const mtoMatrixMock = [
             __typename: 'ModelsToOperationMatrix',
             status: MtoStatus.IN_PROGRESS,
             categories: [],
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -63,7 +84,10 @@ export const mtoMatrixMock = [
   }
 ];
 
-export const mtoMatrixMockFull = [
+export const mtoMatrixMockFull: MockedResponse<
+  GetModelToOperationsMatrixQuery,
+  GetModelToOperationsMatrixQueryVariables
+>[] = [
   {
     request: {
       query: GetModelToOperationsMatrixDocument,
@@ -73,18 +97,23 @@ export const mtoMatrixMockFull = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
           mtoMatrix: {
             __typename: 'ModelsToOperationMatrix',
             status: MtoStatus.IN_PROGRESS,
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
             categories: [
               {
                 __typename: 'MTOCategory',
                 id: '00000000-0000-0000-0000-000000000000',
                 name: 'Uncategorized',
-                isUncategorized: true,
+                isUncategorized: true as boolean,
                 subCategories: [
                   {
                     __typename: 'MTOSubcategory',
@@ -96,17 +125,17 @@ export const mtoMatrixMockFull = [
                         __typename: 'MTOMilestone',
                         id: 'ca2f9f0d-1048-463e-a584-8ec0481122f9',
                         name: 'Acquire a learning contractor',
-                        key: 'ACQUIRE_A_LEARN_CONT',
+                        key: MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT as MtoCommonMilestoneKey,
                         facilitatedBy: [
-                          'MODEL_TEAM',
-                          'MODEL_LEAD',
-                          'LEARNING_CONTRACTOR',
-                          'CONTRACTING_OFFICERS_REPRESENTATIVE',
-                          'LEARNING_AND_DIFFUSION_GROUP'
+                          MtoFacilitator.MODEL_TEAM,
+                          MtoFacilitator.MODEL_LEAD,
+                          MtoFacilitator.LEARNING_CONTRACTOR,
+                          MtoFacilitator.CONTRACTING_OFFICERS_REPRESENTATIVE,
+                          MtoFacilitator.LEARNING_AND_DIFFUSION_GROUP
                         ],
-                        needBy: null,
-                        status: 'NOT_STARTED',
-                        riskIndicator: 'ON_TRACK',
+                        // Removed needBy to match the expected type
+                        status: MtoMilestoneStatus.NOT_STARTED,
+                        riskIndicator: MtoRiskIndicator.ON_TRACK,
                         addedFromMilestoneLibrary: true,
                         isDraft: true,
                         solutions: [
@@ -114,7 +143,7 @@ export const mtoMatrixMockFull = [
                             __typename: 'MTOSolution',
                             id: 'a38fc2fa-30ab-45fe-b864-aff03348f56e',
                             name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
-                            key: 'RMADA'
+                            key: MtoCommonSolutionKey.RMADA as MtoCommonSolutionKey
                           }
                         ]
                       }
@@ -128,27 +157,7 @@ export const mtoMatrixMockFull = [
                 __typename: 'MTOMilestone',
                 id: 'ca2f9f0d-1048-463e-a584-8ec0481122f9',
                 name: 'Acquire a learning contractor',
-                key: 'ACQUIRE_A_LEARN_CONT',
-                facilitatedBy: [
-                  'MODEL_TEAM',
-                  'MODEL_LEAD',
-                  'LEARNING_CONTRACTOR',
-                  'CONTRACTING_OFFICERS_REPRESENTATIVE',
-                  'LEARNING_AND_DIFFUSION_GROUP'
-                ],
-                needBy: null,
-                status: 'NOT_STARTED',
-                riskIndicator: 'ON_TRACK',
-                addedFromMilestoneLibrary: true,
-                isDraft: true,
-                solutions: [
-                  {
-                    __typename: 'MTOSolution',
-                    id: 'a38fc2fa-30ab-45fe-b864-aff03348f56e',
-                    name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
-                    key: 'RMADA'
-                  }
-                ]
+                key: MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT
               }
             ],
 
@@ -179,13 +188,20 @@ export const allMilestoneMock: MockedResponse<
           __typename: 'ModelPlan',
           id: modelID,
           mtoMatrix: {
+            info: {
+              __typename: 'MTOInfo',
+              id: '123'
+            },
             __typename: 'ModelsToOperationMatrix',
             milestones: [
               {
                 __typename: 'MTOMilestone',
                 id: '123',
                 key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
-                name: 'Milestone 1'
+                name: 'Milestone 1',
+                status: MtoMilestoneStatus.NOT_STARTED,
+                riskIndicator: MtoRiskIndicator.ON_TRACK,
+                solutions: []
               }
             ],
             commonMilestones: []
@@ -235,7 +251,10 @@ export const commonMilestonesMock = [
   }
 ];
 
-export const commonSolutionsMock = [
+export const commonSolutionsMock: MockedResponse<
+  GetMtoCommonSolutionsQuery,
+  GetMtoCommonSolutionsQueryVariables
+>[] = [
   {
     request: {
       query: GetMtoCommonSolutionsDocument,
@@ -245,11 +264,16 @@ export const commonSolutionsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
           mtoMatrix: {
             __typename: 'ModelsToOperationMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',
@@ -308,7 +332,10 @@ export const possibleSolutionsMock = [
   }
 ];
 
-export const allMTOSolutionsMock = [
+export const allMTOSolutionsMock: MockedResponse<
+  GetMtoAllSolutionsQuery,
+  GetMtoAllSolutionsQueryVariables
+>[] = [
   {
     request: {
       query: GetMtoAllSolutionsDocument,
@@ -318,11 +345,16 @@ export const allMTOSolutionsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
           mtoMatrix: {
             __typename: 'ModelsToOperationMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',
@@ -337,7 +369,7 @@ export const allMTOSolutionsMock = [
             ],
             solutions: [
               {
-                __typename: 'MtoSolution',
+                __typename: 'MTOSolution',
                 id: '1',
                 name: 'Solution 1',
                 key: MtoCommonSolutionKey.BCDA
@@ -350,7 +382,9 @@ export const allMTOSolutionsMock = [
   }
 ];
 
-export const milestoneMock = (id: string) => [
+export const milestoneMock = (
+  id: string
+): MockedResponse<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>[] => [
   {
     request: {
       query: GetMtoMilestoneDocument,
@@ -360,8 +394,9 @@ export const milestoneMock = (id: string) => [
     },
     result: {
       data: {
+        __typename: 'Query',
         mtoMilestone: {
-          __typename: 'MtoMilestone',
+          __typename: 'MTOMilestone',
           id: '123',
           name: 'Milestone 1',
           key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
@@ -372,12 +407,13 @@ export const milestoneMock = (id: string) => [
           addedFromMilestoneLibrary: true,
           isDraft: false,
           categories: {
+            __typename: 'MTOCategories',
             category: {
-              __typename: 'MtoCategory',
+              __typename: 'MTOCategory',
               id: '1'
             },
             subCategory: {
-              __typename: 'MtoSubcategory',
+              __typename: 'MTOSubcategory',
               id: '2'
             }
           },
@@ -393,20 +429,18 @@ export const milestoneMock = (id: string) => [
           },
           solutions: [
             {
-              __typename: 'MtoSolution',
+              __typename: 'MTOSolution',
               id: '1',
               name: 'Solution 1',
               key: MtoCommonSolutionKey.BCDA,
-              status: MtoMilestoneStatus.COMPLETED,
+              status: MtoSolutionStatus.COMPLETED,
               riskIndicator: MtoRiskIndicator.AT_RISK,
-              commonSolution: [
-                {
-                  __typename: 'MtoCommonSolution',
-                  name: 'common solution 1',
-                  key: MtoCommonSolutionKey.BCDA,
-                  isAdded: true
-                }
-              ]
+              commonSolution: {
+                __typename: 'MTOCommonSolution',
+                name: 'common solution 1',
+                key: MtoCommonSolutionKey.BCDA,
+                isAdded: true
+              }
             }
           ]
         }
@@ -414,6 +448,46 @@ export const milestoneMock = (id: string) => [
     }
   }
 ];
+
+export const allMilestonesMock: MockedResponse<
+  GetMtoAllMilestonesQuery,
+  GetMtoAllMilestonesQueryVariables
+> = {
+  request: {
+    query: GetMtoAllMilestonesDocument,
+    variables: {
+      id: modelID
+    }
+  },
+  result: {
+    data: {
+      __typename: 'Query',
+      modelPlan: {
+        __typename: 'ModelPlan',
+        id: modelID,
+        mtoMatrix: {
+          __typename: 'ModelsToOperationMatrix',
+          info: {
+            __typename: 'MTOInfo',
+            id: '123'
+          },
+          commonMilestones: [],
+          milestones: [
+            {
+              __typename: 'MTOMilestone',
+              id: '123',
+              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              name: 'Milestone 1',
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
+              solutions: []
+            }
+          ]
+        }
+      }
+    }
+  }
+};
 
 export const solutionMock = (
   id: string = '1',
@@ -441,14 +515,33 @@ export const solutionMock = (
           type: MtoSolutionType.IT_SYSTEM,
           neededBy: '2121-08-01',
           pocName: 'Test Name',
-          pocEmail: 'jon@oddball.io'
+          pocEmail: 'jon@oddball.io',
+          milestones: [
+            {
+              __typename: 'MTOMilestone',
+              id: '123',
+              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              name: 'Milestone 1',
+              status: MtoMilestoneStatus.COMPLETED,
+              riskIndicator: MtoRiskIndicator.AT_RISK,
+              commonMilestone: {
+                __typename: 'MTOCommonMilestone',
+                name: 'Common Milestone 1',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                isAdded: true
+              }
+            }
+          ]
         }
       }
     }
   };
 };
 
-export const categoryMock = [
+export const categoryMock: MockedResponse<
+  GetMtoCategoriesQuery,
+  GetMtoCategoriesQueryVariables
+>[] = [
   {
     request: {
       query: GetMtoCategoriesDocument,
@@ -458,30 +551,39 @@ export const categoryMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           mtoMatrix: {
-            __typename: 'MtoMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: '123'
+            },
+            __typename: 'ModelsToOperationMatrix',
             categories: [
               {
-                __typename: 'MtoCategory',
+                __typename: 'MTOCategory',
                 id: '123',
                 name: 'Category 1',
-                subCategories: {
-                  __typename: 'MtoSubCategory',
-                  id: '123',
-                  name: 'SubCategory 1'
-                }
+                subCategories: [
+                  {
+                    __typename: 'MTOSubcategory',
+                    id: '123',
+                    name: 'SubCategory 1'
+                  }
+                ]
               },
               {
-                __typename: 'MtoCategory',
+                __typename: 'MTOCategory',
                 id: '456',
                 name: 'Category 2',
-                subCategories: {
-                  __typename: 'MtoSubCategory',
-                  id: '123',
-                  name: 'SubCategory 2'
-                }
+                subCategories: [
+                  {
+                    __typename: 'MTOSubcategory',
+                    id: '123',
+                    name: 'SubCategory 2'
+                  }
+                ]
               }
             ]
           }
@@ -546,7 +648,10 @@ export const suggestedMilestonesMock = [
   }
 ];
 
-export const solutionAndMilestoneMock = [
+export const solutionAndMilestoneMock: MockedResponse<
+  GetMtoSolutionsAndMilestonesQuery,
+  GetMtoSolutionsAndMilestonesQueryVariables
+>[] = [
   {
     request: {
       query: GetMtoSolutionsAndMilestonesDocument,
@@ -564,7 +669,7 @@ export const solutionAndMilestoneMock = [
             __typename: 'ModelsToOperationMatrix',
             status: MtoStatus.READY_FOR_REVIEW,
             recentEdit: {
-              __typename: 'ModelPlanEdit',
+              __typename: 'RecentModification',
               modifiedDts: '2022-05-12T15:01:39.190679Z'
             },
             solutions: [
@@ -588,6 +693,10 @@ export const solutionAndMilestoneMock = [
                 ]
               }
             ],
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
             milestonesWithNoLinkedSolutions: [
               {
                 __typename: 'MTOMilestone',

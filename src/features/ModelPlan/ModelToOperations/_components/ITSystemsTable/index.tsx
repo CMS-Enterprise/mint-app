@@ -12,7 +12,6 @@ import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { NotFoundPartial } from 'features/NotFound';
-import { read } from 'fs';
 import {
   GetMtoSolutionsAndMilestonesQuery,
   MtoRiskIndicator,
@@ -252,7 +251,15 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
                   type="button"
                   unstyled
                   onClick={() => {
-                    // TODO: Open edit solution panel
+                    setSolutionID(row.original.id);
+                    openEditSolutionModal(row.original.id);
+
+                    // Adds scroll param to existing params
+                    const existingParams = new URLSearchParams(
+                      history.location.search
+                    );
+                    existingParams.set('scroll-to-bottom', 'true');
+                    history.replace({ search: existingParams.toString() });
                   }}
                 >
                   {t('table.moreMilestones', {
@@ -344,7 +351,8 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
     openEditSolutionModal,
     setSolutionID,
     mtoSolutionT,
-    readView
+    readView,
+    history
   ]);
 
   const filteredColumns = useMemo(() => {
@@ -487,9 +495,11 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
+            // need to destructure row and getRowProps to avoid TS error for prop-types
+            const { getRowProps, cells, id } = { ...row };
             return (
-              <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map((cell, i) => {
+              <tr {...getRowProps()} key={id}>
+                {cells.map((cell, i) => {
                   if (i === 0) {
                     return (
                       <th

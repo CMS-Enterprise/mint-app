@@ -598,6 +598,7 @@ const EditMilestoneForm = ({
       {
         Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
         accessor: 'riskIndicator',
+        disableSortBy: true,
         Cell: ({ row }: { row: Row<SolutionType> }) => {
           const { riskIndicator } = row.original;
 
@@ -657,6 +658,7 @@ const EditMilestoneForm = ({
       <Modal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
+        noScrollable={false}
         className="confirmation-modal"
       >
         <PageHeading
@@ -695,6 +697,7 @@ const EditMilestoneForm = ({
           )}
           backButton
           showScroll
+          noScrollable={false}
           closeModal={() => {
             setEditSolutionsOpen(false);
           }}
@@ -1205,7 +1208,8 @@ const EditMilestoneForm = ({
                                       {...column.getSortByToggleProps()}
                                     >
                                       {column.render('Header')}
-                                      {getHeaderSortIcon(column, false)}
+                                      {column.canSort &&
+                                        getHeaderSortIcon(column, false)}
                                     </button>
                                   </th>
                                 ))}

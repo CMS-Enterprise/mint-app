@@ -9,6 +9,10 @@ export default gql(/* GraphQL */ `
         recentEdit {
           modifiedDts
         }
+        # Used to cache the mto matrix - always include
+        info {
+          id
+        }
         solutions {
           id
           type
