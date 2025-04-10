@@ -5,6 +5,10 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       mtoMatrix {
+        status
+        recentEdit {
+          modifiedDts
+        }
         solutions {
           id
           type

@@ -1,3 +1,5 @@
+import { empty } from '@apollo/client';
+
 import { TranslationMTOInfo } from 'types/translation';
 
 import {
@@ -172,8 +174,12 @@ export const modelToOperationsMisc: Record<string, any> = {
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOReadView:
     'The model-to-operations matrix (MTO) for this model hasn’t been started yet. Check back again later for updates.',
+  emptyMTOReadViewWithSolutions:
+    'The model-to-operations matrix (MTO) for this model hasn’t been started yet. Check back again later for updates.',
   noMilestonesReadView:
     'There are not yet any milestones added to this matrix.',
+  noSolutionsReadView:
+    'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',
   emptyMTOdescription: 'Choose an option below to get started.',
   returnToCollaboration: 'Return to model collaboration area',
   returnToMTO: 'Return to model-to-operations matrix',
