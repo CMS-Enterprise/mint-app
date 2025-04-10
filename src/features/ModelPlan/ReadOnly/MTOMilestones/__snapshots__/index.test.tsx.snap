@@ -16,7 +16,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
           Model-to-operations matrix
         </h2>
         <p
-          class="mint-body-large text-base-darkest margin-y-0 flex-align-self-end"
+          class="mint-body-large text-base-dark margin-y-0 flex-align-self-end"
         >
           Milestones
         </p>
