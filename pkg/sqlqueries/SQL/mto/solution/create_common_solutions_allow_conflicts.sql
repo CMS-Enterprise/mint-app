@@ -33,7 +33,8 @@ insert_attempt AS ( --noqa
         created_by,
         created_dts,
         modified_by,
-        modified_dts
+        modified_dts,
+        TRUE AS newly_inserted --TODO, how else can we tell if it is new?
 ),
 
 JOINED AS (

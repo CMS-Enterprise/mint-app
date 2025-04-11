@@ -29,6 +29,13 @@ func (mto *MTOSolutionWithModelFilterView) ToMTOSolution() *MTOSolution {
 	return &mto.MTOSolution
 }
 
+// MTOSolutionWithNewlyInsertedStatus wraps MTOSolution as well as a newly inserted status
+// it is useful for checking if a solution was just added, so an email can be sent
+type MTOSolutionWithNewlyInsertedStatus struct {
+	MTOSolution
+	NewlyInserted bool `json:"newlyInserted" db:"newly_inserted"`
+}
+
 type MTOSolution struct {
 	baseStruct
 	modelPlanRelation

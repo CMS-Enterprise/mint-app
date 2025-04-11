@@ -244,7 +244,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	if err != nil {
 		return nil, err
 	}
-	commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolution, _ int) uuid.UUID {
+	commonSolutionIDs := lo.Map(commonSolutionsInstance, func(item *models.MTOSolutionWithNewlyInsertedStatus, _ int) uuid.UUID {
 		return item.ID
 	})
 	joinedSolutionIDs := lo.Union(solutionIDs, commonSolutionIDs)
@@ -254,6 +254,13 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 		return nil, err
 	}
 	//TODO, here is where we should email that a solution was selected for an MTO
+	newlyInserted := lo.Filter(commonSolutionsInstance, func(item *models.MTOSolutionWithNewlyInsertedStatus, _ int) bool {
+		return item.NewlyInserted
+	})
+	if len(newlyInserted) > 0 {
+		// TODO, send email
+	}
+
 	return currentLinkedSolutions, nil
 }
 

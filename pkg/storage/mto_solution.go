@@ -139,7 +139,7 @@ func MTOSolutionCreateCommonAllowConflictsSQL(
 	commonSolutionKeys []models.MTOCommonSolutionKey,
 	modelPlanID uuid.UUID,
 	createdBy uuid.UUID,
-) ([]*models.MTOSolution, error) {
+) ([]*models.MTOSolutionWithNewlyInsertedStatus, error) {
 
 	// Since this can delete and insert, we need to set the session user variable so that the audit trigger knows who made the delete operation
 	err := setCurrentSessionUserVariable(tx, createdBy)
@@ -151,7 +151,7 @@ func MTOSolutionCreateCommonAllowConflictsSQL(
 		"common_solution_keys": pq.Array(commonSolutionKeys),
 		"created_by":           createdBy,
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOSolution](tx, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOSolutionWithNewlyInsertedStatus](tx, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
 	if err != nil {
 		return nil, err
 	}
