@@ -2,6 +2,7 @@ SELECT
     cSol.filter_view AS filter_view, --noqa
     COALESCE(SOL.name, cSol.name) AS sol_name,
     SOL.status AS sol_status,
+    SOL.mto_common_solution_key AS sol_key,
     (
         SELECT
             STRING_AGG(
@@ -11,9 +12,17 @@ SELECT
         LEFT JOIN user_account AS account ON account.id = collab.user_id --noqa
         WHERE collab.model_plan_id = plan.ID AND collab.team_roles @> '{"MODEL_LEAD"}' --noqa
     ) AS model_lead_names,
+    (
+        SELECT
+            STRING_AGG(
+                COALESCE(milestone.name, common_milestone.name), ', '
+            )
+        FROM mto_milestone_solution_link AS link
+        LEFT JOIN mto_milestone AS milestone ON milestone.id = link.milestone_id
+        LEFT JOIN mto_common_milestone AS common_milestone ON common_milestone.key = milestone.mto_common_milestone_key
+        WHERE link.solution_id = SOL.ID
 
-    --    posNEED.need_name,
-    'test' AS milestone_names,
+    ) AS milestone_names,
     PLAN.ID AS model_id,
     PLAN.model_name,
     PLAN.abbreviation AS model_abbreviation,
