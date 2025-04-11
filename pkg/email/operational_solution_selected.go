@@ -14,8 +14,8 @@ type OperationalSolutionSelectedSubjectContent struct {
 	SolutionName string
 }
 
-// OPerationalSolutionSelectedBodyContent defines the parameters necessary for the corresponding email body
-type OPerationalSolutionSelectedBodyContent struct {
+// OperationalSolutionSelectedBodyContent defines the parameters necessary for the corresponding email body
+type OperationalSolutionSelectedBodyContent struct {
 	ClientAddress     string
 	FilterView        string
 	SolutionName      string
@@ -44,8 +44,8 @@ type OperationalSolutionSelectedDB struct {
 }
 
 // ToSolutionSelectedBodyContent converts a SolutionSelectedDB struct to SolutionSelctedBodyContent
-func (ssdb *OperationalSolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress string) OPerationalSolutionSelectedBodyContent {
-	return OPerationalSolutionSelectedBodyContent{
+func (ssdb *OperationalSolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress string) OperationalSolutionSelectedBodyContent {
+	return OperationalSolutionSelectedBodyContent{
 		ClientAddress:     clientAddress,
 		FilterView:        ssdb.FilterView.ValueOrEmpty(),
 		SolutionName:      ssdb.SolutionName,

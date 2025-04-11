@@ -21,7 +21,7 @@ type MTOSolutionSelectedBodyContent struct {
 	SolutionName      string // TODO do we need to get the short name for solution? Is this avaialble in the DB? We have the key, but I'm not sure that it actually maps
 	SolutionStatus    string
 	ModelLeadNames    string
-	MileStoneNames    *string
+	MilestoneNames    *string
 	ModelID           string
 	ModelName         string
 	ModelAbbreviation string
@@ -35,7 +35,7 @@ type MTOSolutionSelectedDB struct {
 	SolutionName      string                  `json:"solName" db:"sol_name"` //From possible MTO solution
 	SolutionStatus    models.OpSolutionStatus `json:"solStatus" db:"sol_status"`
 	ModelLeadNames    string                  `json:"modelLeadNames" db:"model_lead_names"` // This comes from plan collaborators and user account table
-	MileStoneNames    *string                 `json:"milestoneNames" db:"milestone_names"`  // you can potentially return an array if better
+	MilestoneNames    *string                 `json:"milestoneNames" db:"milestone_names"`  // you can potentially return an array if better
 	ModelID           uuid.UUID               `json:"modelID" db:"model_id"`
 	ModelName         string                  `json:"modelName" db:"model_name"`
 	ModelAbbreviation *string                 `json:"modelAbbreviation" db:"model_abbreviation"`
@@ -51,7 +51,7 @@ func (ssdb *MTOSolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress s
 		SolutionName:      ssdb.SolutionName,
 		SolutionStatus:    ssdb.SolutionStatus.Humanize(),
 		ModelLeadNames:    ssdb.ModelLeadNames,
-		MileStoneNames:    ssdb.MileStoneNames,
+		MilestoneNames:    ssdb.MilestoneNames,
 		ModelID:           ssdb.ModelID.String(),
 		ModelName:         ssdb.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(ssdb.ModelAbbreviation),
