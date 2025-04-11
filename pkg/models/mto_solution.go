@@ -36,6 +36,11 @@ type MTOSolutionWithNewlyInsertedStatus struct {
 	NewlyInserted bool `json:"newlyInserted" db:"newly_inserted"`
 }
 
+// ToMTOSolution returns the MTOSolution object from the MTOSolutionWithNewlyInsertedStatus
+func (mto *MTOSolutionWithNewlyInsertedStatus) ToMTOSolution() *MTOSolution {
+	return &mto.MTOSolution
+}
+
 type MTOSolution struct {
 	baseStruct
 	modelPlanRelation

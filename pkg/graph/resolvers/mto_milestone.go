@@ -258,6 +258,17 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 		return item.NewlyInserted
 	})
 	if len(newlyInserted) > 0 {
+		// for _, solution := range newlyInserted {
+		// 	go func() {
+		// 		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+		// 		if sendEmailErr != nil {
+		// 			logger.Error("error sending solution selected emails",
+		// 				zap.Any("solution", solution.Key),
+		// 				zap.Error(sendEmailErr))
+		// 		}
+		// 	}()
+
+		// }
 		// TODO, send email
 	}
 

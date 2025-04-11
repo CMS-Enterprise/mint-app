@@ -170,14 +170,14 @@ func MTOSolutionCreateCommon(
 	if err != nil {
 		return nil, fmt.Errorf("failed to create and link solutions: %w", err)
 	}
-	// go func() {
-	sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
-	if sendEmailErr != nil {
-		logger.Error("error sending solution selected emails",
-			zap.Any("solution", retSol.Key),
-			zap.Error(sendEmailErr))
-	}
-	// }()
+	go func() {
+		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
+		if sendEmailErr != nil {
+			logger.Error("error sending solution selected emails",
+				zap.Any("solution", retSol.Key),
+				zap.Error(sendEmailErr))
+		}
+	}()
 
 	return retSol, nil
 }
@@ -282,7 +282,7 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 // sendMTOSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
 func sendMTOSolutionSelectedEmails(
 	ctx context.Context,
-	store *storage.Store,
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -297,7 +297,7 @@ func sendMTOSolutionSelectedEmails(
 		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
 		return nil
 	}
-	solSelectedDB, err := storage.GetMTOSolutionSelectedDetails(store, solution.ID)
+	solSelectedDB, err := storage.GetMTOSolutionSelectedDetails(np, solution.ID)
 	if err != nil {
 		return err
 	}
