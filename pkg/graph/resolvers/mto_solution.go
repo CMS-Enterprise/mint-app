@@ -170,14 +170,14 @@ func MTOSolutionCreateCommon(
 	if err != nil {
 		return nil, fmt.Errorf("failed to create and link solutions: %w", err)
 	}
-	go func() {
-		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
-		if sendEmailErr != nil {
-			logger.Error("error sending solution selected emails",
-				zap.Any("solution", retSol.Key),
-				zap.Error(sendEmailErr))
-		}
-	}()
+	// go func() {
+	sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
+	if sendEmailErr != nil {
+		logger.Error("error sending solution selected emails",
+			zap.Any("solution", retSol.Key),
+			zap.Error(sendEmailErr))
+	}
+	// }()
 
 	return retSol, nil
 }
@@ -297,7 +297,7 @@ func sendMTOSolutionSelectedEmails(
 		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
 		return nil
 	}
-	solSelectedDB, err := store.GetSolutionSelectedDetails(solution.ID)
+	solSelectedDB, err := store.GetOperationalSolutionSelectedDetails(solution.ID)
 	if err != nil {
 		return err
 	}

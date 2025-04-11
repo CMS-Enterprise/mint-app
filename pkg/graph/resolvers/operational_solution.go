@@ -105,7 +105,7 @@ func sendOperationalSolutionSelectedEmails(
 		logger.Info("operational solution is of the other type, no solution selected email being sent", zap.Any("solution", operationalSolution))
 		return nil
 	}
-	solSelectedDB, err := store.GetSolutionSelectedDetails(operationalSolution.ID)
+	solSelectedDB, err := store.GetOperationalSolutionSelectedDetails(operationalSolution.ID)
 	if err != nil {
 		return err
 	}
