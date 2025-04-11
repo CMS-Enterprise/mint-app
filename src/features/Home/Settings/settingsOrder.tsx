@@ -89,7 +89,7 @@ const SettingsOrder = () => {
   // Sorts, and replaces any underscores within solution acronyms.  Returns an array of selected solutions acronyms or names
   const selectedSolutions = useMemo(() => {
     const possibleOperationalSolutions =
-      data?.userViewCustomization.possibleOperationalSolutions || [];
+      data?.userViewCustomization.solutions || [];
 
     return [...helpSolutions]
       .filter(solution =>
@@ -222,9 +222,9 @@ const SettingsOrder = () => {
                                 )}
                               </p>
 
-                              {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solutions */}
+                              {/* If MODELS_BY_SOLUTION selected solutions, render solutions */}
                               {setting ===
-                                ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION && (
+                                ViewCustomizationType.MODELS_BY_SOLUTION && (
                                 <p className="margin-0">
                                   {selectedSolutions.length > 0
                                     ? selectedSolutions.join(', ')

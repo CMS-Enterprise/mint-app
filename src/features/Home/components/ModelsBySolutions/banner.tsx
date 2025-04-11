@@ -6,7 +6,7 @@ import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutions
 import { ModelsBySolutionType } from 'features/Home/components/ModelsBySolutions/table';
 import {
   ModelBySolutionStatus,
-  OperationalSolutionKey
+  MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -25,7 +25,7 @@ const ModelsBySolutionsBanner = ({
   selectedStatus,
   setSelectedStatus
 }: {
-  solutionKey: OperationalSolutionKey;
+  solutionKey: MtoCommonSolutionKey;
   solutionModels: ModelsBySolutionType;
   selectedStatus: StatusCategories;
   setSelectedStatus: (status: StatusCategories) => void;

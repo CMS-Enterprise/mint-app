@@ -524,8 +524,8 @@ func (s *Seeder) SeedData() {
 func (s *Seeder) SetDefaultUserViews() {
 	mintPrinc := s.getTestPrincipalByUsername("MINT")
 	s.updateUserView(mintPrinc, map[string]interface{}{
-		"viewCustomization":            []models.ViewCustomizationType{models.ViewCustomizationTypeModelsByOperationalSolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
-		"possibleOperationalSolutions": []models.OperationalSolutionKey{models.OpSKInnovation, models.OpSKAcoOs},
+		"viewCustomization": []models.ViewCustomizationType{models.ViewCustomizationTypeModelsBySolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
+		"solutions":         []models.MTOCommonSolutionKey{models.MTOCSKInnovation, models.MTOCSKAcoOs},
 	},
 	)
 }

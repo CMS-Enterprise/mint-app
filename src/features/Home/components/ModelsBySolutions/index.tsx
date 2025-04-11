@@ -7,7 +7,7 @@ import {
   helpSolutions
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import ModelsBySolutionTable from 'features/Home/components/ModelsBySolutions/table';
-import { OperationalSolutionKey } from 'gql/generated/graphql';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -16,24 +16,24 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import './index.scss';
 
 const ModelsBySolutions = ({
-  operationalSolutionKeys
+  solutionKeys
 }: {
-  operationalSolutionKeys: OperationalSolutionKey[];
+  solutionKeys: MtoCommonSolutionKey[];
 }) => {
   const { t: customHomeT } = useTranslation('customHome');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const orderedOperationalSolutionKeys = useMemo(() => {
-    return [...operationalSolutionKeys].sort((a, b) =>
+  const orderedsolutionKeys = useMemo(() => {
+    return [...solutionKeys].sort((a, b) =>
       (helpSolutions.find(sol => sol.enum === a)?.name || '').localeCompare(
         helpSolutions.find(sol => sol.enum === b)?.name || ''
       )
     );
-  }, [operationalSolutionKeys]);
+  }, [solutionKeys]);
 
   const [isCurrentSolution, setIsCurrentSolution] =
-    useState<OperationalSolutionKey>(orderedOperationalSolutionKeys[0]);
+    useState<MtoCommonSolutionKey>(orderedsolutionKeys[0]);
 
   const getSolutionNameorAcronym = (solution?: HelpSolutionBaseType) => {
     if (!solution) return '';
@@ -43,7 +43,7 @@ const ModelsBySolutions = ({
     return solution.name;
   };
 
-  const solutionNavs = orderedOperationalSolutionKeys.map(solutionKey => (
+  const solutionNavs = orderedsolutionKeys.map(solutionKey => (
     <button
       type="button"
       key={solutionKey}
@@ -60,14 +60,12 @@ const ModelsBySolutions = ({
     </button>
   ));
 
-  if (operationalSolutionKeys.length === 0) {
+  if (solutionKeys.length === 0) {
     return (
       <Alert
         type="info"
         className="margin-top-4"
-        heading={customHomeT(
-          `settings.MODELS_BY_OPERATIONAL_SOLUTION.noResultsHeading`
-        )}
+        heading={customHomeT(`settings.MODELS_BY_SOLUTION.noResultsHeading`)}
       >
         <UswdsReactLink
           to={{
@@ -77,9 +75,7 @@ const ModelsBySolutions = ({
           className="display-flex flex-align-center text-bold"
         >
           <span className="margin-right-1">
-            {customHomeT(
-              `settings.MODELS_BY_OPERATIONAL_SOLUTION.noResultsDescription`
-            )}
+            {customHomeT(`settings.MODELS_BY_SOLUTION.noResultsDescription`)}
           </span>
           <Icon.ArrowForward />
         </UswdsReactLink>
@@ -89,7 +85,7 @@ const ModelsBySolutions = ({
 
   return (
     <div className="models-by-solutions">
-      {operationalSolutionKeys.length < 6 && (
+      {solutionKeys.length < 6 && (
         <Header
           basic
           extended={false}
@@ -105,7 +101,7 @@ const ModelsBySolutions = ({
         </Header>
       )}
 
-      {(isTablet || operationalSolutionKeys.length > 5) && (
+      {(isTablet || solutionKeys.length > 5) && (
         <div className="maxw-mobile-lg">
           <Select
             id="solutionKey"
@@ -113,12 +109,12 @@ const ModelsBySolutions = ({
             value={isCurrentSolution}
             onChange={e =>
               setIsCurrentSolution(
-                e.currentTarget.value as OperationalSolutionKey
+                e.currentTarget.value as MtoCommonSolutionKey
               )
             }
             className="margin-bottom-4 text-primary text-bold"
           >
-            {orderedOperationalSolutionKeys.map(solution => {
+            {orderedsolutionKeys.map(solution => {
               return (
                 <option key={solution} value={solution}>
                   {getSolutionNameorAcronym(
@@ -131,7 +127,7 @@ const ModelsBySolutions = ({
         </div>
       )}
 
-      <ModelsBySolutionTable operationalSolutionKey={isCurrentSolution} />
+      <ModelsBySolutionTable solutionKey={isCurrentSolution} />
     </div>
   );
 };
