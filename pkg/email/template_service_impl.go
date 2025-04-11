@@ -130,8 +130,17 @@ var sendFeedbackBodyTemplate string
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
 
+// MTOSolutionSelectedTemplateName is the template name for the solution selected email that is sent to an MTO solution POCS
+const MTOSolutionSelectedTemplateName string = "mto_solution_selected"
+
+//go:embed templates/mto_solution_selected_body.html
+var mtoSolutionSelectedBodyTemplate string
+
+//go:embed templates/mto_solution_selected_subject.html
+var mtoSolutionSelectedSubjectTemplate string
+
 // OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
-const OperationalSolutionSelectedTemplateName string = "solution_selected"
+const OperationalSolutionSelectedTemplateName string = "operational_solution_selected"
 
 //go:embed templates/operational_solution_selected_body.html
 var operationalSolutionSelectedBodyTemplate string
@@ -174,6 +183,8 @@ func NewTemplateServiceImpl() (*TemplateServiceImpl, error) {
 
 	return service, nil
 }
+
+//TODO consider refactoring this so that templates don't need to be loaded with the load method, but instead instantiated as package vars
 
 // Load caches all email templates which will be used by the template service
 func (t *TemplateServiceImpl) Load() error {
@@ -240,6 +251,10 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
+	if err != nil {
+		return err
+	}
+	err = t.loadEmailTemplate(MTOSolutionSelectedTemplateName, mtoSolutionSelectedSubjectTemplate, mtoSolutionSelectedBodyTemplate)
 	if err != nil {
 		return err
 	}

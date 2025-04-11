@@ -121,6 +121,9 @@ func MTOSolutionCreateCommon(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	commonSolutionKey models.MTOCommonSolutionKey,
 	milestonesToLink []uuid.UUID,
@@ -167,6 +170,14 @@ func MTOSolutionCreateCommon(
 	if err != nil {
 		return nil, fmt.Errorf("failed to create and link solutions: %w", err)
 	}
+	go func() {
+		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
+		if sendEmailErr != nil {
+			logger.Error("error sending solution selected emails",
+				zap.Any("solution", retSol.Key),
+				zap.Error(sendEmailErr))
+		}
+	}()
 
 	return retSol, nil
 }
@@ -268,8 +279,8 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 	})
 }
 
-// sendSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
-func sendSolutionSelectedEmails(
+// sendMTOSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
+func sendMTOSolutionSelectedEmails(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
@@ -295,20 +306,22 @@ func sendSolutionSelectedEmails(
 	if err != nil {
 		return err
 	}
-	//TODO, at this point, transform to get all the email addresses. Look at previous functionality, but also rely on the fact that this is a struct.
-	// NOTE figma asks for the email to be sent to the POC in the to field, and all the others in the cc field.
 
 	if len(pocInfo.PointsOfContact) < 1 {
 		logger.Info(" solution doesn't have any defined points of contact, no solution selected email being sent", zap.Any("solution", solution))
 		// Note, if we support this in the future, we potentially look at the solution POC information in the actual solution.
 		return nil // Don't send an email if there aren't any recipients (Note, custom solutions do not have pocs configured in the db)
 	}
-	pocEmailAddress, err := models.GetPOCEmailAddresses(pocs, emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
+
+	//TODO, at this point, transform to get all the email addresses. Look at previous functionality, but also rely on the fact that this is a struct.
+	// NOTE figma asks for the email to be sent to the POC in the to field, and all the others in the cc field.
+
+	pocEmailAddress, err := pocInfo.EmailAddresses(emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
 	if err != nil {
 		return err
 	}
 
-	err = sendSolutionSelectedForUseByModelEmail(
+	err = sendMTOSolutionSelectedForUseByModelEmail(
 		emailService,
 		emailTemplateService,
 		addressBook,
@@ -319,8 +332,8 @@ func sendSolutionSelectedEmails(
 	return err
 }
 
-// sendSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
-func sendSolutionSelectedForUseByModelEmail(
+// sendMTOSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
+func sendMTOSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -332,7 +345,7 @@ func sendSolutionSelectedForUseByModelEmail(
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.OperationalSolutionSelectedTemplateName)
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOSolutionSelectedTemplateName)
 	if err != nil {
 		return err
 	}
