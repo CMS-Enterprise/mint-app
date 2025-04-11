@@ -253,6 +253,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	if err != nil {
 		return nil, err
 	}
+	//TODO, here is where we should email that a solution was selected for an MTO
 	return currentLinkedSolutions, nil
 }
 

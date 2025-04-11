@@ -134,24 +134,24 @@ func MTOSolutionCreateAllowConflicts(
 // MTOSolutionCreateCommonAllowConflictsSQL takes a list of common solution keys for a model plan id, and inserts ones that don't exist
 // it will return existing data, or newly inserted data
 func MTOSolutionCreateCommonAllowConflictsSQL(
-	np sqlutils.NamedPreparer,
+	tx *sqlx.Tx,
 	_ *zap.Logger,
 	commonSolutionKeys []models.MTOCommonSolutionKey,
 	modelPlanID uuid.UUID,
 	createdBy uuid.UUID,
 ) ([]*models.MTOSolution, error) {
 
-	// TODO update this to only take a tx?
-	// err := setCurrentSessionUserVariable(tx, userID)
-	// if err != nil {
-	// 	return nil, err
-	// }
+	// Since this can delete and insert, we need to set the session user variable so that the audit trigger knows who made the delete operation
+	err := setCurrentSessionUserVariable(tx, createdBy)
+	if err != nil {
+		return nil, err
+	}
 	args := map[string]interface{}{
 		"model_plan_id":        modelPlanID,
 		"common_solution_keys": pq.Array(commonSolutionKeys),
 		"created_by":           createdBy,
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOSolution](tx, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
 	if err != nil {
 		return nil, err
 	}
