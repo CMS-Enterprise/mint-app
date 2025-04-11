@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import MilestonePanel from 'features/ModelPlan/ReadOnly/MTOMilestones/MilestonePanel';
 import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import {
   MtoCommonMilestoneKey,
@@ -12,6 +14,9 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Sidepanel from 'components/Sidepanel';
+import { EditMTOMilestoneContext } from 'contexts/EditMTOMilestoneContext';
+import { MTOMilestonePanelContext } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalState } from 'contexts/MTOModalContext';
 import { formatDateUtc } from 'utils/date';
 
@@ -212,7 +217,25 @@ export const columns: ColumnType[] = [
     accessor: 'name',
     width: '200px',
     sort: sortNested,
-    Cell: ({ row, rowType, expanded }: RowProps) => {
+    Cell: ({ row, rowType, expanded, readView }: RowProps) => {
+      const { openEditMilestoneModal, setMilestoneID } = useContext(
+        MTOMilestonePanelContext
+      );
+
+      if (readView) {
+        return (
+          <Button
+            type="button"
+            unstyled
+            onClick={() => {
+              openEditMilestoneModal(row.id);
+              setMilestoneID(row.id);
+            }}
+          >
+            {row.name}
+          </Button>
+        );
+      }
       return <>{row.name}</>;
     }
   },
