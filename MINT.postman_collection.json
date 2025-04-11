@@ -3659,14 +3659,35 @@
 							"response": []
 						},
 						{
-							"name": "GetMTO Common Solutions",
+							"name": "GetMTO Common Solutions For MTO",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"query": "query mtoCommonSolutions {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All MTO Common Solutions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query mtoCommonSolutions {\nmtoCommonSolutions{\n\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n\n    }\n\n}",
 										"variables": ""
 									}
 								},
