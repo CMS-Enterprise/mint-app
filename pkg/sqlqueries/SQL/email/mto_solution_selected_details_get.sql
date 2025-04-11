@@ -39,5 +39,5 @@ LEFT JOIN model_plan AS PLAN ON SOL.model_plan_id = PLAN.id
 LEFT JOIN plan_basics AS BASICS ON BASICS.model_plan_id = PLAN.id
 WHERE
 
-    SOL.ID = 'ee63364f-9f82-41e8-8784-9d5b144f80cb'
-    -- SOL.ID = :id
+    -- SOL.ID = 'ee63364f-9f82-41e8-8784-9d5b144f80cb'
+    SOL.ID = :id

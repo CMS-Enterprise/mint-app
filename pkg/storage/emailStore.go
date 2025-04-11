@@ -35,11 +35,11 @@ func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*em
 }
 
 // GetMTOSolutionSelectedDetails queries the database to return information that is useful
-func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UUID) (*email.OperationalSolutionSelectedDB, error) {
+func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UUID) (*email.MTOSolutionSelectedDB, error) {
 	args := map[string]interface{}{
 		"id": solutionID,
 	}
-	return sqlutils.GetProcedure[email.OperationalSolutionSelectedDB](np, sqlqueries.Email.MTOSolutionSelectedDetailsGet, args)
+	return sqlutils.GetProcedure[email.MTOSolutionSelectedDB](np, sqlqueries.Email.MTOSolutionSelectedDetailsGet, args)
 
 }
 

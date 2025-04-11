@@ -337,7 +337,7 @@ func sendMTOSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	solutionSelectedDB *email.OperationalSolutionSelectedDB,
+	solutionSelectedDB *email.MTOSolutionSelectedDB,
 	pocEmailAddress []string,
 ) error {
 
