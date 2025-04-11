@@ -140,7 +140,7 @@ func sendOperationalSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	solutionSelectedDB *email.SolutionSelectedDB,
+	solutionSelectedDB *email.OperationalSolutionSelectedDB,
 	pocEmailAddress []string,
 ) error {
 
@@ -153,7 +153,7 @@ func sendOperationalSolutionSelectedForUseByModelEmail(
 		return err
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
 		ModelName:    solutionSelectedDB.ModelName,
 		SolutionName: solutionSelectedDB.SolutionName,
 	})

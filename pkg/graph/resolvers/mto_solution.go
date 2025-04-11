@@ -297,7 +297,7 @@ func sendMTOSolutionSelectedEmails(
 		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
 		return nil
 	}
-	solSelectedDB, err := store.GetOperationalSolutionSelectedDetails(solution.ID)
+	solSelectedDB, err := storage.GetMTOSolutionSelectedDetails(store, solution.ID)
 	if err != nil {
 		return err
 	}
@@ -337,7 +337,7 @@ func sendMTOSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	solutionSelectedDB *email.SolutionSelectedDB,
+	solutionSelectedDB *email.OperationalSolutionSelectedDB,
 	pocEmailAddress []string,
 ) error {
 
@@ -350,7 +350,7 @@ func sendMTOSolutionSelectedForUseByModelEmail(
 		return err
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
 		ModelName:    solutionSelectedDB.ModelName,
 		SolutionName: solutionSelectedDB.SolutionName,
 	})

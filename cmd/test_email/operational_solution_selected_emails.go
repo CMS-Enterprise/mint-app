@@ -73,7 +73,7 @@ func sendOperationalSolutionSelectedForUseByModelEmail(
 		return err
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
 		ModelName:    modelPlanName,
 		SolutionName: solutionName,
 	})
@@ -82,7 +82,7 @@ func sendOperationalSolutionSelectedForUseByModelEmail(
 	}
 	modelLeadJoin := strings.Join(modelLeadNames, ", ")
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.SolutionSelectedBodyContent{
+	emailBody, err := emailTemplate.GetExecutedBody(email.OPerationalSolutionSelectedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		FilterView:        filterView,
 		SolutionName:      solutionName,

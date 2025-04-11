@@ -4,6 +4,7 @@ import (
 	_ "embed"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 
@@ -11,7 +12,7 @@ import (
 )
 
 // GetOperationalSolutionSelectedDetails queries the database to return information that is useful
-func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*email.SolutionSelectedDB, error) {
+func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*email.OperationalSolutionSelectedDB, error) {
 	stmt, err := s.db.PrepareNamed(sqlqueries.Email.OperationalSolutionSelectedDetailsGet)
 	if err != nil {
 
@@ -22,7 +23,7 @@ func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*em
 	arg := map[string]interface{}{
 		"sol_id": solutionID,
 	}
-	solDetails := email.SolutionSelectedDB{}
+	solDetails := email.OperationalSolutionSelectedDB{}
 
 	err = stmt.Get(&solDetails, arg)
 	if err != nil {
@@ -34,26 +35,12 @@ func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*em
 }
 
 // GetMTOSolutionSelectedDetails queries the database to return information that is useful
-func (s *Store) GetMTOSolutionSelectedDetails(solutionID uuid.UUID) (*email.SolutionSelectedDB, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.Email.OperationalSolutionSelectedDetailsGet)
-	if err != nil {
-
-		return nil, err
+func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UUID) (*email.OperationalSolutionSelectedDB, error) {
+	args := map[string]interface{}{
+		"id": solutionID,
 	}
-	defer stmt.Close()
+	return sqlutils.GetProcedure[email.OperationalSolutionSelectedDB](np, sqlqueries.Email.MTOSolutionSelectedDetailsGet, args)
 
-	arg := map[string]interface{}{
-		"sol_id": solutionID,
-	}
-	solDetails := email.SolutionSelectedDB{}
-
-	err = stmt.Get(&solDetails, arg)
-	if err != nil {
-
-		return nil, err
-
-	}
-	return &solDetails, nil
 }
 
 // GetDiscussionReplyDetailsForEmail returns Discussion replies along with user account information for each reply.

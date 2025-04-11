@@ -8,14 +8,14 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// SolutionSelectedSubjectContent defines the parameters necessary for the corresponding email subject
-type SolutionSelectedSubjectContent struct {
+// MTOSolutionSelectedSubjectContent defines the parameters necessary for the corresponding email subject
+type MTOSolutionSelectedSubjectContent struct {
 	ModelName    string
 	SolutionName string
 }
 
-// SolutionSelectedBodyContent defines the parameters necessary for the corresponding email body
-type SolutionSelectedBodyContent struct {
+// MTOSolutionSelectedBodyContent defines the parameters necessary for the corresponding email body
+type MTOSolutionSelectedBodyContent struct {
 	ClientAddress     string
 	FilterView        string
 	SolutionName      string
@@ -29,10 +29,10 @@ type SolutionSelectedBodyContent struct {
 	ModelStartDate    *time.Time
 }
 
-// SolutionSelectedDB this represents the data retrieved from the database for when a solution is selected from the database
-type SolutionSelectedDB struct {
+// MTOSolutionSelectedDB this represents the data retrieved from the database for when a solution is selected from the database
+type MTOSolutionSelectedDB struct {
 	FilterView        *models.ModelViewFilter `json:"filterView" db:"filter_view"`
-	SolutionName      string                  `json:"solName" db:"sol_name"` //From possible operational solution
+	SolutionName      string                  `json:"solName" db:"sol_name"` //From possible MTO solution
 	SolutionStatus    models.OpSolutionStatus `json:"solStatus" db:"sol_status"`
 	ModelLeadNames    string                  `json:"modelLeadNames" db:"model_lead_names"` // This comes from plan collaborators and user account table
 	NeedName          string                  `json:"needName" db:"need_name"`
@@ -44,8 +44,8 @@ type SolutionSelectedDB struct {
 }
 
 // ToSolutionSelectedBodyContent converts a SolutionSelectedDB struct to SolutionSelctedBodyContent
-func (ssdb *SolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress string) SolutionSelectedBodyContent {
-	return SolutionSelectedBodyContent{
+func (ssdb *MTOSolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress string) MTOSolutionSelectedBodyContent {
+	return MTOSolutionSelectedBodyContent{
 		ClientAddress:     clientAddress,
 		FilterView:        ssdb.FilterView.ValueOrEmpty(),
 		SolutionName:      ssdb.SolutionName,
