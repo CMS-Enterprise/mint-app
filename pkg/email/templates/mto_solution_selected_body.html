@@ -15,16 +15,14 @@
         <p><b>Status</b></p>
         <p>{{.ModelStatus}}</p>
         <br/>
-        {{ if .ModelStartDate }}
         <p><b>Model start date</b></p>
-        <p>{{.ModelStartDate.Format "01/02/2006"}}</p>
+        <p>{{ if .ModelStartDate }}{{.ModelStartDate.Format "01/02/2006"}}{{ else }} None specified {{end}} </p>
         <br/>
-        {{ end }}
         <p><b>Model lead(s)</b></p>
         <p>{{.ModelLeadNames}}</p>
         <br/>
-        <p><b>Operational need</b></p>
-        <p>{{.NeedName}}</p>
+        <p><b>Milestone(s) or model function(s)</b></p>
+        <p>{{if .MilestoneNames }}{{.MilestoneNames}}{{ else }} None specified {{end}}</p>
         <br/>
         {{- /* Uncomment this if solution is desired in the future
         <p><b>Solution Status</b></p>
@@ -43,6 +41,10 @@
 </table>
 <br/>
 <br/>
+<p>
+  If you have any questions about this model, please contact the model lead or other model team members. If you have questions about IT implementation of this model, please contact the model’s IT Lead if there is one listed. If you have questions about MINT, please contact the MINT team at
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>.
+</p>
 <hr/>
 <br/>
 {{template "shared_solution_poc_footer.html" .}}

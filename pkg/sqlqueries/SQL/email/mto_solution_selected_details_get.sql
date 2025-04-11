@@ -13,7 +13,7 @@ SELECT
     ) AS model_lead_names,
 
     --    posNEED.need_name,
-    'test' AS need_names,
+    'test' AS milestone_names,
     PLAN.ID AS model_id,
     PLAN.model_name,
     PLAN.abbreviation AS model_abbreviation,
