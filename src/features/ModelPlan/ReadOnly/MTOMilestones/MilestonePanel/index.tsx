@@ -98,8 +98,6 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
   const history = useHistory();
 
-  const { modelID } = useParams<{ modelID: string }>();
-
   const params = new URLSearchParams(history.location.search);
 
   const viewMilestoneID = params.get('view-milestone');
@@ -115,7 +113,23 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
   });
 
   const milestone = useMemo(() => {
-    return data?.mtoMilestone;
+    return (
+      data?.mtoMilestone ||
+      ({
+        __typename: 'MTOMilestone',
+        id: '',
+        name: '',
+        status: MtoMilestoneStatus.NOT_STARTED,
+        key: null,
+        facilitatedBy: null,
+        riskIndicator: MtoRiskIndicator.ON_TRACK,
+        addedFromMilestoneLibrary: false,
+        solutions: [],
+        isDraft: false,
+        categories:
+          [] as unknown as GetMtoMilestoneQuery['mtoMilestone']['categories']
+      } as GetMtoMilestoneQuery['mtoMilestone'])
+    );
   }, [data]);
 
   console.log(milestone);
@@ -221,80 +235,85 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               </span>
             )}
 
-            <UswdsTable
-              bordered={false}
-              {...getTableProps()}
-              className="margin-top-0"
-              fullWidth
-            >
-              <thead>
-                {headerGroups.map(headerGroup => (
-                  <tr
-                    {...headerGroup.getHeaderGroupProps()}
-                    key={{ ...headerGroup.getHeaderGroupProps() }.key}
-                  >
-                    {headerGroup.headers.map(column => (
-                      <th
-                        {...column.getHeaderProps()}
-                        scope="col"
-                        key={column.id}
-                        className="padding-left-0 padding-bottom-0"
-                        style={{
-                          width: column.id === 'status' ? '150px' : 'auto'
-                        }}
+            {milestone.solutions.length > 0 && (
+              <>
+                <UswdsTable
+                  bordered={false}
+                  {...getTableProps()}
+                  className="margin-top-0"
+                  fullWidth
+                >
+                  <thead>
+                    {headerGroups.map(headerGroup => (
+                      <tr
+                        {...headerGroup.getHeaderGroupProps()}
+                        key={{ ...headerGroup.getHeaderGroupProps() }.key}
                       >
-                        <button
-                          className="usa-button usa-button--unstyled position-relative"
-                          type="button"
-                          {...column.getSortByToggleProps()}
-                        >
-                          {column.render('Header')}
-                          {column.canSort && getHeaderSortIcon(column, false)}
-                        </button>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-                  const { getRowProps, cells, id } = { ...row };
-
-                  prepareRow(row);
-                  return (
-                    <tr {...getRowProps()} key={id}>
-                      {cells.map(cell => {
-                        return (
-                          <td
-                            {...cell.getCellProps()}
-                            key={cell.getCellProps().key}
-                            className="padding-left-0"
+                        {headerGroup.headers.map(column => (
+                          <th
+                            {...column.getHeaderProps()}
+                            scope="col"
+                            key={column.id}
+                            className="padding-left-0 padding-bottom-0"
+                            style={{
+                              width: column.id === 'status' ? '150px' : 'auto'
+                            }}
                           >
-                            {cell.render('Cell')}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </UswdsTable>
+                            <button
+                              className="usa-button usa-button--unstyled position-relative"
+                              type="button"
+                              {...column.getSortByToggleProps()}
+                            >
+                              {column.render('Header')}
+                              {column.canSort &&
+                                getHeaderSortIcon(column, false)}
+                            </button>
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody {...getTableBodyProps()}>
+                    {page.map((row, i) => {
+                      const { getRowProps, cells, id } = { ...row };
 
-            {milestone.solutions.length > 5 && (
-              <TablePagination
-                className="flex-justify-start margin-left-neg-05"
-                gotoPage={gotoPage}
-                previousPage={previousPage}
-                nextPage={nextPage}
-                canNextPage={canNextPage}
-                pageIndex={state.pageIndex}
-                pageOptions={pageOptions}
-                canPreviousPage={canPreviousPage}
-                pageCount={pageCount}
-                pageSize={state.pageSize}
-                setPageSize={setPageSize}
-                page={[]}
-              />
+                      prepareRow(row);
+                      return (
+                        <tr {...getRowProps()} key={id}>
+                          {cells.map(cell => {
+                            return (
+                              <td
+                                {...cell.getCellProps()}
+                                key={cell.getCellProps().key}
+                                className="padding-left-0"
+                              >
+                                {cell.render('Cell')}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </UswdsTable>
+
+                {milestone.solutions.length > 5 && (
+                  <TablePagination
+                    className="flex-justify-start margin-left-neg-05"
+                    gotoPage={gotoPage}
+                    previousPage={previousPage}
+                    nextPage={nextPage}
+                    canNextPage={canNextPage}
+                    pageIndex={state.pageIndex}
+                    pageOptions={pageOptions}
+                    canPreviousPage={canPreviousPage}
+                    pageCount={pageCount}
+                    pageSize={state.pageSize}
+                    setPageSize={setPageSize}
+                    page={[]}
+                  />
+                )}
+              </>
             )}
           </Grid>
         </Grid>
