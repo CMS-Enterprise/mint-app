@@ -39,7 +39,7 @@ func main() {
 	reportAProblemEmail(emailService, templateService, addressBook)
 
 	// Solution emails
-	sendSolutionSelectedTestEmail(emailService, templateService, addressBook)
+	sendOperationalSolutionSelectedTestEmail(emailService, templateService, addressBook)
 
 	// Model Plan Suggested Phase Emails
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, templateService, addressBook)

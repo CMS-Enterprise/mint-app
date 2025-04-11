@@ -10,7 +10,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
-func sendSolutionSelectedTestEmail(
+func sendOperationalSolutionSelectedTestEmail(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -27,7 +27,7 @@ func sendSolutionSelectedTestEmail(
 	leadNames := []string{"Model Lead1", "Model Lead2"}
 	filterView := "CBOSC"
 
-	err := sendSolutionSelectedForUseByModelEmail(emailService,
+	err := sendOperationalSolutionSelectedForUseByModelEmail(emailService,
 		templateService,
 		addressBook,
 		solutionName,
@@ -45,8 +45,8 @@ func sendSolutionSelectedTestEmail(
 	noErr(err)
 }
 
-// sendSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
-func sendSolutionSelectedForUseByModelEmail(
+// sendOperationalSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
+func sendOperationalSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
