@@ -9,13 +9,10 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
-import { treatAsOtherSolutions } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
-  OperationalSolutionKey,
   useGetHomepageSettingsQuery,
-  useGetPossibleOperationalSolutionsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
 } from 'gql/generated/graphql';
@@ -35,7 +32,7 @@ import {
 import './index.scss';
 
 type SettingsFormType = {
-  possibleOperationalSolutions: GetHomepageSettingsQuery['userViewCustomization']['solutions'];
+  solutions: GetHomepageSettingsQuery['userViewCustomization']['solutions'];
 };
 
 const SelectSolutionSettings = () => {
@@ -50,28 +47,23 @@ const SelectSolutionSettings = () => {
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
   const { data: solutionData, loading: solutionLoading } =
-    useGetPossibleOperationalSolutionsQuery();
+    useGetGlobalMtoCommonMilestonesQuery();
+
+  console.log(solutionData);
 
   // Sorts, filters, and formats the possible operational solutions for multiselect component
   const solutionOptions = useMemo(() => {
-    const possibleOperationalSolutions =
-      solutionData?.possibleOperationalSolutions || [];
+    const solutions = solutionData?.modelPlan.mtoMatrix.commonSolutions || [];
 
-    return [...possibleOperationalSolutions]
+    return [...solutions]
       .sort((a, b) => a.name.localeCompare(b.name))
-      .filter(
-        solution =>
-          !treatAsOtherSolutions.includes(
-            solution.key as OperationalSolutionKey
-          )
-      )
       .map(solution => {
         return {
           label: solution.name,
           value: solution.key
         };
       });
-  }, [solutionData?.possibleOperationalSolutions]);
+  }, [solutionData?.modelPlan.mtoMatrix.commonSolutions]);
 
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
@@ -118,8 +110,8 @@ const SelectSolutionSettings = () => {
       .then(() => {
         // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
         if (
-          formikRef.current?.values?.possibleOperationalSolutions &&
-          formikRef.current?.values?.possibleOperationalSolutions.length > 0 &&
+          formikRef.current?.values?.solutions &&
+          formikRef.current?.values?.solutions.length > 0 &&
           !selectedSettings?.viewCustomization.includes(
             ViewCustomizationType.MODELS_BY_SOLUTION
           )
@@ -141,7 +133,7 @@ const SelectSolutionSettings = () => {
   };
 
   const initialValues: SettingsFormType = {
-    possibleOperationalSolutions: data?.userViewCustomization.solutions || []
+    solutions: data?.userViewCustomization.solutions || []
   };
 
   return (
@@ -216,20 +208,15 @@ const SelectSolutionSettings = () => {
                             ariaLabel={homepageSettingsT(
                               'operationalSolutions'
                             )}
-                            name="possibleOperationalSolutions"
+                            name="solutions"
                             options={solutionOptions}
                             selectedLabel={homepageSettingsT(
                               'multiselectLabel'
                             )}
                             onChange={(value: string[] | []) => {
-                              setFieldValue(
-                                'possibleOperationalSolutions',
-                                value
-                              );
+                              setFieldValue('solutions', value);
                             }}
-                            initialValues={
-                              initialValues.possibleOperationalSolutions
-                            }
+                            initialValues={initialValues.solutions}
                           />
 
                           <div className="margin-y-4">
