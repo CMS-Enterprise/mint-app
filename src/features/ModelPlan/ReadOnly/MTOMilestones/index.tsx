@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -11,19 +10,11 @@ import {
 
 import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
-import Sidepanel from 'components/Sidepanel';
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 
-import MilestonePanel from './MilestonePanel';
-
 const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
-
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { data, loading, error } = useGetModelToOperationsMatrixQuery({
     variables: {
@@ -38,12 +29,6 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
 
   const hasNoMilestones = modelToOperationsMatrix.milestones?.length === 0;
-
-  const closeModal = () => {
-    params.delete('view-milestone');
-    history.push({ search: params.toString() });
-    setIsModalOpen(false);
-  };
 
   if (loading && !modelToOperationsMatrix) {
     <PageLoading />;
