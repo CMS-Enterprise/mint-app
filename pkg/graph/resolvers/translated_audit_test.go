@@ -42,6 +42,34 @@ func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 	suite.NoError(err)
 	suite.GreaterOrEqual(len(translatedAudits), 5)
 
+	// Expect only 1 entry for ops eval and learning
+	Audits, err := TranslatedAuditCollectionGetByModelPlanIDAndTableNames(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		plan.ID,
+		[]models.TableName{models.TNPlanOpsEvalAndLearning},
+		nil,
+		nil,
+	)
+	suite.NoError(err)
+	suite.Len(Audits, 1)
+
+	// Expect 3 entries for plan participants and providers, model plan, and model plan ops eval and learning
+	Audits, err = TranslatedAuditCollectionGetByModelPlanIDAndTableNames(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		plan.ID,
+		[]models.TableName{models.TNPlanOpsEvalAndLearning, models.TNModelPlan, models.TNPlanParticipantsAndProviders},
+		nil,
+		nil,
+	)
+	suite.NoError(err)
+	suite.Len(Audits, 3)
+
 }
 func (suite *ResolverSuite) TestTranslateAudit() {
 
