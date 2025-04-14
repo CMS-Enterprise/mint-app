@@ -290,7 +290,6 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 			}()
 
 		}
-		// TODO, send email
 	}
 
 	return currentLinkedSolutions, nil

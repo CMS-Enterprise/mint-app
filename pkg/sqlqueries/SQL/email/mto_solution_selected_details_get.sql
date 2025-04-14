@@ -33,11 +33,8 @@ SELECT
 
 FROM mto_solution AS SOL
 LEFT JOIN mto_common_solution AS cSol ON cSol.key = SOL.mto_common_solution_key
---LEFT JOIN operational_need AS NEED ON NEED.id = SOL.operational_need_id
---LEFT JOIN possible_operational_need AS posNEED ON posNEED.id = NEED.need_type
 LEFT JOIN model_plan AS PLAN ON SOL.model_plan_id = PLAN.id
 LEFT JOIN plan_basics AS BASICS ON BASICS.model_plan_id = PLAN.id
 WHERE
 
-    -- SOL.ID = 'ee63364f-9f82-41e8-8784-9d5b144f80cb'
     SOL.ID = :id

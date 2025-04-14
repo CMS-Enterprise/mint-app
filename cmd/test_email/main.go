@@ -39,6 +39,7 @@ func main() {
 	reportAProblemEmail(emailService, templateService, addressBook)
 
 	// Solution emails
+	//TODO, we might want to remove these later. Leaving for comparison now
 	sendOperationalSolutionSelectedTestEmail(emailService, templateService, addressBook)
 	sendMTOSolutionSelectedTestEmail(emailService, templateService, addressBook)
 

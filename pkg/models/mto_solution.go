@@ -68,6 +68,22 @@ const (
 	MTOSolutionStatusCompleted  MTOSolutionStatus = "COMPLETED"
 )
 
+// mtoSolutionStatusHumanized maps MTOSolutionStatuses to a human-readable string
+var mtoSolutionStatusHumanized = map[MTOSolutionStatus]string{
+	MTOSolutionStatusNotStarted: "Not Started",
+	MTOSolutionStatusOnboarding: "Onboarding",
+	MTOSolutionStatusBacklog:    "Backlog",
+	MTOSolutionStatusInProgress: "In Progress",
+	MTOSolutionStatusCompleted:  "Completed",
+}
+
+// Humanize returns the human-readable string of a MTO Solution  Status
+// if a value is not found for the provided status, an empty string is returned
+func (m MTOSolutionStatus) Humanize() string {
+	//TODO, consider implementing the shared translation to make this work
+	return mtoSolutionStatusHumanized[m]
+}
+
 // AddedFromSolutionLibrary returns true or false if this was added from the common solution library.
 // It simply checks if the common solution id is populated or not
 func (m *MTOSolution) AddedFromSolutionLibrary() bool {

@@ -47,11 +47,10 @@ type MTOSolutionSelectedDB struct {
 // ToSolutionSelectedBodyContent converts a SolutionSelectedDB struct to SolutionSelctedBodyContent
 func (ssdb *MTOSolutionSelectedDB) ToSolutionSelectedBodyContent(clientAddress string) MTOSolutionSelectedBodyContent {
 	return MTOSolutionSelectedBodyContent{
-		ClientAddress: clientAddress,
-		FilterView:    ssdb.FilterView.ValueOrEmpty(),
-		SolutionName:  ssdb.SolutionName,
-		// TODO, implement humanize, or borrow from shared translation to make this work
-		SolutionStatus:    string(ssdb.SolutionStatus),
+		ClientAddress:     clientAddress,
+		FilterView:        ssdb.FilterView.ValueOrEmpty(),
+		SolutionName:      ssdb.SolutionName,
+		SolutionStatus:    ssdb.SolutionStatus.Humanize(),
 		ModelLeadNames:    ssdb.ModelLeadNames,
 		MilestoneNames:    ssdb.MilestoneNames,
 		ModelID:           ssdb.ModelID.String(),
