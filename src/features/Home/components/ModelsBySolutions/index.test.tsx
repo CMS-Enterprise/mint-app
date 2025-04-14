@@ -1,28 +1,35 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import {
-  GetModelsBySolutionDocument,
+  GetModelsByMtoSolutionDocument,
+  GetModelsByMtoSolutionQuery,
+  GetModelsByMtoSolutionQueryVariables,
   ModelBySolutionStatus,
+  ModelCategory,
   ModelStatus,
-  MtoCommonSolutionKey,
-  OperationalSolutionKey
+  MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 import setup from 'tests/util';
 
 import ModelsBySolutionTable from './table';
 
-const mocks = [
+const mocks: MockedResponse<
+  GetModelsByMtoSolutionQuery,
+  GetModelsByMtoSolutionQueryVariables
+>[] = [
   {
     request: {
-      query: GetModelsBySolutionDocument,
-      variables: { operationalSolutionKey: OperationalSolutionKey.INNOVATION }
+      query: GetModelsByMtoSolutionDocument,
+      variables: { solutionKey: MtoCommonSolutionKey.INNOVATION }
     },
     result: {
       data: {
-        modelPlansByOperationalSolutionKey: [
+        __typename: 'Query',
+        modelPlansByMTOSolutionKey: [
           {
+            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae1',
             modelPlan: {
               id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
               modelName: 'Plan With CRs and TDLs',
@@ -38,9 +45,10 @@ const mocks = [
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           },
           {
+            modelPlanID: 'e671f056-2634-4af4-abad-a63850832a0a',
             modelPlan: {
               id: 'e671f056-2634-4af4-abad-a63850832a0a',
               modelName: 'Plan With Collaborators',
@@ -56,9 +64,10 @@ const mocks = [
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           },
           {
+            modelPlanID: '598db9f0-54c0-4346-bb6b-da46a36eff1a',
             modelPlan: {
               id: '598db9f0-54c0-4346-bb6b-da46a36eff1a',
               modelName: 'Enhancing Oncology Model',
@@ -74,9 +83,10 @@ const mocks = [
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           },
           {
+            modelPlanID: 'c9cf987d-8543-46bb-a668-2c560ce5b149',
             modelPlan: {
               id: 'c9cf987d-8543-46bb-a668-2c560ce5b149',
               modelName: 'Empty Plan',
@@ -85,16 +95,17 @@ const mocks = [
               abbreviation: 'EP',
               basics: {
                 id: '9a9547e2-b1d0-4ff7-a86b-9dc9339500fa',
-                modelCategory: 'STATE_BASED',
+                modelCategory: ModelCategory.STATE_BASED,
                 performancePeriodStarts: '2024-07-24T05:00:00Z',
                 performancePeriodEnds: '2024-07-31T05:00:00Z',
                 __typename: 'PlanBasics'
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           },
           {
+            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae2',
             modelPlan: {
               id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae2',
               modelName: 'Plan with Basics',
@@ -110,9 +121,10 @@ const mocks = [
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           },
           {
+            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae3',
             modelPlan: {
               id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae3',
               modelName: 'Z Paused Model',
@@ -128,9 +140,10 @@ const mocks = [
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           },
           {
+            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae4',
             modelPlan: {
               id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae4',
               modelName: 'Z Canceled Model',
@@ -146,7 +159,7 @@ const mocks = [
               },
               __typename: 'ModelPlan'
             },
-            __typename: 'ModelPlanAndOperationalSolution'
+            __typename: 'ModelPlanAndMTOCommonSolution'
           }
         ]
       }
