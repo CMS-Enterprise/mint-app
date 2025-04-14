@@ -277,6 +277,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	if len(newlyInserted) > 0 {
 		for _, solution := range newlyInserted {
 			go func() {
+				//TODO: this needs to have the store, not occur in the transaction, or not part of go routine
 				sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
 				if sendEmailErr != nil {
 					logger.Error("error sending solution selected emails",
