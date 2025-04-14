@@ -8,7 +8,6 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import MilestonePanel from 'features/ModelPlan/ReadOnly/MTOMilestones/MilestonePanel';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
@@ -22,13 +21,8 @@ import i18next from 'i18next';
 import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
-import Sidepanel from 'components/Sidepanel';
 import TablePageSize from 'components/TablePageSize';
-import { EditMTOMilestoneContext } from 'contexts/EditMTOMilestoneContext';
-import {
-  MTOMilestonePanelContext,
-  MTOMilestonePanelProvider
-} from 'contexts/MTOMilestonePanelContext';
+import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
