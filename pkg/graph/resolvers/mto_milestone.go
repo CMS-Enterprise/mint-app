@@ -112,6 +112,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			principal,
 			logger,
 			tx,
+			store, // this is used for the emails being sent later
 			emailService,
 			emailTemplateService,
 			addressBook,
@@ -170,6 +171,7 @@ func MTOMilestoneUpdate(
 				principal,
 				logger,
 				tx,
+				store, // this is used for the emails being sent later
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -249,6 +251,8 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	principal authentication.Principal,
 	logger *zap.Logger,
 	tx *sqlx.Tx,
+	// The store is used only for the email, all other operations are done in the transaction
+	store *storage.Store,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -270,15 +274,14 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	if err != nil {
 		return nil, err
 	}
-	//TODO, here is where we should email that a solution was selected for an MTO
+
 	newlyInserted := lo.Filter(commonSolutionsInstance, func(item *models.MTOSolutionWithNewlyInsertedStatus, _ int) bool {
 		return item.NewlyInserted
 	})
 	if len(newlyInserted) > 0 {
 		for _, solution := range newlyInserted {
 			go func() {
-				//TODO: this needs to have the store, not occur in the transaction, or not part of go routine
-				sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+				sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
 				if sendEmailErr != nil {
 					logger.Error("error sending solution selected emails",
 						zap.Any("solution", solution.Key),
@@ -318,7 +321,7 @@ func MTOMilestoneUpdateLinkedSolutions(
 	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 
-		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx,
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, store,
 			emailService,
 			emailTemplateService,
 			addressBook,
