@@ -1,3 +1,11 @@
+WITH table_names_input AS (
+    SELECT unnest(cast(:table_names AS TABLE_NAME[])) AS name
+),
+
+should_filter AS ( --Are there any table names to filter by?
+    SELECT exists(SELECT 1 FROM table_names_input) AS filter
+)
+
 SELECT 
     tAudit.id,
     tAudit.model_plan_id,
@@ -25,10 +33,9 @@ WHERE
         ( tAudit.restricted = FALSE AND :restricted_access = FALSE ) --user does not have access to restricted audits, only show non-restricted
         OR :restricted_access = TRUE --show all audits if the user has access to restricted audits
     )
-    AND ( --If there are no table names provided (nil or empty array), show all audits, else filter by table names
-        :table_names IS NULL
-        OR cardinality(:table_names) = 0
-        OR table_config.name = any(:table_names)
+    AND (
+        NOT (SELECT filter FROM should_filter)
+        OR table_config.name IN (SELECT name FROM table_names_input)
     )
 ORDER BY tAudit.change_id DESC
 LIMIT

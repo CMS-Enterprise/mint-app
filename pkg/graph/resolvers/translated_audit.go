@@ -22,7 +22,7 @@ func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *stora
 }
 
 func TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID,
-	tablesToInclude *[]models.TableName, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
+	tablesToInclude []models.TableName, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
 	hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
 	if err != nil {

@@ -34,7 +34,7 @@ func TranslatedAuditCreate(np sqlutils.NamedPreparer, translatedAudit *models.Tr
 // hasRestrictedAccess: whether or not to show restricted records
 // limit: this controls how many records will be returned at once. A null entry will return all records
 // offset: how many records to skip before returning results. If null, no records will be skipped.
-func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID, tablesToInclude *[]models.TableName, hasRestrictedAccess bool, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
+func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID, tablesToInclude []models.TableName, hasRestrictedAccess bool, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
 	// Note, if limit or offset are nill, they are disregarded
 	arg := map[string]interface{}{
