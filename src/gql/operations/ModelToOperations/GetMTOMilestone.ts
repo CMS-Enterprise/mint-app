@@ -21,9 +21,11 @@ export default gql(/* GraphQL */ `
       categories {
         category {
           id
+          name
         }
         subCategory {
           id
+          name
         }
       }
       solutions {

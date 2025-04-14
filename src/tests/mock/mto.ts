@@ -410,11 +410,13 @@ export const milestoneMock = (
             __typename: 'MTOCategories',
             category: {
               __typename: 'MTOCategory',
-              id: '1'
+              id: '1',
+              name: 'Category 1'
             },
             subCategory: {
               __typename: 'MTOSubcategory',
-              id: '2'
+              id: '2',
+              name: 'SubCategory 1'
             }
           },
           commonMilestone: {

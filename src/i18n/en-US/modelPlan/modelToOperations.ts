@@ -354,6 +354,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     editMilestone: {
       milestoneTitle: 'Milestone details',
+      readviewDescription:
+        'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
         success: 'Your milestone ({{milestone}}) has been updated.',
@@ -371,6 +373,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
       removeMilestone: 'Remove milestone',
+      noneSpecified: 'None specified',
       areYouSure: 'Are you sure you want to remove this milestone?',
       removeDescription:
         'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
@@ -399,6 +402,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       editSolutions: 'Edit solutions',
       noSolutions:
         'You haven’t selected any solutions or IT systems to implement this milestone.',
+      noSolutionsTable:
+        'There are no IT systems or solutions selected to implement this milestone.',
       solution: 'Solution',
       status: 'Status',
       selectedSolutionCount_other: '{{count}} selected solutions',

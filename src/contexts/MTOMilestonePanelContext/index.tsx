@@ -62,11 +62,11 @@ const MTOMilestonePanelProvider = ({
           isOpen={isModalOpen}
           closeModal={closeModal}
           ariaLabel={modelToOperationsMiscT(
-            'milestoneLibrary.aboutThisMilestone'
+            'modal.editMilestone.milestoneTitle'
           )}
-          testid="edit-milestone-sidepanel"
+          testid="view-milestone-sidepanel"
           modalHeading={modelToOperationsMiscT(
-            'milestoneLibrary.aboutThisMilestone'
+            'modal.editMilestone.milestoneTitle'
           )}
           noScrollable
         >
