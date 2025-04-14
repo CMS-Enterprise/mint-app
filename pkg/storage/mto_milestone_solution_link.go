@@ -66,6 +66,8 @@ func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
 	solutionIDs []uuid.UUID,
 	actorID uuid.UUID,
 ) ([]*models.MTOSolution, error) {
+
+	// Since the link can be deleted, set the current session user variable for audit purposes
 	err := setCurrentSessionUserVariable(tx, actorID)
 	if err != nil {
 		return nil, err
