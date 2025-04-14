@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetGlobalMTOCommonMilestones() {
+  query GetGlobalMTOCommonSolutions() {
     mtoCommonSolutions {
       name
       key
