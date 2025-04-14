@@ -12,7 +12,8 @@ type ModelsToOperationMatrix {
   """
   solutions(filterView: ModelViewFilter): [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
-  recentEdit: RecentModification #Note, this data type could change. We might take an approach to return the most recent translated audit, which would provide this information, plus much more
+  # RecentEdit returns the most recent translated audit for the MTO
+  recentEdit: TranslatedAudit 
   milestonesWithNoLinkedSolutions: [MTOMilestone!]!
 
   info: MTOInfo!
@@ -20,11 +21,11 @@ type ModelsToOperationMatrix {
 }
 
 
-type RecentModification {
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
+# type RecentModification {
+#   modifiedBy: UUID
+#   modifiedByUserAccount: UserAccount
+#   modifiedDts: Time
+# }
 
 enum MTOStatus {
   READY

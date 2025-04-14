@@ -39,6 +39,19 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus,
 
 }
 
+func MTOMostRecentTranslatedAudit(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) (*models.TranslatedAudit, error) {
+	numberOfRecords := 1
+	records, err := MTOTranslatedAuditsGetByModelPlanID(ctx, store, logger, principal, modelPlanID, &numberOfRecords, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if records == nil || len(records) < 1 {
+		return nil, nil
+	}
+	return records[0], nil
+}
+
 // MTOLastUpdatedGet returns the most recent update to an MTO overall.
 func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.RecentModification, error) {
 	// TODO  (mto) restructure this to use change history
