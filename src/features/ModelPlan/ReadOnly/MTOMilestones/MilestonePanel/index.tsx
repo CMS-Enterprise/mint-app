@@ -32,6 +32,7 @@ import {
 import classNames from 'classnames';
 import MTORiskIndicatorTag from 'features/ModelPlan/ModelToOperations/_components/MTORiskIndicatorIcon';
 import MilestoneStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
+import MTOTag from 'features/ModelPlan/ModelToOperations/_components/MTOTag';
 import {
   GetModelToOperationsMatrixDocument,
   GetMtoAllSolutionsQuery,
@@ -226,20 +227,25 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
       >
         <Grid row>
           <Grid col={10}>
-            <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
-              <Icon.Science className="margin-left-1" style={{ top: '2px' }} />{' '}
-              {modelToOperationsMiscT('milestoneLibrary.isDraft')}
-            </span>
+            <div className="display-flex">
+              {milestone.isDraft && (
+                <MTOTag
+                  type="draft"
+                  label={modelToOperationsMiscT('milestoneLibrary.isDraft')}
+                  tooltip={mtoMilestoneT('isDraft.questionTooltip')}
+                />
+              )}
 
-            {!milestone.addedFromMilestoneLibrary && (
-              <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
-                <Icon.Construction
-                  className="margin-left-1"
-                  style={{ top: '2px' }}
-                />{' '}
-                {modelToOperationsMiscT('modal.editMilestone.custom')}
-              </span>
-            )}
+              {!milestone.addedFromMilestoneLibrary && (
+                <MTOTag
+                  type="custom"
+                  label={modelToOperationsMiscT('modal.editMilestone.custom')}
+                  tooltip={modelToOperationsMiscT(
+                    'modal.editMilestone.customTooltip'
+                  )}
+                />
+              )}
+            </div>
 
             <h2>{milestone.name}</h2>
 

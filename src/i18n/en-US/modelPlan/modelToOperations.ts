@@ -375,6 +375,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       removeMilestone: 'Remove milestone',
       noneSpecified: 'None specified',
       areYouSure: 'Are you sure you want to remove this milestone?',
+      customTooltip:
+        'As opposed to common milestones available in the MINT milestone library, custom milestones were created by this IT Lead and model team specifically for this model.',
       removeDescription:
         'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
       goBack: 'Go back',
