@@ -12,6 +12,7 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
+  useGetGlobalMtoCommonSolutionsQuery,
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
@@ -47,13 +48,11 @@ const SelectSolutionSettings = () => {
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
   const { data: solutionData, loading: solutionLoading } =
-    useGetGlobalMtoCommonMilestonesQuery();
-
-  console.log(solutionData);
+    useGetGlobalMtoCommonSolutionsQuery();
 
   // Sorts, filters, and formats the possible operational solutions for multiselect component
   const solutionOptions = useMemo(() => {
-    const solutions = solutionData?.modelPlan.mtoMatrix.commonSolutions || [];
+    const solutions = solutionData?.mtoCommonSolutions || [];
 
     return [...solutions]
       .sort((a, b) => a.name.localeCompare(b.name))
@@ -63,7 +62,7 @@ const SelectSolutionSettings = () => {
           value: solution.key
         };
       });
-  }, [solutionData?.modelPlan.mtoMatrix.commonSolutions]);
+  }, [solutionData?.mtoCommonSolutions]);
 
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<

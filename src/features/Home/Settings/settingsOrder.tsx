@@ -12,7 +12,7 @@ import {
 import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
-  OperationalSolutionKey,
+  MtoCommonSolutionKey,
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
@@ -88,14 +88,11 @@ const SettingsOrder = () => {
 
   // Sorts, and replaces any underscores within solution acronyms.  Returns an array of selected solutions acronyms or names
   const selectedSolutions = useMemo(() => {
-    const possibleOperationalSolutions =
-      data?.userViewCustomization.solutions || [];
+    const possibleSolutions = data?.userViewCustomization.solutions || [];
 
     return [...helpSolutions]
       .filter(solution =>
-        possibleOperationalSolutions.includes(
-          solution.enum as OperationalSolutionKey
-        )
+        possibleSolutions.includes(solution.enum as MtoCommonSolutionKey)
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);

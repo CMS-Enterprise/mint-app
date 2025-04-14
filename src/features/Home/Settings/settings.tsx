@@ -15,7 +15,7 @@ import NotFound from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
-  OperationalSolutionKey,
+  MtoCommonSolutionKey,
   useGetHomepageSettingsQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
@@ -61,14 +61,11 @@ const SettingsForm = () => {
 
   // Sorts, and replaces any underscores within solution acronyms.  Returns an array of selected solutions acronyms or names
   const selectedSolutions = useMemo(() => {
-    const possibleOperationalSolutions =
-      data?.userViewCustomization.possibleOperationalSolutions || [];
+    const possibleSolutions = data?.userViewCustomization.solutions || [];
 
     return [...helpSolutions]
       .filter(solution =>
-        possibleOperationalSolutions.includes(
-          solution.enum as OperationalSolutionKey
-        )
+        possibleSolutions.includes(solution.enum as MtoCommonSolutionKey)
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
