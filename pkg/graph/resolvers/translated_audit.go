@@ -46,3 +46,9 @@ func TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx context.Context,
 
 	return translatedAuditCollection, err
 }
+
+// MTOMostRecentTranslatedAudit returns the most recent translated audit for a given model plan id that is  about the MTO section
+func MTOMostRecentTranslatedAudit(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
+	numberOfRecords := 1
+	return TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx, store, logger, principal, modelPlanID, models.MTOTables, &numberOfRecords, nil)
+}
