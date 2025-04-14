@@ -1,0 +1,479 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MilestonePanel Component > renders correctly with milestone data 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container padding-8"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="grid-col-10"
+        data-testid="grid"
+      >
+        <div
+          class="display-flex"
+        />
+        <h2>
+          Milestone 1
+        </h2>
+        <p
+          class="margin-0 mint-body-normal text-base-dark"
+        >
+          Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.
+        </p>
+        <div
+          class="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4"
+        >
+          <div
+            class="grid-row margin-bottom-2"
+            data-testid="grid"
+          >
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="grid"
+            >
+              <dt
+                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
+              >
+                Category
+              </dt>
+              <dd
+                class="description-definition margin-0 font-body-md text-base-darkest"
+              >
+                Category 1
+              </dd>
+            </div>
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="grid"
+            >
+              <dt
+                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
+              >
+                Sub-category
+              </dt>
+              <dd
+                class="description-definition margin-0 font-body-md text-base-darkest"
+              >
+                SubCategory 1
+              </dd>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-bottom-2"
+            data-testid="grid"
+          >
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-12"
+              data-testid="grid"
+            >
+              <dt
+                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
+              >
+                Facilitated by
+              </dt>
+              <dd
+                class="description-definition margin-0 font-body-md text-base-darkest"
+              />
+            </div>
+          </div>
+          <div
+            class="grid-row margin-bottom-2"
+            data-testid="grid"
+          >
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="grid"
+            >
+              <dt
+                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
+              >
+                Need by
+              </dt>
+              <dd
+                class="description-definition margin-0 font-body-md text-base-darkest"
+              >
+                2021-08-01
+              </dd>
+            </div>
+          </div>
+          <div
+            class="grid-row margin-bottom-2"
+            data-testid="grid"
+          >
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="grid"
+            >
+              <dt
+                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
+              >
+                Status
+                <span
+                  class="usa-tooltip top-2px margin-left-1"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-755791"
+                    class="usa-tooltip__trigger mint-no-print"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                    wrapperclasses="top-2px margin-left-1"
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-755791"
+                    role="tooltip"
+                  >
+                    <div
+                      style="font-size: 0.875rem; font-weight: 400; padding: 0.5rem;"
+                    >
+                      Milestone progress statuses:
+                      <ul
+                        class="margin-0 padding-left-3"
+                      >
+                        <li>
+                          Not started: No work has started on any part of this milestone or any solution associated with it
+                        </li>
+                        <li>
+                          In progress: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)
+                        </li>
+                        <li>
+                          Completed: Work for this milestone and all of its selected solutions is finished
+                        </li>
+                      </ul>
+                    </div>
+                  </span>
+                </span>
+              </dt>
+              <dd
+                class="description-definition margin-0 font-body-md text-base-darkest"
+              >
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    Completed
+                  </span>
+                </div>
+              </dd>
+            </div>
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-6"
+              data-testid="grid"
+            >
+              <dt
+                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
+              >
+                Risk indicator
+                <span
+                  class="usa-tooltip top-2px margin-left-1"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-812399"
+                    class="usa-tooltip__trigger mint-no-print"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                    wrapperclasses="top-2px margin-left-1"
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-812399"
+                    role="tooltip"
+                  >
+                    <div
+                      style="font-size: 0.875rem; font-weight: 400; padding: 0.5rem;"
+                    >
+                      Risk indicators:
+                      <ul
+                        class="margin-0 padding-left-3"
+                      >
+                        <li>
+                          No risk (on track)
+                        </li>
+                        <li>
+                          Some risk (off track)
+                        </li>
+                        <li>
+                          Significantly at risk
+                        </li>
+                      </ul>
+                    </div>
+                  </span>
+                </span>
+              </dt>
+              <dd
+                class="description-definition margin-0 font-body-md text-base-darkest"
+              >
+                <div
+                  class="display-flex flex-align-end"
+                >
+                  <div
+                    class="margin-right-1"
+                  >
+                    Significantly at risk
+                  </div>
+                  <div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-791906"
+                        class="usa-tooltip__trigger"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon usa-icon--size-3 text-error-dark top-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-791906"
+                        role="tooltip"
+                        title="Significantly at risk"
+                      >
+                        Significantly at risk
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </dd>
+            </div>
+          </div>
+        </div>
+        <h3
+          class="margin-bottom-1"
+        >
+          1 selected solution
+        </h3>
+        <table
+          class="usa-table usa-table--borderless width-full margin-top-0"
+          data-testid="table"
+        >
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                class="padding-left-0 padding-bottom-0"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="width: auto;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Solution
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                class="padding-left-0 padding-bottom-0"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Status
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                class="padding-left-0 padding-bottom-0"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="width: auto;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  type="button"
+                >
+                  <svg
+                    class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                    />
+                  </svg>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="rowgroup"
+          >
+            <tr
+              role="row"
+            >
+              <td
+                class="padding-left-0"
+                role="cell"
+              >
+                Solution 1
+              </td>
+              <td
+                class="padding-left-0"
+                role="cell"
+              >
+                <div
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
+                  data-testid="tasklist-tag"
+                >
+                  <span>
+                    Completed
+                  </span>
+                </div>
+              </td>
+              <td
+                class="padding-left-0"
+                role="cell"
+              >
+                <div>
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-528043"
+                      class="usa-tooltip__trigger"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon usa-icon--size-3 text-error-dark top-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-528043"
+                      role="tooltip"
+                      title="Significantly at risk"
+                    >
+                      Significantly at risk
+                    </span>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
