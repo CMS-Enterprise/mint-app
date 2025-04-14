@@ -12,6 +12,9 @@
     border-radius: .5rem;
     font-size: 1.375em;
 
+    max-height: 90vh;
+    overflow: auto;
+
     @media screen and (min-width: $tablet) {
       width: 668px !important;
     }
