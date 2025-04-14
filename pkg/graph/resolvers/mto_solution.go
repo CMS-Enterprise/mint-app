@@ -297,6 +297,7 @@ func sendMTOSolutionSelectedEmails(
 		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
 		return nil
 	}
+	//TODO, we might benefit from a dataloader since this is added in multiple places
 	solSelectedDB, err := storage.GetMTOSolutionSelectedDetails(np, solution.ID)
 	if err != nil {
 		return err
@@ -313,7 +314,7 @@ func sendMTOSolutionSelectedEmails(
 		return nil // Don't send an email if there aren't any recipients (Note, custom solutions do not have pocs configured in the db)
 	}
 
-	//TODO, at this point, transform to get all the email addresses. Look at previous functionality, but also rely on the fact that this is a struct.
+	//TODO
 	// NOTE figma asks for the email to be sent to the POC in the to field, and all the others in the cc field.
 
 	pocEmailAddress, err := pocInfo.EmailAddresses(emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)

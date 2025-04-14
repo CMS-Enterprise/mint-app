@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -87,7 +88,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	suite.Len(categories, 1) // Just uncategorized
 
 	// Then, create a common milestone
-	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{}, plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
 	suite.NoError(err)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone.CreatedBy)
 	suite.Nil(milestone.ModifiedBy)
@@ -124,7 +125,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	// Finally, do the same, but ensure that if we would try to create a duplicate category by name, we fail silently
 	// For this example, models.MTOCommonMilestoneKeyAppSupportCon will attempt to create ('Operations','Internal functions'), but since
 	// the 'Operations' category already exists, we should only see a single new subcategory ('Internal functions')
-	milestone2, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID, models.MTOCommonMilestoneKeyAppSupportCon, []models.MTOCommonSolutionKey{})
+	milestone2, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{}, plan.ID, models.MTOCommonMilestoneKeyAppSupportCon, []models.MTOCommonSolutionKey{})
 	suite.NoError(err)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone2.CreatedBy)
 	suite.Nil(milestone2.ModifiedBy)
@@ -159,14 +160,18 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 	plan := suite.createModelPlan("testing common milestone creation")
 
 	// First, create a common milestone
-	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
+		plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
 	suite.NoError(err)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone.CreatedBy)
 	suite.Nil(milestone.ModifiedBy)
 	suite.Nil(milestone.ModifiedDts)
 
 	// Then, try to create another with the same Common Milestone key and expect a failure
-	milestoneDupe, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	milestoneDupe, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
+		plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
 	suite.Error(err)
 	suite.Nil(milestoneDupe)
 }
@@ -372,6 +377,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionI
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		milestone.ID,
 		map[string]interface{}{},
 		solutionLinks,
@@ -402,6 +408,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddByCommonKey
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		milestone.ID,
 		map[string]interface{}{},
 		solutionLinks,
@@ -452,6 +459,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		milestone.ID,
 		map[string]interface{}{},
 		solutionLinks,
@@ -467,6 +475,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		milestone.ID,
 		map[string]interface{}{},
 		solutionLinksEmpty,
@@ -496,6 +505,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		milestone.ID,
 		map[string]interface{}{},
 		solutionLinks,
@@ -511,6 +521,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		milestone.ID,
 		map[string]interface{}{},
 		solutionLinksEmpty,

@@ -6,7 +6,9 @@ import (
 
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -42,6 +44,9 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
 func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
 	commonSolutions []models.MTOCommonSolutionKey,
@@ -107,6 +112,9 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			principal,
 			logger,
 			tx,
+			emailService,
+			emailTemplateService,
+			addressBook,
 			createdMilestone.ID,
 			createdMilestone.ModelPlanID,
 			[]uuid.UUID{},
@@ -127,6 +135,9 @@ func MTOMilestoneUpdate(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	id uuid.UUID,
 	changes map[string]interface{},
 	solutionLinks *model.MTOSolutionLinks,
@@ -159,6 +170,9 @@ func MTOMilestoneUpdate(
 				principal,
 				logger,
 				tx,
+				emailService,
+				emailTemplateService,
+				addressBook,
 				id,
 				existing.ModelPlanID,
 				solutionLinks.SolutionIDs,
@@ -235,6 +249,9 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	principal authentication.Principal,
 	logger *zap.Logger,
 	tx *sqlx.Tx,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	milestoneID uuid.UUID,
 	modelPlanID uuid.UUID,
 	solutionIDs []uuid.UUID,
@@ -258,17 +275,17 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 		return item.NewlyInserted
 	})
 	if len(newlyInserted) > 0 {
-		// for _, solution := range newlyInserted {
-		// 	go func() {
-		// 		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
-		// 		if sendEmailErr != nil {
-		// 			logger.Error("error sending solution selected emails",
-		// 				zap.Any("solution", solution.Key),
-		// 				zap.Error(sendEmailErr))
-		// 		}
-		// 	}()
+		for _, solution := range newlyInserted {
+			go func() {
+				sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+				if sendEmailErr != nil {
+					logger.Error("error sending solution selected emails",
+						zap.Any("solution", solution.Key),
+						zap.Error(sendEmailErr))
+				}
+			}()
 
-		// }
+		}
 		// TODO, send email
 	}
 
@@ -282,6 +299,9 @@ func MTOMilestoneUpdateLinkedSolutions(
 	principal authentication.Principal,
 	logger *zap.Logger,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	id uuid.UUID,
 	solutionIDs []uuid.UUID,
 	commonSolutionKeys []models.MTOCommonSolutionKey,
@@ -297,7 +317,11 @@ func MTOMilestoneUpdateLinkedSolutions(
 	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 
-		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx,
+			emailService,
+			emailTemplateService,
+			addressBook,
+			id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
 		if err != nil {
 			return err
 		}

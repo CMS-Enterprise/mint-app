@@ -54,7 +54,7 @@ func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPl
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, modelPlanID, commonMilestoneKey, commonSolutions)
+	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, modelPlanID, commonMilestoneKey, commonSolutions)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.
@@ -62,7 +62,7 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return MTOMilestoneUpdate(ctx, logger, principal, r.store, id, changes, solutionLinks)
+	return MTOMilestoneUpdate(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, changes, solutionLinks)
 }
 
 // DeleteMTOMilestone is the resolver for the deleteMTOMilestone field.
@@ -83,6 +83,7 @@ func (r *mutationResolver) MtoMilestoneUpdateLinkedSolutions(ctx context.Context
 		principal,
 		logger,
 		r.store,
+		r.emailService, r.emailTemplateService, r.addressBook,
 		id,
 		solutionLinks.SolutionIDs,
 		solutionLinks.CommonSolutionKeys,

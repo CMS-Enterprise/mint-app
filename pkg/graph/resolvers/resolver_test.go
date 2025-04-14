@@ -400,6 +400,7 @@ func (suite *ResolverSuite) createMilestoneCommon(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil, nil, email.AddressBook{},
 		planID,
 		commonMilestoneKey,
 		commonSolutions,
