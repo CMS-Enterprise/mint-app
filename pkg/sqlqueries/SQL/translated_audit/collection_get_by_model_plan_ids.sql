@@ -25,6 +25,11 @@ WHERE
         ( tAudit.restricted = FALSE AND :restricted_access = FALSE ) --user does not have access to restricted audits, only show non-restricted
         OR :restricted_access = TRUE --show all audits if the user has access to restricted audits
     )
+    AND ( --If there are no table names provided (nil or empty array), show all audits, else filter by table names
+        :table_names IS NULL
+        OR cardinality(:table_names) = 0
+        OR table_config.name = any(:table_names)
+    )
 ORDER BY tAudit.change_id DESC
 LIMIT
     :limit_count
