@@ -52,6 +52,10 @@ func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.Rece
 	if err != nil {
 		return nil, err
 	}
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
 
 	var baseStructs []models.IBaseStruct
 	for _, category := range categories {
@@ -59,6 +63,9 @@ func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.Rece
 	}
 	for _, milestone := range milestones {
 		baseStructs = append(baseStructs, milestone)
+	}
+	for _, solution := range solutions {
+		baseStructs = append(baseStructs, solution)
 	}
 	mostRecentTime, mostRecentUserUUID := models.GetMostRecentTime(baseStructs)
 	if mostRecentUserUUID == uuid.Nil {
@@ -69,15 +76,6 @@ func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.Rece
 	recentModified := models.NewRecentModification(mostRecentUserUUID, mostRecentTime)
 
 	return &recentModified, nil
-
-	// TODO (mto) add when solution loaders are implemented
-	// solutions, err := MTOSolutionGetByModelPlanIDLOADER(ctx, modelPlanID)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// if len(solutions) > 0 {
-	// 	return models.MTOStatusInProgress, nil
-	// }
 
 }
 
