@@ -5,9 +5,6 @@ export default gql(/* GraphQL */ `
     mtoCommonSolutions {
       name
       key
-      type
-      subjects
-      isAdded
     }
   }
 `);

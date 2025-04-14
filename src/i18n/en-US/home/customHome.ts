@@ -46,7 +46,7 @@ const settings: HomepageSettingsType = {
   [ViewCustomizationType.MODELS_BY_SOLUTION]: {
     heading: 'Models using specific solutions',
     description:
-      'This tabbed section displays the models using the solutions you care about.',
+      'This tabbed section displays the models using the IT systems and solutions you care about.',
     noResultsHeading:
       'It looks like you forgot to select at least one solution.',
     noResultsDescription: 'Select solutions'
