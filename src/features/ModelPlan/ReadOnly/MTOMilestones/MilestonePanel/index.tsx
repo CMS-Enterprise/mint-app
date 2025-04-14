@@ -1,12 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  Controller,
-  FormProvider,
-  SubmitHandler,
-  useForm
-} from 'react-hook-form';
-import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -16,71 +10,33 @@ import {
   useTable
 } from 'react-table';
 import {
-  Button,
-  Fieldset,
-  Form,
-  FormGroup,
   Grid,
   GridContainer,
   Icon,
-  Label,
-  Radio,
-  Select,
-  Table as UswdsTable,
-  TextInput
+  Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import MTORiskIndicatorTag from 'features/ModelPlan/ModelToOperations/_components/MTORiskIndicatorIcon';
 import MilestoneStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
 import MTOTag from 'features/ModelPlan/ModelToOperations/_components/MTOTag';
 import {
-  GetModelToOperationsMatrixDocument,
-  GetMtoAllSolutionsQuery,
   GetMtoMilestoneQuery,
-  MtoCommonSolutionKey,
-  MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator,
-  MtoSolution,
-  MtoSolutionStatus,
-  useDeleteMtoMilestoneMutation,
-  useGetMtoAllSolutionsQuery,
-  useGetMtoMilestoneQuery,
-  useUpdateMtoMilestoneMutation
+  useGetMtoMilestoneQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import CheckboxField from 'components/CheckboxField';
-import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
-import DatePickerFormatted from 'components/DatePickerFormatted';
-import DatePickerWarning from 'components/DatePickerWarning';
 import {
   DescriptionDefinition,
   DescriptionTerm
 } from 'components/DescriptionGroup';
-import FieldErrorMsg from 'components/FieldErrorMsg';
-import HelpText from 'components/HelpText';
-import Modal from 'components/Modal';
-import MultiSelect from 'components/MultiSelect';
-import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import Tooltip from 'components/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import { isDateInPast } from 'utils/date';
-import dirtyInput, { symmetricDifference } from 'utils/formUtil';
-import {
-  composeMultiSelectOptions,
-  convertCamelCaseToKebabCase
-} from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
-
-// import '../../index.scss';
 
 export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 
@@ -91,16 +47,11 @@ type EditMilestoneFormProps = {
 const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
-  const { t: generalT } = useTranslation('general');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
-  const {
-    facilitatedBy: facilitatedByConfig,
-    status: stausConfig,
-    riskIndicator: riskIndicatorConfig
-  } = usePlanTranslation('mtoMilestone');
+  const { status: stausConfig, riskIndicator: riskIndicatorConfig } =
+    usePlanTranslation('mtoMilestone');
 
   const history = useHistory();
 

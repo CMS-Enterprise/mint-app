@@ -34,11 +34,13 @@ const milestone: MilestoneType = {
     __typename: 'MTOCategories',
     category: {
       __typename: 'MTOCategory',
-      id: '1'
+      id: '1',
+      name: 'Category 1'
     },
     subCategory: {
       __typename: 'MTOSubcategory',
-      id: '2'
+      id: '2',
+      name: 'Subcategory 1'
     }
   },
   commonMilestone: {
