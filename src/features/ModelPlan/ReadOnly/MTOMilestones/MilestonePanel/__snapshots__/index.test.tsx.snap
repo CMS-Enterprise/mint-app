@@ -118,7 +118,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-755791"
+                    aria-describedby="tooltip-550000"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     position="right"
@@ -144,7 +144,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-755791"
+                    id="tooltip-550000"
                     role="tooltip"
                   >
                     <div
@@ -194,7 +194,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-812399"
+                    aria-describedby="tooltip-550000"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     position="right"
@@ -220,7 +220,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-812399"
+                    id="tooltip-550000"
                     role="tooltip"
                   >
                     <div
@@ -261,7 +261,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-791906"
+                        aria-describedby="tooltip-550000"
                         class="usa-tooltip__trigger"
                         data-testid="triggerElement"
                         position="right"
@@ -286,7 +286,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-791906"
+                        id="tooltip-550000"
                         role="tooltip"
                         title="Significantly at risk"
                       >
@@ -435,7 +435,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-528043"
+                      aria-describedby="tooltip-550000"
                       class="usa-tooltip__trigger"
                       data-testid="triggerElement"
                       position="right"
@@ -460,7 +460,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-528043"
+                      id="tooltip-550000"
                       role="tooltip"
                       title="Significantly at risk"
                     >
