@@ -47,7 +47,7 @@ import SolutionViewSelector from '../SolutionViewSelector';
 export type SolutionType =
   GetMtoSolutionsAndMilestonesQuery['modelPlan']['mtoMatrix']['solutions'][0];
 
-const ITSystemsTable = () => {
+const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
 
@@ -63,12 +63,14 @@ const ITSystemsTable = () => {
     EditMTOSolutionContext
   );
 
+  const paramType = readView ? 'type' : 'view';
+
   const hideMilestonesWithoutSolutions =
     params.get('hide-milestones-without-solutions') === 'true';
 
   let viewParam: SolutionViewType = 'all';
 
-  if (params.get('view')) {
+  if (params.get(paramType)) {
     const view = params.get('type') as SolutionViewType;
     if (['all', 'it-systems', 'contracts', 'other-solutions'].includes(view)) {
       viewParam = view;
@@ -184,7 +186,11 @@ const ITSystemsTable = () => {
         accessor: 'name',
         width: 250,
         Cell: ({ row }: any) => {
-          if (row.original.__typename === 'MTOMilestone')
+          if (row.original.__typename === 'MTOMilestone') {
+            if (readView) {
+              return <div className="text-italic">{t('table.noneAdded')}</div>;
+            }
+
             return (
               <Button
                 type="button"
@@ -204,6 +210,7 @@ const ITSystemsTable = () => {
                 <Icon.ArrowForward className="top-05 margin-left-05" />
               </Button>
             );
+          }
 
           const mappedSolution = helpSolutions.find(
             s => s.enum === row.original.key
@@ -344,8 +351,17 @@ const ITSystemsTable = () => {
     openEditSolutionModal,
     setSolutionID,
     mtoSolutionT,
+    readView,
     history
   ]);
+
+  const filteredColumns = useMemo(() => {
+    if (readView) {
+      // Remove the Actions from the columns array if in readview
+      return columns.slice(0, -1);
+    }
+    return columns;
+  }, [readView, columns]);
 
   const {
     getTableProps,
@@ -365,7 +381,7 @@ const ITSystemsTable = () => {
     prepareRow
   } = useTable(
     {
-      columns,
+      columns: filteredColumns,
       data: filteredView,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
@@ -479,9 +495,11 @@ const ITSystemsTable = () => {
         </thead>
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
+            // need to destructure row and getRowProps to avoid TS error for prop-types
+            const { getRowProps, cells, id } = { ...row };
             return (
-              <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map((cell, i) => {
+              <tr {...getRowProps()} key={id}>
+                {cells.map((cell, i) => {
                   if (i === 0) {
                     return (
                       <th

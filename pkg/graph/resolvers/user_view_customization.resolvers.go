@@ -33,9 +33,9 @@ func (r *userViewCustomizationResolver) ViewCustomization(ctx context.Context, o
 	return models.ConvertEnums[models.ViewCustomizationType](obj.ViewCustomization), nil
 }
 
-// PossibleOperationalSolutions is the resolver for the possibleOperationalSolutions field.
-func (r *userViewCustomizationResolver) PossibleOperationalSolutions(ctx context.Context, obj *models.UserViewCustomization) ([]models.OperationalSolutionKey, error) {
-	return models.ConvertEnums[models.OperationalSolutionKey](obj.PossibleOperationalSolutions), nil
+// Solutions is the resolver for the solutions field.
+func (r *userViewCustomizationResolver) Solutions(ctx context.Context, obj *models.UserViewCustomization) ([]models.MTOCommonSolutionKey, error) {
+	return models.ConvertEnums[models.MTOCommonSolutionKey](obj.Solutions), nil
 }
 
 // UserViewCustomization returns generated.UserViewCustomizationResolver implementation.

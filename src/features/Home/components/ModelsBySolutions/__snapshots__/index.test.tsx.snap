@@ -128,7 +128,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
           class="usa-input"
           data-testid="textInput"
           id="models-by-solution-table-search"
-          name="Models using specific operational solutions Search"
+          name="Models using specific solutions Search"
           role="searchbox"
           type="search"
           value=""

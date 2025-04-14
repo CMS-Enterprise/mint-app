@@ -15,6 +15,8 @@ import allMocks, {
 import VerboseMockedProvider from 'tests/MockedProvider';
 import setup from 'tests/util';
 
+import MessageProvider from 'contexts/MessageContext';
+
 import ShareExportModal from './index';
 
 const mockStore = configureMockStore();
@@ -44,12 +46,14 @@ describe('ShareExportModal', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/read-only/model-basics">
-              <ShareExportModal
-                modelID={modelID}
-                closeModal={() => null}
-                filteredView="ccw"
-                setStatusMessage={() => null}
-              />
+              <MessageProvider>
+                <ShareExportModal
+                  modelID={modelID}
+                  closeModal={() => null}
+                  filteredView="ccw"
+                  setStatusMessage={() => null}
+                />
+              </MessageProvider>
             </Route>
           </VerboseMockedProvider>
         </MemoryRouter>
@@ -102,11 +106,13 @@ describe('ShareExportModal', () => {
             addTypename={false}
           >
             <Route path="/models/:modelID/read-only/model-basics">
-              <ShareExportModal
-                modelID={modelID}
-                closeModal={() => null}
-                setStatusMessage={() => null}
-              />
+              <MessageProvider>
+                <ShareExportModal
+                  modelID={modelID}
+                  closeModal={() => null}
+                  setStatusMessage={() => null}
+                />
+              </MessageProvider>
             </Route>
           </VerboseMockedProvider>
         </MemoryRouter>
