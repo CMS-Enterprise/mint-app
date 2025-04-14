@@ -73,3 +73,8 @@ type MTOCommonSolution {
   # isSuggested: Boolean! # TODO (mto) Is this needed?
 
 }
+
+extend type Query {
+  mtoCommonSolutions: [MTOCommonSolution!]!
+  @hasRole(role: MINT_USER)
+}

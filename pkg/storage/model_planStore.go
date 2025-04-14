@@ -402,6 +402,16 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	return sqlResult, nil
 
 }
+func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
+	args := map[string]interface{}{
+		"mto_common_solution_key": key,
+	}
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndMTOCommonSolution](np, sqlqueries.ModelPlan.GetByMTOSolutionKey, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
 
 func (s *Store) ModelPlanGetByOperationalSolutionKey(
 	logger *zap.Logger,

@@ -43,12 +43,12 @@ const settings: HomepageSettingsType = {
     noResultsHeading: 'There are no Models approaching clearance.',
     noResultsDescription: 'Check back later.'
   },
-  [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
-    heading: 'Models using specific operational solutions',
+  [ViewCustomizationType.MODELS_BY_SOLUTION]: {
+    heading: 'Models using specific solutions',
     description:
-      'This tabbed section displays the models using the operational solutions you care about.',
+      'This tabbed section displays the models using the IT systems and solutions you care about.',
     noResultsHeading:
-      'It looks like you forgot to select at least one operational solution.',
+      'It looks like you forgot to select at least one solution.',
     noResultsDescription: 'Select solutions'
   }
 };

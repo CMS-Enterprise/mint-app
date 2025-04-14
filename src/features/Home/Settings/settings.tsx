@@ -15,7 +15,7 @@ import NotFound from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
-  OperationalSolutionKey,
+  MtoCommonSolutionKey,
   useGetHomepageSettingsQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
@@ -61,14 +61,11 @@ const SettingsForm = () => {
 
   // Sorts, and replaces any underscores within solution acronyms.  Returns an array of selected solutions acronyms or names
   const selectedSolutions = useMemo(() => {
-    const possibleOperationalSolutions =
-      data?.userViewCustomization.possibleOperationalSolutions || [];
+    const possibleSolutions = data?.userViewCustomization.solutions || [];
 
     return [...helpSolutions]
       .filter(solution =>
-        possibleOperationalSolutions.includes(
-          solution.enum as OperationalSolutionKey
-        )
+        possibleSolutions.includes(solution.enum as MtoCommonSolutionKey)
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
@@ -194,9 +191,9 @@ const SettingsForm = () => {
                               {settingOptions[settionOption].description}
                             </p>
 
-                            {/* If MODELS_BY_OPERATIONAL_SOLUTION and no selected solutions render out a link to add solutions  */}
+                            {/* If MODELS_BY_SOLUTION and no selected solutions render out a link to add solutions  */}
                             {settionOption ===
-                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                              ViewCustomizationType.MODELS_BY_SOLUTION &&
                               selectedSolutions.length === 0 && (
                                 <UswdsReactLink
                                   to={{
@@ -215,9 +212,9 @@ const SettingsForm = () => {
                                 </UswdsReactLink>
                               )}
 
-                            {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solution and link to update  */}
+                            {/* If MODELS_BY_SOLUTION selected solutions, render solution and link to update  */}
                             {settionOption ===
-                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                              ViewCustomizationType.MODELS_BY_SOLUTION &&
                               selectedSolutions.length > 0 && (
                                 <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
                                   <p

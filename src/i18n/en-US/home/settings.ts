@@ -31,10 +31,10 @@ const settings: HomepageSettingsType = {
     description:
       'This simplified section displays the models within six months of clearance organized chronologically.'
   },
-  [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
-    heading: 'Models using specific operational solutions',
+  [ViewCustomizationType.MODELS_BY_SOLUTION]: {
+    heading: 'Models using specific solutions',
     description:
-      'This tabbed section displays the models using the operational solutions you care about.'
+      'This tabbed section displays the models using the IT systems and solutions you care about.'
   }
 };
 
@@ -65,10 +65,10 @@ const homepageSettings = {
     'There was a problem saving your selected solutions. Please try again.',
   settingsError:
     'There was a problem saving your selected settings. Please try again.',
-  solutionsHeading: 'Select operational solutions',
+  solutionsHeading: 'Select solutions',
   solutionDescription:
-    'Models using the operational solutions chosen below will show in a tabbed section.',
-  operationalSolutions: 'Operational solutions',
+    'Models using the IT systems and solutions chosen below will show in a tabbed section.',
+  operationalSolutions: 'Solutions',
   startTyping: 'Start typing the name of the solution',
   multiselectLabel: 'Solutions',
   save: 'Save',

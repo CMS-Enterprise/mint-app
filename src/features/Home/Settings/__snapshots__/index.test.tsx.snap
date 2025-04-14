@@ -386,16 +386,16 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                     <input
                       class="usa-checkbox__input"
                       disabled=""
-                      id="MODELS_BY_OPERATIONAL_SOLUTION"
+                      id="MODELS_BY_SOLUTION"
                       name="viewCustomization"
                       type="checkbox"
-                      value="MODELS_BY_OPERATIONAL_SOLUTION"
+                      value="MODELS_BY_SOLUTION"
                     />
                     <label
                       class="usa-checkbox__label"
-                      for="MODELS_BY_OPERATIONAL_SOLUTION"
+                      for="MODELS_BY_SOLUTION"
                     >
-                      Models using specific operational solutions
+                      Models using specific solutions
                     </label>
                     <p
                       class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
@@ -404,7 +404,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                   <p
                     class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
                   >
-                    This tabbed section displays the models using the operational solutions you care about.
+                    This tabbed section displays the models using the IT systems and solutions you care about.
                   </p>
                   <a
                     class="usa-link padding-left-4 text-bold display-flex flex-align-center margin-top-1"
@@ -535,7 +535,7 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
               class="usa-breadcrumb__list-item usa-current"
             >
               <span>
-                Select operational solutions
+                Select solutions
               </span>
             </li>
           </ol>
@@ -543,12 +543,12 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
         <h1
           class="margin-bottom-2"
         >
-          Select operational solutions
+          Select solutions
         </h1>
         <p
           class="font-body-lg margin-top-0 margin-bottom-4"
         >
-          Models using the operational solutions chosen below will show in a tabbed section.
+          Models using the IT systems and solutions chosen below will show in a tabbed section.
         </p>
         <div
           class="margin-top-8"

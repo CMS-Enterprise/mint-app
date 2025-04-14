@@ -21,6 +21,11 @@ func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj 
 	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)
 }
 
+// MtoCommonSolutions is the resolver for the mtoCommonSolutions field.
+func (r *queryResolver) MtoCommonSolutions(ctx context.Context) ([]*models.MTOCommonSolution, error) {
+	return MTOCommonSolutionGetByModelPlanIDLOADER(ctx, nil)
+}
+
 // MTOCommonSolution returns generated.MTOCommonSolutionResolver implementation.
 func (r *Resolver) MTOCommonSolution() generated.MTOCommonSolutionResolver {
 	return &mTOCommonSolutionResolver{r}
