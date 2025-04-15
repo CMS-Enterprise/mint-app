@@ -29,9 +29,10 @@ const mtoCardMock: MtoCardProps = {
       id: '123'
     },
     recentEdit: {
-      __typename: 'RecentModification',
-      modifiedDts: null,
-      modifiedByUserAccount: null
+      __typename: 'TranslatedAudit',
+      id: '1',
+      date: '2022-05-12T15:01:39.190679Z',
+      actorName: ''
     },
     milestones: [
       {
@@ -68,11 +69,8 @@ describe('MTO Card', () => {
   it('displays the last modified date and user avatar when modifiedDts and modifiedByUserAccount are provided', () => {
     const modifiedMock = { ...mtoCardMock };
     if (modifiedMock.mtoMatrix.recentEdit) {
-      modifiedMock.mtoMatrix.recentEdit.modifiedDts = '2023-10-01T00:00:00Z';
-      modifiedMock.mtoMatrix.recentEdit.modifiedByUserAccount = {
-        __typename: 'UserAccount',
-        commonName: 'John Doe'
-      };
+      modifiedMock.mtoMatrix.recentEdit.date = '2023-10-01T00:00:00Z';
+      modifiedMock.mtoMatrix.recentEdit.actorName = 'John Doe';
     }
 
     render(

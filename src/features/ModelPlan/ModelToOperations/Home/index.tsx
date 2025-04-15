@@ -116,9 +116,7 @@ const MTOHome = () => {
                 <div className="margin-bottom-3">
                   <MTOStatusBanner
                     status={modelToOperationsMatrix?.status}
-                    lastUpdated={
-                      modelToOperationsMatrix?.recentEdit?.modifiedDts
-                    }
+                    lastUpdated={modelToOperationsMatrix?.recentEdit?.date}
                   />
                 </div>
               )}

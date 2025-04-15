@@ -46,12 +46,9 @@ export default gql(/* GraphQL */ `
           isAdded
         }
         recentEdit {
-          id: modifiedBy
-          modifiedByUserAccount {
-            id
-            commonName
-          }
-          modifiedDts
+          id
+          date
+          actorName
         }
       }
     }

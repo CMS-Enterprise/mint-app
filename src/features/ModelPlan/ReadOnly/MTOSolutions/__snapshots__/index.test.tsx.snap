@@ -44,13 +44,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
           </div>
           <div
             class="display-flex flex-align-center flex-wrap margin-right-1"
-          >
-            <p
-              class="margin-y-0 text-normal margin-right-1 text-base"
-            >
-              Last updated on 05/12/2022
-            </p>
-          </div>
+          />
         </div>
       </div>
     </div>

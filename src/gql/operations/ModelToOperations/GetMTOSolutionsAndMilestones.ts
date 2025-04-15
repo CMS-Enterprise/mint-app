@@ -7,7 +7,8 @@ export default gql(/* GraphQL */ `
       mtoMatrix {
         status
         recentEdit {
-          modifiedDts
+          id
+          date
         }
         # Used to cache the mto matrix - always include
         info {

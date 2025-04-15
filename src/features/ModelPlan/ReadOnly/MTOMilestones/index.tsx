@@ -51,7 +51,7 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
         isViewingFilteredView={false}
         status={modelToOperationsMatrix.status}
         modelID={modelID}
-        modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.modifiedDts}
+        modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 
       {hasNoMilestones ? (
