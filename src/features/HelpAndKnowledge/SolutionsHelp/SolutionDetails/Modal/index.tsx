@@ -6,6 +6,7 @@ import { subComponentsProps } from 'features/ModelPlan/ReadOnly';
 import MobileNav from 'features/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'features/ModelPlan/ReadOnly/_components/Sidenav';
 import { NotFoundPartial } from 'features/NotFound';
+import { set } from 'lodash';
 
 import Alert from 'components/Alert';
 import Sidepanel from 'components/Sidepanel';
@@ -72,6 +73,7 @@ const SolutionDetailsModal = ({
   const params = new URLSearchParams(location.search);
   const milestoneParam = params.get('milestone');
   const solutionParam = params.get('solution');
+  const readViewParam = params.get('view-solution');
   const selectSolutions = params.get('select-solutions');
   const section = params.get('section') || 'about';
 
@@ -103,7 +105,14 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
-    history.push(prevRoute || setCloseRoute, {
+    let closeModalRoute = prevRoute || setCloseRoute;
+
+    // Return to read view if opened from there
+    if (readViewParam) {
+      closeModalRoute = `${closeModalRoute}?view-solution=${readViewParam}`;
+    }
+
+    history.push(closeModalRoute, {
       fromModal: true
     });
   };
@@ -121,7 +130,7 @@ const SolutionDetailsModal = ({
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
         overlayClassName={
-          (milestoneParam && solutionParam) || selectSolutions
+          (milestoneParam && solutionParam) || selectSolutions || readViewParam
             ? 'bg-transparent'
             : ''
         }

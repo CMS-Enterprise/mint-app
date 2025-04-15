@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TranslationMTOSolutionCustom } from 'types/translation';
 
 import {
@@ -67,6 +69,16 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dbField: 'risk_indicator',
     label: 'Risk Indicator',
     sublabel: 'Choose the applicable risk status for this solution.',
+    questionTooltip: (
+      <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
+        Risk indicators:
+        <ul className="margin-0 padding-left-3">
+          <li>No risk (on track)</li>
+          <li>Some risk (off track)</li>
+          <li>Significantly at risk</li>
+        </ul>
+      </div>
+    ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
@@ -81,6 +93,26 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'Status',
     dbField: 'status',
     label: 'Status',
+    questionTooltip: (
+      <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
+        Solution implementation statuses:
+        <ul className="margin-0 padding-left-3">
+          <li>
+            Not started: No work has started on this IT system or solution
+          </li>
+          <li>
+            Onboarding: Work is being planned related to this model (e.g.,
+            contract modification, change request, onboarding request, etc.)
+          </li>
+          <li>Backlog: Model work is on the project team’s backlog</li>
+          <li>
+            In progress: Work for this model is in progress (e.g., development,
+            configuration, testing, etc.)
+          </li>
+          <li>Completed: Work related to this model is finished</li>
+        </ul>
+      </div>
+    ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {

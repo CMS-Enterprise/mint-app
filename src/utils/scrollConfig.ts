@@ -10,6 +10,7 @@ const scrollBlackList: string[] = [
   '&add-milestone=',
   '?edit-milestone=',
   '?view-milestone=',
+  '?view-solution=',
   '&scroll-to-bottom',
   '&hide-added-milestones',
   '&type=',
