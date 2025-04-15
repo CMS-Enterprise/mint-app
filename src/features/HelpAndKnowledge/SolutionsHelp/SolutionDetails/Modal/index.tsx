@@ -6,7 +6,6 @@ import { subComponentsProps } from 'features/ModelPlan/ReadOnly';
 import MobileNav from 'features/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'features/ModelPlan/ReadOnly/_components/Sidenav';
 import { NotFoundPartial } from 'features/NotFound';
-import { set } from 'lodash';
 
 import Alert from 'components/Alert';
 import Sidepanel from 'components/Sidepanel';
