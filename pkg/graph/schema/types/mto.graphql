@@ -24,12 +24,6 @@ type ModelsToOperationMatrix {
 }
 
 
-# type RecentModification {
-#   modifiedBy: UUID
-#   modifiedByUserAccount: UserAccount
-#   modifiedDts: Time
-# }
-
 enum MTOStatus {
   READY
   IN_PROGRESS
