@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
@@ -12,6 +12,7 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { MTOMilestonePanelContext } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalState } from 'contexts/MTOModalContext';
 import { formatDateUtc } from 'utils/date';
 
@@ -212,7 +213,35 @@ export const columns: ColumnType[] = [
     accessor: 'name',
     width: '200px',
     sort: sortNested,
-    Cell: ({ row, rowType, expanded }: RowProps) => {
+    Cell: ({
+      row,
+      rowType,
+      expanded,
+      clearMessage,
+      setMTOModalOpen,
+      setMTOModalState,
+      initLocation,
+      search,
+      readView
+    }: ExtendedRowProps) => {
+      const { openEditMilestoneModal, setMilestoneID } = useContext(
+        MTOMilestonePanelContext
+      );
+
+      if (readView) {
+        return (
+          <Button
+            type="button"
+            unstyled
+            onClick={() => {
+              openEditMilestoneModal(row.id);
+              setMilestoneID(row.id);
+            }}
+          >
+            {row.name}
+          </Button>
+        );
+      }
       return <>{row.name}</>;
     }
   },

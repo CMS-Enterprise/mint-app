@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { TranslationMTOMilestoneCustom } from 'types/translation';
 
 import {
@@ -23,6 +25,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     label: 'Check if this milestone is a draft milestone',
     sublabel:
       'The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
+    questionTooltip:
+      'The "draft" indicator indicates that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
     exportLabel: 'Is this a draft milestone?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
@@ -80,6 +84,26 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'Status',
     dbField: 'status',
     label: 'Status',
+    questionTooltip: (
+      <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
+        Milestone progress statuses:
+        <ul className="margin-0 padding-left-3">
+          <li>
+            Not started: No work has started on any part of this milestone or
+            any solution associated with it
+          </li>
+          <li>
+            In progress: Work for this milestone and/or any of its selected
+            solutions is in progress (e.g., coordination, development,
+            configuration, testing, etc.)
+          </li>
+          <li>
+            Completed: Work for this milestone and all of its selected solutions
+            is finished
+          </li>
+        </ul>
+      </div>
+    ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     order: 1.05,
@@ -96,6 +120,16 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     label: 'Risk indicator',
     sublabel:
       'Select the risk level for this milestone. This will help you and your team identify potential risks and plan accordingly.',
+    questionTooltip: (
+      <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
+        Risk indicators:
+        <ul className="margin-0 padding-left-3">
+          <li>No risk (on track)</li>
+          <li>Some risk (off track)</li>
+          <li>Significantly at risk</li>
+        </ul>
+      </div>
+    ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     order: 1.06,
