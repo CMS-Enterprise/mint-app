@@ -17,7 +17,9 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
         <div
           class="display-flex"
         />
-        <h2>
+        <h2
+          class="line-height-large margin-top-1"
+        >
           Milestone 1
         </h2>
         <p

@@ -231,13 +231,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             <td
               class="padding-1 line-height-normal padding-left-0"
             >
-              <button
-                class="usa-button usa-button--unstyled"
-                data-testid="button"
-                type="button"
-              >
-                Uncategorized
-              </button>
+              Uncategorized
             </td>
             <td
               class="padding-1 line-height-normal padding-left-0"
@@ -276,13 +270,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             <td
               class="padding-1 line-height-normal padding-left-0"
             >
-              <button
-                class="usa-button usa-button--unstyled"
-                data-testid="button"
-                type="button"
-              >
-                Uncategorized
-              </button>
+              Uncategorized
             </td>
             <td
               class="padding-1 line-height-normal padding-left-0"
