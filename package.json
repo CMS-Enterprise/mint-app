@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.13.6",
+    "@apollo/client": "^3.13.7",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@json2csv/formatters": "^7.0.6",
     "@json2csv/plainjs": "^7.0.6",
@@ -185,7 +185,7 @@
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^2.1.9",
-    "webpack": "^5.98.0"
+    "webpack": "^5.99.5"
   },
   "resolutions": {
     "prismjs": "1.24.0",
