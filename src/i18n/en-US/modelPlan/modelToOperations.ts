@@ -444,6 +444,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       unsavedChanges_other: '{{count}} unsaved changes',
       removeSolution: 'Remove solution',
       noneSpecified: 'None specified',
+      noMilestonesTable:
+        'This solution is not yet related to any specific model milestones.',
       areYouSure: 'Are you sure you want to remove this solution?',
       removeDescription:
         'This action cannot be undone. You may add this solution again from the solution library, but you will lose any changes you have made. Any milestones associated with this solution will remain visible in the milestone view of your MTO, but will no longer be related to this solution.',

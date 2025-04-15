@@ -38,6 +38,7 @@ import TablePagination from 'components/TablePagination';
 import Tooltip from 'components/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateUtc } from 'utils/date';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 export type SolutionType = GetMtoSolutionQuery['mtoSolution'];
@@ -244,7 +245,11 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                   />
                   <DescriptionDefinition
                     className="font-body-md text-base-darkest"
-                    definition={solution.neededBy || NoneSpecified}
+                    definition={
+                      solution.neededBy
+                        ? formatDateUtc(solution.neededBy, 'MM/dd/yyyy')
+                        : NoneSpecified
+                    }
                   />
                 </Grid>
               </Grid>
@@ -408,7 +413,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
               </>
             ) : (
               <Alert type="info" slim className="margin-bottom-2">
-                {modelToOperationsMiscT('modal.editSolution.noSolutionsTable')}
+                {modelToOperationsMiscT('modal.editSolution.noMilestonesTable')}
               </Alert>
             )}
           </Grid>

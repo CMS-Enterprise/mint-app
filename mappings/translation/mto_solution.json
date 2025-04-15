@@ -59,6 +59,65 @@
     "dbField": "risk_indicator",
     "label": "Risk Indicator",
     "sublabel": "Choose the applicable risk status for this solution.",
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "style": {
+          "fontSize": "0.875rem",
+          "fontWeight": 400,
+          "padding": "0.5rem"
+        },
+        "children": [
+          "Risk indicators:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "No risk (on track)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Some risk (off track)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Significantly at risk"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    },
     "dataType": "ENUM",
     "formType": "SELECT",
     "options": {
@@ -73,6 +132,85 @@
     "goField": "Status",
     "dbField": "status",
     "label": "Status",
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "style": {
+          "fontSize": "0.875rem",
+          "fontWeight": 400,
+          "padding": "0.5rem"
+        },
+        "children": [
+          "Solution implementation statuses:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Not started: No work has started on this IT system or solution"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Onboarding: Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Backlog: Model work is on the project team’s backlog"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "In progress: Work for this model is in progress (e.g., development, configuration, testing, etc.)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Completed: Work related to this model is finished"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    },
     "dataType": "ENUM",
     "formType": "SELECT",
     "options": {
