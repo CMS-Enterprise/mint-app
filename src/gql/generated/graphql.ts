@@ -1296,6 +1296,10 @@ export type ModelsToOperationMatrix = {
   info: MtoInfo;
   milestones: Array<MtoMilestone>;
   milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
+  /**
+   * RecentEdit returns the most recent translated audit for the MTO
+   * Note, this should not be called when fetching a list of model plans as it is not data loaded
+   */
   recentEdit?: Maybe<TranslatedAudit>;
   /**
    * Solutions returns solutions that are linked to a Model Plan's MTO.

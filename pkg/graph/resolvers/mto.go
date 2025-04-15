@@ -15,8 +15,7 @@ import (
 )
 
 // MTOStatusGet returns the overall status of an MTO
-func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus, error) {
-	//TODO (mto) Decide if this would be better as a DB query, if we should rely on other loaders
+func MTOStatusGet(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) (models.MTOStatus, error) {
 
 	// Check if the mto has been marked as ready to review
 	mtoInfo, err := MTOInfoGetByModelPlanIDLOADER(ctx, modelPlanID)
@@ -28,7 +27,7 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus,
 	}
 
 	// Determine if the mto section has been started
-	lastUpdated, err := MTOLastUpdatedGet(ctx, modelPlanID)
+	lastUpdated, err := MTOMostRecentTranslatedAudit(ctx, store, logger, principal, modelPlanID)
 	if err != nil {
 		return models.MTOStatusReadyToStart, err
 	}
@@ -39,16 +38,25 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus,
 
 }
 
+// MTOMostRecentTranslatedAudit returns the most recent translated audit for an MTO overall.
+// It specifically excludes
 func MTOMostRecentTranslatedAudit(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) (*models.TranslatedAudit, error) {
-	numberOfRecords := 1
+	// TODO, refactor this to be a data loader, since it is called twice
+	numberOfRecords := 2
 	records, err := MTOTranslatedAuditsGetByModelPlanID(ctx, store, logger, principal, modelPlanID, &numberOfRecords, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	if records == nil || len(records) < 1 {
+	// there are no translated audits.
+	if len(records) < 1 {
 		return nil, nil
 	}
+	mostRecent := records[0]
+	if mostRecent.TableName == models.TNMTOInfo && mostRecent.Action == models.DBOpInsert {
+		return nil, nil
+	}
+
 	return records[0], nil
 }
 

@@ -21,7 +21,10 @@ func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *stora
 	return TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx, store, logger, principal, modelPlanID, nil, limit, offset)
 }
 
+// TranslatedAuditCollectionGetByModelPlanIDAndTableNames returns all TranslatedAudit for a given model plan id for the provided table names
+// TODO: refactor this to be a data loader, since it is potentially called multiple times
 func TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID,
+	//TODO refactor this to be a data loader, since it is potentially called multiple times
 	tablesToInclude []models.TableName, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
 	hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)

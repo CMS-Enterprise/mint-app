@@ -41,18 +41,16 @@ func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *mo
 
 // Status is the resolver for the status field.
 func (r *modelsToOperationMatrixResolver) Status(ctx context.Context, obj *models.ModelsToOperationMatrix) (models.MTOStatus, error) {
-	return MTOStatusGet(ctx, obj.ModelPlan.ID)
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return MTOStatusGet(ctx, r.store, logger, principal, obj.ModelPlan.ID)
 }
 
 // RecentEdit is the resolver for the recentEdit field.
 func (r *modelsToOperationMatrixResolver) RecentEdit(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.TranslatedAudit, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-
-	// TODO re-visit when solutions are implemented
-	// TODO re-visit when change history is implemented for MTO
 	return MTOMostRecentTranslatedAudit(ctx, r.store, logger, principal, obj.ModelPlan.ID)
-	// return MTOLastUpdatedGet(ctx, obj.ModelPlan.ID)
 }
 
 // MilestonesWithNoLinkedSolutions is the resolver for the milestonesWithNoLinkedSolutions field.

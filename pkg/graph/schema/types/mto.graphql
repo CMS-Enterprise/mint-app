@@ -12,7 +12,10 @@ type ModelsToOperationMatrix {
   """
   solutions(filterView: ModelViewFilter): [MTOSolution!]! # Need to support solutions that _don't_ have milestones
   status: MTOStatus!
-  # RecentEdit returns the most recent translated audit for the MTO
+  """
+  RecentEdit returns the most recent translated audit for the MTO
+  Note, this should not be called when fetching a list of model plans as it is not data loaded
+  """
   recentEdit: TranslatedAudit 
   milestonesWithNoLinkedSolutions: [MTOMilestone!]!
 
