@@ -1,4 +1,3 @@
-
 WITH data_to_insert AS (
     SELECT 
         GEN_RANDOM_UUID() AS id,
@@ -33,7 +32,8 @@ insert_attempt AS ( --noqa
         created_by,
         created_dts,
         modified_by,
-        modified_dts
+        modified_dts,
+        TRUE AS newly_inserted
 ),
 
 JOINED AS (
@@ -49,7 +49,8 @@ JOINED AS (
         risk_indicator,
         poc_name,
         poc_email,
-        created_by
+        created_by,
+        newly_inserted
     FROM insert_attempt
     UNION ALL
     SELECT
@@ -64,9 +65,19 @@ JOINED AS (
         mto_solution.risk_indicator,
         mto_solution.poc_name,
         mto_solution.poc_email,
-        mto_solution.created_by
+        mto_solution.created_by,
+        FALSE AS newly_inserted
     FROM mto_solution
-    JOIN data_to_insert ON data_to_insert.model_plan_id = mto_solution.model_plan_id AND data_to_insert.mto_common_solution_key = mto_solution.mto_common_solution_key
+    JOIN data_to_insert ON
+        data_to_insert.model_plan_id = mto_solution.model_plan_id
+        AND data_to_insert.mto_common_solution_key = mto_solution.mto_common_solution_key
+        -- exclude rows that were just inserted (already returned by insert_attempt)
+        AND NOT EXISTS (
+            SELECT 1 FROM insert_attempt ia
+            WHERE
+                ia.model_plan_id = mto_solution.model_plan_id
+                AND ia.mto_common_solution_key = mto_solution.mto_common_solution_key
+        )
 )
 
 -- Left Join on common solution for name and type info and return inserted and existing data
@@ -82,7 +93,11 @@ SELECT
     JOINED.risk_indicator,
     JOINED.poc_name,
     JOINED.poc_email,
-    JOINED.created_by
+    JOINED.created_by,
+    JOINED.newly_inserted
 FROM JOINED
-JOIN data_to_insert ON data_to_insert.model_plan_id = JOINED.model_plan_id AND data_to_insert.mto_common_solution_key = JOINED.mto_common_solution_key
+JOIN data_to_insert
+    ON
+        data_to_insert.model_plan_id = JOINED.model_plan_id 
+        AND data_to_insert.mto_common_solution_key = JOINED.mto_common_solution_key
 LEFT JOIN mto_common_solution ON JOINED.mto_common_solution_key = mto_common_solution.key

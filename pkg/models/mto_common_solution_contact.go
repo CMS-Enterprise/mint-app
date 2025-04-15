@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/samber/lo"
 )
@@ -26,6 +27,31 @@ func (mtoCSC *MTOCommonSolutionContactInformation) PrimaryContact() (*MTOCommonS
 	}
 	return contact, nil
 
+}
+
+func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPOCs bool, devTeamEmail string) ([]string, error) {
+	var pocEmailAddress []string
+	if mtoCSC == nil {
+		return nil, fmt.Errorf("contact information is not populated as expected")
+	}
+	pocs := mtoCSC.PointsOfContact
+	if sendToTaggedPOCs { //send to the pocs
+		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
+			return poc.Email
+		})
+	} else {
+		devEmailusername, devEmailDomain, emailValid := strings.Cut(devTeamEmail, "@")
+		if !emailValid {
+			return nil, fmt.Errorf("dev team email format is invalid, unable to send mock solution POC emails. Expected email to only have @ symbol, email :%s", devTeamEmail)
+		}
+		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
+			// this takes advantage of the fact that you can append extra information after the + sign to send to an email address with extra info.
+			noSpaceName := strings.ReplaceAll(poc.Name, " ", "")
+			return devEmailusername + "+" + noSpaceName + "@" + devEmailDomain
+		})
+
+	}
+	return pocEmailAddress, nil
 }
 
 type MTOCommonSolutionContact struct {

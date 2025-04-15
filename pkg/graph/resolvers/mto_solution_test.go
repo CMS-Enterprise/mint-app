@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 
@@ -169,6 +170,9 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
 		plan.ID,
 		commonSolutionKey,
 		[]uuid.UUID{milestoneA.ID, milestoneB.ID}, // link these two milestones

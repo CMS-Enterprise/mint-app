@@ -139,19 +139,14 @@ func MTOSolutionCreateCommonAllowConflictsSQL(
 	commonSolutionKeys []models.MTOCommonSolutionKey,
 	modelPlanID uuid.UUID,
 	createdBy uuid.UUID,
-) ([]*models.MTOSolution, error) {
+) ([]*models.MTOSolutionWithNewlyInsertedStatus, error) {
 
-	// TODO update this to only take a tx?
-	// err := setCurrentSessionUserVariable(tx, userID)
-	// if err != nil {
-	// 	return nil, err
-	// }
 	args := map[string]interface{}{
 		"model_plan_id":        modelPlanID,
 		"common_solution_keys": pq.Array(commonSolutionKeys),
 		"created_by":           createdBy,
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOSolutionWithNewlyInsertedStatus](np, sqlqueries.MTOSolution.CreateCommonSolutionsAllowConflicts, args)
 	if err != nil {
 		return nil, err
 	}
