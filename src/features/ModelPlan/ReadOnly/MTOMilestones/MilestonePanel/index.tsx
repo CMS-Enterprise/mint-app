@@ -198,7 +198,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               )}
             </div>
 
-            <h2>{milestone.name}</h2>
+            <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
 
             <p className="margin-0 mint-body-normal text-base-dark">
               {modelToOperationsMiscT(

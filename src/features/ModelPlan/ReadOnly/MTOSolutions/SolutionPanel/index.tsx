@@ -195,7 +195,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
               )}
             </div>
 
-            <h2>{solution.name}</h2>
+            <h2 className="line-height-large margin-top-1">{solution.name}</h2>
 
             <p className="margin-0 mint-body-normal text-base-dark">
               {mtoSolutionT(`solutionType.options.${solution.type}`)}
