@@ -57,7 +57,7 @@
 }
 
 @page {
-  margin: 0.75in;
+  margin: 0.35in;
   @bottom-left {
     content: 'Page ' counter(page) ' of ' counter(pages);
   }

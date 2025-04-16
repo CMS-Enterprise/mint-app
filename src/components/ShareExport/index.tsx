@@ -18,7 +18,6 @@ import { ReadOnlyComponents } from 'features/ModelPlan/ReadOnly';
 import BodyContent from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { FilterGroup } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { groupOptions } from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
-import ReadOnlyOperationalNeeds from 'features/ModelPlan/ReadOnly/OperationalNeeds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { ModelViewFilter } from 'gql/generated/graphql';
 import CreateShareModelPlan from 'gql/operations/ShareExport/CreateShareModelPlan';
@@ -115,8 +114,9 @@ const ShareExportModal = ({
     'team',
     'discussions',
     'documents',
-    'crs-and-tdl',
-    'it-solutions'
+    'crs-and-tdl'
+    // 'it-systems-and-solutions',
+    // 'milestones'
   ];
 
   // Composes components to render to PDF
@@ -147,9 +147,6 @@ const ShareExportModal = ({
                   {AllReadonlyComponents[component].component}
                 </div>
               ))}
-            <div className="margin-top-6">
-              <ReadOnlyOperationalNeeds modelID={modelID} />
-            </div>
           </>
         )}
       </GridContainer>
@@ -386,7 +383,7 @@ const ShareExportModal = ({
             // PDF/Print doesn't pick up the useContext state change without setTimeout
             setTimeout(() => {
               handlePrint();
-            }, 0);
+            }, 10);
           }
           if (exportCSV) {
             const groupToExport =

@@ -7,6 +7,7 @@ type TablePageSizeProps = {
   className?: string;
   pageSize: number | 'all';
   setPageSize: (pageSize: number) => void;
+  setInitPageSize?: (pageSize: number) => void;
   valueArray?: (number | 'all')[];
   suffix?: string;
 };
@@ -30,6 +31,7 @@ const TablePageSize = ({
   className,
   pageSize,
   setPageSize,
+  setInitPageSize,
   valueArray = [5, 10, 25, 50, 100],
   suffix
 }: TablePageSizeProps) => {
@@ -44,6 +46,9 @@ const TablePageSize = ({
         name="tablePageSize"
         onChange={(e: any) => {
           setPageSize(Number(e.target.value));
+          if (setInitPageSize) {
+            setInitPageSize(Number(e.target.value));
+          }
         }}
         value={pageSize}
       >

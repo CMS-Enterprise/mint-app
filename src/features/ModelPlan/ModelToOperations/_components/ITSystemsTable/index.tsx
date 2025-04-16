@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -37,6 +37,7 @@ import {
   MTOSolutionPanelContext,
   MTOSolutionPanelProvider
 } from 'contexts/MTOSolutionPanelContext';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -479,6 +480,19 @@ const ITSystemsTable = ({
     usePaginationTable
   );
 
+  // isPrintPDF is a boolean that is set to true when the user is printing the PDF
+  const { isPrintPDF } = useContext(PrintPDFContext);
+
+  const [initPageSize] = useState(state.pageSize);
+
+  useEffect(() => {
+    if (isPrintPDF) {
+      setPageSize(1000);
+    } else {
+      setPageSize(initPageSize);
+    }
+  }, [isPrintPDF, setPageSize, initPageSize]);
+
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -508,38 +522,40 @@ const ITSystemsTable = ({
           )}
 
           {!filterSolutions && (
-            <Grid
-              desktop={{ col: 12 }}
-              className="desktop:display-flex flex-wrap margin-bottom-2"
-            >
-              <SolutionViewSelector
-                viewParam={viewParam}
-                type="table"
-                usePages={false}
-                allSolutions={solutionsAndMilestones}
-                itSystemsSolutions={itSystemsSolutions}
-                contractsSolutions={contractsSolutions}
-                otherSolutions={otherSolutions}
-              />
+            <div className="mint-no-print">
+              <Grid
+                desktop={{ col: 12 }}
+                className="desktop:display-flex flex-wrap margin-bottom-2"
+              >
+                <SolutionViewSelector
+                  viewParam={viewParam}
+                  type="table"
+                  usePages={false}
+                  allSolutions={solutionsAndMilestones}
+                  itSystemsSolutions={itSystemsSolutions}
+                  contractsSolutions={contractsSolutions}
+                  otherSolutions={otherSolutions}
+                />
 
-              <CheckboxField
-                id="hide-added-solutions"
-                name="hide-added-solutions"
-                label={t('solutionTable.hideAdded', {
-                  count: milestonesWithoutSolutions.length
-                })}
-                value="true"
-                checked={hideMilestonesWithoutSolutions}
-                onBlur={() => null}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  params.set(
-                    'hide-milestones-without-solutions',
-                    hideMilestonesWithoutSolutions ? 'false' : 'true'
-                  );
-                  history.replace({ search: params.toString() });
-                }}
-              />
-            </Grid>
+                <CheckboxField
+                  id="hide-added-solutions"
+                  name="hide-added-solutions"
+                  label={t('solutionTable.hideAdded', {
+                    count: milestonesWithoutSolutions.length
+                  })}
+                  value="true"
+                  checked={hideMilestonesWithoutSolutions}
+                  onBlur={() => null}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    params.set(
+                      'hide-milestones-without-solutions',
+                      hideMilestonesWithoutSolutions ? 'false' : 'true'
+                    );
+                    history.replace({ search: params.toString() });
+                  }}
+                />
+              </Grid>
+            </div>
           )}
 
           {renderTable && (
@@ -629,33 +645,34 @@ const ITSystemsTable = ({
                   })}
                 </tbody>
               </Table>
+              <div className="mint-no-print">
+                <div className="display-flex flex-wrap">
+                  {tableData.length > state.pageSize && (
+                    <TablePagination
+                      gotoPage={gotoPage}
+                      previousPage={previousPage}
+                      nextPage={nextPage}
+                      canNextPage={canNextPage}
+                      pageIndex={state.pageIndex}
+                      pageOptions={pageOptions}
+                      canPreviousPage={canPreviousPage}
+                      pageCount={pageCount}
+                      pageSize={state.pageSize}
+                      setPageSize={setPageSize}
+                      page={[]}
+                    />
+                  )}
 
-              <div className="display-flex flex-wrap">
-                {tableData.length > state.pageSize && (
-                  <TablePagination
-                    gotoPage={gotoPage}
-                    previousPage={previousPage}
-                    nextPage={nextPage}
-                    canNextPage={canNextPage}
-                    pageIndex={state.pageIndex}
-                    pageOptions={pageOptions}
-                    canPreviousPage={canPreviousPage}
-                    pageCount={pageCount}
-                    pageSize={state.pageSize}
-                    setPageSize={setPageSize}
-                    page={[]}
-                  />
-                )}
-
-                {tableData.length > 5 && (
-                  <TablePageSize
-                    className="margin-left-auto desktop:grid-col-auto"
-                    pageSize={state.pageSize}
-                    setPageSize={setPageSize}
-                    valueArray={[5, 10, 'all']}
-                    suffix={t('table.solutions').toLowerCase()}
-                  />
-                )}
+                  {tableData.length > 5 && (
+                    <TablePageSize
+                      className="margin-left-auto desktop:grid-col-auto"
+                      pageSize={state.pageSize}
+                      setPageSize={setPageSize}
+                      valueArray={[5, 10, 'all']}
+                      suffix={t('table.solutions').toLowerCase()}
+                    />
+                  )}
+                </div>
               </div>
 
               <div

@@ -24,6 +24,7 @@ import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -140,9 +141,16 @@ const MTOTable = ({
   const [expandedRows, setExpandedRows] =
     useState<string[]>(defaultExpandedRows);
 
+  // Toggle inital row expansion states for pdf export. Need to expand all on export and return to previous state once finished exports
+  const [expandedInitRows, setExpandedInitRows] =
+    useState<string[]>(defaultExpandedRows);
+
   // Function to toggle row expansion
   const toggleRow = (index: string) => {
     setExpandedRows(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+    setExpandedInitRows(prev =>
       prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
     );
   };
@@ -177,6 +185,23 @@ const MTOTable = ({
       JSON.stringify(itemsPerPage)
     );
   }, [itemsPerPage, modelID]);
+
+  // isPrintPDF is a boolean that is set to true when the user is printing the PDF
+  const { isPrintPDF } = useContext(PrintPDFContext);
+
+  const [itemsPerPageInit, setItemsPerPageInit] = useState(itemsPerPage);
+
+  // Sets and resets the expanded rows and items per page when the user is printing the PDF
+  // This is done to ensure that all rows are expanded and all items are shown in the PDF
+  useEffect(() => {
+    if (isPrintPDF) {
+      setExpandedRows([]);
+      setItemsPerPage(1000);
+    } else {
+      setExpandedRows(expandedInitRows);
+      setItemsPerPage(itemsPerPageInit);
+    }
+  }, [isPrintPDF, setItemsPerPage, itemsPerPageInit, expandedInitRows]);
 
   // Sort states
   const [sortCount, setSortCount] = useState<number>(3);
@@ -642,16 +667,19 @@ const MTOTable = ({
               <tbody>{renderCategories()}</tbody>
             </table>
           </div>
-          <div className="display-flex">
-            {Pagination}
+          <div className="mint-no-print">
+            <div className="display-flex">
+              {Pagination}
 
-            <TablePageSize
-              className="margin-left-auto desktop:grid-col-auto"
-              pageSize={itemsPerPage}
-              setPageSize={setItemsPerPage}
-              valueArray={[5, 10, 15, 20]}
-              suffix={t('modelToOperationsMisc:table.milestones')}
-            />
+              <TablePageSize
+                className="margin-left-auto desktop:grid-col-auto"
+                pageSize={itemsPerPage}
+                setPageSize={setItemsPerPage}
+                setInitPageSize={setItemsPerPageInit}
+                valueArray={[5, 10, 15, 20]}
+                suffix={t('modelToOperationsMisc:table.milestones')}
+              />
+            </div>
           </div>
         </DndProvider>{' '}
       </MTOMilestonePanelProvider>
