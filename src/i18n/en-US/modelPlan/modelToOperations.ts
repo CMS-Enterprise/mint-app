@@ -437,12 +437,17 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>In progress</bold>: Work for this solution and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)',
         '<bold>Completed</bold>: Work for this solution and all of its selected solutions is finished'
       ],
+      customTooltip:
+        'As opposed to common IT systems and solutions available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
       custom: 'Custom',
       saveChanges: 'Save changes',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
       removeSolution: 'Remove solution',
+      noneSpecified: 'None specified',
+      noMilestonesTable:
+        'This solution is not yet related to any specific model milestones.',
       areYouSure: 'Are you sure you want to remove this solution?',
       removeDescription:
         'This action cannot be undone. You may add this solution again from the solution library, but you will lose any changes you have made. Any milestones associated with this solution will remain visible in the milestone view of your MTO, but will no longer be related to this solution.',

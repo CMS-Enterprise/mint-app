@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MilestonePanel Component > renders correctly with milestone data 1`] = `
+exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
 <DocumentFragment>
   <div
     class="grid-container padding-8"
@@ -20,51 +20,27 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
         <h2
           class="line-height-large margin-top-1"
         >
-          Milestone 1
+          Solution 1
         </h2>
         <p
           class="margin-0 mint-body-normal text-base-dark"
         >
-          Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.
+          IT System
         </p>
+        <div
+          class="margin-top-2"
+        >
+          <a
+            class="usa-link usa-link--external"
+            href="/help-and-knowledge/operational-solutions?page=1&solution=beneficiary-claims-data-api&section=about"
+            target="_blank"
+          >
+            Learn more about this solution
+          </a>
+        </div>
         <div
           class="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4"
         >
-          <div
-            class="grid-row margin-bottom-2"
-            data-testid="grid"
-          >
-            <div
-              class="mobile:grid-col-12 tablet:grid-col-6"
-              data-testid="grid"
-            >
-              <dt
-                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
-              >
-                Category
-              </dt>
-              <dd
-                class="description-definition margin-0 font-body-md text-base-darkest"
-              >
-                Category 1
-              </dd>
-            </div>
-            <div
-              class="mobile:grid-col-12 tablet:grid-col-6"
-              data-testid="grid"
-            >
-              <dt
-                class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
-              >
-                Sub-category
-              </dt>
-              <dd
-                class="description-definition margin-0 font-body-md text-base-darkest"
-              >
-                SubCategory 1
-              </dd>
-            </div>
-          </div>
           <div
             class="grid-row margin-bottom-2"
             data-testid="grid"
@@ -76,11 +52,17 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
               <dt
                 class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
               >
-                Facilitated by
+                Facilitated By
               </dt>
               <dd
                 class="description-definition margin-0 font-body-md text-base-darkest"
-              />
+              >
+                <p
+                  class="margin-0 text-base-dark text-italic"
+                >
+                  None specified
+                </p>
+              </dd>
             </div>
           </div>
           <div
@@ -94,12 +76,12 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
               <dt
                 class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
               >
-                Need by
+                Need By
               </dt>
               <dd
                 class="description-definition margin-0 font-body-md text-base-darkest"
               >
-                2021-08-01
+                08/01/2121
               </dd>
             </div>
           </div>
@@ -152,18 +134,24 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                     <div
                       style="font-size: 0.875rem; font-weight: 400; padding: 0.5rem;"
                     >
-                      Milestone progress statuses:
+                      Solution implementation statuses:
                       <ul
                         class="margin-0 padding-left-3"
                       >
                         <li>
-                          Not started: No work has started on any part of this milestone or any solution associated with it
+                          Not started: No work has started on this IT system or solution
                         </li>
                         <li>
-                          In progress: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)
+                          Onboarding: Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)
                         </li>
                         <li>
-                          Completed: Work for this milestone and all of its selected solutions is finished
+                          Backlog: Model work is on the project team’s backlog
+                        </li>
+                        <li>
+                          In progress: Work for this model is in progress (e.g., development, configuration, testing, etc.)
+                        </li>
+                        <li>
+                          Completed: Work related to this model is finished
                         </li>
                       </ul>
                     </div>
@@ -190,7 +178,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
               <dt
                 class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
               >
-                Risk indicator
+                Risk Indicator
                 <span
                   class="usa-tooltip top-2px margin-left-1"
                   data-testid="tooltipWrapper"
@@ -255,7 +243,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                   <div
                     class="margin-right-1"
                   >
-                    Significantly at risk
+                    At risk
                   </div>
                   <div>
                     <span
@@ -304,7 +292,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
         <h3
           class="margin-bottom-1"
         >
-          1 selected solution
+          1 selected milestone
         </h3>
         <table
           class="usa-table usa-table--borderless width-full margin-top-0"
@@ -327,7 +315,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                   title="Toggle SortBy"
                   type="button"
                 >
-                  Solution
+                  Milestone
                   <svg
                     class="usa-icon margin-left-05"
                     data-testid="caret--sort"
@@ -412,7 +400,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                 class="padding-left-0"
                 role="cell"
               >
-                Solution 1
+                Milestone 1
               </td>
               <td
                 class="padding-left-0"

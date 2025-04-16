@@ -228,7 +228,7 @@ export const columns: ColumnType[] = [
         MTOMilestonePanelContext
       );
 
-      if (readView) {
+      if (readView && rowType === 'milestone') {
         return (
           <Button
             type="button"

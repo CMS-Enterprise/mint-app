@@ -16,14 +16,15 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import MTORiskIndicatorTag from 'features/ModelPlan/ModelToOperations/_components/MTORiskIndicatorIcon';
-import MilestoneStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
+import SolutionStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
 import MTOTag from 'features/ModelPlan/ModelToOperations/_components/MTOTag';
 import {
-  GetMtoMilestoneQuery,
-  MtoMilestoneStatus,
+  GetMtoSolutionQuery,
   MtoRiskIndicator,
-  useGetMtoMilestoneQuery
+  MtoSolutionStatus,
+  useGetMtoSolutionQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -31,76 +32,80 @@ import {
   DescriptionDefinition,
   DescriptionTerm
 } from 'components/DescriptionGroup';
+import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import TablePagination from 'components/TablePagination';
 import Tooltip from 'components/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateUtc } from 'utils/date';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
-export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
+export type SolutionType = GetMtoSolutionQuery['mtoSolution'];
 
-type EditMilestoneFormProps = {
+type EditSolutionFormProps = {
   closeModal: () => void;
 };
 
-const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
-  const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
+const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
+  const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const { status: stausConfig, riskIndicator: riskIndicatorConfig } =
-    usePlanTranslation('mtoMilestone');
+    usePlanTranslation('mtoSolution');
 
   const history = useHistory();
 
   const params = new URLSearchParams(history.location.search);
 
-  const viewMilestoneID = params.get('view-milestone');
+  const viewSolutionID = params.get('view-solution');
 
   const {
     data,
     loading,
     error: queryError
-  } = useGetMtoMilestoneQuery({
+  } = useGetMtoSolutionQuery({
     variables: {
-      id: viewMilestoneID || ''
+      id: viewSolutionID || ''
     }
   });
 
-  const milestone = useMemo(() => {
+  const solution = useMemo(() => {
     return (
-      data?.mtoMilestone ||
+      data?.mtoSolution ||
       ({
-        __typename: 'MTOMilestone',
+        __typename: 'MTOSolution',
         id: '',
         name: '',
-        status: MtoMilestoneStatus.NOT_STARTED,
+        status: MtoSolutionStatus.NOT_STARTED,
         key: null,
         facilitatedBy: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
-        addedFromMilestoneLibrary: false,
-        solutions: [],
-        isDraft: false,
-        categories:
-          [] as unknown as GetMtoMilestoneQuery['mtoMilestone']['categories']
-      } as GetMtoMilestoneQuery['mtoMilestone'])
+        addedFromSolutionLibrary: false,
+        milestones: [],
+        isDraft: false
+      } as GetMtoSolutionQuery['mtoSolution'])
     );
   }, [data]);
+
+  const solutionRoute: string | undefined = helpSolutions.find(
+    sol => sol.enum === solution?.key
+  )?.route;
 
   const columns: Column<SolutionType>[] = useMemo(
     () => [
       {
-        Header: modelToOperationsMiscT('modal.editMilestone.solution'),
+        Header: modelToOperationsMiscT('modal.editSolution.milestone'),
         accessor: 'name'
       },
       {
-        Header: modelToOperationsMiscT('modal.editMilestone.status'),
+        Header: modelToOperationsMiscT('modal.editSolution.status'),
         accessor: 'status',
         Cell: ({ row }: { row: Row<SolutionType> }) => {
           return (
-            <MilestoneStatusTag
+            <SolutionStatusTag
               status={row.original.status}
               classname="width-fit-content"
             />
@@ -144,7 +149,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
   } = useTable(
     {
       columns: columns as Column<object>[],
-      data: milestone?.solutions || [],
+      data: solution?.milestones || [],
       initialState: { pageIndex: 0, pageSize: 5 }
     },
     useGlobalFilter,
@@ -154,17 +159,17 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
   rows.map(row => prepareRow(row));
 
-  if (loading && !milestone) {
+  if (loading && !data) {
     return <PageLoading />;
   }
 
-  if (!milestone || queryError) {
+  if (!data || queryError) {
     return null;
   }
 
   const NoneSpecified = (
     <p className="margin-0 text-base-dark text-italic">
-      {modelToOperationsMiscT('modal.editMilestone.noneSpecified')}
+      {modelToOperationsMiscT('modal.editSolution.noneSpecified')}
     </p>
   );
 
@@ -179,79 +184,49 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         <Grid row>
           <Grid col={10}>
             <div className="display-flex">
-              {milestone.isDraft && (
-                <MTOTag
-                  type="draft"
-                  label={modelToOperationsMiscT('milestoneLibrary.isDraft')}
-                  tooltip={mtoMilestoneT('isDraft.questionTooltip')}
-                />
-              )}
-
-              {!milestone.addedFromMilestoneLibrary && (
+              {!solution.addedFromSolutionLibrary && (
                 <MTOTag
                   type="custom"
-                  label={modelToOperationsMiscT('modal.editMilestone.custom')}
+                  label={modelToOperationsMiscT('modal.editSolution.custom')}
                   tooltip={modelToOperationsMiscT(
-                    'modal.editMilestone.customTooltip'
+                    'modal.editSolution.customTooltip'
                   )}
                 />
               )}
             </div>
 
-            <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
+            <h2 className="line-height-large margin-top-1">{solution.name}</h2>
 
             <p className="margin-0 mint-body-normal text-base-dark">
-              {modelToOperationsMiscT(
-                'modal.editMilestone.readviewDescription'
-              )}
+              {mtoSolutionT(`solutionType.options.${solution.type}`)}
             </p>
 
+            {solution.addedFromSolutionLibrary && (
+              <div className="margin-top-2">
+                <UswdsReactLink
+                  to={`/help-and-knowledge/operational-solutions?page=1&solution=${solutionRoute}&section=about`}
+                  target="_blank"
+                  variant="external"
+                >
+                  {modelToOperationsMiscT('modal.editSolution.learnMore')}
+                </UswdsReactLink>
+              </div>
+            )}
+
             <div className="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4">
-              <Grid row className="margin-bottom-2">
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={modelToOperationsMiscT(
-                      'modal.milestone.milestoneCategory.label'
-                    )}
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      milestone.categories.category?.name || NoneSpecified
-                    }
-                  />
-                </Grid>
-
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={modelToOperationsMiscT(
-                      'modal.milestone.milestoneSubcategory.label'
-                    )}
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      milestone.categories.subCategory?.name || NoneSpecified
-                    }
-                  />
-                </Grid>
-              </Grid>
-
               <Grid row className="margin-bottom-2">
                 <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
                   <DescriptionTerm
                     className="font-body-sm margin-bottom-0"
-                    term={mtoMilestoneT('facilitatedBy.label')}
+                    term={mtoSolutionT('facilitatedBy.label')}
                   />
                   <DescriptionDefinition
                     className="font-body-md text-base-darkest"
                     definition={
-                      milestone.facilitatedBy
-                        ? milestone.facilitatedBy
+                      solution.facilitatedBy
+                        ? solution.facilitatedBy
                             .map((facilitator: any) =>
-                              mtoMilestoneT(
+                              mtoSolutionT(
                                 `facilitatedBy.options.${facilitator}`
                               )
                             )
@@ -266,11 +241,15 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                 <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
                   <DescriptionTerm
                     className="font-body-sm margin-bottom-0"
-                    term={mtoMilestoneT('needBy.label')}
+                    term={mtoSolutionT('neededBy.label')}
                   />
                   <DescriptionDefinition
                     className="font-body-md text-base-darkest"
-                    definition={milestone.needBy || NoneSpecified}
+                    definition={
+                      solution.neededBy
+                        ? formatDateUtc(solution.neededBy, 'MM/dd/yyyy')
+                        : NoneSpecified
+                    }
                   />
                 </Grid>
               </Grid>
@@ -281,7 +260,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                     className="font-body-sm margin-bottom-0"
                     term={
                       <>
-                        {mtoMilestoneT('status.label')}
+                        {mtoSolutionT('status.label')}
                         <Tooltip
                           wrapperclasses="top-2px margin-left-1"
                           label={stausConfig.questionTooltip}
@@ -295,8 +274,8 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                   <DescriptionDefinition
                     className="font-body-md text-base-darkest"
                     definition={
-                      <MilestoneStatusTag
-                        status={milestone.status}
+                      <SolutionStatusTag
+                        status={solution.status}
                         classname="width-fit-content"
                       />
                     }
@@ -308,7 +287,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                     className="font-body-sm margin-bottom-0"
                     term={
                       <>
-                        {mtoMilestoneT('riskIndicator.label')}
+                        {mtoSolutionT('riskIndicator.label')}
                         <Tooltip
                           wrapperclasses="top-2px margin-left-1"
                           label={riskIndicatorConfig.questionTooltip}
@@ -325,12 +304,18 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                     definition={
                       <div className="display-flex flex-align-end">
                         <div className="margin-right-1">
-                          {riskIndicatorConfig.options[milestone.riskIndicator]}
+                          {solution.riskIndicator
+                            ? riskIndicatorConfig.options[
+                                solution.riskIndicator
+                              ]
+                            : NoneSpecified}
                         </div>
-                        <MTORiskIndicatorTag
-                          riskIndicator={milestone.riskIndicator}
-                          showTooltip
-                        />
+                        {solution.riskIndicator && (
+                          <MTORiskIndicatorTag
+                            riskIndicator={solution.riskIndicator}
+                            showTooltip
+                          />
+                        )}
                       </div>
                     }
                   />
@@ -340,14 +325,14 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
             <h3 className="margin-bottom-1">
               {modelToOperationsMiscT(
-                'modal.editMilestone.selectedSolutionCount',
+                'modal.editSolution.selectedMilestoneCount',
                 {
-                  count: milestone.solutions.length
+                  count: solution.milestones.length
                 }
               )}
             </h3>
 
-            {milestone.solutions.length > 0 ? (
+            {solution.milestones.length > 0 ? (
               <>
                 <UswdsTable
                   bordered={false}
@@ -409,7 +394,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                   </tbody>
                 </UswdsTable>
 
-                {milestone.solutions.length > 5 && (
+                {solution.milestones.length > 5 && (
                   <TablePagination
                     className="flex-justify-start margin-left-neg-05"
                     gotoPage={gotoPage}
@@ -428,7 +413,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               </>
             ) : (
               <Alert type="info" slim className="margin-bottom-2">
-                {modelToOperationsMiscT('modal.editMilestone.noSolutionsTable')}
+                {modelToOperationsMiscT('modal.editSolution.noMilestonesTable')}
               </Alert>
             )}
           </Grid>
@@ -438,4 +423,4 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
   );
 };
 
-export default MilestonePanel;
+export default SolutionPanel;
