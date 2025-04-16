@@ -432,6 +432,7 @@ func ModelPlanShare(
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (bool, error) {
+	//TODO, this should use the data loader...
 	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return false, err

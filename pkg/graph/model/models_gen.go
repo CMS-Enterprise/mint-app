@@ -1807,6 +1807,59 @@ func (e ModelPlanFilter) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// ModelShareSection is the section of the model plan that is being shared.
+type ModelShareSection string
+
+const (
+	// Include all sections below
+	ModelShareSectionAll ModelShareSection = "ALL"
+	// Just share the model plan
+	ModelShareSectionModelPlan ModelShareSection = "MODEL_PLAN"
+	// Share all MTO info
+	ModelShareSectionMtoAll ModelShareSection = "MTO_ALL"
+	// Only share MTO Milestones
+	ModelShareSectionMtoMilestones ModelShareSection = "MTO_MILESTONES"
+	// Only share MTO Solutions
+	ModelShareSectionMtoSolutions ModelShareSection = "MTO_SOLUTIONS"
+)
+
+var AllModelShareSection = []ModelShareSection{
+	ModelShareSectionAll,
+	ModelShareSectionModelPlan,
+	ModelShareSectionMtoAll,
+	ModelShareSectionMtoMilestones,
+	ModelShareSectionMtoSolutions,
+}
+
+func (e ModelShareSection) IsValid() bool {
+	switch e {
+	case ModelShareSectionAll, ModelShareSectionModelPlan, ModelShareSectionMtoAll, ModelShareSectionMtoMilestones, ModelShareSectionMtoSolutions:
+		return true
+	}
+	return false
+}
+
+func (e ModelShareSection) String() string {
+	return string(e)
+}
+
+func (e *ModelShareSection) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelShareSection(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelShareSection", str)
+	}
+	return nil
+}
+
+func (e ModelShareSection) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type MonitoringFileType string
 
 const (
