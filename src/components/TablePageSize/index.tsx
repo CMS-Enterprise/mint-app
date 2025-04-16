@@ -7,7 +7,7 @@ type TablePageSizeProps = {
   className?: string;
   pageSize: number | 'all';
   setPageSize: (pageSize: number) => void;
-  setInitPageSize?: (pageSize: number) => void;
+  setInitPageSize?: (pageSize: number) => void; // Used to set a default page size to reset to when exporting table document to PDF
   valueArray?: (number | 'all')[];
   suffix?: string;
 };
