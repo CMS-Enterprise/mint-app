@@ -18,6 +18,14 @@ import (
 // limit: this controls how many records will be returned at once. A null entry will return all records
 // offset: how many records to skip before returning results. If null, no records will be skipped.
 func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
+	return TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx, store, logger, principal, modelPlanID, nil, limit, offset)
+}
+
+// TranslatedAuditCollectionGetByModelPlanIDAndTableNames returns all TranslatedAudit for a given model plan id for the provided table names
+// TODO: refactor this to be a data loader, since it is potentially called multiple times
+func TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID,
+	//TODO refactor this to be a data loader, since it is potentially called multiple times
+	tablesToInclude []models.TableName, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
 	hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
 	if err != nil {
@@ -25,7 +33,7 @@ func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *stora
 		//If desired, we could just return the non-privileged version on error there
 	}
 
-	translatedAuditCollection, err := storage.TranslatedAuditCollectionGetByModelPlanID(store, modelPlanID, hasPrivilegedAccess, limit, offset)
+	translatedAuditCollection, err := storage.TranslatedAuditCollectionGetByModelPlanID(store, modelPlanID, tablesToInclude, hasPrivilegedAccess, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -40,5 +48,10 @@ func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *stora
 	}
 
 	return translatedAuditCollection, err
+}
 
+// MTOTranslatedAuditsGetByModelPlanID returns audits related to the mto section
+func MTOTranslatedAuditsGetByModelPlanID(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
+	numberOfRecords := 1
+	return TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx, store, logger, principal, modelPlanID, models.MTOTables, &numberOfRecords, nil)
 }

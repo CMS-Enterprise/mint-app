@@ -30,7 +30,7 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
   });
 
   const { status, recentEdit, milestones } = mtoMatrix;
-  const { modifiedByUserAccount, modifiedDts } = recentEdit || {};
+  const { actorName, date } = recentEdit || {};
 
   return (
     <Card
@@ -55,17 +55,14 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
       <CardBody>
         <p>{collaborationAreaT('mtoCard.body')}</p>
 
-        {modifiedDts && modifiedByUserAccount && !isLocked && (
+        {date && actorName && !isLocked && (
           <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
             <span className="text-base margin-right-1">
               {collaborationAreaT('dataExchangeApproachCard.lastModified', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                date: formatDateLocal(date, 'MM/dd/yyyy')
               })}
             </span>
-            <Avatar
-              className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
-            />
+            <Avatar className="text-base-darkest" user={actorName} />
           </div>
         )}
 

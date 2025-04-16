@@ -155,10 +155,9 @@ export default gql(/* GraphQL */ `
         }
         status
         recentEdit {
-          modifiedDts
-          modifiedByUserAccount {
-            commonName
-          }
+          id
+          date
+          actorName
         }
         milestones {
           id

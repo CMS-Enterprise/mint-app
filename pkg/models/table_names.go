@@ -50,3 +50,7 @@ const (
 	TNMTOCommonSolutionContact           TableName = "mto_common_solution_contact"
 	TNMTOCommonSolution                  TableName = "mto_common_solution"
 )
+
+// MTOTables is a list of all tables that are related to the MTO section
+// This is used to filter the translated audit collection to only include MTO related tables
+var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo}

@@ -671,8 +671,9 @@ export const solutionAndMilestoneMock: MockedResponse<
             __typename: 'ModelsToOperationMatrix',
             status: MtoStatus.READY_FOR_REVIEW,
             recentEdit: {
-              __typename: 'RecentModification',
-              modifiedDts: '2022-05-12T15:01:39.190679Z'
+              __typename: 'TranslatedAudit',
+              id: '1',
+              date: '2022-05-12T15:01:39.190679Z'
             },
             solutions: [
               {

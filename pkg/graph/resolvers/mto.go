@@ -11,12 +11,10 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // MTOStatusGet returns the overall status of an MTO
-func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus, error) {
-	//TODO (mto) Decide if this would be better as a DB query, if we should rely on other loaders
+func MTOStatusGet(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) (models.MTOStatus, error) {
 
 	// Check if the mto has been marked as ready to review
 	mtoInfo, err := MTOInfoGetByModelPlanIDLOADER(ctx, modelPlanID)
@@ -28,7 +26,7 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus,
 	}
 
 	// Determine if the mto section has been started
-	lastUpdated, err := MTOLastUpdatedGet(ctx, modelPlanID)
+	lastUpdated, err := MTOMostRecentTranslatedAudit(ctx, store, logger, principal, modelPlanID)
 	if err != nil {
 		return models.MTOStatusReadyToStart, err
 	}
@@ -39,46 +37,26 @@ func MTOStatusGet(ctx context.Context, modelPlanID uuid.UUID) (models.MTOStatus,
 
 }
 
-// MTOLastUpdatedGet returns the most recent update to an MTO overall.
-func MTOLastUpdatedGet(ctx context.Context, modelPlanID uuid.UUID) (*models.RecentModification, error) {
-	// TODO  (mto) restructure this to use change history
-
-	// Call the loader directly so we don't get uncategorized included
-	categories, err := loaders.MTOCategory.ByModelPlanID.Load(ctx, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-	milestones, err := MTOMilestoneGetByModelPlanIDLOADER(ctx, modelPlanID)
+// MTOMostRecentTranslatedAudit returns the most recent translated audit for an MTO overall.
+// It specifically excludes
+func MTOMostRecentTranslatedAudit(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) (*models.TranslatedAudit, error) {
+	// TODO, refactor this to be a data loader, since it is called twice
+	numberOfRecords := 2
+	records, err := MTOTranslatedAuditsGetByModelPlanID(ctx, store, logger, principal, modelPlanID, &numberOfRecords, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	var baseStructs []models.IBaseStruct
-	for _, category := range categories {
-		baseStructs = append(baseStructs, category)
+	// there are no translated audits.
+	if len(records) < 1 {
+		return nil, nil
 	}
-	for _, milestone := range milestones {
-		baseStructs = append(baseStructs, milestone)
-	}
-	mostRecentTime, mostRecentUserUUID := models.GetMostRecentTime(baseStructs)
-	if mostRecentUserUUID == uuid.Nil {
-		// There is no recent edit, nil is returned for the user
+	mostRecent := records[0]
+	if mostRecent.TableName == models.TNMTOInfo && mostRecent.Action == models.DBOpInsert {
 		return nil, nil
 	}
 
-	recentModified := models.NewRecentModification(mostRecentUserUUID, mostRecentTime)
-
-	return &recentModified, nil
-
-	// TODO (mto) add when solution loaders are implemented
-	// solutions, err := MTOSolutionGetByModelPlanIDLOADER(ctx, modelPlanID)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// if len(solutions) > 0 {
-	// 	return models.MTOStatusInProgress, nil
-	// }
-
+	return records[0], nil
 }
 
 func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID, isReadyForReview bool) (*models.MTOInfo, error) {
