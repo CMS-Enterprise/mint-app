@@ -20,7 +20,7 @@ export const DescriptionList = ({
 
 type DescriptionTermProps = {
   className?: string;
-  term: string | string[];
+  term: string | string[] | ReactNode;
 };
 
 export const DescriptionTerm = ({ className, term }: DescriptionTermProps) => (

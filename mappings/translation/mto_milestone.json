@@ -14,6 +14,7 @@
     "dbField": "is_draft",
     "label": "Check if this milestone is a draft milestone",
     "sublabel": "The \"draft\" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.",
+    "questionTooltip": "The \"draft\" indicator indicates that this milestone is more of a work in progress than the rest of the model-to-operations matrix.",
     "exportLabel": "Is this a draft milestone?",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
@@ -67,6 +68,65 @@
     "goField": "Status",
     "dbField": "status",
     "label": "Status",
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "style": {
+          "fontSize": "0.875rem",
+          "fontWeight": 400,
+          "padding": "0.5rem"
+        },
+        "children": [
+          "Milestone progress statuses:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Not started: No work has started on any part of this milestone or any solution associated with it"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "In progress: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Completed: Work for this milestone and all of its selected solutions is finished"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    },
     "dataType": "ENUM",
     "formType": "SELECT",
     "order": 1.05,
@@ -82,6 +142,65 @@
     "dbField": "risk_indicator",
     "label": "Risk indicator",
     "sublabel": "Select the risk level for this milestone. This will help you and your team identify potential risks and plan accordingly.",
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "style": {
+          "fontSize": "0.875rem",
+          "fontWeight": 400,
+          "padding": "0.5rem"
+        },
+        "children": [
+          "Risk indicators:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "No risk (on track)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Some risk (off track)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Significantly at risk"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    },
     "dataType": "ENUM",
     "formType": "SELECT",
     "order": 1.06,

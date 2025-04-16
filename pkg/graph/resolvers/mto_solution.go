@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/jmoiron/sqlx"
 
@@ -119,6 +121,9 @@ func MTOSolutionCreateCommon(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	commonSolutionKey models.MTOCommonSolutionKey,
 	milestonesToLink []uuid.UUID,
@@ -145,7 +150,7 @@ func MTOSolutionCreateCommon(
 	}
 
 	// Use a transaction for atomic operations
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+	retSol, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
 		// Step 1: Create the solution
 		solution, err := storage.MTOSolutionCreate(tx, logger, mtoSolution)
 		if err != nil {
@@ -162,6 +167,19 @@ func MTOSolutionCreateCommon(
 
 		return solution, nil
 	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create and link solutions: %w", err)
+	}
+	go func() {
+		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
+		if sendEmailErr != nil {
+			logger.Error("error sending solution selected emails",
+				zap.Any("solution", retSol.Key),
+				zap.Error(sendEmailErr))
+		}
+	}()
+
+	return retSol, nil
 }
 
 // MTOSolutionLinkMilestonesWithTX handles linking milestones to a solution in a single transaction
@@ -259,4 +277,98 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		}
 		return nil
 	})
+}
+
+// sendMTOSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
+func sendMTOSolutionSelectedEmails(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	solution *models.MTOSolution,
+
+) error {
+	if emailService == nil || emailTemplateService == nil || solution == nil {
+		return nil
+	}
+	if solution.Key == nil {
+		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
+		return nil
+	}
+	//TODO, we might benefit from a dataloader since this is added in multiple places
+	solSelectedDB, err := storage.GetMTOSolutionSelectedDetails(np, solution.ID)
+	if err != nil {
+		return err
+	}
+
+	pocInfo, err := MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, *solution.Key)
+	if err != nil {
+		return err
+	}
+
+	if len(pocInfo.PointsOfContact) < 1 {
+		logger.Info(" solution doesn't have any defined points of contact, no solution selected email being sent", zap.Any("solution", solution))
+		// Note, if we support this in the future, we potentially look at the solution POC information in the actual solution.
+		return nil // Don't send an email if there aren't any recipients (Note, custom solutions do not have pocs configured in the db)
+	}
+
+	//TODO
+	// NOTE figma asks for the email to be sent to the POC in the to field, and all the others in the cc field.
+
+	pocEmailAddress, err := pocInfo.EmailAddresses(emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
+	if err != nil {
+		return err
+	}
+
+	err = sendMTOSolutionSelectedForUseByModelEmail(
+		emailService,
+		emailTemplateService,
+		addressBook,
+		solSelectedDB,
+		pocEmailAddress,
+	)
+
+	return err
+}
+
+// sendMTOSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
+func sendMTOSolutionSelectedForUseByModelEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	solutionSelectedDB *email.MTOSolutionSelectedDB,
+	pocEmailAddress []string,
+) error {
+
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOSolutionSelectedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
+		ModelName:    solutionSelectedDB.ModelName,
+		SolutionName: solutionSelectedDB.SolutionName,
+	})
+	if err != nil {
+		return err
+	}
+	bodyContent := solutionSelectedDB.ToSolutionSelectedBodyContent(emailService.GetConfig().GetClientAddress())
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -396,18 +396,26 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: 275px;"
               >
-                <a
-                  class="usa-link"
-                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/milestones?solution=accountable-care-organization&section=about"
+                <button
+                  class="usa-button usa-button--unstyled"
+                  data-testid="button"
+                  type="button"
                 >
                   Solution 1
-                </a>
+                </button>
               </td>
               <td
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: auto;"
               >
-                Milestone 1 
+                <button
+                  class="usa-button usa-button--unstyled"
+                  data-testid="button"
+                  type="button"
+                >
+                  Milestone 1
+                </button>
+                 
               </td>
               <td
                 role="cell"

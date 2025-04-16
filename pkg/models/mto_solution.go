@@ -29,6 +29,18 @@ func (mto *MTOSolutionWithModelFilterView) ToMTOSolution() *MTOSolution {
 	return &mto.MTOSolution
 }
 
+// MTOSolutionWithNewlyInsertedStatus wraps MTOSolution as well as a newly inserted status
+// it is useful for checking if a solution was just added, so an email can be sent
+type MTOSolutionWithNewlyInsertedStatus struct {
+	MTOSolution
+	NewlyInserted bool `json:"newlyInserted" db:"newly_inserted"`
+}
+
+// ToMTOSolution returns the MTOSolution object from the MTOSolutionWithNewlyInsertedStatus
+func (mto *MTOSolutionWithNewlyInsertedStatus) ToMTOSolution() *MTOSolution {
+	return &mto.MTOSolution
+}
+
 type MTOSolution struct {
 	baseStruct
 	modelPlanRelation
@@ -55,6 +67,22 @@ const (
 	MTOSolutionStatusInProgress MTOSolutionStatus = "IN_PROGRESS"
 	MTOSolutionStatusCompleted  MTOSolutionStatus = "COMPLETED"
 )
+
+// mtoSolutionStatusHumanized maps MTOSolutionStatuses to a human-readable string
+var mtoSolutionStatusHumanized = map[MTOSolutionStatus]string{
+	MTOSolutionStatusNotStarted: "Not Started",
+	MTOSolutionStatusOnboarding: "Onboarding",
+	MTOSolutionStatusBacklog:    "Backlog",
+	MTOSolutionStatusInProgress: "In Progress",
+	MTOSolutionStatusCompleted:  "Completed",
+}
+
+// Humanize returns the human-readable string of a MTO Solution  Status
+// if a value is not found for the provided status, an empty string is returned
+func (m MTOSolutionStatus) Humanize() string {
+	//TODO, consider implementing the shared translation to make this work
+	return mtoSolutionStatusHumanized[m]
+}
 
 // AddedFromSolutionLibrary returns true or false if this was added from the common solution library.
 // It simply checks if the common solution id is populated or not

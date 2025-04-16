@@ -4,15 +4,16 @@ import (
 	_ "embed"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 )
 
-// GetSolutionSelectedDetails queries the database to return information that is useful
-func (s *Store) GetSolutionSelectedDetails(solutionID uuid.UUID) (*email.SolutionSelectedDB, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.Email.SolutionSelectedDetailsGet)
+// GetOperationalSolutionSelectedDetails queries the database to return information that is useful
+func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*email.OperationalSolutionSelectedDB, error) {
+	stmt, err := s.db.PrepareNamed(sqlqueries.Email.OperationalSolutionSelectedDetailsGet)
 	if err != nil {
 
 		return nil, err
@@ -22,7 +23,7 @@ func (s *Store) GetSolutionSelectedDetails(solutionID uuid.UUID) (*email.Solutio
 	arg := map[string]interface{}{
 		"sol_id": solutionID,
 	}
-	solDetails := email.SolutionSelectedDB{}
+	solDetails := email.OperationalSolutionSelectedDB{}
 
 	err = stmt.Get(&solDetails, arg)
 	if err != nil {
@@ -31,6 +32,15 @@ func (s *Store) GetSolutionSelectedDetails(solutionID uuid.UUID) (*email.Solutio
 
 	}
 	return &solDetails, nil
+}
+
+// GetMTOSolutionSelectedDetails queries the database to return information that is useful
+func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UUID) (*email.MTOSolutionSelectedDB, error) {
+	args := map[string]interface{}{
+		"id": solutionID,
+	}
+	return sqlutils.GetProcedure[email.MTOSolutionSelectedDB](np, sqlqueries.Email.MTOSolutionSelectedDetailsGet, args)
+
 }
 
 // GetDiscussionReplyDetailsForEmail returns Discussion replies along with user account information for each reply.

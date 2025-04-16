@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -20,7 +21,7 @@ func (s *Seeder) seedModelPlanWithMTOData(
 
 	// Make uncategorized Milestone from Common milestone library
 	// TODO: This likely won't be uncategorized anymore once common milestones also create categories as needed
-	_, err := resolvers.MTOMilestoneCreateCommon(s.Config.Context, s.Config.Logger, princ, s.Config.Store, plan.ID, models.MTOCommonMilestoneKeyAcquireALearnCont, []models.MTOCommonSolutionKey{})
+	_, err := resolvers.MTOMilestoneCreateCommon(s.Config.Context, s.Config.Logger, princ, s.Config.Store, nil, nil, email.AddressBook{}, plan.ID, models.MTOCommonMilestoneKeyAcquireALearnCont, []models.MTOCommonSolutionKey{})
 	if err != nil {
 		panic(err)
 	}

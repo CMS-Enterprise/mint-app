@@ -67,7 +67,18 @@ func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPla
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return MTOSolutionCreateCommon(ctx, logger, principal, r.store, modelPlanID, key, milestonesToLink)
+	return MTOSolutionCreateCommon(
+		ctx,
+		logger,
+		principal,
+		r.store,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		modelPlanID,
+		key,
+		milestonesToLink,
+	)
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.
