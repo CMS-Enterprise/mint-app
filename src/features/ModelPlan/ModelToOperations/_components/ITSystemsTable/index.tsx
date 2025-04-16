@@ -214,7 +214,7 @@ const ITSystemsTable = ({
       {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
-        width: 250,
+        width: 350,
         Cell: ({ row }: any) => {
           const { openViewSolutionModal, setViewSolutionID } = useContext(
             MTOSolutionPanelContext
@@ -251,6 +251,7 @@ const ITSystemsTable = ({
               <Button
                 type="button"
                 unstyled
+                className="mint-print-link"
                 onClick={() => {
                   openViewSolutionModal(row.original.id);
                   setViewSolutionID(row.original.id);
@@ -282,6 +283,7 @@ const ITSystemsTable = ({
       },
       {
         Header: t<string, {}, string>('table.relatedMilestones'),
+        width: 350,
         accessor: 'milestones',
         Cell: ({ row }: any) => {
           const { openEditMilestoneModal, setMilestoneID } = useContext(
@@ -306,6 +308,7 @@ const ITSystemsTable = ({
                 <Button
                   type="button"
                   unstyled
+                  className="mint-print-link"
                   onClick={() => {
                     openEditMilestoneModal(milestones[0].id);
                     setMilestoneID(milestones[0].id);
@@ -320,6 +323,7 @@ const ITSystemsTable = ({
                 <Button
                   type="button"
                   unstyled
+                  className="mint-print-link"
                   onClick={() => {
                     if (readView) {
                       openViewSolutionModal(row.original.id);
@@ -349,6 +353,7 @@ const ITSystemsTable = ({
       {
         Header: t('table.facilitatedBy'),
         accessor: 'facilitatedBy',
+        width: 250,
         Cell: ({ row }: any) => {
           const { facilitatedBy } = row.original || {};
 
@@ -369,6 +374,7 @@ const ITSystemsTable = ({
       {
         Header: t('table.needBy'),
         accessor: 'needBy',
+        width: 200,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -381,6 +387,7 @@ const ITSystemsTable = ({
       {
         Header: t('table.status'),
         accessor: 'status',
+        width: 250,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -577,8 +584,7 @@ const ITSystemsTable = ({
                             paddingBottom: '.5rem',
                             position: 'relative',
                             paddingLeft: index === 0 ? '.5em' : '0px',
-                            width:
-                              index === 2 ? '260px' : column.width || 'auto'
+                            width: column.width
                           }}
                           key={column.id}
                         >
