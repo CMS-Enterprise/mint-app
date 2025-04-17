@@ -28,7 +28,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -102,10 +102,6 @@ const Recover = () => {
   } = (data?.modelPlan?.payments || {}) as RecoverFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   useScrollElement(!loading);
 
@@ -239,16 +235,7 @@ const Recover = () => {
                             {paymentsT('willRecoverPayments.label')}
                           </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="payment-recover-payment-warning"
-                              onClick={() =>
-                                history.push(
-                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                          <MTOWarning id="payment-recover-payment-warning" />
 
                           <BooleanRadio
                             field="willRecoverPayments"

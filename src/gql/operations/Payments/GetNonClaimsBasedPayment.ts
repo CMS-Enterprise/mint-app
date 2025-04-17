@@ -20,10 +20,6 @@ export default gql(/* GraphQL */ `
         planningToUseInnovationPaymentContractor
         planningToUseInnovationPaymentContractorNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

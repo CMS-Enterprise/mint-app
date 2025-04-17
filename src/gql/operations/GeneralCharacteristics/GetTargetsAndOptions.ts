@@ -22,10 +22,6 @@ export default gql(/* GraphQL */ `
         multiplePatricipationAgreementsNeeded
         multiplePatricipationAgreementsNeededNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

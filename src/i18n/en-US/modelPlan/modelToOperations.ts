@@ -169,6 +169,8 @@ export const modelToOperationsMisc: Record<string, any> = {
   isMTOReady: 'Is this MTO ready for review?',
   isMTOInProgress: 'Is this MTO still in progress',
   lastUpdated: 'MTO last updated {{date}}',
+  warningRedirect:
+    'Your answer to this question may have implications for the milestones and IT systems or solutions you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). <link1>Go to your MTO</link1> to review any suggestions.',
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOReadView:
     'The model-to-operations matrix (MTO) for this model hasn’t been started yet. Check back again later for updates.',
