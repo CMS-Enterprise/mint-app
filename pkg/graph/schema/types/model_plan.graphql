@@ -161,6 +161,6 @@ extend type Mutation {
   if a view filter is not provided, the section will be used to determine which section to share.
   if both are excluded, the model plan will be shared with all sections.
   """
-  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter,modelShareSection: ModelShareSection, usernames: [String!]!, optionalMessage: String): Boolean!
+  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter,modelShareSection: ModelShareSection! = ALL, usernames: [String!]!, optionalMessage: String): Boolean!
   @hasRole(role: MINT_USER)
 }

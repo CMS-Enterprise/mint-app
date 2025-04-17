@@ -1701,7 +1701,7 @@ export type MutationSendFeedbackEmailArgs = {
 /** Mutations definition for the schema */
 export type MutationShareModelPlanArgs = {
   modelPlanID: Scalars['UUID']['input'];
-  modelShareSection?: InputMaybe<ModelShareSection>;
+  modelShareSection?: ModelShareSection;
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
   usernames: Array<Scalars['String']['input']>;
   viewFilter?: InputMaybe<ModelViewFilter>;

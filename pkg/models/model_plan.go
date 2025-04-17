@@ -182,6 +182,14 @@ const (
 	ModelShareSectionMtoSolutions ModelShareSection = "MTO_SOLUTIONS"
 )
 
+var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
+	ModelShareSectionAll:           "model-basics",
+	ModelShareSectionModelPlan:     "model-basics",
+	ModelShareSectionMtoAll:        "milestones",
+	ModelShareSectionMtoMilestones: "milestones",
+	ModelShareSectionMtoSolutions:  "it-systems-and-solutions",
+}
+
 type ModelPhase string
 
 const (

@@ -20,7 +20,7 @@ type ModelPlanShareBodyContent struct {
 	ModelLastUpdated         time.Time
 	ModelLeads               []string
 	ModelViewFilter          *string
-	ModelShareSection        *string
+	ModelShareSection        string
 	HumanizedModelViewFilter *string
 	ClientAddress            string
 	ModelID                  string

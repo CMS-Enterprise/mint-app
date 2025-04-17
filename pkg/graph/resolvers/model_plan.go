@@ -428,7 +428,7 @@ func ModelPlanShare(
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
-	shareSection *models.ModelShareSection,
+	shareSection models.ModelShareSection,
 	usernames []string,
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
@@ -507,6 +507,7 @@ func ModelPlanShare(
 		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
 	}
 
+	// TODO: we likely will want to refactor this to use change history to get the last updated information for the entire model plan
 	lastModified := modelPlan.CreatedDts
 	if modelPlan.ModifiedDts != nil {
 		lastModified = *modelPlan.ModifiedDts
@@ -535,7 +536,7 @@ func ModelPlanShare(
 
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
-	var lowercasedShareSection *string
+	var lowercasedShareSection string
 	if viewFilter != nil {
 		humanizedViewFilter = models.StringPointer(
 			models.ModelViewFilterHumanized[*viewFilter])
@@ -543,10 +544,8 @@ func ModelPlanShare(
 		lowercasedViewFilter = models.StringPointer(
 			strings.ToLower(string(*viewFilter)))
 	}
-	if shareSection != nil {
-		lowercasedShareSection = models.StringPointer(
-			strings.ToLower(string(*shareSection)))
-	}
+
+	lowercasedShareSection = strings.ToLower(string(shareSection))
 
 	// Get email body
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
