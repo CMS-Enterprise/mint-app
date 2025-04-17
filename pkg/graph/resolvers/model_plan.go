@@ -428,11 +428,13 @@ func ModelPlanShare(
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
+	shareSection *models.ModelShareSection,
 	usernames []string,
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (bool, error) {
 	//TODO, this should use the data loader...
+
 	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return false, err
@@ -533,12 +535,17 @@ func ModelPlanShare(
 
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
+	var lowercasedShareSection *string
 	if viewFilter != nil {
 		humanizedViewFilter = models.StringPointer(
 			models.ModelViewFilterHumanized[*viewFilter])
 
 		lowercasedViewFilter = models.StringPointer(
 			strings.ToLower(string(*viewFilter)))
+	}
+	if shareSection != nil {
+		lowercasedShareSection = models.StringPointer(
+			strings.ToLower(string(*shareSection)))
 	}
 
 	// Get email body
@@ -552,6 +559,7 @@ func ModelPlanShare(
 		ModelLastUpdated:         lastModified,
 		ModelLeads:               modelLeads,
 		ModelViewFilter:          lowercasedViewFilter,
+		ModelShareSection:        lowercasedShareSection,
 		HumanizedModelViewFilter: humanizedViewFilter,
 		ClientAddress:            clientAddress,
 		ModelID:                  modelPlan.ID.String(),

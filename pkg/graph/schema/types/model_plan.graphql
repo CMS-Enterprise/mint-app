@@ -45,23 +45,23 @@ enum ModelShareSection {
   """
   Include all sections below
   """
-  ALL,
+  ALL, #go to readview
   """
   Just share the model plan
   """
-  MODEL_PLAN,
+  MODEL_PLAN, #go to readview
   """
   Share all MTO info
   """
-  MTO_ALL,
+  MTO_ALL,#go to Milestones readview/milestones
   """
   Only share MTO Milestones
   """
-  MTO_MILESTONES,
+  MTO_MILESTONES, #go to Milestones readview/milestones
   """
   Only share MTO Solutions
   """
-  MTO_SOLUTIONS,
+  MTO_SOLUTIONS,# readview/it-systems-and-solutions
   # DATA_EXCHANGE_APPROACH,
   # TEAM,
 

@@ -53,6 +53,7 @@
 
           <p>
               {{if .ModelViewFilter}}
+              <!-- maybe add model basics after read-only we need a section to preserve statefullness -->
                 <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}">
                   View {{.HumanizedModelViewFilter}} details in MINT
                 </a>

@@ -166,6 +166,22 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
 }
 
+// ModelShareSection is the section of the model plan that is being shared.
+type ModelShareSection string
+
+const (
+	// Include all sections below
+	ModelShareSectionAll ModelShareSection = "ALL"
+	// Just share the model plan
+	ModelShareSectionModelPlan ModelShareSection = "MODEL_PLAN"
+	// Share all MTO info
+	ModelShareSectionMtoAll ModelShareSection = "MTO_ALL"
+	// Only share MTO Milestones
+	ModelShareSectionMtoMilestones ModelShareSection = "MTO_MILESTONES"
+	// Only share MTO Solutions
+	ModelShareSectionMtoSolutions ModelShareSection = "MTO_SOLUTIONS"
+)
+
 type ModelPhase string
 
 const (
