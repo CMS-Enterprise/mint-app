@@ -20,6 +20,8 @@ import {
   GetMtoMilestoneQuery,
   GetMtoMilestoneQueryVariables,
   GetMtoMilestonesDocument,
+  GetMtoMilestonesQuery,
+  GetMtoMilestonesQueryVariables,
   GetMtoSolutionDocument,
   GetMtoSolutionQuery,
   GetMtoSolutionQueryVariables,
@@ -215,7 +217,10 @@ export const allMilestoneMock: MockedResponse<
   }
 ];
 
-export const commonMilestonesMock = [
+export const commonMilestonesMock: MockedResponse<
+  GetMtoMilestonesQuery,
+  GetMtoMilestonesQueryVariables
+>[] = [
   {
     request: {
       query: GetMtoMilestonesDocument,
@@ -225,11 +230,16 @@ export const commonMilestonesMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
           mtoMatrix: {
             __typename: 'ModelsToOperationMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
             commonMilestones: [
               {
                 __typename: 'MTOCommonMilestone',
@@ -242,6 +252,7 @@ export const commonMilestonesMock = [
                 facilitatedByRole: [],
                 commonSolutions: [
                   {
+                    __typename: 'MTOCommonSolution',
                     key: MtoCommonSolutionKey.BCDA
                   }
                 ]
