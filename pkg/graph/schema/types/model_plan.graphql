@@ -42,10 +42,10 @@ enum ModelViewFilter {
 ModelShareSection is the section of the model plan that is being shared.
 """
 enum ModelShareSection {
-  """
-  Include all sections below
-  """
-  ALL, #go to readview
+  # """
+  # Include all sections below
+  # """
+  # ALL, #go to readview
   """
   Just share the model plan
   """
@@ -157,10 +157,8 @@ extend type Mutation {
 
   """
   ShareModelPlan allows a user to share a model plan with other users.
-  if both a view filter and a section are provided, the view filter will be used to determine which section to share.
-  if a view filter is not provided, the section will be used to determine which section to share.
-  if both are excluded, the model plan will be shared with all sections.
+  if both a view filter and a section are provided, the view filter will be ignored
   """
-  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter,modelShareSection: ModelShareSection! = ALL, usernames: [String!]!, optionalMessage: String): Boolean!
+  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter,modelShareSection: ModelShareSection, usernames: [String!]!, optionalMessage: String): Boolean!
   @hasRole(role: MINT_USER)
 }

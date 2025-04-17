@@ -1255,8 +1255,6 @@ export type ModelPlanTranslation = {
 
 /** ModelShareSection is the section of the model plan that is being shared. */
 export enum ModelShareSection {
-  /** Include all sections below */
-  ALL = 'ALL',
   /** Just share the model plan */
   MODEL_PLAN = 'MODEL_PLAN',
   /** Share all MTO info */
@@ -1416,9 +1414,7 @@ export type Mutation = {
   sendFeedbackEmail: Scalars['Boolean']['output'];
   /**
    * ShareModelPlan allows a user to share a model plan with other users.
-   * if both a view filter and a section are provided, the view filter will be used to determine which section to share.
-   * if a view filter is not provided, the section will be used to determine which section to share.
-   * if both are excluded, the model plan will be shared with all sections.
+   * if both a view filter and a section are provided, the view filter will be ignored
    */
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
@@ -1701,7 +1697,7 @@ export type MutationSendFeedbackEmailArgs = {
 /** Mutations definition for the schema */
 export type MutationShareModelPlanArgs = {
   modelPlanID: Scalars['UUID']['input'];
-  modelShareSection?: ModelShareSection;
+  modelShareSection?: InputMaybe<ModelShareSection>;
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
   usernames: Array<Scalars['String']['input']>;
   viewFilter?: InputMaybe<ModelViewFilter>;

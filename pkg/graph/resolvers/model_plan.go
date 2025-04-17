@@ -11,6 +11,7 @@ import (
 	"golang.org/x/exp/maps"
 
 	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 
@@ -428,7 +429,7 @@ func ModelPlanShare(
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
-	shareSection models.ModelShareSection,
+	shareSection *models.ModelShareSection,
 	usernames []string,
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
@@ -536,7 +537,8 @@ func ModelPlanShare(
 
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
-	var lowercasedShareSection string
+	var shareSectionRoute *string
+	var shareSectionHumanized *string
 	if viewFilter != nil {
 		humanizedViewFilter = models.StringPointer(
 			models.ModelViewFilterHumanized[*viewFilter])
@@ -545,7 +547,10 @@ func ModelPlanShare(
 			strings.ToLower(string(*viewFilter)))
 	}
 
-	lowercasedShareSection = strings.ToLower(string(shareSection))
+	if shareSection != nil {
+		shareSectionRoute = helpers.PointerTo(models.ModelShareSectionToRouteTranslation[*shareSection])
+		shareSectionHumanized = helpers.PointerTo(models.ModelShareSectionHumanized[*shareSection])
+	}
 
 	// Get email body
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
@@ -558,7 +563,8 @@ func ModelPlanShare(
 		ModelLastUpdated:         lastModified,
 		ModelLeads:               modelLeads,
 		ModelViewFilter:          lowercasedViewFilter,
-		ModelShareSection:        lowercasedShareSection,
+		ModelShareSection:        shareSectionRoute,
+		ShareSectionHumanized:    shareSectionHumanized,
 		HumanizedModelViewFilter: humanizedViewFilter,
 		ClientAddress:            clientAddress,
 		ModelID:                  modelPlan.ID.String(),

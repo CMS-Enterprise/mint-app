@@ -170,8 +170,8 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 type ModelShareSection string
 
 const (
-	// Include all sections below
-	ModelShareSectionAll ModelShareSection = "ALL"
+	// // Include all sections below
+	// ModelShareSectionAll ModelShareSection = "ALL"
 	// Just share the model plan
 	ModelShareSectionModelPlan ModelShareSection = "MODEL_PLAN"
 	// Share all MTO info
@@ -183,11 +183,22 @@ const (
 )
 
 var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
-	ModelShareSectionAll:           "model-basics",
+	// ModelShareSectionAll:           "model-basics",
 	ModelShareSectionModelPlan:     "model-basics",
 	ModelShareSectionMtoAll:        "milestones",
 	ModelShareSectionMtoMilestones: "milestones",
 	ModelShareSectionMtoSolutions:  "it-systems-and-solutions",
+}
+
+// todo, we might need to say "View this models to operations matrix" in the email
+
+// ModelShareSectionHumanized controls what the email says after View _ details in MINT.
+var ModelShareSectionHumanized = map[ModelShareSection]string{
+	// ModelShareSectionAll:           "more",
+	ModelShareSectionModelPlan:     "more",
+	ModelShareSectionMtoAll:        "models to operations matrix",
+	ModelShareSectionMtoMilestones: "models to operations matrix",
+	ModelShareSectionMtoSolutions:  "models to operations matrix",
 }
 
 type ModelPhase string
