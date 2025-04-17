@@ -17,7 +17,8 @@ const scrollBlackList: string[] = [
   '&hide-added-milestones',
   '&type=',
   '&hide-milestones-without-solutions',
-  '&scroll-to-bottom'
+  '&scroll-to-bottom',
+  'it-systems-and-solutions?type'
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {
