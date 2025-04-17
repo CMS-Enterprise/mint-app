@@ -40,7 +40,7 @@ const mockCollaborator: GetModelPlanType = {
       __typename: 'PlanCollaborator',
       userID: '123',
       id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',
-      modelPlanID: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+      modelPlanID: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
       userAccount: {
         id: '890',
         __typename: 'UserAccount',
@@ -58,7 +58,7 @@ const mocks = [
   {
     request: {
       query: GetModelCollaboratorsDocument,
-      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
       data: {
@@ -73,7 +73,7 @@ describe('Collaborator/Team Member page w/table', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=add'
+          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -103,7 +103,7 @@ describe('Collaborator/Team Member page w/table', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=add'
+          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>

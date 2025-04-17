@@ -322,7 +322,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               class="padding-1 line-height-normal padding-left-0"
             >
               <button
-                class="usa-button usa-button--unstyled"
+                class="usa-button usa-button--unstyled mint-print-link"
                 data-testid="button"
                 type="button"
               >
@@ -336,22 +336,11 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             </td>
             <td
               class="padding-1 line-height-normal padding-left-0"
-            >
-              <a
-                class="usa-link"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/milestones?solution=research-measurement-assessment-design-and-analysis&section=about"
-              >
-                RMADA
-              </a>
-            </td>
+            />
             <td
               class="padding-1 line-height-normal padding-left-0"
             >
-              <span
-                class="text-italic"
-              >
-                None added yet
-              </span>
+              05/12/2022
             </td>
             <td
               class="padding-1 line-height-normal padding-left-0"
@@ -370,41 +359,45 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
       </table>
     </div>
     <div
-      class="display-flex"
+      class="mint-no-print"
     >
       <div
-        class=""
-      />
-      <div
-        class="desktop:margin-top-2 margin-left-auto desktop:grid-col-auto"
+        class="display-flex"
       >
-        <select
-          class="usa-select margin-top-0 width-auto"
-          data-testid="table-page-size"
-          id="table-page-size"
-          name="tablePageSize"
+        <div
+          class=""
+        />
+        <div
+          class="desktop:margin-top-2 margin-left-auto desktop:grid-col-auto"
         >
-          <option
-            value="5"
+          <select
+            class="usa-select margin-top-0 width-auto"
+            data-testid="table-page-size"
+            id="table-page-size"
+            name="tablePageSize"
           >
-            Show 5 milestones
-          </option>
-          <option
-            value="10"
-          >
-            Show 10 milestones
-          </option>
-          <option
-            value="15"
-          >
-            Show 15 milestones
-          </option>
-          <option
-            value="20"
-          >
-            Show 20 milestones
-          </option>
-        </select>
+            <option
+              value="5"
+            >
+              Show 5 milestones
+            </option>
+            <option
+              value="10"
+            >
+              Show 10 milestones
+            </option>
+            <option
+              value="15"
+            >
+              Show 15 milestones
+            </option>
+            <option
+              value="20"
+            >
+              Show 20 milestones
+            </option>
+          </select>
+        </div>
       </div>
     </div>
      

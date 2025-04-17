@@ -17,7 +17,7 @@ type GetModelPlanInfoType = GetBasicsQuery['modelPlan'];
 
 const basicMockData: GetModelPlanInfoType = {
   __typename: 'ModelPlan',
-  id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
   modelName: 'My excellent plan that I just initiated',
   abbreviation: 'MEP',
   nameHistory: ['First Name', 'Second Name', 'Third Name'],
@@ -43,7 +43,7 @@ const mocks = [
   {
     request: {
       query: GetBasicsDocument,
-      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
       data: {
@@ -61,7 +61,7 @@ describe('Model Plan Basics page', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/basics'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -84,7 +84,7 @@ describe('Model Plan Basics page', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/basics'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -143,7 +143,7 @@ describe('Model Plan Basics page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/basics'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>

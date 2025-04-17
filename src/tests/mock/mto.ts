@@ -27,6 +27,8 @@ import {
   GetMtoSolutionsAndMilestonesQuery,
   GetMtoSolutionsAndMilestonesQueryVariables,
   GetPossibleSolutionsDocument,
+  GetPossibleSolutionsQuery,
+  GetPossibleSolutionsQueryVariables,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoCommonSolutionSubject,
@@ -137,6 +139,7 @@ export const mtoMatrixMockFull: MockedResponse<
                         status: MtoMilestoneStatus.NOT_STARTED,
                         riskIndicator: MtoRiskIndicator.ON_TRACK,
                         addedFromMilestoneLibrary: true,
+                        needBy: '2022-05-12T15:01:39.190679Z',
                         isDraft: true,
                         solutions: [
                           {
@@ -303,16 +306,21 @@ export const commonSolutionsMock: MockedResponse<
   }
 ];
 
-export const possibleSolutionsMock = [
+export const possibleSolutionsMock: MockedResponse<
+  GetPossibleSolutionsQuery,
+  GetPossibleSolutionsQueryVariables
+>[] = [
   {
     request: {
       query: GetPossibleSolutionsDocument
     },
-    results: {
+    result: {
       data: {
+        __typename: 'Query',
         possibleOperationalSolutions: [
           {
-            id: '123',
+            __typename: 'PossibleOperationalSolution',
+            id: 123,
             key: OperationalSolutionKey.ACO_OS,
             pointsOfContact: [
               {
@@ -666,7 +674,7 @@ export const solutionAndMilestoneMock: MockedResponse<
         __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
-          id: '123',
+          id: modelID,
           mtoMatrix: {
             __typename: 'ModelsToOperationMatrix',
             status: MtoStatus.READY_FOR_REVIEW,

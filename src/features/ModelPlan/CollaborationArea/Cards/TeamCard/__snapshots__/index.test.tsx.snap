@@ -102,14 +102,14 @@ exports[`TeamCard component > displays role count correctly 1`] = `
         <a
           class="usa-button"
           data-testid="add-collaborator"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators/add-collaborator"
         >
           Add a team member
         </a>
         <a
           class="usa-button usa-button--outline margin-left-0"
           data-testid="manage-collaborators"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators"
         >
           Manage model team
         </a>
@@ -221,14 +221,14 @@ exports[`TeamCard component > matches snapshot 1`] = `
         <a
           class="usa-button"
           data-testid="add-collaborator"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators/add-collaborator"
         >
           Add a team member
         </a>
         <a
           class="usa-button usa-button--outline margin-left-0"
           data-testid="manage-collaborators"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators"
         >
           Manage model team
         </a>
