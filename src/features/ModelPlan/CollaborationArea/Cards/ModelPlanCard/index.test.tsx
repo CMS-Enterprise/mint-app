@@ -147,7 +147,6 @@ const modelPlan: GetModelPlanTypes = {
       commonName: 'John Doe'
     }
   },
-  operationalNeeds: [] as any,
   documents: [
     {
       __typename: 'PlanDocument',
