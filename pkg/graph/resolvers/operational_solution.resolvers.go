@@ -14,30 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// CreateOperationalSolution is the resolver for the createOperationalSolution field.
-func (r *mutationResolver) CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return OperationalSolutionCreate(
-		ctx,
-		r.store,
-		logger,
-		r.emailService,
-		r.emailTemplateService,
-		r.addressBook,
-		operationalNeedID,
-		solutionType,
-		changes,
-		principal)
-}
-
-// UpdateOperationalSolution is the resolver for the updateOperationalSolution field.
-func (r *mutationResolver) UpdateOperationalSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.OperationalSolution, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return OperationalSolutionUpdate(logger, id, changes, principal, r.store)
-}
-
 // Documents is the resolver for the documents field.
 func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models.OperationalSolution) ([]*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
@@ -72,3 +48,30 @@ func (r *Resolver) OperationalSolution() generated.OperationalSolutionResolver {
 }
 
 type operationalSolutionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) CreateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType *models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return OperationalSolutionCreate(
+		ctx,
+		r.store,
+		logger,
+		r.emailService,
+		r.emailTemplateService,
+		r.addressBook,
+		operationalNeedID,
+		solutionType,
+		changes,
+		principal)
+}
+func (r *mutationResolver) UpdateOperationalSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return OperationalSolutionUpdate(logger, id, changes, principal, r.store)
+}

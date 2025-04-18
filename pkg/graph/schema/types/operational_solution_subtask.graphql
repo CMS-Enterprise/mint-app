@@ -4,20 +4,6 @@ enum OperationalSolutionSubtaskStatus {
   DONE
 }
 
-input CreateOperationalSolutionSubtaskInput {
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-}
-
-input UpdateOperationalSolutionSubtaskInput {
-  id: UUID!
-  changes: UpdateOperationalSolutionSubtaskChangesInput!
-}
-
-input UpdateOperationalSolutionSubtaskChangesInput @goModel(model: "map[string]interface{}") {
-  name: String!
-  status: OperationalSolutionSubtaskStatus!
-}
 
 type OperationalSolutionSubtask {
   id: UUID!
@@ -33,13 +19,3 @@ type OperationalSolutionSubtask {
   modifiedDts: Time
 }
 
-extend type Mutation {
-  createOperationalSolutionSubtasks(solutionID: UUID!, inputs: [CreateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
-  @hasRole(role: MINT_USER)
-
-  updateOperationalSolutionSubtasks(inputs: [UpdateOperationalSolutionSubtaskInput!]!): [OperationalSolutionSubtask!]
-  @hasRole(role: MINT_USER)
-
-  deleteOperationalSolutionSubtask(id: UUID!): Int!
-  @hasRole(role: MINT_USER)
-}
