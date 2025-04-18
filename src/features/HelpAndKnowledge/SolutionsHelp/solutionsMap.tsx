@@ -1,14 +1,15 @@
 import React from 'react';
 import {
-  OperationalSolutionCategories,
-  OperationalSolutionCategoryRoute,
-  OperationalSolutionSubCategories
-} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
-import {
   GetPossibleSolutionsQuery,
   MtoCommonSolutionKey,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
+
+import {
+  OperationalSolutionCategories,
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'types/operationalSolutionCategories';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import {
-  OperationalSolutionCategories,
-  OperationalSolutionCategoryRoute
-} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/Tag';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
+import {
+  OperationalSolutionCategories,
+  OperationalSolutionCategoryRoute
+} from 'types/operationalSolutionCategories';
 
 type SolutionsTagProps = {
   className?: string;

@@ -227,6 +227,11 @@ const AppRoutes = () => {
             from="/models/:modelID/collaboration-area/task-list/it-solutions"
             to="/models/:modelID/collaboration-area/model-to-operations"
           />
+          {/* Read view redirect from legacy Operational Needs Track to new MTO Matrix  */}
+          <Redirect
+            from="/models/:modelID/read-view/it-solutions"
+            to="/models/:modelID/read-view/milestones"
+          />
 
           <ProtectedRoute
             path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"

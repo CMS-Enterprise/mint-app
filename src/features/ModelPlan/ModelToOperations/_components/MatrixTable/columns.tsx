@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import {
   MtoCommonMilestoneKey,
   MtoFacilitator,
@@ -14,6 +13,7 @@ import i18next from 'i18next';
 import UswdsReactLink from 'components/LinkWrapper';
 import { MTOMilestonePanelContext } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalState } from 'contexts/MTOModalContext';
+import { findSolutionByKey } from 'hooks/useModalSolutionState';
 import { formatDateUtc } from 'utils/date';
 
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';

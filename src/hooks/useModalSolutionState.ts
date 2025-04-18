@@ -5,7 +5,6 @@ Hook used to get the state/route of the modal for IT lead solution details
 import { useLocation } from 'react-router-dom';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { findSolutionByKey } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import {
   MtoCommonSolutionKey,
   OperationalSolutionKey
@@ -20,6 +19,14 @@ type SolutionModalState = {
   selectedSolution: HelpSolutionType | undefined;
   renderModal: boolean;
   loading: boolean;
+};
+
+export const findSolutionByKey = (
+  key: OperationalSolutionKey | null,
+  solutions: HelpSolutionType[]
+): HelpSolutionType | undefined => {
+  if (!key) return undefined;
+  return [...solutions].find(solution => solution.enum === key);
 };
 
 const useModalSolutionState = (

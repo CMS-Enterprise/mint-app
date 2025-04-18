@@ -296,7 +296,7 @@ describe('The Model Plan Payment Form', () => {
     cy.contains('button', 'Continue to operational solutions tracker').click();
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/it-solutions$/
+        /\/models\/.{36}\/collaboration-area\/task-list\$/
       );
     });
   });

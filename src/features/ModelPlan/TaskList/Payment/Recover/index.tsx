@@ -181,9 +181,7 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
-            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-          );
+          history.push(`/models/${modelID}/collaboration-area/task-list`);
         }}
         enableReinitialize
         innerRef={formikRef}
