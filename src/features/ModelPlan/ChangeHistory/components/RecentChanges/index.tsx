@@ -63,7 +63,8 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
                     : changeRecords.length,
                   section: t(`sections.${changeRecords[0].tableName}`),
                   date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
-                  time: formatTime(changeRecords[0].date)
+                  time: formatTime(changeRecords[0].date),
+                  inOrTo: t('to')
                 }}
                 components={{
                   datetime: <span className="text-base" />

@@ -24,7 +24,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -92,10 +92,6 @@ const CCWAndQuality = () => {
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetCCWAndQualityFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -312,16 +308,7 @@ const CCWAndQuality = () => {
                           )}
                         </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="ops-eval-and-learning-data-needed-warning"
-                            onClick={() =>
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
+                        <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
 
                         <BooleanRadio
                           field="developNewQualityMeasures"

@@ -23,7 +23,7 @@ import configureMockStore from 'redux-mock-store';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import TaskList, { getLatestModifiedDate } from './index';
+import TaskList from './index';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
@@ -287,30 +287,6 @@ describe('The Model Plan Task List', () => {
     expect(
       sessionStorage.getItem(`statusChecked-${modelPlan.id}`)?.toString()
     ).toBe('true');
-  });
-
-  it('gets the last modified date of operational solutions', async () => {
-    const expectedDate: string = '2023-05-21T13:38:11.998962Z';
-
-    const lastUpdated = getLatestModifiedDate([
-      {
-        __typename: 'OperationalNeed',
-        id: '724c19ce-0309-4f04-a4fe-d9ed345dbec',
-        modifiedDts: null
-      },
-      {
-        __typename: 'OperationalNeed',
-        id: '864c19ce-0309-4f04-a4fe-d9ed844edbec',
-        modifiedDts: '2023-04-01T13:38:11.998962Z'
-      },
-      {
-        __typename: 'OperationalNeed',
-        id: '134c19ce-0309-4f04-a4fe-d9ed844edbec',
-        modifiedDts: '2023-05-21T13:38:11.998962Z'
-      }
-    ]);
-
-    expect(lastUpdated).toEqual(expectedDate);
   });
 
   it('displays the model plan task list steps', async () => {

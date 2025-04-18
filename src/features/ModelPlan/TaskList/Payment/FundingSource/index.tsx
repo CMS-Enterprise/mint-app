@@ -28,7 +28,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -95,10 +95,6 @@ const FundingSource = () => {
   } = (data?.modelPlan?.payments || {}) as FundingFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
@@ -425,16 +421,7 @@ const FundingSource = () => {
                             {paymentsT('payType.label')}
                           </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="payment-pay-recipients-warning"
-                              onClick={() =>
-                                history.push(
-                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                          <MTOWarning id="payment-pay-recipients-warning" />
 
                           <p className="text-base margin-y-1 margin-top-2">
                             {paymentsT('payType.sublabel')}

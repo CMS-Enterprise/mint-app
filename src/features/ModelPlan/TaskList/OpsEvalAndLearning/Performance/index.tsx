@@ -17,7 +17,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -91,10 +91,6 @@ const Performance = () => {
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as PerformanceFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -210,16 +206,7 @@ const Performance = () => {
                       {opsEvalAndLearningT('benchmarkForPerformance.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-benchmark-performance-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-benchmark-performance-warning" />
 
                     <Fieldset>
                       {getKeys(benchmarkForPerformanceConfig.options).map(
@@ -341,17 +328,10 @@ const Performance = () => {
                       {opsEvalAndLearningMiscT('participantAppeal')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-appeal-performance-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                        className="margin-top-2"
-                      />
-                    )}
+                    <MTOWarning
+                      id="ops-eval-and-learning-appeal-performance-warning"
+                      className="margin-top-2"
+                    />
 
                     <Alert slim type="info">
                       {opsEvalAndLearningMiscT('appealsWarning')}

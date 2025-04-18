@@ -125,30 +125,6 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
           Will the model have a learning strategy?
         </label>
         <div
-          class="usa-alert usa-alert--warning flex it-solutions-warning"
-          data-testid="alert"
-        >
-          <div
-            class="usa-alert__body"
-          >
-            <p
-              class="usa-alert__text"
-            >
-              <span>
-                Changing your answer to this question may also affect your selections in the operational solutions and implementation status tracker.  
-                <button
-                  class="usa-button usa-button usa-button--unstyled"
-                  data-testid="button"
-                  id="ops-eval-and-learning-learning-systems-warning"
-                  type="button"
-                >
-                  Go to operational solutions tracker.
-                </button>
-              </span>
-            </p>
-          </div>
-        </div>
-        <div
           class="mint-checkbox usa-checkbox"
         >
           <input

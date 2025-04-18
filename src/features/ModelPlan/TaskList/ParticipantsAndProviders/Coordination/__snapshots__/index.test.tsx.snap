@@ -506,30 +506,6 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         >
           Will you collect participant IDs? If so, select which types.
         </label>
-        <div
-          class="usa-alert usa-alert--warning flex it-solutions-warning"
-          data-testid="alert"
-        >
-          <div
-            class="usa-alert__body"
-          >
-            <p
-              class="usa-alert__text"
-            >
-              <span>
-                Changing your answer to this question may also affect your selections in the operational solutions and implementation status tracker.  
-                <button
-                  class="usa-button usa-button usa-button--unstyled"
-                  data-testid="button"
-                  id="ops-eval-and-learning-data-needed-warning"
-                  type="button"
-                >
-                  Go to operational solutions tracker.
-                </button>
-              </span>
-            </p>
-          </div>
-        </div>
         <p
           class="text-base margin-0 line-height-body-3"
         >

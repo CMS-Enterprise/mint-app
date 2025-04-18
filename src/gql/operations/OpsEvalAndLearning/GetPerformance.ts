@@ -25,10 +25,6 @@ export default gql(/* GraphQL */ `
         appealOther
         appealNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

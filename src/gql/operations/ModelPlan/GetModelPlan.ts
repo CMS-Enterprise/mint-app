@@ -140,10 +140,6 @@ export default gql(/* GraphQL */ `
         readyForClearanceDts
         status
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
       prepareForClearance {
         status
         modifiedDts: latestClearanceDts

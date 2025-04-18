@@ -25,7 +25,7 @@ import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -90,10 +90,6 @@ const Frequency = () => {
   } = (data?.modelPlan?.beneficiaries || {}) as FrequencyFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   useScrollElement(!loading);
 
@@ -223,16 +219,7 @@ const Frequency = () => {
                           {beneficiariesT('beneficiaryOverlap.label')}
                         </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="beneficiaries-overlap-warning"
-                            onClick={() => {
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                              );
-                            }}
-                          />
-                        )}
+                        <MTOWarning id="beneficiaries-overlap-warning" />
 
                         <Fieldset>
                           {getKeys(beneficiaryOverlapConfig.options).map(
