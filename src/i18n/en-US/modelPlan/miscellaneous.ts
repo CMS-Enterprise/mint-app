@@ -6,6 +6,7 @@ export const miscellaneous: Record<string, Record<string, string> | string> = {
   saveAndReturnToCollaborationArea:
     'Save and return to model collaboration area',
   for: 'for',
+  save: 'Save',
   home: 'Home',
   next: 'Next',
   back: 'Back',
