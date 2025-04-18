@@ -554,7 +554,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                     >
                       <a
                         class="usa-link"
-                        href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+                        href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
                       >
                         My plan
                       </a>
@@ -952,7 +952,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                     >
                       <a
                         class="usa-link"
-                        href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+                        href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
                       >
                         My plan
                       </a>

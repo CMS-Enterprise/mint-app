@@ -1,11 +1,14 @@
+import { MockedResponse } from '@apollo/client/testing';
 import {
   GetOperationalNeedAnswerDocument,
   GetOperationalNeedDocument,
+  GetPossibleSolutionsDocument,
+  GetPossibleSolutionsQuery,
+  GetPossibleSolutionsQueryVariables,
   OperationalNeedKey,
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'gql/generated/graphql';
-import GetPossibleSolutions from 'gql/operations/Solutions/GetPossibleSolutions';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -22,23 +25,37 @@ export const pointsOfContact = [
   }
 ];
 
-export const possibleSolutionsMock = [
+export const possibleSolutionsMock: MockedResponse<
+  GetPossibleSolutionsQuery,
+  GetPossibleSolutionsQueryVariables
+>[] = [
   {
     request: {
-      query: GetPossibleSolutions
+      query: GetPossibleSolutionsDocument
     },
     result: {
       data: {
+        __typename: 'Query',
         possibleOperationalSolutions: [
           {
-            __typname: 'PossibleOperationalSolution',
-            id: '1267679i6867663',
+            __typename: 'PossibleOperationalSolution',
+            id: 12676796867663,
             key: OperationalSolutionKey.INNOVATION,
-            pointsOfContact: [...pointsOfContact]
+            pointsOfContact: [
+              {
+                __typename: 'PossibleOperationalSolutionContact',
+                id: '1267967874323',
+                name: 'John Mint',
+                email: 'john.mint@oddball.io',
+                isTeam: false,
+                role: 'Project lead',
+                isPrimary: true
+              }
+            ]
           },
           {
-            __typname: 'PossibleOperationalSolution',
-            id: '2345256',
+            __typename: 'PossibleOperationalSolution',
+            id: 2345256,
             key: OperationalSolutionKey.ACO_OS,
             pointsOfContact: [
               {
@@ -53,8 +70,8 @@ export const possibleSolutionsMock = [
             ]
           },
           {
-            __typname: 'PossibleOperationalSolution',
-            id: '78968679',
+            __typename: 'PossibleOperationalSolution',
+            id: 78968679,
             key: OperationalSolutionKey.APPS,
             pointsOfContact: [
               {
@@ -69,8 +86,8 @@ export const possibleSolutionsMock = [
             ]
           },
           {
-            __typname: 'PossibleOperationalSolution',
-            id: '116785636',
+            __typename: 'PossibleOperationalSolution',
+            id: 116785636,
             key: OperationalSolutionKey.RMADA,
             pointsOfContact: [
               {

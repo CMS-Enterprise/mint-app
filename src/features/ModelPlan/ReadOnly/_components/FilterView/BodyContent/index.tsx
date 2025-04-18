@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Grid, Link } from '@trussworks/react-uswds';
+import ITSystemsTable from 'features/ModelPlan/ModelToOperations/_components/ITSystemsTable';
 import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyCRTDLs from 'features/ModelPlan/ReadOnly/CRTDLs';
 import ReadOnlyDataExchangeApproach from 'features/ModelPlan/ReadOnly/DataExchangeapproach';
@@ -10,7 +11,6 @@ import ReadOnlyOpsEvalAndLearning from 'features/ModelPlan/ReadOnly/OpsEvalAndLe
 import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'features/ModelPlan/ReadOnly/Team';
-import OperationalNeedsTable from 'features/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 
 import Divider from 'components/Divider';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -66,7 +66,7 @@ const BodyContent = ({
   filteredView: (typeof filterGroups)[number];
 }) => {
   const { t } = useTranslation('filterView');
-  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const filterMappings = usePlanTranslation();
 
@@ -109,16 +109,19 @@ const BodyContent = ({
       {filteredGroupSolutions[filteredView] && (
         <div>
           <Divider className="margin-top-8" />
-          <h2 className="margin-top-5">
-            {opSolutionsMiscT('headingReadOnly')}
-          </h2>
-          <OperationalNeedsTable
-            className="margin-bottom-5"
-            modelID={modelID}
-            type="needs"
-            readOnly
-            hideGlobalFilter
-            hiddenColumns={[opSolutionsMiscT('itSolutionsTable.actions')]}
+
+          <div className="display-flex margin-bottom-2 margin-top-5">
+            <h2 className="margin-y-0 margin-right-2">
+              {modelToOperationsMiscT('heading')}
+            </h2>
+
+            <p className="mint-body-large text-base-dark margin-y-0 flex-align-self-end">
+              {modelToOperationsMiscT('solutions')}
+            </p>
+          </div>
+
+          <ITSystemsTable
+            readView
             filterSolutions={filteredGroupSolutions[filteredView]}
           />
         </div>

@@ -50,3 +50,15 @@ func getTranslationMapAndTranslateSingleValue(tableName models.TableName, transl
 	return rawValue
 
 }
+
+func formatCategoryTranslation(categoryName string, parentCategoryName *string) string {
+	name := categoryName
+	if parentCategoryName == nil {
+		parentCategoryName = &name
+		categoryName = models.UncategorizedMTOName
+	}
+
+	name = *parentCategoryName + " (" + categoryName + ")"
+
+	return name
+}

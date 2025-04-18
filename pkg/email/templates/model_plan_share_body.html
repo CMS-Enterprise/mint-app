@@ -1,6 +1,6 @@
 {{template "shared_header.html"}}
 
-<h3>{{.UserName}} has shared a Model Plan with you:</h3>
+<h3>{{.UserName}} has shared information about a model with you:</h3>
 <br/>
 <!-- Only show the optional message if it exists -->
 {{if and .OptionalMessage (gt (len .OptionalMessage) 0)}}
@@ -52,12 +52,16 @@
           <br/>
 
           <p>
-              {{if .ModelViewFilter}}
-                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only?filter-view={{.ModelViewFilter}}">
+              {{if .ModelShareSectionRoute}}
+              <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/{{.ModelShareSectionRoute}}">
+                View {{.ModelShareSectionHumanized}} details in MINT
+              </a>
+              {{else if .ModelViewFilter}}
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/model-basics?filter-view={{.ModelViewFilter}}">
                   View {{.HumanizedModelViewFilter}} details in MINT
                 </a>
               {{else}}
-                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only">
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/model-basics">
                   View more details in MINT
                 </a>
               {{end}}

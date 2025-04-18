@@ -181,6 +181,13 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
 }
 
+// MtoMatrix is the resolver for the mtoMatrix field.
+func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan) (*models.ModelsToOperationMatrix, error) {
+	return &models.ModelsToOperationMatrix{
+		ModelPlan: obj, // pass a reference of the Model Plan to the MTO Matrix object so we can fetch stuff based on it!
+	}, nil
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -209,10 +216,9 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 }
 
 // ShareModelPlan is the resolver for the shareModelPlan field.
-func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error) {
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-
 	return ModelPlanShare(
 		ctx,
 		logger,
@@ -223,6 +229,7 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 		r.addressBook,
 		modelPlanID,
 		viewFilter,
+		modelShareSection,
 		usernames,
 		optionalMessage,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),

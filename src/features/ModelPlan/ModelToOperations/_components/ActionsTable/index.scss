@@ -1,0 +1,36 @@
+@use 'viewports' as *;
+
+.action-buttons {
+  display: grid;
+  grid-template-rows: 1fr 1fr minmax(1fr, 133px);
+
+  & > div:not(:last-child) {
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #E6E6E6;
+  }
+
+  @media (min-width: $tablet) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(1fr, 133px) minmax(1fr, 133px);
+
+    .action-button--category {
+      grid-column: 1 / span 2;
+    }
+  }
+
+  @media (min-width: $desktop) {
+    grid-template-columns: 1fr 1fr minmax(346px, 1fr);
+    grid-template-rows: 1fr;
+
+    .action-button--category {
+      grid-column: 3 / span 1;
+    }
+
+    & > div:not(:last-child) {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+}

@@ -25,6 +25,7 @@ import CRTDL from 'features/ModelPlan/CRTDL';
 import DataEchangeApproach from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
+import ModelToOperations from 'features/ModelPlan/ModelToOperations';
 import NewPlan from 'features/ModelPlan/NewPlan';
 import ReadOnly from 'features/ModelPlan/ReadOnly';
 import Status from 'features/ModelPlan/Status';
@@ -34,7 +35,6 @@ import Basics from 'features/ModelPlan/TaskList/Basics';
 import Beneficiaries from 'features/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'features/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics';
-import ITSolutions from 'features/ModelPlan/TaskList/ITSolutions';
 import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
 import OpsEvalAndLearning from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
@@ -167,6 +167,12 @@ const AppRoutes = () => {
             component={DataEchangeApproach}
           />
 
+          {/* Model to Operation Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-to-operations"
+            component={ModelToOperations}
+          />
+
           {/* Task List Routes */}
           <Redirect
             exact
@@ -216,9 +222,15 @@ const AppRoutes = () => {
             component={Payment}
           />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/it-solutions"
-            component={ITSolutions}
+          {/* Redirect from legacy Operational Needs Track to new MTO Matrix.  TODO: Can remove at some point once fully converted */}
+          <Redirect
+            from="/models/:modelID/collaboration-area/task-list/it-solutions"
+            to="/models/:modelID/collaboration-area/model-to-operations"
+          />
+          {/* Read view redirect from legacy Operational Needs Track to new MTO Matrix  */}
+          <Redirect
+            from="/models/:modelID/read-view/it-solutions"
+            to="/models/:modelID/read-view/milestones"
           />
 
           <ProtectedRoute

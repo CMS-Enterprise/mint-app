@@ -7,15 +7,15 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
-  OperationalSolutionCategories,
-  OperationalSolutionCategoryRoute
-} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import Divider from 'components/Divider';
 import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import {
+  OperationalSolutionCategories,
+  OperationalSolutionCategoryRoute
+} from 'types/operationalSolutionCategories';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
@@ -48,7 +48,7 @@ export const findCategoryMapByRouteParam = (
 };
 
 export const findSolutionByRouteParam = (
-  route: string | null,
+  route: string | null | undefined,
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
   if (!route) return undefined;
@@ -89,8 +89,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { helpSolutions, loading } = useHelpSolution();
 
   // Get the solution map details from solution route param
-  const { prevPathname, selectedSolution: solution } =
-    useModalSolutionState(null);
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState();
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);

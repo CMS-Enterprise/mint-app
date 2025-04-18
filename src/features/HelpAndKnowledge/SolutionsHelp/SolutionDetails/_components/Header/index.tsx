@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { OperationalSolutionCategoryRoute } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
+import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
 
 type HeaderProps = {
   className?: string;

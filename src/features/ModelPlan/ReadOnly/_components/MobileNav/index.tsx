@@ -6,6 +6,7 @@ import { Icon } from '@trussworks/react-uswds';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import { subComponentsProps, SubpageKey } from '../..';
+import SideNav from '../Sidenav';
 
 import './index.scss';
 
@@ -69,23 +70,12 @@ const MobileNav = ({
           className="read-only-model-plan__subNav__list-container bg-primary-dark"
         >
           <ul className="read-only-model-plan__subNav__list subNav">
-            {Object.keys(subComponents).map((key: string) => (
-              <li key={key} className="">
-                <NavLink
-                  to={
-                    !isHelpArticle
-                      ? subComponents[key].route
-                      : subComponents[key].helpRoute
-                  }
-                  key={key}
-                  className={key === subinfo ? 'subNav--current' : ''}
-                  onClick={() => setIsAccordionOpen(!isAccordionOpen)}
-                >
-                  {translationKey(`navigation.${key}`)}
-                </NavLink>
-              </li>
-            ))}
-            <li className="subNav__item--back-to-all-models">
+            <SideNav
+              subComponents={subComponents}
+              isHelpArticle={isHelpArticle}
+              isMobile
+            />
+            <li>
               <NavLink
                 to={solutionDetailRoute || '/models'}
                 className="display-flex flex-align-center"

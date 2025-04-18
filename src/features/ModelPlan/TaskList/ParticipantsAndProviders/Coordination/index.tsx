@@ -26,7 +26,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -90,10 +90,6 @@ export const Coordination = () => {
   } = (data?.modelPlan?.participantsAndProviders || {}) as CoordinationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -426,16 +422,7 @@ export const Coordination = () => {
                       {participantsAndProvidersT('participantsIds.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-data-needed-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
 
                     <p className="text-base margin-0 line-height-body-3">
                       {participantsAndProvidersT('participantsIds.sublabel')}

@@ -24,7 +24,6 @@ import {
   GetLockedModelPlanSectionsQuery,
   GetModelPlanQuery,
   LockableSection,
-  TaskStatus,
   useGetModelPlanQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -58,8 +57,7 @@ type TaskListSectionLockStatus =
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
-type OperationalNeedsType =
-  GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
+
 type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 type BeneficiariesType = GetModelPlanQuery['modelPlan']['beneficiaries'];
 type GeneralCharacteristicsType =
@@ -72,11 +70,6 @@ type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
 type PrepareForClearanceType =
   GetModelPlanQuery['modelPlan']['prepareForClearance'];
 
-type ITSolutionsType = {
-  modifiedDts: string | null | undefined;
-  status: TaskStatus;
-};
-
 type TaskListSectionsType = {
   [key: string]:
     | BasicsType
@@ -85,7 +78,6 @@ type TaskListSectionsType = {
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
     | PaymentsType
-    | ITSolutionsType
     | PrepareForClearanceType;
 };
 
@@ -99,30 +91,9 @@ const taskListSectionMap: Partial<Record<string, LockableSection>> = {
   prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
 };
 
-export const getLatestModifiedDate = (
-  operationalNeedsArray: OperationalNeedsType[]
-) => {
-  const updatedNeeds = operationalNeedsArray.filter(need => need.modifiedDts);
-
-  if (updatedNeeds.length !== 0) {
-    return updatedNeeds.reduce((a, b) =>
-      a.modifiedDts! > b.modifiedDts! ? a : b
-    ).modifiedDts;
-  }
-
-  return null;
-};
-
 export type StatusMessageType = {
   message: string;
   status: 'success' | 'error';
-};
-
-export const getITSolutionsStatus = (
-  operationalNeedsArray: OperationalNeedsType[]
-) => {
-  const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
-  return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
 };
 
 const TaskList = () => {
@@ -175,16 +146,10 @@ const TaskList = () => {
     opsEvalAndLearning,
     beneficiaries,
     payments,
-    operationalNeeds = [],
     prepareForClearance,
     collaborators,
     suggestedPhase
   } = modelPlan;
-
-  const itSolutions: ITSolutionsType = {
-    modifiedDts: getLatestModifiedDate(operationalNeeds),
-    status: getITSolutionsStatus(operationalNeeds)
-  };
 
   const taskListSections: TaskListSectionsType = {
     basics,
@@ -193,7 +158,6 @@ const TaskList = () => {
     beneficiaries,
     opsEvalAndLearning,
     payments,
-    itSolutions,
     prepareForClearance
   };
 
@@ -340,10 +304,6 @@ const TaskList = () => {
                 className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
               >
                 {Object.keys(taskListSections).map((key: string) => {
-                  if (flags.hideITLeadExperience && key === 'itSolutions') {
-                    return <div key={key} />;
-                  }
-
                   return (
                     <Fragment key={key}>
                       <TaskListItem
@@ -364,12 +324,6 @@ const TaskList = () => {
                             <p className="margin-top-0">
                               {t(`numberedList.${key}.${userRole}`)}
                             </p>
-                            {key === 'itSolutions' &&
-                              userRole !== 'assessment' && (
-                                <p className="margin-top-0">
-                                  {t(`numberedList.${key}.${userRole}2`)}
-                                </p>
-                              )}
                           </TaskListDescription>
                         </div>
                         <TaskListButton

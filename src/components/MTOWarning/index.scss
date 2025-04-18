@@ -1,0 +1,16 @@
+@use 'viewports' as *;
+
+.mto-warning {
+    position: absolute !important;
+    margin: 1rem calc(105%);
+    margin-top: -1rem !important;
+    width: 95% !important;
+
+    @media screen and (max-width: $desktop) {
+        position: relative !important;
+        margin: auto !important;
+        margin-top: .5rem !important;
+        margin-bottom: 1rem !important;
+        width: auto !important;
+    }
+}

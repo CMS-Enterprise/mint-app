@@ -26,7 +26,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -92,10 +92,6 @@ const TargetsAndOptions = () => {
     multiplePatricipationAgreementsNeededNote
   } = (data?.modelPlan?.generalCharacteristics ||
     {}) as TargetsAndOptionsFormType;
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -408,16 +404,7 @@ const TargetsAndOptions = () => {
                       {generalCharacteristicsT('agreementTypes.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-data-needed-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
 
                     <p className="text-base margin-y-1">
                       {generalCharacteristicsT('agreementTypes.sublabel')}

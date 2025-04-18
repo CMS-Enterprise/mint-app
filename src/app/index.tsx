@@ -122,12 +122,19 @@ const splitLink = split(
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({
+    // Custom cache key for gql entities that have no `id` field, the default cache key for apollo
     typePolicies: {
       OperationalSolution: {
         keyFields: ['key', 'nameOther', 'id']
       },
+      MTOSubcategory: {
+        keyFields: false
+      },
       LockableSectionLockStatus: {
         keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
+      },
+      ModelsToOperationMatrix: {
+        keyFields: ['info', ['id']]
       }
     }
   }),

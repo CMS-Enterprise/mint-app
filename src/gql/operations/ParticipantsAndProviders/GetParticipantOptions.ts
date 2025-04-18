@@ -17,10 +17,6 @@ export default gql(/* GraphQL */ `
         selectionOther
         selectionNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

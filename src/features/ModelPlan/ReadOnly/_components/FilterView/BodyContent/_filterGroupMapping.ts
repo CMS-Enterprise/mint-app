@@ -1,4 +1,4 @@
-import { ModelViewFilter, OperationalSolutionKey } from 'gql/generated/graphql';
+import { ModelViewFilter, MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import { getKeys } from 'types/translation';
 
@@ -25,23 +25,22 @@ export const filterGroupKey: Record<FilterGroup, ModelViewFilter> = {
 // Map of operational solutions that should be rendered on each filter view
 export const filteredGroupSolutions: Record<
   FilterGroup,
-  OperationalSolutionKey[]
+  MtoCommonSolutionKey[]
 > = {
-  cbosc: [OperationalSolutionKey.CBOSC],
-  ccw: [OperationalSolutionKey.CCW, OperationalSolutionKey.SHARED_SYSTEMS],
-  dfsdm: [OperationalSolutionKey.IPC],
+  cbosc: [MtoCommonSolutionKey.CBOSC],
+  ccw: [MtoCommonSolutionKey.CCW, MtoCommonSolutionKey.SHARED_SYSTEMS],
+  dfsdm: [MtoCommonSolutionKey.IPC],
   ipc: [
-    OperationalSolutionKey.INNOVATION,
-    OperationalSolutionKey.ACO_OS,
-    OperationalSolutionKey.CDX,
-    OperationalSolutionKey.IPC
+    MtoCommonSolutionKey.INNOVATION,
+    MtoCommonSolutionKey.ACO_OS,
+    MtoCommonSolutionKey.CDX,
+    MtoCommonSolutionKey.IPC
   ],
-  iddoc: [OperationalSolutionKey.INNOVATION, OperationalSolutionKey.ACO_OS],
-  mdm: [OperationalSolutionKey.MDM_POR],
+  iddoc: [MtoCommonSolutionKey.INNOVATION, MtoCommonSolutionKey.ACO_OS],
+  mdm: [MtoCommonSolutionKey.MDM_POR],
   pbg: [
-    OperationalSolutionKey.IPC,
-    OperationalSolutionKey.SHARED_SYSTEMS,
-    OperationalSolutionKey.EFT,
-    OperationalSolutionKey.CONTRACTOR
+    MtoCommonSolutionKey.IPC,
+    MtoCommonSolutionKey.SHARED_SYSTEMS,
+    MtoCommonSolutionKey.EFT
   ]
 };

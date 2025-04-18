@@ -7,11 +7,15 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
     data-testid="read-only-model-plan--participants-and-providers"
   >
     <div>
-      <h2
-        class="margin-top-0 margin-bottom-2"
+      <div
+        class="display-flex margin-bottom-2 "
       >
-        Participants and providers
-      </h2>
+        <h2
+          class="margin-y-0 margin-right-2"
+        >
+          Participants and providers
+        </h2>
+      </div>
       <div
         class="padding-0 margin-bottom-4"
         data-testid="task-list-status-condensed"

@@ -7,11 +7,15 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
     data-testid="read-only-model-plan--beneficiaries"
   >
     <div>
-      <h2
-        class="margin-top-0 margin-bottom-2"
+      <div
+        class="display-flex margin-bottom-2 "
       >
-        Data exchange approach
-      </h2>
+        <h2
+          class="margin-y-0 margin-right-2"
+        >
+          Data exchange approach
+        </h2>
+      </div>
       <div
         class="padding-0 margin-bottom-4"
         data-testid="task-list-status-condensed"

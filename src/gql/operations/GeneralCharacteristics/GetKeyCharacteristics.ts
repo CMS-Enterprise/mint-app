@@ -22,10 +22,6 @@ export default gql(/* GraphQL */ `
         planContractUpdated
         planContractUpdatedNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

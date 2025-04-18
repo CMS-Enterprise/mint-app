@@ -1,0 +1,18 @@
+"""
+This holds information specific to a models to operation matrix
+"""
+type MTOInfo {
+  id: UUID!
+  modelPlanID: UUID!
+
+  readyForReviewBy: UUID
+  readyForReviewDTS: Time
+  readyForReviewByUserAccount: UserAccount
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}

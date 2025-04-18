@@ -1,10 +1,14 @@
+import { MockedResponse } from '@apollo/client/testing';
 import {
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
+  GetEchimpCrandTdlQueryVariables,
   GetFavoritesDocument,
   GetFavoritesQuery,
+  GetFavoritesQueryVariables,
   GetModelPlansDocument,
   GetModelPlansQuery,
+  GetModelPlansQueryVariables,
   ModelCategory,
   ModelPlanFilter,
   ModelStatus
@@ -15,7 +19,7 @@ type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
 export type EchimpCrAndTdlsType =
   GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
-export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+export const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 const modelPlanData: GetModelPlansType = [
   {
@@ -69,7 +73,7 @@ const modelPlanData: GetModelPlansType = [
 export const modelPlanCollectionMock = (
   filter: ModelPlanFilter,
   isMAC: boolean = false
-) => {
+): MockedResponse<GetModelPlansQuery, GetModelPlansQueryVariables>[] => {
   return [
     {
       request: {
@@ -78,6 +82,7 @@ export const modelPlanCollectionMock = (
       },
       result: {
         data: {
+          __typename: 'Query',
           modelPlanCollection: modelPlanData
         }
       }
@@ -115,7 +120,9 @@ const favoritesModelPlanData: GetFavoritesType = [
   }
 ];
 
-export const favoritesPlanCollectionMock = (filter: ModelPlanFilter) => {
+export const favoritesPlanCollectionMock = (
+  filter: ModelPlanFilter
+): MockedResponse<GetFavoritesQuery, GetFavoritesQueryVariables>[] => {
   return [
     {
       request: {
@@ -124,6 +131,7 @@ export const favoritesPlanCollectionMock = (filter: ModelPlanFilter) => {
       },
       result: {
         data: {
+          __typename: 'Query',
           modelPlanCollection: favoritesModelPlanData
         }
       }
@@ -151,11 +159,15 @@ const echimpCRandTDLMockData: EchimpCrAndTdlsType[] = [
     __typename: 'EChimpTDL',
     id: '456',
     title: 'Echimp TDL',
+    status: 'Open',
     issuedDate: '2022-07-30T05:00:00Z'
   }
 ];
 
-export const echimpCRsAndTDLsMock = [
+export const echimpCRsAndTDLsMock: MockedResponse<
+  GetEchimpCrandTdlQuery,
+  GetEchimpCrandTdlQueryVariables
+>[] = [
   {
     request: {
       query: GetEchimpCrandTdlDocument,
@@ -163,6 +175,7 @@ export const echimpCRsAndTDLsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,

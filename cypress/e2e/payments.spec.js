@@ -293,10 +293,10 @@ describe('The Model Plan Payment Form', () => {
       .type('10/26/2028')
       .should('have.value', '10/26/2028');
 
-    cy.contains('button', 'Continue to operational solutions tracker').click();
+    cy.contains('button', 'Save').click();
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/it-solutions$/
+        /\/models\/.{36}\/collaboration-area\/task-list/
       );
     });
   });

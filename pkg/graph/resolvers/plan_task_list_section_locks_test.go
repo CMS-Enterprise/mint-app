@@ -13,7 +13,7 @@ import (
 func (suite *ResolverSuite) TestGetTaskListSectionLocksWithLockedSections() {
 	mockController := gomock.NewController(suite.T())
 	ps := mockpubsub.NewMockPubSub(mockController)
-	modelPlanID, _ := uuid.Parse("f11eb129-2c80-4080-9440-439cbe1a286f")
+	modelPlanID, _ := uuid.Parse("ce3405a0-3399-4e3a-88d7-3cfc613d2905")
 	lockResolver := NewLockableSectionLocksResolverImplementation()
 	sections := [...]models.LockableSection{models.LockableSectionBasics, models.LockableSectionGeneralCharacteristics}
 
@@ -45,7 +45,7 @@ func (suite *ResolverSuite) TestGetTaskListSectionLocksWithLockedSections() {
 func (suite *ResolverSuite) TestLockTaskListSection() {
 	mockController := gomock.NewController(suite.T())
 	ps := mockpubsub.NewMockPubSub(mockController)
-	modelPlanID, _ := uuid.Parse("f11eb129-2c80-4080-9440-439cbe1a286f")
+	modelPlanID, _ := uuid.Parse("ce3405a0-3399-4e3a-88d7-3cfc613d2905")
 	section := models.LockableSectionBasics
 
 	ps.EXPECT().Publish(modelPlanID, pubsubevents.LockableSectionLocksChanged, gomock.Any())

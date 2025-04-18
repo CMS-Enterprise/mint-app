@@ -12,7 +12,15 @@ type PaginationProps = {
   loading?: boolean;
   query?: string;
   withQueryParams?: string; // Query parameter to use for pagination - ex: withQueryParams: 'page' -> ?page=1'
+  sliceFn?: (items: any[], start: number, end: number) => any[];
+  itemLength?: number;
+  showPageIfOne?: boolean; // Show page component even if there is only one page
 } & JSX.IntrinsicElements['div'];
+
+type PaginationState = {
+  currentPage: number;
+  pageCount: number;
+};
 
 // Takes in default props for Truss' Pagination component, items to paginates and returns the current items and the Pagination component
 const usePagination = <T extends any[]>({
@@ -21,9 +29,13 @@ const usePagination = <T extends any[]>({
   itemsPerPage = 3,
   loading = false,
   query = '',
-  withQueryParams
+  withQueryParams,
+  sliceFn,
+  itemLength,
+  showPageIfOne
 }: PaginationProps): {
   currentItems: T;
+  pagination: PaginationState;
   Pagination: JSX.Element;
   Results: JSX.Element;
 } => {
@@ -42,28 +54,32 @@ const usePagination = <T extends any[]>({
   // Current page number
   const [currentPageNum, setCurrentPageNum] = useState<number>(defaultPage);
 
+  const itemsLength = itemLength || items.length;
+
   // Total number of pages
   const [pageCount, setPageCount] = useState<number>(
-    Math.floor(items.length / itemsPerPage)
+    Math.floor(itemsLength / itemsPerPage)
   );
 
   // Current items to dsiplay on the current page - contains search and sort data
   const [currentItems, setCurrentItems] = useState(
-    items.slice(
-      currentPageNum * itemsPerPage,
-      currentPageNum * itemsPerPage + itemsPerPage
-    )
+    sliceFn
+      ? sliceFn(items, currentPageNum - 1, itemsPerPage)
+      : items.slice(
+          currentPageNum * itemsPerPage,
+          currentPageNum * itemsPerPage + itemsPerPage
+        )
   );
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
     if (!loading) {
       setCurrentPageNum(defaultPage);
-      setPageCount(Math.ceil(items.length / itemsPerPage));
+      setPageCount(Math.ceil(itemsLength / itemsPerPage));
     }
   }, [
     loading,
-    items.length,
+    itemsLength,
     itemsPerPage,
     history,
     params,
@@ -74,13 +90,15 @@ const usePagination = <T extends any[]>({
   // Update the current items when the page offset changes.
   useEffect(() => {
     setCurrentItems(
-      items.slice(
-        (currentPageNum - 1) * itemsPerPage,
-        (currentPageNum - 1) * itemsPerPage + itemsPerPage
-      )
+      sliceFn
+        ? sliceFn(items, currentPageNum - 1, itemsPerPage)
+        : items.slice(
+            (currentPageNum - 1) * itemsPerPage,
+            (currentPageNum - 1) * itemsPerPage + itemsPerPage
+          )
     );
-    setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [items, currentPageNum, setPageCount, itemsPerPage]);
+    setPageCount(Math.ceil(itemsLength / itemsPerPage));
+  }, [items, currentPageNum, setPageCount, itemsPerPage, sliceFn, itemsLength]);
 
   const handleNext = () => {
     const nextPage = currentPageNum + 1;
@@ -120,9 +138,13 @@ const usePagination = <T extends any[]>({
 
   return {
     currentItems: currentItems as T,
+    pagination: {
+      currentPage: currentPageNum,
+      pageCount
+    },
     Pagination: (
       <div className={classNames(className)}>
-        {pageCount > 1 && (
+        {(pageCount > 1 || (pageCount === 1 && showPageIfOne)) && (
           <TrussPagination
             className="mint-pagination"
             pathname={location.pathname}
@@ -141,8 +163,8 @@ const usePagination = <T extends any[]>({
         globalFilter={query}
         pageIndex={pageOffset / itemsPerPage}
         pageSize={itemsPerPage}
-        filteredRowLength={items.length}
-        rowLength={items.length}
+        filteredRowLength={itemsLength}
+        rowLength={itemsLength}
       />
     )
   };
