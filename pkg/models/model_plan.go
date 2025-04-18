@@ -166,6 +166,39 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
 }
 
+// ModelShareSection is the section of the model plan that is being shared.
+type ModelShareSection string
+
+const (
+	// // Include all sections below
+	// ModelShareSectionAll ModelShareSection = "ALL"
+	// Just share the model plan
+	ModelShareSectionModelPlan ModelShareSection = "MODEL_PLAN"
+	// Share all MTO info
+	ModelShareSectionMtoAll ModelShareSection = "MTO_ALL"
+	// Only share MTO Milestones
+	ModelShareSectionMtoMilestones ModelShareSection = "MTO_MILESTONES"
+	// Only share MTO Solutions
+	ModelShareSectionMtoSolutions ModelShareSection = "MTO_SOLUTIONS"
+)
+
+var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
+	// ModelShareSectionAll:           "model-basics",
+	ModelShareSectionModelPlan:     "model-basics",
+	ModelShareSectionMtoAll:        "milestones",
+	ModelShareSectionMtoMilestones: "milestones",
+	ModelShareSectionMtoSolutions:  "it-systems-and-solutions",
+}
+
+// ModelShareSectionHumanized controls what the email says after View _ details in MINT.
+var ModelShareSectionHumanized = map[ModelShareSection]string{
+	// ModelShareSectionAll:           "more",
+	ModelShareSectionModelPlan:     "model plan",
+	ModelShareSectionMtoAll:        "models to operations matrix",
+	ModelShareSectionMtoMilestones: "models to operations matrix",
+	ModelShareSectionMtoSolutions:  "models to operations matrix",
+}
+
 type ModelPhase string
 
 const (

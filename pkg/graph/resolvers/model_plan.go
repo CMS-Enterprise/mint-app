@@ -11,6 +11,7 @@ import (
 	"golang.org/x/exp/maps"
 
 	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 
@@ -428,11 +429,13 @@ func ModelPlanShare(
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,
+	shareSection *models.ModelShareSection,
 	usernames []string,
 	optionalMessage *string,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (bool, error) {
-	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+
+	modelPlan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return false, err
 	}
@@ -494,16 +497,17 @@ func ModelPlanShare(
 		return false, fmt.Errorf("failed to execute email subject: %w", err)
 	}
 
-	var modelPlanCategoriesHumainzed []string
+	var modelPlanCategoriesHumanized []string
 	if planBasics.ModelCategory != nil {
-		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[*planBasics.ModelCategory])
+		modelPlanCategoriesHumanized = append(modelPlanCategoriesHumanized, models.ModelCategoryHumanized[*planBasics.ModelCategory])
 	}
 
 	for _, category := range planBasics.AdditionalModelCategories {
 		// Have to cast the additional category as a models.ModelCategory so we can fetch it from the models.ModelCategoryHumanized map
-		modelPlanCategoriesHumainzed = append(modelPlanCategoriesHumainzed, models.ModelCategoryHumanized[models.ModelCategory(category)])
+		modelPlanCategoriesHumanized = append(modelPlanCategoriesHumanized, models.ModelCategoryHumanized[models.ModelCategory(category)])
 	}
 
+	// TODO: we likely will want to refactor this to use change history to get the last updated information for the entire model plan
 	lastModified := modelPlan.CreatedDts
 	if modelPlan.ModifiedDts != nil {
 		lastModified = *modelPlan.ModifiedDts
@@ -532,6 +536,8 @@ func ModelPlanShare(
 
 	var humanizedViewFilter *string
 	var lowercasedViewFilter *string
+	var shareSectionRoute *string
+	var shareSectionHumanized *string
 	if viewFilter != nil {
 		humanizedViewFilter = models.StringPointer(
 			models.ModelViewFilterHumanized[*viewFilter])
@@ -540,20 +546,27 @@ func ModelPlanShare(
 			strings.ToLower(string(*viewFilter)))
 	}
 
+	if shareSection != nil {
+		shareSectionRoute = helpers.PointerTo(models.ModelShareSectionToRouteTranslation[*shareSection])
+		shareSectionHumanized = helpers.PointerTo(models.ModelShareSectionHumanized[*shareSection])
+	}
+
 	// Get email body
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
-		UserName:                 principal.Account().CommonName,
-		OptionalMessage:          optionalMessage,
-		ModelName:                modelPlan.ModelName,
-		ModelShortName:           modelPlan.Abbreviation,
-		ModelCategories:          modelPlanCategoriesHumainzed,
-		ModelStatus:              humanizedModelStatus,
-		ModelLastUpdated:         lastModified,
-		ModelLeads:               modelLeads,
-		ModelViewFilter:          lowercasedViewFilter,
-		HumanizedModelViewFilter: humanizedViewFilter,
-		ClientAddress:            clientAddress,
-		ModelID:                  modelPlan.ID.String(),
+		UserName:                   principal.Account().CommonName,
+		OptionalMessage:            optionalMessage,
+		ModelName:                  modelPlan.ModelName,
+		ModelShortName:             modelPlan.Abbreviation,
+		ModelCategories:            modelPlanCategoriesHumanized,
+		ModelStatus:                humanizedModelStatus,
+		ModelLastUpdated:           lastModified,
+		ModelLeads:                 modelLeads,
+		ModelViewFilter:            lowercasedViewFilter,
+		ModelShareSectionRoute:     shareSectionRoute,
+		ModelShareSectionHumanized: shareSectionHumanized,
+		HumanizedModelViewFilter:   humanizedViewFilter,
+		ClientAddress:              clientAddress,
+		ModelID:                    modelPlan.ID.String(),
 	})
 	if err != nil {
 		return false, fmt.Errorf("failed to execute email body: %w", err)

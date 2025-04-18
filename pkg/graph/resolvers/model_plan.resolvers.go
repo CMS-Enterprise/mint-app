@@ -216,10 +216,9 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 }
 
 // ShareModelPlan is the resolver for the shareModelPlan field.
-func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error) {
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-
 	return ModelPlanShare(
 		ctx,
 		logger,
@@ -230,6 +229,7 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 		r.addressBook,
 		modelPlanID,
 		viewFilter,
+		modelShareSection,
 		usernames,
 		optionalMessage,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),

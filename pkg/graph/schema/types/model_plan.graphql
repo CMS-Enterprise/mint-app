@@ -38,6 +38,34 @@ enum ModelViewFilter {
   OACT, # OFFICE_OF_THE_ACTUARY
   PBG, # PROVIDER_BILLING_GROUP
 }
+"""
+ModelShareSection is the section of the model plan that is being shared.
+"""
+enum ModelShareSection {
+  # """
+  # Include all sections below
+  # """
+  # ALL, #go to readview
+  """
+  Just share the model plan
+  """
+  MODEL_PLAN, #go to readview
+  """
+  Share all MTO info
+  """
+  MTO_ALL,#go to Milestones readview/milestones
+  """
+  Only share MTO Milestones
+  """
+  MTO_MILESTONES, #go to Milestones readview/milestones
+  """
+  Only share MTO Solutions
+  """
+  MTO_SOLUTIONS,# readview/it-systems-and-solutions
+  # DATA_EXCHANGE_APPROACH,
+  # TEAM,
+
+}
 
 enum ModelPhase {
   ICIP_COMPLETE,
@@ -127,6 +155,10 @@ extend type Mutation {
   updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
   @hasRole(role: MINT_USER)
 
-  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter, usernames: [String!]!, optionalMessage: String): Boolean!
+  """
+  ShareModelPlan allows a user to share a model plan with other users.
+  if both a view filter and a section are provided, the view filter will be ignored
+  """
+  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter,modelShareSection: ModelShareSection, usernames: [String!]!, optionalMessage: String): Boolean!
   @hasRole(role: MINT_USER)
 }

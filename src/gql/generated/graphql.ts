@@ -1253,6 +1253,18 @@ export type ModelPlanTranslation = {
   status: TranslationFieldWithOptions;
 };
 
+/** ModelShareSection is the section of the model plan that is being shared. */
+export enum ModelShareSection {
+  /** Just share the model plan */
+  MODEL_PLAN = 'MODEL_PLAN',
+  /** Share all MTO info */
+  MTO_ALL = 'MTO_ALL',
+  /** Only share MTO Milestones */
+  MTO_MILESTONES = 'MTO_MILESTONES',
+  /** Only share MTO Solutions */
+  MTO_SOLUTIONS = 'MTO_SOLUTIONS'
+}
+
 export enum ModelStatus {
   ACTIVE = 'ACTIVE',
   ANNOUNCED = 'ANNOUNCED',
@@ -1400,6 +1412,10 @@ export type Mutation = {
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
+  /**
+   * ShareModelPlan allows a user to share a model plan with other users.
+   * if both a view filter and a section are provided, the view filter will be ignored
+   */
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
   unlockLockableSection: Scalars['Boolean']['output'];
@@ -1681,6 +1697,7 @@ export type MutationSendFeedbackEmailArgs = {
 /** Mutations definition for the schema */
 export type MutationShareModelPlanArgs = {
   modelPlanID: Scalars['UUID']['input'];
+  modelShareSection?: InputMaybe<ModelShareSection>;
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
   usernames: Array<Scalars['String']['input']>;
   viewFilter?: InputMaybe<ModelViewFilter>;
