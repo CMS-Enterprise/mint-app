@@ -35,7 +35,7 @@ type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
-  id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
   abbreviation: null,
   isFavorite: false,
   modelName: 'Testing Model Summary',
@@ -81,7 +81,7 @@ const mock = [
   {
     request: {
       query: GetModelSummaryDocument,
-      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
       data: {
@@ -144,7 +144,7 @@ describe('Read Only Filtered View Body Content', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics?filter-view=cmmi`
+          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics?filter-view=cmmi`
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>

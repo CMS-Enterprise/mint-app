@@ -27,7 +27,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
         >
           <a
             class="usa-link usa-breadcrumb__link"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
           >
             <span>
               Model collaboration area
@@ -39,7 +39,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
         >
           <a
             class="usa-link usa-breadcrumb__link"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
           >
             <span>
               Model Plan task list

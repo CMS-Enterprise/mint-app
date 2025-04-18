@@ -232,7 +232,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                 <p
                   class="text-bold"
                 >
-                  CR Status
+                  TDL Status
                 </p>
                 <p>
                   Open
@@ -244,7 +244,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                 <p
                   class="text-bold"
                 >
-                  Implementation Date
+                  Issued date
                 </p>
                 <p>
                   2022-07-30T05:00:00Z
@@ -299,10 +299,8 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                 >
                   TDL Status
                 </p>
-                <p
-                  class="text-base text-italic"
-                >
-                  No data available
+                <p>
+                  Open
                 </p>
               </div>
               <div
