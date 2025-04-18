@@ -41,7 +41,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
               >
                 <span>
                   Model collaboration area
@@ -73,7 +73,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
         </p>
         <a
           class="usa-link display-inline-flex flex-align-center margin-y-3"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
         >
           <svg
             aria-hidden="true"
@@ -309,7 +309,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     <p
                       class="text-bold"
                     >
-                      CR Status
+                      TDL Status
                     </p>
                     <p>
                       Open
@@ -321,7 +321,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     <p
                       class="text-bold"
                     >
-                      Implementation Date
+                      Issued date
                     </p>
                     <p>
                       2022-07-30T05:00:00Z
@@ -376,10 +376,8 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     >
                       TDL Status
                     </p>
-                    <p
-                      class="text-base text-italic"
-                    >
-                      No data available
+                    <p>
+                      Open
                     </p>
                   </div>
                   <div

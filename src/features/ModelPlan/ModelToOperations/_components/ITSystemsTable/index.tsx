@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -14,6 +14,7 @@ import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutions
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoSolutionsAndMilestonesQuery,
+  MtoCommonSolutionKey,
   MtoRiskIndicator,
   MtoSolutionStatus,
   MtoSolutionType,
@@ -36,8 +37,10 @@ import {
   MTOSolutionPanelContext,
   MTOSolutionPanelProvider
 } from 'contexts/MTOSolutionPanelContext';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -55,7 +58,13 @@ import SolutionViewSelector from '../SolutionViewSelector';
 export type SolutionType =
   GetMtoSolutionsAndMilestonesQuery['modelPlan']['mtoMatrix']['solutions'][0];
 
-const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
+const ITSystemsTable = ({
+  readView,
+  filterSolutions
+}: {
+  readView?: boolean;
+  filterSolutions?: MtoCommonSolutionKey[];
+}) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
 
@@ -129,6 +138,19 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
     return sortedSolutions;
   }, [data]);
 
+  const readViewFilterSolutions = useMemo(() => {
+    let readViewSolutions = data?.modelPlan.mtoMatrix.solutions || [];
+
+    // Filter out solutions that are not a part of the filter groups mapping/filterSolutions array prop
+    if (filterSolutions) {
+      readViewSolutions = readViewSolutions.filter((solution: any) => {
+        return filterSolutions?.includes(solution.key);
+      });
+    }
+
+    return readViewSolutions;
+  }, [data, filterSolutions]);
+
   const solutionsAndMilestones = useMemo(() => {
     if (!hideMilestonesWithoutSolutions) {
       return [...solutions].concat([...milestonesWithoutSolutions]);
@@ -192,7 +214,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
       {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
-        width: 250,
+        width: 350,
         Cell: ({ row }: any) => {
           const { openViewSolutionModal, setViewSolutionID } = useContext(
             MTOSolutionPanelContext
@@ -229,6 +251,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
               <Button
                 type="button"
                 unstyled
+                className="mint-print-link"
                 onClick={() => {
                   openViewSolutionModal(row.original.id);
                   setViewSolutionID(row.original.id);
@@ -260,6 +283,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
       },
       {
         Header: t<string, {}, string>('table.relatedMilestones'),
+        width: 350,
         accessor: 'milestones',
         Cell: ({ row }: any) => {
           const { openEditMilestoneModal, setMilestoneID } = useContext(
@@ -284,6 +308,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
                 <Button
                   type="button"
                   unstyled
+                  className="mint-print-link"
                   onClick={() => {
                     openEditMilestoneModal(milestones[0].id);
                     setMilestoneID(milestones[0].id);
@@ -298,6 +323,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
                 <Button
                   type="button"
                   unstyled
+                  className="mint-print-link"
                   onClick={() => {
                     if (readView) {
                       openViewSolutionModal(row.original.id);
@@ -327,6 +353,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
       {
         Header: t('table.facilitatedBy'),
         accessor: 'facilitatedBy',
+        width: 250,
         Cell: ({ row }: any) => {
           const { facilitatedBy } = row.original || {};
 
@@ -347,6 +374,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
       {
         Header: t('table.needBy'),
         accessor: 'needBy',
+        width: 200,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -359,6 +387,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
       {
         Header: t('table.status'),
         accessor: 'status',
+        width: 250,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -416,6 +445,8 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
     return columns;
   }, [readView, columns]);
 
+  const tableData = filterSolutions ? readViewFilterSolutions : filteredView;
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -435,7 +466,7 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
   } = useTable(
     {
       columns: filteredColumns,
-      data: filteredView,
+      data: tableData,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
@@ -456,6 +487,19 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
     usePaginationTable
   );
 
+  // isPrintPDF is a boolean that is set to true when the user is printing the PDF
+  const { isPrintPDF } = useContext(PrintPDFContext);
+
+  const [initPageSize] = useState(state.pageSize);
+
+  useEffect(() => {
+    if (isPrintPDF) {
+      setPageSize(1000);
+    } else {
+      setPageSize(initPageSize);
+    }
+  }, [isPrintPDF, setPageSize, initPageSize]);
+
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -469,6 +513,9 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
   // `Column.Cell` is available during filtering
   rows.map(row => prepareRow(row));
 
+  const renderTable =
+    (tableData.length > 0 && filterSolutions) || !filterSolutions;
+
   return (
     <MTOMilestonePanelProvider>
       <MTOSolutionPanelProvider>
@@ -481,160 +528,174 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
             />
           )}
 
-          <Grid
-            desktop={{ col: 12 }}
-            className="desktop:display-flex flex-wrap margin-bottom-2"
-          >
-            <SolutionViewSelector
-              viewParam={viewParam}
-              type="table"
-              usePages={false}
-              allSolutions={solutionsAndMilestones}
-              itSystemsSolutions={itSystemsSolutions}
-              contractsSolutions={contractsSolutions}
-              otherSolutions={otherSolutions}
-            />
+          {!filterSolutions && (
+            <div className="mint-no-print">
+              <Grid
+                desktop={{ col: 12 }}
+                className="desktop:display-flex flex-wrap margin-bottom-2"
+              >
+                <SolutionViewSelector
+                  viewParam={viewParam}
+                  type="table"
+                  usePages={false}
+                  allSolutions={solutionsAndMilestones}
+                  itSystemsSolutions={itSystemsSolutions}
+                  contractsSolutions={contractsSolutions}
+                  otherSolutions={otherSolutions}
+                />
 
-            <CheckboxField
-              id="hide-added-solutions"
-              name="hide-added-solutions"
-              label={t('solutionTable.hideAdded', {
-                count: milestonesWithoutSolutions.length
-              })}
-              value="true"
-              checked={hideMilestonesWithoutSolutions}
-              onBlur={() => null}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                params.set(
-                  'hide-milestones-without-solutions',
-                  hideMilestonesWithoutSolutions ? 'false' : 'true'
-                );
-                history.replace({ search: params.toString() });
-              }}
-            />
-          </Grid>
+                <CheckboxField
+                  id="hide-added-solutions"
+                  name="hide-added-solutions"
+                  label={t('solutionTable.hideAdded', {
+                    count: milestonesWithoutSolutions.length
+                  })}
+                  value="true"
+                  checked={hideMilestonesWithoutSolutions}
+                  onBlur={() => null}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    params.set(
+                      'hide-milestones-without-solutions',
+                      hideMilestonesWithoutSolutions ? 'false' : 'true'
+                    );
+                    history.replace({ search: params.toString() });
+                  }}
+                />
+              </Grid>
+            </div>
+          )}
 
-          <Table bordered={false} {...getTableProps()} fullWidth scrollable>
-            <thead>
-              {headerGroups.map(headerGroup => (
-                <tr
-                  {...headerGroup.getHeaderGroupProps()}
-                  key={{ ...headerGroup.getHeaderGroupProps() }.key}
-                >
-                  {headerGroup.headers.map((column, index) => (
-                    <th
-                      {...column.getHeaderProps()}
-                      aria-sort={getColumnSortStatus(column)}
-                      className="table-header"
-                      scope="col"
-                      style={{
-                        paddingBottom: '.5rem',
-                        position: 'relative',
-                        paddingLeft: index === 0 ? '.5em' : '0px',
-                        width: index === 2 ? '260px' : column.width || 'auto'
-                      }}
-                      key={column.id}
+          {renderTable && (
+            <>
+              <Table bordered={false} {...getTableProps()} fullWidth scrollable>
+                <thead>
+                  {headerGroups.map(headerGroup => (
+                    <tr
+                      {...headerGroup.getHeaderGroupProps()}
+                      key={{ ...headerGroup.getHeaderGroupProps() }.key}
                     >
-                      <button
-                        className="usa-button usa-button--unstyled position-relative"
-                        type="button"
-                        {...column.getSortByToggleProps()}
-                      >
-                        {column.render('Header')}
-                        {getHeaderSortIcon(column, false)}
-                      </button>
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {page.map((row, index) => {
-                // need to destructure row and getRowProps to avoid TS error for prop-types
-                const { getRowProps, cells, id } = { ...row };
-                return (
-                  <tr {...getRowProps()} key={id}>
-                    {cells.map((cell, i) => {
-                      if (i === 0) {
-                        return (
-                          <th
-                            {...cell.getCellProps()}
-                            scope="row"
-                            className={classNames('padding-x-1')}
-                            style={{
-                              paddingLeft: '0',
-                              borderBottom:
-                                index === page.length - 1
-                                  ? '1px solid black'
-                                  : 'auto',
-                              whiteSpace: 'normal'
-                            }}
-                            key={cell.getCellProps().key}
-                          >
-                            {cell.render('Cell')}
-                          </th>
-                        );
-                      }
-                      return (
-                        <td
-                          {...cell.getCellProps()}
+                      {headerGroup.headers.map((column, index) => (
+                        <th
+                          {...column.getHeaderProps()}
+                          aria-sort={getColumnSortStatus(column)}
+                          className="table-header"
+                          scope="col"
                           style={{
-                            paddingLeft: '0',
-                            whiteSpace: 'normal',
-                            maxWidth: i === 1 ? '275px' : 'auto',
-                            borderBottom:
-                              index === page.length - 1
-                                ? '1px solid black'
-                                : 'auto'
+                            paddingBottom: '.5rem',
+                            position: 'relative',
+                            paddingLeft: index === 0 ? '.5em' : '0px',
+                            width: column.width
                           }}
-                          key={cell.getCellProps().key}
+                          key={column.id}
                         >
-                          {cell.render('Cell')}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+                          <button
+                            className="usa-button usa-button--unstyled position-relative"
+                            type="button"
+                            {...column.getSortByToggleProps()}
+                          >
+                            {column.render('Header')}
+                            {getHeaderSortIcon(column, false)}
+                          </button>
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {page.map((row, index) => {
+                    // need to destructure row and getRowProps to avoid TS error for prop-types
+                    const { getRowProps, cells, id } = { ...row };
+                    return (
+                      <tr {...getRowProps()} key={id}>
+                        {cells.map((cell, i) => {
+                          if (i === 0) {
+                            return (
+                              <th
+                                {...cell.getCellProps()}
+                                scope="row"
+                                className={classNames('padding-x-1')}
+                                style={{
+                                  paddingLeft: '0',
+                                  borderBottom:
+                                    index === page.length - 1
+                                      ? '1px solid black'
+                                      : 'auto',
+                                  whiteSpace: 'normal'
+                                }}
+                                key={cell.getCellProps().key}
+                              >
+                                {cell.render('Cell')}
+                              </th>
+                            );
+                          }
+                          return (
+                            <td
+                              {...cell.getCellProps()}
+                              style={{
+                                paddingLeft: '0',
+                                whiteSpace: 'normal',
+                                maxWidth: i === 1 ? '275px' : 'auto',
+                                borderBottom:
+                                  index === page.length - 1
+                                    ? '1px solid black'
+                                    : 'auto'
+                              }}
+                              key={cell.getCellProps().key}
+                            >
+                              {cell.render('Cell')}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+              <div className="mint-no-print">
+                <div className="display-flex flex-wrap">
+                  {tableData.length > state.pageSize && (
+                    <TablePagination
+                      gotoPage={gotoPage}
+                      previousPage={previousPage}
+                      nextPage={nextPage}
+                      canNextPage={canNextPage}
+                      pageIndex={state.pageIndex}
+                      pageOptions={pageOptions}
+                      canPreviousPage={canPreviousPage}
+                      pageCount={pageCount}
+                      pageSize={state.pageSize}
+                      setPageSize={setPageSize}
+                      page={[]}
+                    />
+                  )}
+
+                  {tableData.length > 5 && (
+                    <TablePageSize
+                      className="margin-left-auto desktop:grid-col-auto"
+                      pageSize={state.pageSize}
+                      setPageSize={setPageSize}
+                      valueArray={[5, 10, 'all']}
+                      suffix={t('table.solutions').toLowerCase()}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="usa-sr-only usa-table__announcement-region"
+                aria-live="polite"
+              >
+                {currentTableSortDescription(headerGroups[0])}
+              </div>
+            </>
+          )}
+
+          <FilterViewSolutionsAlert
+            filterSolutions={filterSolutions}
+            solutions={tableData}
+          />
 
           {/* Pagination */}
-
-          <div className="display-flex flex-wrap">
-            {filteredView.length > state.pageSize && (
-              <TablePagination
-                gotoPage={gotoPage}
-                previousPage={previousPage}
-                nextPage={nextPage}
-                canNextPage={canNextPage}
-                pageIndex={state.pageIndex}
-                pageOptions={pageOptions}
-                canPreviousPage={canPreviousPage}
-                pageCount={pageCount}
-                pageSize={state.pageSize}
-                setPageSize={setPageSize}
-                page={[]}
-              />
-            )}
-
-            {filteredView.length > 0 && (
-              <TablePageSize
-                className="margin-left-auto desktop:grid-col-auto"
-                pageSize={state.pageSize}
-                setPageSize={setPageSize}
-                valueArray={[5, 10, 'all']}
-                suffix={t('table.solutions').toLowerCase()}
-              />
-            )}
-          </div>
-
-          <div
-            className="usa-sr-only usa-table__announcement-region"
-            aria-live="polite"
-          >
-            {currentTableSortDescription(headerGroups[0])}
-          </div>
 
           {filteredView.length === 0 && (
             <Alert type="info" slim>
@@ -650,3 +711,33 @@ const ITSystemsTable = ({ readView }: { readView?: boolean }) => {
 };
 
 export default ITSystemsTable;
+
+export const FilterViewSolutionsAlert = ({
+  filterSolutions,
+  solutions
+}: {
+  filterSolutions: MtoCommonSolutionKey[] | undefined;
+  solutions: SolutionType[];
+}) => {
+  const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
+  const { commonSolutions: commonSolutionsConfig } =
+    usePlanTranslation('mtoMilestone');
+
+  if (!filterSolutions) return null;
+
+  const unusedSolutions = filterSolutions.filter(
+    solution => !solutions.find((need: any) => need.key === solution)
+  );
+  if (unusedSolutions.length === 0) return null;
+
+  return (
+    <Alert noIcon type="info" validation>
+      {opSolutionsMiscT('itSolutionsTable.unusedSolutionsAlert')}
+      <ul className="margin-top-1 margin-bottom-0">
+        {unusedSolutions.map(solution => (
+          <li key={solution}>{commonSolutionsConfig.options[solution]}</li>
+        ))}
+      </ul>
+    </Alert>
+  );
+};

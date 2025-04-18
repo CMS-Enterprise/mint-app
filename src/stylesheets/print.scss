@@ -20,6 +20,11 @@
     display: none;
   }
 
+  .mint-print-link {
+    text-decoration: none !important;
+    color: black !important;
+  }
+
   .mint-only-print {
     display: block !important;
   }
@@ -57,7 +62,7 @@
 }
 
 @page {
-  margin: 0.75in;
+  margin: 0.35in;
   @bottom-left {
     content: 'Page ' counter(page) ' of ' counter(pages);
   }

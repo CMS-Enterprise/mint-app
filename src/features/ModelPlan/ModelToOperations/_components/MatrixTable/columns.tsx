@@ -233,6 +233,7 @@ export const columns: ColumnType[] = [
           <Button
             type="button"
             unstyled
+            className="mint-print-link"
             onClick={() => {
               openEditMilestoneModal(row.id);
               setMilestoneID(row.id);
@@ -304,7 +305,7 @@ export const columns: ColumnType[] = [
               ) : (
                 <Button
                   type="button"
-                  className="display-block"
+                  className="display-block mint-print-link"
                   unstyled
                   onClick={() => {
                     if (clearMessage) clearMessage();
@@ -339,7 +340,10 @@ export const columns: ColumnType[] = [
               return (
                 <React.Fragment key={solution.id}>
                   {solution.key !== null ? (
-                    <UswdsReactLink to={detailRoute}>
+                    <UswdsReactLink
+                      to={detailRoute}
+                      className="mint-print-link"
+                    >
                       {solutionMap?.acronym ?? solutionMap?.name}
                     </UswdsReactLink>
                   ) : (
