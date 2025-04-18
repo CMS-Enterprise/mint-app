@@ -15,6 +15,7 @@ import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 
 import DocumentUpload from './documentUpload';
+import LinkDocument from './LinkDocument';
 
 const AddDocument = () => {
   const { t } = useTranslation('documentsMisc');
@@ -83,7 +84,7 @@ const AddDocument = () => {
             </Button>
           </ButtonGroup>
 
-          <DocumentUpload />
+          {formState === 'upload' ? <DocumentUpload /> : <LinkDocument />}
 
           <div className="display-block">
             <Button

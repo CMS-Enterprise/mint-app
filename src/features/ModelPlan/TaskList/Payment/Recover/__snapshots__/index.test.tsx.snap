@@ -790,7 +790,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 data-testid="button"
                 type="submit"
               >
-                Continue to operational solutions tracker
+                Save
               </button>
             </div>
             <button
