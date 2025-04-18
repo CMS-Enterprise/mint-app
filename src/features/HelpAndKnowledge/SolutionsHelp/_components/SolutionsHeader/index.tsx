@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionCategoryRoute } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
+import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 

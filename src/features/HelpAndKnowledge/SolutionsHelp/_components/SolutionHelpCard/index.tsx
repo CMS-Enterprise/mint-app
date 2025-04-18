@@ -3,10 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Card, CardGroup, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionCategoryRoute } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
+import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
 import { tObject } from 'utils/translation';
 
 import {

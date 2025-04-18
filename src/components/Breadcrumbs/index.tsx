@@ -31,9 +31,6 @@ export enum BreadcrumbItemOptions {
   BENEFICIARIES = 'BENEFICIARIES',
   OPS_EVAL_AND_LEARNING = 'OPS_EVAL_AND_LEARNING',
   PAYMENTS = 'PAYMENTS',
-  IT_TRACKER = 'IT_TRACKER',
-  ADD_SOLUTION = 'ADD_SOLUTION',
-  SOLUTION_DETAILS = 'SOLUTION_DETAILS',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
   COLLABORATORS = 'COLLABORATORS',
   DOCUMENTS = 'DOCUMENTS',
@@ -111,18 +108,6 @@ export const commonBreadCrumbs = (
   PAYMENTS: {
     text: 'paymentsMisc:heading',
     url: `/models/${modelID}/collaboration-area/task-list/payments`
-  },
-  IT_TRACKER: {
-    text: 'opSolutionsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/it-solutions`
-  },
-  ADD_SOLUTION: {
-    text: 'opSolutionsMisc:addSolution',
-    url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
-  },
-  SOLUTION_DETAILS: {
-    text: 'opSolutionsMisc:solutionDetails',
-    url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
   },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',
