@@ -52,13 +52,16 @@
           <br/>
 
           <p>
-              {{if .ModelViewFilter}}
-              <!-- todo, don't provide section and filter view, if section, just section, else do the filter view with model-basics to preserve statefulness in front end ui -->
-                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/{{.ModelShareSection}}?filter-view={{.ModelViewFilter}}">
+              {{if .ModelShareSectionRoute}}
+              <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/{{.ModelShareSectionRoute}}">
+                View {{.ModelShareSectionHumanized}} details in MINT
+              </a>
+              {{else if .ModelViewFilter}}
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/model-basics?filter-view={{.ModelViewFilter}}">
                   View {{.HumanizedModelViewFilter}} details in MINT
                 </a>
               {{else}}
-                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/{{.ModelShareSection}}">
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/model-basics">
                   View more details in MINT
                 </a>
               {{end}}

@@ -11,18 +11,18 @@ type ModelPlanShareSubjectContent struct {
 
 // ModelPlanShareBodyContent defines the parameters necessary for the corresponding email body
 type ModelPlanShareBodyContent struct {
-	UserName                 string
-	OptionalMessage          *string
-	ModelName                string
-	ModelShortName           *string
-	ModelCategories          []string
-	ModelStatus              string
-	ModelLastUpdated         time.Time
-	ModelLeads               []string
-	ModelViewFilter          *string
-	ShareSectionHumanized    *string
-	ModelShareSection        *string
-	HumanizedModelViewFilter *string
-	ClientAddress            string
-	ModelID                  string
+	UserName                   string
+	OptionalMessage            *string
+	ModelName                  string
+	ModelShortName             *string
+	ModelCategories            []string
+	ModelStatus                string
+	ModelLastUpdated           time.Time
+	ModelLeads                 []string
+	ModelViewFilter            *string
+	ModelShareSectionHumanized *string
+	ModelShareSectionRoute     *string
+	HumanizedModelViewFilter   *string
+	ClientAddress              string
+	ModelID                    string
 }

@@ -195,7 +195,7 @@ var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 // ModelShareSectionHumanized controls what the email says after View _ details in MINT.
 var ModelShareSectionHumanized = map[ModelShareSection]string{
 	// ModelShareSectionAll:           "more",
-	ModelShareSectionModelPlan:     "more",
+	ModelShareSectionModelPlan:     "model plan",
 	ModelShareSectionMtoAll:        "models to operations matrix",
 	ModelShareSectionMtoMilestones: "models to operations matrix",
 	ModelShareSectionMtoSolutions:  "models to operations matrix",

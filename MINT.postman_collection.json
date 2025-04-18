@@ -74,7 +74,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -84,8 +85,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, usernames: $usernames, optionalMessage: $optionalMessage)\n}\n",
-								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"usernames\": [\"ABCD\", \"TEST\"],\n  \"optionalMessage\": \"\"\n}\n"
+								"query": "mutation shareModelPlan {\n    shareModelPlan(\n        modelPlanID: \"{{modelPlanID}}\",\n        #Note viewFilter and share section are not meant to be used at once\n        # if both are provided, the Share section is prioritized\n        # viewFilter: CMMI,\n        modelShareSection: MODEL_PLAN\n        usernames: [\"ABCD\", \"TEST\"],\n        optionalMessage: \"This was a triumph. I'm making a note here, huge success\"\n        )\n}\n",
+								"variables": ""
 							}
 						},
 						"url": {
