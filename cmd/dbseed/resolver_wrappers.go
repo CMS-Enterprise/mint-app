@@ -329,30 +329,6 @@ func (s *Seeder) getTestPrincipalByUUID(userID uuid.UUID) *authentication.Applic
 
 }
 
-// operationalSolutionSubtasksCreate is a wrapper for resolvers.OperationalSolutionSubtasksCreate
-// It will panic if an error occurs, rather than bubbling the error up
-func (s *Seeder) operationalSolutionSubtasksCreate(
-	mp *models.ModelPlan,
-	solutionID uuid.UUID,
-	inputs []*model.CreateOperationalSolutionSubtaskInput,
-) []*models.OperationalSolutionSubtask {
-
-	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
-
-	subtasks, err := resolvers.OperationalSolutionSubtasksCreate(
-		s.Config.Logger,
-		s.Config.Store,
-		inputs,
-		solutionID,
-		principal,
-	)
-
-	if err != nil {
-		panic(err)
-	}
-	return subtasks
-}
-
 // existingModelLinkCreate is a wrapper for resolvers.ExistingModelLinkCreate
 // It will panic if an error occurs, rather than bubbling the error up
 func (s *Seeder) existingModelLinkCreate(

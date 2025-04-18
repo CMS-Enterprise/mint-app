@@ -22,11 +22,3 @@ extend type Query {
   operationalNeed(id: UUID!): OperationalNeed!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
-
-extend type Mutation {
-  addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed!
-  @hasRole(role: MINT_USER)
-
-  updateCustomOperationalNeedByID(id: UUID!, customNeedType: String needed: Boolean!): OperationalNeed!
-  @hasRole(role: MINT_USER)
-}

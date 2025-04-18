@@ -441,20 +441,6 @@ func (s *Seeder) SeedData() {
 		},
 	)
 
-	_ = s.operationalSolutionSubtasksCreate(
-		planWithBasics,
-		operationalSolution.ID,
-		[]*model.CreateOperationalSolutionSubtaskInput{
-			{
-				Name:   "Create the thing!",
-				Status: models.OperationalSolutionSubtaskStatusInProgress,
-			}, {
-				Name:   "Do the thing!",
-				Status: models.OperationalSolutionSubtaskStatusTodo,
-			},
-		},
-	)
-
 	// Seed a plan that is has a clearance start date 3 months from today
 	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT", nil)
 	s.updateModelPlan(planApproachingClearance, map[string]interface{}{

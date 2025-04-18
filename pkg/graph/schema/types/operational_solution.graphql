@@ -37,17 +37,6 @@ type OperationalSolution {
   modifiedDts: Time
 }
 
-input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-  needed: Boolean
-  nameOther: String # Only valid for when solution type is null
-
-  pocName: String
-  pocEmail: String
-  mustStartDts: Time
-  mustFinishDts: Time
-  otherHeader: String
-  status: OpSolutionStatus
-}
 
 extend type Query {
   operationalSolutions(operationalNeedID: UUID!, includeNotNeeded: Boolean! = false): [OperationalSolution!]!
@@ -55,12 +44,4 @@ extend type Query {
 
   operationalSolution(id: UUID!): OperationalSolution!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  createOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey, changes: OperationalSolutionChanges!): OperationalSolution!
-  @hasRole(role: MINT_USER)
-
-  updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
-  @hasRole(role: MINT_USER)
 }

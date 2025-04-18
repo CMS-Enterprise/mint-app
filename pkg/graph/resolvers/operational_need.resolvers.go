@@ -14,20 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
-func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
-}
-
-// UpdateCustomOperationalNeedByID is the resolver for the updateCustomOperationalNeedByID field.
-func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
-}
-
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
@@ -46,3 +32,20 @@ func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
 }
 
 type operationalNeedResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
+}
+func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, id uuid.UUID, customNeedType *string, needed bool) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return OperationalNeedCustomUpdateByID(logger, id, customNeedType, needed, principal, r.store)
+}
