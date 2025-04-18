@@ -190,8 +190,6 @@ var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 	ModelShareSectionMtoSolutions:  "it-systems-and-solutions",
 }
 
-// todo, we might need to say "View this models to operations matrix" in the email
-
 // ModelShareSectionHumanized controls what the email says after View _ details in MINT.
 var ModelShareSectionHumanized = map[ModelShareSection]string{
 	// ModelShareSectionAll:           "more",
