@@ -5,7 +5,6 @@ import { Button, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DocumentType,
-  useCreateDocumentSolutionLinksMutation,
   useUploadNewPlanDocumentMutation
 } from 'gql/generated/graphql';
 
@@ -64,8 +63,6 @@ const DocumentUpload = ({
       </Alert>
     );
 
-  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
-
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {
     const { file } = values as FileUploadForm;
@@ -85,41 +82,15 @@ const DocumentUpload = ({
       })
         .then(response => {
           if (!response.errors) {
-            // Checking if need to link new doc to existing solution
-            if (
-              solutionID &&
-              solutionDetailsLink &&
-              response?.data?.uploadNewPlanDocument?.id
-            ) {
-              createSolutionLinks({
-                variables: {
-                  solutionID,
-                  documentIDs: [response?.data?.uploadNewPlanDocument?.id]
-                }
-              })
-                .then(res => {
-                  if (res && !res.errors) {
-                    messageOnNextPage(
-                      'documentUploadSolutionSuccess',
-                      file.name
-                    );
-                    history.push(solutionDetailsLink);
-                  } else if (response.errors) {
-                    setMutationError(true);
-                  }
-                })
-                .catch(() => {
-                  setMutationError(true);
-                });
-            } else {
-              messageOnNextPage('documentUploadSuccess', file.name);
+            messageOnNextPage('documentUploadSuccess', file.name);
 
-              if (solutionDetailsLink) {
-                history.push(solutionDetailsLink);
-              } else {
-                history.push(`/models/${modelID}/collaboration-area/documents`);
-              }
+            if (solutionDetailsLink) {
+              history.push(solutionDetailsLink);
+            } else {
+              history.push(`/models/${modelID}/collaboration-area/documents`);
             }
+          } else {
+            setMutationError(true);
           }
         })
         .catch(errors => {

@@ -10,8 +10,12 @@ import {
   MtoRiskIndicator,
   MtoSolutionStatus
 } from 'gql/generated/graphql';
-import { categoryMock, milestoneMock, modelID } from 'tests/mock/mto';
-import { possibleSolutionsMock } from 'tests/mock/solutions';
+import {
+  categoryMock,
+  milestoneMock,
+  modelID,
+  possibleSolutionsMock
+} from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
