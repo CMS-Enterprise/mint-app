@@ -1,5 +1,17 @@
 import React from 'react';
 
+export const filterGroupParams = [
+  'ccw',
+  'cmmi',
+  'cbosc',
+  'dfsdm',
+  'ipc',
+  'iddoc',
+  'mdm',
+  'oact',
+  'pbg'
+];
+
 export const groupOptions = [
   { value: 'ccw', label: 'Chronic Conditions Warehouse (CCW)' },
   { value: 'cmmi', label: 'CMMI Cost Estimate' },

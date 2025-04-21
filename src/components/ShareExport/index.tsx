@@ -17,9 +17,12 @@ import classNames from 'classnames';
 import { ReadOnlyComponents } from 'features/ModelPlan/ReadOnly';
 import BodyContent from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { FilterGroup } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import { groupOptions } from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
+import {
+  filterGroupParams,
+  groupOptions
+} from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
-import { ModelViewFilter } from 'gql/generated/graphql';
+import { ModelShareSection, ModelViewFilter } from 'gql/generated/graphql';
 import CreateShareModelPlan from 'gql/operations/ShareExport/CreateShareModelPlan';
 
 import Alert from 'components/Alert';
@@ -40,7 +43,7 @@ const navElement = ['share', 'export'] as const;
 
 export type NavModelElemet = (typeof navElement)[number];
 
-export type FitlerGroup = FilterGroup | 'all';
+export type FitlerGroup = FilterGroup | ModelShareSection;
 
 const FileTypes = ['csv', 'pdf'] as const;
 
@@ -48,7 +51,7 @@ type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
   defaultTab?: NavModelElemet;
-  filteredView?: FilterGroup | 'all' | null;
+  filteredView?: FilterGroup | ModelShareSection | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
 
@@ -67,7 +70,7 @@ const ShareExportModal = ({
   const { setPrintPDF } = useContext(PrintPDFContext);
 
   const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
-    (filteredView as FilterGroup) || 'all'
+    (filteredView as FilterGroup) || ModelShareSection.MODEL_PLAN
   );
 
   const [exportCSV, setExportCSV] = useState<boolean>(false);
@@ -123,10 +126,12 @@ const ShareExportModal = ({
   const ComponentToPrint: JSX.Element = (
     <div className="mint-only-print" ref={componentRef}>
       <PDFSummary
-        filteredView={filteredGroup === 'all' ? undefined : filteredGroup}
+        filteredView={
+          filterGroupParams.includes(filteredGroup) ? filteredGroup : undefined
+        }
       />
       <GridContainer className="padding-x-8 margin-top-4">
-        {filteredGroup && filteredGroup !== 'all' ? (
+        {filteredGroup && filterGroupParams.includes(filteredGroup) ? (
           // Filter view component
           <BodyContent modelID={modelID} filteredView={filteredGroup} />
         ) : (
@@ -215,9 +220,13 @@ const ShareExportModal = ({
           e.preventDefault();
 
           const viewFilter =
-            filteredGroup && filteredGroup !== 'all'
+            filteredGroup && filterGroupParams.includes(filteredGroup)
               ? (filteredGroup.toUpperCase() as ModelViewFilter)
               : undefined;
+
+          const modelShareSection = !filterGroupParams.includes(filteredGroup)
+            ? filteredGroup
+            : undefined;
 
           // Send a share event to GA
           ReactGA.send({
@@ -231,6 +240,7 @@ const ShareExportModal = ({
             variables: {
               modelPlanID: modelID,
               viewFilter,
+              modelShareSection,
               usernames,
               optionalMessage
             }
@@ -331,7 +341,7 @@ const ShareExportModal = ({
             className="usa-button--unstyled margin-top-0 display-flex flex-justify-center"
             onClick={() => {
               const filterParam: string =
-                filteredGroup && filteredGroup !== 'all'
+                filteredGroup && filterGroupParams.includes(filteredGroup)
                   ? `?filter-view=${filteredGroup}`
                   : '';
 
@@ -341,7 +351,7 @@ const ShareExportModal = ({
             }}
           >
             <Icon.Link className="margin-right-1" />
-            {filteredGroup && filteredGroup !== 'all'
+            {filteredGroup && filterGroupParams.includes(filteredGroup)
               ? generalReadOnlyT('modal.copyLinkFilteredReadView')
               : generalReadOnlyT('modal.copyLinkReadView')}
           </Button>
@@ -391,7 +401,7 @@ const ShareExportModal = ({
           }
           if (exportCSV) {
             const groupToExport =
-              filteredGroup && filteredGroup !== 'all'
+              filteredGroup && filterGroupParams.includes(filteredGroup)
                 ? filteredGroup
                 : undefined;
 
