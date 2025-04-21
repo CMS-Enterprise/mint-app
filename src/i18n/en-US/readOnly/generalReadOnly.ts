@@ -1,3 +1,5 @@
+import { ModelShareSection } from 'gql/generated/graphql';
+
 const generalReadOnly = {
   back: 'View all models',
   description: {
@@ -62,7 +64,17 @@ const generalReadOnly = {
     },
     label: 'Share/export navigation',
     allModels: 'All model plan information',
-    documentTitle: 'MINT Model Plan'
+    documentTitle: 'MINT Model Plan',
+    sections: 'Sections',
+    filteredViews: 'Filtered views',
+    exportSections: {
+      [ModelShareSection.MODEL_PLAN]: 'Model Plan',
+      [ModelShareSection.MTO_ALL]: 'Model-to-operations matrix (all)',
+      [ModelShareSection.MTO_MILESTONES]:
+        'Model-to-operations matrix (milestones view only)',
+      [ModelShareSection.MTO_SOLUTIONS]:
+        'Model-to-operations matrix (solutions view only)'
+    }
   },
   questionNotApplicable_one:
     'There is {{count}} additional question that is not applicable for this model based on the answers selected in the question above.',

@@ -32,6 +32,7 @@ import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
 import PDFSummary from './pdfSummary';
+import exportSectionOptions from './util';
 
 import './index.scss';
 
@@ -192,8 +193,13 @@ const ShareExportModal = ({
         defaultValue={filteredGroup}
         options={[
           {
-            value: 'all',
-            label: generalReadOnlyT('modal.allModels')
+            value: 'section-export-label',
+            label: generalReadOnlyT('modal.sections')
+          },
+          ...exportSectionOptions,
+          {
+            value: 'filter-export-label',
+            label: generalReadOnlyT('modal.filteredViews')
           },
           ...groupOptions
         ]}

@@ -55,4 +55,11 @@
             background-color: color('primary-lighter') !important;
         }
     }
+
+    li[value*="export-label"] {
+        pointer-events: none;
+        color: color('primary-darker');
+        font-weight: bold;
+        padding-top: 1.25rem;
+    }
 }

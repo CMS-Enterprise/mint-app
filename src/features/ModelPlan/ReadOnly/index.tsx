@@ -207,11 +207,16 @@ const isSubpage = (
 
 export const filteredViewOutput = (value: string) => {
   if (value === 'cmmi') {
-    return groupOptions.filter(n => n.value.includes(value))[0].label;
+    return groupOptions.filter(n => n.value?.includes(value))[0].label;
   }
-  return groupOptions
-    .filter(n => n.value.includes(value))[0]
-    .value.toUpperCase();
+
+  const foundFilterGroup = groupOptions.find(n => n.value?.includes(value));
+
+  if (!foundFilterGroup) {
+    return '';
+  }
+
+  return foundFilterGroup.value.toUpperCase();
 };
 
 // Checks if the url query param is a valid filteredView and converts to lowercase
