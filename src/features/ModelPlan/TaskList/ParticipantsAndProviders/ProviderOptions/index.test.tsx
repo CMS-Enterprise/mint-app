@@ -11,7 +11,6 @@ import {
   FrequencyType,
   GetProviderOptionsDocument,
   GetProviderOptionsQuery,
-  OperationalNeedKey,
   ProviderAddType,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -64,20 +63,7 @@ const providerOptionsMock = [
         modelPlan: {
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
-          participantsAndProviders: providerOptionsMockData,
-          operationalNeeds: [
-            {
-              __typename: 'OperationalNeed',
-              id: operationalNeedID,
-              modelPlanID: modelID,
-              name: 'Obtain an application support contractor',
-              key: OperationalNeedKey.APP_SUPPORT_CON,
-              nameOther: null,
-              needed: true,
-              modifiedDts: '',
-              solutions: []
-            }
-          ]
+          participantsAndProviders: providerOptionsMockData
         }
       }
     }
