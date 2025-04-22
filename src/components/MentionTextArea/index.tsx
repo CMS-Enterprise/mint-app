@@ -15,7 +15,7 @@ import { sortBy } from 'lodash';
 import Alert from 'components/Alert';
 
 import suggestion from './suggestion';
-import { formatedSolutionMentions, getMentions } from './util';
+import { getMentions } from './util';
 
 import './index.scss';
 
@@ -86,20 +86,23 @@ const MentionTextArea = ({
 
   const fetchUsers = ({ query }: { query: string }) => {
     // If "@" trigger is typed without a following query, return on the solution contacts
-    if (!query) return formatedSolutionMentions();
+
+    // TODO: Add back in once emails are configured to handle MTO solutions
+    // if (!query) return formatedSolutionMentions();
+
     return getUsersLazyQuery({
       variables: { searchTerm: query }
     }).then(res =>
       sortBy(
-        (
-          res?.data?.searchOktaUsers?.map(user => {
-            return {
-              username: user.username,
-              displayName: `${user.displayName} (${user.username})`,
-              tagType: TagType.USER_ACCOUNT
-            };
-          }) || []
-        ).concat(formatedSolutionMentions(query)),
+        res?.data?.searchOktaUsers?.map(user => {
+          return {
+            username: user.username,
+            displayName: `${user.displayName} (${user.username})`,
+            tagType: TagType.USER_ACCOUNT
+          };
+        }) || [],
+        // TODO: Add back in once emails are configured to handle MTO solutions
+        // .concat(formatedSolutionMentions(query)),
         'displayName'
       )
     );
