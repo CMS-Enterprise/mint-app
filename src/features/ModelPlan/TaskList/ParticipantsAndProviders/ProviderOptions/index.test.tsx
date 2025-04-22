@@ -18,7 +18,6 @@ import {
 import ProviderOptions from './index';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
-const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
 type GetProviderOptionsType =
   GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
