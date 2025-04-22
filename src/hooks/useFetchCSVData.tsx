@@ -24,10 +24,7 @@ import {
 import i18next from 'i18next';
 
 import {
-  csvFieldsModelPlan,
-  csvFieldsMTO,
-  csvFieldsMTOMilestone,
-  csvFieldsMTOSolution,
+  csvFields,
   fieldsToUnwind
 } from 'components/CSVExportLink/fieldDefinitions';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -169,6 +166,17 @@ export const dataFormatter = (
         : transformObj[key];
     }
 
+    // Flatten nested data for export - ex: milestone.solutions = [{name:  "Solution 1"}] => milestone.solutions = ["Solution 1"]
+    else if (allPlanTranslation?.[key]?.flattenNestedData) {
+      mappedObj[key] = transformObj[key]
+        ? transformObj[key]
+            .map(
+              (item: any) => item[allPlanTranslation?.[key]?.flattenNestedData]
+            )
+            .join(', ')
+        : transformObj[key];
+    }
+
     // Translates any enum values - either single value or an array
     else if (allPlanTranslation?.[key]?.options) {
       if (Array.isArray(transformObj[key])) {
@@ -249,49 +257,6 @@ export const dataFormatter = (
   return mappedObj;
 };
 
-// const modelPlanSectionMappings: Record<ModelShareSection, PlanSection[]> = {
-//   [ModelShareSection.MODEL_PLAN]: [
-//     PlanSection.MODEL_PLAN,
-//     PlanSection.BASICS,
-//     PlanSection.GENERAL_CHARACTERISTICS,
-//     PlanSection.PARTICPANTS_AND_PROVIDERS,
-//     PlanSection.BENEFICIARIES,
-//     PlanSection.OPS_EVAL_AND_LEARNING,
-//     PlanSection.PAYMENTS
-//   ],
-//   [ModelShareSection.MTO_ALL]: [
-//     PlanSection.MTO_MILESTONE,
-//     PlanSection.MTO_SOLUTION,
-//     PlanSection.MTO_CATEGORY,
-//     PlanSection.MTO_INFO
-//   ],
-//   [ModelShareSection.MTO_MILESTONES]: [PlanSection.MTO_MILESTONE],
-//   [ModelShareSection.MTO_SOLUTIONS]: [PlanSection.MTO_SOLUTION]
-// };
-
-// // Filters out columns for csv based on selected FilterGroup mappings in translation file
-// export const selectSectionedFields = (
-//   allPlanTranslation: any,
-//   exportSection: ModelShareSection
-// ) => {
-//   const selectedFields: string[] = [];
-
-//   const sectionsToExport = modelPlanSectionMappings[exportSection];
-
-//   sectionsToExport.forEach((section: PlanSection) => {
-//     if (section === PlanSection.MODEL_PLAN) {
-//       selectedFields.push(`${section}`);
-//     } else {
-//       getKeys(allPlanTranslation[section]).forEach((field: any) => {
-//         // Push to array to become a column in exported csv
-//         selectedFields.push(`${section}.${field}`);
-//       });
-//     }
-//   });
-
-//   return selectedFields;
-// };
-
 // Filters out columns for csv based on selected FilterGroup mappings in translation file
 export const selectFilteredFields = (
   allPlanTranslation: any,
@@ -364,24 +329,13 @@ const downloadFile = (data: string) => {
   element.click();
 };
 
+// Flattens the MTO data to be in a single row for each model plan, rather than all nested under mtoMatrix
 const flattenMTOData = (data: CSVModelPlanType[]) => {
   const flattenedData: any = [...data];
   const dataObj = { ...flattenedData[0] };
 
-  dataObj.mtoMilestone = dataObj.mtoMatrix.milestones.map((milestone: any) => ({
-    ...milestone,
-    solutions: milestone.solutions
-      .map((solution: any) => solution.name)
-      .join(', ')
-  }));
-
-  dataObj.mtoSolution = dataObj.mtoMatrix.solutions.map((solution: any) => ({
-    ...solution,
-    milestones: solution.milestones
-      .map((milestone: any) => milestone.name)
-      .join(', ')
-  }));
-
+  dataObj.mtoMilestone = dataObj.mtoMatrix.milestones;
+  dataObj.mtoSolution = dataObj.mtoMatrix.solutions;
   dataObj.mtoCategory = dataObj.mtoMatrix.categories;
   dataObj.modelToOperations = dataObj.mtoMatrix.info;
   return [dataObj];
@@ -397,31 +351,13 @@ const csvFormatter = (
 
     const flattenedData = flattenMTOData(csvData);
 
-    let selectedCSVFields = removedUnneededData(
-      csvData[0],
-      allPlanTranslation,
-      csvFieldsModelPlan
-    );
-
-    if (exportSection === ModelShareSection.MTO_ALL) {
-      selectedCSVFields = csvFieldsMTO;
-    }
-
-    if (exportSection === ModelShareSection.MTO_MILESTONES) {
-      selectedCSVFields = csvFieldsMTOMilestone;
-    }
-
-    if (exportSection === ModelShareSection.MTO_SOLUTIONS) {
-      selectedCSVFields = csvFieldsMTOSolution;
-    }
-
-    // Remove export data that is conditional/not needed
-    if (isFilterGroup(exportSection)) {
-      selectedCSVFields = selectFilteredFields(
-        allPlanTranslation,
-        exportSection
-      );
-    }
+    const selectedCSVFields = isFilterGroup(exportSection)
+      ? selectFilteredFields(allPlanTranslation, exportSection)
+      : removedUnneededData(
+          csvData[0],
+          allPlanTranslation,
+          csvFields[exportSection]
+        );
 
     const parser = new Parser({
       fields: selectedCSVFields,

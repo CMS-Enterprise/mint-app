@@ -207,6 +207,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXTAREA,
     order: 2.1,
     multiSelectLabel: 'Selected solutions',
+    flattenNestedData: 'name',
     options: {
       INNOVATION: '4innovation',
       ACO_OS: 'Accountable Care Organization - Operational System',

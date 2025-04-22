@@ -1,3 +1,4 @@
+import { ModelShareSection } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 type CSVLabel = {
@@ -540,6 +541,13 @@ const csvFieldsMTO: (CSVLabel | string)[] = [
   'modelToOperations.readyForReviewDTS'
 ];
 
+const csvFields: Record<ModelShareSection, (CSVLabel | string)[]> = {
+  [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan,
+  [ModelShareSection.MTO_ALL]: csvFieldsMTO,
+  [ModelShareSection.MTO_MILESTONES]: csvFieldsMTOMilestone,
+  [ModelShareSection.MTO_SOLUTIONS]: csvFieldsMTOSolution
+};
+
 const fieldsToUnwind: string[] = [
   'collaborators',
   'discussions',
@@ -549,10 +557,4 @@ const fieldsToUnwind: string[] = [
   'mtoSolution'
 ];
 
-export {
-  csvFieldsModelPlan,
-  csvFieldsMTO,
-  csvFieldsMTOMilestone,
-  csvFieldsMTOSolution,
-  fieldsToUnwind
-};
+export { csvFields, fieldsToUnwind };

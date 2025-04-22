@@ -181,6 +181,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     formType: TranslationFormType.MULTISELECT,
     order: 2.1,
     multiSelectLabel: 'Selected milestones',
+    flattenNestedData: 'name',
     options: {
       MANAGE_CD: 'Manage Part C/D enrollment',
       REV_COL_BIDS: 'Review and collect plan bids',
