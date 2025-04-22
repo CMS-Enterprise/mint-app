@@ -1172,7 +1172,6 @@ export type ModelPlan = {
   mtoMatrix: ModelsToOperationMatrix;
   nameHistory: Array<Scalars['String']['output']>;
   opSolutionLastModifiedDts: Scalars['Time']['output'];
-  operationalNeeds: Array<OperationalNeed>;
   opsEvalAndLearning: PlanOpsEvalAndLearning;
   participantsAndProviders: PlanParticipantsAndProviders;
   payments: PlanPayments;
@@ -1196,15 +1195,6 @@ export type ModelPlanAndMtoCommonSolution = {
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];
   mtoCommonSolution: MtoCommonSolution;
-};
-
-export type ModelPlanAndPossibleOperationalSolution = {
-  __typename: 'ModelPlanAndPossibleOperationalSolution';
-  key: OperationalSolutionKey;
-  modelPlan: ModelPlan;
-  modelPlanID: Scalars['UUID']['output'];
-  possibleOperationalSolution: PossibleOperationalSolution;
-  possibleOperationalSolutionID: Scalars['Int']['output'];
 };
 
 /**
@@ -1359,7 +1349,6 @@ export type Mutation = {
   createPlanCR: PlanCr;
   createPlanCollaborator: PlanCollaborator;
   createPlanDiscussion: PlanDiscussion;
-  createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
   createPlanTDL: PlanTdl;
   /**
    * Automatically attempts to create a series of categories and subcategories by name. If any specific category/subcategory already exists, it will
@@ -1387,7 +1376,6 @@ export type Mutation = {
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
-  removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
@@ -1520,13 +1508,6 @@ export type MutationCreatePlanDiscussionArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationCreatePlanDocumentSolutionLinksArgs = {
-  documentIDs: Array<Scalars['UUID']['input']>;
-  solutionID: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationCreatePlanTdlArgs = {
   input: PlanTdlCreateInput;
 };
@@ -1616,13 +1597,6 @@ export type MutationMarkNotificationAsReadArgs = {
 export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
   id: Scalars['UUID']['input'];
   solutionLinks: MtoSolutionLinks;
-};
-
-
-/** Mutations definition for the schema */
-export type MutationRemovePlanDocumentSolutionLinksArgs = {
-  documentIDs: Array<Scalars['UUID']['input']>;
-  solutionID: Scalars['UUID']['input'];
 };
 
 
@@ -1836,72 +1810,6 @@ export enum NonClaimsBasedPayType {
   SHARED_SAVINGS = 'SHARED_SAVINGS'
 }
 
-export enum OpSolutionStatus {
-  AT_RISK = 'AT_RISK',
-  BACKLOG = 'BACKLOG',
-  COMPLETED = 'COMPLETED',
-  IN_PROGRESS = 'IN_PROGRESS',
-  NOT_STARTED = 'NOT_STARTED',
-  ONBOARDING = 'ONBOARDING'
-}
-
-export type OperationalNeed = {
-  __typename: 'OperationalNeed';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  key?: Maybe<OperationalNeedKey>;
-  modelPlanID: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  nameOther?: Maybe<Scalars['String']['output']>;
-  needed?: Maybe<Scalars['Boolean']['output']>;
-  section?: Maybe<TaskListSection>;
-  solutions: Array<OperationalSolution>;
-};
-
-
-export type OperationalNeedSolutionsArgs = {
-  includeNotNeeded?: Scalars['Boolean']['input'];
-};
-
-export enum OperationalNeedKey {
-  ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
-  ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
-  ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
-  APP_SUPPORT_CON = 'APP_SUPPORT_CON',
-  CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
-  COMM_W_PART = 'COMM_W_PART',
-  COMPUTE_SHARED_SAVINGS_PAYMENT = 'COMPUTE_SHARED_SAVINGS_PAYMENT',
-  DATA_TO_MONITOR = 'DATA_TO_MONITOR',
-  DATA_TO_SUPPORT_EVAL = 'DATA_TO_SUPPORT_EVAL',
-  EDUCATE_BENEF = 'EDUCATE_BENEF',
-  ESTABLISH_BENCH = 'ESTABLISH_BENCH',
-  HELPDESK_SUPPORT = 'HELPDESK_SUPPORT',
-  IDDOC_SUPPORT = 'IDDOC_SUPPORT',
-  IT_PLATFORM_FOR_LEARNING = 'IT_PLATFORM_FOR_LEARNING',
-  MAKE_NON_CLAIMS_BASED_PAYMENTS = 'MAKE_NON_CLAIMS_BASED_PAYMENTS',
-  MANAGE_BEN_OVERLAP = 'MANAGE_BEN_OVERLAP',
-  MANAGE_CD = 'MANAGE_CD',
-  MANAGE_FFS_EXCL_PAYMENTS = 'MANAGE_FFS_EXCL_PAYMENTS',
-  MANAGE_PROV_OVERLAP = 'MANAGE_PROV_OVERLAP',
-  PART_TO_PART_COLLAB = 'PART_TO_PART_COLLAB',
-  PROCESS_PART_APPEALS = 'PROCESS_PART_APPEALS',
-  QUALITY_PERFORMANCE_SCORES = 'QUALITY_PERFORMANCE_SCORES',
-  RECOVER_PAYMENTS = 'RECOVER_PAYMENTS',
-  RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
-  REV_COL_BIDS = 'REV_COL_BIDS',
-  REV_SCORE_APP = 'REV_SCORE_APP',
-  SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
-  SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
-  UPDATE_CONTRACT = 'UPDATE_CONTRACT',
-  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
-  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
-}
-
 /** Represents operational need translation data */
 export type OperationalNeedTranslation = {
   __typename: 'OperationalNeedTranslation';
@@ -1912,33 +1820,6 @@ export type OperationalNeedTranslation = {
   nameOther: TranslationField;
   needed: TranslationFieldWithOptions;
   section: TranslationFieldWithOptions;
-};
-
-export type OperationalSolution = {
-  __typename: 'OperationalSolution';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  documents: Array<PlanDocument>;
-  id: Scalars['UUID']['output'];
-  isCommonSolution: Scalars['Boolean']['output'];
-  isOther: Scalars['Boolean']['output'];
-  key?: Maybe<OperationalSolutionKey>;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  mustFinishDts?: Maybe<Scalars['Time']['output']>;
-  mustStartDts?: Maybe<Scalars['Time']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  nameOther?: Maybe<Scalars['String']['output']>;
-  needed?: Maybe<Scalars['Boolean']['output']>;
-  operationalNeedID: Scalars['UUID']['output'];
-  operationalSolutionSubtasks: Array<OperationalSolutionSubtask>;
-  otherHeader?: Maybe<Scalars['String']['output']>;
-  pocEmail?: Maybe<Scalars['String']['output']>;
-  pocName?: Maybe<Scalars['String']['output']>;
-  solutionType?: Maybe<Scalars['Int']['output']>;
-  status: OpSolutionStatus;
 };
 
 export enum OperationalSolutionKey {
@@ -1983,26 +1864,6 @@ export enum OperationalSolutionKey {
   RFA = 'RFA',
   RMADA = 'RMADA',
   SHARED_SYSTEMS = 'SHARED_SYSTEMS'
-}
-
-export type OperationalSolutionSubtask = {
-  __typename: 'OperationalSolutionSubtask';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-  solutionID: Scalars['UUID']['output'];
-  status: OperationalSolutionSubtaskStatus;
-};
-
-export enum OperationalSolutionSubtaskStatus {
-  DONE = 'DONE',
-  IN_PROGRESS = 'IN_PROGRESS',
-  TODO = 'TODO'
 }
 
 /** Represents operational solution subtask translation data */
@@ -2606,19 +2467,6 @@ export type PlanDocumentLinkInput = {
   otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
   restricted: Scalars['Boolean']['input'];
   url: Scalars['String']['input'];
-};
-
-export type PlanDocumentSolutionLink = {
-  __typename: 'PlanDocumentSolutionLink';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  documentID: Scalars['UUID']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  solutionID: Scalars['UUID']['output'];
 };
 
 /** Represents document solution link translation data */
@@ -3786,21 +3634,6 @@ export type PlanTdlTranslation = {
   title: TranslationField;
 };
 
-export type PossibleOperationalNeed = {
-  __typename: 'PossibleOperationalNeed';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['Int']['output'];
-  key: OperationalNeedKey;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-  possibleSolutions: Array<PossibleOperationalSolution>;
-  section?: Maybe<TaskListSection>;
-};
-
 export type PossibleOperationalSolution = {
   __typename: 'PossibleOperationalSolution';
   createdBy: Scalars['UUID']['output'];
@@ -3880,21 +3713,16 @@ export type Query = {
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
-  modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
   ndaInfo: NdaInfo;
-  operationalNeed: OperationalNeed;
-  operationalSolution: OperationalSolution;
-  operationalSolutions: Array<OperationalSolution>;
   planCR: PlanCr;
   planCollaboratorByID: PlanCollaborator;
   planDocument: PlanDocument;
   planPayments: PlanPayments;
   planTDL: PlanTdl;
-  possibleOperationalNeeds: Array<PossibleOperationalNeed>;
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   /**
@@ -3954,12 +3782,6 @@ export type QueryModelPlansByMtoSolutionKeyArgs = {
 
 
 /** Query definition for the schema */
-export type QueryModelPlansByOperationalSolutionKeyArgs = {
-  operationalSolutionKey: OperationalSolutionKey;
-};
-
-
-/** Query definition for the schema */
 export type QueryMtoMilestoneArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -3968,25 +3790,6 @@ export type QueryMtoMilestoneArgs = {
 /** Query definition for the schema */
 export type QueryMtoSolutionArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryOperationalNeedArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryOperationalSolutionArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryOperationalSolutionsArgs = {
-  includeNotNeeded?: Scalars['Boolean']['input'];
-  operationalNeedID: Scalars['UUID']['input'];
 };
 
 

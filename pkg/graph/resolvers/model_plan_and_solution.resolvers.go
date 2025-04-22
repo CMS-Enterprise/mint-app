@@ -27,27 +27,6 @@ func (r *modelPlanAndMTOCommonSolutionResolver) ModelPlan(ctx context.Context, o
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
-// PossibleOperationalSolution is the resolver for the possibleOperationalSolution field.
-func (r *modelPlanAndPossibleOperationalSolutionResolver) PossibleOperationalSolution(ctx context.Context, obj *models.ModelPlanAndPossibleOperationalSolution) (*models.PossibleOperationalSolution, error) {
-	return PossibleOperationalSolutionGetByKey(ctx, obj.Key)
-}
-
-// ModelPlan is the resolver for the modelPlan field.
-func (r *modelPlanAndPossibleOperationalSolutionResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanAndPossibleOperationalSolution) (*models.ModelPlan, error) {
-	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
-}
-
-// ModelPlansByOperationalSolutionKey is the resolver for the modelPlansByOperationalSolutionKey field.
-func (r *queryResolver) ModelPlansByOperationalSolutionKey(ctx context.Context, operationalSolutionKey models.OperationalSolutionKey) ([]*models.ModelPlanAndPossibleOperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return ModelPlansByOperationalSolutionKey(
-		logger,
-		r.store,
-		operationalSolutionKey,
-	)
-}
-
 // ModelPlansByMTOSolutionKey is the resolver for the modelPlansByMTOSolutionKey field.
 func (r *queryResolver) ModelPlansByMTOSolutionKey(ctx context.Context, solutionKey models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -63,10 +42,4 @@ func (r *Resolver) ModelPlanAndMTOCommonSolution() generated.ModelPlanAndMTOComm
 	return &modelPlanAndMTOCommonSolutionResolver{r}
 }
 
-// ModelPlanAndPossibleOperationalSolution returns generated.ModelPlanAndPossibleOperationalSolutionResolver implementation.
-func (r *Resolver) ModelPlanAndPossibleOperationalSolution() generated.ModelPlanAndPossibleOperationalSolutionResolver {
-	return &modelPlanAndPossibleOperationalSolutionResolver{r}
-}
-
 type modelPlanAndMTOCommonSolutionResolver struct{ *Resolver }
-type modelPlanAndPossibleOperationalSolutionResolver struct{ *Resolver }
