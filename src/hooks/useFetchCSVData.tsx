@@ -24,7 +24,10 @@ import {
 import i18next from 'i18next';
 
 import {
-  csvFields,
+  csvFieldsModelPlan,
+  csvFieldsMTO,
+  csvFieldsMTOMilestone,
+  csvFieldsMTOSolution,
   fieldsToUnwind
 } from 'components/CSVExportLink/fieldDefinitions';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -35,6 +38,29 @@ type AllModelDataType = GetAllModelDataQuery['modelPlanCollection'][0];
 type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
+
+type FilterGroupType = keyof typeof filterGroupKey;
+
+const isFilterGroup = (
+  exportSection: any
+): exportSection is FilterGroupType => {
+  return getKeys(filterGroupKey).includes(exportSection as FilterGroupType);
+};
+
+const mtoSections: PlanSection[] = [
+  PlanSection.MTO_MILESTONE,
+  PlanSection.MTO_SOLUTION,
+  PlanSection.MTO_CATEGORY,
+  PlanSection.MTO_INFO
+];
+
+// TODO: Will use later once we introduce segmented model plan exports
+// // Checks if the section is a model plan section rather than a filter group
+// const isModelPlanSection = (
+//   section: ModelShareSection | FilterGroupType
+// ): section is ModelShareSection => {
+//   return getKeys(ModelShareSection).includes(section as ModelShareSection);
+// };
 
 /**
  * @param dataField Dot notation of the nested field to be mapped to the header - ex: 'basics.goal'
@@ -85,11 +111,17 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   // Gets the label value from translation object
   if (allPlanTranslation[section][fieldName]?.label) {
-    translation = allPlanTranslation[section][fieldName].label;
+    translation = allPlanTranslation[section][fieldName]?.exportLabel
+      ? allPlanTranslation[section][fieldName]?.exportLabel
+      : allPlanTranslation[section][fieldName].label;
   }
 
   // Append Task list section to status headers so differentiate values
-  if (fieldName === 'status' && section !== 'modelPlan') {
+  if (
+    fieldName === 'status' &&
+    section !== 'modelPlan' &&
+    !mtoSections.includes(section as PlanSection)
+  ) {
     translation = `${i18next.t(`${section}Misc:heading`)}: ${translation}`;
   }
 
@@ -217,60 +249,53 @@ export const dataFormatter = (
   return mappedObj;
 };
 
-// Checks if the section is a model plan section rather than a filter group
-const isModelPlanSection = (
-  section: ModelShareSection | FilterGroup
-): section is ModelShareSection => {
-  return getKeys(ModelShareSection).includes(section as ModelShareSection);
-};
+// const modelPlanSectionMappings: Record<ModelShareSection, PlanSection[]> = {
+//   [ModelShareSection.MODEL_PLAN]: [
+//     PlanSection.MODEL_PLAN,
+//     PlanSection.BASICS,
+//     PlanSection.GENERAL_CHARACTERISTICS,
+//     PlanSection.PARTICPANTS_AND_PROVIDERS,
+//     PlanSection.BENEFICIARIES,
+//     PlanSection.OPS_EVAL_AND_LEARNING,
+//     PlanSection.PAYMENTS
+//   ],
+//   [ModelShareSection.MTO_ALL]: [
+//     PlanSection.MTO_MILESTONE,
+//     PlanSection.MTO_SOLUTION,
+//     PlanSection.MTO_CATEGORY,
+//     PlanSection.MTO_INFO
+//   ],
+//   [ModelShareSection.MTO_MILESTONES]: [PlanSection.MTO_MILESTONE],
+//   [ModelShareSection.MTO_SOLUTIONS]: [PlanSection.MTO_SOLUTION]
+// };
 
-const modelPlanSectionMappings: Record<ModelShareSection, PlanSection[]> = {
-  [ModelShareSection.MODEL_PLAN]: [
-    PlanSection.MODEL_PLAN,
-    PlanSection.BASICS,
-    PlanSection.GENERAL_CHARACTERISTICS,
-    PlanSection.PARTICPANTS_AND_PROVIDERS,
-    PlanSection.BENEFICIARIES,
-    PlanSection.OPS_EVAL_AND_LEARNING,
-    PlanSection.PAYMENTS
-  ],
-  [ModelShareSection.MTO_ALL]: [
-    PlanSection.MTO_INFO,
-    PlanSection.MTO_CATEGORY,
-    PlanSection.MTO_MILESTONE,
-    PlanSection.MTO_SOLUTION
-  ],
-  [ModelShareSection.MTO_MILESTONES]: [PlanSection.MTO_MILESTONE],
-  [ModelShareSection.MTO_SOLUTIONS]: [PlanSection.MTO_SOLUTION]
-};
+// // Filters out columns for csv based on selected FilterGroup mappings in translation file
+// export const selectSectionedFields = (
+//   allPlanTranslation: any,
+//   exportSection: ModelShareSection
+// ) => {
+//   const selectedFields: string[] = [];
 
-// Filters out columns for csv based on selected FilterGroup mappings in translation file
-export const selectSectionedFields = (
-  allPlanTranslation: any,
-  exportSection: ModelShareSection
-) => {
-  const selectedFields: string[] = [];
+//   const sectionsToExport = modelPlanSectionMappings[exportSection];
 
-  const sectionsToExport = modelPlanSectionMappings[exportSection];
+//   sectionsToExport.forEach((section: PlanSection) => {
+//     if (section === PlanSection.MODEL_PLAN) {
+//       selectedFields.push(`${section}`);
+//     } else {
+//       getKeys(allPlanTranslation[section]).forEach((field: any) => {
+//         // Push to array to become a column in exported csv
+//         selectedFields.push(`${section}.${field}`);
+//       });
+//     }
+//   });
 
-  sectionsToExport.forEach((section: PlanSection) => {
-    if (section === PlanSection.MODEL_PLAN) {
-      selectedFields.push(`${section}`);
-    } else {
-      getKeys(allPlanTranslation[section]).forEach((field: any) => {
-        // Push to array to become a column in exported csv
-        selectedFields.push(`${section}.${field}`);
-      });
-    }
-  });
-
-  return selectedFields;
-};
+//   return selectedFields;
+// };
 
 // Filters out columns for csv based on selected FilterGroup mappings in translation file
 export const selectFilteredFields = (
   allPlanTranslation: any,
-  exportSection: FilterGroup
+  exportSection: FilterGroupType
 ) => {
   const selectedFields: string[] = [];
   // Loop through task list sections of translation obj
@@ -343,8 +368,20 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
   const flattenedData: any = [...data];
   const dataObj = { ...flattenedData[0] };
 
-  dataObj.mtoMilestone = dataObj.mtoMatrix.milestones;
-  dataObj.mtoSolution = dataObj.mtoMatrix.solutions;
+  dataObj.mtoMilestone = dataObj.mtoMatrix.milestones.map((milestone: any) => ({
+    ...milestone,
+    solutions: milestone.solutions
+      .map((solution: any) => solution.name)
+      .join(', ')
+  }));
+
+  dataObj.mtoSolution = dataObj.mtoMatrix.solutions.map((solution: any) => ({
+    ...solution,
+    milestones: solution.milestones
+      .map((milestone: any) => milestone.name)
+      .join(', ')
+  }));
+
   dataObj.mtoCategory = dataObj.mtoMatrix.categories;
   dataObj.modelToOperations = dataObj.mtoMatrix.info;
   return [dataObj];
@@ -353,24 +390,36 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  exportSection: FilterGroup | ModelShareSection
+  exportSection: FilterGroupType | ModelShareSection
 ) => {
-  // console.log(csvData);
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
 
     const flattenedData = flattenMTOData(csvData);
 
-    let selectedCSVFields = isModelPlanSection(exportSection)
-      ? selectSectionedFields(allPlanTranslation, exportSection)
-      : selectFilteredFields(allPlanTranslation, exportSection);
+    let selectedCSVFields = removedUnneededData(
+      csvData[0],
+      allPlanTranslation,
+      csvFieldsModelPlan
+    );
+
+    if (exportSection === ModelShareSection.MTO_ALL) {
+      selectedCSVFields = csvFieldsMTO;
+    }
+
+    if (exportSection === ModelShareSection.MTO_MILESTONES) {
+      selectedCSVFields = csvFieldsMTOMilestone;
+    }
+
+    if (exportSection === ModelShareSection.MTO_SOLUTIONS) {
+      selectedCSVFields = csvFieldsMTOSolution;
+    }
 
     // Remove export data that is conditional/not needed
-    if (isModelPlanSection(exportSection)) {
-      selectedCSVFields = removedUnneededData(
-        flattenedData[0],
+    if (isFilterGroup(exportSection)) {
+      selectedCSVFields = selectFilteredFields(
         allPlanTranslation,
-        selectedCSVFields
+        exportSection
       );
     }
 

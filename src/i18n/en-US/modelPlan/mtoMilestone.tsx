@@ -41,6 +41,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'FacilitatedBy',
     dbField: 'facilitated_by',
     label: 'Facilitated by',
+    exportLabel: 'Milestone facilitated by',
     sublabel: 'Choose the role or group responsible for this work.',
     multiSelectLabel: 'Selected roles',
     dataType: TranslationDataType.STRING,
@@ -73,6 +74,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'NeedBy',
     dbField: 'need_by',
     label: 'Need by',
+    exportLabel: 'Milestone needed by',
     sublabel:
       'Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
@@ -84,6 +86,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'Status',
     dbField: 'status',
     label: 'Status',
+    exportLabel: 'Milestone status',
     questionTooltip: (
       <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
         Milestone progress statuses:
@@ -118,6 +121,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'RiskIndicator',
     dbField: 'risk_indicator',
     label: 'Risk indicator',
+    exportLabel: 'Milestone risk indicator',
     sublabel:
       'Select the risk level for this milestone. This will help you and your team identify potential risks and plan accordingly.',
     questionTooltip: (
@@ -198,6 +202,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     goField: 'Solutions',
     dbField: 'solutions',
     label: 'Available solutions',
+    exportLabel: 'Linked solutions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.1,

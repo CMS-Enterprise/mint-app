@@ -5,7 +5,7 @@ type CSVLabel = {
   value: string;
 };
 
-const csvFields: (CSVLabel | string)[] = [
+const csvFieldsModelPlan: (CSVLabel | string)[] = [
   {
     label: i18next.t<string, {}, string>('modelPlanMisc:modelID'),
     value: 'id'
@@ -436,24 +436,6 @@ const csvFields: (CSVLabel | string)[] = [
   'dataExchangeApproach.markedCompleteDts',
   'dataExchangeApproach.status',
 
-  // Model to Operations
-  'mtoMilestone.name',
-  'mtoMilestone.isDraft',
-  'mtoMilestone.facilitatedBy',
-  'mtoMilestone.needBy',
-  'mtoMilestone.status',
-  'mtoMilestone.riskIndicator',
-  'mtoMilestone.solutions.name',
-  'mtoSolution.name',
-  'mtoSolution.facilitatedBy',
-  'mtoSolution.neededBy',
-  'mtoSolution.status',
-  'mtoSolution.riskIndicator',
-  'mtoSolution.milestones.name',
-  'mtoCategory.name',
-  'modelToOperations.readyForReviewBy',
-  'modelToOperations.readyForReviewDTS',
-
   // Collaborators
   {
     label: `${i18next.t<string, {}, string>(
@@ -531,15 +513,46 @@ const csvFields: (CSVLabel | string)[] = [
   }
 ];
 
+const csvFieldsMTOMilestone: (CSVLabel | string)[] = [
+  'mtoMilestone.name',
+  'mtoMilestone.isDraft',
+  'mtoMilestone.facilitatedBy',
+  'mtoMilestone.needBy',
+  'mtoMilestone.status',
+  'mtoMilestone.riskIndicator',
+  'mtoMilestone.solutions'
+];
+
+const csvFieldsMTOSolution: (CSVLabel | string)[] = [
+  'mtoSolution.name',
+  'mtoSolution.facilitatedBy',
+  'mtoSolution.neededBy',
+  'mtoSolution.status',
+  'mtoSolution.riskIndicator',
+  'mtoSolution.milestones'
+];
+
+const csvFieldsMTO: (CSVLabel | string)[] = [
+  ...csvFieldsMTOMilestone,
+  ...csvFieldsMTOSolution,
+  'mtoCategory.name',
+  'modelToOperations.readyForReviewBy',
+  'modelToOperations.readyForReviewDTS'
+];
+
 const fieldsToUnwind: string[] = [
   'collaborators',
   'discussions',
   'discussions.replies',
   'mtoCategory',
   'mtoMilestone',
-  'mtoMilestone.solutions',
-  'mtoSolution',
-  'mtoSolution.milestones'
+  'mtoSolution'
 ];
 
-export { csvFields, fieldsToUnwind };
+export {
+  csvFieldsModelPlan,
+  csvFieldsMTO,
+  csvFieldsMTOMilestone,
+  csvFieldsMTOSolution,
+  fieldsToUnwind
+};

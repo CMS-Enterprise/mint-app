@@ -40,6 +40,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'PocName',
     dbField: 'poc_name',
     label: 'Point of contact name',
+    exportLabel: 'Solution point of contact name',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.2
@@ -49,6 +50,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'PocEmail',
     dbField: 'poc_email',
     label: 'Point of contact email address',
+    exportLabel: 'Solution point of contact email address',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.3
@@ -68,6 +70,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'RiskIndicator',
     dbField: 'risk_indicator',
     label: 'Risk Indicator',
+    exportLabel: 'Solution risk indicator',
     sublabel: 'Choose the applicable risk status for this solution.',
     questionTooltip: (
       <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
@@ -93,6 +96,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'Status',
     dbField: 'status',
     label: 'Status',
+    exportLabel: 'Solution status',
     questionTooltip: (
       <div style={{ fontSize: '0.875rem', fontWeight: 400, padding: '0.5rem' }}>
         Solution implementation statuses:
@@ -129,6 +133,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'NeededBy',
     dbField: 'needed_by',
     label: 'Need By',
+    exportLabel: 'Solution needed by',
     sublabel:
       'Choose the date when onboarding and implementation work for this solution should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
@@ -140,6 +145,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'FacilitatedBy',
     dbField: 'facilitated_by',
     label: 'Facilitated By',
+    exportLabel: 'Solution facilitated by',
     sublabel: 'Choose the role or group responsible for this work.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
@@ -170,7 +176,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'milestones',
     goField: 'Milestones',
     dbField: 'milestones',
-    label: 'Milestones',
+    label: 'Linked milestones',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     order: 2.1,
