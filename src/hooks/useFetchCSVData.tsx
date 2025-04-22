@@ -16,6 +16,7 @@ import {
   GetAllModelDataQueryHookResult,
   GetAllSingleModelDataQuery,
   GetAllSingleModelDataQueryHookResult,
+  ModelShareSection,
   TranslationDataType,
   useGetAllModelDataLazyQuery,
   useGetAllSingleModelDataLazyQuery
@@ -27,7 +28,7 @@ import {
   fieldsToUnwind
 } from 'components/CSVExportLink/fieldDefinitions';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
+import { getKeys, PlanSection } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 
 type AllModelDataType = GetAllModelDataQuery['modelPlanCollection'][0];
@@ -216,10 +217,60 @@ export const dataFormatter = (
   return mappedObj;
 };
 
+// Checks if the section is a model plan section rather than a filter group
+const isModelPlanSection = (
+  section: ModelShareSection | FilterGroup
+): section is ModelShareSection => {
+  return getKeys(ModelShareSection).includes(section as ModelShareSection);
+};
+
+const modelPlanSectionMappings: Record<ModelShareSection, PlanSection[]> = {
+  [ModelShareSection.MODEL_PLAN]: [
+    PlanSection.MODEL_PLAN,
+    PlanSection.BASICS,
+    PlanSection.GENERAL_CHARACTERISTICS,
+    PlanSection.PARTICPANTS_AND_PROVIDERS,
+    PlanSection.BENEFICIARIES,
+    PlanSection.OPS_EVAL_AND_LEARNING,
+    PlanSection.PAYMENTS
+  ],
+  [ModelShareSection.MTO_ALL]: [
+    PlanSection.MTO_INFO,
+    PlanSection.MTO_CATEGORY,
+    PlanSection.MTO_MILESTONE,
+    PlanSection.MTO_SOLUTION
+  ],
+  [ModelShareSection.MTO_MILESTONES]: [PlanSection.MTO_MILESTONE],
+  [ModelShareSection.MTO_SOLUTIONS]: [PlanSection.MTO_SOLUTION]
+};
+
+// Filters out columns for csv based on selected FilterGroup mappings in translation file
+export const selectSectionedFields = (
+  allPlanTranslation: any,
+  exportSection: ModelShareSection
+) => {
+  const selectedFields: string[] = [];
+
+  const sectionsToExport = modelPlanSectionMappings[exportSection];
+
+  sectionsToExport.forEach((section: PlanSection) => {
+    if (section === PlanSection.MODEL_PLAN) {
+      selectedFields.push(`${section}`);
+    } else {
+      getKeys(allPlanTranslation[section]).forEach((field: any) => {
+        // Push to array to become a column in exported csv
+        selectedFields.push(`${section}.${field}`);
+      });
+    }
+  });
+
+  return selectedFields;
+};
+
 // Filters out columns for csv based on selected FilterGroup mappings in translation file
 export const selectFilteredFields = (
   allPlanTranslation: any,
-  filteredGroup: FilterGroup
+  exportSection: FilterGroup
 ) => {
   const selectedFields: string[] = [];
   // Loop through task list sections of translation obj
@@ -227,7 +278,7 @@ export const selectFilteredFields = (
     if (taskListSection === 'nameHistory') {
       if (
         allPlanTranslation[taskListSection]?.filterGroups?.includes(
-          filterGroupKey[filteredGroup]
+          filterGroupKey[exportSection]
         )
       ) {
         // Push to array to become a column in exported csv
@@ -238,7 +289,7 @@ export const selectFilteredFields = (
     getKeys(allPlanTranslation[taskListSection]).forEach((field: any) => {
       if (
         allPlanTranslation[taskListSection][field]?.filterGroups?.includes(
-          filterGroupKey[filteredGroup]
+          filterGroupKey[exportSection]
         )
       ) {
         // Push to array to become a column in exported csv
@@ -288,23 +339,40 @@ const downloadFile = (data: string) => {
   element.click();
 };
 
+const flattenMTOData = (data: CSVModelPlanType[]) => {
+  const flattenedData: any = [...data];
+  const dataObj = { ...flattenedData[0] };
+
+  dataObj.mtoMilestone = dataObj.mtoMatrix.milestones;
+  dataObj.mtoSolution = dataObj.mtoMatrix.solutions;
+  dataObj.mtoCategory = dataObj.mtoMatrix.categories;
+  dataObj.modelToOperations = dataObj.mtoMatrix.info;
+  return [dataObj];
+};
+
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  filteredGroup?: FilterGroup | undefined
+  exportSection: FilterGroup | ModelShareSection
 ) => {
+  // console.log(csvData);
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
 
-    const filteredData = removedUnneededData(
-      csvData[0],
-      allPlanTranslation,
-      csvFields
-    );
+    const flattenedData = flattenMTOData(csvData);
 
-    const selectedCSVFields = filteredGroup
-      ? selectFilteredFields(allPlanTranslation, filteredGroup)
-      : filteredData;
+    let selectedCSVFields = isModelPlanSection(exportSection)
+      ? selectSectionedFields(allPlanTranslation, exportSection)
+      : selectFilteredFields(allPlanTranslation, exportSection);
+
+    // Remove export data that is conditional/not needed
+    if (isModelPlanSection(exportSection)) {
+      selectedCSVFields = removedUnneededData(
+        flattenedData[0],
+        allPlanTranslation,
+        selectedCSVFields
+      );
+    }
 
     const parser = new Parser({
       fields: selectedCSVFields,
@@ -325,7 +393,7 @@ const csvFormatter = (
         }
       }
     });
-    const csv = parser.parse(csvData);
+    const csv = parser.parse(flattenedData);
     downloadFile(csv);
   } catch (err) {
     // TODO: add more robust error handling: display a modal/message if download fails?
@@ -338,11 +406,13 @@ type UseFetchCSVData = {
     input: string
   ) => Promise<GetAllSingleModelDataQueryHookResult>;
   fetchAllData: () => Promise<GetAllModelDataQueryHookResult>;
-  setFilteredGroup: (filteredGroup?: FilterGroup) => void;
+  setExportSection: (exportSection: FilterGroup | ModelShareSection) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
-  const [filteredGroup, setFilteredGroup] = useState<FilterGroup | undefined>();
+  const [exportSection, setExportSection] = useState<
+    FilterGroup | ModelShareSection
+  >(ModelShareSection.MODEL_PLAN);
   const allPlanTranslation = usePlanTranslation();
 
   // Get data for a single model plan
@@ -351,7 +421,7 @@ const useFetchCSVData = (): UseFetchCSVData => {
       csvFormatter(
         data.modelPlan ? [data.modelPlan] : [],
         allPlanTranslation,
-        filteredGroup
+        exportSection
       );
     }
   });
@@ -359,7 +429,11 @@ const useFetchCSVData = (): UseFetchCSVData => {
   // Get data for all model plans
   const [fetchAllData] = useGetAllModelDataLazyQuery({
     onCompleted: data => {
-      csvFormatter(data.modelPlanCollection || [], allPlanTranslation);
+      csvFormatter(
+        data.modelPlanCollection || [],
+        allPlanTranslation,
+        exportSection
+      );
     }
   });
 
@@ -369,7 +443,7 @@ const useFetchCSVData = (): UseFetchCSVData => {
       [fetchSingleData]
     ),
     fetchAllData: useCallback(async () => fetchAllData(), [fetchAllData]),
-    setFilteredGroup
+    setExportSection
   };
 };
 

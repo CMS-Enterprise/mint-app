@@ -69,7 +69,7 @@ const ShareExportModal = ({
 
   const { setPrintPDF } = useContext(PrintPDFContext);
 
-  const [filteredGroup, setFilteredGroup] = useState<FitlerGroup>(
+  const [exportSection, setExportSection] = useState<FitlerGroup>(
     (filteredView as FilterGroup) || ModelShareSection.MODEL_PLAN
   );
 
@@ -82,7 +82,7 @@ const ShareExportModal = ({
   // State for modal navigation elements
   const [isActive, setIsActive] = useState<NavModelElemet>(defaultTab);
 
-  const { fetchSingleData, setFilteredGroup: setFilteredGroupForExport } =
+  const { fetchSingleData, setExportSection: setExportSectionForExport } =
     useFetchCSVData();
 
   const modalElementId: string = 'share-export-modal';
@@ -95,7 +95,7 @@ const ShareExportModal = ({
 
   // Sets the default combobox option to a filter view if already on a filter view readonly page
   useEffect(() => {
-    if (filteredView) setFilteredGroup(filteredView);
+    if (filteredView) setExportSection(filteredView);
   }, [filteredView]);
 
   // Submit handler for exporting PDF
@@ -127,13 +127,13 @@ const ShareExportModal = ({
     <div className="mint-only-print" ref={componentRef}>
       <PDFSummary
         filteredView={
-          filterGroupParams.includes(filteredGroup) ? filteredGroup : undefined
+          filterGroupParams.includes(exportSection) ? exportSection : undefined
         }
       />
       <GridContainer className="padding-x-8 margin-top-4">
-        {filteredGroup && filterGroupParams.includes(filteredGroup) ? (
+        {exportSection && filterGroupParams.includes(exportSection) ? (
           // Filter view component
-          <BodyContent modelID={modelID} filteredView={filteredGroup} />
+          <BodyContent modelID={modelID} filteredView={exportSection} />
         ) : (
           // All model plan sections
           <>
@@ -193,9 +193,9 @@ const ShareExportModal = ({
         id={id}
         name="filterGroup"
         onChange={value => {
-          setFilteredGroup(value as FitlerGroup);
+          setExportSection(value as FitlerGroup);
         }}
-        defaultValue={filteredGroup}
+        defaultValue={exportSection}
         options={[
           {
             value: 'section-export-label',
@@ -220,18 +220,18 @@ const ShareExportModal = ({
           e.preventDefault();
 
           const viewFilter =
-            filteredGroup && filterGroupParams.includes(filteredGroup)
-              ? (filteredGroup.toUpperCase() as ModelViewFilter)
+            exportSection && filterGroupParams.includes(exportSection)
+              ? (exportSection.toUpperCase() as ModelViewFilter)
               : undefined;
 
-          const modelShareSection = !filterGroupParams.includes(filteredGroup)
-            ? filteredGroup
+          const modelShareSection = !filterGroupParams.includes(exportSection)
+            ? exportSection
             : undefined;
 
           // Send a share event to GA
           ReactGA.send({
             hitType: 'event',
-            eventCategory: `share_model_plan_${filteredGroup}`,
+            eventCategory: `share_model_plan_${exportSection}`,
             eventAction: 'click',
             eventLabel: `Share model plan ${viewFilter || ''}`
           });
@@ -341,8 +341,8 @@ const ShareExportModal = ({
             className="usa-button--unstyled margin-top-0 display-flex flex-justify-center"
             onClick={() => {
               const filterParam: string =
-                filteredGroup && filterGroupParams.includes(filteredGroup)
-                  ? `?filter-view=${filteredGroup}`
+                exportSection && filterGroupParams.includes(exportSection)
+                  ? `?filter-view=${exportSection}`
                   : '';
 
               navigator.clipboard.writeText(
@@ -351,7 +351,7 @@ const ShareExportModal = ({
             }}
           >
             <Icon.Link className="margin-right-1" />
-            {filteredGroup && filterGroupParams.includes(filteredGroup)
+            {exportSection && filterGroupParams.includes(exportSection)
               ? generalReadOnlyT('modal.copyLinkFilteredReadView')
               : generalReadOnlyT('modal.copyLinkReadView')}
           </Button>
@@ -367,7 +367,7 @@ const ShareExportModal = ({
             <Button
               type="submit"
               data-testid="export-model-plan"
-              disabled={!filteredGroup || !usernames || loading}
+              disabled={!exportSection || !usernames || loading}
               className="margin-top-0"
             >
               {generalReadOnlyT('modal.share')}
@@ -400,20 +400,15 @@ const ShareExportModal = ({
             }, 10);
           }
           if (exportCSV) {
-            const groupToExport =
-              filteredGroup && filterGroupParams.includes(filteredGroup)
-                ? filteredGroup
-                : undefined;
-
             // Send a export csv event to GA
             ReactGA.send({
               hitType: 'event',
-              eventCategory: `export_model_plan_csv_${filteredGroup}`,
+              eventCategory: `export_model_plan_csv_${exportSection}`,
               eventAction: 'click',
-              eventLabel: `Export model plan to CSV ${groupToExport?.toUpperCase()}`
+              eventLabel: `Export model plan to CSV ${exportSection.toUpperCase()}`
             });
 
-            setFilteredGroupForExport(groupToExport);
+            setExportSectionForExport(exportSection);
             fetchSingleData(modelID);
           }
         }}
@@ -479,7 +474,7 @@ const ShareExportModal = ({
           <Button
             type="submit"
             data-testid="export-model-plan"
-            disabled={!filteredGroup || (!exportCSV && !exportPDF)}
+            disabled={!exportSection || (!exportCSV && !exportPDF)}
             className="margin-top-0"
           >
             {generalReadOnlyT('modal.export')}

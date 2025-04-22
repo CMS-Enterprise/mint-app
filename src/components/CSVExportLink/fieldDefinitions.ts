@@ -436,6 +436,24 @@ const csvFields: (CSVLabel | string)[] = [
   'dataExchangeApproach.markedCompleteDts',
   'dataExchangeApproach.status',
 
+  // Model to Operations
+  'mtoMilestone.name',
+  'mtoMilestone.isDraft',
+  'mtoMilestone.facilitatedBy',
+  'mtoMilestone.needBy',
+  'mtoMilestone.status',
+  'mtoMilestone.riskIndicator',
+  'mtoMilestone.solutions.name',
+  'mtoSolution.name',
+  'mtoSolution.facilitatedBy',
+  'mtoSolution.neededBy',
+  'mtoSolution.status',
+  'mtoSolution.riskIndicator',
+  'mtoSolution.milestones.name',
+  'mtoCategory.name',
+  'modelToOperations.readyForReviewBy',
+  'modelToOperations.readyForReviewDTS',
+
   // Collaborators
   {
     label: `${i18next.t<string, {}, string>(
@@ -516,7 +534,12 @@ const csvFields: (CSVLabel | string)[] = [
 const fieldsToUnwind: string[] = [
   'collaborators',
   'discussions',
-  'discussions.replies'
+  'discussions.replies',
+  'mtoCategory',
+  'mtoMilestone',
+  'mtoMilestone.solutions',
+  'mtoSolution',
+  'mtoSolution.milestones'
 ];
 
 export { csvFields, fieldsToUnwind };
