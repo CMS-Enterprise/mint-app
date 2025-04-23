@@ -63,7 +63,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Who are the participants?
             </span>
@@ -179,13 +179,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Participant note
           </div>
@@ -206,7 +206,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Are the participants in CMMI models now?
               <span
@@ -254,7 +254,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -275,13 +275,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Parts in model
           </div>
@@ -302,7 +302,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               At what level will the model apply?
               <span
@@ -350,7 +350,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             App level
           </div>
@@ -379,13 +379,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
                 >
                   How many participants do you expect?
                 </span>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 0
               </div>
@@ -407,13 +407,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
                 >
                   What is your level of confidence on this estimate?
                 </span>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Fairly confident
               </div>
@@ -439,13 +439,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Confidence note
           </div>
@@ -466,13 +466,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How will you recruit the participants?
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Not applicable
           </div>
@@ -496,13 +496,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Recruitment note
           </div>
@@ -523,7 +523,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How will you select participants?
             </span>
@@ -564,13 +564,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note selection
           </div>
@@ -591,7 +591,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How frequently are participants added?
             </span>
@@ -635,13 +635,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             My note
           </div>
@@ -662,7 +662,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How frequently are participants removed?
             </span>
@@ -706,13 +706,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Second note
           </div>
@@ -733,7 +733,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How will you communicate with participants?
             </span>
@@ -774,13 +774,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Comm note
           </div>
@@ -801,7 +801,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               What type of risk will the participant assume?
             </span>
@@ -836,13 +836,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note risk
           </div>
@@ -863,13 +863,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Will the risk arrangement change as the model progresses?
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -890,13 +890,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             My risk change ntoe
           </div>
@@ -917,7 +917,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Are participants required to retain a financial guarantee? If so, are there any limitations on the type?
               <span
@@ -965,7 +965,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <ul
@@ -1014,13 +1014,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Notes
           </div>
@@ -1041,13 +1041,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Will the participants coordinate the work of others?
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -1068,13 +1068,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Coornidate work note
           </div>
@@ -1103,13 +1103,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
                 >
                   Will there be gainsharing payments?
                 </span>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1131,13 +1131,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
                 >
                   Will you track gainsharing payments?
                 </span>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1163,7 +1163,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Are providers eligible to participate in gainsharing arrangements?
             </span>
@@ -1204,13 +1204,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Track note
           </div>
@@ -1231,7 +1231,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Will you collect participant IDs?
             </span>
@@ -1266,13 +1266,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for particpants
           </div>
@@ -1293,7 +1293,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How frequently are providers added?
             </span>
@@ -1337,13 +1337,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note freq
           </div>
@@ -1364,7 +1364,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How will you decide to add providers?
             </span>
@@ -1399,13 +1399,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Add note
           </div>
@@ -1426,7 +1426,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Can providers leave the model?
             </span>
@@ -1461,13 +1461,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note leave
           </div>
@@ -1488,7 +1488,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               How frequently are providers removed?
             </span>
@@ -1532,13 +1532,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note freq removal
           </div>
@@ -1559,13 +1559,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Will the providers overlap with other models?
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             No
           </div>
@@ -1631,13 +1631,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Overlap note
           </div>

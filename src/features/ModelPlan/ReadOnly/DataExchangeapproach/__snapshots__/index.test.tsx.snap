@@ -68,7 +68,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               What data will you collect from participants?
             </span>
@@ -168,13 +168,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             collect note
           </div>
@@ -200,7 +200,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               What data will you send to participants?
             </span>
@@ -273,13 +273,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             send note
           </div>
@@ -305,13 +305,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Do you need to make multi-payer data available to participants?
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             No
           </div>
@@ -377,13 +377,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             data available note
           </div>
@@ -409,13 +409,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Do you need to collect and aggregate multi-source data for analyses by the model team and implementation contractor?
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             No
           </div>
@@ -484,13 +484,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             multi source note
           </div>
@@ -516,7 +516,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?
               <span
@@ -578,7 +578,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             No
           </div>
@@ -602,13 +602,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             new data note
           </div>
@@ -634,13 +634,13 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Please describe any additional data exchange considerations.
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             consideration desc
           </div>
