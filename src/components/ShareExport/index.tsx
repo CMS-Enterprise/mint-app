@@ -35,7 +35,10 @@ import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
 import PDFSummary from './pdfSummary';
-import exportSectionOptions from './util';
+import exportSectionOptions, {
+  modelPlanSectionMappings,
+  ModelSubSectionRouteKey
+} from './util';
 
 import './index.scss';
 
@@ -140,6 +143,12 @@ const ShareExportModal = ({
             {Object.keys(AllReadonlyComponents)
               .filter(
                 component => !excludedComponents.includes(component as string)
+              )
+              // Filter out components that are not in the selected export section
+              .filter(component =>
+                modelPlanSectionMappings[
+                  exportSection as ModelShareSection
+                ].includes(component as ModelSubSectionRouteKey)
               )
               .map((component, index) => (
                 <div

@@ -21,6 +21,10 @@ import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/SectionContainer';
 import ShareExportModal from 'components/ShareExport';
+import {
+  modelSectionRouteKey,
+  ModelSubSectionRouteKey
+} from 'components/ShareExport/util';
 import StatusBanner from 'components/StatusBanner';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import PrintPDFWrapper from 'contexts/PrintPDFContext';
@@ -81,22 +85,6 @@ export type subComponentProps = {
 export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
-
-const listOfSubpageKey: string[] = [
-  'model-basics',
-  'general-characteristics',
-  'participants-and-providers',
-  'beneficiaries',
-  'operations-evaluation-and-learning',
-  'payment',
-  'milestones',
-  'it-systems-and-solutions',
-  'team',
-  'discussions',
-  'documents',
-  'crs-and-tdl',
-  'data-exchange-approach'
-];
 
 export const ReadOnlyComponents = (
   modelID: string,
@@ -190,19 +178,17 @@ export const ReadOnlyComponents = (
   };
 };
 
-export type SubpageKey = (typeof listOfSubpageKey)[number];
-
 const isSubpage = (
-  x: SubpageKey,
+  x: ModelSubSectionRouteKey,
   flags: any,
   isHelpArticle?: boolean
 ): boolean => {
   if (isHelpArticle) {
-    return listOfSubpageKey
+    return modelSectionRouteKey
       .filter(subpage => subpage !== 'discussions')
       .includes(x);
   }
-  return listOfSubpageKey.includes(x);
+  return modelSectionRouteKey.includes(x);
 };
 
 export const filteredViewOutput = (value: string) => {
@@ -235,7 +221,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '', subinfo } =
     useParams<{
       modelID: string;
-      subinfo: SubpageKey;
+      subinfo: ModelSubSectionRouteKey;
     }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');

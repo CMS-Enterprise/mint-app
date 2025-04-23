@@ -3,16 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { Icon } from '@trussworks/react-uswds';
 
+import { ModelSubSectionRouteKey } from 'components/ShareExport/util';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
-import { subComponentsProps, SubpageKey } from '../..';
+import { subComponentsProps } from '../..';
 import SideNav from '../Sidenav';
 
 import './index.scss';
 
 interface MobileNavProps {
   subComponents: subComponentsProps;
-  subinfo: SubpageKey;
+  subinfo: ModelSubSectionRouteKey;
   isHelpArticle: boolean | undefined;
   solutionDetailRoute?: string;
   isFilteredView?: boolean;
