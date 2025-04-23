@@ -455,10 +455,6 @@ export default gql(/* GraphQL */ `
           readyForReviewBy
           readyForReviewDTS
         }
-        categories {
-          id
-          name
-        }
         milestones {
           id
           name
@@ -467,6 +463,16 @@ export default gql(/* GraphQL */ `
           needBy
           status
           riskIndicator
+          categories {
+            category {
+              id
+              name
+            }
+            subCategory {
+              id
+              name
+            }
+          }
           solutions {
             id
             name

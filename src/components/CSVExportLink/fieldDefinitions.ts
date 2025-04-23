@@ -517,6 +517,18 @@ const csvFieldsModelPlan: (CSVLabel | string)[] = [
 const csvFieldsMTOMilestone: (CSVLabel | string)[] = [
   'mtoMilestone.name',
   'mtoMilestone.isDraft',
+  {
+    label: i18next.t<string, {}, string>(
+      'modelToOperationsMisc:modal.milestone.milestoneCategory.label'
+    ),
+    value: 'mtoMilestone.categories.category.name'
+  },
+  {
+    label: i18next.t<string, {}, string>(
+      'modelToOperationsMisc:modal.milestone.milestoneSubcategory.label'
+    ),
+    value: 'mtoMilestone.categories.subCategory.name'
+  },
   'mtoMilestone.facilitatedBy',
   'mtoMilestone.needBy',
   'mtoMilestone.status',
@@ -552,7 +564,6 @@ const fieldsToUnwind: string[] = [
   'collaborators',
   'discussions',
   'discussions.replies',
-  'mtoCategory',
   'mtoMilestone',
   'mtoSolution'
 ];
