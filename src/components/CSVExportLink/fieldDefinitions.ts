@@ -1,6 +1,8 @@
 import { ModelShareSection } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import { ExtendedModelShareSection } from 'hooks/useFetchCSVData';
+
 type CSVLabel = {
   label: string;
   value: string;
@@ -548,12 +550,12 @@ const csvFieldsMTOSolution: (CSVLabel | string)[] = [
 const csvFieldsMTO: (CSVLabel | string)[] = [
   ...csvFieldsMTOMilestone,
   ...csvFieldsMTOSolution,
-  'mtoCategory.name',
-  'modelToOperations.readyForReviewBy',
+  'modelToOperations.readyForReviewByUserAccount.commonName',
   'modelToOperations.readyForReviewDTS'
 ];
 
-const csvFields: Record<ModelShareSection, (CSVLabel | string)[]> = {
+const csvFields: Record<ExtendedModelShareSection, (CSVLabel | string)[]> = {
+  ALL: [...csvFieldsModelPlan, ...csvFieldsMTO],
   [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan,
   [ModelShareSection.MTO_ALL]: csvFieldsMTO,
   [ModelShareSection.MTO_MILESTONES]: csvFieldsMTOMilestone,

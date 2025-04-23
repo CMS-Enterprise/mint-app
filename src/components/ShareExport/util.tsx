@@ -1,19 +1,19 @@
-import { ModelShareSection } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import { ExtendedModelShareSection } from 'hooks/useFetchCSVData';
 import { getKeys } from 'types/translation';
 
 type ExportSectionOption = {
-  value: ModelShareSection;
+  value: ExtendedModelShareSection;
   label: string;
 };
 
 const exportSectionOptions: ExportSectionOption[] = getKeys(
-  ModelShareSection
+  ExtendedModelShareSection
 ).map(key => ({
-  value: ModelShareSection[key],
+  value: ExtendedModelShareSection[key],
   label: i18next.t(
-    `generalReadOnly:modal.exportSections.${ModelShareSection[key]}`
+    `generalReadOnly:modal.exportSections.${ExtendedModelShareSection[key]}`
   )
 }));
 
@@ -36,10 +36,25 @@ export const modelSectionRouteKey: string[] = [
 export type ModelSubSectionRouteKey = (typeof modelSectionRouteKey)[number];
 
 export const modelPlanSectionMappings: Record<
-  ModelShareSection,
+  ExtendedModelShareSection,
   ModelSubSectionRouteKey[]
 > = {
-  [ModelShareSection.MODEL_PLAN]: [
+  [ExtendedModelShareSection.ALL]: [
+    'model-basics',
+    'general-characteristics',
+    'participants-and-providers',
+    'beneficiaries',
+    'operations-evaluation-and-learning',
+    'payment',
+    'milestones',
+    'it-systems-and-solutions',
+    'team',
+    'discussions',
+    'documents',
+    'crs-and-tdl',
+    'data-exchange-approach'
+  ],
+  [ExtendedModelShareSection.MODEL_PLAN]: [
     'model-basics',
     'general-characteristics',
     'participants-and-providers',
@@ -47,9 +62,12 @@ export const modelPlanSectionMappings: Record<
     'operations-evaluation-and-learning',
     'payment'
   ],
-  [ModelShareSection.MTO_ALL]: ['milestones', 'it-systems-and-solutions'],
-  [ModelShareSection.MTO_MILESTONES]: ['milestones'],
-  [ModelShareSection.MTO_SOLUTIONS]: ['it-systems-and-solutions']
+  [ExtendedModelShareSection.MTO_ALL]: [
+    'milestones',
+    'it-systems-and-solutions'
+  ],
+  [ExtendedModelShareSection.MTO_MILESTONES]: ['milestones'],
+  [ExtendedModelShareSection.MTO_SOLUTIONS]: ['it-systems-and-solutions']
 };
 
 export default exportSectionOptions;

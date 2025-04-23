@@ -36,6 +36,20 @@ type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];
 
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
+// Needing to redefined as enum because the generated enum is not extensible, and we need to iterate over the values
+export enum ExtendedModelShareSection {
+  // Share mdoel plan and all MTO
+  ALL = 'ALL',
+  // Just share the model plan
+  MODEL_PLAN = 'MODEL_PLAN',
+  // Share all MTO info
+  MTO_ALL = 'MTO_ALL',
+  // Only share MTO Milestones
+  MTO_MILESTONES = 'MTO_MILESTONES',
+  // Only share MTO Solutions
+  MTO_SOLUTIONS = 'MTO_SOLUTIONS'
+}
+
 type FilterGroupType = keyof typeof filterGroupKey;
 
 const isFilterGroup = (
@@ -47,16 +61,15 @@ const isFilterGroup = (
 const mtoSections: PlanSection[] = [
   PlanSection.MTO_MILESTONE,
   PlanSection.MTO_SOLUTION,
-  PlanSection.MTO_CATEGORY,
   PlanSection.MTO_INFO
 ];
 
 // TODO: Will use later once we introduce segmented model plan exports
 // // Checks if the section is a model plan section rather than a filter group
 // const isModelPlanSection = (
-//   section: ModelShareSection | FilterGroupType
-// ): section is ModelShareSection => {
-//   return getKeys(ModelShareSection).includes(section as ModelShareSection);
+//   section: ExtendedModelShareSection | FilterGroupType
+// ): section is ExtendedModelShareSection => {
+//   return getKeys(ExtendedModelShareSection).includes(section as ExtendedModelShareSection);
 // };
 
 /**
@@ -344,7 +357,7 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  exportSection: FilterGroupType | ModelShareSection
+  exportSection: FilterGroupType | ExtendedModelShareSection
 ) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
@@ -391,12 +404,14 @@ type UseFetchCSVData = {
     input: string
   ) => Promise<GetAllSingleModelDataQueryHookResult>;
   fetchAllData: () => Promise<GetAllModelDataQueryHookResult>;
-  setExportSection: (exportSection: FilterGroup | ModelShareSection) => void;
+  setExportSection: (
+    exportSection: FilterGroup | ExtendedModelShareSection
+  ) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
   const [exportSection, setExportSection] = useState<
-    FilterGroup | ModelShareSection
+    FilterGroup | ExtendedModelShareSection
   >(ModelShareSection.MODEL_PLAN);
   const allPlanTranslation = usePlanTranslation();
 

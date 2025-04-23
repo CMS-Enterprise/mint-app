@@ -22,7 +22,7 @@ import {
   groupOptions
 } from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
-import { ModelShareSection, ModelViewFilter } from 'gql/generated/graphql';
+import { ModelViewFilter } from 'gql/generated/graphql';
 import CreateShareModelPlan from 'gql/operations/ShareExport/CreateShareModelPlan';
 
 import Alert from 'components/Alert';
@@ -32,7 +32,9 @@ import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
-import useFetchCSVData from 'hooks/useFetchCSVData';
+import useFetchCSVData, {
+  ExtendedModelShareSection
+} from 'hooks/useFetchCSVData';
 
 import PDFSummary from './pdfSummary';
 import exportSectionOptions, {
@@ -46,7 +48,7 @@ const navElement = ['share', 'export'] as const;
 
 export type NavModelElemet = (typeof navElement)[number];
 
-export type FitlerGroup = FilterGroup | ModelShareSection;
+export type FitlerGroup = FilterGroup | ExtendedModelShareSection;
 
 const FileTypes = ['csv', 'pdf'] as const;
 
@@ -54,7 +56,7 @@ type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
   defaultTab?: NavModelElemet;
-  filteredView?: FilterGroup | ModelShareSection | null;
+  filteredView?: FilterGroup | ExtendedModelShareSection | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
 
@@ -73,7 +75,7 @@ const ShareExportModal = ({
   const { setPrintPDF } = useContext(PrintPDFContext);
 
   const [exportSection, setExportSection] = useState<FitlerGroup>(
-    (filteredView as FilterGroup) || ModelShareSection.MODEL_PLAN
+    (filteredView as FilterGroup) || ExtendedModelShareSection.ALL
   );
 
   const [exportCSV, setExportCSV] = useState<boolean>(false);
@@ -118,10 +120,10 @@ const ShareExportModal = ({
 
   // Readonly section that do not need to be rendered in PDF
   const excludedComponents: string[] = [
-    'team',
-    'discussions',
-    'documents',
-    'crs-and-tdl'
+    // 'team',
+    'discussions'
+    // 'documents',
+    // 'crs-and-tdl'
   ];
 
   // Composes components to render to PDF
@@ -147,7 +149,7 @@ const ShareExportModal = ({
               // Filter out components that are not in the selected export section
               .filter(component =>
                 modelPlanSectionMappings[
-                  exportSection as ModelShareSection
+                  exportSection as ExtendedModelShareSection
                 ].includes(component as ModelSubSectionRouteKey)
               )
               .map((component, index) => (
@@ -249,7 +251,10 @@ const ShareExportModal = ({
             variables: {
               modelPlanID: modelID,
               viewFilter,
-              modelShareSection,
+              modelShareSection:
+                modelShareSection === ExtendedModelShareSection.ALL
+                  ? ExtendedModelShareSection.MODEL_PLAN
+                  : modelShareSection,
               usernames,
               optionalMessage
             }

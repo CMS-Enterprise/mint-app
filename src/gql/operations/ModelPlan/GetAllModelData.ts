@@ -452,7 +452,10 @@ export default gql(/* GraphQL */ `
       mtoMatrix {
         info {
           id
-          readyForReviewBy
+          readyForReviewByUserAccount {
+            id
+            commonName
+          }
           readyForReviewDTS
         }
         milestones {
