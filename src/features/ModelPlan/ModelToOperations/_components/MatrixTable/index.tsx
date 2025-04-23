@@ -613,7 +613,8 @@ const MTOTable = ({
                         padding: '1rem',
                         paddingLeft: index === 0 ? '.5rem' : '0px',
                         paddingBottom: '.25rem',
-                        textAlign: 'left',
+                        textAlign:
+                          column.accessor === 'actions' ? 'right' : 'left',
                         width: column.width,
                         minWidth: column.width,
                         maxWidth: column.width

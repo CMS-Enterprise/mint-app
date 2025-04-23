@@ -229,7 +229,6 @@ const ActionMenu = ({
       <Button
         type="button"
         unstyled
-        className="margin-right-2"
         onClick={() => {
           setMilestoneID(milestoneID);
           openEditMilestoneModal(milestoneID);
