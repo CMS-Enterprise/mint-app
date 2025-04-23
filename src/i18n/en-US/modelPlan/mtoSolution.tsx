@@ -148,7 +148,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
       MODEL_LEAD: 'Model lead',
       IT_LEAD: 'It lead',
       SOLUTION_ARCHITECT: 'Solution architect',
-      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'It system team or product owner',
+      IT_SYSTEM_PRODUCT_OWNER: 'It system product owner',
       PARTICIPANTS: 'Participants',
       APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
       IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
@@ -162,7 +162,9 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
       LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group',
       RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
         'Research and rapid cycle evaluation group',
-      OTHER: 'Other'
+      OTHER: 'Other',
+      DATA_ANALYTICS_CONTRACTOR: 'Data Analytics Contractor',
+      MODEL_DATA_LEAD: 'Model Data Lead'
     },
     order: 1.8
   },

@@ -51,7 +51,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       MODEL_LEAD: 'Model lead',
       IT_LEAD: 'IT lead',
       SOLUTION_ARCHITECT: 'Solution architect',
-      IT_SYSTEM_TEAM_OR_PRODUCT_OWNER: 'IT system team or Product owner',
+      IT_SYSTEM_PRODUCT_OWNER: 'IT system product owner',
       PARTICIPANTS: 'Participants',
       APPLICATION_SUPPORT_CONTRACTOR: 'Application support contractor',
       IMPLEMENTATION_CONTRACTOR: 'Implementation contractor',
@@ -65,7 +65,9 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       LEARNING_AND_DIFFUSION_GROUP: 'Learning and diffusion group (LDG)',
       RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP:
         'Research and Rapid Cycle Evaluation Group (RREG)',
-      OTHER: 'Other'
+      OTHER: 'Other',
+      DATA_ANALYTICS_CONTRACTOR: 'Data Analytics Contractor',
+      MODEL_DATA_LEAD: 'Model Data Lead'
     }
   },
   needBy: {

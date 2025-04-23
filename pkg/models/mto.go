@@ -28,7 +28,7 @@ const (
 	MTOFacilitatorModelLead                            MTOFacilitator = "MODEL_LEAD"
 	MTOFacilitatorITLead                               MTOFacilitator = "IT_LEAD"
 	MTOFacilitatorSolutionArchitect                    MTOFacilitator = "SOLUTION_ARCHITECT"
-	MTOFacilitatorITSystemTeamOrProductOwner           MTOFacilitator = "IT_SYSTEM_TEAM_OR_PRODUCT_OWNER"
+	MTOFacilitatorITSystemProductOwner                 MTOFacilitator = "IT_SYSTEM_PRODUCT_OWNER"
 	MTOFacilitatorParticipants                         MTOFacilitator = "PARTICIPANTS"
 	MTOFacilitatorApplicationSupportContractor         MTOFacilitator = "APPLICATION_SUPPORT_CONTRACTOR"
 	MTOFacilitatorImplementationContractor             MTOFacilitator = "IMPLEMENTATION_CONTRACTOR"
@@ -39,6 +39,8 @@ const (
 	MTOFacilitatorContractingOfficersRepresentative    MTOFacilitator = "CONTRACTING_OFFICERS_REPRESENTATIVE"
 	MTOFacilitatorLearningAndDiffusionGroup            MTOFacilitator = "LEARNING_AND_DIFFUSION_GROUP"
 	MTOFacilitatorResearchAndRapidCycleEvaluationGroup MTOFacilitator = "RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP"
+	MTOFacilitatorDataAnalyticsContractor              MTOFacilitator = "DATA_ANALYTICS_CONTRACTOR"
+	MTOFacilitatorModelDataLead                        MTOFacilitator = "MODEL_DATA_LEAD"
 	MTOFacilitatorOther                                MTOFacilitator = "OTHER"
 )
 
