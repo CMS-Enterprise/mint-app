@@ -41,8 +41,11 @@ module.exports = {
       'PlanTDLTranslation',
       'PlanDocumentTranslation',
       'OperationalNeedTranslation',
+      'OperationalNeedKey', // This is needed for the translation of the OperationalNeedTranslation
       'OperationalSolutionTranslation',
+      'OpSolutionStatus', // This is needed for the translation of the OperationalSolutionTranslation
       'OperationalSolutionSubtaskTranslation',
+      'OperationalSolutionSubtaskStatus', // This is needed for the translation of the OperationalSolutionSubtaskTranslation
       'PlanDocumentSolutionLinkTranslation',
       'ExistingModelLinkTranslation',
       'TranslationFieldWithParent',

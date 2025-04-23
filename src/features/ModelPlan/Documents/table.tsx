@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import {
   DocumentType,
   GetModelPlanDocumentsQuery,
-  GetOperationalSolutionQuery,
   useDeleteModelPlanDocumentMutation,
   useGetModelPlanDocumentsQuery
 } from 'gql/generated/graphql';
@@ -44,9 +43,6 @@ import {
 import { isAssessment } from 'utils/user';
 
 import './index.scss';
-
-type SolutionDocumentType =
-  GetOperationalSolutionQuery['operationalSolution']['documents'][0];
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
@@ -146,7 +142,7 @@ const findDocIDAndRemoveOrInsert = (
 };
 
 type TableProps = {
-  data: GetDocumentType[] | SolutionDocumentType[];
+  data: GetDocumentType[];
   hiddenColumns?: string[];
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;

@@ -14,11 +14,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CreateOperationalSolutionSubtaskInput struct {
-	Name   string                                  `json:"name"`
-	Status models.OperationalSolutionSubtaskStatus `json:"status"`
-}
-
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -752,11 +747,6 @@ type SendFeedbackEmailInput struct {
 	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
 	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
-}
-
-type UpdateOperationalSolutionSubtaskInput struct {
-	ID      uuid.UUID              `json:"id"`
-	Changes map[string]interface{} `json:"changes"`
 }
 
 type ActionType string

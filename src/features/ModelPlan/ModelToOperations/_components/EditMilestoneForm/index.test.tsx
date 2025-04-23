@@ -3,7 +3,12 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import Sinon from 'sinon';
-import { categoryMock, milestoneMock, modelID } from 'tests/mock/mto';
+import {
+  allMTOSolutionsMock,
+  categoryMock,
+  milestoneMock,
+  modelID
+} from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
@@ -22,7 +27,11 @@ describe('EditMilestoneForm', () => {
       >
         <MessageProvider>
           <MockedProvider
-            mocks={[...milestoneMock('123'), ...categoryMock]}
+            mocks={[
+              ...milestoneMock('123'),
+              ...categoryMock,
+              ...allMTOSolutionsMock
+            ]}
             addTypename={false}
           >
             <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">

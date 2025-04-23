@@ -7,7 +7,7 @@ import {
   MtoCommonSolutionKey,
   MtoFacilitator
 } from 'gql/generated/graphql';
-import { possibleSolutionsMock } from 'tests/mock/solutions';
+import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 

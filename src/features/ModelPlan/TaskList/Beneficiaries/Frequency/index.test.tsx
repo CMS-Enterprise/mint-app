@@ -11,7 +11,6 @@ import {
   FrequencyType,
   GetFrequencyDocument,
   GetFrequencyQuery,
-  OperationalNeedKey,
   OverlapType,
   TaskStatus,
   YesNoType
@@ -22,7 +21,6 @@ import Frequency from './index';
 type BeneficiaryFrequencyType = GetFrequencyQuery['modelPlan']['beneficiaries'];
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
-const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
@@ -61,20 +59,7 @@ const beneficiaryMock = [
         modelPlan: {
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
-          beneficiaries: mockData,
-          operationalNeeds: [
-            {
-              __typename: 'OperationalNeed',
-              id: operationalNeedID,
-              modelPlanID: modelID,
-              name: 'Obtain an application support contractor',
-              key: OperationalNeedKey.APP_SUPPORT_CON,
-              nameOther: null,
-              needed: true,
-              modifiedDts: '',
-              solutions: []
-            }
-          ]
+          beneficiaries: mockData
         }
       }
     }

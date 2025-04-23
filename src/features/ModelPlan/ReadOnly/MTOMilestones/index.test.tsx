@@ -3,8 +3,11 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import Sinon from 'sinon';
-import { modelID, mtoMatrixMockFull } from 'tests/mock/mto';
-import { possibleSolutionsMock } from 'tests/mock/solutions';
+import {
+  modelID,
+  mtoMatrixMockFull,
+  possibleSolutionsMock
+} from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 

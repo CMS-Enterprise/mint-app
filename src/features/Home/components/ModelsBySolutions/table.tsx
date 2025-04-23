@@ -7,7 +7,7 @@ import ModelsBySolutionsBanner, {
   StatusCategories
 } from 'features/Home/components/ModelsBySolutions/banner';
 import {
-  GetModelsBySolutionQuery,
+  GetModelsByMtoSolutionQuery,
   ModelCategory,
   MtoCommonSolutionKey,
   useGetModelsByMtoSolutionQuery
@@ -25,7 +25,7 @@ import { formatDateUtc } from 'utils/date';
 import ModelSolutionCard from './card';
 
 export type ModelsBySolutionType =
-  GetModelsBySolutionQuery['modelPlansByOperationalSolutionKey'];
+  GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'];
 
 type ModelPlansTableProps = {
   solutionKey: MtoCommonSolutionKey;
