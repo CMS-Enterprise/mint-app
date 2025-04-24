@@ -81,15 +81,7 @@ describe('Notification Center', () => {
     cy.get('[data-testid="navmenu__notifications--noNotification"').should(
       'exist'
     );
-    // Check to see entries should no longer have red dot
-    cy.get('[data-testid="individual-notification"]')
-      .first()
-      .find('[data-testid="notification-red-dot"]')
-      .should('not.exist');
-    cy.get('[data-testid="individual-notification"]')
-      .second()
-      .find('[data-testid="notification-red-dot"]')
-      .should('not.exist');
+    cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
   });
 
   it('navigates to see Daily Digest notification', () => {
