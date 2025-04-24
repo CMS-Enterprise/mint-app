@@ -6,43 +6,12 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
-
-// OperationalSolutionSubtasksCreate implements resolver logic to create an operational solution subtask in the database
-func OperationalSolutionSubtasksCreate(
-	logger *zap.Logger,
-	store *storage.Store,
-	inputs []*model.CreateOperationalSolutionSubtaskInput,
-	solutionID uuid.UUID,
-	principal authentication.Principal,
-) ([]*models.OperationalSolutionSubtask, error) {
-	var subtasks []*models.OperationalSolutionSubtask
-
-	for _, input := range inputs {
-		subtask := models.NewOperationalSolutionSubtask(
-			principal.Account().ID,
-			uuid.New(),
-			solutionID,
-			input.Name,
-			input.Status,
-		)
-
-		err := BaseStructPreCreate(logger, subtask, principal, store, true)
-		if err != nil {
-			return nil, err
-		}
-
-		subtasks = append(subtasks, subtask)
-	}
-
-	return store.OperationalSolutionSubtasksCreate(logger, subtasks)
-}
 
 // OperationalSolutionSubtaskGetByID implements the resolver logic to get an operational solution subtask by ID
 func OperationalSolutionSubtaskGetByID(
@@ -77,42 +46,6 @@ func OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx context.Context, soluti
 	}
 
 	return result.([]*models.OperationalSolutionSubtask), nil
-}
-
-// OperationalSolutionSubtasksUpdateByID implements the resolver logic to update
-// a collection of operational solution subtasks by ID
-func OperationalSolutionSubtasksUpdateByID(
-	logger *zap.Logger,
-	store *storage.Store,
-	principal authentication.Principal,
-	subtasksChanges []*model.UpdateOperationalSolutionSubtaskInput,
-) ([]*models.OperationalSolutionSubtask, error) {
-	var subtaskUpdates []*models.OperationalSolutionSubtask
-
-	for _, subtaskChanges := range subtasksChanges {
-		// TODO: Create a transaction to fetch a collection of operational solution subtasks from a collection of IDs
-		existing, err := store.OperationalSolutionSubtaskGetByID(logger, subtaskChanges.ID)
-		if err != nil {
-			return nil, err
-		}
-
-		err = BaseStructPreUpdate(
-			logger,
-			existing,
-			subtaskChanges.Changes,
-			principal,
-			store,
-			true,
-			true,
-		)
-		if err != nil {
-			return nil, err
-		}
-
-		subtaskUpdates = append(subtaskUpdates, existing)
-	}
-
-	return store.OperationalSolutionSubtasksUpdate(logger, subtaskUpdates)
 }
 
 // OperationalSolutionSubtaskDelete implements resolver logic to delete an operational solution subtask

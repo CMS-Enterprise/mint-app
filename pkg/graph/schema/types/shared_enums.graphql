@@ -48,6 +48,8 @@ enum TaskListSection {
   PAYMENT,
   PREPARE_FOR_CLEARANCE
 }
+# Region : Operational Need and Solutions, these will be removed after MTO is fully migrated
+
 
 enum OperationalNeedKey{
   MANAGE_CD
@@ -83,18 +85,20 @@ enum OperationalNeedKey{
   IT_PLATFORM_FOR_LEARNING
 }
 
-enum DiscussionUserRole {
-  CMS_SYSTEM_SERVICE_TEAM,
-  LEADERSHIP,
-  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
-  MINT_TEAM,
-  IT_LEAD,
-  MODEL_LEAD,
-  MODEL_TEAM,
-  SHARED_SYSTEM_MAINTAINER,
-  SOLUTION_ARCHITECT,
-  NONE_OF_THE_ABOVE,
+enum OperationalSolutionSubtaskStatus {
+  TODO,
+  IN_PROGRESS,
+  DONE
 }
+enum OpSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  AT_RISK
+}
+
 
 enum OperationalSolutionKey{
   INNOVATION
@@ -139,6 +143,23 @@ enum OperationalSolutionKey{
   MIDS
   MODEL_SPACE
 }
+
+#endregion : Operational Need and Solutions, these will be removed after MTO is fully migrated
+
+
+enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM,
+  LEADERSHIP,
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
+  MINT_TEAM,
+  IT_LEAD,
+  MODEL_LEAD,
+  MODEL_TEAM,
+  SHARED_SYSTEM_MAINTAINER,
+  SOLUTION_ARCHITECT,
+  NONE_OF_THE_ABOVE,
+}
+
 
 """
 A user role associated with a job code

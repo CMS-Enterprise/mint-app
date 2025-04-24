@@ -2,8 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { commonSolutionsMock, modelID } from 'tests/mock/mto';
-import { possibleSolutionsMock } from 'tests/mock/solutions';
+import {
+  commonSolutionsMock,
+  modelID,
+  possibleSolutionsMock
+} from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 

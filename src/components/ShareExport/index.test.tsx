@@ -5,13 +5,16 @@ import { waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 import { echimpCRsAndTDLsMock } from 'tests/mock/general';
-import { mtoMatrixMock, solutionAndMilestoneMock } from 'tests/mock/mto';
+import {
+  mtoMatrixMock,
+  possibleSolutionsMock,
+  solutionAndMilestoneMock
+} from 'tests/mock/mto';
 import allMocks, {
   dataExchangeApproachMocks,
   modelID,
   summaryMock
 } from 'tests/mock/readonly';
-import { possibleSolutionsMock } from 'tests/mock/solutions';
 import VerboseMockedProvider from 'tests/MockedProvider';
 import setup from 'tests/util';
 

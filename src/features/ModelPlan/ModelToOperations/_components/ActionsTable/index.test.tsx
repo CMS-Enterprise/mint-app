@@ -20,6 +20,7 @@ describe('MTO Table Actions Component', () => {
         mocks={[
           ...commonSolutionsMock,
           ...milestoneMock(modelID),
+          ...commonMilestonesMock,
           ...commonMilestonesMock
         ]}
         addTypename={false}
