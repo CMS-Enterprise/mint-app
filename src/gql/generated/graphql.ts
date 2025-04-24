@@ -1255,6 +1255,7 @@ export type ModelPlanTranslation = {
 
 /** ModelShareSection is the section of the model plan that is being shared. */
 export enum ModelShareSection {
+  ALL = 'ALL',
   /** Just share the model plan */
   MODEL_PLAN = 'MODEL_PLAN',
   /** Share all MTO info */
