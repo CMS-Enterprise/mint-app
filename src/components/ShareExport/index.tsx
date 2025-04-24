@@ -22,7 +22,7 @@ import {
   groupOptions
 } from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
-import { ModelViewFilter } from 'gql/generated/graphql';
+import { ModelShareSection, ModelViewFilter } from 'gql/generated/graphql';
 import CreateShareModelPlan from 'gql/operations/ShareExport/CreateShareModelPlan';
 
 import Alert from 'components/Alert';
@@ -32,9 +32,7 @@ import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
-import useFetchCSVData, {
-  ExtendedModelShareSection
-} from 'hooks/useFetchCSVData';
+import useFetchCSVData from 'hooks/useFetchCSVData';
 
 import PDFSummary from './pdfSummary';
 import exportSectionOptions, {
@@ -48,7 +46,7 @@ const navElement = ['share', 'export'] as const;
 
 export type NavModelElemet = (typeof navElement)[number];
 
-export type FitlerGroup = FilterGroup | ExtendedModelShareSection;
+export type FitlerGroup = FilterGroup | ModelShareSection;
 
 const FileTypes = ['csv', 'pdf'] as const;
 
@@ -56,7 +54,7 @@ type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
   defaultTab?: NavModelElemet;
-  filteredView?: FilterGroup | ExtendedModelShareSection | null;
+  filteredView?: FilterGroup | ModelShareSection | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
 
@@ -75,7 +73,7 @@ const ShareExportModal = ({
   const { setPrintPDF } = useContext(PrintPDFContext);
 
   const [exportSection, setExportSection] = useState<FitlerGroup>(
-    (filteredView as FilterGroup) || ExtendedModelShareSection.ALL
+    (filteredView as FilterGroup) || ModelShareSection.ALL
   );
 
   const [exportCSV, setExportCSV] = useState<boolean>(false);
@@ -144,7 +142,7 @@ const ShareExportModal = ({
               // Filter out components that are not in the selected export section
               .filter(component =>
                 modelPlanSectionMappings[
-                  exportSection as ExtendedModelShareSection
+                  exportSection as ModelShareSection
                 ].includes(component as ModelSubSectionRouteKey)
               )
               .map((component, index) => (
@@ -247,8 +245,8 @@ const ShareExportModal = ({
               modelPlanID: modelID,
               viewFilter,
               modelShareSection:
-                modelShareSection === ExtendedModelShareSection.ALL
-                  ? ExtendedModelShareSection.MODEL_PLAN
+                modelShareSection === ModelShareSection.ALL
+                  ? ModelShareSection.MODEL_PLAN
                   : modelShareSection,
               usernames,
               optionalMessage

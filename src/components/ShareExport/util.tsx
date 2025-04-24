@@ -1,19 +1,19 @@
+import { ModelShareSection } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
-import { ExtendedModelShareSection } from 'hooks/useFetchCSVData';
 import { getKeys } from 'types/translation';
 
 type ExportSectionOption = {
-  value: ExtendedModelShareSection;
+  value: ModelShareSection;
   label: string;
 };
 
 const exportSectionOptions: ExportSectionOption[] = getKeys(
-  ExtendedModelShareSection
+  ModelShareSection
 ).map(key => ({
-  value: ExtendedModelShareSection[key],
+  value: ModelShareSection[key],
   label: i18next.t(
-    `generalReadOnly:modal.exportSections.${ExtendedModelShareSection[key]}`
+    `generalReadOnly:modal.exportSections.${ModelShareSection[key]}`
   )
 }));
 
@@ -36,10 +36,10 @@ export const modelSectionRouteKey: string[] = [
 export type ModelSubSectionRouteKey = (typeof modelSectionRouteKey)[number];
 
 export const modelPlanSectionMappings: Record<
-  ExtendedModelShareSection,
+  ModelShareSection,
   ModelSubSectionRouteKey[]
 > = {
-  [ExtendedModelShareSection.ALL]: [
+  [ModelShareSection.ALL]: [
     'model-basics',
     'general-characteristics',
     'participants-and-providers',
@@ -54,7 +54,7 @@ export const modelPlanSectionMappings: Record<
     'crs-and-tdl',
     'data-exchange-approach'
   ],
-  [ExtendedModelShareSection.MODEL_PLAN]: [
+  [ModelShareSection.MODEL_PLAN]: [
     'model-basics',
     'general-characteristics',
     'participants-and-providers',
@@ -62,12 +62,9 @@ export const modelPlanSectionMappings: Record<
     'operations-evaluation-and-learning',
     'payment'
   ],
-  [ExtendedModelShareSection.MTO_ALL]: [
-    'milestones',
-    'it-systems-and-solutions'
-  ],
-  [ExtendedModelShareSection.MTO_MILESTONES]: ['milestones'],
-  [ExtendedModelShareSection.MTO_SOLUTIONS]: ['it-systems-and-solutions']
+  [ModelShareSection.MTO_ALL]: ['milestones', 'it-systems-and-solutions'],
+  [ModelShareSection.MTO_MILESTONES]: ['milestones'],
+  [ModelShareSection.MTO_SOLUTIONS]: ['it-systems-and-solutions']
 };
 
 export default exportSectionOptions;

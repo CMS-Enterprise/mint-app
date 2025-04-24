@@ -1,8 +1,6 @@
 import { ModelShareSection } from 'gql/generated/graphql';
 import { TFunction } from 'i18next';
 
-import { ExtendedModelShareSection } from 'hooks/useFetchCSVData';
-
 // Notes: passing in translation t function here for all mapped sections, as for some reason, i18next library is not accessible here.
 // TODOL I plan to come back later to address this
 
@@ -549,7 +547,7 @@ const csvFieldsMTO = (t: TFunction): (CSVLabel | string)[] => [
 
 const csvFields = (
   t: TFunction
-): Record<ExtendedModelShareSection, (CSVLabel | string)[]> => {
+): Record<ModelShareSection, (CSVLabel | string)[]> => {
   return {
     ALL: [...csvFieldsModelPlan(t), ...csvFieldsMTO(t)],
     [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan(t),

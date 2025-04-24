@@ -1,4 +1,4 @@
-import { ExtendedModelShareSection } from 'hooks/useFetchCSVData';
+import { ModelShareSection } from 'gql/generated/graphql';
 
 const generalReadOnly = {
   back: 'View all models',
@@ -68,13 +68,13 @@ const generalReadOnly = {
     sections: 'Sections',
     filteredViews: 'Filtered views',
     exportSections: {
-      [ExtendedModelShareSection.ALL]:
+      [ModelShareSection.ALL]:
         'All model information (includes all of the sections below)',
-      [ExtendedModelShareSection.MODEL_PLAN]: 'Model Plan',
-      [ExtendedModelShareSection.MTO_ALL]: 'Model-to-operations matrix (all)',
-      [ExtendedModelShareSection.MTO_MILESTONES]:
+      [ModelShareSection.MODEL_PLAN]: 'Model Plan',
+      [ModelShareSection.MTO_ALL]: 'Model-to-operations matrix (all)',
+      [ModelShareSection.MTO_MILESTONES]:
         'Model-to-operations matrix (milestones view only)',
-      [ExtendedModelShareSection.MTO_SOLUTIONS]:
+      [ModelShareSection.MTO_SOLUTIONS]:
         'Model-to-operations matrix (solutions view only)'
     }
   },
