@@ -89,6 +89,7 @@ const MentionTextArea = ({
 
     // TODO: Add back in once emails are configured to handle MTO solutions
     // if (!query) return formatedSolutionMentions();
+    if (query.length < 2) return [];
 
     return getUsersLazyQuery({
       variables: { searchTerm: query }
