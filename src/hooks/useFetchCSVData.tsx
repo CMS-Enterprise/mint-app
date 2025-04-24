@@ -120,7 +120,7 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   translation = getUserHeaderLabel(fieldName, dataField);
 
   // Gets the label value from translation object
-  if (allPlanTranslation[section][fieldName]?.label) {
+  if (allPlanTranslation[section]?.[fieldName]?.label) {
     translation = allPlanTranslation[section][fieldName]?.exportLabel
       ? allPlanTranslation[section][fieldName]?.exportLabel
       : allPlanTranslation[section][fieldName].label;
@@ -369,7 +369,7 @@ const csvFormatter = (
       : removedUnneededData(
           csvData[0],
           allPlanTranslation,
-          csvFields[exportSection]
+          csvFields(i18next.t)[exportSection]
         );
 
     const parser = new Parser({
