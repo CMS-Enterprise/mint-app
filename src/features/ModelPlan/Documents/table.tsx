@@ -31,6 +31,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
@@ -73,6 +74,7 @@ const PlanDocumentsTable = ({
   className
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documentsMisc');
+
   const {
     error,
     loading,
@@ -175,6 +177,8 @@ export const Table = ({
   const [fileToRemove, setFileToRemove] = useState<GetDocumentType>(
     {} as GetDocumentType
   );
+
+  const { isPrintPDF } = useContext(PrintPDFContext);
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -452,10 +456,18 @@ export const Table = ({
     documentTypeConfig.options
   ]);
 
+  const filteredColumns = useMemo(() => {
+    if (isPrintPDF) {
+      // Remove the Actions from the columns array if in printing pdf
+      return columns.slice(0, -1);
+    }
+    return columns;
+  }, [isPrintPDF, columns]);
+
   const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
     useTable(
       {
-        columns,
+        columns: filteredColumns,
         data,
         sortTypes: {
           alphanumeric: (rowOne, rowTwo, columnName) => {

@@ -14,6 +14,7 @@ import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
 import { Avatar } from 'components/Avatar';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
+import PrintPDFWrapper from 'contexts/PrintPDFContext';
 import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
@@ -37,7 +38,7 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
   const { actorName, date } = recentEdit || {};
 
   return (
-    <>
+    <PrintPDFWrapper>
       <Modal
         isOpen={isExportModalOpen}
         closeModal={() => setIsExportModalOpen(false)}
@@ -113,7 +114,7 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
           )}
         </CardFooter>
       </Card>
-    </>
+    </PrintPDFWrapper>
   );
 };
 
