@@ -119,12 +119,7 @@ const ShareExportModal = ({
   const AllReadonlyComponents = ReadOnlyComponents(modelID);
 
   // Readonly section that do not need to be rendered in PDF
-  const excludedComponents: string[] = [
-    // 'team',
-    'discussions'
-    // 'documents',
-    // 'crs-and-tdl'
-  ];
+  const excludedComponents: string[] = ['discussions'];
 
   // Composes components to render to PDF
   // Can either be all readonly sections, or individual filter group component views
