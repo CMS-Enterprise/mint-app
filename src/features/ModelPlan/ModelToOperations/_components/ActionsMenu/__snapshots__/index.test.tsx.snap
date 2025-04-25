@@ -6,7 +6,7 @@ exports[`Component > renders correctly and matches snapshot 1`] = `
     style="text-align: right;"
   >
     <button
-      class="usa-button usa-button--unstyled margin-right-2"
+      class="usa-button usa-button--unstyled"
       data-testid="button"
       type="button"
     >

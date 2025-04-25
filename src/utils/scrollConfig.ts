@@ -17,6 +17,7 @@ const scrollBlackList: string[] = [
   '&hide-added-milestones',
   '&type=',
   '&hide-milestones-without-solutions',
+  '?hide-milestones-without-solutions=true',
   '&scroll-to-bottom',
   'it-systems-and-solutions?type'
 ];
