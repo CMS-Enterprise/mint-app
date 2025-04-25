@@ -24,3 +24,10 @@ Cypress.Commands.add('enterModelPlanTaskList', (planName, table) => {
 
   cy.get('[data-testid="page-loading"]').should('not.exist');
 });
+
+Cypress.Commands.add('findModalWithThisHeading', (heading, alias = 'modal') => {
+  cy.contains(heading)
+    .closest('[role="dialog"]')
+    .should('be.visible')
+    .as(alias);
+});

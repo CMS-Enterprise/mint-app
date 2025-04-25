@@ -57,11 +57,10 @@ describe('Model-to-Operations Matrix', () => {
         cy.contains('Add to matrix').click();
       });
 
-    cy.contains('h3', 'Add a solution for this milestone?')
-      .closest('[role="dialog"]')
-      .as('addSolutionToMilestoneModal');
-
-    cy.get('@addSolutionToMilestoneModal').should('be.visible');
+    cy.findModalWithThisHeading(
+      'Add a solution for this milestone?',
+      'addSolutionToMilestoneModal'
+    );
 
     cy.get('@addSolutionToMilestoneModal')
       .contains('button', 'Add without solutions')
@@ -92,7 +91,31 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('@milestoneHeading').then(headingText => {
       cy.get('table').within(() => {
         cy.get('td').contains(headingText).should('exist');
+        cy.contains('Select a solution').click();
       });
+    });
+
+    cy.findModalWithThisHeading(
+      'Add a solution for this milestone?',
+      'addSolutionModal'
+    );
+    cy.get('@addSolutionModal').within(() => {
+      cy.get('#multi-source-data-to-collect').click().type('4i{enter}');
+      cy.get('#clear-selection')
+        .parent()
+        .find('[class$="indicatorContainer"]')
+        .eq(1)
+        .click();
+      cy.get('#multi-source-data-to-collect-tags li').should(
+        'have.length.greaterThan',
+        0
+      );
+      cy.contains('Add 1 solution').click();
+    });
+
+    cy.get('table').within(() => {
+      cy.get('td').contains('4i').should('exist');
+      // cy.contains('Select a solution').click();
     });
   });
 });
