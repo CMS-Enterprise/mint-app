@@ -18,12 +18,12 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('SIGN_PARTICIPATION_AGREEMENTS', '{INNOVATION}')
+    FROM link_key_and_array('SIGN_PARTICIPATION_AGREEMENTS', '{INNOVATION, ARS, POST_PORTAL, RFA}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('RECRUIT_PARTICIPANTS', '{GS, CMS_QUALTRICS, LOI, RFA}')
+    FROM link_key_and_array('RECRUIT_PARTICIPANTS', '{GS, LOI, RFA}')
     UNION
     SELECT
         "key",
@@ -43,7 +43,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('VET_PROVIDERS_FOR_PROGRAM_INTEGRITY', '{CPI_VETTING}')
+    FROM link_key_and_array('VET_PROVIDERS_FOR_PROGRAM_INTEGRITY', '{INNOVATION, ARS, POST_PORTAL, CPI_VETTING}')
     UNION
     SELECT
         "key",
@@ -68,12 +68,12 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('ESTABLISH_BENCH', '{IDR, CCW}')
+    FROM link_key_and_array('ESTABLISH_BENCH', '{MODEL_SPACE}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('PROCESS_PART_APPEALS', '{LV}')
+    FROM link_key_and_array('PROCESS_PART_APPEALS', '{LV, POST_PORTAL, GOVDELIVERY}')
     UNION
     SELECT
         "key",
@@ -83,27 +83,27 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('DATA_TO_MONITOR', '{CDX, CCW, HDR, IDR, POST_PORTAL}')
+    FROM link_key_and_array('DATA_TO_MONITOR', '{ISP, POST_PORTAL, INNOVATION, CDX, HDR}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('DATA_TO_SUPPORT_EVAL', '{CDX, CCW, HDR, POST_PORTAL}')
+    FROM link_key_and_array('DATA_TO_SUPPORT_EVAL', '{ISP, POST_PORTAL, INNOVATION, CDX, HDR}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('CLAIMS_BASED_MEASURES', '{IDR, CCW}')
+    FROM link_key_and_array('CLAIMS_BASED_MEASURES', '{MODEL_SPACE, CCW}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('QUALITY_PERFORMANCE_SCORES', '{HDR}')
+    FROM link_key_and_array('QUALITY_PERFORMANCE_SCORES', '{ISP}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('SEND_REPDATA_TO_PART', '{INNOVATION, BCDA, CDX, CMS_BOX, EFT, EDFR, RMADA, POST_PORTAL}')
+    FROM link_key_and_array('SEND_REPDATA_TO_PART', '{INNOVATION, BCDA, ISP, CDX, EDFR}')
     UNION
     SELECT
         "key",
@@ -133,7 +133,7 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('ADJUST_FFS_CLAIMS', '{SHARED_SYSTEMS, HIGLAS}')
+    FROM link_key_and_array('ADJUST_FFS_CLAIMS', '{SHARED_SYSTEMS}')
     UNION
     SELECT
         "key",
@@ -143,17 +143,17 @@ WITH  links AS (
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('MAKE_NON_CLAIMS_BASED_PAYMENTS', '{APPS, HIGLAS, IPC, MDM_NCBP}')
+    FROM link_key_and_array('MAKE_NON_CLAIMS_BASED_PAYMENTS', '{IPC, APPS, MDM_NCBP}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('COMPUTE_SHARED_SAVINGS_PAYMENT', '{RMADA}')
+    FROM link_key_and_array('COMPUTE_SHARED_SAVINGS_PAYMENT', '{RMADA, MODEL_SPACE}')
     UNION
     SELECT
         "key",
         "value"
-    FROM link_key_and_array('RECOVER_PAYMENTS', '{APPS, IPC, SHARED_SYSTEMS}')
+    FROM link_key_and_array('RECOVER_PAYMENTS', '{IPC, APPS, SHARED_SYSTEMS}')			
 )
 
 -- Insert into common milestone link from the union select that combines the keys
