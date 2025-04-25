@@ -2046,11 +2046,27 @@ Model Space offers model teams and their contractors templates or Databricks not
   }
 };
 
-const helpCategories: Record<ArticleCategories, string> = {
-  [ArticleCategories.GETTING_STARTED]: 'Getting started',
-  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation',
-  [ArticleCategories.MTO_TUTORIALS]: 'MINT tutorials',
-  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: 'Model concept and design'
+const helpCategories: Record<ArticleCategories, CardInfoType> = {
+  [ArticleCategories.GETTING_STARTED]: {
+    title: 'Getting started',
+    description:
+      'Use these articles to help you get started with the creation of your Model Plan.'
+  },
+  [ArticleCategories.IT_IMPLEMENTATION]: {
+    title: 'IT implementation',
+    description:
+      'Use these articles to better understand what’s involved in your model to IT implementation.'
+  },
+  [ArticleCategories.MTO_TUTORIALS]: {
+    title: 'MINT tutorials',
+    description:
+      'Step-by-step guides to help you navigate MINT and it’s capabilities.'
+  },
+  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: {
+    title: 'Model concept and design',
+    description:
+      'Use these articles to better understand what’s involved in the model concept and design phase.'
+  }
 };
 
 const helpArticleNames: Record<HelpArticle, string> = {
@@ -2096,12 +2112,12 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO'
 };
 
-type ExternalResourcesType = {
+type CardInfoType = {
   title: string;
   description: string;
 };
 
-const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
+const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
     title: 'Announcement materials on SharePoint',
     description:

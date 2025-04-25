@@ -65,7 +65,7 @@ const ResourcesByCategory = ({
           <Grid desktop={{ col: 4 }} className="margin-bottom-4">
             <div className="display-block">
               <UswdsReactLink to="/help-and-knowledge/articles?category=getting-started">
-                {t(`helpCategories.${ArticleCategories.GETTING_STARTED}`)}
+                {t(`helpCategories.${ArticleCategories.GETTING_STARTED}.title`)}
               </UswdsReactLink>
               <p className="margin-y-1">
                 {t('numResources', {
@@ -80,7 +80,9 @@ const ResourcesByCategory = ({
           <Grid desktop={{ col: 4 }} className="margin-bottom-4">
             <div className="display-block">
               <UswdsReactLink to="/help-and-knowledge/articles?category=it-implementation">
-                {t(`helpCategories.${ArticleCategories.IT_IMPLEMENTATION}`)}
+                {t(
+                  `helpCategories.${ArticleCategories.IT_IMPLEMENTATION}.title`
+                )}
               </UswdsReactLink>{' '}
               <p className="margin-y-1">
                 {t('numResources', {
@@ -95,7 +97,7 @@ const ResourcesByCategory = ({
           <Grid desktop={{ col: 4 }} className="margin-bottom-4">
             <div className="display-block">
               <UswdsReactLink to="/help-and-knowledge/articles?category=mto-tutorials">
-                {t(`helpCategories.${ArticleCategories.MTO_TUTORIALS}`)}
+                {t(`helpCategories.${ArticleCategories.MTO_TUTORIALS}.title`)}
               </UswdsReactLink>{' '}
               <p className="margin-top-1 margin-bottom-0">
                 {t('numResources', {
@@ -111,7 +113,7 @@ const ResourcesByCategory = ({
             <div className="display-block">
               <UswdsReactLink to="/help-and-knowledge/articles?category=model-concept-and-design">
                 {t(
-                  `helpCategories.${ArticleCategories.MODEL_CONCEPT_AND_DESIGN}`
+                  `helpCategories.${ArticleCategories.MODEL_CONCEPT_AND_DESIGN}.title`
                 )}
               </UswdsReactLink>{' '}
               <p className="margin-top-1 margin-bottom-0">
