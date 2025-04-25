@@ -25,6 +25,11 @@ type SolutionCategoryType = {
   description: string;
 };
 
+type CardInfoType = {
+  title: string;
+  description: string;
+};
+
 export const solutionCategories: Record<
   OperationalSolutionCategoryRoute,
   SolutionCategoryType
@@ -2112,11 +2117,6 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO'
 };
 
-type CardInfoType = {
-  title: string;
-  description: string;
-};
-
 const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
     title: 'Announcement materials on SharePoint',
@@ -2152,61 +2152,6 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
     title: 'Quality Vertical health equity resources on SharePoint ',
     description:
       'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
-  },
-  [HelpArticle.CREATING_MTO_MATRIX]: {
-    title: 'Creating your Model-to-operations matrix (MTO) in MINT',
-    description:
-      'Learn more about the Model-to-operations matrix, what it’s for, and how to create and maintain an MTO in MINT.'
-  },
-  [HelpArticle.STARTING_MTO]: {
-    title: 'Starting an MTO for a new model',
-    description:
-      'New models all start with an empty Model-to-operations matrix (MTO). IT Leads newly assigned to a model can start creating a MTO by following the steps below.'
-  },
-  [HelpArticle.USING_MILESTONE_TABLE]: {
-    title: 'Using the milestone table',
-    description:
-      'The milestone and solution tables are the main Model-to-operations matrix (MTO) content views in MINT. Each one offers a slightly different view of content you have added to your MTO.'
-  },
-  [HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE]: {
-    title: 'Using the IT system and solution table',
-    description:
-      'The milestone and solution tables are the main Model-to-operations matrix (MTO) content views in MINT. Each one offers a slightly different view of content you have added to your MTO.'
-  },
-  [HelpArticle.USING_TABLE_ACTIONS]: {
-    title: 'Using the table actions area',
-    description:
-      'The milestone and solution tables are the main Model-to-operations matrix (MTO) content views in MINT. Each one offers a slightly different view of content you have added to your MTO.'
-  },
-  [HelpArticle.USING_MILESTONE_LIBRARY]: {
-    title: 'Using the milestone library',
-    description:
-      'The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or Model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.'
-  },
-  [HelpArticle.USING_SOLUTION_LIBRARY]: {
-    title: 'Using the solution library',
-    description:
-      'The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or Model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.'
-  },
-  [HelpArticle.ADD_CUSTOM_MILESTONE]: {
-    title: 'How to add a custom milestone',
-    description:
-      'MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. IT Leads are able to create custom milestones directly from the Model-to-operations matrix (MTO) for their model.'
-  },
-  [HelpArticle.ADD_CUSTOM_SOLUTION]: {
-    title: 'How to add a custom solution',
-    description:
-      'When possible, MINT encourages users to add solutions to a Model-to-operations matrix via the solution library. However, MINT’s solution library does not currently offer a comprehensive list of all IT systems, contracts, and other operational solutions used for models. because of this and the unique needs of individual models, IT Leads may need to create custom solutions for a given model. IT Leads are able to create custom solutions directly from the Model-to-operations matrix (MTO) for their model.'
-  },
-  [HelpArticle.UPDATING_MTO_STATUS]: {
-    title: 'Updating your MTO status',
-    description:
-      'The MINT Model-to-operations matrix (MTO) has 3 main overall statuses: Ready to start, In progress, and Ready for review. Ready to start is automatically set when a MTO is completely empty of all content. In progress is automatically set when any content (milestones, categories, solutions, and/or templates) are added to the MTO. Ready for review can be manually set when the contents of an MTO are fairly well set and the IT Lead is ready for comments and feedback from others. Follow the instructions below to set the status for your MTO to Ready for review.'
-  },
-  [HelpArticle.SHARING_EXPORTING_MTO]: {
-    title: 'Sharing and exporting your MTO',
-    description:
-      'Sharing your Model-to-operations matrix (MTO) with colleagues or other interested parties is easy in MINT. You may share your MTO (or a section of it) via email, you may export it as a PDF or CSV, and may also copy a link to the read view of your MTO in MINT. When you share your MTO via email, MINT will automatically send an email to your desired recipients which includes a link to the read view of your MTO in MINT. CMS staff who do not already have MINT access will be able to find instructions to get access to MINT, and those who do already have MINT access will be able to sign in to see your MTO.'
   }
 };
 
