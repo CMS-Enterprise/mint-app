@@ -83,7 +83,7 @@ BEGIN
   IF NOT EXISTS (
     SELECT 1
     FROM mto_common_solution_contact
-    WHERE mto_common_solution_contact = OLD.mto_common_solution_key
+    WHERE mto_common_solution_key = OLD.mto_common_solution_key
       AND is_primary = TRUE
   ) THEN
     RAISE EXCEPTION 'At least one primary contact must be assigned for each mto common solution.';
