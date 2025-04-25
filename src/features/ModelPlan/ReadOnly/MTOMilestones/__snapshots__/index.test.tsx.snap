@@ -109,7 +109,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </button>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 200px; min-width: 200px; max-width: 200px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 175px; min-width: 175px; max-width: 175px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -133,7 +133,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </button>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 200px; min-width: 200px; max-width: 200px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 150px; min-width: 150px; max-width: 150px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
