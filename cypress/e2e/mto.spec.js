@@ -57,7 +57,7 @@ describe('Model-to-Operations Matrix', () => {
         cy.contains('Add to matrix').click();
       });
 
-    cy.findModalWithThisHeading(
+    cy.findModalWithThisHeadingAndSaveAlias(
       'Add a solution for this milestone?',
       'addSolutionToMilestoneModal'
     );
@@ -95,7 +95,7 @@ describe('Model-to-Operations Matrix', () => {
       });
     });
 
-    cy.findModalWithThisHeading(
+    cy.findModalWithThisHeadingAndSaveAlias(
       'Add a solution for this milestone?',
       'addSolutionModal'
     );
