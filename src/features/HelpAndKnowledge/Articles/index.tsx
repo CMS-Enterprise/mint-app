@@ -51,14 +51,30 @@ export type ArticleProps = {
   external?: boolean;
 };
 
-// Help and Knowledge Articles
-const helpAndKnowledgeArticles: ArticleProps[] = [
+export const homeArticles: ArticleProps[] = [
+  {
+    key: HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH,
+    route: '/evaluating-data-exchange-approach',
+    translation: 'evaluatingDataExchangeApproach',
+    type: ArticleCategories.GETTING_STARTED
+  },
+  {
+    key: HelpArticle.CREATING_MTO_MATRIX,
+    route: '/creating-mto-matrix',
+    translation: 'creatingMtoMatrix',
+    type: ArticleCategories.IT_IMPLEMENTATION
+  },
   {
     key: HelpArticle.MODEL_PLAN_OVERVIEW,
     route: '/model-plan-overview', // route for hitting rendered article component
     translation: 'modelPlanOverview', // Should reference the translation used to index the title and description for cards
     type: ArticleCategories.GETTING_STARTED
-  },
+  }
+];
+
+// Help and Knowledge Articles
+const helpAndKnowledgeArticles: ArticleProps[] = [
+  ...homeArticles,
   {
     key: HelpArticle.SAMPLE_MODEL_PLAN,
     route: '/sample-model-plan',
@@ -106,12 +122,6 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     route: '/phases-involved',
     translation: 'phasesInvolved',
     type: ArticleCategories.IT_IMPLEMENTATION
-  },
-  {
-    key: HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH,
-    route: '/evaluating-data-exchange-approach',
-    translation: 'evaluatingDataExchangeApproach',
-    type: ArticleCategories.GETTING_STARTED
   },
   {
     key: HelpArticle.ANNOUNCEMENT_MATERIALS,
@@ -165,12 +175,6 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     translation: HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY,
     type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN,
     external: true
-  },
-  {
-    key: HelpArticle.CREATING_MTO_MATRIX,
-    route: '/creating-mto-matrix',
-    translation: 'creatingMtoMatrix',
-    type: ArticleCategories.IT_IMPLEMENTATION
   },
   {
     key: HelpArticle.STARTING_MTO,
