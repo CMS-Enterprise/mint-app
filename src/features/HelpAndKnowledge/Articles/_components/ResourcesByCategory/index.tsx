@@ -93,21 +93,6 @@ const ResourcesByCategory = ({
           </Grid>
         )}
 
-        {currentCategory !== ArticleCategories.MTO_TUTORIALS && (
-          <Grid desktop={{ col: 4 }} className="margin-bottom-4">
-            <div className="display-block">
-              <UswdsReactLink to="/help-and-knowledge/articles?category=mto-tutorials">
-                {t(`helpCategories.${ArticleCategories.MTO_TUTORIALS}.title`)}
-              </UswdsReactLink>{' '}
-              <p className="margin-top-1 margin-bottom-0">
-                {t('numResources', {
-                  count: mtoTutorialArticles.length
-                })}
-              </p>
-            </div>
-          </Grid>
-        )}
-
         {currentCategory !== ArticleCategories.MODEL_CONCEPT_AND_DESIGN && (
           <Grid desktop={{ col: 4 }} className="margin-bottom-4">
             <div className="display-block">
@@ -119,6 +104,21 @@ const ResourcesByCategory = ({
               <p className="margin-top-1 margin-bottom-0">
                 {t('numResources', {
                   count: modelConceptAndDesignArticles.length
+                })}
+              </p>
+            </div>
+          </Grid>
+        )}
+
+        {currentCategory !== ArticleCategories.MTO_TUTORIALS && (
+          <Grid desktop={{ col: 4 }} className="margin-bottom-4">
+            <div className="display-block">
+              <UswdsReactLink to="/help-and-knowledge/articles?category=mto-tutorials">
+                {t(`helpCategories.${ArticleCategories.MTO_TUTORIALS}.title`)}
+              </UswdsReactLink>{' '}
+              <p className="margin-top-1 margin-bottom-0">
+                {t('numResources', {
+                  count: mtoTutorialArticles.length
                 })}
               </p>
             </div>
