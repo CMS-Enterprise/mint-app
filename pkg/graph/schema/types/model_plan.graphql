@@ -45,7 +45,7 @@ enum ModelShareSection {
   # """
   # Include all sections below
   # """
-  # ALL, #go to readview
+  ALL, #go to readview
   """
   Just share the model plan
   """

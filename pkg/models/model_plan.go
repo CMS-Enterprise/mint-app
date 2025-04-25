@@ -171,7 +171,7 @@ type ModelShareSection string
 
 const (
 	// // Include all sections below
-	// ModelShareSectionAll ModelShareSection = "ALL"
+	ModelShareSectionAll ModelShareSection = "ALL"
 	// Just share the model plan
 	ModelShareSectionModelPlan ModelShareSection = "MODEL_PLAN"
 	// Share all MTO info
@@ -183,7 +183,7 @@ const (
 )
 
 var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
-	// ModelShareSectionAll:           "model-basics",
+	ModelShareSectionAll:           "model-basics",
 	ModelShareSectionModelPlan:     "model-basics",
 	ModelShareSectionMtoAll:        "milestones",
 	ModelShareSectionMtoMilestones: "milestones",
@@ -192,7 +192,7 @@ var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 
 // ModelShareSectionHumanized controls what the email says after View _ details in MINT.
 var ModelShareSectionHumanized = map[ModelShareSection]string{
-	// ModelShareSectionAll:           "more",
+	ModelShareSectionAll:           "more",
 	ModelShareSectionModelPlan:     "model plan",
 	ModelShareSectionMtoAll:        "models to operations matrix",
 	ModelShareSectionMtoMilestones: "models to operations matrix",

@@ -138,6 +138,7 @@ export type TranslationFieldProperties = Omit<
   pageLabel?: string; // Label for the page
   modalLink?: string; // Adds a modal link,
   hideIfFalsy?: boolean; // Hide question if the value is falsy - ex: dataWillNotBeCollectedFromParticipants
+  flattenNestedData?: string; // Flatten nested data for export - ex: milestone.solutions = [{name:  "Solution 1"}] => milestone.solutions = ["Solution 1"]
 };
 
 /*

@@ -249,7 +249,7 @@ export const columns: ColumnType[] = [
   {
     Header: i18next.t('modelToOperationsMisc:table.facilitatedBy'),
     accessor: 'facilitatedBy',
-    width: '200px',
+    width: '175px',
     sort: sortNested,
     Cell: ({ row, rowType, expanded }: RowProps) => {
       if (!row.facilitatedBy) return <></>;
@@ -267,7 +267,7 @@ export const columns: ColumnType[] = [
   {
     Header: i18next.t('modelToOperationsMisc:table.solutions'),
     accessor: 'solutions',
-    width: '200px',
+    width: '150px',
     sort: (data: CategoryType[], direction: 'ASC' | 'DESC') => {
       const copyData = [...data];
       copyData.forEach(category => {

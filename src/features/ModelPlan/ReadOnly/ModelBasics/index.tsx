@@ -272,7 +272,7 @@ const ReadOnlyModelBasics = ({
                   <div className="display-flex flex-align-top">
                     <ProcessListHeading
                       type="p"
-                      className="font-body-sm line-height-sans-4"
+                      className="mint-text-normal line-height-sans-4"
                     >
                       {basicsMiscT('clearance')}
                     </ProcessListHeading>
@@ -314,7 +314,7 @@ const ReadOnlyModelBasics = ({
                 <ProcessListItem className="read-only-model-plan__timeline__list-item">
                   <ProcessListHeading
                     type="p"
-                    className="font-body-sm line-height-sans-4"
+                    className="mint-text-normal line-height-sans-4"
                   >
                     {basicsMiscT('applicationPeriod')}
                   </ProcessListHeading>
@@ -340,7 +340,7 @@ const ReadOnlyModelBasics = ({
                   <div className="display-flex flex-align-top">
                     <ProcessListHeading
                       type="p"
-                      className="font-body-sm line-height-sans-4"
+                      className="mint-text-normal line-height-sans-4"
                     >
                       {basicsMiscT('demonstrationPerformance')}
                     </ProcessListHeading>
@@ -428,7 +428,10 @@ const BasicsTimelineItem = ({
   value: string | null | undefined;
 }) => (
   <>
-    <ProcessListHeading type="p" className="font-body-sm line-height-sans-4">
+    <ProcessListHeading
+      type="p"
+      className="mint-text-normal line-height-sans-4"
+    >
       {label}
     </ProcessListHeading>
 

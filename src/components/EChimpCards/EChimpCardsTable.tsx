@@ -157,24 +157,26 @@ const EChimpCardsTable = ({
   }
 
   if (echimpItems.length === 0) {
-    <Alert type="info" heading={crtdlsT('tableState.empty.heading')}>
-      <span className="mandatory-fields-alert__text">
-        <Trans
-          t={crtdlsT}
-          i18nKey="tableState.empty.copy"
-          components={{
-            el: (
-              <ExternalLink
-                className="margin-right-0"
-                href={import.meta.env.VITE_ECHIMP_URL}
-              >
-                {' '}
-              </ExternalLink>
-            )
-          }}
-        />
-      </span>
-    </Alert>;
+    return (
+      <Alert type="info" heading={crtdlsT('tableState.empty.heading')}>
+        <span className="mandatory-fields-alert__text">
+          <Trans
+            t={crtdlsT}
+            i18nKey="tableState.empty.copy"
+            components={{
+              el: (
+                <ExternalLink
+                  className="margin-right-0"
+                  href={import.meta.env.VITE_ECHIMP_URL}
+                >
+                  {' '}
+                </ExternalLink>
+              )
+            }}
+          />
+        </span>
+      </Alert>
+    );
   }
 
   return (
@@ -197,49 +199,55 @@ const EChimpCardsTable = ({
         />
       </Sidepanel>
       <Grid row>
-        <Grid desktop={{ col: 6 }}>
-          <GlobalClientFilter
-            globalFilter={query}
-            setGlobalFilter={setQuery}
-            tableID="cr-and-tdl-table"
-            tableName={crtdlsT('heading')}
-            className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
-          />
-        </Grid>
+        <div className="mint-no-print">
+          <Grid desktop={{ col: 6 }}>
+            <GlobalClientFilter
+              globalFilter={query}
+              setGlobalFilter={setQuery}
+              tableID="cr-and-tdl-table"
+              tableName={crtdlsT('heading')}
+              className="margin-bottom-3 maxw-none tablet:width-mobile-lg "
+            />
+          </Grid>
+        </div>
         <Grid desktop={{ col: 6 }}>
           <div
             className="desktop:margin-left-auto display-flex"
             style={{ maxWidth: '13rem' }}
           >
-            <Label
-              htmlFor="sort"
-              className="text-normal margin-top-1 margin-right-1"
-            >
-              {i18next.t('changeHistory:sort.label')}
-            </Label>
+            <div className="mint-no-print">
+              <Label
+                htmlFor="sort"
+                className="text-normal margin-top-1 margin-right-1"
+              >
+                {i18next.t('changeHistory:sort.label')}
+              </Label>
 
-            <Select
-              id="sort"
-              className="margin-bottom-2 margin-top-0"
-              name="sort"
-              value={sort}
-              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                setSort(e.target.value as SortProps['value']);
-              }}
-            >
-              {sortOptions.map(option => {
-                return (
-                  <option key={`sort-${option.value}`} value={option.value}>
-                    {option.label}
-                  </option>
-                );
-              })}
-            </Select>
+              <Select
+                id="sort"
+                className="margin-bottom-2 margin-top-0"
+                name="sort"
+                value={sort}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                  setSort(e.target.value as SortProps['value']);
+                }}
+              >
+                {sortOptions.map(option => {
+                  return (
+                    <option key={`sort-${option.value}`} value={option.value}>
+                      {option.label}
+                    </option>
+                  );
+                })}
+              </Select>
+            </div>
           </div>
         </Grid>
       </Grid>
       <Grid row className="margin-bottom-4">
-        <Grid col={12}>{Results}</Grid>
+        <div className="mint-no-print">
+          <Grid col={12}>{Results}</Grid>
+        </div>
       </Grid>
       <CardGroup>
         {currentItems.map(card => (
@@ -253,15 +261,17 @@ const EChimpCardsTable = ({
           />
         ))}
       </CardGroup>
-      <Grid row>
-        {Pagination}
-        <TablePageSize
-          className="margin-left-auto desktop:grid-col-auto"
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          valueArray={[6, 9, 'all']}
-        />
-      </Grid>
+      <div className="mint-no-print">
+        <Grid row>
+          {Pagination}
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            valueArray={[6, 9, 'all']}
+          />
+        </Grid>
+      </div>
     </div>
   );
 };

@@ -20,6 +20,13 @@
     display: none;
   }
 
+  .grid-container {
+      max-width: none !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+  }
+
   .mint-print-link {
     text-decoration: none !important;
     color: black !important;
