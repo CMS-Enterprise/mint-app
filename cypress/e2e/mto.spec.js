@@ -191,7 +191,7 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('@customMilestoneModal').within(() => {
       cy.get('#primary-category')
-        .should('be.disabled')
+        .should('be.not.disabled')
         .find('option')
         .not('[value="default"]')
         .first()
@@ -243,10 +243,18 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('[data-testid="mandatory-fields-alert"]')
       .should('exist')
       .contains('Your solution (Custom Solution) has been added.');
+
+    // Click the IT system and solutions tab
     cy.contains('IT systems and solutions').click();
+
     cy.get('table').within(() => {
-      cy.get('td').contains('Custom Solution').should('exist');
-      cy.contains('Edit details').click();
+      cy.get('td')
+        .contains('Custom Solution')
+        .should('exist')
+        .parent('tr')
+        .within(() => {
+          cy.contains('Edit details').click();
+        });
     });
 
     cy.get('#name').clear().type('Edited Custom Solution');
@@ -254,6 +262,48 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('table').within(() => {
       cy.get('td').contains('Edited Custom Solution').should('exist');
+    });
+  });
+
+  it('Add standard categories', () => {
+    cy.contains('Add this template').click();
+    cy.findModalWithThisHeadingAndSaveAlias(
+      'Are you sure you want to continue?'
+    );
+
+    cy.contains('Add template').click();
+
+    cy.get('[data-testid="mandatory-fields-alert"]')
+      .should('exist')
+      .contains('Your template (Standard categories) has been added.');
+  });
+
+  it('tests Action Menu', () => {
+    cy.get('tbody tr')
+      .first()
+      .find('td')
+      .eq(1)
+      .invoke('text')
+      .then(text => {
+        cy.wrap(text.trim()).as('firstRowName');
+      });
+
+    cy.get('tbody tr')
+      .first()
+      .find('button[aria-label="Open action menu"]')
+      .click({ force: true });
+
+    cy.contains('button', 'Move category down').click({ force: true });
+
+    cy.get('@firstRowName').then(firstRowName => {
+      cy.get('tbody tr')
+        .first()
+        .find('td')
+        .eq(1)
+        .invoke('text')
+        .then(currentFirstRowName => {
+          expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
+        });
     });
   });
 });
