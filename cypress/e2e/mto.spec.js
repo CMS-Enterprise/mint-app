@@ -153,5 +153,107 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('@secondCard').within(() => {
       cy.contains('Add to matrix').click();
     });
+
+    cy.findModalWithThisHeadingAndSaveAlias(
+      'Add to existing milestone?',
+      'addToExistingMilestone'
+    );
+
+    cy.get('@addToExistingMilestone').within(() => {
+      cy.get('#linked-milestones').click();
+      cy.get('[role="listbox"]')
+        .find('input[type="checkbox"]')
+        .first()
+        .check({ force: true })
+        .should('be.checked');
+      cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
+      cy.contains('Add with 1 milestone').click();
+    });
+
+    cy.contains('a', 'Return to model-to-operations matrix').click();
+    cy.url().should(
+      'include',
+      '/collaboration-area/model-to-operations/matrix'
+    );
+
+    cy.get('table').within(() => {
+      cy.get('td').contains('ACO-OS').should('exist');
+    });
+  });
+
+  it('Create custom milestone', () => {
+    cy.contains('or, add a custom milestone').click();
+
+    cy.findModalWithThisHeadingAndSaveAlias(
+      'Add a new model milestone',
+      'customMilestoneModal'
+    );
+
+    cy.get('@customMilestoneModal').within(() => {
+      cy.get('#primary-category')
+        .should('be.disabled')
+        .find('option')
+        .not('[value="default"]')
+        .first()
+        .then($option => {
+          cy.get('#primary-category').select($option.text());
+        });
+      cy.get('#subcategory')
+        .find('option')
+        .not('[value="default"]')
+        .first()
+        .then($option => {
+          cy.get('#subcategory').select($option.text());
+        });
+
+      cy.get('#name').type('Custom Milestone');
+      cy.contains('Add milestone').click();
+    });
+
+    cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
+    cy.get('td').contains('Custom Milestone').should('exist');
+  });
+
+  it('Create custom solution', () => {
+    cy.contains('or, add a custom solution').click();
+
+    cy.findModalWithThisHeadingAndSaveAlias(
+      'Add a new solution',
+      'customSolutionModal'
+    );
+
+    cy.get('@customSolutionModal').within(() => {
+      cy.get('#solution-type')
+        .should('be.not.disabled')
+        .find('option')
+        .not('[value="default"]')
+        .first()
+        .then($option => {
+          cy.get('#solution-type').select($option.text());
+        });
+
+      cy.get('#solution-title').type('Custom Solution');
+      cy.get('#poc-name').type('Primary Contact');
+      cy.get('#poc-email').type('primary@contact.com');
+      // Cause a blur to trigger validation
+      cy.get('#poc-name').click();
+      cy.contains('Add solution').should('be.not.disabled').click();
+    });
+
+    cy.get('[data-testid="mandatory-fields-alert"]')
+      .should('exist')
+      .contains('Your solution (Custom Solution) has been added.');
+    cy.contains('IT systems and solutions').click();
+    cy.get('table').within(() => {
+      cy.get('td').contains('Custom Solution').should('exist');
+      cy.contains('Edit details').click();
+    });
+
+    cy.get('#name').clear().type('Edited Custom Solution');
+    cy.contains('Save changes').should('be.not.disabled').click();
+
+    cy.get('table').within(() => {
+      cy.get('td').contains('Edited Custom Solution').should('exist');
+    });
   });
 });
