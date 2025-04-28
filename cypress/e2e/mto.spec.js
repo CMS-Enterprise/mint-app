@@ -1,10 +1,8 @@
 describe('Model-to-Operations Matrix', () => {
-  before(() => {
+  beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
-  });
 
-  it('Fills out an empty MTO Matrix with milestones and solutions', () => {
     cy.enterModelPlanCollaborationArea('Empty Plan');
 
     cy.get('[data-testid="Card"]')
@@ -17,7 +15,9 @@ describe('Model-to-Operations Matrix', () => {
       'include',
       '/collaboration-area/model-to-operations/matrix'
     );
+  });
 
+  it('Fills out an empty MTO Matrix with milestones and solutions', () => {
     cy.contains('h2', 'Your model-to-operations matrix is a bit empty!');
 
     cy.contains('a', 'Browse common solutions');
@@ -32,6 +32,7 @@ describe('Model-to-Operations Matrix', () => {
     );
 
     cy.contains('button', /All common milestones/).click();
+
     cy.get('[data-testid="alert"]').should('not.exist');
 
     cy.get('[data-testid="Card"]')
@@ -115,7 +116,42 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('table').within(() => {
       cy.get('td').contains('4i').should('exist');
-      // cy.contains('Select a solution').click();
+    });
+  });
+  it('Adding a Solution from the Solution Library', () => {
+    cy.contains('Browse solution library').click();
+    cy.url().should('include', '/solution-library');
+
+    // Add the second solution
+    cy.get('[data-testid="Card"]')
+      .eq(1)
+      .as('secondCard')
+      .within(() => {
+        cy.get('h3')
+          .invoke('text')
+          .then(text => {
+            // Save the milestone name
+            cy.wrap(text.trim()).as('solutionHeading');
+          });
+        cy.contains('Add to matrix').should('exist');
+        // Open up Solutions Sidepanel
+        cy.contains('About this solution').should('exist').click();
+      });
+
+    cy.get('@solutionHeading').then(solutionHeading => {
+      cy.get('[role="dialog"]')
+        .scrollIntoView()
+        .within(() => {
+          cy.contains(solutionHeading).should('be.visible');
+        })
+        .as('sidePanel');
+      cy.get('[aria-label="Close Modal"]').click();
+    });
+
+    cy.get('@sidePanel').should('not.exist');
+
+    cy.get('@secondCard').within(() => {
+      cy.contains('Add to matrix').click();
     });
   });
 });
