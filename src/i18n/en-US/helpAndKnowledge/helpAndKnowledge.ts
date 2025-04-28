@@ -25,6 +25,11 @@ type SolutionCategoryType = {
   description: string;
 };
 
+type CardInfoType = {
+  title: string;
+  description: string;
+};
+
 export const solutionCategories: Record<
   OperationalSolutionCategoryRoute,
   SolutionCategoryType
@@ -2046,10 +2051,27 @@ Model Space offers model teams and their contractors templates or Databricks not
   }
 };
 
-const helpCategories: Record<ArticleCategories, string> = {
-  [ArticleCategories.GETTING_STARTED]: 'Getting started',
-  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation',
-  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: 'Model concept and design'
+const helpCategories: Record<ArticleCategories, CardInfoType> = {
+  [ArticleCategories.GETTING_STARTED]: {
+    title: 'Getting started',
+    description:
+      'Use these articles to help you get started with the creation of your Model Plan.'
+  },
+  [ArticleCategories.IT_IMPLEMENTATION]: {
+    title: 'IT implementation',
+    description:
+      'Use these articles to better understand what’s involved in your model to IT implementation.'
+  },
+  [ArticleCategories.MTO_TUTORIALS]: {
+    title: 'MINT tutorials',
+    description:
+      'Step-by-step guides to help you navigate MINT and it’s capabilities.'
+  },
+  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: {
+    title: 'Model concept and design',
+    description:
+      'Use these articles to better understand what’s involved in the model concept and design phase.'
+  }
 };
 
 const helpArticleNames: Record<HelpArticle, string> = {
@@ -2079,15 +2101,23 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]:
     'Fraud and abuse waiver templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
-    'Quality Vertical health equity resources on SharePoint'
+    'Quality Vertical health equity resources on SharePoint',
+  [HelpArticle.CREATING_MTO_MATRIX]:
+    'Creating your Model-to-operations matrix (MTO) in MINT',
+  [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
+  [HelpArticle.USING_MILESTONE_TABLE]: 'Using the milestone table',
+  [HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE]:
+    'Using the IT system and solution table',
+  [HelpArticle.USING_TABLE_ACTIONS]: 'Using the table actions area',
+  [HelpArticle.USING_MILESTONE_LIBRARY]: 'Using the milestone library',
+  [HelpArticle.USING_SOLUTION_LIBRARY]: 'Using the solution library',
+  [HelpArticle.ADD_CUSTOM_MILESTONE]: 'How to add a custom milestone',
+  [HelpArticle.ADD_CUSTOM_SOLUTION]: 'How to add a custom solution',
+  [HelpArticle.UPDATING_MTO_STATUS]: 'Updating your MTO status',
+  [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO'
 };
 
-type ExternalResourcesType = {
-  title: string;
-  description: string;
-};
-
-const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
+const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
     title: 'Announcement materials on SharePoint',
     description:
