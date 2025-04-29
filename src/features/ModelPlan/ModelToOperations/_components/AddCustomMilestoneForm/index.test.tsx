@@ -24,6 +24,10 @@ const mocks = [
           id: modelID,
           mtoMatrix: {
             __typename: 'MtoMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: modelID
+            },
             categories: [
               {
                 __typename: 'MtoCategory',

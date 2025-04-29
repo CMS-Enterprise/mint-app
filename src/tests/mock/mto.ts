@@ -45,6 +45,18 @@ import {
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
+export const pointsOfContact = [
+  {
+    __typename: 'PossibleOperationalSolutionContact',
+    id: '1267967874323',
+    name: 'John Mint',
+    email: 'john.mint@oddball.io',
+    isTeam: false,
+    role: 'Project lead',
+    isPrimary: true
+  }
+];
+
 export const mtoMatrixMock: MockedResponse<
   GetModelToOperationsMatrixQuery,
   GetModelToOperationsMatrixQueryVariables

@@ -45,10 +45,6 @@ import {
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
   GetModelSummaryQuery,
-  GetOperationalNeedsDocument,
-  GetOperationalNeedsQuery,
-  GetPossibleOperationalSolutionsDocument,
-  GetPossibleOperationalSolutionsQuery,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -57,9 +53,6 @@ import {
   MonitoringFileType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
-  OperationalNeedKey,
-  OperationalSolutionKey,
-  OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRequireFinancialGuaranteeType,
@@ -98,7 +91,6 @@ type PaymentTypes = GetAllPaymentsQuery['modelPlan']['payments'];
 type GetModelCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
-type GetOperationalNeedsType = GetOperationalNeedsQuery;
 type GetAllDataExchangeApproachType =
   GetAllDataExchangeApproachQuery['modelPlan']['dataExchangeApproach'];
 
@@ -860,101 +852,6 @@ export const collaboratorsMocks = [
           collaborators: collaboratorsData
         }
       }
-    }
-  }
-];
-
-const opNeedsData: GetOperationalNeedsType = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    isCollaborator: true,
-    opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
-    modelName: 'My excellent plan that I just initiated',
-    operationalNeeds: [
-      {
-        __typename: 'OperationalNeed',
-        id: '123',
-        modelPlanID: modelID,
-        name: 'Recruit participants',
-        key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
-        nameOther: null,
-        needed: true,
-        modifiedDts: '2022-05-12T15:01:39.190679Z',
-        solutions: [
-          {
-            __typename: 'OperationalSolution',
-            id: '123',
-            status: OpSolutionStatus.IN_PROGRESS,
-            name: 'Shared Systems',
-            key: OperationalSolutionKey.SHARED_SYSTEMS,
-            otherHeader: '',
-            mustStartDts: null,
-            mustFinishDts: null,
-            operationalSolutionSubtasks: [],
-            needed: true,
-            nameOther: null,
-            pocEmail: null,
-            pocName: null,
-            createdBy: '',
-            createdDts: ''
-          }
-        ]
-      }
-    ]
-  }
-};
-
-export const operationalNeedsMock = [
-  {
-    request: {
-      query: GetOperationalNeedsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: opNeedsData
-    }
-  }
-];
-
-const possibleOperationalSolutionData: GetPossibleOperationalSolutionsQuery = {
-  __typename: 'Query',
-  possibleOperationalSolutions: [
-    {
-      id: 1,
-      name: '4innovation (4i)',
-      key: OperationalSolutionKey.INNOVATION,
-      __typename: 'PossibleOperationalSolution'
-    },
-    {
-      id: 2,
-      name: 'Accountable Care Organization - Operational System (ACO-OS)',
-      key: OperationalSolutionKey.ACO_OS,
-      __typename: 'PossibleOperationalSolution'
-    },
-    {
-      id: 3,
-      name: 'Automated Plan Payment System (APPS)',
-      key: OperationalSolutionKey.APPS,
-      __typename: 'PossibleOperationalSolution'
-    },
-    {
-      id: 4,
-      name: 'Centralized Data Exchange (CDX)',
-      key: OperationalSolutionKey.CDX,
-      __typename: 'PossibleOperationalSolution'
-    }
-  ]
-};
-
-export const possibleOperationalSolutionDataMocks = [
-  {
-    request: {
-      query: GetPossibleOperationalSolutionsDocument
-    },
-    result: {
-      data: possibleOperationalSolutionData
     }
   }
 ];

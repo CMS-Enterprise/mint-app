@@ -36,7 +36,7 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
           data-testid="label"
           for="available-solutions"
         >
-          Milestones
+          Linked milestones
         </label>
         <div>
           <div
@@ -76,7 +76,7 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
                     aria-describedby="react-select-3-placeholder"
                     aria-expanded="false"
                     aria-haspopup="true"
-                    aria-labelledby="Milestones"
+                    aria-labelledby="Linked milestones"
                     autocapitalize="none"
                     autocomplete="off"
                     autocorrect="off"

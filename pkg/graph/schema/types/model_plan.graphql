@@ -45,7 +45,7 @@ enum ModelShareSection {
   # """
   # Include all sections below
   # """
-  # ALL, #go to readview
+  ALL, #go to readview
   """
   Just share the model plan
   """
@@ -118,7 +118,6 @@ type ModelPlan {
   echimpCRsAndTDLs: [EChimpCRAndTDLS!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: [OperationalNeed!]!
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
 
