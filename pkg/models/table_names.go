@@ -1,7 +1,26 @@
 package models
 
+import (
+	"sort"
+	"strings"
+)
+
 // TableName represents the name of tables in the database
 type TableName string
+
+type TableNames []TableName
+
+// String implements the stringer interface for TableNames
+//
+//	It will sort the TableNames and return a comma separated string
+func (t TableNames) String() string {
+	names := make([]string, len(t))
+	for i, tn := range t {
+		names[i] = string(tn)
+	}
+	sort.Strings(names)
+	return "{" + strings.Join(names, ",") + "}"
+}
 
 // These are the options for TableNameEnum
 const (

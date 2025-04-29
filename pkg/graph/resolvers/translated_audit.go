@@ -11,7 +11,15 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+// TranslatedAuditGetMostRecentByModelPlanIDAndTableNames returns the most recent TranslatedAudit for a given model plan id and table names
+// if one doesn't exist, it will return nil.
+// TODO, should we include some filtering to not get changes by the system account? Or just specifically ignore changes for suggestions?
+func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude models.TableNames) (*models.TranslatedAudit, error) {
+	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{})
+}
 
 // TranslatedAuditCollectionGetByModelPlanID returns all TranslatedAudit for a given model plan id
 // if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
