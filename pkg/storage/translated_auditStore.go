@@ -48,3 +48,22 @@ func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelP
 	}
 	return translatedAuditCollection, nil
 }
+
+// TranslatedAuditMostRecentGetByModelPlanIDAndTableNamesLoader returns the most recent TranslatedAudit for a given model plan id and table names
+// it serializes the params into a json array and passes it to the sql query
+// it will return only the most recent for each combination
+func TranslatedAuditMostRecentGetByModelPlanIDAndTableNamesLoader(np sqlutils.NamedPreparer, keys []MostRecentByModelPlanIDAndTableFilters) ([]*models.TranslatedAudit, error) {
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAudit](np, sqlqueries.TranslatedAudit.MostRecentByModelPlanIDAndTableFiltersLOADER, arg)
+	if procErr != nil {
+		return nil, procErr
+	}
+	return translatedAuditCollection, nil
+
+}

@@ -18,6 +18,13 @@ import (
 // if one doesn't exist, it will return nil.
 // TODO, should we include some filtering to not get changes by the system account? Or just specifically ignore changes for suggestions?
 func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude models.TableNames) (*models.TranslatedAudit, error) {
+	// TODO handle access control, either in the code or in the query. Note, that it is also controlled by job codes :thinking
+	// hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("unable to determine appropriate access level to view audit collection. err %w", err)
+	// 	//If desired, we could just return the non-privileged version on error there
+	// }
+
 	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{})
 }
 
