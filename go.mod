@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.55.6
+	github.com/aws/aws-sdk-go v1.55.7
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.22.1
 	github.com/go-openapi/swag v0.23.1
@@ -123,7 +123,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/samber/lo v1.49.1
+	github.com/samber/lo v1.50.0
 	github.com/spf13/afero v1.12.0 // indirect
 	github.com/spf13/cast v1.7.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
