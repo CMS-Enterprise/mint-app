@@ -194,9 +194,9 @@ var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 var ModelShareSectionHumanized = map[ModelShareSection]string{
 	ModelShareSectionAll:           "more",
 	ModelShareSectionModelPlan:     "model plan",
-	ModelShareSectionMtoAll:        "models to operations matrix",
-	ModelShareSectionMtoMilestones: "models to operations matrix",
-	ModelShareSectionMtoSolutions:  "models to operations matrix",
+	ModelShareSectionMtoAll:        "model-to-operations matrix",
+	ModelShareSectionMtoMilestones: "model-to-operations matrix",
+	ModelShareSectionMtoSolutions:  "model-to-operations matrix",
 }
 
 type ModelPhase string
