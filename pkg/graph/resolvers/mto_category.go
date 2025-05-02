@@ -141,12 +141,13 @@ type mtoStandardCategory struct {
 }
 
 var mtoStandardCategories []mtoStandardCategory = []mtoStandardCategory{
-	{name: "Participants", subcategories: []string{"Application and selection", "Participant support"}},
-	{name: "Operations", subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking", "Benchmarks", "Monitoring", "Internal functions", "Fee-for-service (FFS)"}},
-	{name: "Payment", subcategories: []string{}},
+	{name: "Participants", subcategories: []string{"Application, review, and selection", "Participant support"}},
+	{name: "Operations", subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking/alignment", "Benchmarks", "Internal functions", "Fee-for-service (FFS)", "Monitoring"}},
+	{name: "Legal", subcategories: []string{"Agreements", "Benefit enhancements", "Beneficiary engagement and incentives"}},
+	{name: "Payment", subcategories: []string{"Claims-based", "Non-claims based"}},
 	{name: "Payers", subcategories: []string{}},
-	{name: "Learning", subcategories: []string{}},
 	{name: "Quality", subcategories: []string{}},
+	{name: "Learning", subcategories: []string{}},
 	{name: "Evaluation", subcategories: []string{}},
 	{name: "Model closeout or extension", subcategories: []string{}},
 }
