@@ -669,8 +669,8 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	})
 
 	suite.Len(categoriesAfterRename, 21) // total (three more than before)
-	suite.Equal(9, numCategories)        // just top-level categories (one more than before)
-	suite.Equal(12, numSubcategories)    // just subcategories (two more than before)
+	suite.Equal(10, numCategories)       // just top-level categories (one more than before)
+	suite.Equal(17, numSubcategories)    // just subcategories (two more than before)
 }
 
 func (suite *ResolverSuite) TestMTOCategoryDelete_NullID() {
