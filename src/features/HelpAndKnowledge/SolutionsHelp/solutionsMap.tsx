@@ -1,13 +1,15 @@
 import React from 'react';
 import {
+  GetPossibleSolutionsQuery,
+  MtoCommonSolutionKey,
+  OperationalSolutionKey
+} from 'gql/generated/graphql';
+
+import {
   OperationalSolutionCategories,
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
-} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
-import {
-  GetPossibleSolutionsQuery,
-  OperationalSolutionKey
-} from 'gql/generated/graphql';
+} from 'types/operationalSolutionCategories';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
@@ -106,12 +108,17 @@ export type ModalSolutionComponentType = {
 };
 
 export interface HelpSolutionBaseType {
-  enum: OperationalSolutionKey;
+  enum: OperationalSolutionKey | MtoCommonSolutionKey;
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
   subCategories?: OperationalSolutionSubCategories[];
   acronym?: string;
+  type:
+    | 'IT System'
+    | 'Cross-cutting group'
+    | 'Contracts and contractors'
+    | 'Other';
   name: string;
   alertPrimaryContact?: boolean; // Alert primary contact with missing info
   systemOwner?: SystemOwnerType;
@@ -127,6 +134,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: '4i',
+    type: 'IT System',
     name: '4innovation',
     systemOwner: {
       name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
@@ -152,6 +160,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'ACO-OS',
+    type: 'IT System',
     name: 'Accountable Care Organization - Operational System',
     systemOwner: {
       name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
@@ -179,6 +188,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'automated-plan-payment-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     acronym: 'APPS',
+    type: 'IT System',
     name: 'Automated Plan Payment System',
     systemOwner: {
       name: 'Medicare Plan Payment Group, Division of Payment Operations',
@@ -193,6 +203,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'BCDA',
+    type: 'IT System',
     name: 'Beneficiary Claims Data API',
     systemOwner: {
       name: 'Data Analytics and Strategy Group',
@@ -208,6 +219,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'centralized-data-exchange',
     categories: [OperationalSolutionCategories.DATA],
     acronym: 'CDX',
+    type: 'IT System',
     name: 'Centralized Data Exchange',
     systemOwner: {
       name: 'Business Services Group',
@@ -231,6 +243,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'chronic-conditions-warehouse',
     categories: [OperationalSolutionCategories.DATA],
     acronym: 'CCW',
+    type: 'IT System',
     name: 'Chronic Conditions Warehouse',
     systemOwner: {
       name: 'Research Data Development Group',
@@ -255,6 +268,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'CMS Box',
+    type: 'IT System',
     components: {
       timeline: (props: SolutionDetailProps) => <CMSBoxTimeline {...props} />
     }
@@ -266,6 +280,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
     subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
     name: 'CMS Qualtrics',
+    type: 'IT System',
     components: {
       timeline: (props: SolutionDetailProps) => (
         <CMSQualtricsTimeline {...props} />
@@ -279,6 +294,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     subCategories: [OperationalSolutionSubCategories.HELP_DESK],
     acronym: 'CBOSC',
+    type: 'IT System',
     name: 'Consolidated Business Operations Support Center',
     systemOwner: {
       name: 'Business Services Group, Division of System Support, Operations, and Security',
@@ -305,6 +321,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
     ],
     name: 'CPI Vetting',
+    type: 'Other',
     alertPrimaryContact: true,
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -319,6 +336,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     acronym: 'EFT',
+    type: 'IT System',
     name: 'Electronic File Transfer',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -332,6 +350,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'expanded-data-feedback-reporting',
     categories: [OperationalSolutionCategories.DATA],
     acronym: 'eDFR',
+    type: 'IT System',
     name: 'Expanded Data Feedback Reporting',
     systemOwner: {
       name: 'Business Services Group',
@@ -354,6 +373,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'GovDelivery',
+    type: 'IT System',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -367,6 +387,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS
     ],
     acronym: 'GS',
+    type: 'Other',
     name: 'GrantSolutions',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
@@ -378,6 +399,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'healthcare-integrated-general-kedger-accounting-system',
     categories: [OperationalSolutionCategories.PAYMENT_FINANCIALS],
     acronym: 'HIGLAS',
+    type: 'IT System',
     name: 'Healthcare Integrated General Ledger Accounting System',
     systemOwner: {
       name: 'Accounting Management Group',
@@ -396,6 +418,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionCategories.QUALITY
     ],
     acronym: 'HDR',
+    type: 'IT System',
     name: 'Health Data Reporting',
     systemOwner: {
       name: 'Business Services Group',
@@ -417,6 +440,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'health-plan-management-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     acronym: 'HPMS',
+    type: 'IT System',
     name: 'Health Plan Management System',
     systemOwner: {
       name: 'Division of Plan Data',
@@ -437,6 +461,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionCategories.PAYMENT_FINANCIALS
     ],
     acronym: 'IPC',
+    type: 'Contracts and contractors',
     name: 'Innovation Payment Contractor',
     systemOwner: {
       name: 'Business Services Group, Division of Budget Operations & Management',
@@ -461,6 +486,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     ],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'ISP',
+    type: 'Contracts and contractors',
     name: 'Innovation Support Platform',
     contractors: [
       {
@@ -490,6 +516,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'integrated-data-repository',
     categories: [OperationalSolutionCategories.DATA],
     acronym: 'IDR',
+    type: 'IT System',
     name: 'Integrated Data Repository',
     systemOwner: {
       name: 'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
@@ -508,6 +535,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'learning-and-diffusion-group',
     categories: [OperationalSolutionCategories.LEARNING],
     acronym: 'LDG',
+    type: 'Cross-cutting group',
     name: 'Learning and Diffusion Group',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
@@ -519,6 +547,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'legal-vertical',
     categories: [OperationalSolutionCategories.LEGAL],
     acronym: 'LV',
+    type: 'Other',
     name: 'Legal Vertical',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
@@ -530,6 +559,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'master-data-management-program-organization-relationship',
     categories: [OperationalSolutionCategories.DATA],
     acronym: 'MDM-POR',
+    type: 'IT System',
     name: 'Master Data Management Program-Organization Relationship',
     systemOwner: {
       name: 'Enterprise Architecture and Data Group',
@@ -548,6 +578,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionCategories.PAYMENT_FINANCIALS
     ],
     acronym: 'MDM-NCBP',
+    type: 'IT System',
     name: 'Master Data Management for Non-Claims Based Payments',
     systemOwner: {
       name: 'Enterprise Architecture and Data Group',
@@ -566,6 +597,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionCategories.QUALITY
     ],
     acronym: 'MIDS',
+    type: 'Contracts and contractors',
     name: 'Measure and Instrument Development and Support',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
@@ -577,6 +609,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'medicare-advantage-prescription-drug-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     acronym: 'MARx',
+    type: 'IT System',
     name: 'Medicare Advantage Prescription Drug System',
     systemOwner: {
       name: 'Medicare Plan Payment Group, Division of Payment Operations',
@@ -594,6 +627,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'model-space',
     categories: [OperationalSolutionCategories.DATA],
     name: 'Model Space',
+    type: 'IT System',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     },
@@ -615,6 +649,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
     name: 'Outlook Mailbox',
+    type: 'IT System',
     components: {
       timeline: (props: SolutionDetailProps) => (
         <OutlookMailboxTimeLine {...props} />
@@ -627,6 +662,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'quality-vertical',
     categories: [OperationalSolutionCategories.QUALITY],
     acronym: 'QV',
+    type: 'Other',
     name: 'Quality Vertical',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
@@ -638,6 +674,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'research-measurement-assessment-design-and-analysis',
     categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
     acronym: 'RMADA',
+    type: 'Contracts and contractors',
     name: 'Research, Measurement, Assessment, Design, and Analysis',
     components: {
       timeline: (props: SolutionDetailProps) => <RMADATimeline {...props} />
@@ -656,6 +693,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
     ],
     acronym: 'ARS',
+    type: 'IT System',
     name: 'Salesforce Application Review and Scoring',
     systemOwner: {
       name: 'Business Services Group',
@@ -679,6 +717,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'salesforce-connect',
     categories: [OperationalSolutionCategories.LEARNING],
     name: 'Salesforce CONNECT',
+    type: 'IT System',
     systemOwner: {
       name: 'Business Services Group',
       system: 'Center for Medicare and Medicaid Innovation'
@@ -711,6 +750,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
     ],
     acronym: 'LOI',
+    type: 'IT System',
     name: 'Salesforce Letter of Intent',
     systemOwner: {
       name: 'Business Services Group',
@@ -738,6 +778,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
     acronym: 'POST / PORTAL',
+    type: 'IT System',
     name: 'Salesforce Project Officer Support Tool / Portal',
     systemOwner: {
       name: 'Business Services Group',
@@ -771,6 +812,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
     ],
     acronym: 'RFA',
+    type: 'IT System',
     name: 'Salesforce Request for Application',
     systemOwner: {
       name: 'Business Services Group',
@@ -797,6 +839,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'shared-systems',
     categories: [OperationalSolutionCategories.MEDICARE_FFS],
     name: 'Shared Systems',
+    type: 'IT System',
     systemOwner: {
       name: 'Applications Management Group, Division of Shared Systems Management',
       system: 'Office of Information Technology'

@@ -20,10 +20,6 @@ export default gql(/* GraphQL */ `
         affectsMedicareSecondaryPayerClaimsNote
         payModelDifferentiation
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

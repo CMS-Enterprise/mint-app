@@ -14,6 +14,7 @@ import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutio
 import existingModelLink from '../../src/i18n/en-US/modelPlan/existingModelLink';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
+import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
 import operationalNeed from '../../src/i18n/en-US/modelPlan/operationalNeeds';
 import subtask from '../../src/i18n/en-US/modelPlan/operationalSolutionSubtasks';
 import opsEvalAndLearning from '../../src/i18n/en-US/modelPlan/opsEvalAndLearning';
@@ -47,7 +48,8 @@ export const translationSections = {
   operational_solution_subtask: subtask,
   existing_model_link: existingModelLink,
   plan_document_solution_link: documentSolutionLink,
-  data_exchange_approach: dataExchangeApproach
+  data_exchange_approach: dataExchangeApproach,
+  mto_info: mtoInfo
 };
 
 // Fields that are not needed by BE

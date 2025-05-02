@@ -1,0 +1,222 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="border-1px radius-md border-gray-10 padding-3"
+  >
+    <div
+      class="action-bar display-flex"
+    >
+      <p
+        class="margin-y-0 text-bold"
+      >
+        Table actions
+      </p>
+      <div
+        class="margin-x-2 padding-y-05"
+      >
+        <div
+          class="border-right-2px border-base-light height-full"
+        />
+      </div>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Hide actions
+        <svg
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="action-buttons margin-top-3"
+    >
+      <div
+        class="action-button--milestone"
+      >
+        <div
+          class="width-fit-content"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <div
+              class="margin-right-1 bg-green-5 radius-sm display-flex flex-align-center flex-justify-center"
+              style="height: 20px; width: 20px;"
+            >
+              <svg
+                class="usa-icon"
+                focusable="false"
+                height="1em"
+                role="img"
+                style="fill: #607F35;"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6z"
+                />
+              </svg>
+            </div>
+            <p
+              class="margin-y-0 text-bold"
+            >
+              Milestones
+            </p>
+          </div>
+          <p
+            class="margin-top-0"
+          >
+            1 common milestones
+          </p>
+          <button
+            class="usa-button usa-button--outline display-block margin-bottom-1"
+            data-testid="button"
+            type="button"
+          >
+            Browse milestone library
+          </button>
+          <button
+            class="usa-button usa-button--unstyled display-block"
+            data-testid="button"
+            type="button"
+          >
+            or, add a custom milestone
+          </button>
+        </div>
+      </div>
+      <div
+        class="action-button--solution"
+      >
+        <div
+          class="width-fit-content"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <div
+              class="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
+              style="height: 20px; width: 20px; background-color: rgb(225, 230, 249);"
+            >
+              <svg
+                class="usa-icon"
+                focusable="false"
+                height="1em"
+                role="img"
+                style="fill: #3F57A6;"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
+                />
+              </svg>
+            </div>
+            <p
+              class="margin-y-0 text-bold"
+            >
+              Operational solutions
+            </p>
+          </div>
+          <p
+            class="margin-top-0"
+          >
+            2 common solutions and IT systems
+          </p>
+          <button
+            class="usa-button usa-button--outline display-block margin-bottom-1"
+            data-testid="button"
+            type="button"
+          >
+            Browse solution library
+          </button>
+          <button
+            class="usa-button usa-button--unstyled display-block"
+            data-testid="button"
+            type="button"
+          >
+            or, add a custom solution
+          </button>
+        </div>
+      </div>
+      <div
+        class="action-button--category"
+      >
+        <div
+          class="display-flex flex-align-center"
+        >
+          <div
+            class="margin-right-1 radius-sm display-flex flex-align-center flex-justify-center"
+            style="height: 20px; width: 20px; background-color: rgb(223, 225, 226);"
+          >
+            <svg
+              class="usa-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              style="fill: #565C65;"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 3v8h8V3H3zm6 6H5V5h4v4zm-6 4v8h8v-8H3zm6 6H5v-4h4v4zm4-16v8h8V3h-8zm6 6h-4V5h4v4zm-6 4v8h8v-8h-8zm6 6h-4v-4h4v4z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <p
+            class="margin-y-0 text-bold"
+          >
+            Templates and categories
+          </p>
+        </div>
+        <p
+          class="margin-top-0"
+        >
+          1 available template
+        </p>
+        <div
+          class="display-flex flex-justify bg-base-lightest border border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
+          style="gap: 24px;"
+        >
+          <span
+            class="text-bold"
+          >
+            Standard categories
+          </span>
+          <button
+            class="usa-button usa-button--unstyled display-block"
+            data-testid="button"
+            type="button"
+          >
+            Add this template
+          </button>
+        </div>
+        <button
+          class="usa-button usa-button--unstyled display-block"
+          data-testid="button"
+          type="button"
+        >
+          or, add a custom category
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,6 +1,24 @@
 import React from 'react';
+import { ModelViewFilter } from 'gql/generated/graphql';
 
-export const groupOptions = [
+export const filterGroupParams = [
+  ModelViewFilter.CCW.toLowerCase(),
+  ModelViewFilter.CMMI.toLowerCase(),
+  ModelViewFilter.CBOSC.toLowerCase(),
+  ModelViewFilter.DFSDM.toLowerCase(),
+  ModelViewFilter.IPC.toLowerCase(),
+  ModelViewFilter.IDDOC.toLowerCase(),
+  ModelViewFilter.MDM.toLowerCase(),
+  ModelViewFilter.OACT.toLowerCase(),
+  ModelViewFilter.PBG.toLowerCase()
+];
+
+type GroupOption = {
+  value: (typeof filterGroupParams)[number];
+  label: string;
+};
+
+export const groupOptions: GroupOption[] = [
   { value: 'ccw', label: 'Chronic Conditions Warehouse (CCW)' },
   { value: 'cmmi', label: 'CMMI Cost Estimate' },
   {

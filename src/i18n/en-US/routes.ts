@@ -119,6 +119,10 @@ const routes = {
     '/read-view/operations-evaluation-and-learning':
       'Read view - Operations, evaluation, and learning',
     '/read-view/payment': 'Read view - Payment',
+    '/read-view/milestones': 'Read view - Milestones',
+    '/read-view/it-systems-and-solutions':
+      'Read view - IT systems and solutions',
+    '/read-view/data-exchange-approach': 'Data exchange approach',
     '/read-view/it-solutions':
       'Read view - Operational solutions and implementation status',
     '/read-view/team': 'Read view - Team',

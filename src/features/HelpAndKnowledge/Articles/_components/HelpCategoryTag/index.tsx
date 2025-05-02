@@ -25,10 +25,10 @@ export default function HelpCategoryTag({
       <Tag
         className="article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
         arialabel={t(
-          `Articles under the ${t(`helpCategories.${type}`)} category`
+          `Articles under the ${t(`helpCategories.${type}.title`)} category`
         )}
       >
-        {t(`helpCategories.${type}`)}
+        {t(`helpCategories.${type}.title`)}
       </Tag>
     </UswdsReactLink>
   );

@@ -25,7 +25,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -81,10 +81,6 @@ export const ParticipantOptions = () => {
     {}) as ParticipantOptionsFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -265,16 +261,7 @@ export const ParticipantOptions = () => {
                       {participantsAndProvidersT('recruitmentMethod.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="participants-and-providers-recruitment-method-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="participants-and-providers-recruitment-method-warning" />
 
                     <Fieldset>
                       {getKeys(recruitmentMethodConfig.options).map(key => (
@@ -332,16 +319,7 @@ export const ParticipantOptions = () => {
                       {participantsAndProvidersT('selectionMethod.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="participants-and-providers-selection-method-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="participants-and-providers-selection-method-warning" />
 
                     <Field
                       as={MultiSelect}

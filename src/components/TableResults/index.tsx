@@ -60,21 +60,21 @@ const TableResults = ({
                 {t('tableAndPagination:results.noResults')}{' '}
                 {/* Displays the search input even if there are no results */}
                 {displayResult(globalFilter)}
+                {globalFilter && (
+                  <Alert
+                    type="warning"
+                    heading={t('results.alertHeading', {
+                      query: globalFilter
+                    })}
+                  >
+                    {t('results.alertDescription')}
+                  </Alert>
+                )}
               </div>
-              {globalFilter && (
-                <Alert
-                  type="warning"
-                  heading={t('results.alertHeading', {
-                    query: globalFilter
-                  })}
-                >
-                  {t('results.alertDescription')}
-                </Alert>
-              )}
             </>
           )
         ) : (
-          <div role="status" aria-live="polite">
+          <div role="status" aria-live="polite" className="margin-bottom-2">
             {t('results.results', {
               currentPage,
               pageRange: displayedRowsCount,

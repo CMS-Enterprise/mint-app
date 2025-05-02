@@ -364,7 +364,7 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType, nil, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(sol)
-	solutionSelectedDetails, err := suite.testConfigs.Store.GetSolutionSelectedDetails(sol.ID)
+	solutionSelectedDetails, err := suite.testConfigs.Store.GetOperationalSolutionSelectedDetails(sol.ID)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.Abbreviation, solutionSelectedDetails.ModelAbbreviation)

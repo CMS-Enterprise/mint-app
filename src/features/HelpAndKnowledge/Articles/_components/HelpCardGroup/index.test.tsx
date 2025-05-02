@@ -23,6 +23,6 @@ describe('handleSortOptions', () => {
   it('sorts articles by title in descending order', () => {
     const result = handleSortOptions(helpAndKnowledgeArticles, 'by-title-z-a');
     expect(result[0].key).toBe(HelpArticle.UTILIZING_SOLUTIONS);
-    expect(result[1].key).toBe(HelpArticle.STRATEGY_REFRESH_RESOURCES);
+    expect(result[1].key).toBe(HelpArticle.USING_TABLE_ACTIONS);
   });
 });

@@ -27,6 +27,7 @@ import DataExchangeApproachCard from './Cards/DataExchangeApproachCard';
 import DiscussionsCard from './Cards/DiscussionsCard';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
+import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 
 import './index.scss';
@@ -66,7 +67,8 @@ const CollaborationArea = () => {
     status,
     collaborators,
     isFavorite,
-    suggestedPhase
+    suggestedPhase,
+    mtoMatrix
   } = modelPlan;
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -213,6 +215,8 @@ const CollaborationArea = () => {
                     modelID={modelID}
                     dataExhangeApproachData={dataExchangeApproach}
                   />
+
+                  <MTOCard modelID={modelID} mtoMatrix={mtoMatrix} />
                 </CardGroup>
               </Grid>
             </Grid>

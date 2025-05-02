@@ -23,10 +23,6 @@ export default gql(/* GraphQL */ `
         qualityPerformanceImpactsPaymentOther
         qualityPerformanceImpactsPaymentNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

@@ -371,12 +371,6 @@ func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
 	err = suite.verifyModelPlanTrackingDate(plan, sol.CreatedDts)
 	suite.NoError(err)
 
-	// Create a subtask for the solution
-	opSolSubtask := suite.createOperationalSolutionSubtaskWithSolution(sol)
-
-	err = suite.verifyModelPlanTrackingDate(plan, opSolSubtask.CreatedDts)
-	suite.NoError(err)
-
 	documentSolLinks, err := PlanDocumentSolutionLinksCreate(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,

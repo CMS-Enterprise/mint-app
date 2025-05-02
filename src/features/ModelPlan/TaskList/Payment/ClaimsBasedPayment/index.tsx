@@ -25,7 +25,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -90,10 +90,6 @@ const ClaimsBasedPayment = () => {
   } = (data?.modelPlan?.payments || {}) as ClaimsBasedPaymentFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
@@ -260,17 +256,10 @@ const ClaimsBasedPayment = () => {
                             )}
                           </Label>
 
-                          {itSolutionsStarted && (
-                            <ITSolutionsWarning
-                              id="payment-provider-exclusion-ffs-system-warning"
-                              className="margin-top-neg-5"
-                              onClick={() =>
-                                history.push(
-                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                                )
-                              }
-                            />
-                          )}
+                          <MTOWarning
+                            id="payment-provider-exclusion-ffs-system-warning"
+                            className="margin-top-neg-5"
+                          />
 
                           <BooleanRadio
                             field="shouldAnyProvidersExcludedFFSSystems"

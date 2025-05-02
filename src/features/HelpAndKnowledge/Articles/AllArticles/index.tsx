@@ -37,14 +37,22 @@ const AllArticles = () => {
       <GridContainer>
         <Grid>
           <HelpBreadcrumb
-            text={category ? t(`helpCategories.${category}`) : t(`${'all'}`)}
+            text={
+              category ? t(`helpCategories.${category}.title`) : t(`${'all'}`)
+            }
           />
-          <PageHeading>
-            {category ? t(`helpCategories.${category}`) : t(`${'all'}`)}
+          <PageHeading className="margin-bottom-2">
+            {category ? t(`helpCategories.${category}.title`) : t(`${'all'}`)}
           </PageHeading>
 
+          {category && (
+            <p className="mint-body-large margin-top-0">
+              {t(`helpCategories.${category}.description`)}
+            </p>
+          )}
+
           <HelpCardGroup
-            className="margin-y-2"
+            className="margin-y-2 margin-top-6"
             tag={!category}
             resources={resources}
           />

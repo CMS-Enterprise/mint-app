@@ -4,6 +4,8 @@ import classnames from 'classnames';
 import {
   DataExchangeApproachStatus,
   ModelStatus,
+  MtoMilestoneStatus,
+  MtoStatus,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -29,6 +31,8 @@ export const TaskListStatusTag = ({
     | PrepareForClearanceStatus
     | ModelStatus
     | DataExchangeApproachStatus
+    | MtoStatus
+    | MtoMilestoneStatus
     | undefined;
   classname?: string;
 }) => {
@@ -37,6 +41,10 @@ export const TaskListStatusTag = ({
   let tagStyle;
   let tagCopy;
   switch (status) {
+    case 'NOT_STARTED':
+      tagCopy = t('taskListStatus.NOT_STARTED');
+      tagStyle = 'bg-info-light';
+      break;
     case 'IN_PROGRESS':
       tagCopy = t('taskListStatus.IN_PROGRESS');
       tagStyle = 'bg-warning';

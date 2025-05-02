@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Custom Catergory form > matches snapshot 1`] = `
+<DocumentFragment>
+  <p>
+    This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.
+  </p>
+  <button
+    class="usa-button margin-right-4 bg-error"
+    data-testid="button"
+    type="button"
+  >
+    Remove category
+  </button>
+  <button
+    class="usa-button usa-button--unstyled"
+    data-testid="button"
+    type="button"
+  >
+    Go back
+  </button>
+</DocumentFragment>
+`;

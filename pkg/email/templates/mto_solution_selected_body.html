@@ -1,0 +1,54 @@
+{{template "shared_header.html"}}
+<p>
+  As a part of implementation planning, a CMMI model team has indicated that they plan to use {{.SolutionName}} to implement their model. Please keep in mind that, depending on the model and its start date, model teams may have varied implementation timelines. You may learn more about this model below, or by visiting MINT.
+</p>
+</br>
+<h3>A model plans to use {{.SolutionName}}:</h3>
+<br/>
+<table>
+  <tr>
+    <td>
+      <div class="container-border">
+        <h2>{{.ModelName}}</h2>
+        {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}})
+         <br/>
+        {{end}}
+        <br/>
+        <p><b>Status</b></p>
+        <p>{{.ModelStatus}}</p>
+        <br/>
+        <p><b>Model start date</b></p>
+        <p>{{ if .ModelStartDate }}{{.ModelStartDate.Format "01/02/2006"}}{{ else }} None specified {{end}} </p>
+        <br/>
+        <p><b>Model lead(s)</b></p>
+        <p>{{.ModelLeadNames}}</p>
+        <br/>
+        <p><b>Milestone(s) or model function(s)</b></p>
+        <p>{{if .MilestoneNames }}{{.MilestoneNames}}{{ else }} None specified {{end}}</p>
+        <br/>
+        {{- /* Uncomment this if solution is desired in the future
+        <p><b>Solution Status</b></p>
+        <p>{{.SolutionStatus}}</p>
+        <br/>
+        - */}}
+        <p style="font-weight: normal">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/model-basics{{ if .FilterView }}?filter-view={{.FilterView}} {{end}}">
+            View {{ if .FilterView}} {{.FilterView}} {{ else }} more {{end}} details in MINT
+          </a>
+        </p>
+        <br/>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
+<br/>
+<p>
+  If you have any questions about this model, please contact the model lead or other model team members. If you have questions about IT implementation of this model, please contact the model’s IT Lead if there is one listed. If you have questions about MINT, please contact the MINT team at
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>.
+</p>
+<hr/>
+<br/>
+{{template "shared_solution_poc_footer.html" .}}
+
+{{template "shared_footer.html"}}

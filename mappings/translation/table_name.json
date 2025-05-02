@@ -116,5 +116,29 @@
   },
   "plan_data_exchange_approach": {
     "generalName": "Data exchange approach"
+  },
+  "mto_category": {
+    "generalName": "MTO category"
+  },
+  "mto_milestone": {
+    "generalName": "MTO milestone"
+  },
+  "mto_solution": {
+    "generalName": "MTO solution"
+  },
+  "mto_info": {
+    "generalName": "MTO info"
+  },
+  "mto_common_milestone": {
+    "generalName": "MTO common milestone"
+  },
+  "mto_common_solution": {
+    "generalName": "MTO common solution"
+  },
+  "mto_milestone_solution_link": {
+    "generalName": "MTO milestone solution link"
+  },
+  "mto_common_solution_contact": {
+    "generalName": "MTO common solution contact"
   }
 }

@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Custom Catergory form > matches snapshot 1`] = `
+<DocumentFragment>
+  <p
+    class="margin-top-2 margin-bottom-3"
+  >
+    This action will also move any milestones within this sub-category.
+  </p>
+  <dt
+    class="text-bold"
+  >
+    Current category
+  </dt>
+  <dd
+    class="margin-0 margin-bottom-2"
+  />
+  <form
+    class="usa-form maxw-none"
+    data-testid="form"
+    id="edit-milestone-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-3"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="parent-id"
+        >
+          New category 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <select
+          class="usa-select"
+          data-testid="Select"
+          id="parent-id"
+          name="parentID"
+        >
+          <option
+            value="default"
+          >
+            - Select - 
+          </option>
+          <option
+            value="123"
+          >
+            Category 1
+          </option>
+          <option
+            value="456"
+          >
+            Category 2
+          </option>
+        </select>
+      </div>
+      <button
+        class="usa-button margin-right-4"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Save changes
+      </button>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </fieldset>
+  </form>
+</DocumentFragment>
+`;

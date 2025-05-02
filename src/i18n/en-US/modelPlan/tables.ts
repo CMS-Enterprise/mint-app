@@ -83,6 +83,30 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   },
   [TableName.PLAN_DATA_EXCHANGE_APPROACH]: {
     generalName: 'Data exchange approach'
+  }, // TODO (mto) verify these names
+  [TableName.MTO_CATEGORY]: {
+    generalName: 'MTO category'
+  },
+  [TableName.MTO_MILESTONE]: {
+    generalName: 'MTO milestone'
+  },
+  [TableName.MTO_SOLUTION]: {
+    generalName: 'MTO solution'
+  },
+  [TableName.MTO_INFO]: {
+    generalName: 'MTO info'
+  },
+  [TableName.MTO_COMMON_MILESTONE]: {
+    generalName: 'MTO common milestone'
+  },
+  [TableName.MTO_COMMON_SOLUTION]: {
+    generalName: 'MTO common solution'
+  },
+  [TableName.MTO_MILESTONE_SOLUTION_LINK]: {
+    generalName: 'MTO milestone solution link'
+  },
+  [TableName.MTO_COMMON_SOLUTION_CONTACT]: {
+    generalName: 'MTO common solution contact'
   }
 };
 

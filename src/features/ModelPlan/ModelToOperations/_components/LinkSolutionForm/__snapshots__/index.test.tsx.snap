@@ -1,0 +1,204 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LinkSolutionForm > renders and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-container padding-8"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row"
+      data-testid="grid"
+    >
+      <div
+        class="grid-col-10"
+        data-testid="grid"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          1 selected solution
+        </h3>
+        <div
+          class="text-base-dark mint-body-normal margin-bottom-4"
+        >
+          You may visit the 
+          <a
+            class="usa-link"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library"
+          >
+            solution library
+          </a>
+           or 
+          <a
+            class="usa-link usa-link--external"
+            href="/help-and-knowledge/operational-solutions"
+            target="_blank"
+          >
+            help center
+          </a>
+           to learn more about the solutions below.
+        </div>
+        <div
+          class="border-bottom-1px border-base-lighter border-top-1px padding-top-4 padding-bottom-2 margin-bottom-4"
+        >
+          <h4
+            class="margin-0"
+          >
+            Suggested solutions
+          </h4>
+          <p
+            class="margin-top-0 margin-bottom-3 mint-body-normal text-base"
+          >
+            These solutions are commonly used for this milestone.
+          </p>
+          <div
+            class="desktop:grid-col-9 display-flex"
+            data-testid="grid"
+          >
+            <li
+              class="usa-card width-full"
+              data-testid="Card"
+            >
+              <div
+                class="usa-card__container padding-3 flex-justify radius-md margin-0 model-to-operations__selected-shadow"
+              >
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    checked=""
+                    class="usa-checkbox__input"
+                    id="bcda"
+                    name="bcda"
+                    type="checkbox"
+                    value="bcda"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="bcda"
+                  >
+                    Select this solution
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <h3
+                  class="margin-0"
+                >
+                  Beneficiary Claims Data API
+                </h3>
+                <p
+                  class="margin-top-0 margin-bottom-0"
+                >
+                  BCDA
+                </p>
+              </div>
+            </li>
+          </div>
+        </div>
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="available-solutions"
+        >
+          Available solutions
+        </label>
+        <div
+          class="mint-help-text margin-top-1 text-base-dark mint-body-normal"
+        >
+          Select from other operational solutions and IT systems included in MINT, including any custom solutions you may have added to your MTO. Select all that apply.
+        </div>
+        <div>
+          <div
+            class="easi-multiselect usa-combo-box margin-top-1 grouped-options css-b62m3t-container"
+            id="available-solutions"
+          >
+            <span
+              class="css-1f43avz-a11yText-A11yText"
+              id="react-select-2-live-region"
+            />
+            <span
+              aria-atomic="false"
+              aria-live="polite"
+              aria-relevant="additions text"
+              class="css-1f43avz-a11yText-A11yText"
+              role="log"
+            />
+            <div
+              class=" css-1vl89cy-control"
+            >
+              <div
+                class=" css-1fdsijx-ValueContainer"
+              >
+                <div
+                  class=" css-1jqq78o-placeholder"
+                  id="react-select-2-placeholder"
+                >
+                  0 selected
+                </div>
+                <div
+                  class=" css-qbdosj-Input"
+                  data-value=""
+                >
+                  <input
+                    aria-activedescendant=""
+                    aria-autocomplete="list"
+                    aria-describedby="react-select-2-placeholder"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-labelledby="Available solutions"
+                    autocapitalize="none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    class=""
+                    id="available-solutions"
+                    role="combobox"
+                    spellcheck="false"
+                    style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                    tabindex="0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class=" css-1hb7zxy-IndicatorsContainer"
+              >
+                <span
+                  class=" css-16b81-indicatorSeparator"
+                />
+                <div
+                  aria-hidden="true"
+                  class=" css-gjng1h-indicatorContainer"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="css-tj5bde-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div>
+              <input
+                name="availableSolutions"
+                type="hidden"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

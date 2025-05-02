@@ -1,0 +1,14 @@
+"""
+Represents a translation of a contact for a common solution
+"""
+type MTOCommonSolutionContactTranslation {
+  key: TranslationField! @goTag(key: "db", value:"mto_common_solution_key")
+
+  name: TranslationField! @goTag(key: "db", value:"name")
+  email: TranslationField! @goTag(key: "db", value:"email")
+  isTeam: TranslationField! @goTag(key: "db", value:"is_team")
+  role: TranslationField! @goTag(key: "db", value:"role")
+  isPrimary: TranslationField! @goTag(key: "db", value:"is_primary")
+
+}
+

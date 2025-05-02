@@ -16,7 +16,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
         <h3
           class="line-height-body-4 margin-bottom-1"
         >
-          Overview for adding a model
+          Evaluate your data exchange approach
         </h3>
       </header>
       <a
@@ -36,7 +36,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
         data-testid="CardBody"
       >
         <p>
-          Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation
+          Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome). We often collect health-related social needs data, such as socio-demographic data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange.
         </p>
       </div>
       <div
@@ -44,7 +44,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
         data-testid="CardFooter"
       >
         <button
-          aria-label="Read Overview for adding a model article"
+          aria-label="Read Evaluate your data exchange approach article"
           class="usa-button usa-button--outline"
           type="button"
         >

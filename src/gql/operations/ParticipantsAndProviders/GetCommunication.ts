@@ -24,10 +24,6 @@ export default gql(/* GraphQL */ `
         willRiskChange
         willRiskChangeNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

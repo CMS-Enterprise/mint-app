@@ -115,7 +115,7 @@ describe('fetch csv utils', () => {
   it('translates a header value from field name', () => {
     const data = 'payments.payRecipients';
 
-    const returnData = 'Who will you pay? Select all that apply.';
+    const returnData = 'Who will you pay?';
 
     expect(headerFormatter(data, allPlanTranslation)).toEqual(returnData);
   });

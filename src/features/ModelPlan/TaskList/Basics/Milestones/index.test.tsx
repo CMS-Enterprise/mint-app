@@ -44,13 +44,13 @@ const mocks = [
   {
     request: {
       query: GetMilestonesDocument,
-      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
       data: {
         modelPlan: {
           __typename: 'ModelPlan',
-          id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           basics: milestonesMockData
         }
@@ -64,7 +64,7 @@ describe('Model Basics Milestones page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/milestones'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/milestones'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>

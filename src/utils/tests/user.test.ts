@@ -48,6 +48,7 @@ describe('user', () => {
             changeHistoryEnabled: false,
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
+            sandbox: true,
             echimpEnabled: false // TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
           })
         ).toBe(false);

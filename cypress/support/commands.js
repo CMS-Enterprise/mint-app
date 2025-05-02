@@ -26,3 +26,4 @@
 import './login';
 import './model-plan-by-name';
 import './clickOutside';
+import './find-modal-with-heading-and-save-alias';

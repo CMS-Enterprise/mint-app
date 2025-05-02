@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/suite"
 
 	"github.com/cms-enterprise/mint-app/pkg/testconfig"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/dataloadertestconfigs"
 	useraccounthelperstestconfigs "github.com/cms-enterprise/mint-app/pkg/testconfig/useraccountstoretestconfigs"
 )
 
@@ -18,6 +19,7 @@ type TAuditSuite struct {
 // SetupTest clears the database between each test
 func (suite *TAuditSuite) SetupTest() {
 	err := suite.testConfigs.GenericSetupTests()
+	suite.testConfigs.Context = dataloadertestconfigs.DecorateTestContextWithDataLoader(suite.testConfigs.Context, suite.testConfigs.Store)
 	suite.NoError(err)
 }
 

@@ -1,0 +1,8 @@
+
+"""
+Represents MTO Milestone Solution Link translation data
+"""
+type MTOMilestoneSolutionLinkTranslation {
+    milestoneID: TranslationField! @goTag(key: "db", value: "milestone_id")
+    solutionID: TranslationField! @goTag(key: "db", value: "solution_id")
+}
