@@ -22,6 +22,7 @@ exports[`Sidepanel > matches snapshot 1`] = `
         aria-label="ariaLabel"
         aria-modal="true"
         class="ReactModal__Content mint-sidepanel__content"
+        data-testid="side-panel"
         role="dialog"
         tabindex="-1"
       >
