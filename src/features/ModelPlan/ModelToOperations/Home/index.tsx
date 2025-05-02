@@ -30,6 +30,8 @@ import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import SuggestedMilestoneBanner from '../_components/SuggestedMilestoneBanner';
 
+import './index.scss';
+
 export type MTOOption = 'milestones' | 'solutions';
 
 export const mtoOptions: MTOOption[] = ['milestones', 'solutions'];

@@ -1,0 +1,7 @@
+.model-to-operations__nav-container {
+  .usa-nav__link {
+    &::after {
+      bottom: 0 !important;
+    }
+  }
+}
