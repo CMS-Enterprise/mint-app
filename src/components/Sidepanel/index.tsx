@@ -64,6 +64,7 @@ const Sidepanel = ({
       shouldCloseOnOverlayClick
       contentLabel={ariaLabel}
       appElement={document.getElementById('root')! as HTMLElement}
+      testId="side-panel"
     >
       <div data-testid={testid}>
         <div className="mint-sidepanel__x-button-container display-flex text-base flex-align-center">
