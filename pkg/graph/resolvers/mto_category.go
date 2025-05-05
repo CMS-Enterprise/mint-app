@@ -140,16 +140,38 @@ type mtoStandardCategory struct {
 	subcategories []string
 }
 
+const (
+	mtoCatParticipants    string = "Participants"
+	mtoSubCatAppRevSelect string = "Application, review, and selection"
+	mtoSubCatPartSupport  string = "Participant support"
+
+	mtoCatOperations string = "Operations"
+
+	mtoCatLegal string = "Legal"
+
+	mtoCatPayment string = "Payment"
+
+	mtoCatPayers string = "Payers"
+
+	mtoCatQuality string = "Quality"
+
+	mtoCatLearning string = "Learning"
+
+	mtoCatEvaluation string = "Evaluation"
+
+	mtoCatModelCloseout string = "Model closeout or extension"
+)
+
 var mtoStandardCategories []mtoStandardCategory = []mtoStandardCategory{
-	{name: "Participants", subcategories: []string{"Application, review, and selection", "Participant support"}},
-	{name: "Operations", subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking/alignment", "Benchmarks", "Internal functions", "Fee-for-service (FFS)", "Monitoring"}},
-	{name: "Legal", subcategories: []string{"Agreements", "Benefit enhancements", "Beneficiary engagement and incentives"}},
-	{name: "Payment", subcategories: []string{"Claims-based", "Non-claims based"}},
-	{name: "Payers", subcategories: []string{}},
-	{name: "Quality", subcategories: []string{}},
-	{name: "Learning", subcategories: []string{}},
-	{name: "Evaluation", subcategories: []string{}},
-	{name: "Model closeout or extension", subcategories: []string{}},
+	{name: mtoCatParticipants, subcategories: []string{mtoSubCatAppRevSelect, mtoSubCatPartSupport}},
+	{name: mtoCatOperations, subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking/alignment", "Benchmarks", "Internal functions", "Fee-for-service (FFS)", "Monitoring"}},
+	{name: mtoCatLegal, subcategories: []string{"Agreements", "Benefit enhancements", "Beneficiary engagement and incentives"}},
+	{name: mtoCatPayment, subcategories: []string{"Claims-based", "Non-claims based"}},
+	{name: mtoCatPayers, subcategories: []string{}},
+	{name: mtoCatQuality, subcategories: []string{}},
+	{name: mtoCatLearning, subcategories: []string{}},
+	{name: mtoCatEvaluation, subcategories: []string{}},
+	{name: mtoCatModelCloseout, subcategories: []string{}},
 }
 
 // MTOCreateStandardCategories attempts to create a bunch of categories (some with subcategories) that represent a "standard" set of categories that might
