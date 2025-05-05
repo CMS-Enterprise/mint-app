@@ -1,5 +1,3 @@
-import { title } from 'process';
-
 const creatingMtoMatrix = {
   title: 'Creating your Model-to-operations matrix (MTO) in MINT',
   breadcrumb: 'Creating your MTO in MINT',
