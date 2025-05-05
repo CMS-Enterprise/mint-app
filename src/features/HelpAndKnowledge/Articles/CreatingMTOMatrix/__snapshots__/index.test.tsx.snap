@@ -1,0 +1,948 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              Creating your Model-to-operations matrix (MTO) in MINT
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              Learn more about the Model-to-operations matrix, what it’s for, and how to create and maintain an MTO in MINT.
+            </p>
+            <h2
+              class="margin-top-4 margin-bottom-1"
+            >
+              What is an MTO?
+            </h2>
+            <p
+              class="margin-bottom-3 margin-top-1"
+            >
+              The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the IT systems or solutions used to implement those milestones, and when work for individual milestones must be completed by.
+            </p>
+            <h3
+              class="margin-top-3 margin-bottom-1"
+            >
+              Why create an MTO?
+            </h3>
+            <p
+              class="margin-bottom-2 margin-top-1"
+            >
+              MTOs help to make sense of and document the very complex set of systems, contracts, and activities used to implement a model. It helps keep track of the status of a variety of moving parts, and allows all interested parties to stay informed about model implementation progress. In the past, MTOs have been maintained by individual IT Leads as Powerpoint or Excel files, but MINT allows for more streamlined setup and update capabilities for IT Leads, as well as improved self-service access for all other interested parties.
+            </p>
+            <div
+              class="grid-row grid-gap-2"
+              data-testid="grid"
+            >
+              <div
+                class="tablet:grid-col-6 margin-bottom-1"
+                data-testid="grid"
+              >
+                <li
+                  class="usa-card margin-0 height-full"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container padding-2 radius-md margin-0"
+                  >
+                    <h4
+                      class="margin-y-0"
+                    >
+                      Edit access
+                    </h4>
+                    <p
+                      class="margin-y-1"
+                    >
+                      Users with edit access can:
+                    </p>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Create and update MTOs for any model they have access to
+                      </li>
+                      <li>
+                        Add and remove common milestones and IT systems or solutions to or from an MTO
+                      </li>
+                      <li>
+                        Create custom milestones, categories, and solutions
+                      </li>
+                      <li>
+                        Update the status of an MTO
+                      </li>
+                      <li>
+                        Share an MTO with colleagues or export an MTO
+                      </li>
+                      <li>
+                        Use MINT discussions to discuss the MTO and other aspects of a model
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </div>
+              <div
+                class="tablet:grid-col-6 margin-bottom-1"
+                data-testid="grid"
+              >
+                <li
+                  class="usa-card margin-0 height-full"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container padding-2 radius-md margin-0"
+                  >
+                    <h4
+                      class="margin-y-0"
+                    >
+                      Read view
+                    </h4>
+                    <p
+                      class="margin-y-1"
+                    >
+                      Any MINT users can access a read view of MTOs and can:
+                    </p>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        View all content (milestones, solutions, statuses, categories, etc.) for any model’s MTO
+                      </li>
+                      <li>
+                        Share an MTO with colleagues or export an MTO
+                      </li>
+                      <li>
+                        Use MINT discussions to ask questions of the model team
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </div>
+            </div>
+            <h3
+              class="margin-top-3 margin-bottom-1"
+            >
+              Why create an MTO?
+            </h3>
+            <p
+              class="margin-bottom-2 margin-top-1"
+            >
+              MTOs help to make sense of and document the very complex set of systems, contracts, and activities used to implement a model. It helps keep track of the status of a variety of moving parts, and allows all interested parties to stay informed about model implementation progress. In the past, MTOs have been maintained by individual IT Leads as Powerpoint or Excel files, but MINT allows for more streamlined setup and update capabilities for IT Leads, as well as improved self-service access for all other interested parties.
+            </p>
+            <div
+              class="grid-row grid-gap-2"
+              data-testid="grid"
+            >
+              <div
+                class="tablet:grid-col-6 margin-bottom-1"
+                data-testid="grid"
+              >
+                <li
+                  class="usa-card margin-0 height-full"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container padding-2 radius-md margin-0"
+                  >
+                    <h4
+                      class="margin-y-0"
+                    >
+                      IT Lead
+                    </h4>
+                    <p
+                      class="margin-y-1"
+                    >
+                      IT Leads have edit access to models that they have been assigned to (and read view access to other models) and will:
+                    </p>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Create and maintain a draft MTO
+                      </li>
+                      <li>
+                        Make time with the model team to regularly share the MTO and the status of the milestones and solutions listed
+                      </li>
+                      <li>
+                        Act as a liaison to IT system teams and Product Owners to ensure that work is moving forward for onboarding to a system, contract, or other solution.
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </div>
+              <div
+                class="tablet:grid-col-6 margin-bottom-1"
+                data-testid="grid"
+              >
+                <li
+                  class="usa-card margin-0 height-full"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container padding-2 radius-md margin-0"
+                  >
+                    <h4
+                      class="margin-y-0"
+                    >
+                      Model team
+                    </h4>
+                    <p
+                      class="margin-y-1"
+                    >
+                      Model teams (including Model Leads and workstream leads) have edit access to models that they are team members of (and read view access to other models) and will:
+                    </p>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Review the MTO in MINT as necessary
+                      </li>
+                      <li>
+                        Meet regularly with the IT Lead to review MTO status
+                      </li>
+                      <li>
+                        Work with the IT Lead to ensure content in the MTO is correct
+                      </li>
+                      <li>
+                        Take responsibility for and update any tasks or activities assigned to them in the MTO
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </div>
+            </div>
+            <h2
+              class="margin-top-4 margin-bottom-1"
+            >
+              Parts of an MTO
+            </h2>
+            <p
+              class="margin-bottom-3 margin-top-1"
+            >
+              An MTO in MINT is made up of a variety of different pieces, all of which help communicate different aspects of a model’s move towards becoming an active and operational model.
+            </p>
+            <h3
+              class="margin-top-3 margin-bottom-1"
+            >
+              Milestones
+            </h3>
+            <p
+              class="margin-bottom-2 margin-top-1"
+            >
+              A milestone is a key function or requirement for a model. Work for a milestone needs to be completed or enabled before a model can go live. MINT’s MTO feature offers two milestone capabilities. The MINT milestone library contains a set of common model milestones that can be quickly added to an MTO. MINT also offers the capability to create custom milestones, allowing for any unique characteristics of individual models.
+            </p>
+            <h3
+              class="margin-top-3 margin-bottom-1"
+            >
+              Categories
+            </h3>
+            <p
+              class="margin-bottom-2 margin-top-1"
+            >
+              Categories are an easy way for IT leads to arrange milestones into functional groups or model phases. This can make the MTO more easily digestible for other MINT users and can help organize milestones in a more chronological manner according to operational phase.
+            </p>
+            <h3
+              class="margin-top-3 margin-bottom-1"
+            >
+              IT systems and solutions
+            </h3>
+            <p
+              class="margin-bottom-2 margin-top-1"
+            >
+              Solutions are IT systems, contracts, CMS groups and teams, and other methods to implement milestones. IT leads will use their breadth of expertise to add solutions to the MTO and specify which milestone(s) they will help to accomplish. Like milestones, MINT offers two ways of adding a solution to an MTO. The MINT solution library houses a set of information about commonly used IT systems and other solutions, enabling IT leads to quickly add them to an MTO or associate them with a milestone. MINT also allows users to create custom solutions, helpful in cases where a needed system is not included in MINT or when a model is using a bespoke solution not commonly used by other models. You can also view MINT’s available IT systems and solutions in the 
+              <a
+                class="usa-link"
+                href="/help-and-knowledge/operational-solutions"
+              >
+                Operational solutions area of the Help Center
+              </a>
+              . When IT Leads add solutions to an MTO, the points of contact for the chosen IT system or solution will receive an automatic notification email from MINT which includes a link to read about the model that plans to use their system or solution. 
+            </p>
+            <h3
+              class="margin-top-3 margin-bottom-1"
+            >
+              Templates
+            </h3>
+            <p
+              class="margin-bottom-2 margin-top-1"
+            >
+              Templates are combinations of milestones, categories, and solutions that give users a specific MTO starting point or set of content to add to an existing MTO. Template content is often specific to a particular type of model or a particular model characteristic.
+            </p>
+            <h2
+              class="margin-top-4 margin-bottom-1 line-height-large"
+            >
+              Recommended high-level process for MTOs and solution implementation
+            </h2>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Create Model Plan in MINT
+                </h3>
+                <p>
+                  The Model Lead and Model Team work to fill out the Model Plan in MINT as best they can, with assistance as needed from the MINT Team (formerly known as the Model Intake Team). They should also complete any additional Model Intake activities that are necessary.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  IT Lead is assigned to the model
+                </h3>
+                <p>
+                  The IT Lead should review all materials created by the Model Team, including but not limited to: the Model Plan in MINT, 2-page and 6-page concept papers, and the ICIP or draft ICIP.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Begin drafting MTO
+                </h3>
+                <p>
+                  Using all that was learned in step 2, the IT Lead should begin an MTO in MINT. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. 
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Share MTO with Model Team
+                </h3>
+                <p>
+                  Once a solid draft of the MTO is complete, the IT Lead should meet with the Model Team to share the draft MTO and discuss the details and plan for moving forward. This would also be a good time to establish a plan for a regular cadence of MTO updates, whether during an existing meeting series, or as a new set of meetings. 
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  (Optional) Mark MTO as Ready for Review
+                </h3>
+                <p>
+                  Once the model’s draft MTO is generally agreed upon by the IT Lead and Model Team, set the MTO status to "Ready for review" to signal to other interested parties that the main content (milestones, solutions, etc.) is fairly well set and is open to any comments or feedback. Even if the MTO is set to "Ready for review", IT Leads should still expect to update the implementation status of individual items as work progresses.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Begin discussions with IT system and solution teams
+                </h3>
+                <p>
+                  IT Leads (or other agreed upon responsible party) should begin reaching out to IT system and solution teams identified in the MTO to begin or learn more about any necessary onboarding processes. In step 3 (above) and after, as IT Leads add solutions to an MTO, the points of contact for the chosen IT system or solution will receive an automatic notification email from MINT. These emails include a link to read about the model, and can be a good opportunity to begin conversations with the IT system or solution team. 
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Continue to update the MTO in MINT
+                </h3>
+                <p>
+                  As work progresses, IT Leads should continue to use the MINT MTO feature to update the status of individual milestones as well as IT systems and solutions. To asynchronously update any interested parties, use the Share feature in MINT to share a link to the model’s MTO with any colleagues or interested individuals at CMS.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Final content update
+                </h3>
+                <p>
+                  When the model goes Active (or is paused or ends for another reason), IT Leads should do a final content update of the MTO, ensuring that all statuses, milestones, and solutions are accurate. This ensures that MINT can retain historical information about how a model went operational, potentially leading to efficiencies in the future.
+                </p>
+              </li>
+            </ol>
+            <div
+              class="bg-base-lightest padding-2"
+            >
+              <h3
+                class="margin-top-1 margin-bottom-1"
+              >
+                MTO tutorials
+              </h3>
+              <p
+                class="margin-bottom-2 margin-top-1"
+              >
+                Use the links below to access more specific details about how to use the MTO capabilities in MINT.
+              </p>
+              <div
+                class="grid-row"
+                data-testid="grid"
+              >
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/starting-mto"
+                  >
+                    <span>
+                      Starting an MTO for a new model
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-milestone-table"
+                  >
+                    <span>
+                      Using the milestone table
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-it-systems-and-solutions-table"
+                  >
+                    <span>
+                      Using the IT system and solution table
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-table-actions"
+                  >
+                    <span>
+                      Using the table actions area
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-milestone-library"
+                  >
+                    <span>
+                      Using the milestone library
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-solution-library"
+                  >
+                    <span>
+                      Using the solution library
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/add-custom-milestone"
+                  >
+                    <span>
+                      How to add a custom milestone
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/add-custom-solution"
+                  >
+                    <span>
+                      How to add a custom solution
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/updating-mto-status"
+                  >
+                    <span>
+                      Updating your MTO status
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/sharing-exporting-mto"
+                  >
+                    <span>
+                      Sharing and exporting your MTO
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help articles
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help articles that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Phases involved in creating IT and operational support for models
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=it-implementation"
+              >
+                <span
+                  aria-label="Articles under the IT implementation category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  IT implementation
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  There are two phases invovled in creating IT and operational support for CMMI models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Phases involved in creating IT and operational support for models article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Model implementation and solution implementation
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=it-implementation"
+              >
+                <span
+                  aria-label="Articles under the IT implementation category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  IT implementation
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Model implementation and solution implementation article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Utilizing available operational solutions
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=it-implementation"
+              >
+                <span
+                  aria-label="Articles under the IT implementation category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  IT implementation
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Utilizing available operational solutions article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

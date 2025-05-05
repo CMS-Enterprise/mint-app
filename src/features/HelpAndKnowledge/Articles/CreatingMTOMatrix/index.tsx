@@ -87,7 +87,7 @@ export const CreatingMTOMatrix = () => {
 
                     <ul className="margin-0">
                       {editAccessList.map(item => (
-                        <li>{item}</li>
+                        <li key={item}>{item}</li>
                       ))}
                     </ul>
                   </Card>
@@ -106,7 +106,7 @@ export const CreatingMTOMatrix = () => {
 
                     <ul className="margin-0">
                       {readViewList.map(item => (
-                        <li>{item}</li>
+                        <li key={item}>{item}</li>
                       ))}
                     </ul>
                   </Card>
@@ -135,7 +135,7 @@ export const CreatingMTOMatrix = () => {
 
                     <ul className="margin-0">
                       {itLeadList.map(item => (
-                        <li>{item}</li>
+                        <li key={item}>{item}</li>
                       ))}
                     </ul>
                   </Card>
@@ -154,7 +154,7 @@ export const CreatingMTOMatrix = () => {
 
                     <ul className="margin-0">
                       {modelTeamList.map(item => (
-                        <li>{item}</li>
+                        <li key={item}>{item}</li>
                       ))}
                     </ul>
                   </Card>
