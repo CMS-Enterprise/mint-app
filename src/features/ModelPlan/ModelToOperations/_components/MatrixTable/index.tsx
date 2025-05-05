@@ -283,22 +283,112 @@ const MTOTable = ({
     const { clearMessage } = useMessage();
     const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
+    const renderActionMenu = () => {
+      const setIndexes =
+        rowType === 'subcategory' && categoryIndex !== undefined
+          ? [categoryIndex, currentIndex]
+          : [currentIndex];
+
+      const moveRowDirection = (num: number) => {
+        if (rowType === 'category') {
+          return [setIndexes[0] + num];
+        }
+        return [setIndexes[0], setIndexes[1] + num];
+      };
+
+      return (
+        <ActionMenu
+          name={row.name}
+          primaryCategoryID={categoryID ?? ''}
+          subCategoryID={subCategoryID ?? ''}
+          milestoneID={row.id}
+          rowType={rowType}
+          MoveUp={
+            <Button
+              type="button"
+              disabled={
+                currentIndex === 0 || currentIndex === (rowLength || 0) - 1
+              }
+              onClick={e => {
+                e.stopPropagation();
+                setRearrangedData(
+                  moveRow(
+                    setIndexes,
+                    moveRowDirection(-1),
+                    rowType,
+                    sortedData,
+                    updateOrder,
+                    setError
+                  )
+                );
+              }}
+              onKeyPress={e => {
+                e.stopPropagation();
+              }}
+              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+              unstyled
+            >
+              {t(
+                `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryUp' : 'moveSubCategoryUp'}`
+              )}
+            </Button>
+          }
+          MoveDown={
+            <Button
+              type="button"
+              disabled={
+                currentIndex === (rowLength || 0) - 1 ||
+                currentIndex === (rowLength || 0) - 2
+              }
+              onClick={e => {
+                e.stopPropagation();
+                setRearrangedData(
+                  moveRow(
+                    setIndexes,
+                    moveRowDirection(1),
+                    rowType,
+                    sortedData,
+                    updateOrder,
+                    setError
+                  )
+                );
+              }}
+              onKeyPress={e => {
+                e.stopPropagation();
+              }}
+              className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+              unstyled
+            >
+              {t(
+                `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryDown' : 'moveSubCategoryDown'}`
+              )}
+            </Button>
+          }
+        />
+      );
+    };
+
+    // Subcategory: special case with full-width label + separate ActionMenu cell
+    if (rowType === 'subcategory') {
+      return (
+        <>
+          <td />
+          <td
+            colSpan={filteredColumns.length - 2}
+            className="padding-1 padding-left-0"
+          >
+            {row.name}
+          </td>
+          <td className="padding-1">{renderActionMenu()}</td>
+        </>
+      );
+    }
+
+    // Milestone & Category: standard row rendering
     return (
       <>
         {filteredColumns.map((column, index) => {
           const RenderCell = column?.Cell ?? '';
-
-          const setIndexes =
-            rowType === 'subcategory' && categoryIndex !== undefined
-              ? [categoryIndex, currentIndex]
-              : [currentIndex];
-
-          const moveRowDirection = (num: number) => {
-            if (rowType === 'category') {
-              return [setIndexes[0] + num];
-            }
-            return [setIndexes[0], setIndexes[1] + num];
-          };
 
           return (
             <td
@@ -308,98 +398,27 @@ const MTOTable = ({
               })}
               key={column.accessor}
             >
-              {/* If column is the Actions column, render <ActionMenu /> with custom buttons that updates data state for reordering */}
-              {column.accessor === 'actions' ? (
-                <ActionMenu
-                  name={row.name}
-                  primaryCategoryID={categoryID ?? ''}
-                  subCategoryID={subCategoryID ?? ''}
-                  milestoneID={row.id}
-                  rowType={rowType}
-                  MoveUp={
-                    <Button
-                      type="button"
-                      disabled={
-                        currentIndex === 0 ||
-                        currentIndex === (rowLength || 0) - 1
-                      }
-                      onClick={e => {
-                        e.stopPropagation();
-                        setRearrangedData(
-                          moveRow(
-                            setIndexes,
-                            moveRowDirection(-1),
-                            rowType,
-                            sortedData,
-                            updateOrder,
-                            setError
-                          )
-                        );
-                      }}
-                      onKeyPress={e => {
-                        e.stopPropagation();
-                      }}
-                      className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-                      unstyled
-                    >
-                      {t(
-                        `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryUp' : 'moveSubCategoryUp'}`
-                      )}
-                    </Button>
-                  }
-                  MoveDown={
-                    <Button
-                      type="button"
-                      disabled={
-                        currentIndex === (rowLength || 0) - 1 ||
-                        currentIndex === (rowLength || 0) - 2
-                      }
-                      onClick={e => {
-                        e.stopPropagation();
-                        setRearrangedData(
-                          moveRow(
-                            setIndexes,
-                            moveRowDirection(1),
-                            rowType,
-                            sortedData,
-                            updateOrder,
-                            setError
-                          )
-                        );
-                      }}
-                      onKeyPress={e => {
-                        e.stopPropagation();
-                      }}
-                      className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
-                      unstyled
-                    >
-                      {t(
-                        `modelToOperationsMisc:table.menu.${rowType === 'category' ? 'moveCategoryDown' : 'moveSubCategoryDown'}`
-                      )}
-                    </Button>
-                  }
-                />
-              ) : (
-                <>
-                  {RenderCell ? (
-                    <>
-                      <RenderCell
-                        row={row}
-                        rowType={rowType}
-                        expanded={expanded}
-                        clearMessage={clearMessage}
-                        setMTOModalOpen={setMTOModalOpen}
-                        setMTOModalState={setMTOModalState}
-                        initLocation={initLocation}
-                        search={location.search}
-                        readView={readView}
-                      />
-                    </>
-                  ) : (
-                    row[column.accessor as keyof MilestoneType]
-                  )}
-                </>
-              )}
+              {(() => {
+                if (column.accessor === 'actions') {
+                  return renderActionMenu();
+                }
+                if (RenderCell) {
+                  return (
+                    <RenderCell
+                      row={row}
+                      rowType={rowType}
+                      expanded={expanded}
+                      clearMessage={clearMessage}
+                      setMTOModalOpen={setMTOModalOpen}
+                      setMTOModalState={setMTOModalState}
+                      initLocation={initLocation}
+                      search={location.search}
+                      readView={readView}
+                    />
+                  );
+                }
+                return row[column.accessor as keyof MilestoneType];
+              })()}
             </td>
           );
         })}
