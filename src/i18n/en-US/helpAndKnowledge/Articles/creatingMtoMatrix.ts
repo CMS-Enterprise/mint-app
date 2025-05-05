@@ -25,6 +25,26 @@ const creatingMtoMatrix = {
     'View all content (milestones, solutions, statuses, categories, etc.) for any model’s MTO',
     'Share an MTO with colleagues or export an MTO',
     'Use MINT discussions to ask questions of the model team'
+  ],
+  whoCreatesMTO: 'Who creates and uses an MTO?',
+  whoCreatesMTODescription:
+    'IT Leads are responsible for creating the MTO and keeping it up-to-date. Model team members are able to make updates to the MTO if they have that working arrangement with their IT Lead and work closely with or keep their IT Lead informed. MINT Team users (also known as Assessment Team) are also able to edit MTOs if needed, and are available to help IT leads.',
+  itLead: 'IT Lead',
+  itLeadDescription:
+    'IT Leads have edit access to models that they have been assigned to (and read view access to other models) and will:',
+  itLeadList: [
+    'Create and maintain a draft MTO',
+    'Make time with the model team to regularly share the MTO and the status of the milestones and solutions listed',
+    'Act as a liaison to IT system teams and Product Owners to ensure that work is moving forward for onboarding to a system, contract, or other solution.'
+  ],
+  modelTeam: 'Model team',
+  modelTeamDescription:
+    'Model teams (including Model Leads and workstream leads) have edit access to models that they are team members of (and read view access to other models) and will:',
+  modelTeamList: [
+    'Review the MTO in MINT as necessary',
+    'Meet regularly with the IT Lead to review MTO status',
+    'Work with the IT Lead to ensure content in the MTO is correct',
+    'Take responsibility for and update any tasks or activities assigned to them in the MTO'
   ]
 };
 export default creatingMtoMatrix;
