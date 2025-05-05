@@ -636,9 +636,9 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	numSubcategories := lo.CountBy(updatedCategories, func(c *models.MTOCategory) bool {
 		return c.ParentID != nil
 	})
-	suite.Len(updatedCategories, 18)  // total
-	suite.Equal(8, numCategories)     // just top-level categories
-	suite.Equal(10, numSubcategories) // just subcategories
+	suite.Len(updatedCategories, 24)  // total
+	suite.Equal(9, numCategories)     // just top-level categories
+	suite.Equal(15, numSubcategories) // just subcategories
 
 	// Finally, we'll:
 	// 1) rename one of the standard categories that has subcategories (i.e. "Participants")
