@@ -145,15 +145,15 @@ const (
 	mtoSubCatAppRevSelect string = "Application, review, and selection"
 	mtoSubCatPartSupport  string = "Participant support"
 
-	mtoCatOperations           string = "Operations"
-	mtoSubCatSetupOps          string = "Set up operations"
-	mtoSubCatCollectData       string = "Collect data"
-	mtoSubCatSendData          string = "Send data to participants"
-	mtoSubCatTrackingAlignment string = "Participant and beneficiary tracking/alignment"
-	mtoSubCatBenchmarks        string = "Benchmarks"
-	mtoSubCatInternalFunctions string = "Internal functions"
-	mtoSubCatFFS               string = "Fee-for-service (FFS)"
-	mtoSubCatMonitoring        string = "Monitoring"
+	mtoCatOperations                      string = "Operations"
+	mtoSubCatSetupOps                     string = "Set up operations"
+	mtoSubCatCollectData                  string = "Collect data"
+	mtoSubCatSendData                     string = "Send data to participants"
+	mtoSubCatPartAndBeneTrackingAlignment string = "Participant and beneficiary tracking/alignment"
+	mtoSubCatBenchmarks                   string = "Benchmarks"
+	mtoSubCatInternalFunctions            string = "Internal functions"
+	mtoSubCatFFS                          string = "Fee-for-service (FFS)"
+	mtoSubCatMonitoring                   string = "Monitoring"
 
 	mtoCatLegal                   string = "Legal"
 	mtoSubCatAgreements           string = "Agreements"
@@ -185,7 +185,7 @@ var mtoStandardCategories []mtoStandardCategory = []mtoStandardCategory{
 			mtoSubCatSetupOps,
 			mtoSubCatCollectData,
 			mtoSubCatSendData,
-			mtoSubCatTrackingAlignment,
+			mtoSubCatPartAndBeneTrackingAlignment,
 			mtoSubCatBenchmarks,
 			mtoSubCatInternalFunctions,
 			mtoSubCatFFS,

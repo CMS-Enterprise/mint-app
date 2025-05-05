@@ -647,7 +647,8 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 
 	// 1) Find and rename
 	participantsCategory, found := lo.Find[*models.MTOCategory](updatedCategories, func(item *models.MTOCategory) bool {
-		return item.Name == "Participants"
+		return item.Name == mtoCatParticipants
+		// TODO, refactor to use const instead of strings
 	})
 	suite.True(found)
 	_, err = MTOCategoryRename(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, participantsCategory.ID, "Participants (NEW AND IMPROVED)")
@@ -668,7 +669,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 		return c.ParentID != nil
 	})
 
-	suite.Len(categoriesAfterRename, 21) // total (three more than before)
+	suite.Len(categoriesAfterRename, 27) // total (three more than before)
 	suite.Equal(10, numCategories)       // just top-level categories (one more than before)
 	suite.Equal(17, numSubcategories)    // just subcategories (two more than before)
 }
