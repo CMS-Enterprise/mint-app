@@ -472,7 +472,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
       },
-      selectedMilestones: 'Selected milestones',
+      selectedMilestones: 'Related milestones',
       selectedMilestonesCount:
         '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:

@@ -102,7 +102,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 data-testid="label"
                 for="facilitated-by"
               >
-                Facilitated By
+                Facilitated by
               </label>
               <div
                 class="mint-help-text margin-top-1"
@@ -147,7 +147,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                           aria-describedby="react-select-2-placeholder"
                           aria-expanded="false"
                           aria-haspopup="true"
-                          aria-label="Facilitated By"
+                          aria-label="Facilitated by"
                           aria-labelledby="facilitated-by"
                           autocapitalize="none"
                           autocomplete="off"
@@ -207,7 +207,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 data-testid="label"
                 for="needed-by"
               >
-                Need By
+                Need by
               </label>
               <div
                 class="mint-help-text margin-top-1"
@@ -468,7 +468,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
               <h3
                 class="margin-0 margin-bottom-1"
               >
-                Selected milestones
+                Related milestones
               </h3>
               <p
                 class="margin-0 margin-bottom-1"

@@ -52,7 +52,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
               <dt
                 class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
               >
-                Facilitated By
+                Facilitated by
               </dt>
               <dd
                 class="description-definition margin-0 font-body-md text-base-darkest"
@@ -76,7 +76,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
               <dt
                 class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
               >
-                Need By
+                Need by
               </dt>
               <dd
                 class="description-definition margin-0 font-body-md text-base-darkest"

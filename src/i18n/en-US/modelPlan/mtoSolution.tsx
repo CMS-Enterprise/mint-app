@@ -132,7 +132,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'neededBy',
     goField: 'NeededBy',
     dbField: 'needed_by',
-    label: 'Need By',
+    label: 'Need by',
     exportLabel: 'Solution needed by',
     sublabel:
       'Choose the date when onboarding and implementation work for this solution should be complete. Format: mm/dd/yyyy',
@@ -144,7 +144,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'facilitatedBy',
     goField: 'FacilitatedBy',
     dbField: 'facilitated_by',
-    label: 'Facilitated By',
+    label: 'Facilitated by',
     exportLabel: 'Solution facilitated by',
     sublabel: 'Choose the role or group responsible for this work.',
     dataType: TranslationDataType.ENUM,

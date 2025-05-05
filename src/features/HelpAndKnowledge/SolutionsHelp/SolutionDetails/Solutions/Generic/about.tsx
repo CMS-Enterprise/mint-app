@@ -105,11 +105,11 @@ const InternalSolutionButton = ({
       type="button"
       unstyled
       onClick={() => {
+        history.push({ search: params.toString() });
         const modalCon = document?.getElementsByClassName(
           'ReactModal__Overlay'
-        )?.[1];
+        )?.[0];
         modalCon.scrollTo(0, 0);
-        history.push({ search: params.toString() });
       }}
     >
       {children}

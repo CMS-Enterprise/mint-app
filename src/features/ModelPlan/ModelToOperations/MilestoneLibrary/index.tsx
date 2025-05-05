@@ -252,9 +252,9 @@ const MilstoneCardGroup = ({
           history.replace({ search: params.toString() });
           setIsSidepanelOpen(false);
         }}
-        ariaLabel={t('milestoneLibrary.aboutThisMilestone')}
+        ariaLabel={t('modal.editMilestone.milestoneTitle')}
         testid="milestone-sidepanel"
-        modalHeading={t('milestoneLibrary.aboutThisMilestone')}
+        modalHeading={t('modal.editMilestone.milestoneTitle')}
         noScrollable
       >
         {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
@@ -459,7 +459,7 @@ const MilstoneCardGroup = ({
                   pageSize={itemsPerPage}
                   setPageSize={setItemsPerPage}
                   valueArray={[6, 9, 'all']}
-                  suffix={t('milestones')}
+                  suffix={t('milestones').toLowerCase()}
                 />
               )}
             </div>
