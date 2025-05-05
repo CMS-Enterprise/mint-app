@@ -1,6 +1,7 @@
 module github.com/cms-enterprise/mint-app
 
 go 1.23.4
+toolchain go1.24.1
 
 require (
 	github.com/99designs/gqlgen v0.17.38
@@ -31,7 +32,7 @@ require github.com/gorilla/websocket v1.5.3
 require github.com/xhit/go-simple-mail/v2 v2.16.0
 
 require (
-	github.com/contribsys/faktory v1.9.1
+	github.com/contribsys/faktory v1.9.2
 	github.com/launchdarkly/go-sdk-common/v3 v3.2.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
 	github.com/parquet-go/parquet-go v0.25.0
@@ -80,7 +81,7 @@ require (
 )
 
 require (
-	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/BurntSushi/toml v1.5.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0 // indirect
 	github.com/okta/okta-sdk-golang/v2 v2.20.0
@@ -95,7 +96,7 @@ require (
 require (
 	github.com/agnivade/levenshtein v1.2.1 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
-	github.com/charmbracelet/bubbletea v1.3.4
+	github.com/charmbracelet/bubbletea v1.3.5
 	github.com/contribsys/faktory_worker_go v1.7.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.6 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
