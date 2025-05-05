@@ -145,28 +145,68 @@ const (
 	mtoSubCatAppRevSelect string = "Application, review, and selection"
 	mtoSubCatPartSupport  string = "Participant support"
 
-	mtoCatOperations string = "Operations"
+	mtoCatOperations           string = "Operations"
+	mtoSubCatSetupOps          string = "Set up operations"
+	mtoSubCatCollectData       string = "Collect data"
+	mtoSubCatSendData          string = "Send data to participants"
+	mtoSubCatTrackingAlignment string = "Participant and beneficiary tracking/alignment"
+	mtoSubCatBenchmarks        string = "Benchmarks"
+	mtoSubCatInternalFunctions string = "Internal functions"
+	mtoSubCatFFS               string = "Fee-for-service (FFS)"
+	mtoSubCatMonitoring        string = "Monitoring"
 
-	mtoCatLegal string = "Legal"
+	mtoCatLegal                   string = "Legal"
+	mtoSubCatAgreements           string = "Agreements"
+	mtoSubCatBenefitEnhancements  string = "Benefit enhancements"
+	mtoSubCatEngagementIncentives string = "Beneficiary engagement and incentives"
 
-	mtoCatPayment string = "Payment"
+	mtoCatPayment      string = "Payment"
+	mtoSubCatClaims    string = "Claims-based"
+	mtoSubCatNonClaims string = "Non-claims based"
 
-	mtoCatPayers string = "Payers"
-
-	mtoCatQuality string = "Quality"
-
-	mtoCatLearning string = "Learning"
-
-	mtoCatEvaluation string = "Evaluation"
-
+	mtoCatPayers        string = "Payers"
+	mtoCatQuality       string = "Quality"
+	mtoCatLearning      string = "Learning"
+	mtoCatEvaluation    string = "Evaluation"
 	mtoCatModelCloseout string = "Model closeout or extension"
 )
 
 var mtoStandardCategories []mtoStandardCategory = []mtoStandardCategory{
-	{name: mtoCatParticipants, subcategories: []string{mtoSubCatAppRevSelect, mtoSubCatPartSupport}},
-	{name: mtoCatOperations, subcategories: []string{"Set up operations", "Collect data", "Send data to participants", "Participant and beneficiary tracking/alignment", "Benchmarks", "Internal functions", "Fee-for-service (FFS)", "Monitoring"}},
-	{name: mtoCatLegal, subcategories: []string{"Agreements", "Benefit enhancements", "Beneficiary engagement and incentives"}},
-	{name: mtoCatPayment, subcategories: []string{"Claims-based", "Non-claims based"}},
+	{
+		name: mtoCatParticipants,
+		subcategories: []string{
+			mtoSubCatAppRevSelect,
+			mtoSubCatPartSupport,
+		},
+	},
+	{
+		name: mtoCatOperations,
+		subcategories: []string{
+			mtoSubCatSetupOps,
+			mtoSubCatCollectData,
+			mtoSubCatSendData,
+			mtoSubCatTrackingAlignment,
+			mtoSubCatBenchmarks,
+			mtoSubCatInternalFunctions,
+			mtoSubCatFFS,
+			mtoSubCatMonitoring,
+		},
+	},
+	{
+		name: mtoCatLegal,
+		subcategories: []string{
+			mtoSubCatAgreements,
+			mtoSubCatBenefitEnhancements,
+			mtoSubCatEngagementIncentives,
+		},
+	},
+	{
+		name: mtoCatPayment,
+		subcategories: []string{
+			mtoSubCatClaims,
+			mtoSubCatNonClaims,
+		},
+	},
 	{name: mtoCatPayers, subcategories: []string{}},
 	{name: mtoCatQuality, subcategories: []string{}},
 	{name: mtoCatLearning, subcategories: []string{}},
