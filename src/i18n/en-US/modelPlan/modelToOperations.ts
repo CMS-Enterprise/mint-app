@@ -14,7 +14,7 @@ type MilestoneCardType = {
 const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   [MtoCommonMilestoneKey.MANAGE_CD]: {
     description:
-      'Identify the Part D and Parts C/D beneficiaries based on their enrollment in a participating MAPD or PDP plan.'
+      'Identify the Part D and Parts C/D beneficiaries based on their enrollment in a participating Medicare Advantage and Prescription Drug (MAPD) or Prescription Drug Plan (PDP) plan.'
   },
   [MtoCommonMilestoneKey.REV_COL_BIDS]: {
     description:
@@ -26,7 +26,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.SIGN_PARTICIPATION_AGREEMENTS]: {
     description:
-      'Support the signing of Participation Agreements between CMS and each participant. There would be a unique document for each participant with signatures from both CMS and the participant.'
+      'Support the signing of Participation Agreements between CMS and each participant. There would be a unique document for each participant with signatures from both CMS and the participant. Most often, ACO models will use 4i to fulfill this milestone, while non-ACO models will use Salesforce.'
   },
   [MtoCommonMilestoneKey.RECRUIT_PARTICIPANTS]: {
     description:
@@ -46,7 +46,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.VET_PROVIDERS_FOR_PROGRAM_INTEGRITY]: {
     description:
-      'Screen potential participants or providers in a model for significant program integrity concerns, such as convictions of fraud or abuse or pending fraud or abuse cases.'
+      'Screen potential participants or providers in a model for significant program integrity concerns, such as convictions of fraud or abuse or pending fraud or abuse cases. ACO models will often use 4i which will integrate with CPI to vet providers. Non-ACO models will often use Salesforce to integrate with CPI to vet providers.'
   },
   [MtoCommonMilestoneKey.MANAGE_PROV_OVERLAP]: {
     description:
@@ -66,7 +66,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.ESTABLISH_BENCH]: {
     description:
-      'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.'
+      'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.<br>Note: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
   },
   [MtoCommonMilestoneKey.PROCESS_PART_APPEALS]: {
     description:
@@ -82,15 +82,15 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.DATA_TO_SUPPORT_EVAL]: {
     description:
-      'Gather information from participants, intermediaries, or both, to help support model evaluation.'
+      'Gather information from participants, intermediaries, or both, to help support model evaluation. Non-ACO models will likely use one or more ISP systems and/or the Salesforce Project Officer Support Tool / Portal, while ACO models are likely to use 4i to accomplish this milestone. Teams using ISP systems may select ISP for this milestone until they are sure which specific systems they will use.\nNote: Some of this collected data may also be used for the purposes of model monitoring.'
   },
   [MtoCommonMilestoneKey.CLAIMS_BASED_MEASURES]: {
     description:
-      'Analyze claims information to calculate a claims-based measure. This measure may be part of a broader quality strategy or methodology for the model.'
+      'Analyze claims information to calculate a claims-based measure. This measure may be part of a broader quality strategy or methodology for the model. Different team members may use different tools for different activities related to this milestone. For example, Implementation contractors are likely to use Model Space, while Evaluation contractors may use CCW.\nNote: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
   },
   [MtoCommonMilestoneKey.QUALITY_PERFORMANCE_SCORES]: {
     description:
-      'Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper fusce urna pharetra id orci. Feugiat in ac ornare lobortis. Vulputate nisi et sem magna id consequat scelerisque sed sed. Facilisi id porttitor vulputate donec purus enim turpis. Viverra porttitor ut eget ante adipiscing. Id etiam commodo porta facilisi. Lectus vulputate id pretium ut neque magna aliquam cras.'
+      'Gather information about participant quality performance and use it to calculate quality performance scores.'
   },
   [MtoCommonMilestoneKey.SEND_REPDATA_TO_PART]: {
     description:
