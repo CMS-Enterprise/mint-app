@@ -20,6 +20,7 @@ CREATE TABLE mto_solution(
     -- we allow null because this is will be from the commonSolution table if it exists
     type MTO_SOLUTION_TYPE,
     facilitated_by MTO_FACILITATOR[],
+    facilitated_by_other ZERO_STRING,
     needed_by TIMESTAMP WITH TIME ZONE,
     status MTO_SOLUTION_STATUS NOT NULL,
     risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',

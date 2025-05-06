@@ -16,6 +16,7 @@ CREATE TABLE mto_milestone (
     -- we allow null because this is will be from the commonMilestone table if it exists
     name ZERO_STRING,
     facilitated_by MTO_FACILITATOR[],
+    facilitated_by_other ZERO_STRING,
     need_by TIMESTAMP WITH TIME ZONE,
     status MTO_MILESTONE_STATUS NOT NULL,
     risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
