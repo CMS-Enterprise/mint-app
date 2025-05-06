@@ -67,6 +67,6 @@ ALTER TABLE mto_solution
 ADD CONSTRAINT mto_solution_check_facilitated_by_other_only_if_other
 CHECK (
     facilitated_by_other IS NULL
-    OR facilitated_by @> ARRAY['OTHER'] -- does the array contain OTHER?
+    OR facilitated_by @> ARRAY['OTHER']::MTO_FACILITATOR[] -- does the array contain OTHER?
 );
 COMMENT ON CONSTRAINT mto_solution_check_facilitated_by_other_only_if_other ON mto_solution IS 'Ensures that if facilitated_by_other can only be provided if the facilitated_by array includes the OTHER option.';
