@@ -35,6 +35,7 @@ WITH retVal AS (
         mto_common_solution_key,
         name,
         type,
+        facilitated_by,
         facilitated_by_other,
         needed_by,
         status,
