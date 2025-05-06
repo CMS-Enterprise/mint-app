@@ -182,7 +182,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Create custom milestone', () => {
-    cy.contains('or, add a custom milestone').click();
+    cy.contains('or, create a custom milestone').click();
 
     cy.findModalWithThisHeadingAndSaveAlias(
       'Add a new model milestone',
@@ -215,7 +215,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Create custom solution', () => {
-    cy.contains('or, add a custom solution').click();
+    cy.contains('or, create a custom solution').click();
 
     cy.findModalWithThisHeadingAndSaveAlias(
       'Add a new solution',

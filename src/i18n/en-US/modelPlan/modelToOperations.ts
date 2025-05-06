@@ -224,7 +224,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Template',
       header: 'Standard categories',
       description: '24 categories, 0 milestones, 0 solutions',
-      buttonText: 'Use this template'
+      buttonText: 'Add this template'
     }
   },
   table: {
@@ -242,6 +242,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     noneAdded: 'None added yet',
     editDetails: 'Edit details',
     milestones: 'milestones',
+    milestonesCount: '{{count}} milestone',
+    milestonesCount_other: '{{count}} milestones',
     selectASolution: 'Select a solution',
     noRelatedMilestones: 'No related milestones',
     moreMilestones: '+ {{count}} more milestone',
@@ -252,9 +254,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       moveSubCategoryUp: 'Move sub-category up',
       moveCategoryDown: 'Move category down',
       moveSubCategoryDown: 'Move sub-category down',
-      addMilestone: 'Add model milestone',
+      addMilestone: 'Create model milestone',
       moveToAnotherCategory: 'Move to another category',
-      addSubCategory: 'Add sub-category',
+      addSubCategory: 'Create sub-category',
       editCategoryTitle: 'Edit category title',
       editSubCategoryTitle: 'Edit sub-category title',
       removeCategory: 'Remove category',
@@ -655,8 +657,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       'MINT hasn’t suggested any milestones for your model that match your search. You may also try checking <link1>all available milestones</link1>. As you and your team fill out more of your <link2>Model Plan</link2>, MINT may display suggested common milestones that match your search. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email1>MINTTeam@cms.hhs.gov</email1>.',
     dontSeeMilestone: 'Don’t see a milestone you need?',
     checkMilestones:
-      'Check <link1>all available milestones</link1> or <button1>add a custom milestone</button1>.',
-    addCustomMilestone: 'Add a custom milestone',
+      'Check <link1>all available milestones</link1> or <button1>create a custom milestone</button1>.',
+    addCustomMilestone: 'Create a custom milestone',
     aboutSolution: 'About this solution',
     commonSolutions: 'Common solutions'
   },
@@ -673,8 +675,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     dontSeeSolution: 'Don’t see the solution you need?',
     checkAllSolutions:
-      'Check <link1>all available solutions</link1> or <button1>add a custom solution</button1>.',
-    addCustomSolution: 'Add a custom solution',
+      'Check <link1>all available solutions</link1> or <button1>create a custom solution</button1>.',
+    addCustomSolution: 'Create a custom solution',
     aboutThisSolution: 'About this solution',
     IT_SYSTEM: 'IT System',
     CONTRACTOR: 'Contract vehicle, contractor, or other contract',
