@@ -233,7 +233,7 @@ const SelectSolutionForm = () => {
           id="select-solution-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Fieldset>
+          <Fieldset className="margin-bottom-8">
             <Controller
               name="linkedSolutions"
               control={control}
@@ -289,24 +289,30 @@ const SelectSolutionForm = () => {
             />
           </Fieldset>
 
-          <Button type="submit" disabled={!isDirty} className="margin-right-3">
-            {!watch('linkedSolutions')?.length
-              ? t('modal.selectSolution.cta.disabled')
-              : t('modal.selectSolution.cta.add', {
-                  count: watch('linkedSolutions')?.length || 0
-                })}
-          </Button>
+          <div className="mint-modal__footer">
+            <Button
+              type="submit"
+              disabled={!isDirty}
+              className="margin-right-3 margin-top-0"
+            >
+              {!watch('linkedSolutions')?.length
+                ? t('modal.selectSolution.cta.disabled')
+                : t('modal.selectSolution.cta.add', {
+                    count: watch('linkedSolutions')?.length || 0
+                  })}
+            </Button>
 
-          <Button
-            type="button"
-            className="usa-button usa-button--unstyled"
-            onClick={() => {
-              reset();
-              setMTOModalOpen(false);
-            }}
-          >
-            {t('modal.cancel')}
-          </Button>
+            <Button
+              type="button"
+              className="usa-button usa-button--unstyled margin-top-0"
+              onClick={() => {
+                reset();
+                setMTOModalOpen(false);
+              }}
+            >
+              {t('modal.cancel')}
+            </Button>
+          </div>
         </Form>
       </FormProvider>
     </>

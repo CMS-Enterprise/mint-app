@@ -152,19 +152,26 @@ const EditCategoryTitleForm = () => {
             )}
           />
         </Fieldset>
-        <Button type="submit" disabled={!isValid} className="margin-right-3">
-          {t('modal.editCategoryTitle.saveChanges')}
-        </Button>
-        <Button
-          type="button"
-          className={`usa-button ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
-          onClick={() => {
-            reset();
-            setMTOModalOpen(false);
-          }}
-        >
-          {t('modal.cancel')}
-        </Button>
+
+        <div className="mint-modal__footer">
+          <Button
+            type="submit"
+            disabled={!isValid}
+            className="margin-right-3 margin-top-0"
+          >
+            {t('modal.editCategoryTitle.saveChanges')}
+          </Button>
+          <Button
+            type="button"
+            className={`usa-button margin-top-0 ${isMobile ? 'usa-button--outline' : 'usa-button--unstyled'}`}
+            onClick={() => {
+              reset();
+              setMTOModalOpen(false);
+            }}
+          >
+            {t('modal.cancel')}
+          </Button>
+        </div>
       </Form>
     </FormProvider>
   );

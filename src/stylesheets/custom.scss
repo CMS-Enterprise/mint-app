@@ -333,5 +333,24 @@ th {
     }
   }
 
- 
+  &__height {
+    height: 600px
+  }
+
+  &__fixed-top {
+    position: fixed;
+    width: 100%;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    background-color: #fff;
+    width: 100%;
+    margin-left: -2rem;
+    padding-left: 2rem;
+    box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);  
+  }
 }
