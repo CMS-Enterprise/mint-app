@@ -174,6 +174,16 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     },
     order: 1.8
   },
+  facilitatedByOther: {
+    gqlField: 'facilitatedByOther',
+    goField: 'FacilitatedByOther',
+    dbField: 'facilitated_by_other',
+    label: 'Facilitated by (other)',
+    exportLabel: 'Solution facilitated by (other)',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.85
+  },
   milestones: {
     gqlField: 'milestones',
     goField: 'Milestones',

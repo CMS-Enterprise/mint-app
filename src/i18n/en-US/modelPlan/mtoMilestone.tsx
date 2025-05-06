@@ -71,6 +71,16 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       MODEL_DATA_LEAD: 'Model Data Lead'
     }
   },
+  facilitatedByOther: {
+    gqlField: 'facilitatedByOther',
+    goField: 'FacilitatedByOther',
+    dbField: 'facilitated_by_other',
+    label: 'Facilitated by (other)',
+    exportLabel: 'Milestone facilitated by (other)',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.035
+  },
   needBy: {
     gqlField: 'needBy',
     goField: 'NeedBy',
