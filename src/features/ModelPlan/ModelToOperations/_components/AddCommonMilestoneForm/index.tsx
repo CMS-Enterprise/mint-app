@@ -230,7 +230,7 @@ const AddCommonMilestoneForm = ({
           id="milestone-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Fieldset>
+          <Fieldset className="padding-bottom-8">
             <Controller
               name="commonSolutions"
               control={control}
@@ -262,23 +262,29 @@ const AddCommonMilestoneForm = ({
             />
           </Fieldset>
 
-          <Button type="submit" disabled={!isValid} className="margin-right-3">
-            {t('modal.solutionToMilestone.add', {
-              count: watch('commonSolutions')?.length || 0
-            })}
-          </Button>
+          <div className="mint-modal__footer">
+            <Button
+              type="submit"
+              disabled={!isValid}
+              className="margin-right-3 margin-top-0"
+            >
+              {t('modal.solutionToMilestone.add', {
+                count: watch('commonSolutions')?.length || 0
+              })}
+            </Button>
 
-          <Button
-            type="button"
-            className="usa-button usa-button--unstyled"
-            onClick={() => {
-              reset();
-              clearMessage();
-              closeModal();
-            }}
-          >
-            {t('modal.cancel')}
-          </Button>
+            <Button
+              type="button"
+              className="usa-button usa-button--unstyled margin-top-0"
+              onClick={() => {
+                reset();
+                clearMessage();
+                closeModal();
+              }}
+            >
+              {t('modal.cancel')}
+            </Button>
+          </div>
         </Form>
       </FormProvider>
     </>

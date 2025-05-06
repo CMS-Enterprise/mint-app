@@ -60,6 +60,7 @@ const MilestoneCard = ({
           clearMessage();
           setIsModalOpen(false);
         }}
+        fixed
         className="tablet:width-mobile-lg mint-body-normal"
       >
         <div className="margin-bottom-2">
