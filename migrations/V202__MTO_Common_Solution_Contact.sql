@@ -69,21 +69,21 @@ COMMENT ON INDEX idx_unique_primary_contact_per_mto_common_solution IS 'Ensures 
 CREATE OR REPLACE FUNCTION ENSURE_PRIMARY_CONTACT_MTO()
 RETURNS TRIGGER AS $$
 DECLARE
-  mto_common_solution_key MTO_COMMON_SOLUTION_KEY;
+  sol_key MTO_COMMON_SOLUTION_KEY;
 BEGIN
 
   -- Determine the appropriate key based on the trigger event
   IF TG_OP = 'DELETE' THEN
-    mto_common_solution_key := OLD.mto_common_solution_key;
+    sol_key := OLD.mto_common_solution_key;
   ELSE
-    mto_common_solution_key := NEW.mto_common_solution_key;
+    sol_key := NEW.mto_common_solution_key;
   END IF;
   
   -- Check if there is at least one primary contact for the solution
   IF NOT EXISTS (
     SELECT 1
     FROM mto_common_solution_contact
-    WHERE mto_common_solution_contact = OLD.mto_common_solution_key
+    WHERE mto_common_solution_key = sol_key
       AND is_primary = TRUE
   ) THEN
     RAISE EXCEPTION 'At least one primary contact must be assigned for each mto common solution.';

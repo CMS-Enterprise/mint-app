@@ -636,9 +636,9 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	numSubcategories := lo.CountBy(updatedCategories, func(c *models.MTOCategory) bool {
 		return c.ParentID != nil
 	})
-	suite.Len(updatedCategories, 18)  // total
-	suite.Equal(8, numCategories)     // just top-level categories
-	suite.Equal(10, numSubcategories) // just subcategories
+	suite.Len(updatedCategories, 24)  // total
+	suite.Equal(9, numCategories)     // just top-level categories
+	suite.Equal(15, numSubcategories) // just subcategories
 
 	// Finally, we'll:
 	// 1) rename one of the standard categories that has subcategories (i.e. "Participants")
@@ -647,7 +647,8 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 
 	// 1) Find and rename
 	participantsCategory, found := lo.Find[*models.MTOCategory](updatedCategories, func(item *models.MTOCategory) bool {
-		return item.Name == "Participants"
+		return item.Name == mtoCatParticipants
+		// TODO, refactor to use const instead of strings
 	})
 	suite.True(found)
 	_, err = MTOCategoryRename(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, participantsCategory.ID, "Participants (NEW AND IMPROVED)")
@@ -668,9 +669,9 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 		return c.ParentID != nil
 	})
 
-	suite.Len(categoriesAfterRename, 21) // total (three more than before)
-	suite.Equal(9, numCategories)        // just top-level categories (one more than before)
-	suite.Equal(12, numSubcategories)    // just subcategories (two more than before)
+	suite.Len(categoriesAfterRename, 27) // total (three more than before)
+	suite.Equal(10, numCategories)       // just top-level categories (one more than before)
+	suite.Equal(17, numSubcategories)    // just subcategories (two more than before)
 }
 
 func (suite *ResolverSuite) TestMTOCategoryDelete_NullID() {

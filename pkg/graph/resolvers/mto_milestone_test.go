@@ -106,7 +106,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	suite.Len(categories, 2) // 1 new category (Operations) + Uncategorized
 
 	operationsCategory, found := lo.Find(categories, func(item *models.MTOCategory) bool {
-		return item != nil && item.Name == "Operations"
+		return item != nil && item.Name == mtoCatOperations
 	})
 	suite.True(found)
 
@@ -114,12 +114,12 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	suite.NoError(err)
 	suite.Len(operationsSubCategories, 2) // should have 'Participant and beneficiary tracking' + Uncategorized
 	participantSubcategory, found := lo.Find(operationsSubCategories, func(item *models.MTOSubcategory) bool {
-		return item != nil && item.Name == "Participant and beneficiary tracking"
+		return item != nil && item.Name == mtoSubCatPartAndBeneTrackingAlignment
 	})
-	suite.True(found)
-
-	if suite.NotNil(milestone.MTOCategoryID) {
-		suite.Equal(participantSubcategory.ID, *milestone.MTOCategoryID) // ensure that the common milestone was created pointed to the subcategory
+	if suite.True(found) {
+		if suite.NotNil(milestone.MTOCategoryID) {
+			suite.Equal(participantSubcategory.ID, *milestone.MTOCategoryID) // ensure that the common milestone was created pointed to the subcategory
+		}
 	}
 
 	// Finally, do the same, but ensure that if we would try to create a duplicate category by name, we fail silently
@@ -143,13 +143,13 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 
 	// Find 'Participant and beneficiary tracking'
 	_, foundParticipant := lo.Find(operationsSubCategories, func(item *models.MTOSubcategory) bool {
-		return item != nil && item.Name == "Participant and beneficiary tracking"
+		return item != nil && item.Name == mtoSubCatPartAndBeneTrackingAlignment
 	})
 	suite.True(foundParticipant)
 
 	// Find 'Internal functions'
 	_, foundInternalFunctions := lo.Find(operationsSubCategories, func(item *models.MTOSubcategory) bool {
-		return item != nil && item.Name == "Internal functions"
+		return item != nil && item.Name == mtoSubCatInternalFunctions
 	})
 	suite.True(foundInternalFunctions)
 }
