@@ -209,16 +209,16 @@ export const modelToOperationsMisc: Record<string, any> = {
       header: 'Start with model milestones',
       description:
         'Model milestones are the key activities and functions that models must accomplish in order to be ready to go live. Most will be fulfilled by one or more IT systems or solutions. Many milestones are similar across models, so MINT offers a library of common milestones to select from.',
-      buttonText: 'Browse common milestones',
-      linkText: 'or, add a custom milestone'
+      buttonText: 'Add milestones from library',
+      linkText: 'or, create a custom milestone'
     },
     solutions: {
       label: 'Operational solutions',
       header: 'Start with IT systems or other solutions',
       description:
         'Models use a variety of IT systems or solutions to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.',
-      buttonText: 'Browse common solutions',
-      linkText: 'or, add a custom solution'
+      buttonText: 'Add solutions from library',
+      linkText: 'or, create a custom solution'
     },
     template: {
       label: 'Template',
@@ -266,15 +266,15 @@ export const modelToOperationsMisc: Record<string, any> = {
       hideActions: 'Hide actions',
       milestones: 'Milestones',
       commonMilestones: '{{number}} common milestones',
-      browseMilestoneLibrary: 'Browse milestone library',
+      browseMilestoneLibrary: 'Add milestones from library',
       operationalSolutions: 'Operational solutions',
       commonSolutions: '{{number}} common solutions and IT systems',
-      browseSolutionLibrary: 'Browse solution library',
+      browseSolutionLibrary: 'Add solutions from library',
       templateAndCategories: 'Templates and categories',
       availableTemplates: '1 available template',
       standardCategories: 'Standard categories',
       addThisTemplate: 'Add this template',
-      addCustomCategory: 'or, add a custom category'
+      addCustomCategory: 'or, create a custom category'
     },
     alert: {
       noSolutions:
