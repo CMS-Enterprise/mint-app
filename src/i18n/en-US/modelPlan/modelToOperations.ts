@@ -110,19 +110,19 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.EDUCATE_BENEF]: {
     description:
-      'Share information with beneficairies, either directly or via participants. This information may educate beneficiaries about their involvement in a model, about their health condition, or something else.'
+      'Share information with beneficiaries, either directly or via participants. This information may educate beneficiaries about their involvement in a model, about their health condition, or something else.'
   },
   [MtoCommonMilestoneKey.IT_PLATFORM_FOR_LEARNING]: {
     description:
-      'Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper fusce urna pharetra id orci. Feugiat in ac ornare lobortis. Vulputate nisi et sem magna id consequat scelerisque sed sed. Facilisi id porttitor vulputate donec purus enim turpis. Viverra porttitor ut eget ante adipiscing. Id etiam commodo porta facilisi. Lectus vulputate id pretium ut neque magna aliquam cras.'
+      'Support participants learning by providing resources, in addition to the sharing of ideas and experiences. This can help participants learn from the successes and challenges of others involved with the same model.'
   },
   [MtoCommonMilestoneKey.ADJUST_FFS_CLAIMS]: {
     description:
-      'Make payment changes to the Fee-For-Service payment system for Medicare-enrolled providers or suppliers. This may involve updating payment rates to existing payments or may involve paying for things the Fee-for-Service System has not typically paid for (or no longer paying for things it typically does pay for).'
+      'Make payment changes to the Fee-For-Service payment system for Medicare-enrolled providers or suppliers. This may involve updating payment rates to existing payments or may involve paying for things the Fee-for-Service System has not typically paid for (or no longer paying for things it typically does pay for). Work for this milestone may include establishing new codes.'
   },
   [MtoCommonMilestoneKey.MANAGE_FFS_EXCL_PAYMENTS]: {
     description:
-      'Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper fusce urna pharetra id orci. Feugiat in ac ornare lobortis. Vulputate nisi et sem magna id consequat scelerisque sed sed. Facilisi id porttitor vulputate donec purus enim turpis. Viverra porttitor ut eget ante adipiscing. Id etiam commodo porta facilisi. Lectus vulputate id pretium ut neque magna aliquam cras.'
+      "Support the model ability to make changes to the way providers are paid in the current fee-for-service payment system, to match the model's policies."
   },
   [MtoCommonMilestoneKey.MAKE_NON_CLAIMS_BASED_PAYMENTS]: {
     description:
@@ -130,11 +130,11 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.COMPUTE_SHARED_SAVINGS_PAYMENT]: {
     description:
-      'Calculate the performance of participants relative to the benchmark. This calculation may take into account the quality performance score and other factors. Positive results could result in shared savings and negative results could result in shared losses.'
+      'Calculate the performance of participants relative to the benchmark. This calculation may take into account the quality performance score and other factors. Positive results could result in shared savings and negative results could result in shared losses. RMADA contractors will use Model Space to complete this work.'
   },
   [MtoCommonMilestoneKey.RECOVER_PAYMENTS]: {
     description:
-      'When needed, recover payments from participants or providers. Payments may have been errors and may need to be recovered, or participants may have incurred losses and CMS may be recovering that money.'
+      'When needed, recover payments from participants or providers. Payments may have been errors and may need to be recovered, or participants may have incurred losses and CMS may be recovering that money. For work related to this milestone, Medicare Fee-for-service (FFS) models will most often use the Innovation Payment Contractor (IPC), MAPD models are likely to use the Automated Plan Payment System (APPS), and in extremely rare cases, some FFS models may make non-claims based payments through Medicare Administrative Contractors (MAC).'
   }
 };
 
