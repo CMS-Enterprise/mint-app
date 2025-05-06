@@ -66,7 +66,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.ESTABLISH_BENCH]: {
     description:
-      'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.<br>Note: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
+      'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.\n\nNote: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
   },
   [MtoCommonMilestoneKey.PROCESS_PART_APPEALS]: {
     description:
@@ -82,11 +82,11 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.DATA_TO_SUPPORT_EVAL]: {
     description:
-      'Gather information from participants, intermediaries, or both, to help support model evaluation. Non-ACO models will likely use one or more ISP systems and/or the Salesforce Project Officer Support Tool / Portal, while ACO models are likely to use 4i to accomplish this milestone. Teams using ISP systems may select ISP for this milestone until they are sure which specific systems they will use.\nNote: Some of this collected data may also be used for the purposes of model monitoring.'
+      'Gather information from participants, intermediaries, or both, to help support model evaluation. Non-ACO models will likely use one or more ISP systems and/or the Salesforce Project Officer Support Tool / Portal, while ACO models are likely to use 4i to accomplish this milestone. Teams using ISP systems may select ISP for this milestone until they are sure which specific systems they will use.\n\nNote: Some of this collected data may also be used for the purposes of model monitoring.'
   },
   [MtoCommonMilestoneKey.CLAIMS_BASED_MEASURES]: {
     description:
-      'Analyze claims information to calculate a claims-based measure. This measure may be part of a broader quality strategy or methodology for the model. Different team members may use different tools for different activities related to this milestone. For example, Implementation contractors are likely to use Model Space, while Evaluation contractors may use CCW.\nNote: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
+      'Analyze claims information to calculate a claims-based measure. This measure may be part of a broader quality strategy or methodology for the model. Different team members may use different tools for different activities related to this milestone. For example, Implementation contractors are likely to use Model Space, while Evaluation contractors may use CCW.\n\nNote: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
   },
   [MtoCommonMilestoneKey.QUALITY_PERFORMANCE_SCORES]: {
     description:
