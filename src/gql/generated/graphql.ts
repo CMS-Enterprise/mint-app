@@ -1008,6 +1008,7 @@ export type MtoMilestoneTranslation = {
   __typename: 'MTOMilestoneTranslation';
   commonSolutions: TranslationFieldWithOptions;
   facilitatedBy: TranslationFieldWithOptions;
+  facilitatedByOther: TranslationField;
   isDraft: TranslationFieldWithOptions;
   key: TranslationField;
   mtoCategoryID: TranslationField;
@@ -1080,6 +1081,7 @@ export enum MtoSolutionStatus {
 export type MtoSolutionTranslation = {
   __typename: 'MTOSolutionTranslation';
   facilitatedBy: TranslationFieldWithOptions;
+  facilitatedByOther: TranslationField;
   key: TranslationField;
   milestones: TranslationFieldWithOptions;
   name: TranslationField;
