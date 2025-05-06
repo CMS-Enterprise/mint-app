@@ -368,8 +368,8 @@ const MTOTable = ({
       );
     };
 
-    // Subcategory: special case with full-width label + separate ActionMenu cell
-    if (rowType === 'subcategory') {
+    // Milestone & Subcategory: special case with full-width label + separate ActionMenu cell
+    if (rowType === 'subcategory' || rowType === 'category') {
       return (
         <>
           <td />
@@ -384,7 +384,7 @@ const MTOTable = ({
       );
     }
 
-    // Milestone & Category: standard row rendering
+    // Category: standard row rendering
     return (
       <>
         {filteredColumns.map((column, index) => {

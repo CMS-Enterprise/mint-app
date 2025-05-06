@@ -213,38 +213,115 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             style="cursor: pointer; background-color: rgb(225, 243, 248); border-bottom: 1px solid black; border-top: 1px solid black; font-weight: bold; font-size: 1.25em;"
             tabindex="0"
           >
+            <td />
             <td
-              class="padding-1 line-height-normal padding-left-05"
-            >
-              <span
-                class="margin-left-05"
-                style="font-size: 1.25rem;"
-              >
-                <span
-                  aria-label="Collapse row"
-                  class="text-primary"
-                >
-                  ―
-                </span>
-              </span>
-            </td>
-            <td
-              class="padding-1 line-height-normal padding-left-0"
+              class="padding-1 padding-left-0"
+              colspan="4"
             >
               Uncategorized
             </td>
             <td
-              class="padding-1 line-height-normal padding-left-0"
-            />
-            <td
-              class="padding-1 line-height-normal padding-left-0"
-            />
-            <td
-              class="padding-1 line-height-normal padding-left-0"
-            />
-            <td
-              class="padding-1 line-height-normal padding-left-0"
-            />
+              class="padding-1"
+            >
+              <div>
+                <button
+                  aria-label="Open action menu"
+                  class="usa-button usa-button--unstyled width-auto padding-right-1 text-primary text-decoration-none text-bold float-right"
+                  data-testid="button"
+                  style="font-size: 1.25rem;"
+                  type="button"
+                >
+                  …
+                </button>
+                <ul
+                  class="usa-nav__submenu share-export-modal__menu padding-top-05 padding-bottom-0 bg-white text-primary width-card-lg action-menu position-absolute"
+                  hidden=""
+                >
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Close menu
+                    </button>
+                  </li>
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      data-testid="button"
+                      disabled=""
+                      type="button"
+                    >
+                      Move category up
+                    </button>
+                  </li>
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      data-testid="button"
+                      disabled=""
+                      type="button"
+                    >
+                      Move category down
+                    </button>
+                  </li>
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Add model milestone
+                    </button>
+                  </li>
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      data-testid="button"
+                      disabled=""
+                      type="button"
+                    >
+                      Add sub-category
+                    </button>
+                  </li>
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
+                      data-testid="button"
+                      disabled=""
+                      type="button"
+                    >
+                      Edit category title
+                    </button>
+                  </li>
+                  <li
+                    class="usa-nav__submenu-item"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item "
+                      data-testid="button"
+                      disabled=""
+                      type="button"
+                    >
+                      Remove category
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
           </tr>
           <tr
             draggable="true"
