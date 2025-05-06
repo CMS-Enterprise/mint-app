@@ -19,6 +19,11 @@ type MTOMilestone {
   """
   mtoCategoryID: UUID
   facilitatedBy: [MTOFacilitator!]
+  """
+  A place to store the other facilitator information if selected as an option for facilitatedBy.
+  Note, this data will be cleared if other is removed as an option
+  """
+  facilitatedByOther: String
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
@@ -46,6 +51,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   name: String # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
   mtoCategoryID: UUID
   facilitatedBy: [MTOFacilitator!]
+  facilitatedByOther: String
   needBy: Time
   status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator

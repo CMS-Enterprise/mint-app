@@ -24,6 +24,7 @@ insert_attempt AS ( --noqa
         name,
         type,
         facilitated_by,
+        facilitated_by_other,
         needed_by,
         status,
         risk_indicator,

@@ -31,12 +31,13 @@ type MTOMilestone struct {
 	Name *string                `json:"name" db:"name"`                    // From Common Milestone Table if linked
 	Key  *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"` // Foreign Key to the Common Milestone Table
 
-	MTOCategoryID *uuid.UUID                 `json:"mtoCategoryID" db:"mto_category_id"`
-	FacilitatedBy *EnumArray[MTOFacilitator] `json:"facilitatedBy" db:"facilitated_by"`
-	NeedBy        *time.Time                 `json:"needBy" db:"need_by"`
-	Status        MTOMilestoneStatus         `json:"status" db:"status"`
-	RiskIndicator MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`
-	IsDraft       bool                       `json:"isDraft" db:"is_draft"`
+	MTOCategoryID      *uuid.UUID                 `json:"mtoCategoryID" db:"mto_category_id"`
+	FacilitatedBy      *EnumArray[MTOFacilitator] `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther *string                    `json:"facilitatedByOther" db:"facilitated_by_other"`
+	NeedBy             *time.Time                 `json:"needBy" db:"need_by"`
+	Status             MTOMilestoneStatus         `json:"status" db:"status"`
+	RiskIndicator      MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`
+	IsDraft            bool                       `json:"isDraft" db:"is_draft"`
 }
 
 // AddedFromMilestoneLibrary returns true or false if this was added from the common milestone library.

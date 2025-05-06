@@ -952,6 +952,11 @@ export type MtoMilestone = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<Array<MtoFacilitator>>;
+  /**
+   * A place to store the other facilitator information if selected as an option for facilitatedBy.
+   * Note, this data will be cleared if other is removed as an option
+   */
+  facilitatedByOther?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   isDraft: Scalars['Boolean']['output'];
   key?: Maybe<MtoCommonMilestoneKey>;
@@ -972,6 +977,7 @@ export type MtoMilestone = {
 
 export type MtoMilestoneChanges = {
   facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   isDraft?: InputMaybe<Scalars['Boolean']['input']>;
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1026,6 +1032,11 @@ export type MtoSolution = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   facilitatedBy?: Maybe<Array<MtoFacilitator>>;
+  /**
+   * A place to store the other facilitator information if selected as an option for facilitatedBy.
+   * Note, this data will be cleared if other is removed as an option
+   */
+  facilitatedByOther?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   key?: Maybe<MtoCommonSolutionKey>;
   milestones: Array<MtoMilestone>;
@@ -1043,6 +1054,7 @@ export type MtoSolution = {
 
 export type MtoSolutionChanges = {
   facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   neededBy?: InputMaybe<Scalars['Time']['input']>;
   pocEmail?: InputMaybe<Scalars['String']['input']>;
