@@ -70,18 +70,18 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               data-testid="CardFooter"
             >
               <a
-                aria-label="Browse common milestones"
+                aria-label="Add milestones from library"
                 class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
                 href="/models/123/collaboration-area/model-to-operations/milestone-library"
               >
-                Browse common milestones
+                Add milestones from library
               </a>
               <button
                 class="usa-button usa-button--unstyled display-block"
                 data-testid="button"
                 type="button"
               >
-                or, add a custom milestone
+                or, create a custom milestone
               </button>
             </div>
           </div>
@@ -138,18 +138,18 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               data-testid="CardFooter"
             >
               <a
-                aria-label="Browse common solutions"
+                aria-label="Add solutions from library"
                 class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
                 href="/models/123/collaboration-area/model-to-operations/solution-library"
               >
-                Browse common solutions
+                Add solutions from library
               </a>
               <button
                 class="usa-button usa-button--unstyled display-block"
                 data-testid="button"
                 type="button"
               >
-                or, add a custom solution
+                or, create a custom solution
               </button>
             </div>
           </div>
@@ -258,7 +258,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
                     data-testid="button"
                     type="button"
                   >
-                    Use this template
+                    Add this template
                   </button>
                 </div>
               </div>

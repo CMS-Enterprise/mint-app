@@ -88,21 +88,25 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
         />
       </div>
     </fieldset>
-    <button
-      class="usa-button margin-right-3"
-      data-testid="button"
-      disabled=""
-      type="submit"
+    <div
+      class="mint-modal__footer"
     >
-      Add category
-    </button>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      Cancel
-    </button>
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Add category
+      </button>
+      <button
+        class="usa-button usa-button margin-top-0 usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </DocumentFragment>
 `;

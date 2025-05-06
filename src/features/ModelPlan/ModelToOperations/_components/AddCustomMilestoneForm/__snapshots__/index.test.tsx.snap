@@ -109,7 +109,7 @@ exports[`Custom Milestone form > matches snapshot 1`] = `
       </div>
     </fieldset>
     <div
-      class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-2"
+      class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-8"
       data-testid="alert"
     >
       <div
@@ -132,21 +132,25 @@ exports[`Custom Milestone form > matches snapshot 1`] = `
         </p>
       </div>
     </div>
-    <button
-      class="usa-button margin-right-3"
-      data-testid="button"
-      disabled=""
-      type="submit"
+    <div
+      class="mint-modal__footer"
     >
-      Add milestone
-    </button>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      Cancel
-    </button>
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Add milestone
+      </button>
+      <button
+        class="usa-button usa-button usa-button--unstyled margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </DocumentFragment>
 `;

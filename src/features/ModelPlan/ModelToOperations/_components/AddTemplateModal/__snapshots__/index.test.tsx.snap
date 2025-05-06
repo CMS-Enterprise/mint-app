@@ -22,17 +22,17 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
       Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.
     </p>
     <div
-      class="display-flex"
+      class="display-flex mint-modal__footer"
     >
       <button
-        class="usa-button margin-right-3"
+        class="usa-button margin-right-3 margin-top-0"
         data-testid="button"
         type="submit"
       >
         Add template
       </button>
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled margin-top-0"
         data-testid="button"
         type="button"
       >
