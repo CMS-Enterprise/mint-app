@@ -178,8 +178,10 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'facilitatedByOther',
     goField: 'FacilitatedByOther',
     dbField: 'facilitated_by_other',
-    label: 'Facilitated by (other)',
-    exportLabel: 'Solution facilitated by (other)',
+    label: 'Please describe',
+    exportLabel: 'Milestone facilitated by (other)',
+    sublabel:
+      'Because you selected “Other” above, please provide a role or title.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.85
