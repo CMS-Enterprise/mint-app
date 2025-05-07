@@ -78,7 +78,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.DATA_TO_MONITOR]: {
     description:
-      'Gather information from participants, intermediaries, or both, to help monitor the model. Monitoring may include detecting any side effects associated with the model changes and may include checking to ensure compliance with model requirements. Note: some of this information may also be shared with the model evaluation.'
+      'Gather information from participants, intermediaries, or both, to help support model evaluation. Non-ACO models will likely use one or more ISP systems and/or the Salesforce Project Officer Support Tool / Portal, while ACO models are likely to use 4i to accomplish this milestone. Teams using ISP systems may select ISP for this milestone until they are sure which specific systems they will use.\n\nNote: Some of this collected data may also be used for the purposes of model monitoring.'
   },
   [MtoCommonMilestoneKey.DATA_TO_SUPPORT_EVAL]: {
     description:
@@ -94,7 +94,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.SEND_REPDATA_TO_PART]: {
     description:
-      'Share information with participants. Information may include reports, dashboards, raw data, or written materials.'
+      'Share information with participants. Information may include reports or dashboards (e.g. participant feedback and other dashboards), raw data  (e.g., CMS Claims and Claims Line Feeds (CCLF)), written materials, or data via API. Non-ACO models will likely use one or more ISP systems, while ACO models are likely to use 4i to accomplish this milestone.'
   },
   [MtoCommonMilestoneKey.UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR]: {
     description:
@@ -126,7 +126,7 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   },
   [MtoCommonMilestoneKey.MAKE_NON_CLAIMS_BASED_PAYMENTS]: {
     description:
-      'Make payments outside of the Fee-for-Service payment system. This may include payments to participants, providers, beneficiaries, or other parties.'
+      'Make payments outside of the Fee-for-Service payment system. This may include payments to participants, providers, beneficiaries, or other parties. For work related to this milestone, Medicare Fee-for-service (FFS) models will most often use the Innovation Payment Contractor (IPC), MAPD models are likely to use the Automated Plan Payment System (APPS), and in extremely rare cases, some FFS models may make non-claims based payments through Medicare Administrative Contractors (MAC). All models making non-claims based payments must also share information about the non-claims based payments in order to support internal CMS functions. This is currently done through Master Data Management for Non-Claims Based Payments (MDM-NCBP).'
   },
   [MtoCommonMilestoneKey.COMPUTE_SHARED_SAVINGS_PAYMENT]: {
     description:
