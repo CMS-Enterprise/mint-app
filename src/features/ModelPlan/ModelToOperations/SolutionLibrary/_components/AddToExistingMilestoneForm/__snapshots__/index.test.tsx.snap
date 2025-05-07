@@ -5,6 +5,16 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
   <p
     class="mint-body-normal"
   >
+    <span
+      class="text-bold"
+    >
+      Selected solution: 
+    </span>
+    Test Solution
+  </p>
+  <p
+    class="mint-body-normal"
+  >
     You may choose to add this solution to existing milestones in your MTO, or you may do so later.
   </p>
   <div
