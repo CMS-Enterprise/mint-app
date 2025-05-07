@@ -463,6 +463,7 @@ export default gql(/* GraphQL */ `
           name
           isDraft
           facilitatedBy
+          facilitatedByOther
           needBy
           status
           riskIndicator
@@ -485,6 +486,7 @@ export default gql(/* GraphQL */ `
           id
           name
           facilitatedBy
+          facilitatedByOther
           neededBy
           status
           riskIndicator
