@@ -334,7 +334,7 @@ th {
   }
 
   &__height {
-    height: 600px
+    max-height: 600px !important;
   }
 
   &__fixed-top {

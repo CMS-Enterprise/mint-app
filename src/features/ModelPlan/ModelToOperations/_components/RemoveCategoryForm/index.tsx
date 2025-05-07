@@ -73,7 +73,7 @@ const RemoveCategoryForm = () => {
   };
 
   return (
-    <>
+    <div className="margin-bottom-8">
       <p>{t(`modal.${namespace}.copy`)}</p>
 
       <div className="mint-modal__footer">
@@ -95,7 +95,7 @@ const RemoveCategoryForm = () => {
           {t(`modal.${namespace}.goBack`)}
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

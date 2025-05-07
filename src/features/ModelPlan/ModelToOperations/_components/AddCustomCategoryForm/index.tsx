@@ -178,7 +178,10 @@ const CustomCategoryForm = () => {
         id="custom-category-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Fieldset disabled={loading}>
+        <Fieldset
+          disabled={loading}
+          className="margin-bottom-8 padding-bottom-4"
+        >
           <Controller
             name="primaryCategory"
             control={control}

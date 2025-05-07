@@ -8,7 +8,7 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
     id="custom-category-form"
   >
     <fieldset
-      class="usa-fieldset"
+      class="usa-fieldset margin-bottom-8 padding-bottom-4"
       data-testid="fieldset"
     >
       <div

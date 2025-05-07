@@ -119,7 +119,7 @@ const EditCategoryTitleForm = () => {
         id="custom-category-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Fieldset>
+        <Fieldset className="margin-bottom-8 padding-bottom-4">
           <Controller
             name="name"
             control={control}

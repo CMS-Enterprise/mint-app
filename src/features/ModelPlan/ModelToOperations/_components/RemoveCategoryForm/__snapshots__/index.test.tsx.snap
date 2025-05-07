@@ -2,26 +2,30 @@
 
 exports[`Custom Catergory form > matches snapshot 1`] = `
 <DocumentFragment>
-  <p>
-    This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.
-  </p>
   <div
-    class="mint-modal__footer"
+    class="margin-bottom-8"
   >
-    <button
-      class="usa-button margin-right-4 bg-error margin-top-0"
-      data-testid="button"
-      type="button"
+    <p>
+      This action cannot be undone. This will also remove any sub-categories in this category. Any milestones will move to the “Uncategorized” category in your MTO.
+    </p>
+    <div
+      class="mint-modal__footer"
     >
-      Remove category
-    </button>
-    <button
-      class="usa-button usa-button--unstyled margin-top-0"
-      data-testid="button"
-      type="button"
-    >
-      Go back
-    </button>
+      <button
+        class="usa-button margin-right-4 bg-error margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Remove category
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Go back
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;
