@@ -424,7 +424,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       customSolution: 'Custom solutions added to this MTO',
       otherSolutions: 'Other available solutions',
       backToMilestone: 'Back to milestone details',
-      charactersAllowed: '75 characters allowed'
+      charactersAllowed: '75 characters allowed',
+      solutionInfo:
+        'To view more information about the solutions associated with this milestone, navigate to the <link1>“Solutions and IT systems” tab</link1> in your MTO. From there you may edit details about the solutions, including the status.'
     },
     editSolution: {
       solutionTitle: 'Solution details',
@@ -495,7 +497,9 @@ export const modelToOperationsMisc: Record<string, any> = {
         'You may add additional milestones to your MTO from the <milestone>milestone library</milestone> or by adding a custom milestone from the main page of your MTO.',
       customMilestone: 'Milestones in your MTO that often use this solution',
       otherMilestones: 'Other milestones in your MTO',
-      backToSolution: 'Back to solution details'
+      backToSolution: 'Back to solution details',
+      milestoneInfo:
+        'To view more information about the milestones using this solution, navigate to the <link1>“Milestones” tab</link1> in your MTO. From there you may edit details about the milestones, including the status.'
     },
     solution: {
       title: 'Add a new solution',

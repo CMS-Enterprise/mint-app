@@ -1,4 +1,11 @@
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
@@ -27,7 +34,10 @@ const EditMTOSolutionProvider = ({
 
   const history = useHistory();
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const solutionParam = params.get('edit-solution');
 
@@ -47,19 +57,32 @@ const EditMTOSolutionProvider = ({
 
   const [leavePage, setLeavePage] = useState<boolean>(false);
 
-  const closeModal = () => {
+  const [closeDestination, setCloseDestination] = useState<string | null>(null);
+
+  const closeModal = useCallback(() => {
     if (isDirty && !submitted.current) {
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
-      params.delete('edit-solution');
-      params.delete('scroll-to-bottom');
-      params.delete('select-milestones');
-      history.push({ search: params.toString() });
+      if (closeDestination) {
+        history.push(closeDestination);
+        setCloseDestination(null);
+      } else {
+        params.delete('edit-solution');
+        params.delete('scroll-to-bottom');
+        params.delete('select-milestones');
+        history.push({ search: params.toString() });
+      }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  };
+  }, [isDirty, submitted, history, params, closeDestination]);
+
+  useEffect(() => {
+    if (closeDestination) {
+      closeModal();
+    }
+  }, [closeDestination, closeModal]);
 
   const openEditSolutionModal = (id: string) => {
     params.set('edit-solution', id);
@@ -89,6 +112,7 @@ const EditMTOSolutionProvider = ({
             closeModal={closeModal}
             setIsDirty={setIsDirty}
             submitted={submitted}
+            setCloseDestination={setCloseDestination}
           />
         </Sidepanel>
 
@@ -114,8 +138,12 @@ const EditMTOSolutionProvider = ({
             type="button"
             className="margin-right-4 bg-error"
             onClick={() => {
-              params.delete('edit-solution');
-              history.replace({ search: params.toString() });
+              if (closeDestination) {
+                history.push(closeDestination);
+              } else {
+                params.delete('edit-solution');
+                history.replace({ search: params.toString() });
+              }
               setIsModalOpen(false);
               setIsDirty(false);
               setLeavePage(false);

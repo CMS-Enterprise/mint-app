@@ -94,12 +94,14 @@ type EditSolutionFormProps = {
   closeModal: () => void;
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
   submitted: { current: boolean }; // Ref to track if form has been submitted
+  setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
 };
 
 const EditSolutionForm = ({
   closeModal,
   setIsDirty,
-  submitted
+  submitted,
+  setCloseDestination
 }: EditSolutionFormProps) => {
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
@@ -964,6 +966,30 @@ const EditSolutionForm = ({
                       </Alert>
                     ) : (
                       <div ref={scrollRef}>
+                        <Alert type="info" slim className="margin-top-3">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editSolution.milestoneInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
+
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}

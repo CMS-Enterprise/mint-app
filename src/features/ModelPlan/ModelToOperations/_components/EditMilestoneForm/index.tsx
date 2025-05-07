@@ -108,12 +108,14 @@ type EditMilestoneFormProps = {
   closeModal: () => void;
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
   submitted: { current: boolean }; // Ref to track if form has been submitted
+  setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
 };
 
 const EditMilestoneForm = ({
   closeModal,
   setIsDirty,
-  submitted
+  submitted,
+  setCloseDestination
 }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
@@ -1230,6 +1232,30 @@ const EditMilestoneForm = ({
                       </Alert>
                     ) : (
                       <>
+                        <Alert type="info" slim className="margin-top-4">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editMilestone.solutionInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
+
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}

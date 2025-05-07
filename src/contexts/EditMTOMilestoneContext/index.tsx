@@ -1,4 +1,11 @@
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
@@ -27,7 +34,10 @@ const EditMTOMilestoneProvider = ({
 
   const history = useHistory();
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const milestoneParam = params.get('edit-milestone');
 
@@ -47,18 +57,31 @@ const EditMTOMilestoneProvider = ({
 
   const [leavePage, setLeavePage] = useState<boolean>(false);
 
-  const closeModal = () => {
+  const [closeDestination, setCloseDestination] = useState<string | null>(null);
+
+  const closeModal = useCallback(() => {
     if (isDirty && !submitted.current) {
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
-      params.delete('edit-milestone');
-      params.delete('select-solutions');
-      history.push({ search: params.toString() });
+      if (closeDestination) {
+        history.push(closeDestination);
+        setCloseDestination(null);
+      } else {
+        params.delete('edit-milestone');
+        params.delete('select-solutions');
+        history.push({ search: params.toString() });
+      }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  };
+  }, [isDirty, submitted, closeDestination, history, params]);
+
+  useEffect(() => {
+    if (closeDestination) {
+      closeModal();
+    }
+  }, [closeDestination, closeModal]);
 
   const openEditMilestoneModal = (id: string) => {
     params.set('edit-milestone', id);
@@ -90,6 +113,7 @@ const EditMTOMilestoneProvider = ({
             closeModal={closeModal}
             setIsDirty={setIsDirty}
             submitted={submitted}
+            setCloseDestination={setCloseDestination}
           />
         </Sidepanel>
 
@@ -115,8 +139,12 @@ const EditMTOMilestoneProvider = ({
             type="button"
             className="margin-right-4 bg-error"
             onClick={() => {
-              params.delete('edit-milestone');
-              history.replace({ search: params.toString() });
+              if (closeDestination) {
+                history.push(closeDestination);
+              } else {
+                params.delete('edit-milestone');
+                history.replace({ search: params.toString() });
+              }
               setIsModalOpen(false);
               setIsDirty(false);
               setLeavePage(false);
