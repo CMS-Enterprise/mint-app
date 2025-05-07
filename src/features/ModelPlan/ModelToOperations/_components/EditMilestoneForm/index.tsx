@@ -92,6 +92,7 @@ type FormValues = {
     };
   };
   facilitatedBy?: MtoFacilitator[];
+  facilitatedByOther?: string;
   needBy?: string;
   status: MtoMilestoneStatus;
   riskIndicator: MtoRiskIndicator;
@@ -317,6 +318,7 @@ const EditMilestoneForm = ({
       },
       name: milestone?.name || '',
       facilitatedBy: milestone?.facilitatedBy || [],
+      facilitatedByOther: milestone?.facilitatedByOther || '',
       needBy: milestone?.needBy || '',
       status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
       riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
@@ -1001,6 +1003,59 @@ const EditMilestoneForm = ({
                       </FormGroup>
                     )}
                   />
+
+                  {watch('facilitatedBy')?.includes(MtoFacilitator.OTHER) && (
+                    <Controller
+                      name="facilitatedByOther"
+                      control={control}
+                      rules={{
+                        required: modelToOperationsMiscT('validation.fillOut')
+                      }}
+                      render={({
+                        field: { ref, ...field },
+                        fieldState: { error }
+                      }) => (
+                        <FormGroup
+                          className="margin-0 margin-bottom-3"
+                          error={!!error}
+                        >
+                          <Label
+                            htmlFor={convertCamelCaseToKebabCase(
+                              'facilitatedByOther'
+                            )}
+                            requiredMarker
+                            className="text-normal"
+                          >
+                            {mtoMilestoneT('facilitatedByOther.label')}
+                          </Label>
+
+                          {!!error && (
+                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                          )}
+
+                          <HelpText className="margin-top-1">
+                            {mtoMilestoneT('facilitatedByOther.sublabel')}
+                          </HelpText>
+
+                          <TextInput
+                            {...field}
+                            ref={null}
+                            id={convertCamelCaseToKebabCase(
+                              'facilitatedByOther'
+                            )}
+                            type="text"
+                            maxLength={75}
+                          />
+
+                          <HelpText className="margin-top-1">
+                            {modelToOperationsMiscT(
+                              'modal.editMilestone.charactersAllowed'
+                            )}
+                          </HelpText>
+                        </FormGroup>
+                      )}
+                    />
+                  )}
 
                   <Controller
                     name="needBy"

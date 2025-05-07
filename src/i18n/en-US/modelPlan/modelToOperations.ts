@@ -423,7 +423,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       suggestedSolution: 'Suggested solutions for this milestone',
       customSolution: 'Custom solutions added to this MTO',
       otherSolutions: 'Other available solutions',
-      backToMilestone: 'Back to milestone details'
+      backToMilestone: 'Back to milestone details',
+      charactersAllowed: '75 characters allowed'
     },
     editSolution: {
       solutionTitle: 'Solution details',
@@ -644,6 +645,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     facilitatedByArray: 'Facilitated by: {{facilitatedBy}}',
     addToMatrix: 'Add to matrix',
     aboutThisMilestone: 'About this milestone',
+    milestoneDetails: 'Milestone details',
     whySuggested: 'Why is this suggested?',
     youAnswered: 'In the Model Plan, you answered:',
     changeAnswer: 'Want to change your answer?',
