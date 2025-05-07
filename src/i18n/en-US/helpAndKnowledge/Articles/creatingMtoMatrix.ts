@@ -37,6 +37,21 @@ const creatingMtoMatrix = {
     'Make time with the model team to regularly share the MTO and the status of the milestones and solutions listed',
     'Act as a liaison to IT system teams and Product Owners to ensure that work is moving forward for onboarding to a system, contract, or other solution.'
   ],
+  bsgCMMILeadership: 'BSG and CMMI leadership',
+  bsgCMMILeadershipDescription:
+    'CMMI leadership across all groups, but especially within the Business Services Group (BSG) usually have read view access to models and can:',
+  bsgCMMILeadershipList: [
+    'Review MTO and Model Plan content in MINT to stay up-to-date on the progress of MTO and model activities',
+    'Share feedback, questions, or concerns using the discussions feature in MINT',
+    'Sign up for notifications to be alerted of any changes to the MTO or Model Plan in MINT'
+  ],
+  otherCMSStaff: 'Other CMS staff',
+  otherCMSStaffDescription:
+    'Other CMS staff such as IT system Product Owners or team members in other divisions such as OACT or OAGM most often have read view access to MINT and can:',
+  otherCMSStaffList: [
+    'Receive notifications when a model has decided to use their system or solution',
+    'Review MTO and Model Plan content in MINT to stay up-to-date on the progress of MTO and model activities'
+  ],
   modelTeam: 'Model team',
   modelTeamDescription:
     'Model teams (including Model Leads and workstream leads) have edit access to models that they are team members of (and read view access to other models) and will:',

@@ -30,6 +30,12 @@ export const CreatingMTOMatrix = () => {
   const readViewList = tArray<string>('creatingMtoMatrix:readViewList');
   const itLeadList = tArray<string>('creatingMtoMatrix:itLeadList');
   const modelTeamList = tArray<string>('creatingMtoMatrix:modelTeamList');
+  const bsgCMMILeadershipList = tArray<string>(
+    'creatingMtoMatrix:bsgCMMILeadershipList'
+  );
+  const otherCMSStaffList = tArray<string>(
+    'creatingMtoMatrix:otherCMSStaffList'
+  );
   const recommendProcessList = tArray<any>(
     'creatingMtoMatrix:recommendProcessList'
   );
@@ -121,7 +127,7 @@ export const CreatingMTOMatrix = () => {
                 {t('whyCreateMTODescription')}
               </p>
 
-              <Grid row gap={2}>
+              <Grid row gap={2} className="margin-bottom-1">
                 <Grid tablet={{ col: 6 }} className="margin-bottom-1">
                   <Card
                     className="margin-0 height-full"
@@ -154,6 +160,50 @@ export const CreatingMTOMatrix = () => {
 
                     <ul className="margin-0">
                       {modelTeamList.map(item => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </Card>
+                </Grid>
+              </Grid>
+
+              <Grid row gap={2}>
+                <Grid tablet={{ col: 6 }} className="margin-bottom-1">
+                  <Card
+                    className="margin-0 height-full"
+                    containerProps={{
+                      className: 'padding-2 radius-md margin-0'
+                    }}
+                  >
+                    <h4 className="margin-y-0">{t('bsgCMMILeadership')}</h4>
+
+                    <p className="margin-y-1">
+                      {t('bsgCMMILeadershipDescription')}
+                    </p>
+
+                    <ul className="margin-0">
+                      {bsgCMMILeadershipList.map(item => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </Card>
+                </Grid>
+
+                <Grid tablet={{ col: 6 }} className="margin-bottom-1">
+                  <Card
+                    className="margin-0 height-full"
+                    containerProps={{
+                      className: 'padding-2 radius-md margin-0'
+                    }}
+                  >
+                    <h4 className="margin-y-0">{t('otherCMSStaff')}</h4>
+
+                    <p className="margin-y-1">
+                      {t('otherCMSStaffDescription')}
+                    </p>
+
+                    <ul className="margin-0">
+                      {otherCMSStaffList.map(item => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>

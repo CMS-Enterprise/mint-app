@@ -183,7 +183,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
               MTOs help to make sense of and document the very complex set of systems, contracts, and activities used to implement a model. It helps keep track of the status of a variety of moving parts, and allows all interested parties to stay informed about model implementation progress. In the past, MTOs have been maintained by individual IT Leads as Powerpoint or Excel files, but MINT allows for more streamlined setup and update capabilities for IT Leads, as well as improved self-service access for all other interested parties.
             </p>
             <div
-              class="grid-row grid-gap-2"
+              class="grid-row grid-gap-2 margin-bottom-1"
               data-testid="grid"
             >
               <div
@@ -258,6 +258,82 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                       </li>
                       <li>
                         Take responsibility for and update any tasks or activities assigned to them in the MTO
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </div>
+            </div>
+            <div
+              class="grid-row grid-gap-2"
+              data-testid="grid"
+            >
+              <div
+                class="tablet:grid-col-6 margin-bottom-1"
+                data-testid="grid"
+              >
+                <li
+                  class="usa-card margin-0 height-full"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container padding-2 radius-md margin-0"
+                  >
+                    <h4
+                      class="margin-y-0"
+                    >
+                      BSG and CMMI leadership
+                    </h4>
+                    <p
+                      class="margin-y-1"
+                    >
+                      CMMI leadership across all groups, but especially within the Business Services Group (BSG) usually have read view access to models and can:
+                    </p>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Review MTO and Model Plan content in MINT to stay up-to-date on the progress of MTO and model activities
+                      </li>
+                      <li>
+                        Share feedback, questions, or concerns using the discussions feature in MINT
+                      </li>
+                      <li>
+                        Sign up for notifications to be alerted of any changes to the MTO or Model Plan in MINT
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </div>
+              <div
+                class="tablet:grid-col-6 margin-bottom-1"
+                data-testid="grid"
+              >
+                <li
+                  class="usa-card margin-0 height-full"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container padding-2 radius-md margin-0"
+                  >
+                    <h4
+                      class="margin-y-0"
+                    >
+                      Other CMS staff
+                    </h4>
+                    <p
+                      class="margin-y-1"
+                    >
+                      Other CMS staff such as IT system Product Owners or team members in other divisions such as OACT or OAGM most often have read view access to MINT and can:
+                    </p>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Receive notifications when a model has decided to use their system or solution
+                      </li>
+                      <li>
+                        Review MTO and Model Plan content in MINT to stay up-to-date on the progress of MTO and model activities
                       </li>
                     </ul>
                   </div>
