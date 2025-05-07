@@ -41,7 +41,7 @@ export type MilestoneType = {
   riskIndicator: MtoRiskIndicator;
   name: string;
   facilitatedBy: MtoFacilitator[] | null;
-  facilitatedByOther: string | null;
+  facilitatedByOther?: string | null;
   solutions: MtoSolutionType[];
   needBy: string | null;
   status: MtoMilestoneStatus;
@@ -62,7 +62,7 @@ export type SubCategoryType = {
   riskIndicator: undefined;
   name: string;
   facilitatedBy: undefined;
-  facilitatedByOther: undefined;
+  facilitatedByOther?: undefined;
   solutions: string[];
   needBy: undefined;
   status: undefined;
@@ -80,7 +80,7 @@ export type CategoryType = {
   riskIndicator: undefined;
   name: string;
   facilitatedBy: undefined;
-  facilitatedByOther: undefined;
+  facilitatedByOther?: undefined;
   solutions: string[];
   needBy: undefined;
   status: undefined;
