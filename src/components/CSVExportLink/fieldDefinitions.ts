@@ -523,6 +523,7 @@ const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
     value: 'mtoMilestone.categories.subCategory.name'
   },
   'mtoMilestone.facilitatedBy',
+  'mtoMilestone.facilitatedByOther',
   'mtoMilestone.needBy',
   'mtoMilestone.status',
   'mtoMilestone.riskIndicator',
@@ -532,6 +533,7 @@ const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
 const csvFieldsMTOSolution = (t: TFunction): (CSVLabel | string)[] => [
   'mtoSolution.name',
   'mtoSolution.facilitatedBy',
+  'mtoSolution.facilitatedByOther',
   'mtoSolution.neededBy',
   'mtoSolution.status',
   'mtoSolution.riskIndicator',
