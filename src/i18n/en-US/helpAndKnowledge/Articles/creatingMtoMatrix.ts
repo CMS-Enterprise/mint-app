@@ -5,7 +5,7 @@ const creatingMtoMatrix = {
     'Learn more about the Model-to-operations matrix, what it’s for, and how to create and maintain an MTO in MINT.',
   whatIsMTO: 'What is an MTO?',
   whatIsMTODescription:
-    'The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the IT systems or solutions used to implement those milestones, and when work for individual milestones must be completed by.',
+    'The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the solutions or IT systems used to implement those milestones, and when work for individual milestones must be completed by.',
   whyCreateMTO: 'Why create an MTO?',
   whyCreateMTODescription:
     'MTOs help to make sense of and document the very complex set of systems, contracts, and activities used to implement a model. It helps keep track of the status of a variety of moving parts, and allows all interested parties to stay informed about model implementation progress. In the past, MTOs have been maintained by individual IT Leads as Powerpoint or Excel files, but MINT allows for more streamlined setup and update capabilities for IT Leads, as well as improved self-service access for all other interested parties.',
@@ -13,7 +13,7 @@ const creatingMtoMatrix = {
   editAccessDescription: 'Users with edit access can:',
   editAccessList: [
     'Create and update MTOs for any model they have access to',
-    'Add and remove common milestones and IT systems or solutions to or from an MTO',
+    'Add and remove common milestones and solutions or IT systems to or from an MTO',
     'Create custom milestones, categories, and solutions',
     'Update the status of an MTO',
     'Share an MTO with colleagues or export an MTO',
@@ -70,9 +70,9 @@ const creatingMtoMatrix = {
   categories: 'Categories',
   categoriesDescription:
     'Categories are an easy way for IT leads to arrange milestones into functional groups or model phases. This can make the MTO more easily digestible for other MINT users and can help organize milestones in a more chronological manner according to operational phase.',
-  itSystems: 'IT systems and solutions',
+  itSystems: 'Solutions and IT systems',
   itSystemsDescription:
-    'Solutions are IT systems, contracts, CMS groups and teams, and other methods to implement milestones. IT leads will use their breadth of expertise to add solutions to the MTO and specify which milestone(s) they will help to accomplish. Like milestones, MINT offers two ways of adding a solution to an MTO. The MINT solution library houses a set of information about commonly used IT systems and other solutions, enabling IT leads to quickly add them to an MTO or associate them with a milestone. MINT also allows users to create custom solutions, helpful in cases where a needed system is not included in MINT or when a model is using a bespoke solution not commonly used by other models. You can also view MINT’s available IT systems and solutions in the <link1>Operational solutions area of the Help Center</link1>. When IT Leads add solutions to an MTO, the points of contact for the chosen IT system or solution will receive an automatic notification email from MINT which includes a link to read about the model that plans to use their system or solution. ',
+    'Solutions are IT systems, contracts, CMS groups and teams, and other methods to implement milestones. IT leads will use their breadth of expertise to add solutions to the MTO and specify which milestone(s) they will help to accomplish. Like milestones, MINT offers two ways of adding a solution to an MTO. The MINT solution library houses a set of information about commonly used IT systems and other solutions, enabling IT leads to quickly add them to an MTO or associate them with a milestone. MINT also allows users to create custom solutions, helpful in cases where a needed system is not included in MINT or when a model is using a bespoke solution not commonly used by other models. You can also view MINT’s available solutions and IT systems in the <link1>Operational solutions area of the Help Center</link1>. When IT Leads add solutions to an MTO, the points of contact for the chosen IT system or solution will receive an automatic notification email from MINT which includes a link to read about the model that plans to use their system or solution. ',
   templates: 'Templates',
   templatesDescription:
     'Templates are combinations of milestones, categories, and solutions that give users a specific MTO starting point or set of content to add to an existing MTO. Template content is often specific to a particular type of model or a particular model characteristic.',
@@ -112,7 +112,7 @@ const creatingMtoMatrix = {
     {
       title: 'Continue to update the MTO in MINT',
       description:
-        'As work progresses, IT Leads should continue to use the MINT MTO feature to update the status of individual milestones as well as IT systems and solutions. To asynchronously update any interested parties, use the Share feature in MINT to share a link to the model’s MTO with any colleagues or interested individuals at CMS.'
+        'As work progresses, IT Leads should continue to use the MINT MTO feature to update the status of individual milestones as well as solutions and IT systems. To asynchronously update any interested parties, use the Share feature in MINT to share a link to the model’s MTO with any colleagues or interested individuals at CMS.'
     },
     {
       title: 'Final content update',
