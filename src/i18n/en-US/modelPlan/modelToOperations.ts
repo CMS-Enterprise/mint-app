@@ -214,7 +214,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     solutions: {
       label: 'Operational solutions',
-      header: 'Start with IT systems or other solutions',
+      header: 'Start with solutions or IT systems',
       description:
         'Models use a variety of solutions or IT systems to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.',
       buttonText: 'Browse common solutions',
@@ -440,7 +440,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>Completed</bold>: Work for this solution and all of its selected solutions is finished'
       ],
       customTooltip:
-        'As opposed to common solutions and IT systems available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
+        'As opposed to common operational solutions and IT systems available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
       custom: 'Custom',
       saveChanges: 'Save changes',
       save: 'Save',
