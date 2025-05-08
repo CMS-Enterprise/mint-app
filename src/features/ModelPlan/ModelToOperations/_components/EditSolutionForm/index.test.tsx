@@ -40,6 +40,7 @@ describe('EditSolutionForm Component', () => {
                 closeModal={vi.fn()}
                 setIsDirty={vi.fn()}
                 setCloseDestination={vi.fn()}
+                setFooter={() => {}}
                 submitted={{ current: false }}
               />
             </Route>

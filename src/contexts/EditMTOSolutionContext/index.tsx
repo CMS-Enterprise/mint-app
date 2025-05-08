@@ -59,6 +59,8 @@ const EditMTOSolutionProvider = ({
 
   const [closeDestination, setCloseDestination] = useState<string | null>(null);
 
+  const [footer, setFooter] = useState<React.ReactNode | null>(null);
+
   const closeModal = useCallback(() => {
     if (isDirty && !submitted.current) {
       setLeavePage(true);
@@ -107,12 +109,15 @@ const EditMTOSolutionProvider = ({
             'modal.editSolution.solutionTitle'
           )}
           noScrollable
+          fixed
+          footer={footer}
         >
           <EditSolutionForm
             closeModal={closeModal}
             setIsDirty={setIsDirty}
             submitted={submitted}
             setCloseDestination={setCloseDestination}
+            setFooter={setFooter}
           />
         </Sidepanel>
 

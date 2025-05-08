@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {
   Controller,
   FormProvider,
@@ -95,13 +101,15 @@ type EditSolutionFormProps = {
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
   submitted: { current: boolean }; // Ref to track if form has been submitted
   setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
+  setFooter: (footer: React.ReactNode | null) => void; // Set footer of modal
 };
 
 const EditSolutionForm = ({
   closeModal,
   setIsDirty,
   submitted,
-  setCloseDestination
+  setCloseDestination,
+  setFooter
 }: EditSolutionFormProps) => {
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
@@ -302,69 +310,82 @@ const EditSolutionForm = ({
 
   const [deleteSolution] = useDeleteMtoSolutionMutation();
 
-  const onSubmit: SubmitHandler<FormValues> = formData => {
-    const { neededBy, name, ...formChanges } = dirtyInput(solution, formData);
+  const onSubmit: SubmitHandler<FormValues> = useCallback(
+    formData => {
+      const { neededBy, name, ...formChanges } = dirtyInput(solution, formData);
 
-    updateSolution({
-      variables: {
-        id: editSolutionID || '',
-        changes: {
-          ...formChanges,
-          ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
-          ...(!!name && !solution?.addedFromSolutionLibrary && { name })
+      updateSolution({
+        variables: {
+          id: editSolutionID || '',
+          changes: {
+            ...formChanges,
+            ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
+            ...(!!name && !solution?.addedFromSolutionLibrary && { name })
+          },
+          milestoneLinks: {
+            milestoneIDs
+          }
         },
-        milestoneLinks: {
-          milestoneIDs
-        }
-      },
-      refetchQueries: [
-        GetModelToOperationsMatrixDocument,
-        GetMtoSolutionsAndMilestonesDocument
-      ]
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={modelToOperationsMiscT(
-                      'modal.editSolution.successUpdated'
-                    )}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    values={{ solution: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
-          );
-          // eslint-disable-next-line no-param-reassign
-          submitted.current = true;
-          setIsDirty(false);
-          closeModal();
-        }
+        refetchQueries: [
+          GetModelToOperationsMatrixDocument,
+          GetMtoSolutionsAndMilestonesDocument
+        ]
       })
-      .catch(() => {
-        setMutationError(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
-          </Alert>
-        );
-      });
-  };
+        .then(response => {
+          if (!response?.errors) {
+            showMessage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="mandatory-fields-alert"
+                  className="margin-y-4"
+                >
+                  <span className="mandatory-fields-alert__text">
+                    <Trans
+                      i18nKey={modelToOperationsMiscT(
+                        'modal.editSolution.successUpdated'
+                      )}
+                      components={{
+                        b: <span className="text-bold" />
+                      }}
+                      values={{ solution: formData.name }}
+                    />
+                  </span>
+                </Alert>
+              </>
+            );
+            // eslint-disable-next-line no-param-reassign
+            submitted.current = true;
+            setIsDirty(false);
+            closeModal();
+          }
+        })
+        .catch(() => {
+          setMutationError(
+            <Alert
+              type="error"
+              slim
+              data-testid="error-alert"
+              className="margin-y-4"
+            >
+              {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
+            </Alert>
+          );
+        });
+    },
+    [
+      solution,
+      updateSolution,
+      editSolutionID,
+      milestoneIDs,
+      showMessage,
+      modelToOperationsMiscT,
+      submitted,
+      setIsDirty,
+      closeModal
+    ]
+  );
 
   const handleRemove = () => {
     deleteSolution({
@@ -410,6 +431,39 @@ const EditSolutionForm = ({
         setIsModalOpen(false);
       });
   };
+
+  // Set the footer of the modal to be rendered in the parent Sidepanel to allow for sticky bottom
+  useEffect(() => {
+    setFooter(
+      <div className="border-top-1px border-base-lighter padding-y-4 panel-footer">
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
+          className="margin-bottom-2"
+        >
+          {modelToOperationsMiscT('modal.editSolution.saveChanges')}
+        </Button>
+
+        <Button
+          type="button"
+          disabled={isSubmitting}
+          className="bg-error"
+          onClick={() => setIsModalOpen(true)}
+        >
+          {modelToOperationsMiscT('modal.editSolution.removeSolution')}
+        </Button>
+      </div>
+    );
+  }, [
+    isSubmitting,
+    isDirty,
+    unsavedSolutionChanges,
+    handleSubmit,
+    setFooter,
+    onSubmit,
+    modelToOperationsMiscT
+  ]);
 
   const columns: Column<MilestoneType>[] = useMemo(
     () => [
@@ -501,7 +555,7 @@ const EditSolutionForm = ({
   }
 
   return (
-    <>
+    <div className="margin-top-8">
       <Modal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
@@ -649,7 +703,7 @@ const EditSolutionForm = ({
                   )}
                 </div>
 
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={loading} className="margin-bottom-8">
                   <p className="margin-top-0 margin-bottom-3 text-base">
                     <Trans
                       i18nKey={modelToOperationsMiscT(
@@ -1072,35 +1126,12 @@ const EditSolutionForm = ({
                     )}
                   </div>
                 </Fieldset>
-
-                <div className="border-top-1px border-base-lighter padding-y-4">
-                  <Button
-                    type="submit"
-                    disabled={
-                      (isSubmitting || !isDirty) && !unsavedSolutionChanges
-                    }
-                    className="margin-bottom-2"
-                  >
-                    {modelToOperationsMiscT('modal.editSolution.saveChanges')}
-                  </Button>
-
-                  <Button
-                    type="button"
-                    disabled={isSubmitting}
-                    className="bg-error"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    {modelToOperationsMiscT(
-                      'modal.editSolution.removeSolution'
-                    )}
-                  </Button>
-                </div>
               </Form>
             </FormProvider>
           </Grid>
         </Grid>
       </GridContainer>
-    </>
+    </div>
   );
 };
 
