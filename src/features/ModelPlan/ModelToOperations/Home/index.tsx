@@ -240,8 +240,14 @@ const MTOHome = () => {
                     <PageLoading />
                   ) : (
                     <>
-                      <MTOTableActions />
-                      <ITSystemsTable />
+                      {isMatrixStarted ? (
+                        <>
+                          <MTOTableActions />
+                          <ITSystemsTable />
+                        </>
+                      ) : (
+                        <MTOOptionsPanel />
+                      )}
                     </>
                   )}
                 </>
