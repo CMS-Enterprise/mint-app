@@ -218,7 +218,12 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               class="padding-1 padding-left-0"
               colspan="4"
             >
-              Uncategorized
+              Uncategorized 
+              <span
+                class="text-base-dark margin-left-2 mint-body-normal"
+              >
+                1 milestone
+              </span>
             </td>
             <td
               class="padding-1"
@@ -280,7 +285,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                       data-testid="button"
                       type="button"
                     >
-                      Add model milestone
+                      Create model milestone
                     </button>
                   </li>
                   <li
@@ -292,7 +297,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                       disabled=""
                       type="button"
                     >
-                      Add sub-category
+                      Create sub-category
                     </button>
                   </li>
                   <li
@@ -334,7 +339,12 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               class="padding-1 padding-left-0"
               colspan="4"
             >
-              Uncategorized
+              Uncategorized 
+              <span
+                class="text-base-dark margin-left-2 mint-body-normal"
+              >
+                1 milestone
+              </span>
             </td>
             <td
               class="padding-1"
@@ -396,7 +406,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                       data-testid="button"
                       type="button"
                     >
-                      Add model milestone
+                      Create model milestone
                     </button>
                   </li>
                   <li

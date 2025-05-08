@@ -20,9 +20,9 @@ describe('Model-to-Operations Matrix', () => {
   it('Fills out an empty MTO Matrix with milestones and solutions', () => {
     cy.contains('h2', 'Your model-to-operations matrix is a bit empty!');
 
-    cy.contains('a', 'Browse common solutions');
-    cy.contains('button', 'Use this template');
-    cy.contains('a', 'Browse common milestones').click();
+    cy.contains('a', 'Add solutions from library');
+    cy.contains('button', 'Add this template');
+    cy.contains('a', 'Add milestones from library').click();
 
     cy.url().should('include', '/milestone-library');
 
@@ -119,7 +119,7 @@ describe('Model-to-Operations Matrix', () => {
     });
   });
   it('Adding a Solution from the Solution Library', () => {
-    cy.contains('Browse solution library').click();
+    cy.contains('Add solutions from library').click();
     cy.url().should('include', '/solution-library');
 
     // Add the second solution
@@ -182,7 +182,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Create custom milestone', () => {
-    cy.contains('or, add a custom milestone').click();
+    cy.contains('or, create a custom milestone').click();
 
     cy.findModalWithThisHeadingAndSaveAlias(
       'Add a new model milestone',
@@ -215,7 +215,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Create custom solution', () => {
-    cy.contains('or, add a custom solution').click();
+    cy.contains('or, create a custom solution').click();
 
     cy.findModalWithThisHeadingAndSaveAlias(
       'Add a new solution',

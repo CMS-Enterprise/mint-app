@@ -241,7 +241,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               data-testid="button"
               type="button"
             >
-              Add a custom solution 
+              Create a custom solution 
             </button>
           </div>
         </div>

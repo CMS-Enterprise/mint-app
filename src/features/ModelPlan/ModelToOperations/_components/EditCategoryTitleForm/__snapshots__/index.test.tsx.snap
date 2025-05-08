@@ -8,7 +8,7 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
     id="custom-category-form"
   >
     <fieldset
-      class="usa-fieldset"
+      class="usa-fieldset margin-bottom-8 padding-bottom-4"
       data-testid="fieldset"
     >
       <div
@@ -46,21 +46,25 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
         />
       </div>
     </fieldset>
-    <button
-      class="usa-button margin-right-3"
-      data-testid="button"
-      disabled=""
-      type="submit"
+    <div
+      class="mint-modal__footer"
     >
-      Save changes
-    </button>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      Cancel
-    </button>
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Save changes
+      </button>
+      <button
+        class="usa-button usa-button margin-top-0 usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </DocumentFragment>
 `;

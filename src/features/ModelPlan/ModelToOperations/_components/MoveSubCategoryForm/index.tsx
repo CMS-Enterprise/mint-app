@@ -194,24 +194,26 @@ const MoveSubCategoryForm = () => {
                 )}
               </Alert>
             )}
+            <div className="mint-modal__footer">
+              <Button
+                type="submit"
+                disabled={
+                  isSubmitting || !isDirty || !!showExistingSubcategoryAlert
+                }
+                className="margin-right-4 margin-top-0"
+              >
+                {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+              </Button>
 
-            <Button
-              type="submit"
-              disabled={
-                isSubmitting || !isDirty || !!showExistingSubcategoryAlert
-              }
-              className="margin-right-4"
-            >
-              {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
-            </Button>
-
-            <Button
-              type="button"
-              unstyled
-              onClick={() => setMTOModalOpen(false)}
-            >
-              {modelToOperationsMiscT('modal.cancel')}
-            </Button>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => setMTOModalOpen(false)}
+              >
+                {modelToOperationsMiscT('modal.cancel')}
+              </Button>
+            </div>
           </Fieldset>
         </Form>
       </FormProvider>

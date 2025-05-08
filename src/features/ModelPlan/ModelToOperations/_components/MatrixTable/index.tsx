@@ -269,7 +269,8 @@ const MTOTable = ({
     rowLength,
     categoryID,
     subCategoryID,
-    categoryIndex
+    categoryIndex,
+    numberOfMilestones
   }: {
     row: RowType;
     rowType: MTORowType;
@@ -279,6 +280,7 @@ const MTOTable = ({
     categoryID?: string;
     subCategoryID?: string;
     categoryIndex?: number;
+    numberOfMilestones?: number;
   }) => {
     const { clearMessage } = useMessage();
     const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
@@ -377,7 +379,12 @@ const MTOTable = ({
             colSpan={filteredColumns.length - 2}
             className="padding-1 padding-left-0"
           >
-            {row.name}
+            {row.name}{' '}
+            <span className="text-base-dark margin-left-2 mint-body-normal">
+              {t('table.milestonesCount', {
+                count: numberOfMilestones
+              })}
+            </span>
           </td>
           <td className="padding-1">{renderActionMenu()}</td>
         </>
@@ -471,6 +478,8 @@ const MTOTable = ({
         return null;
       }
 
+      const numberOfMilestones = subCategory.milestones.length;
+
       return (
         <div style={{ display: 'contents' }} key={subCategory.id}>
           <DraggableRow
@@ -507,6 +516,7 @@ const MTOTable = ({
               categoryID={categoryID}
               subCategoryID={subCategory.id}
               categoryIndex={categoryIndex}
+              numberOfMilestones={numberOfMilestones}
             />
           </DraggableRow>
           {isExpanded &&
@@ -523,6 +533,11 @@ const MTOTable = ({
       }
 
       const isExpanded = !expandedRows.includes(category.id);
+
+      const numberOfMilestones = category.subCategories.reduce(
+        (acc, subCategory) => acc + subCategory.milestones.length,
+        0
+      );
 
       return (
         <div style={{ display: 'contents' }} key={category.id}>
@@ -561,6 +576,7 @@ const MTOTable = ({
               rowLength={sortedData.length}
               categoryID={category.id}
               categoryIndex={index}
+              numberOfMilestones={numberOfMilestones}
             />
           </DraggableRow>
 

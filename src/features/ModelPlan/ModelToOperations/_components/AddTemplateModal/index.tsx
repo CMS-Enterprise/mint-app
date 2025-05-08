@@ -79,14 +79,15 @@ const AddTemplateModal = () => {
 
       <p>{t('modal.addTemplate.description2')}</p>
 
-      <div className="display-flex">
-        <Button type="submit" className="margin-right-3">
+      <div className="display-flex mint-modal__footer">
+        <Button type="submit" className="margin-right-3 margin-top-0">
           {t('modal.addTemplate.addTemplate')}
         </Button>
 
         <Button
           type="button"
           unstyled
+          className="margin-top-0"
           onClick={() => {
             setMTOModalOpen(false);
           }}

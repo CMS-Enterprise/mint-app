@@ -168,7 +168,10 @@ const AddToExistingMilestoneForm = ({
           id="add-to-existing-milestone-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Fieldset disabled={loading || milestones?.length === 0}>
+          <Fieldset
+            disabled={loading || milestones?.length === 0}
+            className="padding-bottom-8"
+          >
             <Controller
               name="linkedMilestones"
               control={control}
@@ -200,8 +203,8 @@ const AddToExistingMilestoneForm = ({
             />
           </Fieldset>
 
-          <div className="margin-top-0">
-            <Button type="submit" className="margin-right-3">
+          <div className="margin-top-0 mint-modal__footer">
+            <Button type="submit" className="margin-right-3 margin-top-0">
               {watch('linkedMilestones')?.length === 0
                 ? t('modal.addToExistingMilestone.cta.empty')
                 : t('modal.addToExistingMilestone.cta.add', {
@@ -211,7 +214,7 @@ const AddToExistingMilestoneForm = ({
 
             <Button
               type="button"
-              className="usa-button usa-button--unstyled"
+              className="usa-button usa-button--unstyled margin-top-0"
               onClick={() => {
                 reset();
                 clearMessage();

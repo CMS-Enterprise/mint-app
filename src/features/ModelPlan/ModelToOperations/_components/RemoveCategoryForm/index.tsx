@@ -73,26 +73,29 @@ const RemoveCategoryForm = () => {
   };
 
   return (
-    <>
+    <div className="margin-bottom-8">
       <p>{t(`modal.${namespace}.copy`)}</p>
 
-      <Button
-        type="button"
-        className="margin-right-4 bg-error"
-        onClick={() => handleRemove()}
-      >
-        {t(`modal.${namespace}.button`)}
-      </Button>
-      <Button
-        type="button"
-        unstyled
-        onClick={() => {
-          setMTOModalOpen(false);
-        }}
-      >
-        {t(`modal.${namespace}.goBack`)}
-      </Button>
-    </>
+      <div className="mint-modal__footer">
+        <Button
+          type="button"
+          className="margin-right-4 bg-error margin-top-0"
+          onClick={() => handleRemove()}
+        >
+          {t(`modal.${namespace}.button`)}
+        </Button>
+        <Button
+          type="button"
+          unstyled
+          className="margin-top-0"
+          onClick={() => {
+            setMTOModalOpen(false);
+          }}
+        >
+          {t(`modal.${namespace}.goBack`)}
+        </Button>
+      </div>
+    </div>
   );
 };
 

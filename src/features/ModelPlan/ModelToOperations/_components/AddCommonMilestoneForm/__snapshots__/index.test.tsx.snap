@@ -13,7 +13,7 @@ exports[`Add common milestone form > matches snapshot 1`] = `
     id="milestone-form"
   >
     <fieldset
-      class="usa-fieldset"
+      class="usa-fieldset padding-bottom-8"
       data-testid="fieldset"
     >
       <div
@@ -122,20 +122,24 @@ exports[`Add common milestone form > matches snapshot 1`] = `
         </div>
       </div>
     </fieldset>
-    <button
-      class="usa-button margin-right-3"
-      data-testid="button"
-      type="submit"
+    <div
+      class="mint-modal__footer"
     >
-      Add without solutions
-    </button>
-    <button
-      class="usa-button usa-button usa-button--unstyled"
-      data-testid="button"
-      type="button"
-    >
-      Cancel
-    </button>
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        type="submit"
+      >
+        Add without solutions
+      </button>
+      <button
+        class="usa-button usa-button usa-button--unstyled margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </DocumentFragment>
 `;
