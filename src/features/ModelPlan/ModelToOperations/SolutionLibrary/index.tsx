@@ -240,7 +240,7 @@ const SolutionLibrary = () => {
               <Expire delay={45000}>{message}</Expire>
             )}
 
-            <div className="milestone-card-group">
+            <div className="solution-card-group">
               <div className="margin-top-2 margin-bottom-4">
                 <Grid row>
                   {/* Search bar and results info */}

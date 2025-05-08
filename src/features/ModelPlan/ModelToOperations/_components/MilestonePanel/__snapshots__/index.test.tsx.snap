@@ -51,7 +51,9 @@ exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] =
         >
           Category: Test Category  (Test SubCategory)
         </p>
-        <p>
+        <p
+          style="white-space: pre-line;"
+        >
           Advertise the opportunity to bid on work related to evaluating a model, review the bids and select evaluation contractor.
         </p>
         <p
