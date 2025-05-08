@@ -358,7 +358,9 @@ const ITSystemsTable = ({
           const { facilitatedBy } = row.original || {};
 
           if (!facilitatedBy || row.original.__typename === 'MTOMilestone')
-            return <></>;
+            return (
+              <em>{mtoSolutionT('modelToOperationsMisc:table.noneAdded')}</em>
+            );
 
           return (
             <>
