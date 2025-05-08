@@ -88,14 +88,14 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
             data-testid="button"
             type="button"
           >
-            Browse milestone library
+            Add milestones from library
           </button>
           <button
             class="usa-button usa-button--unstyled display-block"
             data-testid="button"
             type="button"
           >
-            or, add a custom milestone
+            or, create a custom milestone
           </button>
         </div>
       </div>
@@ -143,14 +143,14 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
             data-testid="button"
             type="button"
           >
-            Browse solution library
+            Add solutions from library
           </button>
           <button
             class="usa-button usa-button--unstyled display-block"
             data-testid="button"
             type="button"
           >
-            or, add a custom solution
+            or, create a custom solution
           </button>
         </div>
       </div>
@@ -213,7 +213,7 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
           data-testid="button"
           type="button"
         >
-          or, add a custom category
+          or, create a custom category
         </button>
       </div>
     </div>

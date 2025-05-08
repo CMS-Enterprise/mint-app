@@ -16,6 +16,7 @@ CREATE TABLE mto_milestone (
     -- we allow null because this is will be from the commonMilestone table if it exists
     name ZERO_STRING,
     facilitated_by MTO_FACILITATOR[],
+    facilitated_by_other ZERO_STRING,
     need_by TIMESTAMP WITH TIME ZONE,
     status MTO_MILESTONE_STATUS NOT NULL,
     risk_indicator MTO_RISK_INDICATOR NOT NULL DEFAULT 'ON_TRACK',
@@ -48,3 +49,12 @@ ADD CONSTRAINT check_name_or_common_milestone_null CHECK (
 
 COMMENT ON CONSTRAINT check_name_or_common_milestone_null ON mto_milestone IS 
 'Ensures either mto_common_milestone_key or name is null, but not both: if a common milestone is referenced, name must be null; if name is specified, no common milestone may be referenced.';
+
+
+ALTER TABLE mto_milestone
+ADD CONSTRAINT mto_milestone_check_facilitated_by_other_only_if_other
+CHECK (
+    facilitated_by_other IS NULL
+    OR facilitated_by @> ARRAY['OTHER']::MTO_FACILITATOR[] -- does the array contain OTHER?
+);
+COMMENT ON CONSTRAINT mto_milestone_check_facilitated_by_other_only_if_other ON mto_milestone IS 'Ensures that if facilitated_by_other can only be provided if the facilitated_by array includes the OTHER option.';

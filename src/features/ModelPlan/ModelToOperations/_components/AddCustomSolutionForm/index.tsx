@@ -284,7 +284,7 @@ const CustomSolutionForm = () => {
             )}
           />
         </Fieldset>
-        <Alert type="info" slim className="margin-bottom-2">
+        <Alert type="info" slim className="margin-bottom-8">
           {modalCalledFrom === 'solution-library' ? (
             t('modal.solution.alert.fromSolutionLibrary')
           ) : (
@@ -309,19 +309,25 @@ const CustomSolutionForm = () => {
             />
           )}
         </Alert>
-        <Button type="submit" disabled={!isValid} className="margin-right-3">
-          {t('modal.addButton', { type: 'solution' })}
-        </Button>
-        <Button
-          type="button"
-          className="usa-button usa-button--unstyled"
-          onClick={() => {
-            reset();
-            setMTOModalOpen(false);
-          }}
-        >
-          {t('modal.cancel')}
-        </Button>
+        <div className="mint-modal__footer">
+          <Button
+            type="submit"
+            disabled={!isValid}
+            className="margin-right-3 margin-top-0"
+          >
+            {t('modal.addButton', { type: 'solution' })}
+          </Button>
+          <Button
+            type="button"
+            className="usa-button usa-button--unstyled margin-top-0"
+            onClick={() => {
+              reset();
+              setMTOModalOpen(false);
+            }}
+          >
+            {t('modal.cancel')}
+          </Button>
+        </div>
       </Form>
     </FormProvider>
   );

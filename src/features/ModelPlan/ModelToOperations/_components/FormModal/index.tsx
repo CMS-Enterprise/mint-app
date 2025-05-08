@@ -55,6 +55,7 @@ const MTOModal = () => {
         resetMTOModalState();
         setMTOModalOpen(false);
       }}
+      fixed
       shouldCloseOnOverlayClick={!shouldNotCloseModals.includes(modalType)}
       className="tablet:width-mobile-lg mint-body-normal"
     >

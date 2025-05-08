@@ -717,6 +717,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'salesforce-connect',
     categories: [OperationalSolutionCategories.LEARNING],
     name: 'Salesforce CONNECT',
+    acronym: 'CONNECT',
     type: 'IT System',
     systemOwner: {
       name: 'Business Services Group',

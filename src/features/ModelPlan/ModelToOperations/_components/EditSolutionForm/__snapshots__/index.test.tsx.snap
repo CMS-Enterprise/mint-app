@@ -496,6 +496,30 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 </svg>
               </button>
               <div>
+                <div
+                  class="usa-alert usa-alert--info usa-alert--slim flex margin-top-3"
+                  data-testid="alert"
+                >
+                  <div
+                    class="usa-alert__body"
+                  >
+                    <p
+                      class="usa-alert__text"
+                    >
+                      <span>
+                        To view more information about the milestones using this solution, navigate to the 
+                        <button
+                          class="usa-button usa-button--unstyled usa-button--unstyled margin-0"
+                          data-testid="button"
+                          type="button"
+                        >
+                          “Milestones” tab
+                        </button>
+                         in your MTO. From there you may edit details about the milestones, including the status.
+                      </span>
+                    </p>
+                  </div>
+                </div>
                 <table
                   class="usa-table usa-table--borderless width-full margin-top-0"
                   data-testid="table"

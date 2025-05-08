@@ -56,6 +56,17 @@
       "MODEL_DATA_LEAD": "Model Data Lead"
     }
   },
+  "facilitatedByOther": {
+    "gqlField": "facilitatedByOther",
+    "goField": "FacilitatedByOther",
+    "dbField": "facilitated_by_other",
+    "label": "Please describe",
+    "exportLabel": "Milestone facilitated by (other)",
+    "sublabel": "Because you selected “Other” above, please provide a role or title.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.035
+  },
   "needBy": {
     "gqlField": "needBy",
     "goField": "NeedBy",

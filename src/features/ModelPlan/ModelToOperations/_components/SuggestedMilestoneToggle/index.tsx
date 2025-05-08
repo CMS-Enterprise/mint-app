@@ -133,6 +133,47 @@ const SuggestedMilestoneToggle = ({
       : [];
   }, [milestoneConfig, data]);
 
+  const formattedAnswers = useMemo(() => {
+    if (answers.length === 0) {
+      return <></>;
+    }
+
+    const mappedAnswer = typeof answers[0] !== 'object' ? answers : answers[0];
+
+    if (!milestoneConfig.multiPart) {
+      return mappedAnswer.map((answer: string | boolean) => {
+        return (
+          <li>
+            {i18next.exists(
+              `${milestoneConfig?.parentField}:${milestoneConfig?.fieldName}.options.${answer}`
+            )
+              ? i18next.t(
+                  `${milestoneConfig?.parentField}:${milestoneConfig?.fieldName}.options.${answer}`
+                )
+              : 'No answer'}
+          </li>
+        );
+      });
+    }
+    return answers.map((answer: MultiPartType) => {
+      return (
+        <li className="margin-y-1" key={answer.question}>
+          {i18next.t(
+            `${milestoneConfig?.parentField}:${answer.question}.label`
+          )}{' '}
+          -{' '}
+          {i18next.exists(
+            `${milestoneConfig?.parentField}:${answer.question}.options.${answer.answer}`
+          )
+            ? i18next.t(
+                `${milestoneConfig?.parentField}:${answer.question}.options.${answer.answer}`
+              )
+            : 'No answer'}
+        </li>
+      );
+    });
+  }, [answers, milestoneConfig]);
+
   return (
     <div className={classNames(className)}>
       <button
@@ -171,41 +212,7 @@ const SuggestedMilestoneToggle = ({
                 </p>
 
                 {data && milestoneConfig && (
-                  <ul className="padding-left-4">
-                    {!milestoneConfig.multiPart &&
-                      answers.map((answer: string | boolean) => (
-                        <li
-                          className="margin-y-1"
-                          key={answer.toString()}
-                          data-testid={answer.toString()}
-                        >
-                          {i18next.exists(
-                            `${milestoneConfig.parentField}:${milestoneConfig.fieldName}.options.${answer}`
-                          )
-                            ? i18next.t(
-                                `${milestoneConfig.parentField}:${milestoneConfig.fieldName}.options.${answer}`
-                              )
-                            : 'No answer'}
-                        </li>
-                      ))}
-
-                    {milestoneConfig.multiPart &&
-                      answers.map((answer: MultiPartType) => (
-                        <li className="margin-y-1" key={answer.question}>
-                          {i18next.t(
-                            `${milestoneConfig.parentField}:${answer.question}.label`
-                          )}{' '}
-                          -{' '}
-                          {i18next.exists(
-                            `${milestoneConfig.parentField}:${answer.question}.options.${answer.answer}`
-                          )
-                            ? i18next.t(
-                                `${milestoneConfig.parentField}:${answer.question}.options.${answer.answer}`
-                              )
-                            : 'No answer'}
-                        </li>
-                      ))}
-                  </ul>
+                  <ul className="padding-left-4">{formattedAnswers}</ul>
                 )}
 
                 <p className="margin-bottom-0">

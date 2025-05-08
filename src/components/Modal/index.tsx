@@ -17,6 +17,7 @@ type ModalProps = {
   openModal?: () => void;
   closeModal: () => void;
   noScrollable?: boolean;
+  fixed?: boolean;
 };
 
 const Modal = ({
@@ -29,7 +30,8 @@ const Modal = ({
   modalHeading,
   openModal,
   closeModal,
-  noScrollable = true
+  noScrollable = true,
+  fixed = false
 }: ModalProps) => {
   const handleOpenModal = () => {
     if (!scroll) noScroll.on();
@@ -42,8 +44,12 @@ const Modal = ({
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-modal__overlay overflow-y-scroll"
-      className={classNames('mint-modal__content', className)}
+      overlayClassName={classNames('mint-modal__overlay', {
+        'overflow-y-scroll': !fixed
+      })}
+      className={classNames('mint-modal__content', className, {
+        'overflow-hidden': fixed
+      })}
       onAfterOpen={handleOpenModal}
       onAfterClose={() => {
         if (noScrollable) {
@@ -57,9 +63,13 @@ const Modal = ({
       {!navigation ? (
         <>
           <div
-            className={`mint-modal__top-section display-flex text-base ${
-              modalHeading ? 'border-bottom-1px border-base-lighter' : ''
-            }`}
+            className={classNames(
+              'mint-modal__top-section display-flex text-base',
+              {
+                'mint-modal__fixed-top': fixed,
+                'border-bottom-1px border-base-lighter': modalHeading
+              }
+            )}
           >
             {modalHeading && (
               <h4 className="margin-0 padding-left-4 padding-top-2">
@@ -76,7 +86,13 @@ const Modal = ({
             </button>
           </div>
 
-          <div className="mint-modal__body">{children}</div>
+          <div
+            className={classNames('mint-modal__body', {
+              'margin-top-6 mint-modal__height overflow-y-auto': fixed
+            })}
+          >
+            {children}
+          </div>
         </>
       ) : (
         <>{children}</>

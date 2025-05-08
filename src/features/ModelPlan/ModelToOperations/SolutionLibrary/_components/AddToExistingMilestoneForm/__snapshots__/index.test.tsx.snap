@@ -5,6 +5,16 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
   <p
     class="mint-body-normal"
   >
+    <span
+      class="text-bold"
+    >
+      Selected solution: 
+    </span>
+    Test Solution
+  </p>
+  <p
+    class="mint-body-normal border-bottom border-base-lighter padding-bottom-2"
+  >
     You may choose to add this solution to existing milestones in your MTO, or you may do so later.
   </p>
   <div
@@ -29,7 +39,7 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
     id="add-to-existing-milestone-form"
   >
     <fieldset
-      class="usa-fieldset"
+      class="usa-fieldset padding-bottom-8"
       data-testid="fieldset"
       disabled=""
     >
@@ -135,17 +145,17 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
       </div>
     </fieldset>
     <div
-      class="margin-top-0"
+      class="margin-top-0 mint-modal__footer"
     >
       <button
-        class="usa-button margin-right-3"
+        class="usa-button margin-right-3 margin-top-0"
         data-testid="button"
         type="submit"
       >
         Add without milestone
       </button>
       <button
-        class="usa-button usa-button usa-button--unstyled"
+        class="usa-button usa-button usa-button--unstyled margin-top-0"
         data-testid="button"
         type="button"
       >

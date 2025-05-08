@@ -96,7 +96,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
       </a>
     </div>
     <div
-      class="milestone-card-group"
+      class="solution-card-group"
     >
       <div
         class="margin-top-2 margin-bottom-4"
@@ -241,7 +241,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               data-testid="button"
               type="button"
             >
-              Add a custom solution 
+              Create a custom solution 
             </button>
           </div>
         </div>

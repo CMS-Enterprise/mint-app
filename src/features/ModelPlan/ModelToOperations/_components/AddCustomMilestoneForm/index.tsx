@@ -260,7 +260,7 @@ const CustomMilestoneForm = () => {
             )}
           />
         </Fieldset>
-        <Alert type="info" slim className="margin-bottom-2">
+        <Alert type="info" slim className="margin-bottom-8">
           <Trans
             i18nKey={
               isMilestoneLibraryRoute
@@ -287,20 +287,26 @@ const CustomMilestoneForm = () => {
             }}
           />
         </Alert>
-        <Button type="submit" disabled={!isValid} className="margin-right-3">
-          {t('modal.addButton', { type: 'milestone' })}
-        </Button>
-        <Button
-          type="button"
-          className="usa-button usa-button--unstyled"
-          onClick={() => {
-            reset();
-            clearMessage();
-            setMTOModalOpen(false);
-          }}
-        >
-          {t('modal.cancel')}
-        </Button>
+        <div className="mint-modal__footer">
+          <Button
+            type="submit"
+            disabled={!isValid}
+            className="margin-right-3 margin-top-0"
+          >
+            {t('modal.addButton', { type: 'milestone' })}
+          </Button>
+          <Button
+            type="button"
+            className="usa-button usa-button--unstyled margin-top-0"
+            onClick={() => {
+              reset();
+              clearMessage();
+              setMTOModalOpen(false);
+            }}
+          >
+            {t('modal.cancel')}
+          </Button>
+        </div>
       </Form>
     </FormProvider>
   );
