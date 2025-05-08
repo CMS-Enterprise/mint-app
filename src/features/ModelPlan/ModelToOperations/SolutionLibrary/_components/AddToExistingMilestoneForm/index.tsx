@@ -152,6 +152,12 @@ const AddToExistingMilestoneForm = ({
   return (
     <>
       <p className="mint-body-normal">
+        <span className="text-bold">
+          {t('modal.addToExistingMilestone.selectedSolution')}
+        </span>
+        {solutionName}
+      </p>
+      <p className="mint-body-normal border-bottom border-base-lighter padding-bottom-2">
         {t('modal.addToExistingMilestone.description')}
       </p>
 

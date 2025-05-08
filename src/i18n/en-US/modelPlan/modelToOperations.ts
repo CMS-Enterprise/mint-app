@@ -528,6 +528,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       title: 'Add a solution for this milestone?',
       description:
         'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
+      selectedMilestone: 'Selected milestone: ',
       alert: {
         success: 'Your solution ({{solution}}) has been added.',
         error:
@@ -620,6 +621,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Milestones',
       helpText: 'Select all that apply.',
       selectedLabel: 'Selected milestones',
+      selectedSolution: 'Selected solution: ',
       noMilestone:
         'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
       cta: {
