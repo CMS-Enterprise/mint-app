@@ -79,6 +79,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         status: MtoMilestoneStatus.NOT_STARTED,
         key: null,
         facilitatedBy: null,
+        facilitatedByOther: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
         addedFromMilestoneLibrary: false,
         solutions: [],
@@ -250,10 +251,11 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                     definition={
                       milestone.facilitatedBy
                         ? milestone.facilitatedBy
-                            .map((facilitator: any) =>
-                              mtoMilestoneT(
-                                `facilitatedBy.options.${facilitator}`
-                              )
+                            .map(
+                              (facilitator: any) =>
+                                `${mtoMilestoneT(
+                                  `facilitatedBy.options.${facilitator}`
+                                )}${facilitator === 'OTHER' ? ` (${milestone.facilitatedByOther})` : ''}`
                             )
                             .join(', ')
                         : NoneSpecified

@@ -15,6 +15,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoSolutionsAndMilestonesQuery,
   MtoCommonSolutionKey,
+  MtoFacilitator,
   MtoRiskIndicator,
   MtoSolutionStatus,
   MtoSolutionType,
@@ -355,7 +356,7 @@ const ITSystemsTable = ({
         accessor: 'facilitatedBy',
         width: 250,
         Cell: ({ row }: any) => {
-          const { facilitatedBy } = row.original || {};
+          const { facilitatedBy, facilitatedByOther } = row.original || {};
 
           if (!facilitatedBy || row.original.__typename === 'MTOMilestone')
             return <></>;
@@ -363,8 +364,9 @@ const ITSystemsTable = ({
           return (
             <>
               {facilitatedBy
-                .map((facilitator: any) =>
-                  mtoSolutionT(`facilitatedBy.options.${facilitator}`)
+                .map(
+                  (facilitator: MtoFacilitator) =>
+                    `${mtoSolutionT(`mtoMilestone:facilitatedBy.options.${facilitator}`)}${facilitator === 'OTHER' ? ` (${facilitatedByOther})` : ''}`
                 )
                 .join(', ')}
             </>

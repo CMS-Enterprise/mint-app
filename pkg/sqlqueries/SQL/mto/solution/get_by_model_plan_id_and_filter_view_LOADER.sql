@@ -15,6 +15,7 @@ SELECT
     COALESCE(mto_solution.name, mto_common_solution.name) AS "name",
     COALESCE(mto_solution.type, mto_common_solution.type) AS "type",
     mto_solution.facilitated_by,
+    mto_solution.facilitated_by_other,
     mto_solution.needed_by,
     mto_solution.status,
     mto_solution.risk_indicator,

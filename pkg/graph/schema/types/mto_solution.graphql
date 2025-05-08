@@ -12,6 +12,11 @@ type MTOSolution {
   id: UUID!
   name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
   facilitatedBy:  [MTOFacilitator!]
+  """
+  A place to store the other facilitator information if selected as an option for facilitatedBy.
+  Note, this data will be cleared if other is removed as an option
+  """
+  facilitatedByOther: String
   neededBy: Time
   status: MTOSolutionStatus!
   riskIndicator: MTORiskIndicator
@@ -37,6 +42,7 @@ type MTOSolution {
 input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
   name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
   facilitatedBy:  [MTOFacilitator!]
+  facilitatedByOther: String
   neededBy: Time
   status: MTOSolutionStatus
   riskIndicator: MTORiskIndicator
