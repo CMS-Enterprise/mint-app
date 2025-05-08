@@ -164,13 +164,13 @@ export const modelToOperationsMisc: Record<string, any> = {
   heading: 'Model-to-operations matrix',
   forModel: 'for {{ modelName }}',
   milestones: 'Milestones',
-  solutions: 'IT systems and solutions',
+  solutions: 'Solutions and IT systems',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
   isMTOInProgress: 'Is this MTO still in progress',
   lastUpdated: 'MTO last updated {{date}}',
   warningRedirect:
-    'Your answer to this question may have implications for the milestones and IT systems or solutions you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). <link1>Go to your MTO</link1> to review any suggestions.',
+    'Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). <link1>Go to your MTO</link1> to review any suggestions.',
   emptyMTO: 'Your model-to-operations matrix is a bit empty!',
   emptyMTOReadView:
     'The model-to-operations matrix (MTO) for this model hasn’t been started yet. Check back again later for updates.',
@@ -208,7 +208,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Milestones',
       header: 'Start with model milestones',
       description:
-        'Model milestones are the key activities and functions that models must accomplish in order to be ready to go live. Most will be fulfilled by one or more IT systems or solutions. Many milestones are similar across models, so MINT offers a library of common milestones to select from.',
+        'Model milestones are the key activities and functions that models must accomplish in order to be ready to go live. Most will be fulfilled by one or more solutions or IT systems. Many milestones are similar across models, so MINT offers a library of common milestones to select from.',
       buttonText: 'Browse common milestones',
       linkText: 'or, add a custom milestone'
     },
@@ -216,7 +216,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Operational solutions',
       header: 'Start with IT systems or other solutions',
       description:
-        'Models use a variety of IT systems or solutions to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.',
+        'Models use a variety of solutions or IT systems to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.',
       buttonText: 'Browse common solutions',
       linkText: 'or, add a custom solution'
     },
@@ -407,7 +407,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       noSolutions:
         'You haven’t selected any solutions or IT systems to implement this milestone.',
       noSolutionsTable:
-        'There are no IT systems or solutions selected to implement this milestone.',
+        'There are no solutions or IT systems selected to implement this milestone.',
       solution: 'Solution',
       status: 'Status',
       selectedSolutionCount_other: '{{count}} selected solutions',
@@ -440,7 +440,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         '<bold>Completed</bold>: Work for this solution and all of its selected solutions is finished'
       ],
       customTooltip:
-        'As opposed to common IT systems and solutions available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
+        'As opposed to common solutions and IT systems available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
       custom: 'Custom',
       saveChanges: 'Save changes',
       save: 'Save',

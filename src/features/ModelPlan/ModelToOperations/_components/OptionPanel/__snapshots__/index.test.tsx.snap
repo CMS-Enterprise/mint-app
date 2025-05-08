@@ -63,7 +63,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               class="usa-card__body padding-x-0 padding-top-0"
               data-testid="CardBody"
             >
-              Model milestones are the key activities and functions that models must accomplish in order to be ready to go live. Most will be fulfilled by one or more IT systems or solutions. Many milestones are similar across models, so MINT offers a library of common milestones to select from.
+              Model milestones are the key activities and functions that models must accomplish in order to be ready to go live. Most will be fulfilled by one or more solutions or IT systems. Many milestones are similar across models, so MINT offers a library of common milestones to select from.
             </div>
             <div
               class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
@@ -131,7 +131,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               class="usa-card__body padding-x-0 padding-top-0"
               data-testid="CardBody"
             >
-              Models use a variety of IT systems or solutions to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.
+              Models use a variety of solutions or IT systems to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.
             </div>
             <div
               class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"

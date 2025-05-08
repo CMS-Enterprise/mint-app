@@ -121,7 +121,7 @@ const routes = {
     '/read-view/payment': 'Read view - Payment',
     '/read-view/milestones': 'Read view - Milestones',
     '/read-view/it-systems-and-solutions':
-      'Read view - IT systems and solutions',
+      'Read view - Solutions and IT systems',
     '/read-view/data-exchange-approach': 'Data exchange approach',
     '/read-view/it-solutions':
       'Read view - Operational solutions and implementation status',

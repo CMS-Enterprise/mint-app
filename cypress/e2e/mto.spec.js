@@ -245,7 +245,7 @@ describe('Model-to-Operations Matrix', () => {
       .contains('Your solution (Custom Solution) has been added.');
 
     // Click the IT system and solutions tab
-    cy.contains('IT systems and solutions').click();
+    cy.contains('Solutions and IT systems').click();
 
     cy.get('table').within(() => {
       cy.get('td')
