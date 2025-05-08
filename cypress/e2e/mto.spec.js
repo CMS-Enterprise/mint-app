@@ -257,7 +257,7 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
-    cy.get('#name').clear().type('Edited Custom Solution');
+    cy.get('#name').clear().type('Edited Custom Solution', { force: true });
     cy.contains('Save changes').should('be.not.disabled').click();
 
     cy.get('table').within(() => {
