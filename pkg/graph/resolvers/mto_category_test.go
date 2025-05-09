@@ -684,7 +684,6 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	// 1) Find and rename
 	participantsCategory, found := lo.Find[*models.MTOCategory](updatedCategories, func(item *models.MTOCategory) bool {
 		return item.Name == mtoCatParticipants
-		// TODO, refactor to use const instead of strings
 	})
 	suite.True(found)
 	_, err = MTOCategoryRename(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, participantsCategory.ID, "Participants (NEW AND IMPROVED)")
