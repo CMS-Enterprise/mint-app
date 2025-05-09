@@ -46,6 +46,10 @@ input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
   neededBy: Time
   status: MTOSolutionStatus
   riskIndicator: MTORiskIndicator
+  """
+  If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  """
+  type: MTOSolutionType 
   pocName: String
   pocEmail: String
 }
