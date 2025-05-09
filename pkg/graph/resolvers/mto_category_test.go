@@ -7,6 +7,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) createMTOCategory(catName string, modelPlanID uuid.UUID, parentID *uuid.UUID) *models.MTOCategory {
@@ -47,7 +48,42 @@ func (suite *ResolverSuite) createMultipleMTOcategories(categoryNames []string, 
 }
 
 func (suite *ResolverSuite) TestMTOCategoryGetByModelPlanIDLOADER() {
-	//TODO when data exchange approach is complete, use the generic testing functionality introduced to write a unit test for this loader
+	plan1 := suite.createModelPlan("model plan 1")
+	cat1Name := "Category 1"
+	category1, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat1Name, plan1.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(category1)
+	suite.EqualValues(plan1.ID, category1.ModelPlanID)
+
+	plan2 := suite.createModelPlan("model plan 2")
+	cat2Name := "Category 2"
+	category2, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Name, plan2.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(category2)
+	suite.EqualValues(plan2.ID, category2.ModelPlanID)
+
+	plan3 := suite.createModelPlan("model plan 3")
+	cat3Name := "Category 3"
+	category3, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat3Name, plan3.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(category3)
+	suite.EqualValues(plan3.ID, category3.ModelPlanID)
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, uuid.UUID]{
+		{Key: plan1.ID, Expected: category1.ID},
+		{Key: plan2.ID, Expected: category2.ID},
+		{Key: plan3.ID, Expected: category3.ID},
+	}
+	verifyFunc := func(data []*models.MTOCategory, expected uuid.UUID) bool {
+		if suite.NotNil(data) {
+			suite.Len(data, 1) //if we want, we can verify multiple values are returned, this is testing that the correct one is returned at a minimum
+			return suite.EqualValues(expected, data[0].ID)
+		}
+		return false
+	}
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOCategory, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOCategory.ByModelPlanID,
+		expectedResults, verifyFunc)
+
 }
 
 // TestMTOCategoryCreate validates fields are generated and categories are created as expected for an MTO category
