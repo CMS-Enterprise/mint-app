@@ -1,0 +1,113 @@
+meta {
+  name: Update Plan Beneficiaries
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanBeneficiaries{
+      updatePlanBeneficiaries (id: "{{beneficiariesID}}", changes: 
+          {
+              status: READY_FOR_CLEARANCE
+          #Page 1
+          beneficiaries: [MEDICAID,MEDICARE_PART_D]
+          diseaseSpecificGroup: "centers for diabetes prevention"
+          #   beneficiariesOther:
+          #   beneficiariesNote:
+          #   treatDualElligibleDifferent:
+          #   treatDualElligibleDifferentHow:
+          #   treatDualElligibleDifferentNote:
+          #   excludeCertainCharacteristics:
+          #   excludeCertainCharacteristicsCriteria:
+          #   excludeCertainCharacteristicsNote:
+          #Page 2
+          numberPeopleImpacted: 22
+          #   estimateConfidence:
+          confidenceNote: "Confidence hooray!!!!"
+          #   beneficiarySelectionMethod:
+          #   beneficiarySelectionOther:
+  
+          #   beneficiarySelectionNote:
+          #   #Page 3
+          #   beneficiarySelectionFrequency:
+          #   beneficiarySelectionFrequencyOther:
+          #   beneficiarySelectionFrequencyNote:
+          #   beneficiaryOverlap:
+          #   beneficiaryOverlapNote:
+          precedenceRules: [YES, NO]
+          precedenceRulesYes: "This is a 'YES' comment"
+          precedenceRulesNo: "This is a 'NO' comment"
+          precedenceRulesNote: "This is a precedence rules note"
+      }) {
+          id
+          modelPlanID
+          beneficiaries
+          beneficiariesOther
+          beneficiariesNote
+          diseaseSpecificGroup
+          treatDualElligibleDifferent
+          treatDualElligibleDifferentHow
+          treatDualElligibleDifferentNote
+          excludeCertainCharacteristics
+          excludeCertainCharacteristicsCriteria
+          excludeCertainCharacteristicsNote
+          numberPeopleImpacted
+          estimateConfidence
+          confidenceNote
+          beneficiarySelectionMethod
+          beneficiarySelectionOther
+          beneficiarySelectionNote
+          beneficiarySelectionFrequency
+          beneficiarySelectionFrequencyOther
+          beneficiarySelectionFrequencyNote
+          beneficiaryRemovalFrequency
+          beneficiaryRemovalFrequencyContinually
+          beneficiaryRemovalFrequencyOther
+          beneficiaryRemovalFrequencyNote
+          beneficiaryOverlap
+          beneficiaryOverlapNote
+          precedenceRules
+          precedenceRulesYes
+          precedenceRulesNo
+          precedenceRulesNote
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          readyForReviewBy
+          readyForReviewDts
+          readyForClearanceBy
+          readyForClearanceDts
+          status
+  
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }     
+          readyForReviewByUserAccount 
+          {
+              commonName
+          }
+          readyForClearanceByUserAccount 
+          {
+              commonName
+          }        
+      }
+  }
+}

@@ -1,0 +1,81 @@
+meta {
+  name: Get CurrentUser
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query currentUser {
+    currentUser {
+      launchDarkly {
+        userKey
+      }
+      account {
+        commonName
+        email
+      }
+      notifications {
+        numUnreadNotifications
+        notifications {
+          __typename
+          id
+          isRead
+          inAppSent
+          emailSent
+          activity {
+            activityType
+            entityID
+            actorID
+            metaData {
+              __typename
+              ... on TaggedInPlanDiscussionActivityMeta{
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }                  
+                  discussionID
+                  content
+              }
+              ... on TaggedInDiscussionReplyActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }                  
+                  discussionID
+                  replyID
+                  content
+              }
+            }
+            createdByUserAccount {
+              commonName
+            }
+          }
+          createdByUserAccount {
+            commonName
+          }
+        }
+      }
+    }
+  }
+  
+}
+
+body:graphql:vars {
+  {}
+}

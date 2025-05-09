@@ -1,0 +1,32 @@
+meta {
+  name: Share Model Plan
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation shareModelPlan {
+      shareModelPlan(
+          modelPlanID: "{{modelPlanID}}",
+          #Note viewFilter and share section are not meant to be used at once
+          # if both are provided, the Share section is prioritized
+          # viewFilter: CMMI,
+          modelShareSection: MODEL_PLAN
+          usernames: ["ABCD", "TEST"],
+          optionalMessage: "This was a triumph. I'm making a note here, huge success"
+          )
+  }
+  
+}

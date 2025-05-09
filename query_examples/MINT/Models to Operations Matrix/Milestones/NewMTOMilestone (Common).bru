@@ -1,0 +1,59 @@
+meta {
+  name: NewMTOMilestone (Common)
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NewMTOMilestone {
+      createMTOMilestoneCommon(modelPlanID: "{{modelPlanID}}",
+      commonMilestoneKey: MANAGE_CD,
+      commonSolutions: [INNOVATION, ACO_OS]
+  ) {
+      id
+      name
+      key
+      addedFromMilestoneLibrary
+      facilitatedBy
+      needBy
+      status
+      riskIndicator
+      # isDraftMilestone
+      mtoCategoryID
+      categories {
+          category{
+              name
+              position
+          }
+          subCategory{
+              name
+              position
+          }
+      }        
+  
+      # commonMilestone
+      # solutions
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOMilestoneCommon
+  
+  mtoMilestoneID = responseData.id
+  
+  
+  bru.setVar("mtoMilestoneID", mtoMilestoneID);
+}

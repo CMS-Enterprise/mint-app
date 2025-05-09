@@ -1,0 +1,186 @@
+meta {
+  name: GetNotifications
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: http://localhost:8085/api/graph/query
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query currentUser {
+    currentUser {
+      notifications {
+        numUnreadNotifications
+        notifications {
+          __typename
+          id
+          isRead
+          inAppSent
+          emailSent
+          activity {
+            activityType
+            entityID
+            actorID
+                      metaData {
+              __typename
+              ... on TaggedInPlanDiscussionActivityMeta{
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }      
+                  discussionID
+                  content
+              }
+              ... on TaggedInDiscussionReplyActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }                  
+                  discussionID
+                  replyID
+                  content
+              }
+              ... on ModelPlanSharedActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }
+                  optionalMessage
+              }
+              ... on NewDiscussionRepliedActivityMeta {
+                  version
+                  type
+                  discussionID
+                  replyID
+                  content
+              } 
+              ... on DailyDigestCompleteActivityMeta{
+                  version
+                  type
+                  modelPlanIDs
+                  date
+                  analyzedAudits{
+                         id
+                          modelPlanID
+                          modelName
+                          date
+                          changes{
+                              modelPlan{
+                                  oldName
+                                  statusChanges
+                              }
+                              documents{
+                                  count
+                              }
+                              crTdls{
+                                  activity
+                              }
+                              planSections{
+                                  updated
+                                  readyForReview
+                                  readyForClearance
+                              }
+                              modelLeads{
+                                  added{
+                                      id
+                                      commonName
+                                      # userAccount{
+                                      #     id
+                                      #     email
+                                      # }
+                                  }
+                              }
+                              planDiscussions{
+                                  activity
+                              }
+                          }
+  
+                  }
+  
+              }
+              ... on NewModelPlanActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }
+              }
+              ... on DatesChangedActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan {
+                      id
+                  }
+                  dateChanges {
+                      isChanged
+                      field
+                      isRange
+                      oldDate
+                      newDate
+                      oldRangeStart
+                      oldRangeEnd
+                      newRangeStart
+                      newRangeEnd
+                  }
+              }   
+              ... on PlanDataExchangeApproachMarkedCompleteActivityMeta {
+                  version
+                  type
+                  dataExchangeApproachID
+                  dataExchangeApproach {
+                      id
+                  }
+                  modelPlan {
+                      id
+                  }
+                  markedCompleteBy
+                  markedCompleteByUserAccount {
+                      id
+                  }
+              }          
+            }
+            createdByUserAccount {
+              commonName
+            }
+          }
+          createdByUserAccount {
+            commonName
+          }
+        }
+      }
+    }
+  }
+  
+}
+
+tests {
+  let notifications = res.getBody().data.currentUser.notifications.notifications
+  if (notifications.length > 0) {
+      userNotificationID = notifications[0].id
+      bru.setVar("userNotificationID", userNotificationID);
+  }
+  
+  
+  // for (let i =0; i< notifications.length; i++){
+  //     subtaskID = notifications[i].id
+  //     bru.setVar("operationalSolutionSubtaskID"+i, subtaskID);
+  // }
+}

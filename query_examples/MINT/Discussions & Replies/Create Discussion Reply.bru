@@ -1,0 +1,75 @@
+meta {
+  name: Create Discussion Reply
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation createDiscussionReply {
+      createDiscussionReply (input: {
+          discussionID: "{{discussionID}}"
+          content: "Let me look into it, ok? <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"ADMI\" data-label=\"ADMI\">@Audrey Abrams</span>!"
+          userRole: IT_ARCHITECT
+      }) {
+          id
+          discussionID
+          content{
+              rawContent
+              tags{
+                  id
+                  taggedField
+                  taggedContentTable
+                  taggedContentID
+                  entityUUID
+                  entityIntID
+                  entity{
+                      __typename
+                      ... on UserAccount{
+                          id
+                          commonName
+                          email
+                      }
+                      ... on PossibleOperationalSolution {
+                          name
+                          key
+                      }
+                  }
+              }
+          }
+          isAssessment
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }             
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createDiscussionReply
+  
+  discussionReplyID = responseData.id
+  
+  
+  bru.setVar("discussionReplyID", discussionReplyID);
+}
