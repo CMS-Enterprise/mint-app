@@ -998,6 +998,7 @@ export type MtoMilestoneSolutionLinkTranslation = {
   solutionID: TranslationField;
 };
 
+/** The possible statuses of Milestone. */
 export enum MtoMilestoneStatus {
   COMPLETED = 'COMPLETED',
   IN_PROGRESS = 'IN_PROGRESS',
@@ -1070,6 +1071,7 @@ export type MtoSolutionLinks = {
   solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
 };
 
+/** The possible statuses of a Solution. */
 export enum MtoSolutionStatus {
   BACKLOG = 'BACKLOG',
   COMPLETED = 'COMPLETED',

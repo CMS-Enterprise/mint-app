@@ -1,4 +1,6 @@
-# TODO (mto) Verify all these. Zoë said they should match previous solution statuses
+"""
+The possible statuses of a Solution.
+"""
 enum MTOSolutionStatus {
   NOT_STARTED
   ONBOARDING
@@ -67,5 +69,5 @@ extend type Mutation {
 
 extend type Query {
   mtoSolution(id: UUID!): MTOSolution!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
