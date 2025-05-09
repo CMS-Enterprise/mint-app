@@ -109,13 +109,15 @@ type EditMilestoneFormProps = {
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
   submitted: { current: boolean }; // Ref to track if form has been submitted
   setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
+  setFooter: (footer: React.ReactNode | null) => void; // Set footer of modal
 };
 
 const EditMilestoneForm = ({
   closeModal,
   setIsDirty,
   submitted,
-  setCloseDestination
+  setCloseDestination,
+  setFooter
 }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
@@ -445,93 +447,107 @@ const EditMilestoneForm = ({
 
   const [deleteMilestone] = useDeleteMtoMilestoneMutation();
 
-  const onSubmit: SubmitHandler<FormValues> = formData => {
-    let mtoCategoryID;
+  const onSubmit = useCallback<SubmitHandler<FormValues>>(
+    formData => {
+      let mtoCategoryID;
 
-    const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
+      const uncategorizedCategoryID = '00000000-0000-0000-0000-000000000000';
 
-    // Sets the mtoCategoryID based on the change of either category or subcategory
-    if (formData.categories.subCategory.id !== uncategorizedCategoryID) {
-      mtoCategoryID = formData.categories.subCategory.id;
-    } else if (formData.categories.category.id === uncategorizedCategoryID) {
-      mtoCategoryID = null;
-    } else {
-      mtoCategoryID = formData.categories.category.id;
-    }
-
-    const { categories, needBy, name, ...formChanges } = dirtyInput(
-      milestone,
-      formData
-    );
-
-    // Check if category has changed to determine if the category is dirty to add to payload
-    let isCategoryDirty: boolean = false;
-    if (
-      formData.categories.category.id !== milestone?.categories.category.id ||
-      formData.categories.subCategory.id !==
-        milestone?.categories.subCategory.id
-    ) {
-      isCategoryDirty = true;
-    }
-
-    updateMilestone({
-      variables: {
-        id: editMilestoneID || '',
-        changes: {
-          ...formChanges,
-          ...(isCategoryDirty && { mtoCategoryID }),
-          ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
-          ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
-        },
-        solutionLinks: {
-          commonSolutionKeys,
-          solutionIDs
-        }
+      // Sets the mtoCategoryID based on the change of either category or subcategory
+      if (formData.categories.subCategory.id !== uncategorizedCategoryID) {
+        mtoCategoryID = formData.categories.subCategory.id;
+      } else if (formData.categories.category.id === uncategorizedCategoryID) {
+        mtoCategoryID = null;
+      } else {
+        mtoCategoryID = formData.categories.category.id;
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={modelToOperationsMiscT(
-                      'modal.editMilestone.successUpdated'
-                    )}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    values={{ milestone: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
-          );
-          // eslint-disable-next-line no-param-reassign
-          submitted.current = true;
-          setIsDirty(false);
-          closeModal();
+
+      const { categories, needBy, name, ...formChanges } = dirtyInput(
+        milestone,
+        formData
+      );
+
+      // Check if category has changed to determine if the category is dirty to add to payload
+      let isCategoryDirty: boolean = false;
+      if (
+        formData.categories.category.id !== milestone?.categories.category.id ||
+        formData.categories.subCategory.id !==
+          milestone?.categories.subCategory.id
+      ) {
+        isCategoryDirty = true;
+      }
+
+      updateMilestone({
+        variables: {
+          id: editMilestoneID || '',
+          changes: {
+            ...formChanges,
+            ...(isCategoryDirty && { mtoCategoryID }),
+            ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
+            ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
+          },
+          solutionLinks: {
+            commonSolutionKeys,
+            solutionIDs
+          }
         }
       })
-      .catch(() => {
-        setMutationError(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
-          </Alert>
-        );
-      });
-  };
+        .then(response => {
+          if (!response?.errors) {
+            showMessage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="mandatory-fields-alert"
+                  className="margin-y-4"
+                >
+                  <span className="mandatory-fields-alert__text">
+                    <Trans
+                      i18nKey={modelToOperationsMiscT(
+                        'modal.editMilestone.successUpdated'
+                      )}
+                      components={{
+                        b: <span className="text-bold" />
+                      }}
+                      values={{ milestone: formData.name }}
+                    />
+                  </span>
+                </Alert>
+              </>
+            );
+            // eslint-disable-next-line no-param-reassign
+            submitted.current = true;
+            setIsDirty(false);
+            closeModal();
+          }
+        })
+        .catch(() => {
+          setMutationError(
+            <Alert
+              type="error"
+              slim
+              data-testid="error-alert"
+              className="margin-y-4"
+            >
+              {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
+            </Alert>
+          );
+        });
+    },
+    [
+      milestone,
+      updateMilestone,
+      editMilestoneID,
+      commonSolutionKeys,
+      solutionIDs,
+      showMessage,
+      modelToOperationsMiscT,
+      submitted,
+      setIsDirty,
+      closeModal
+    ]
+  );
 
   const handleRemove = () => {
     deleteMilestone({
@@ -580,6 +596,39 @@ const EditMilestoneForm = ({
         setIsModalOpen(false);
       });
   };
+
+  // Set the footer of the modal to be rendered in the parent Sidepanel to allow for sticky bottom
+  useEffect(() => {
+    setFooter(
+      <div className="border-top-1px border-base-lighter padding-y-4 panel-footer">
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
+          className="margin-bottom-2 margin-top-0"
+        >
+          {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+        </Button>
+
+        <Button
+          type="button"
+          disabled={isSubmitting}
+          className="bg-error margin-top-0"
+          onClick={() => setIsModalOpen(true)}
+        >
+          {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
+        </Button>
+      </div>
+    );
+  }, [
+    isSubmitting,
+    isDirty,
+    unsavedSolutionChanges,
+    handleSubmit,
+    setFooter,
+    onSubmit,
+    modelToOperationsMiscT
+  ]);
 
   const columns: Column<SolutionType>[] = useMemo(
     () => [
@@ -658,7 +707,7 @@ const EditMilestoneForm = ({
   }
 
   return (
-    <>
+    <div className="margin-top-8">
       <Modal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
@@ -789,7 +838,7 @@ const EditMilestoneForm = ({
                   {milestone.name}
                 </h2>
 
-                <Fieldset disabled={loading}>
+                <Fieldset disabled={loading} className="margin-bottom-8">
                   <p className="margin-top-0 margin-bottom-3 text-base">
                     <Trans
                       i18nKey={modelToOperationsMiscT(
@@ -1341,35 +1390,12 @@ const EditMilestoneForm = ({
                     )}
                   </div>
                 </Fieldset>
-
-                <div className="border-top-1px border-base-lighter padding-y-4">
-                  <Button
-                    type="submit"
-                    disabled={
-                      (isSubmitting || !isDirty) && !unsavedSolutionChanges
-                    }
-                    className="margin-bottom-2"
-                  >
-                    {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
-                  </Button>
-
-                  <Button
-                    type="button"
-                    disabled={isSubmitting}
-                    className="bg-error"
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    {modelToOperationsMiscT(
-                      'modal.editMilestone.removeMilestone'
-                    )}
-                  </Button>
-                </div>
               </Form>
             </FormProvider>
           </Grid>
         </Grid>
       </GridContainer>
-    </>
+    </div>
   );
 };
 

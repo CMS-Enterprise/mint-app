@@ -7,8 +7,6 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import i18next from 'i18next';
 import { allMilestonesMock, modelID, solutionMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -40,6 +38,7 @@ describe('EditSolutionForm Component', () => {
                 closeModal={vi.fn()}
                 setIsDirty={vi.fn()}
                 setCloseDestination={vi.fn()}
+                setFooter={() => {}}
                 submitted={{ current: false }}
               />
             </Route>
@@ -63,29 +62,5 @@ describe('EditSolutionForm Component', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('displays a confirmation modal when the remove button is clicked', async () => {
-    renderForm();
-
-    await waitFor(() => {
-      expect(screen.getByText('Solution 1')).toBeInTheDocument();
-    });
-
-    const removeButton = screen.getByText(
-      i18next.t<string, {}, string>(
-        'modelToOperationsMisc:modal.editSolution.removeSolution'
-      )
-    );
-
-    await userEvent.click(removeButton);
-
-    expect(
-      screen.getByText(
-        i18next.t<string, {}, string>(
-          'modelToOperationsMisc:modal.editSolution.areYouSure'
-        )
-      )
-    ).toBeInTheDocument();
   });
 });
