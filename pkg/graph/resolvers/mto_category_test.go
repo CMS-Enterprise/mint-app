@@ -6,7 +6,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -653,7 +652,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	plan := suite.createModelPlan("Plan with standard MTO Categories")
 
 	// Call the storage method directly here since it doesn't append any `Uncategorized`, making it more useful for direct testing & validation
-	initialCategories, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	initialCategories, err := MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(initialCategories, 0) // No categories to start
 
@@ -662,7 +661,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	suite.NoError(err)
 
 	// Check all the categories again
-	updatedCategories, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	updatedCategories, err := MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	// Make sure it's the expected split of categories and subcategories
@@ -694,7 +693,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	suite.NoError(err)
 
 	// 3) Assert proper length
-	categoriesAfterRename, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	categoriesAfterRename, err := MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	numCategories = lo.CountBy(categoriesAfterRename, func(c *models.MTOCategory) bool {
