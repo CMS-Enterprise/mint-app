@@ -86,7 +86,7 @@ type FormValues = {
   neededBy?: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
-  solutionType: MtoSolutionType | 'default';
+  type: MtoSolutionType | 'default';
   pocName: string;
   pocEmail: string;
 };
@@ -237,7 +237,7 @@ const EditSolutionForm = ({
   const formValues = useMemo(
     () => ({
       name: solution?.name || '',
-      solutionType: (solution?.type as MtoSolutionType) || 'default',
+      type: (solution?.type as MtoSolutionType) || 'default',
       pocName: solution?.pocName || '',
       pocEmail: solution?.pocEmail || '',
       facilitatedBy: solution?.facilitatedBy || [],
@@ -311,7 +311,7 @@ const EditSolutionForm = ({
   const [deleteSolution] = useDeleteMtoSolutionMutation();
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    const { neededBy, name, solutionType, ...formChanges } = dirtyInput(
+    const { neededBy, name, type, ...formChanges } = dirtyInput(
       solution,
       formData
     );
@@ -323,10 +323,7 @@ const EditSolutionForm = ({
           ...formChanges,
           ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
           ...(!!name && !solution?.addedFromSolutionLibrary && { name }),
-          ...(!!formData.solutionType &&
-            !solution?.addedFromSolutionLibrary && {
-              type: formData.solutionType
-            })
+          ...(!!type && !solution?.addedFromSolutionLibrary && { type })
         },
         milestoneLinks: {
           milestoneIDs
@@ -719,7 +716,7 @@ const EditSolutionForm = ({
                         )}
                       />
                       <Controller
-                        name="solutionType"
+                        name="type"
                         control={control}
                         rules={{
                           required: true,
