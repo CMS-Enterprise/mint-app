@@ -201,11 +201,13 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
             <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
 
-            <p className="margin-0 mint-body-normal text-base-dark">
-              {modelToOperationsMiscT(
-                'modal.editMilestone.readviewDescription'
-              )}
-            </p>
+            {milestone.key && (
+              <p style={{ whiteSpace: 'pre-line' }}>
+                {modelToOperationsMiscT(
+                  `milestoneLibrary.milestoneMap.${milestone.key}.description`
+                )}
+              </p>
+            )}
 
             <div className="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4">
               <Grid row className="margin-bottom-2">

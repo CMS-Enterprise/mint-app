@@ -403,7 +403,9 @@ export const allMTOSolutionsMock: MockedResponse<
                 __typename: 'MTOSolution',
                 id: '1',
                 name: 'Solution 1',
-                key: MtoCommonSolutionKey.BCDA
+                key: MtoCommonSolutionKey.BCDA,
+                status: MtoSolutionStatus.COMPLETED,
+                riskIndicator: MtoRiskIndicator.AT_RISK
               }
             ]
           }

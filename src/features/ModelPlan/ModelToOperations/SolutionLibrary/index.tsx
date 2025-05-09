@@ -31,9 +31,8 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
+import MTOSolutionCard from '../_components/MTOSolutionCard';
 import SolutionViewSelector from '../_components/SolutionViewSelector';
-
-import MTOSolutionCard from './_components/MTOSolutionCard';
 
 export type SolutionCardType =
   GetMtoCommonSolutionsQuery['modelPlan']['mtoMatrix']['commonSolutions'][0];
@@ -293,6 +292,7 @@ const SolutionLibrary = () => {
                           'hide-added-solutions',
                           hideAddedSolutions ? 'false' : 'true'
                         );
+                        params.set('page', '1');
                         history.replace({ search: params.toString() });
                       }}
                     />

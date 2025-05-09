@@ -123,6 +123,7 @@ const MilstoneCardGroup = ({
   milestones: MilestoneCardType[];
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: tableT } = useTranslation('tableAndPagination');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -284,6 +285,7 @@ const MilstoneCardGroup = ({
                   pageSize={itemsPerPage}
                   filteredRowLength={rowLength}
                   rowLength={allItems.length}
+                  showAlert={false}
                 />
               </Grid>
             )}
@@ -399,33 +401,39 @@ const MilstoneCardGroup = ({
           </Grid>
         </div>
 
-        {viewParam === 'suggested' && suggestedMilestones.length === 0 ? (
-          <Alert
-            type="info"
-            heading={t('milestoneLibrary.noSuggestedHeading')}
-            className="mint-body-normal"
-          >
-            <Trans
-              t={t}
-              i18nKey="milestoneLibrary.noSuggestedDescription"
-              components={{
-                link1: (
-                  <UswdsReactLink
-                    to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
-                  >
-                    {' '}
-                  </UswdsReactLink>
-                ),
-                link2: (
-                  <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
-                    {' '}
-                  </UswdsReactLink>
-                ),
-                email1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
-              }}
-            />
-          </Alert>
-        ) : (
+        {viewParam === 'suggested' &&
+          suggestedMilestones.length === 0 &&
+          !query && (
+            <Alert
+              type="info"
+              heading={t('milestoneLibrary.noSuggestedHeading')}
+              className="mint-body-normal"
+            >
+              <Trans
+                t={t}
+                i18nKey="milestoneLibrary.noSuggestedDescription"
+                components={{
+                  link1: (
+                    <UswdsReactLink
+                      to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
+                    >
+                      {' '}
+                    </UswdsReactLink>
+                  ),
+                  link2: (
+                    <UswdsReactLink
+                      to={`/models/${modelID}/collaboration-area`}
+                    >
+                      {' '}
+                    </UswdsReactLink>
+                  ),
+                  email1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                }}
+              />
+            </Alert>
+          )}
+
+        {
           <>
             <CardGroup className="padding-x-1">
               <Grid desktop={{ col: 12 }}>
@@ -446,8 +454,18 @@ const MilstoneCardGroup = ({
               </Grid>
             </CardGroup>
 
-            {/* Pagination */}
+            {!!query && rowLength === 0 && (
+              <Alert
+                type="warning"
+                heading={tableT('results.alertHeading', {
+                  query
+                })}
+              >
+                {tableT('results.alertDescription')}
+              </Alert>
+            )}
 
+            {/* Pagination */}
             <div className="display-flex flex-wrap">
               {currentItems.length > 0 && pageCount > 0 && (
                 <>{PaginationComponent}</>
@@ -464,7 +482,7 @@ const MilstoneCardGroup = ({
               )}
             </div>
           </>
-        )}
+        }
       </div>
     </>
   );
