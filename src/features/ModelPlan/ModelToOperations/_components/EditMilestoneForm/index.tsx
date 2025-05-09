@@ -538,14 +538,7 @@ const EditMilestoneForm = ({
       variables: {
         id: editMilestoneID || ''
       },
-      refetchQueries: [
-        {
-          query: GetModelToOperationsMatrixDocument,
-          variables: {
-            id: modelID
-          }
-        }
-      ]
+      refetchQueries: [GetModelToOperationsMatrixDocument]
     })
       .then(response => {
         if (!response?.errors) {
@@ -563,10 +556,11 @@ const EditMilestoneForm = ({
               </Alert>
             </>
           );
+          closeModal();
           setIsModalOpen(false);
         }
       })
-      .catch(errors => {
+      .catch(() => {
         setMutationError(
           <Alert
             type="error"
@@ -577,7 +571,6 @@ const EditMilestoneForm = ({
             {modelToOperationsMiscT('modal.editMilestone.errorRemoved')}
           </Alert>
         );
-        setIsModalOpen(false);
       });
   };
 

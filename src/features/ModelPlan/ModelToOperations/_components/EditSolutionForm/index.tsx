@@ -371,7 +371,10 @@ const EditSolutionForm = ({
       variables: {
         id: editSolutionID || ''
       },
-      refetchQueries: [GetModelToOperationsMatrixDocument]
+      refetchQueries: [
+        GetModelToOperationsMatrixDocument,
+        GetMtoSolutionsAndMilestonesDocument
+      ]
     })
       .then(response => {
         if (!response?.errors) {
