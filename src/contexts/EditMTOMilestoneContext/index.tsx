@@ -67,7 +67,7 @@ const EditMTOMilestoneProvider = ({
         const url = new URL(closeDestination, window.location.origin); // Parse the URL
         const baseRoute = url.pathname; // Extract the base route
         const queryParams = url.search; // Extract the query parameters (if needed)
-  
+
         history.push({
           pathname: baseRoute,
           search: queryParams,
