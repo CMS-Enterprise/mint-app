@@ -209,8 +209,16 @@ const EditMilestoneForm = ({
           name: isCustomSolution(solution)
             ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
             : combinedSolutions.find(sol => sol.key === solution)?.name || '',
-          status: MtoSolutionStatus.NOT_STARTED,
-          riskIndicator: MtoRiskIndicator.ON_TRACK
+          status: isCustomSolution(solution)
+            ? combinedSolutions.find(sol => sol.id === solution)?.status ||
+              MtoSolutionStatus.NOT_STARTED
+            : combinedSolutions.find(sol => sol.key === solution)?.status ||
+              MtoSolutionStatus.NOT_STARTED,
+          riskIndicator: isCustomSolution(solution)
+            ? combinedSolutions.find(sol => sol.id === solution)
+                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
+            : combinedSolutions.find(sol => sol.key === solution)
+                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
         };
       }
 
