@@ -32,7 +32,7 @@ var MTOCommonSolution = &mtoCommonSolutionLoaders{
 	ByCommonMilestoneKey: NewLoaderWrapper(batchMTOCommonSolutionGetByCommonMilestoneKey),
 }
 
-//TODO (mto) revisit this and see if you can refactor the dataloader to take *uuid.UUID. The only part that doesn't work is onePerMany,
+//Future Enhancement (mto) revisit this and see if you can refactor the dataloader to take *uuid.UUID. The only part that doesn't work is onePerMany,
 // because a pointer of a map key is comparing the pointer address, not value.
 // Currently we are relying in uuid.Nil (0000-0000-etc) to represent nil
 

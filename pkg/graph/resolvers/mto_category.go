@@ -254,16 +254,15 @@ func MTOCategoryGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUI
 }
 
 // MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER implements resolver logic to get all MTO Categories (including subcategories) by a model plan ID using a data loader
+// This is largely useful for testing instead of for app code, as the categories are all returned at the top level.
+// It does not include  uncategorized records, as it contextually doesn't make sense.
 func MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOCategory, error) {
-	//TODO, consider removing this. It probably doesn't make sense conceptually, as you are only making on uncategorized
-	// , and giving it a max position of all categories
-
 	dbCategories, err := loaders.MTOCategory.AndSubCategoriesByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
-	// return while adding an uncategorized record as well
-	return append(dbCategories, models.MTOUncategorizedFromArray(modelPlanID, nil, dbCategories)), nil
+	// NOTE uncategorized is not included in this call, as it is not able to use it for each parent level category. All are returned at a flat level
+	return dbCategories, nil
 }
 
 func MTOSubcategoryGetByParentIDLoader(ctx context.Context, modelPlanID uuid.UUID, parentID uuid.UUID) ([]*models.MTOSubcategory, error) {

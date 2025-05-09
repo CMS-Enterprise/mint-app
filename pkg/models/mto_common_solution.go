@@ -3,15 +3,17 @@ package models
 import "github.com/google/uuid"
 
 type MTOCommonSolution struct {
-	Name        string                              `json:"name" db:"name"`
-	Key         MTOCommonSolutionKey                `json:"key" db:"key"`
-	Type        MTOSolutionType                     `json:"type" db:"type"`
-	Subjects    EnumArray[MTOCommonSolutionSubject] `json:"subjects" db:"subjects"`
-	FilterView  *ModelViewFilter                    `json:"filterView" db:"filter_view"`
-	ModelPlanID *uuid.UUID                          `json:"modelPlanID" db:"model_plan_id"` //TODO (mto) verify this, this would facilitate queries and is_added. This is not an actual database column
+	Name       string                              `json:"name" db:"name"`
+	Key        MTOCommonSolutionKey                `json:"key" db:"key"`
+	Type       MTOSolutionType                     `json:"type" db:"type"`
+	Subjects   EnumArray[MTOCommonSolutionSubject] `json:"subjects" db:"subjects"`
+	FilterView *ModelViewFilter                    `json:"filterView" db:"filter_view"`
+	// This field facilitate queries, but is not an actual database column (the mto_solution table joins to the model plan, and potentially to this table, unless it is a custom solution)
+	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 	// This field is here for the sake of simplifying DB queries, it comes from a linking table, and only provides some contextual data
-	CommonMilestoneKey *MTOCommonMilestoneKey `json:"commonMilestoneKey" db:"mto_common_milestone_key"` //TODO (mto) verify this,
-	IsAdded            bool                   `json:"isAdded" db:"is_added"`                            //TODO (mto) verify this
+	CommonMilestoneKey *MTOCommonMilestoneKey `json:"commonMilestoneKey" db:"mto_common_milestone_key"`
+	// This field facilitate queries, but is not an actual database column. It is evaluated contextually in the database to note if a common solution has been added to an MTO for a specific model plan
+	IsAdded bool `json:"isAdded" db:"is_added"`
 }
 
 type MTOCommonSolutionKey string

@@ -455,7 +455,6 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 	// get the Category
 	var parentCategoryID *uuid.UUID
 	var parentName *string
-	//TODO, this should be updated to handle if the data is deleted and not fail if so.
 	parentIDChange, fieldPresent := changesFields["parent_id"]
 	if fieldPresent {
 		var parentCategoryIDString string
@@ -472,10 +471,10 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 	} else {
 		// Note, if a parent id wasn't set and deleted, it is excluded from the audit as it is unchanged. EG null --> null never shows up in the audit.
 
-		// attempt to fetch the category, and get parent id from the entyr
+		// attempt to fetch the category, and get parent id from the entry
 		category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
 		if err != nil {
-			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) { // this can be nil if the category was deleted6
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) { // this can be nil if the category was deleted
 				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
 			}
 		}

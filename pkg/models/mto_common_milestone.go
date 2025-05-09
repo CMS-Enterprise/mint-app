@@ -11,8 +11,8 @@ type MTOCommonMilestone struct {
 
 	// Section specifies the Task List Section that corresponds to suggesting this common milestone
 	Section TaskListSection `json:"section" db:"section"`
-
-	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"` //TODO (mto) verify this, this would facilitate queries and is_added. This is not an actual database column
+	// This field facilitate queries, but is not an actual database column (the mto_milestone table joins to the model plan, and potentially to this table, unless it is a custom milestone)
+	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 	IsAdded     bool       `json:"isAdded" db:"is_added"`
 	IsSuggested bool       `json:"IsSuggested" db:"is_suggested"`
 }

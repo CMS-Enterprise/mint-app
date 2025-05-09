@@ -6,7 +6,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) createMTOCategory(catName string, modelPlanID uuid.UUID, parentID *uuid.UUID) *models.MTOCategory {
@@ -47,7 +47,42 @@ func (suite *ResolverSuite) createMultipleMTOcategories(categoryNames []string, 
 }
 
 func (suite *ResolverSuite) TestMTOCategoryGetByModelPlanIDLOADER() {
-	//TODO when data exchange approach is complete, use the generic testing functionality introduced to write a unit test for this loader
+	plan1 := suite.createModelPlan("model plan 1")
+	cat1Name := "Category 1"
+	category1, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat1Name, plan1.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(category1)
+	suite.EqualValues(plan1.ID, category1.ModelPlanID)
+
+	plan2 := suite.createModelPlan("model plan 2")
+	cat2Name := "Category 2"
+	category2, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Name, plan2.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(category2)
+	suite.EqualValues(plan2.ID, category2.ModelPlanID)
+
+	plan3 := suite.createModelPlan("model plan 3")
+	cat3Name := "Category 3"
+	category3, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat3Name, plan3.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(category3)
+	suite.EqualValues(plan3.ID, category3.ModelPlanID)
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, uuid.UUID]{
+		{Key: plan1.ID, Expected: category1.ID},
+		{Key: plan2.ID, Expected: category2.ID},
+		{Key: plan3.ID, Expected: category3.ID},
+	}
+	verifyFunc := func(data []*models.MTOCategory, expected uuid.UUID) bool {
+		if suite.NotNil(data) {
+			suite.Len(data, 1) //if we want, we can verify multiple values are returned, this is testing that the correct one is returned at a minimum
+			return suite.EqualValues(expected, data[0].ID)
+		}
+		return false
+	}
+	loaders.VerifyLoaders[uuid.UUID, []*models.MTOCategory, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOCategory.ByModelPlanID,
+		expectedResults, verifyFunc)
+
 }
 
 // TestMTOCategoryCreate validates fields are generated and categories are created as expected for an MTO category
@@ -617,7 +652,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	plan := suite.createModelPlan("Plan with standard MTO Categories")
 
 	// Call the storage method directly here since it doesn't append any `Uncategorized`, making it more useful for direct testing & validation
-	initialCategories, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	initialCategories, err := MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(initialCategories, 0) // No categories to start
 
@@ -626,7 +661,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	suite.NoError(err)
 
 	// Check all the categories again
-	updatedCategories, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	updatedCategories, err := MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	// Make sure it's the expected split of categories and subcategories
@@ -648,7 +683,6 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	// 1) Find and rename
 	participantsCategory, found := lo.Find[*models.MTOCategory](updatedCategories, func(item *models.MTOCategory) bool {
 		return item.Name == mtoCatParticipants
-		// TODO, refactor to use const instead of strings
 	})
 	suite.True(found)
 	_, err = MTOCategoryRename(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, participantsCategory.ID, "Participants (NEW AND IMPROVED)")
@@ -659,7 +693,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	suite.NoError(err)
 
 	// 3) Assert proper length
-	categoriesAfterRename, err := storage.MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(suite.testConfigs.Store, suite.testConfigs.Logger, []uuid.UUID{plan.ID})
+	categoriesAfterRename, err := MTOCategoryAndSubcategoriesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	numCategories = lo.CountBy(categoriesAfterRename, func(c *models.MTOCategory) bool {

@@ -23,12 +23,12 @@ func MTOCommonSolutionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID *u
 
 // MTOCommonSolutionGetByKeyLOADER returns a common Solution by it's key. Currently, it doesn't provide any contextual data.
 func MTOCommonSolutionGetByKeyLOADER(ctx context.Context, key models.MTOCommonSolutionKey) (*models.MTOCommonSolution, error) {
-	// TODO look into expanding this to also take contextual model plan data to return is added etc
+	// Future Enhancement look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOCommonSolution.ByKey.Load(ctx, key)
 }
 
 // MTOCommonSolutionGetByCommonMilestoneKeyLOADER returns all common Solutions associated with a common Milestone by it's key. Currently, it doesn't provide any contextual data.
 func MTOCommonSolutionGetByCommonMilestoneKeyLOADER(ctx context.Context, key models.MTOCommonMilestoneKey) ([]*models.MTOCommonSolution, error) {
-	// TODO look into expanding this to also take contextual model plan data to return is added etc
+	// Future Enhancement look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOCommonSolution.ByCommonMilestoneKey.Load(ctx, key)
 }

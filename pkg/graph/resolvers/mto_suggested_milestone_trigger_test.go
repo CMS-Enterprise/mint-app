@@ -11,7 +11,7 @@ import (
 // Currently, these tests do not exhaustively validate _every_ possible trigger for suggested common milestones.
 // It mainly focuses on testing the different types/styles of answers that can cause a milestone to become suggested.
 //
-// TODO We could refactor this to be more exhaustive (e.g. a test for each), and if we did this we'd probably want to do a more table-driven-testing approach,
+// Future Enhancement We could refactor this to be more exhaustive (e.g. a test for each), and if we did this we'd probably want to do a more table-driven-testing approach,
 // but it's probably just not worth it at this time.
 
 func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {

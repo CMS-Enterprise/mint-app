@@ -108,29 +108,6 @@ func MTOSolutionCreate(
 	return returned, nil
 }
 
-// MTOSolutionCreateAllowConflicts creates a new MTOSolution in the database, but
-// in the case of a conflict, instead just returns the conflicting row (and doesn't return an error)
-// TODO: Batch insert these solutions
-func MTOSolutionCreateAllowConflicts(
-	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	mtoSolution *models.MTOSolution,
-) (*models.MTOSolution, error) {
-	if mtoSolution.ID == uuid.Nil {
-		mtoSolution.ID = uuid.New()
-	}
-
-	returned, procErr := sqlutils.GetProcedure[models.MTOSolution](
-		np,
-		sqlqueries.MTOSolution.CreateAllowConflicts,
-		mtoSolution,
-	)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue creating new MTOSolution object (MTOSolutionCreateAllowConflicts): %w", procErr)
-	}
-	return returned, nil
-}
-
 // MTOSolutionCreateCommonAllowConflictsSQL takes a list of common solution keys for a model plan id, and inserts ones that don't exist
 // it will return existing data, or newly inserted data
 func MTOSolutionCreateCommonAllowConflictsSQL(

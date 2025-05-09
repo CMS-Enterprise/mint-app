@@ -5,9 +5,6 @@ import _ "embed"
 //go:embed SQL/mto/solution/create.sql
 var mtoSolutionCreateSQL string
 
-//go:embed SQL/mto/solution/create_allow_conflicts.sql
-var mtoSolutionCreateAllowConflictsSQL string
-
 //go:embed SQL/mto/solution/create_common_solutions_allow_conflicts.sql
 var mtoSolutionCreateCommonSolutionsAllowConflictsSQL string
 
@@ -31,7 +28,6 @@ var mtoSolutionGetByMilestoneIDLoaderSQL string
 
 type mtoSolutionScripts struct {
 	Create                              string
-	CreateAllowConflicts                string
 	CreateCommonSolutionsAllowConflicts string
 	Update                              string
 	Delete                              string
@@ -43,7 +39,6 @@ type mtoSolutionScripts struct {
 
 var MTOSolution = mtoSolutionScripts{
 	Create:                              mtoSolutionCreateSQL,
-	CreateAllowConflicts:                mtoSolutionCreateAllowConflictsSQL,
 	CreateCommonSolutionsAllowConflicts: mtoSolutionCreateCommonSolutionsAllowConflictsSQL,
 	Update:                              mtoSolutionUpdateSQL,
 	Delete:                              mtoSolutionDeleteSQL,

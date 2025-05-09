@@ -81,7 +81,7 @@ var mtoSolutionStatusHumanized = map[MTOSolutionStatus]string{
 // Humanize returns the human-readable string of a MTO Solution  Status
 // if a value is not found for the provided status, an empty string is returned
 func (m MTOSolutionStatus) Humanize() string {
-	//TODO, consider implementing the shared translation to make this work
+	//Future Enhancement, consider implementing the shared translation to make this work
 	return mtoSolutionStatusHumanized[m]
 }
 

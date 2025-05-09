@@ -800,6 +800,7 @@ export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
   contactInformation: MtoCommonSolutionContactInformation;
   filterView?: Maybe<ModelViewFilter>;
+  /** Has this common solution been added to the MTO for a model plan? It is only evaluated when evaluated at the parent level, in the context of a model plan */
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
@@ -997,6 +998,7 @@ export type MtoMilestoneSolutionLinkTranslation = {
   solutionID: TranslationField;
 };
 
+/** The possible statuses of Milestone. */
 export enum MtoMilestoneStatus {
   COMPLETED = 'COMPLETED',
   IN_PROGRESS = 'IN_PROGRESS',
@@ -1071,6 +1073,7 @@ export type MtoSolutionLinks = {
   solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
 };
 
+/** The possible statuses of a Solution. */
 export enum MtoSolutionStatus {
   BACKLOG = 'BACKLOG',
   COMPLETED = 'COMPLETED',
