@@ -64,7 +64,17 @@ const EditMTOMilestoneProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       if (closeDestination) {
-        history.push(closeDestination);
+        const url = new URL(closeDestination, window.location.origin); // Parse the URL
+        const baseRoute = url.pathname; // Extract the base route
+        const queryParams = url.search; // Extract the query parameters (if needed)
+  
+        history.push({
+          pathname: baseRoute,
+          search: queryParams,
+          state: {
+            scroll: true
+          }
+        });
         setCloseDestination(null);
       } else {
         params.delete('edit-milestone');

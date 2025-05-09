@@ -181,7 +181,10 @@ const LinkSolutionForm = ({
               components={{
                 solution: (
                   <UswdsReactLink
-                    to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                    to={{
+                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
+                      state: { scroll: true }
+                    }}
                   >
                     {' '}
                   </UswdsReactLink>
