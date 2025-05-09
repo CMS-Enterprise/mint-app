@@ -4,15 +4,15 @@ import {
   Card,
   Grid,
   GridContainer,
-  Icon,
+  // Icon,
   Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import i18next from 'i18next';
 
+// import i18next from 'i18next';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -21,7 +21,7 @@ import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import RelatedArticles from '../_components/RelatedArticles';
-import helpAndKnowledgeArticles, { ArticleCategories, HelpArticle } from '..';
+import { ArticleCategories, HelpArticle } from '..';
 
 export const CreatingMTOMatrix = () => {
   const { t } = useTranslation('creatingMtoMatrix');
@@ -40,13 +40,13 @@ export const CreatingMTOMatrix = () => {
     'creatingMtoMatrix:recommendProcessList'
   );
 
-  const mtoTutorialArticles = helpAndKnowledgeArticles
-    .filter(article => article.type === ArticleCategories.MTO_TUTORIALS)
-    .sort((a, b) => {
-      if (a.key === 'STARTING_MTO') return -1; // Move STARTING_MTO to the top
-      if (b.key === 'STARTING_MTO') return 1; // Keep other articles below STARTING_MTO
-      return 0; // Maintain the order of other articles
-    });
+  // const mtoTutorialArticles = helpAndKnowledgeArticles
+  //   .filter(article => article.type === ArticleCategories.MTO_TUTORIALS)
+  //   .sort((a, b) => {
+  //     if (a.key === 'STARTING_MTO') return -1; // Move STARTING_MTO to the top
+  //     if (b.key === 'STARTING_MTO') return 1; // Keep other articles below STARTING_MTO
+  //     return 0; // Maintain the order of other articles
+  //   });
 
   return (
     <div>
@@ -271,7 +271,8 @@ export const CreatingMTOMatrix = () => {
                 ))}
               </ProcessList>
 
-              <div className="bg-base-lightest padding-2">
+              {/* TODO: renable once MTO tutoarial articles are complete */}
+              {/* <div className="bg-base-lightest padding-2">
                 <h3 className="margin-top-1 margin-bottom-1">
                   {t('mtoTutorials')}
                 </h3>
@@ -297,7 +298,7 @@ export const CreatingMTOMatrix = () => {
                     );
                   })}
                 </Grid>
-              </div>
+              </div> */}
 
               <h2 className="margin-top-5 margin-bottom-1 line-height-large">
                 {t('stillNeedHelp')}
