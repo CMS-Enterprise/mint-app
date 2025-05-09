@@ -93,9 +93,10 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              history.push(
-                `/models/${modelID}/collaboration-area/model-to-operations`
-              )
+              history.push({
+                pathname: `/models/${modelID}/collaboration-area/model-to-operations`,
+                state: { scroll: true }
+              })
             }
             data-testid="to-model-to-operations"
           >

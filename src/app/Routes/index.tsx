@@ -1,11 +1,5 @@
-import React, { useLayoutEffect } from 'react';
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  Switch,
-  useLocation
-} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
@@ -67,33 +61,21 @@ import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 import SubscriptionWrapper from 'contexts/PageLockContext';
 import RouterProvider from 'contexts/RouterContext';
-import usePrevLocation from 'hooks/usePrevious';
 import useRouteTitle from 'hooks/useRouteTitle';
+import useScrollTop from 'hooks/useScrollTop';
 
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { NavContextProvider } from '../../contexts/NavContext';
-import shouldScroll from '../../utils/scrollConfig';
 
 const AppRoutes = () => {
   const { authState } = useOktaAuth();
-  const location = useLocation();
-  const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
   // Fetches translated title for route and sends to GA
   useRouteTitle({ sendGA: true });
 
   // Scroll to top
-  useLayoutEffect(() => {
-    if (
-      shouldScroll(
-        location.pathname + location.search,
-        (prevLocation?.pathname || '') + (prevLocation?.search || '')
-      )
-    ) {
-      window.scrollTo(0, 0);
-    }
-  }, [location.pathname, location.search, prevLocation]);
+  useScrollTop();
 
   return (
     <Switch>
