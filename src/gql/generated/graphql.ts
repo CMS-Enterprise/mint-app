@@ -800,6 +800,7 @@ export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
   contactInformation: MtoCommonSolutionContactInformation;
   filterView?: Maybe<ModelViewFilter>;
+  /** Has this common solution been added to the MTO for a model plan? It is only evaluated when evaluated at the parent level, in the context of a model plan */
   isAdded: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
