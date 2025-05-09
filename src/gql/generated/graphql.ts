@@ -1062,6 +1062,8 @@ export type MtoSolutionChanges = {
   pocName?: InputMaybe<Scalars['String']['input']>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
   status?: InputMaybe<MtoSolutionStatus>;
+  /** If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!) */
+  type?: InputMaybe<MtoSolutionType>;
 };
 
 export type MtoSolutionLinks = {
