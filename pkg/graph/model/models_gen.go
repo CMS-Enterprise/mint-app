@@ -91,16 +91,17 @@ type MTOMilestoneSolutionLinkTranslation struct {
 
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
-	Name            models.TranslationField            `json:"name" db:"name"`
-	IsDraft         models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
-	FacilitatedBy   models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
-	NeedBy          models.TranslationField            `json:"needBy" db:"need_by"`
-	RiskIndicator   models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
-	CommonSolutions models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
-	Solutions       models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
-	Status          models.TranslationFieldWithOptions `json:"status" db:"status"`
-	Key             models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
-	MtoCategoryID   models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+	Name               models.TranslationField            `json:"name" db:"name"`
+	IsDraft            models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
+	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	NeedBy             models.TranslationField            `json:"needBy" db:"need_by"`
+	RiskIndicator      models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	CommonSolutions    models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
+	Solutions          models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
+	Status             models.TranslationFieldWithOptions `json:"status" db:"status"`
+	Key                models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCategoryID      models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
 }
 
 type MTOSolutionLinks struct {
@@ -110,16 +111,17 @@ type MTOSolutionLinks struct {
 
 // Represents MTO Custom Solution translation data
 type MTOSolutionTranslation struct {
-	Name          models.TranslationField            `json:"name" db:"name"`
-	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
-	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
-	SolutionType  models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
-	Key           models.TranslationField            `json:"key" db:"mto_common_solution_key"`
-	RiskIndicator models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
-	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
-	NeededBy      models.TranslationField            `json:"neededBy" db:"needed_by"`
-	FacilitatedBy models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
-	Milestones    models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
+	Name               models.TranslationField            `json:"name" db:"name"`
+	PocName            models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail           models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	SolutionType       models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Key                models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	RiskIndicator      models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	Status             models.TranslationFieldWithOptions `json:"status" db:"status"`
+	NeededBy           models.TranslationField            `json:"neededBy" db:"needed_by"`
+	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
 // Represents model plan base translation data

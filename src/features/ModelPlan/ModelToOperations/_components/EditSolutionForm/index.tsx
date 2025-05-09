@@ -82,6 +82,7 @@ import '../../index.scss';
 type FormValues = {
   name: string;
   facilitatedBy?: MtoFacilitator[];
+  facilitatedByOther?: string;
   neededBy?: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
@@ -97,12 +98,14 @@ type EditSolutionFormProps = {
   closeModal: () => void;
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
   submitted: { current: boolean }; // Ref to track if form has been submitted
+  setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
 };
 
 const EditSolutionForm = ({
   closeModal,
   setIsDirty,
-  submitted
+  submitted,
+  setCloseDestination
 }: EditSolutionFormProps) => {
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
@@ -238,6 +241,7 @@ const EditSolutionForm = ({
       pocName: solution?.pocName || '',
       pocEmail: solution?.pocEmail || '',
       facilitatedBy: solution?.facilitatedBy || [],
+      facilitatedByOther: solution?.facilitatedByOther || '',
       neededBy: solution?.neededBy || '',
       status: solution?.status || MtoSolutionStatus.NOT_STARTED,
       riskIndicator: solution?.riskIndicator || MtoRiskIndicator.ON_TRACK
@@ -872,6 +876,59 @@ const EditSolutionForm = ({
                     )}
                   />
 
+                  {watch('facilitatedBy')?.includes(MtoFacilitator.OTHER) && (
+                    <Controller
+                      name="facilitatedByOther"
+                      control={control}
+                      rules={{
+                        required: modelToOperationsMiscT('validation.fillOut')
+                      }}
+                      render={({
+                        field: { ref, ...field },
+                        fieldState: { error }
+                      }) => (
+                        <FormGroup
+                          className="margin-0 margin-bottom-3"
+                          error={!!error}
+                        >
+                          <Label
+                            htmlFor={convertCamelCaseToKebabCase(
+                              'facilitatedByOther'
+                            )}
+                            requiredMarker
+                            className="text-normal"
+                          >
+                            {mtoSolutionT('facilitatedByOther.label')}
+                          </Label>
+
+                          {!!error && (
+                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                          )}
+
+                          <HelpText className="margin-top-1">
+                            {mtoSolutionT('facilitatedByOther.sublabel')}
+                          </HelpText>
+
+                          <TextInput
+                            {...field}
+                            ref={null}
+                            id={convertCamelCaseToKebabCase(
+                              'facilitatedByOther'
+                            )}
+                            type="text"
+                            maxLength={75}
+                          />
+
+                          <HelpText className="margin-top-1">
+                            {modelToOperationsMiscT(
+                              'modal.editMilestone.charactersAllowed'
+                            )}
+                          </HelpText>
+                        </FormGroup>
+                      )}
+                    />
+                  )}
+
                   <Controller
                     name="neededBy"
                     control={control}
@@ -1049,6 +1106,30 @@ const EditSolutionForm = ({
                       </Alert>
                     ) : (
                       <div ref={scrollRef}>
+                        <Alert type="info" slim className="margin-top-3">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editSolution.milestoneInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
+
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}

@@ -1291,6 +1291,7 @@ export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
   isDraft: TranslationFieldPropertiesWithOptions<Bool>;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  facilitatedByOther: TranslationFieldProperties;
   needBy: TranslationFieldProperties;
   riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
@@ -1324,6 +1325,7 @@ export type TranslationMTOSolutionCustomForm = {
   status: TranslationFieldPropertiesWithOptions<MtoSolutionStatus>;
   neededBy: TranslationFieldProperties;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  facilitatedByOther: TranslationFieldProperties;
   milestones: TranslationFieldPropertiesWithOptions<MtoCommonMilestoneKey>;
 };
 

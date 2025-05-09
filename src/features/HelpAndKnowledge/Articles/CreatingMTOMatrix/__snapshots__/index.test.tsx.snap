@@ -72,7 +72,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
             <p
               class="margin-bottom-3 margin-top-1"
             >
-              The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the IT systems or solutions used to implement those milestones, and when work for individual milestones must be completed by.
+              The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the solutions or IT systems used to implement those milestones, and when work for individual milestones must be completed by.
             </p>
             <h3
               class="margin-top-3 margin-bottom-1"
@@ -116,7 +116,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                         Create and update MTOs for any model they have access to
                       </li>
                       <li>
-                        Add and remove common milestones and IT systems or solutions to or from an MTO
+                        Add and remove common milestones and solutions or IT systems to or from an MTO
                       </li>
                       <li>
                         Create custom milestones, categories, and solutions
@@ -373,12 +373,12 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
             <h3
               class="margin-top-3 margin-bottom-1"
             >
-              IT systems and solutions
+              Solutions and IT systems
             </h3>
             <p
               class="margin-bottom-2 margin-top-1"
             >
-              Solutions are IT systems, contracts, CMS groups and teams, and other methods to implement milestones. IT leads will use their breadth of expertise to add solutions to the MTO and specify which milestone(s) they will help to accomplish. Like milestones, MINT offers two ways of adding a solution to an MTO. The MINT solution library houses a set of information about commonly used IT systems and other solutions, enabling IT leads to quickly add them to an MTO or associate them with a milestone. MINT also allows users to create custom solutions, helpful in cases where a needed system is not included in MINT or when a model is using a bespoke solution not commonly used by other models. You can also view MINT’s available IT systems and solutions in the 
+              Solutions are IT systems, contracts, CMS groups and teams, and other methods to implement milestones. IT leads will use their breadth of expertise to add solutions to the MTO and specify which milestone(s) they will help to accomplish. Like milestones, MINT offers two ways of adding a solution to an MTO. The MINT solution library houses a set of information about commonly used IT systems and other solutions, enabling IT leads to quickly add them to an MTO or associate them with a milestone. MINT also allows users to create custom solutions, helpful in cases where a needed system is not included in MINT or when a model is using a bespoke solution not commonly used by other models. You can also view MINT’s available solutions and IT systems in the 
               <a
                 class="usa-link"
                 href="/help-and-knowledge/operational-solutions"
@@ -493,7 +493,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                   Continue to update the MTO in MINT
                 </h3>
                 <p>
-                  As work progresses, IT Leads should continue to use the MINT MTO feature to update the status of individual milestones as well as IT systems and solutions. To asynchronously update any interested parties, use the Share feature in MINT to share a link to the model’s MTO with any colleagues or interested individuals at CMS.
+                  As work progresses, IT Leads should continue to use the MINT MTO feature to update the status of individual milestones as well as solutions and IT systems. To asynchronously update any interested parties, use the Share feature in MINT to share a link to the model’s MTO with any colleagues or interested individuals at CMS.
                 </p>
               </li>
               <li

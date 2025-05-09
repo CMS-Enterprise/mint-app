@@ -234,7 +234,6 @@ describe('moveRow', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: []
       }
     ];

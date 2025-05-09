@@ -9,6 +9,7 @@ SELECT
     m.mto_category_id,
     COALESCE(m.name, cm.name) AS name,
     m.facilitated_by,
+    m.facilitated_by_other,
     m.need_by,
     m.status,
     m.risk_indicator,

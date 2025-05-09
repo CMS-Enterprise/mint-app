@@ -20,6 +20,7 @@ export default gql(/* GraphQL */ `
           key
           name
           facilitatedBy
+          facilitatedByOther
           neededBy
           status
           riskIndicator

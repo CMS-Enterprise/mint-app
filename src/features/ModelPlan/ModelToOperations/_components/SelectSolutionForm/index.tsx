@@ -220,9 +220,16 @@ const SelectSolutionForm = () => {
       });
   };
 
+  // Adding solution from the table
   return (
     <>
       <p className="mint-body-normal">
+        <span className="text-bold">
+          {t('modal.solutionToMilestone.selectedMilestone')}
+        </span>
+        {milestone?.name}
+      </p>
+      <p className="mint-body-normal border-bottom border-base-lighter padding-bottom-2">
         {t('modal.selectSolution.description')}
       </p>
 

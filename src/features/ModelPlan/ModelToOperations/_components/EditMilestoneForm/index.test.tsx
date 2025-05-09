@@ -38,6 +38,7 @@ describe('EditMilestoneForm', () => {
               <EditMilestoneForm
                 closeModal={() => {}}
                 setIsDirty={() => {}}
+                setCloseDestination={vi.fn()}
                 submitted={{ current: false }}
               />
             </Route>

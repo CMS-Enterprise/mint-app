@@ -5,6 +5,16 @@ exports[`Select a Solution form > matches snapshot 1`] = `
   <p
     class="mint-body-normal"
   >
+    <span
+      class="text-bold"
+    >
+      Selected milestone: 
+    </span>
+    Milestone 1
+  </p>
+  <p
+    class="mint-body-normal border-bottom border-base-lighter padding-bottom-2"
+  >
     Any added solutions will be associated with this milestone and will also appear in the solution view of your MTO.
   </p>
   <form

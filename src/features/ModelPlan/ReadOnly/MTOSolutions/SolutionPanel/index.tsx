@@ -82,6 +82,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
         status: MtoSolutionStatus.NOT_STARTED,
         key: null,
         facilitatedBy: null,
+        facilitatedByOther: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
         addedFromSolutionLibrary: false,
         milestones: [],
@@ -225,10 +226,11 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                     definition={
                       solution.facilitatedBy
                         ? solution.facilitatedBy
-                            .map((facilitator: any) =>
-                              mtoSolutionT(
-                                `facilitatedBy.options.${facilitator}`
-                              )
+                            .map(
+                              (facilitator: any) =>
+                                `${mtoSolutionT(
+                                  `facilitatedBy.options.${facilitator}`
+                                )}${facilitator === 'OTHER' ? ` (${solution.facilitatedByOther})` : ''}`
                             )
                             .join(', ')
                         : NoneSpecified
