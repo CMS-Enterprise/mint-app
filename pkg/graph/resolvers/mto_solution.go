@@ -231,7 +231,7 @@ func MTOSolutionGetByModelPlanIDLOADER(
 	ctx context.Context,
 	modelPlanID uuid.UUID,
 ) ([]*models.MTOSolution, error) {
-	// TODO look into expanding this to also take contextual model plan data to return is added etc
+	// Future Enhancement look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOSolution.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
@@ -251,7 +251,7 @@ func MTOSolutionGetByIDLOADER(
 
 // MTOSolutionDelete deletes an MTOSolution
 // It returns an error if the principal is invalid, the solution doesn't exist, user doesn't have permissions to delete, or the delete call itself fails
-// TODO - Consider returning a *models.MTOSolution here if we want to ever access the returned data on what was deleted
+// Future Enhancement - Consider returning a *models.MTOSolution here if we want to ever access the returned data on what was deleted
 func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -297,7 +297,7 @@ func sendMTOSolutionSelectedEmails(
 		logger.Info(" this is a custom, no solution selected email being sent", zap.Any("solution", solution))
 		return nil
 	}
-	//TODO, we might benefit from a dataloader since this is added in multiple places
+	//Future Enhancement, we might benefit from a dataloader since this is added in multiple places
 	solSelectedDB, err := storage.GetMTOSolutionSelectedDetails(np, solution.ID)
 	if err != nil {
 		return err
@@ -314,7 +314,7 @@ func sendMTOSolutionSelectedEmails(
 		return nil // Don't send an email if there aren't any recipients (Note, custom solutions do not have pocs configured in the db)
 	}
 
-	//TODO
+	//Future Enhancement
 	// NOTE figma asks for the email to be sent to the POC in the to field, and all the others in the cc field.
 
 	pocEmailAddress, err := pocInfo.EmailAddresses(emailService.GetConfig().GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
