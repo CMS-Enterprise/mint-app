@@ -1,0 +1,39 @@
+meta {
+  name: Get Model Plan with ECHIMP data
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query modelPlan ($id: UUID!) {
+      modelPlan (id: $id) {
+          id
+          modelName
+          echimpCRs{
+              title
+          }
+          echimpTDLs{
+              title
+          }
+  
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}

@@ -1,0 +1,78 @@
+meta {
+  name: 4 MTO Categories
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NewMTOCategories {
+    createCategory0: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Category 0"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    
+    createCategory1: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Category 1"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    
+    createCategory2: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Category 2"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    
+    createCategory3: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Category 3"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+  }
+  
+}
+
+tests {
+  let responseData = res.getBody().data
+  
+  mtoCategory0ID = responseData.createCategory0.id
+  bru.setVar("mtoCategory0ID", mtoCategory0ID);
+  
+  mtoCategory1ID = responseData.createCategory1.id
+  bru.setVar("mtoCategory1ID", mtoCategory1ID);
+  
+  mtoCategory2ID = responseData.createCategory2.id
+  bru.setVar("mtoCategory2ID", mtoCategory2ID);
+  
+  mtoCategory3ID = responseData.createCategory3.id
+  bru.setVar("mtoCategory3ID", mtoCategory3ID);
+}

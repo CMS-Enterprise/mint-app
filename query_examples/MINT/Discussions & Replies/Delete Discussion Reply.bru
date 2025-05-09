@@ -1,0 +1,48 @@
+meta {
+  name: Delete Discussion Reply
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation deleteDiscussionReply ($id: UUID!) {
+      deleteDiscussionReply (id: $id) {
+          id
+          discussionID
+          content
+          userRole
+          userRoleDescription
+          isAssessment
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }             
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{discussionReplyID}}"
+  }
+}

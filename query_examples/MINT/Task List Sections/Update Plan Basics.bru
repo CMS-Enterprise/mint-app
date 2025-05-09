@@ -1,0 +1,113 @@
+meta {
+  name: Update Plan Basics
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {
+      updatePlanBasics (id: $id, changes: $changes) {
+          id
+          modelPlanID
+          demoCode
+          amsModelID
+          modelCategory
+          cmsCenters
+          cmmiGroups
+          modelType
+          modelTypeOther
+          problem
+          goal
+          testInterventions
+          note
+          completeICIP
+          clearanceStarts
+          clearanceEnds
+          announced
+          applicationsStart
+          applicationsEnd
+          performancePeriodStarts
+          performancePeriodEnds
+          wrapUpEnds
+          highLevelNote
+          phasedIn
+          phasedInNote
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          readyForReviewBy
+          readyForReviewDts
+          readyForClearanceBy
+          readyForClearanceDts
+          status
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }     
+          readyForReviewByUserAccount 
+          {
+              commonName
+          }
+          readyForClearanceByUserAccount 
+          {
+              commonName
+          }
+  
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{basicsID}}",
+    "changes": {
+      "demoCode": "",
+      "amsModelID": "",
+      "modelCategory": "",
+      "cmsCenters": [
+        ""
+      ],
+      "cmmiGroups": [
+        ""
+      ],
+      "modelType": [
+          ""
+      ],
+      "modelTypeOther": "",
+      "problem": "",
+      "goal": "",
+      "testInterventions": "",
+      "note": "",
+      "completeICIP": "",
+      "clearanceStarts": "",
+      "clearanceEnds": "",
+      "announced": "",
+      "applicationsStart": "",
+      "applicationsEnd": "",
+      "performancePeriodStarts": "",
+      "performancePeriodEnds": "",
+      "wrapUpEnds": "",
+      "highLevelNote": "",
+      "phasedIn": true,
+      "phasedInNote": "",
+      "status": ""
+    }
+  }
+}

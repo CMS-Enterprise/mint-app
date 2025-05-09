@@ -1,0 +1,71 @@
+meta {
+  name: PlanBasicsUpdate
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: http://localhost:8085/api/graph/query
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation UPDATEPlanBasics{
+    
+    updatePlanBasics(id:"{{basicsID}}" changes:{   
+  
+      cmmiGroups : [
+          # STATE_INNOVATIONS_GROUP
+          ,PATIENT_CARE_MODELS_GROUP
+          ,POLICY_AND_PROGRAMS_GROUP
+          # ,PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
+          ,SEAMLESS_CARE_MODELS_GROUP
+          ]
+      modelType: [VOLUNTARY, OTHER]
+      modelTypeOther: "Test type"
+      # problem:" A interesting problem"
+      goal: " Be a good solution"
+      testInterventions: "A Kazoo that plays Brahms Lullaby"
+      note: "Notes are now cool again"
+      status: READY_FOR_REVIEW
+      clearanceStarts: "2023-11-18T16:28:24.26322738Z"
+      performancePeriodStarts: "2023-11-18T16:28:24.26322738Z"
+    } 
+    
+    
+    )
+    
+    
+    {
+     id
+     cmmiGroups
+      modelPlanID
+      modelType
+      # modelTypeOther
+      problem
+      goal
+      testInterventions
+      note
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+      status 
+      readyForReviewBy
+      readyForReviewDts
+      readyForClearanceBy
+      readyForClearanceDts
+      
+      
+    }
+    
+    
+  }
+}

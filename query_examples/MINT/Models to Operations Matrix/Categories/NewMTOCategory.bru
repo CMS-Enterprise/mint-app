@@ -1,0 +1,41 @@
+meta {
+  name: NewMTOCategory
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NewMTOCategory {
+  createMTOCategory(modelPlanID: "{{modelPlanID}}",
+  name: "Awesome Category 0"
+  # ,parentID: "{{mtoCategoryID}}"
+  ) {
+      id
+      name
+      isUncategorized
+      # modelPlanID
+      position
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOCategory
+  
+  mtoCategoryID = responseData.id
+  
+  
+  bru.setVar("mtoCategoryID", mtoCategoryID);
+}

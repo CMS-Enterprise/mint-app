@@ -1,0 +1,35 @@
+meta {
+  name: Search Okta Users
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query searchOktaUsers ($searchTerm: String!) {
+      searchOktaUsers (searchTerm: $searchTerm) {
+          firstName
+          lastName
+          displayName
+          email
+          username
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "searchTerm": ""
+  }
+}

@@ -1,0 +1,18 @@
+meta {
+  name: Operational Needs And Solutions
+}
+
+auth {
+  mode: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+tests {
+  test("Response status is 200", function(){
+      expect(res.getStatus()).to.equal(200);
+  })
+}

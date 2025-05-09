@@ -1,0 +1,268 @@
+meta {
+  name: Update Plan Ops Eval And Learning
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanOpsEvalAndLearning ($id: UUID!, $changes: PlanOpsEvalAndLearningChanges!) {
+      updatePlanOpsEvalAndLearning (id: $id, changes: $changes) {
+          id
+          modelPlanID
+          stakeholders
+          stakeholdersOther
+          stakeholdersNote
+          helpdeskUse
+          helpdeskUseNote
+          contractorSupport
+          contractorSupportOther
+          contractorSupportHow
+          contractorSupportNote
+          iddocSupport
+          iddocSupportNote
+          technicalContactsIdentified
+          technicalContactsIdentifiedDetail
+          technicalContactsIdentifiedNote
+          captureParticipantInfo
+          captureParticipantInfoNote
+          icdOwner
+          draftIcdDueDate
+          icdNote
+          uatNeeds
+          stcNeeds
+          testingTimelines
+          testingNote
+          dataMonitoringFileTypes
+          dataMonitoringFileOther
+          dataResponseType
+          dataResponseFileFrequency
+          dataFullTimeOrIncremental
+          eftSetUp
+          unsolicitedAdjustmentsIncluded
+          dataFlowDiagramsNeeded
+          produceBenefitEnhancementFiles
+          fileNamingConventions
+          dataMonitoringNote
+          benchmarkForPerformance
+          benchmarkForPerformanceNote
+          computePerformanceScores
+          computePerformanceScoresNote
+          riskAdjustPerformance
+          riskAdjustFeedback
+          riskAdjustPayments
+          riskAdjustOther
+          riskAdjustNote
+          appealPerformance
+          appealFeedback
+          appealPayments
+          appealOther
+          appealNote
+          evaluationApproaches
+          evaluationApproachOther
+          evalutaionApproachNote
+          ccmInvolvment
+          ccmInvolvmentOther
+          ccmInvolvmentNote
+          dataNeededForMonitoring
+          dataNeededForMonitoringOther
+          dataNeededForMonitoringNote
+          dataToSendParticicipants
+          dataToSendParticicipantsOther
+          dataToSendParticicipantsNote
+          shareCclfData
+          shareCclfDataNote
+          sendFilesBetweenCcw
+          sendFilesBetweenCcwNote
+          appToSendFilesToKnown
+          appToSendFilesToWhich
+          appToSendFilesToNote
+          useCcwForFileDistribiutionToParticipants
+          useCcwForFileDistribiutionToParticipantsNote
+          developNewQualityMeasures
+          developNewQualityMeasuresNote
+          qualityPerformanceImpactsPayment
+          qualityPerformanceImpactsPaymentNote
+          dataSharingStarts
+          dataSharingStartsOther
+          dataSharingFrequency
+          dataSharingFrequencyOther
+          dataSharingStartsNote
+          dataCollectionStarts
+          dataCollectionStartsOther
+          dataCollectionFrequency
+          dataCollectionFrequencyOther
+          dataCollectionFrequencyNote
+          qualityReportingStarts
+          qualityReportingStartsOther
+          qualityReportingStartsNote
+          qualityReportingFrequency
+          qualityReportingFrequencyContinually
+          qualityReportingFrequencyOther
+          modelLearningSystems
+          modelLearningSystemsOther
+          modelLearningSystemsNote
+          anticipatedChallenges
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          readyForReviewBy
+          readyForReviewDts
+          readyForClearanceBy
+          readyForClearanceDts
+          status
+                  createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }     
+          readyForReviewByUserAccount 
+          {
+              commonName
+          }
+          readyForClearanceByUserAccount 
+          {
+              commonName
+          }
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{opsEvalAndLearningID}}",
+    "changes": {    
+      "stakeholders": [
+        ""
+      ],
+      "stakeholdersOther": "",
+      "stakeholdersNote": "",
+      "helpdeskUse": true,
+      "helpdeskUseNote": "",
+      "contractorSupport": [
+        ""
+      ],
+      "contractorSupportOther": "",
+      "contractorSupportHow": "",
+      "contractorSupportNote": "",
+      "iddocSupport": true,
+      "iddocSupportNote": "",
+      "technicalContactsIdentified": true,
+      "technicalContactsIdentifiedDetail": "",
+      "technicalContactsIdentifiedNote": "",
+      "captureParticipantInfo": true,
+      "captureParticipantInfoNote": "",
+      "icdOwner": "",
+      "draftIcdDueDate": "",
+      "icdNote": "",
+      "uatNeeds": "",
+      "stcNeeds": "",
+      "testingTimelines": "",
+      "testingNote": "",
+      "dataMonitoringFileTypes": [
+        ""
+      ],
+      "dataMonitoringFileOther": "",
+      "dataResponseType": "",
+      "dataResponseFileFrequency": "",
+      "dataFullTimeOrIncremental": "",
+      "eftSetUp": true,
+      "unsolicitedAdjustmentsIncluded": true,
+      "dataFlowDiagramsNeeded": true,
+      "produceBenefitEnhancementFiles": true,
+      "fileNamingConventions": "",
+      "dataMonitoringNote": "",
+      "benchmarkForPerformance": "",
+      "benchmarkForPerformanceNote": "",
+      "computePerformanceScores": true,
+      "computePerformanceScoresNote": "",
+      "riskAdjustPerformance": true,
+      "riskAdjustFeedback": true,
+      "riskAdjustPayments": true,
+      "riskAdjustOther": true,
+      "riskAdjustNote": "",
+      "appealPerformance": true,
+      "appealFeedback": true,
+      "appealPayments": true,
+      "appealOther": true,
+      "appealNote": "",
+      "evaluationApproaches": [
+        ""
+      ],
+      "evaluationApproachOther": "",
+      "evalutaionApproachNote": "",
+      "ccmInvolvment": [
+        ""
+      ],
+      "ccmInvolvmentOther": "",
+      "ccmInvolvmentNote": "",
+      "dataNeededForMonitoring": [
+        ""
+      ],
+      "dataNeededForMonitoringOther": "",
+      "dataNeededForMonitoringNote": "",
+      "dataToSendParticicipants": [
+        ""
+      ],
+      "dataToSendParticicipantsOther": "",
+      "dataToSendParticicipantsNote": "",
+      "shareCclfData": true,
+      "shareCclfDataNote": "",
+      "sendFilesBetweenCcw": true,
+      "sendFilesBetweenCcwNote": "",
+      "appToSendFilesToKnown": true,
+      "appToSendFilesToWhich": "",
+      "appToSendFilesToNote": "",
+      "useCcwForFileDistribiutionToParticipants": true,
+      "useCcwForFileDistribiutionToParticipantsNote": "",
+      "developNewQualityMeasures": true,
+      "developNewQualityMeasuresNote": "",
+      "qualityPerformanceImpactsPayment": true,
+      "qualityPerformanceImpactsPaymentNote": "",
+      "dataSharingStarts": "",
+      "dataSharingStartsOther": "",
+      "dataSharingFrequency": [
+        ""
+      ],
+      "dataSharingFrequencyOther": "",
+      "dataSharingStartsNote": "",
+      "dataCollectionStarts": "",
+      "dataCollectionStartsOther": "",
+      "dataCollectionFrequency": [
+        ""
+      ],
+      "dataCollectionFrequencyOther": "",
+      "dataCollectionFrequencyNote": "",
+      "qualityReportingStarts": "",
+      "qualityReportingStartsOther": "",
+      "qualityReportingStartsNote": "",
+      "qualityReportingFrequency": [
+          ""
+      ],
+      "qualityReportingFrequencyContinually": "",
+      "qualityReportingFrequencyOther": "",
+      "modelLearningSystems": [
+        ""
+      ],
+      "modelLearningSystemsOther": "",
+      "modelLearningSystemsNote": "",
+      "anticipatedChallenges": "",
+      "status": ""
+    }
+  }
+}

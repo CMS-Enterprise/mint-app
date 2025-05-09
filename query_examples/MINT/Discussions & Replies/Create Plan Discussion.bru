@@ -1,0 +1,78 @@
+meta {
+  name: Create Plan Discussion
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation createPlanDiscussion{
+      createPlanDiscussion (input:{      
+      modelPlanID: "{{modelPlanID}}"
+      content: "<p>Hey <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"SKZO\" data-label=\"Alexander Stark\">@Alexander Stark</span>!  Will you be able to join the meeting next week?  If not, can you contact <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"TEST\" data-label=\"Terry Thompson\">@Terry Thompson</span> to let them know?</p> BTW, here is a solution! <strong> <span data-type=\"mention\" tag-type=\"POSSIBLE_SOLUTION\" class=\"mention\" data-id=\"INNOVATION\" data-label=\"INNOVATION\">@INNOVATION</span></strong> <ul> <li>Tagging <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"TEST\" data-label=\"Terry Thompson\">@Terry Thompson</span> again. </li></ul>"
+        userRole:NONE_OF_THE_ABOVE
+        userRoleDescription: "this is a test"
+        } ){
+          id
+          modelPlanID
+          content{
+              rawContent
+              tags{
+                  id
+                  taggedField
+                  taggedContentTable
+                  taggedContentID
+                  entityUUID
+                  entityIntID
+                  entity{
+                      __typename
+                      ... on UserAccount{
+                          id
+                          commonName
+                          email
+                      }
+                      ... on PossibleOperationalSolution {
+                          name
+                          key
+                      }
+                  }
+              }
+          }
+          userRole
+          userRoleDescription
+          isAssessment
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }             
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createPlanDiscussion
+  
+  discussionID = responseData.id
+  
+  
+  bru.setVar("discussionID", discussionID);
+}

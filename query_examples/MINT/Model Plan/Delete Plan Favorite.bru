@@ -1,0 +1,37 @@
+meta {
+  name: Delete Plan Favorite
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation deletePlanFavorite ($modelPlanID: UUID!) {
+      deletePlanFavorite (modelPlanID: $modelPlanID) {
+          id
+          modelPlanID
+          userID
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": ""
+  }
+}
