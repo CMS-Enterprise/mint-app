@@ -801,9 +801,10 @@ const EditSolutionForm = ({
                         name="pocEmail"
                         control={control}
                         rules={{
-                          required: true,
+                          required:
+                            modelToOperationsMiscT('validation.fillOut'),
                           pattern: {
-                            value: /\S+@\S+\.\S+/,
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                             message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
                           }
                         }}
