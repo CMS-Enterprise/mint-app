@@ -380,13 +380,27 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 
 	// the data is deletable, so it needs to be a pointer
 	var name *string
-	nameChange, fieldPresent := changesFields["name"]
-	if fieldPresent {
+	nameChange, nameFieldPresent := changesFields["name"]
+	keyChange, keyFieldPresent := changesFields["mto_common_milestone_key"]
+	if nameFieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			name = models.StringPointer(fmt.Sprint(nameChange.Old))
 		} else {
 			name = models.StringPointer(fmt.Sprint(nameChange.New))
 		}
+
+	} else if keyFieldPresent {
+		var commonMilestoneKey any
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			commonMilestoneKey = keyChange.Old
+		} else {
+			commonMilestoneKey = keyChange.New
+		}
+		milestoneName, err := getMTOCommonMilestoneForeignKeyReference(ctx, store, commonMilestoneKey)
+		if err != nil {
+			return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone. err %w", err)
+		}
+		name = &milestoneName
 
 	} else {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
