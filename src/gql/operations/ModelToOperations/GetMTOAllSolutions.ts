@@ -17,6 +17,8 @@ export default gql(/* GraphQL */ `
           id
           key
           name
+          status
+          riskIndicator
         }
       }
     }

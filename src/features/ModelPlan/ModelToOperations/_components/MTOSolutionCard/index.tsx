@@ -18,9 +18,8 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
-import { SolutionCardType } from '..';
-
-import AddToExistingMilestoneForm from './AddToExistingMilestoneForm';
+import { SolutionCardType } from '../../SolutionLibrary';
+import AddToExistingMilestoneForm from '../AddToExistingMilestoneForm';
 
 const MTOSolutionCard = ({
   className,
