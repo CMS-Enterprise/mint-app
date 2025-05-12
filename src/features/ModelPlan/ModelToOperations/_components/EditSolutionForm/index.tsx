@@ -404,7 +404,10 @@ const EditSolutionForm = ({
       variables: {
         id: editSolutionID || ''
       },
-      refetchQueries: [GetMtoSolutionsAndMilestonesDocument]
+      refetchQueries: [
+        GetMtoSolutionsAndMilestonesDocument,
+        GetMtoSolutionsAndMilestonesDocument
+      ]
     })
       .then(response => {
         if (!response?.errors) {

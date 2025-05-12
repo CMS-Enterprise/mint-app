@@ -13,6 +13,7 @@ type TableResultsProps = {
   filteredRowLength: number;
   rowLength: number;
   showNoResults?: boolean;
+  showAlert?: boolean;
 };
 
 const displayResult = (searchTerm: FilterValue) =>
@@ -32,7 +33,8 @@ const TableResults = ({
   pageSize,
   filteredRowLength,
   rowLength,
-  showNoResults = true
+  showNoResults = true,
+  showAlert = true
 }: TableResultsProps) => {
   const { t } = useTranslation('tableAndPagination');
 
@@ -60,7 +62,7 @@ const TableResults = ({
                 {t('tableAndPagination:results.noResults')}{' '}
                 {/* Displays the search input even if there are no results */}
                 {displayResult(globalFilter)}
-                {globalFilter && (
+                {globalFilter && showAlert && (
                   <Alert
                     type="warning"
                     heading={t('results.alertHeading', {

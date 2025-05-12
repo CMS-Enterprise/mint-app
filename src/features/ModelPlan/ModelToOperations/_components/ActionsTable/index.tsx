@@ -111,9 +111,10 @@ const MTOTableActions = () => {
                   className="display-block margin-bottom-1"
                   outline
                   onClick={() => {
-                    history.push(
-                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
-                    );
+                    history.push({
+                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
+                      state: { scroll: true }
+                    });
                   }}
                 >
                   {t('table.tableActions.browseMilestoneLibrary')}
@@ -168,9 +169,10 @@ const MTOTableActions = () => {
                   className="display-block margin-bottom-1"
                   outline
                   onClick={() => {
-                    history.push(
-                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
-                    );
+                    history.push({
+                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
+                      state: { scroll: true }
+                    });
                   }}
                 >
                   {t('table.tableActions.browseSolutionLibrary')}
