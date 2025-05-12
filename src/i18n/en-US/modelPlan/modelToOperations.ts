@@ -296,7 +296,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     markAsReady: 'Mark as ready for review',
     markAsInProgress: 'Mark as in progress',
     goBack: 'Go back to MTO',
-    error: 'Failed to update MTO status'
+    error: 'Failed to update MTO status',
+    cancel: 'Cancel'
   },
   modal: {
     addButton: 'Add {{type}}',

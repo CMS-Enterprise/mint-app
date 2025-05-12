@@ -97,7 +97,7 @@ const MTOReadyForReview = ({
               closeModal();
             }}
           >
-            {t('readyForReview.goBack')}
+            {t('readyForReview.cancel')}
           </Button>
         </div>
       </div>
