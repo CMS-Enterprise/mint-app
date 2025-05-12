@@ -39,6 +39,7 @@ describe('EditMilestoneForm', () => {
                 closeModal={() => {}}
                 setIsDirty={() => {}}
                 setCloseDestination={vi.fn()}
+                setFooter={() => {}}
                 submitted={{ current: false }}
               />
             </Route>

@@ -26,9 +26,9 @@ const ResourcesByCategory = ({
     article => article.type === ArticleCategories.IT_IMPLEMENTATION
   );
 
-  const mtoTutorialArticles = helpAndKnowledgeArticles.filter(
-    article => article.type === ArticleCategories.MTO_TUTORIALS
-  );
+  // const mtoTutorialArticles = helpAndKnowledgeArticles.filter(
+  //   article => article.type === ArticleCategories.MTO_TUTORIALS
+  // );
 
   const modelConceptAndDesignArticles = helpAndKnowledgeArticles.filter(
     article => article.type === ArticleCategories.MODEL_CONCEPT_AND_DESIGN
@@ -110,7 +110,8 @@ const ResourcesByCategory = ({
           </Grid>
         )}
 
-        {currentCategory !== ArticleCategories.MTO_TUTORIALS && (
+        {/* TODO: renable once MTO tutoarial articles are complete */}
+        {/* {currentCategory !== ArticleCategories.MTO_TUTORIALS && (
           <Grid desktop={{ col: 4 }} className="margin-bottom-4">
             <div className="display-block">
               <UswdsReactLink to="/help-and-knowledge/articles?category=mto-tutorials">
@@ -123,7 +124,7 @@ const ResourcesByCategory = ({
               </p>
             </div>
           </Grid>
-        )}
+        )} */}
       </Grid>
     </div>
   );

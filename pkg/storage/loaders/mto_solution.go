@@ -118,7 +118,7 @@ func batchMTOSolutionGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.U
 	}
 
 	getResFunc := func(key uuid.UUID, resMap map[uuid.UUID][]*models.MTOSolutionWithMilestoneID) ([]*models.MTOSolution, bool) {
-		// TODO: (mto) see if we can genericize this so we only have to call mtoWith.ToMTOMilestone() instead of iterating too
+		// Future Enhancement: (mto) see if we can genericize this so we only have to call mtoWith.ToMTOMilestone() instead of iterating too
 		res, ok := resMap[key]
 		converted := make([]*models.MTOSolution, len(res))
 

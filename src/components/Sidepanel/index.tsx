@@ -19,6 +19,8 @@ type SidepanelProps = {
   noScrollable?: boolean;
   showScroll?: boolean;
   backButton?: boolean;
+  fixed?: boolean;
+  footer?: React.ReactNode;
 };
 
 const Sidepanel = ({
@@ -33,7 +35,9 @@ const Sidepanel = ({
   testid,
   noScrollable = true,
   showScroll,
-  backButton
+  backButton,
+  fixed = false,
+  footer
 }: SidepanelProps) => {
   const handleOpenModal = () => {
     noScroll.on();
@@ -53,7 +57,9 @@ const Sidepanel = ({
         },
         overlayClassName
       )}
-      className={classNames('mint-sidepanel__content', classname)}
+      className={classNames('mint-sidepanel__content', classname, {
+        'overflow-hidden': fixed
+      })}
       onAfterOpen={handleOpenModal}
       onAfterClose={() => {
         if (noScrollable) {
@@ -67,7 +73,14 @@ const Sidepanel = ({
       testId="side-panel"
     >
       <div data-testid={testid}>
-        <div className="mint-sidepanel__x-button-container display-flex text-base flex-align-center">
+        <div
+          className={classNames(
+            'mint-sidepanel__x-button-container display-flex text-base flex-align-center',
+            {
+              'mint-modal__fixed-top': fixed
+            }
+          )}
+        >
           <button
             type="button"
             data-testid="close-discussions"
@@ -84,7 +97,15 @@ const Sidepanel = ({
           <h4 className="margin-0">{modalHeading}</h4>
         </div>
 
-        {children}
+        <div
+          className={classNames('mint-modal__body', {
+            'overflow-y-auto': fixed
+          })}
+        >
+          {children}
+        </div>
+
+        <div className="fixed-bottom">{footer}</div>
       </div>
     </ReactModal>
   );

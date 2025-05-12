@@ -59,6 +59,8 @@ const EditMTOMilestoneProvider = ({
 
   const [closeDestination, setCloseDestination] = useState<string | null>(null);
 
+  const [footer, setFooter] = useState<React.ReactNode | null>(null);
+
   const closeModal = useCallback(() => {
     if (isDirty && !submitted.current) {
       setLeavePage(true);
@@ -107,6 +109,8 @@ const EditMTOMilestoneProvider = ({
           modalHeading={modelToOperationsMiscT(
             'milestoneLibrary.milestoneDetails'
           )}
+          fixed
+          footer={footer}
           noScrollable
         >
           <EditMilestoneForm
@@ -114,6 +118,7 @@ const EditMTOMilestoneProvider = ({
             setIsDirty={setIsDirty}
             submitted={submitted}
             setCloseDestination={setCloseDestination}
+            setFooter={setFooter}
           />
         </Sidepanel>
 

@@ -58,9 +58,16 @@ exports[`Sidepanel > matches snapshot 1`] = `
               modalHeading
             </h4>
           </div>
-          <div>
-            children
+          <div
+            class="mint-modal__body"
+          >
+            <div>
+              children
+            </div>
           </div>
+          <div
+            class="fixed-bottom"
+          />
         </div>
       </div>
     </div>
