@@ -24,6 +24,7 @@ import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
+import { MTOSolutionPanelProvider } from 'contexts/MTOSolutionPanelContext';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
@@ -614,110 +615,112 @@ const MTOTable = ({
   return (
     <>
       <MTOMilestonePanelProvider>
-        {selectedSolution && (
-          <SolutionDetailsModal
-            solution={selectedSolution}
-            openedFrom={prevPathname}
-            closeRoute={initLocation}
-          />
-        )}
-        <DndProvider backend={HTML5Backend}>
-          <div
-            className="display-block"
-            style={{
-              width: '100%',
-              minWidth: '100%',
-              overflow: 'auto',
-              borderBottom: '1px solid black',
-              marginBottom: '.75rem'
-            }}
-          >
-            <table
+        <MTOSolutionPanelProvider>
+          {selectedSolution && (
+            <SolutionDetailsModal
+              solution={selectedSolution}
+              openedFrom={prevPathname}
+              closeRoute={initLocation}
+            />
+          )}
+          <DndProvider backend={HTML5Backend}>
+            <div
+              className="display-block"
               style={{
                 width: '100%',
-                borderCollapse: 'collapse'
+                minWidth: '100%',
+                overflow: 'auto',
+                borderBottom: '1px solid black',
+                marginBottom: '.75rem'
               }}
             >
-              <thead>
-                <tr>
-                  {filteredColumns.map((column, index) => (
-                    <th
-                      key={column.accessor}
-                      style={{
-                        borderBottom: '1px solid black',
-                        padding: '1rem',
-                        paddingLeft: index === 0 ? '.5rem' : '0px',
-                        paddingBottom: '.25rem',
-                        textAlign:
-                          column.accessor === 'actions' ? 'right' : 'left',
-                        width: column.width,
-                        minWidth: column.width,
-                        maxWidth: column.width
-                      }}
-                    >
-                      {column.canSort !== false ? (
-                        <button
-                          className={classNames(
-                            'usa-button usa-button--unstyled position-relative'
-                          )}
-                          onClick={() => {
-                            const isSorted =
-                              sortCount % 3 === 1 || sortCount % 3 === 0;
-                            const isSortedDesc = sortCount % 3 === 1;
+              <table
+                style={{
+                  width: '100%',
+                  borderCollapse: 'collapse'
+                }}
+              >
+                <thead>
+                  <tr>
+                    {filteredColumns.map((column, index) => (
+                      <th
+                        key={column.accessor}
+                        style={{
+                          borderBottom: '1px solid black',
+                          padding: '1rem',
+                          paddingLeft: index === 0 ? '.5rem' : '0px',
+                          paddingBottom: '.25rem',
+                          textAlign:
+                            column.accessor === 'actions' ? 'right' : 'left',
+                          width: column.width,
+                          minWidth: column.width,
+                          maxWidth: column.width
+                        }}
+                      >
+                        {column.canSort !== false ? (
+                          <button
+                            className={classNames(
+                              'usa-button usa-button--unstyled position-relative'
+                            )}
+                            onClick={() => {
+                              const isSorted =
+                                sortCount % 3 === 1 || sortCount % 3 === 0;
+                              const isSortedDesc = sortCount % 3 === 1;
 
-                            setCurrentColumn(index);
-                            setSortCount(sortCount + 1);
-                            setColumnSort(prev => {
-                              const newColumnSort = [...prev];
-                              newColumnSort[index] = {
-                                isSorted,
-                                isSortedDesc,
-                                sortColumn: column.accessor
-                              };
-                              return newColumnSort;
-                            });
-                          }}
-                          type="button"
-                        >
-                          {column.Header}
-                          {getHeaderSortIcon(columnSort[index], false)}
-                        </button>
-                      ) : (
-                        <span
-                          className={classNames(
-                            'usa-button usa-button--unstyled position-relative',
-                            {
-                              'text-no-underline text-black':
-                                column.Header ===
-                                t('modelToOperationsMisc:table.actions')
-                            }
-                          )}
-                        >
-                          {column.Header}
-                        </span>
-                      )}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>{renderCategories()}</tbody>
-            </table>
-          </div>
-          <div className="mint-no-print">
-            <div className="display-flex">
-              {Pagination}
-
-              <TablePageSize
-                className="margin-left-auto desktop:grid-col-auto"
-                pageSize={itemsPerPage}
-                setPageSize={setItemsPerPage}
-                setInitPageSize={setItemsPerPageInit}
-                valueArray={[5, 10, 15, 20]}
-                suffix={t('modelToOperationsMisc:table.milestones')}
-              />
+                              setCurrentColumn(index);
+                              setSortCount(sortCount + 1);
+                              setColumnSort(prev => {
+                                const newColumnSort = [...prev];
+                                newColumnSort[index] = {
+                                  isSorted,
+                                  isSortedDesc,
+                                  sortColumn: column.accessor
+                                };
+                                return newColumnSort;
+                              });
+                            }}
+                            type="button"
+                          >
+                            {column.Header}
+                            {getHeaderSortIcon(columnSort[index], false)}
+                          </button>
+                        ) : (
+                          <span
+                            className={classNames(
+                              'usa-button usa-button--unstyled position-relative',
+                              {
+                                'text-no-underline text-black':
+                                  column.Header ===
+                                  t('modelToOperationsMisc:table.actions')
+                              }
+                            )}
+                          >
+                            {column.Header}
+                          </span>
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>{renderCategories()}</tbody>
+              </table>
             </div>
-          </div>
-        </DndProvider>{' '}
+            <div className="mint-no-print">
+              <div className="display-flex">
+                {Pagination}
+
+                <TablePageSize
+                  className="margin-left-auto desktop:grid-col-auto"
+                  pageSize={itemsPerPage}
+                  setPageSize={setItemsPerPage}
+                  setInitPageSize={setItemsPerPageInit}
+                  valueArray={[5, 10, 15, 20]}
+                  suffix={t('modelToOperationsMisc:table.milestones')}
+                />
+              </div>
+            </div>
+          </DndProvider>{' '}
+        </MTOSolutionPanelProvider>
       </MTOMilestonePanelProvider>
     </>
   );
