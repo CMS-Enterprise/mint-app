@@ -113,7 +113,10 @@ const LinkMilestoneForm = ({
               components={{
                 milestone: (
                   <UswdsReactLink
-                    to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                    to={{
+                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
+                      state: { scroll: true }
+                    }}
                   >
                     {' '}
                   </UswdsReactLink>
