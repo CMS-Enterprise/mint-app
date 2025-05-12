@@ -259,7 +259,8 @@ const EditSolutionForm = ({
 
   const methods = useForm<FormValues>({
     defaultValues: formValues,
-    values: formValues
+    values: formValues,
+    mode: 'onBlur'
   });
 
   const {
@@ -459,7 +460,6 @@ const EditSolutionForm = ({
         >
           {modelToOperationsMiscT('modal.editSolution.saveChanges')}
         </Button>
-
         <Button
           type="button"
           disabled={isSubmitting}
@@ -776,10 +776,16 @@ const EditSolutionForm = ({
                         name="type"
                         control={control}
                         rules={{
-                          required: true,
-                          validate: value => value !== 'default'
+                          required:
+                            modelToOperationsMiscT('validation.fillOut'),
+                          validate: value =>
+                            value !== 'default' ||
+                            modelToOperationsMiscT('validation.fillOut')
                         }}
-                        render={({ field: { ref, ...field } }) => (
+                        render={({
+                          field: { ref, ...field },
+                          fieldState: { error }
+                        }) => (
                           <FormGroup className="margin-top-0 margin-bottom-2">
                             <Label
                               htmlFor={convertCamelCaseToKebabCase(field.name)}
@@ -790,7 +796,9 @@ const EditSolutionForm = ({
                                 'modal.editSolution.label.solutionType'
                               )}
                             </Label>
-
+                            {!!error && (
+                              <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                            )}
                             <Select
                               {...field}
                               id={convertCamelCaseToKebabCase(field.name)}
