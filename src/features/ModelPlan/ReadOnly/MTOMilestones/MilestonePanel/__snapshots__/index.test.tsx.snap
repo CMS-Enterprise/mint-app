@@ -23,9 +23,9 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
           Milestone 1
         </h2>
         <p
-          class="margin-0 mint-body-normal text-base-dark"
+          style="white-space: pre-line;"
         >
-          Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.
+          Advertise the opportunity to bid on work related to evaluating a model, review the bids and select evaluation contractor.
         </p>
         <div
           class="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4"

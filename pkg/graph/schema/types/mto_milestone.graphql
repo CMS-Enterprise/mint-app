@@ -1,5 +1,6 @@
-
-# TODO Determine what these should actually be with Zoë & Natalie. These could change
+"""
+The possible statuses of Milestone.
+"""
 enum MTOMilestoneStatus {
   NOT_STARTED
   IN_PROGRESS
@@ -78,6 +79,6 @@ extend type Mutation {
 
 extend type Query {
   mtoMilestone(id: UUID!): MTOMilestone!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
