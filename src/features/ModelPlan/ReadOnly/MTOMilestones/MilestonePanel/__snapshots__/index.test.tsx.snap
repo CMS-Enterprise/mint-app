@@ -23,7 +23,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
           Milestone 1
         </h2>
         <p
-          style="white-space: pre-line;"
+          class="margin-0 mint-body-normal text-base-dark text-pre-line"
         >
           Advertise the opportunity to bid on work related to evaluating a model, review the bids and select evaluation contractor.
         </p>
