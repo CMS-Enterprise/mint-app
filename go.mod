@@ -1,6 +1,6 @@
 module github.com/cms-enterprise/mint-app
 
-go 1.23.4
+go 1.24
 
 require (
 	github.com/99designs/gqlgen v0.17.38
@@ -31,7 +31,7 @@ require github.com/gorilla/websocket v1.5.3
 require github.com/xhit/go-simple-mail/v2 v2.16.0
 
 require (
-	github.com/contribsys/faktory v1.9.1
+	github.com/contribsys/faktory v1.9.2
 	github.com/launchdarkly/go-sdk-common/v3 v3.2.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
 	github.com/parquet-go/parquet-go v0.25.0
