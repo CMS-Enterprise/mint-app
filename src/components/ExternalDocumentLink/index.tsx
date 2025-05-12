@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from '@trussworks/react-uswds';
+import { Button, Icon, Link } from '@trussworks/react-uswds';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-
-import ExternalLink from '../ExternalLink';
 
 type ExternalLinkModalTypes = {
   url: string;
@@ -73,13 +71,14 @@ const ExternalDocumentLink = ({ url, buttonText }: ExternalLinkModalTypes) => {
           )}
         </div>
 
-        <ExternalLink
+        <Link
           className="usa-button text-white"
           href={url}
           variant="unstyled"
+          target="_blank"
         >
           {externalT('document.continueButton')}
-        </ExternalLink>
+        </Link>
 
         <Button
           type="button"
