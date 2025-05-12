@@ -136,6 +136,7 @@ const EditMTOMilestoneProvider = ({
           isOpen={leavePage && !submitted.current}
           closeModal={() => setLeavePage(false)}
           className="confirmation-modal"
+          zTop
         >
           <PageHeading
             headingLevel="h3"
@@ -172,6 +173,7 @@ const EditMTOMilestoneProvider = ({
             type="button"
             unstyled
             onClick={() => {
+              setCloseDestination(null);
               setLeavePage(false);
             }}
           >

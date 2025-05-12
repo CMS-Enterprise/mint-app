@@ -66,7 +66,12 @@ const EditMTOSolutionProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       if (closeDestination) {
-        history.push(closeDestination);
+        history.push({
+          pathname: closeDestination,
+          state: {
+            scroll: true
+          }
+        });
         setCloseDestination(null);
       } else {
         params.delete('edit-solution');

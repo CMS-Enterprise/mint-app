@@ -13,6 +13,7 @@ import i18next from 'i18next';
 import UswdsReactLink from 'components/LinkWrapper';
 import { MTOMilestonePanelContext } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalState } from 'contexts/MTOModalContext';
+import { MTOSolutionPanelContext } from 'contexts/MTOSolutionPanelContext';
 import { findSolutionByKey } from 'hooks/useModalSolutionState';
 import { formatDateUtc } from 'utils/date';
 
@@ -297,6 +298,10 @@ export const columns: ColumnType[] = [
       search,
       readView
     }: ExtendedRowProps) => {
+      const { openViewSolutionModal, setViewSolutionID } = useContext(
+        MTOSolutionPanelContext
+      );
+
       if (rowType !== 'milestone') return <></>;
       if (isMilestoneType(row)) {
         if (row.solutions.length === 0)
@@ -327,6 +332,36 @@ export const columns: ColumnType[] = [
               )}
             </>
           );
+
+        if (readView) {
+          return (
+            <>
+              {row.solutions.map((solution, index) => {
+                const solutionAcornym = findSolutionByKey(
+                  solution.key!,
+                  helpSolutions
+                )?.acronym;
+
+                return (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="mint-print-link"
+                    onClick={() => {
+                      openViewSolutionModal(solution.id);
+                      setViewSolutionID(solution.id);
+                    }}
+                  >
+                    <span className="margin-right-05">
+                      {solutionAcornym || solution.name}
+                      {index < row.solutions.length - 1 && ', '}
+                    </span>
+                  </Button>
+                );
+              })}
+            </>
+          );
+        }
 
         return (
           <>

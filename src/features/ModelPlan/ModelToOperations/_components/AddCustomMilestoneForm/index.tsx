@@ -48,9 +48,19 @@ const CustomMilestoneForm = () => {
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
   const {
-    mtoModalState: { categoryID, subCategoryID },
+    mtoModalState: { categoryID, subCategoryID, toggleRow },
     setMTOModalOpen
   } = useContext(MTOModalContext);
+
+  const setCategoryRowsOpenOnCreation = (
+    category: string,
+    subcategory: string
+  ) => {
+    if (toggleRow) {
+      toggleRow(category, true);
+      toggleRow(subcategory, true);
+    }
+  };
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -130,6 +140,10 @@ const CustomMilestoneForm = () => {
                 </span>
               </Alert>
             </>
+          );
+          setCategoryRowsOpenOnCreation(
+            formData.primaryCategory,
+            formData.subcategory
           );
           setMTOModalOpen(false);
         }

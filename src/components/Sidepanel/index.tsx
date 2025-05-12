@@ -99,7 +99,8 @@ const Sidepanel = ({
 
         <div
           className={classNames('mint-modal__body', {
-            'overflow-y-auto': fixed
+            'overflow-y-auto': fixed,
+            'padding-x-0': !fixed
           })}
         >
           {children}

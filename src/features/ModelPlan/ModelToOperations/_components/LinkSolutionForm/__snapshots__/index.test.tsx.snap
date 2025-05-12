@@ -23,12 +23,13 @@ exports[`LinkSolutionForm > renders and matches snapshot 1`] = `
           class="text-base-dark mint-body-normal margin-bottom-4"
         >
           You may visit the 
-          <a
-            class="usa-link"
-            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library"
+          <button
+            class="usa-button usa-button--unstyled usa-button--unstyled margin-0"
+            data-testid="button"
+            type="button"
           >
             solution library
-          </a>
+          </button>
            or 
           <a
             class="usa-link usa-link--external"

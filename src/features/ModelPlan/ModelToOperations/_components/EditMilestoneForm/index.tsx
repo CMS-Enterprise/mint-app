@@ -766,6 +766,7 @@ const EditMilestoneForm = ({
             allSolutions={
               allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
             }
+            setCloseDestination={setCloseDestination}
           />
         </Sidepanel>
       )}
