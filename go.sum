@@ -34,8 +34,8 @@ github.com/charmbracelet/x/cellbuf v0.0.13-0.20250311204145-2c3ea96c31dd h1:vy0G
 github.com/charmbracelet/x/cellbuf v0.0.13-0.20250311204145-2c3ea96c31dd/go.mod h1:xe0nKWGd3eJgtqZRaN9RjMtK7xUYchjzPr7q6kcvCCs=
 github.com/charmbracelet/x/term v0.2.1 h1:AQeHeLZ1OqSXhrAWpYUtZyX1T3zVxfpZuEQMIQaGIAQ=
 github.com/charmbracelet/x/term v0.2.1/go.mod h1:oQ4enTYFV7QN4m0i9mzHrViD7TQKvNEEkHUMCmsxdUg=
-github.com/contribsys/faktory v1.9.2 h1:lbNSh8SOsKopoRJn4Z9E/GiWrBwwK3XAUqAUizapQbg=
-github.com/contribsys/faktory v1.9.2/go.mod h1:SYpmpRfPjky9+aSJY2O80kdRWzfHKBVcPH9ngw603E4=
+github.com/contribsys/faktory v1.9.1 h1:iHR54Kl4akiZPchVNRMQHxGGyUphr9g2lRNjBYssrvc=
+github.com/contribsys/faktory v1.9.1/go.mod h1:1NEfRDZhKDd8tdd7Hg+51QjGrnWFtD28AQQ/EZ82a5c=
 github.com/contribsys/faktory_worker_go v1.7.0 h1:YSZRj/nSjn+2ms9ooHIOHAahHJehXutgD46b+0lHDP4=
 github.com/contribsys/faktory_worker_go v1.7.0/go.mod h1:JRw4PvanwLgX5IIQazw6W5zg/Rg7/Fg6YrkdH4gJJPc=
 github.com/cpuguy83/go-md2man/v2 v2.0.6 h1:XJtiaUW6dEEqVuZiMTn1ldk455QWwEIsMIJlo5vtkx0=
