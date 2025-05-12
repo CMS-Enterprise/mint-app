@@ -484,7 +484,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} milestones associated with this solution',
       editMilestones: 'Edit related milestones',
       noMilestones:
-        'You haven’t identified pinkSolutionForm/index.tsany specific milestones that this solution will help implement.',
+        'You haven’t identified any specific milestones that this solution will help implement.',
       milestone: 'Milestone',
       status: 'Status',
       selectedMilestoneCount_other: '{{count}} selected milestones',
