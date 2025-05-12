@@ -49,6 +49,8 @@ const (
 	TNMTOCommonMilestone                 TableName = "mto_common_milestone"
 	TNMTOCommonSolutionContact           TableName = "mto_common_solution_contact"
 	TNMTOCommonSolution                  TableName = "mto_common_solution"
+
+	TNMTOSuggestedMilestone TableName = "mto_suggested_milestone"
 )
 
 // MTOTables is a list of all tables that are related to the MTO section

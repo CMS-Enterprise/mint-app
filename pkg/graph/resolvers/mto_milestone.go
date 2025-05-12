@@ -191,7 +191,7 @@ func MTOMilestoneUpdate(
 
 // MTOMilestoneDelete deletes an MTOMilestone
 // It returns an error if the principal is invalid, the milestone doesn't exist, user doesn't have permissions to delete, or the delete call itself fails
-// TODO - Consider returning a *models.MTOMilestone here if we want to ever access the returned data on what was deleted
+// Future Enhancement - Consider returning a *models.MTOMilestone here if we want to ever access the returned data on what was deleted
 func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -317,7 +317,7 @@ func MTOMilestoneUpdateLinkedSolutions(
 
 	// initiate transaction
 	var retSolutions []*models.MTOSolution
-	// TODO see about replacing this with a helper function that expects to return a slice instead of a single type
+	// Future Enhancement see about replacing this with a helper function that expects to return a slice instead of a single type
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 
 		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, store,
@@ -329,7 +329,7 @@ func MTOMilestoneUpdateLinkedSolutions(
 			return err
 		}
 		retSolutions = currentLinkedSolutions
-		// TODO, should we instead return the solutions?
+		// Future Enhancement, return the solutions from in the transaction instead of setting the variable
 		return nil
 
 	})

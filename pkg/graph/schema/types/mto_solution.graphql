@@ -1,4 +1,6 @@
-# TODO (mto) Verify all these. Zoë said they should match previous solution statuses
+"""
+The possible statuses of a Solution.
+"""
 enum MTOSolutionStatus {
   NOT_STARTED
   ONBOARDING
@@ -22,7 +24,7 @@ type MTOSolution {
   riskIndicator: MTORiskIndicator
   key: MTOCommonSolutionKey
   type: MTOSolutionType # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
-  pocName: String #TODO (mto) if there is a default value for ones sourced from common solutions, these can be reverted back to String! Otherwise, we should leave nullable
+  pocName: String
   pocEmail: String
 
   #Meta Data
@@ -71,5 +73,5 @@ extend type Mutation {
 
 extend type Query {
   mtoSolution(id: UUID!): MTOSolution!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC]) #TODO (mto) is there any reason a MAC user shouldn't query this?
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
