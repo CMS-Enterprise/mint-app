@@ -18,6 +18,7 @@ type ModalProps = {
   closeModal: () => void;
   noScrollable?: boolean;
   fixed?: boolean;
+  zTop?: boolean;
 };
 
 const Modal = ({
@@ -31,7 +32,8 @@ const Modal = ({
   openModal,
   closeModal,
   noScrollable = true,
-  fixed = false
+  fixed = false,
+  zTop
 }: ModalProps) => {
   const handleOpenModal = () => {
     if (!scroll) noScroll.on();
@@ -45,7 +47,8 @@ const Modal = ({
     <ReactModal
       isOpen={isOpen}
       overlayClassName={classNames('mint-modal__overlay', {
-        'overflow-y-scroll': !fixed
+        'overflow-y-scroll': !fixed,
+        'z-top': zTop
       })}
       className={classNames('mint-modal__content', className, {
         'overflow-hidden': fixed

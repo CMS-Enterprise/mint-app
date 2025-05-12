@@ -8,7 +8,13 @@ import React, {
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Grid, GridContainer, Label, Link } from '@trussworks/react-uswds';
+import {
+  Button,
+  Grid,
+  GridContainer,
+  Label,
+  Link
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
@@ -33,6 +39,7 @@ type LinkSolutionFormProps = {
   solutionIDs: string[];
   setSolutionIDs: Dispatch<SetStateAction<string[]>>;
   allSolutions: GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix'];
+  setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
 };
 
 const LinkSolutionForm = ({
@@ -41,7 +48,8 @@ const LinkSolutionForm = ({
   setCommonSolutionKeys,
   solutionIDs,
   setSolutionIDs,
-  allSolutions
+  allSolutions,
+  setCloseDestination
 }: LinkSolutionFormProps) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: milestoneT } = useTranslation('mtoMilestone');
@@ -180,11 +188,18 @@ const LinkSolutionForm = ({
               i18nKey="modelToOperationsMisc:modal.editMilestone.visitSolutionLibrary"
               components={{
                 solution: (
-                  <UswdsReactLink
-                    to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                  <Button
+                    type="button"
+                    unstyled
+                    className="usa-button--unstyled margin-0"
+                    onClick={() => {
+                      setCloseDestination(
+                        `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                      );
+                    }}
                   >
                     {' '}
-                  </UswdsReactLink>
+                  </Button>
                 ),
                 help: (
                   <Link
