@@ -147,13 +147,26 @@ const MTOTable = ({
     useState<string[]>(defaultExpandedRows);
 
   // Function to toggle row expansion
-  const toggleRow = (index: string) => {
-    setExpandedRows(prev =>
-      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-    );
-    setExpandedInitRows(prev =>
-      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-    );
+  const toggleRow = (index: string, forceOpen?: boolean) => {
+    setExpandedRows(prev => {
+      if (prev.includes(index)) {
+        return prev.filter(i => i !== index);
+      }
+      if (forceOpen) {
+        return [...prev];
+      }
+      return [...prev, index];
+    });
+
+    setExpandedInitRows(prev => {
+      if (prev.includes(index)) {
+        return prev.filter(i => i !== index);
+      }
+      if (forceOpen) {
+        return [...prev];
+      }
+      return [...prev, index];
+    });
   };
 
   useEffect(() => {
@@ -306,6 +319,7 @@ const MTOTable = ({
           subCategoryID={subCategoryID ?? ''}
           milestoneID={row.id}
           rowType={rowType}
+          toggleRow={toggleRow}
           MoveUp={
             <Button
               type="button"

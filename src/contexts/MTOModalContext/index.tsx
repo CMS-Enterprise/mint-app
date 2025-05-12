@@ -10,6 +10,7 @@ export interface MTOModalState {
   rowType: MTORowType;
   subCategoryID: string;
   modalCalledFrom?: 'solution-library';
+  toggleRow?: (index: string, forceOpen?: boolean) => void;
 }
 
 interface MTOModalContextType {
@@ -28,7 +29,8 @@ const MTOModalContext = createContext<MTOModalContextType>({
     categoryName: '',
     rowType: 'category',
     subCategoryID: '',
-    modalType: 'category'
+    modalType: 'category',
+    toggleRow: () => {}
   },
   setMTOModalState: () => {},
   resetMTOModalState: () => {}
@@ -43,7 +45,8 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
     categoryName: '',
     rowType: 'category',
     subCategoryID: '',
-    modalType: 'category'
+    modalType: 'category',
+    toggleRow: () => {}
   });
 
   const setMTOModalState = (state: Partial<MTOModalState>) => {
@@ -59,7 +62,8 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
       categoryName: '',
       rowType: 'category',
       subCategoryID: '',
-      modalType: 'category'
+      modalType: 'category',
+      toggleRow: () => {}
     });
   };
 

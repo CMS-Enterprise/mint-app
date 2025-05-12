@@ -17,7 +17,8 @@ const ActionMenu = ({
   milestoneID,
   primaryCategoryID,
   subCategoryID,
-  name
+  name,
+  toggleRow
 }: {
   rowType: MTORowType;
   MoveUp: React.ReactChild;
@@ -26,6 +27,7 @@ const ActionMenu = ({
   primaryCategoryID: string;
   subCategoryID?: string;
   name?: string;
+  toggleRow?: (index: string, forceOpen?: boolean) => void;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -113,7 +115,8 @@ const ActionMenu = ({
                 setMTOModalState({
                   modalType: 'milestone',
                   categoryID: primaryCategoryID,
-                  subCategoryID: subCategoryID ?? ''
+                  subCategoryID: subCategoryID ?? '',
+                  toggleRow
                 });
               }}
               onKeyPress={e => {
