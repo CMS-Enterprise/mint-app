@@ -827,7 +827,7 @@ const EditSolutionForm = ({
                         name="pocName"
                         control={control}
                         rules={{
-                          required: true
+                          required: modelToOperationsMiscT('validation.fillOut')
                         }}
                         render={({ field: { ref, ...field } }) => (
                           <FormGroup className="margin-top-0 margin-bottom-2">
@@ -840,6 +840,11 @@ const EditSolutionForm = ({
                                 'modal.solution.label.pocName'
                               )}
                             </Label>
+                            {errors.pocName && (
+                              <span className="usa-error-message" role="alert">
+                                {errors.pocName.message}
+                              </span>
+                            )}
 
                             <TextInput
                               type="text"
