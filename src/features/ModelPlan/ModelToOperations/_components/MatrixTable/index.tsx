@@ -63,6 +63,8 @@ const MTOTable = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  console.log('hit');
+
   const { modelID } = useParams<{ modelID: string }>();
 
   const { showMessage: setError } = useMessage();

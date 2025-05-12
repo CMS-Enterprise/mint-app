@@ -167,7 +167,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   solutions: 'Solutions and IT systems',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
-  isMTOInProgress: 'Is this MTO still in progress',
+  isMTOInProgress: 'Is this MTO still in progress?',
   lastUpdated: 'MTO last updated {{date}}',
   warningRedirect:
     'Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). <link1>Go to your MTO</link1> to review any suggestions.',
