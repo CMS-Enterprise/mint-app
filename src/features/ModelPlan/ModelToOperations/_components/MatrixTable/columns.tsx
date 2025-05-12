@@ -256,7 +256,8 @@ export const columns: ColumnType[] = [
     width: '175px',
     sort: sortNested,
     Cell: ({ row, rowType, expanded }: RowProps) => {
-      if (!row.facilitatedBy) return <></>;
+      if (!row.facilitatedBy)
+        return <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>;
       return (
         <>
           {row.facilitatedBy

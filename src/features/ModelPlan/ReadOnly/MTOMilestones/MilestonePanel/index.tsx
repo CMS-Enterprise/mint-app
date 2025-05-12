@@ -202,7 +202,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
             <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
 
             {milestone.key && (
-              <p style={{ whiteSpace: 'pre-line' }}>
+              <p className="margin-0 mint-body-normal text-base-dark text-pre-line">
                 {modelToOperationsMiscT(
                   `milestoneLibrary.milestoneMap.${milestone.key}.description`
                 )}
