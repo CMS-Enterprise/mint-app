@@ -24,7 +24,6 @@ import {
 } from 'gql/generated/graphql';
 
 import HelpText from 'components/HelpText';
-import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 

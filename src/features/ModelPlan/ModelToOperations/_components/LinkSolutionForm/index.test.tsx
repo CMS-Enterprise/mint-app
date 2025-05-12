@@ -108,6 +108,7 @@ describe('LinkSolutionForm', () => {
                   },
                   solutions: []
                 }}
+                setCloseDestination={() => null}
               />
             </Route>
           </MockedProvider>

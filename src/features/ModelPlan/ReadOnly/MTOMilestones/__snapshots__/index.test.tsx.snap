@@ -501,12 +501,17 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             <td
               class="padding-1 line-height-normal padding-left-0"
             >
-              <a
-                class="usa-link mint-print-link"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/milestones?solution=research-measurement-assessment-design-and-analysis&section=about"
+              <button
+                class="usa-button usa-button--unstyled mint-print-link"
+                data-testid="button"
+                type="button"
               >
-                RMADA
-              </a>
+                <span
+                  class="margin-right-05"
+                >
+                  RMADA
+                </span>
+              </button>
             </td>
             <td
               class="padding-1 line-height-normal padding-left-0"
