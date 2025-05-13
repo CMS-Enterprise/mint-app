@@ -131,6 +131,7 @@ const SolutionViewSelector = ({
             <Button
               type="button"
               outline={viewParam !== 'cross-cut'}
+              style={{ borderRadius: '0 .25rem .25rem 0' }}
               onClick={() => {
                 params.set(viewParamName, 'cross-cut');
                 if (usePages) params.set('page', '1');
