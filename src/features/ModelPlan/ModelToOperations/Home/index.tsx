@@ -10,7 +10,10 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { useGetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
+import {
+  MtoStatus,
+  useGetModelToOperationsMatrixQuery
+} from 'gql/generated/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -25,7 +28,7 @@ import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
 import ITSystemsTable from '../_components/ITSystemsTable';
-import MTOTable, { isMatrixStartedFc } from '../_components/MatrixTable';
+import MTOTable from '../_components/MatrixTable';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import SuggestedMilestoneBanner from '../_components/SuggestedMilestoneBanner';
@@ -84,9 +87,8 @@ const MTOHome = () => {
     }
   }, [viewparam, history, params]);
 
-  const isMatrixStarted: boolean = useMemo(() => {
-    return isMatrixStartedFc(data?.modelPlan.mtoMatrix);
-  }, [data?.modelPlan.mtoMatrix]);
+  const isMatrixStarted: boolean =
+    data?.modelPlan.mtoMatrix.status !== MtoStatus.READY;
 
   return (
     <>

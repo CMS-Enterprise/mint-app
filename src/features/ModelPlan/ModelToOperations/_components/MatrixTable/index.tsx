@@ -664,8 +664,6 @@ const MTOTable = ({
                           padding: '1rem',
                           paddingLeft: index === 0 ? '.5rem' : '0px',
                           paddingBottom: '.25rem',
-                          textAlign:
-                            column.accessor === 'actions' ? 'right' : 'left',
                           width: column.width,
                           minWidth: column.width,
                           maxWidth: column.width
@@ -741,31 +739,6 @@ const MTOTable = ({
 };
 
 export default MTOTable;
-
-export const isMatrixStartedFc = (
-  data: GetModelToOperationsMatrixQueryType | undefined
-): boolean => {
-  if (!data) {
-    return false;
-  }
-
-  const hasCategories = (data.categories || []).filter(
-    category => !category.isUncategorized
-  );
-
-  const hasSubcategories = hasCategories.filter(
-    subcategory => !subcategory.isUncategorized
-  );
-
-  if (
-    hasCategories.length ||
-    hasSubcategories.length ||
-    data.milestones.length
-  ) {
-    return true;
-  }
-  return false;
-};
 
 /**
  * Function to format Category and SubCategory data to mirror the structure of Milstone data

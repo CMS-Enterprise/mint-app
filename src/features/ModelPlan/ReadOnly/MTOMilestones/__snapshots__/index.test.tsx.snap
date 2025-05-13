@@ -64,7 +64,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
         <thead>
           <tr>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem .5rem; text-align: left; width: 60px; min-width: 60px; max-width: 60px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem .5rem; width: 60px; min-width: 60px; max-width: 60px;"
             >
               <span
                 class="usa-button usa-button--unstyled position-relative"
@@ -85,7 +85,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </span>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 200px; min-width: 200px; max-width: 200px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 200px; min-width: 200px; max-width: 200px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -109,7 +109,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </button>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 175px; min-width: 175px; max-width: 175px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 175px; min-width: 175px; max-width: 175px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -133,7 +133,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </button>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 150px; min-width: 150px; max-width: 150px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 150px; min-width: 150px; max-width: 150px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -157,7 +157,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </button>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 130px; min-width: 130px; max-width: 130px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 130px; min-width: 130px; max-width: 130px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -181,7 +181,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               </button>
             </th>
             <th
-              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; text-align: left; width: 130px; min-width: 130px; max-width: 130px;"
+              style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 130px; min-width: 130px; max-width: 130px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -486,7 +486,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               class="padding-1 line-height-normal padding-left-0"
             >
               <button
-                class="usa-button usa-button--unstyled mint-print-link"
+                class="usa-button usa-button--unstyled mint-print-link line-height-normal"
                 data-testid="button"
                 type="button"
               >
@@ -496,7 +496,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             <td
               class="padding-1 line-height-normal padding-left-0"
             >
-              Model team, Model lead, Learning contractor, Contracting Officer’s Representative (COR), Learning and diffusion group (LDG)
+              Model team, Model Lead, Learning contractor, Contracting Officers Representative (COR), Learning and Diffusion Group (LDG)
             </td>
             <td
               class="padding-1 line-height-normal padding-left-0"
