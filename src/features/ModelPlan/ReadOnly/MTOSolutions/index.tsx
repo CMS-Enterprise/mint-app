@@ -26,10 +26,6 @@ const ReadOnlyMTOSolutions = ({ modelID }: { modelID: string }) => {
 
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
 
-  const hasNoSolutions =
-    'solutions' in modelToOperationsMatrix &&
-    modelToOperationsMatrix.solutions?.length === 0;
-
   if (loading && !modelToOperationsMatrix) {
     <PageLoading />;
   }
@@ -54,18 +50,10 @@ const ReadOnlyMTOSolutions = ({ modelID }: { modelID: string }) => {
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 
-      {hasNoSolutions ? (
-        <>
-          {mtoNotStarted ? (
-            <Alert type="info" slim className="margin-bottom-2">
-              {t('emptyMTOReadViewWithSolutions')}
-            </Alert>
-          ) : (
-            <Alert type="info" slim className="margin-bottom-2">
-              {t('noSolutionsReadView')}
-            </Alert>
-          )}
-        </>
+      {mtoNotStarted ? (
+        <Alert type="info" slim className="margin-bottom-2">
+          {t('emptyMTOReadViewWithSolutions')}
+        </Alert>
       ) : (
         <ITSystemsTable readView />
       )}
