@@ -26,10 +26,6 @@ const ReadOnlyMTOSolutions = ({ modelID }: { modelID: string }) => {
 
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
 
-  const hasNoSolutions =
-    'solutions' in modelToOperationsMatrix &&
-    modelToOperationsMatrix.solutions?.length === 0;
-
   if (loading && !modelToOperationsMatrix) {
     <PageLoading />;
   }
