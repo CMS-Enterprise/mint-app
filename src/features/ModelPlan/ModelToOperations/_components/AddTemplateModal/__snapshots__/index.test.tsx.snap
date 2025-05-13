@@ -18,7 +18,9 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
         24 categories (including 9 primary categories)
       </li>
     </ul>
-    <p>
+    <p
+      class="margin-bottom-8"
+    >
       Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.
     </p>
     <div
