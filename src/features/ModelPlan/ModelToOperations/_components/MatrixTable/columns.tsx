@@ -314,7 +314,7 @@ export const columns: ColumnType[] = [
               ) : (
                 <Button
                   type="button"
-                  className="display-block mint-print-link"
+                  className="display-block mint-print-link text-bold"
                   unstyled
                   onClick={() => {
                     if (clearMessage) clearMessage();
