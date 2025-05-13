@@ -292,8 +292,8 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 {isSubCategory ? t('subCategory') : t('category')}{' '}
                 <span className="text-normal">
                   {t(`auditUpdateType.${change.action}`)}
+                  {': '}
                 </span>
-                {': '}
                 {categoryName || t('dataNotAvailable')}
               </span>
             );
