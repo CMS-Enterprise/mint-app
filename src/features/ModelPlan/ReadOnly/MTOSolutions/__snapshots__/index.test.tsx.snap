@@ -199,7 +199,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                 colspan="1"
                 role="columnheader"
                 scope="col"
-                style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 350px;"
+                style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 320px;"
               >
                 <button
                   class="usa-button usa-button--unstyled position-relative"
@@ -509,7 +509,11 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               <td
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
-              />
+              >
+                <em>
+                  None added yet
+                </em>
+              </td>
               <td
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"

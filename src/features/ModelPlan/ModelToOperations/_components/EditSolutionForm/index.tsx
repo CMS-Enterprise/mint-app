@@ -44,6 +44,7 @@ import {
   MtoFacilitator,
   MtoRiskIndicator,
   MtoSolutionStatus,
+  MtoSolutionType,
   useDeleteMtoSolutionMutation,
   useGetMtoAllMilestonesQuery,
   useGetMtoSolutionQuery,
@@ -91,6 +92,9 @@ type FormValues = {
   neededBy?: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
+  type: MtoSolutionType | 'default';
+  pocName: string;
+  pocEmail: string;
 };
 
 type TableMilestoneType =
@@ -121,7 +125,8 @@ const EditSolutionForm = ({
   const {
     facilitatedBy: facilitatedByConfig,
     status: stausConfig,
-    riskIndicator: riskIndicatorConfig
+    riskIndicator: riskIndicatorConfig,
+    solutionType: solutionTypeConfig
   } = usePlanTranslation('mtoSolution');
 
   const history = useHistory();
@@ -240,6 +245,9 @@ const EditSolutionForm = ({
   const formValues = useMemo(
     () => ({
       name: solution?.name || '',
+      type: (solution?.type as MtoSolutionType) || 'default',
+      pocName: solution?.pocName || '',
+      pocEmail: solution?.pocEmail || '',
       facilitatedBy: solution?.facilitatedBy || [],
       facilitatedByOther: solution?.facilitatedByOther || '',
       neededBy: solution?.neededBy || '',
@@ -251,14 +259,15 @@ const EditSolutionForm = ({
 
   const methods = useForm<FormValues>({
     defaultValues: formValues,
-    values: formValues
+    values: formValues,
+    mode: 'onBlur'
   });
 
   const {
     control,
     handleSubmit,
     watch,
-    formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
+    formState: { isSubmitting, isDirty, dirtyFields, touchedFields, errors }
   } = methods;
 
   const values = watch();
@@ -312,7 +321,10 @@ const EditSolutionForm = ({
 
   const onSubmit: SubmitHandler<FormValues> = useCallback(
     formData => {
-      const { neededBy, name, ...formChanges } = dirtyInput(solution, formData);
+      const { neededBy, name, type, ...formChanges } = dirtyInput(
+        solution,
+        formData
+      );
 
       updateSolution({
         variables: {
@@ -320,7 +332,8 @@ const EditSolutionForm = ({
           changes: {
             ...formChanges,
             ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
-            ...(!!name && !solution?.addedFromSolutionLibrary && { name })
+            ...(!!name && !solution?.addedFromSolutionLibrary && { name }),
+            ...(!!type && !solution?.addedFromSolutionLibrary && { type })
           },
           milestoneLinks: {
             milestoneIDs
@@ -393,7 +406,7 @@ const EditSolutionForm = ({
         id: editSolutionID || ''
       },
       refetchQueries: [
-        GetModelToOperationsMatrixDocument,
+        GetMtoSolutionsAndMilestonesDocument,
         GetMtoSolutionsAndMilestonesDocument
       ]
     })
@@ -447,7 +460,6 @@ const EditSolutionForm = ({
         >
           {modelToOperationsMiscT('modal.editSolution.saveChanges')}
         </Button>
-
         <Button
           type="button"
           disabled={isSubmitting}
@@ -719,41 +731,180 @@ const EditSolutionForm = ({
                   </p>
 
                   {!solution.addedFromSolutionLibrary && (
-                    <Controller
-                      name="name"
-                      control={control}
-                      rules={{
-                        required: modelToOperationsMiscT('validation.fillOut'),
-                        validate: value => {
-                          const trimmedValue = value.trim();
-                          if (!trimmedValue) {
-                            return modelToOperationsMiscT('validation.fillOut');
+                    <>
+                      <Controller
+                        name="name"
+                        control={control}
+                        rules={{
+                          required:
+                            modelToOperationsMiscT('validation.fillOut'),
+                          validate: value => {
+                            const trimmedValue = value.trim();
+                            if (!trimmedValue) {
+                              return modelToOperationsMiscT(
+                                'validation.fillOut'
+                              );
+                            }
+                            return true;
                           }
-                          return true;
-                        }
-                      }}
-                      render={({
-                        field: { ref, ...field },
-                        fieldState: { error }
-                      }) => (
-                        <FormGroup className="margin-bottom-3">
-                          <Label requiredMarker htmlFor="name">
-                            {mtoSolutionT('name.label')}
-                          </Label>
+                        }}
+                        render={({
+                          field: { ref, ...field },
+                          fieldState: { error }
+                        }) => (
+                          <FormGroup className="margin-bottom-3">
+                            <Label requiredMarker htmlFor="name">
+                              {modelToOperationsMiscT(
+                                'modal.editSolution.label.solutionTitle'
+                              )}
+                            </Label>
 
-                          {!!error && (
-                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                            {!!error && (
+                              <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                            )}
+
+                            <TextInput
+                              {...field}
+                              ref={null}
+                              id="name"
+                              type="text"
+                            />
+                          </FormGroup>
+                        )}
+                      />
+                      <Controller
+                        name="type"
+                        control={control}
+                        rules={{
+                          required:
+                            modelToOperationsMiscT('validation.fillOut'),
+                          validate: value =>
+                            value !== 'default' ||
+                            modelToOperationsMiscT('validation.fillOut')
+                        }}
+                        render={({
+                          field: { ref, ...field },
+                          fieldState: { error }
+                        }) => (
+                          <FormGroup className="margin-top-0 margin-bottom-2">
+                            <Label
+                              htmlFor={convertCamelCaseToKebabCase(field.name)}
+                              className="mint-text-normal line-height-normal maxw-none margin-bottom-1 text-bold"
+                              requiredMarker
+                            >
+                              {modelToOperationsMiscT(
+                                'modal.editSolution.label.solutionType'
+                              )}
+                            </Label>
+                            {!!error && (
+                              <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                            )}
+                            <Select
+                              {...field}
+                              id={convertCamelCaseToKebabCase(field.name)}
+                              value={field.value || ''}
+                              defaultValue="default"
+                            >
+                              <option value="default">- Select - </option>
+                              {getKeys(solutionTypeConfig.options).map(
+                                option => {
+                                  return (
+                                    <option
+                                      key={`select-${convertCamelCaseToKebabCase(option)}`}
+                                      value={option}
+                                    >
+                                      {solutionTypeConfig.options[option]}
+                                    </option>
+                                  );
+                                }
+                              )}
+                            </Select>
+                          </FormGroup>
+                        )}
+                      />
+
+                      <div className="margin-top-0 padding-top-1 margin-bottom-2">
+                        <p className="text-bold margin-y-0">
+                          {modelToOperationsMiscT('modal.solution.pocHeading')}
+                        </p>
+                        <p className="text-base margin-y-0">
+                          {modelToOperationsMiscT(
+                            'modal.solution.pocSubheading'
                           )}
+                        </p>
+                      </div>
 
-                          <TextInput
-                            {...field}
-                            ref={null}
-                            id="name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      )}
-                    />
+                      <Controller
+                        name="pocName"
+                        control={control}
+                        rules={{
+                          required: modelToOperationsMiscT('validation.fillOut')
+                        }}
+                        render={({ field: { ref, ...field } }) => (
+                          <FormGroup className="margin-top-0 margin-bottom-2">
+                            <Label
+                              htmlFor={convertCamelCaseToKebabCase(field.name)}
+                              className="mint-body-normal maxw-none margin-bottom-1"
+                              requiredMarker
+                            >
+                              {modelToOperationsMiscT(
+                                'modal.solution.label.pocName'
+                              )}
+                            </Label>
+                            {errors.pocName && (
+                              <span className="usa-error-message" role="alert">
+                                {errors.pocName.message}
+                              </span>
+                            )}
+
+                            <TextInput
+                              type="text"
+                              {...field}
+                              id={convertCamelCaseToKebabCase(field.name)}
+                              value={field.value || ''}
+                            />
+                          </FormGroup>
+                        )}
+                      />
+
+                      <Controller
+                        name="pocEmail"
+                        control={control}
+                        rules={{
+                          required:
+                            modelToOperationsMiscT('validation.fillOut'),
+                          pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
+                          }
+                        }}
+                        render={({ field: { ref, ...field } }) => (
+                          <FormGroup className="margin-top-0 margin-bottom-2">
+                            <Label
+                              htmlFor={convertCamelCaseToKebabCase(field.name)}
+                              className="mint-body-normal maxw-none margin-bottom-1"
+                              requiredMarker
+                            >
+                              {modelToOperationsMiscT(
+                                'modal.solution.label.pocEmail'
+                              )}
+                            </Label>
+                            {errors.pocEmail && (
+                              <span className="usa-error-message" role="alert">
+                                {errors.pocEmail.message}
+                              </span>
+                            )}
+
+                            <TextInput
+                              type="text"
+                              {...field}
+                              id={convertCamelCaseToKebabCase(field.name)}
+                              value={field.value || ''}
+                            />
+                          </FormGroup>
+                        )}
+                      />
+                    </>
                   )}
 
                   <Controller

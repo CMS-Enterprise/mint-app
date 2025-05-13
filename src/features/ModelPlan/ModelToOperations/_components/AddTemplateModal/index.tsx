@@ -83,7 +83,7 @@ const AddTemplateModal = () => {
         <li>{t('modal.addTemplate.item')}</li>
       </ul>
 
-      <p>{t('modal.addTemplate.description2')}</p>
+      <p className="margin-bottom-8">{t('modal.addTemplate.description2')}</p>
 
       <div className="display-flex mint-modal__footer">
         <Button type="submit" className="margin-right-3 margin-top-0">

@@ -740,31 +740,6 @@ const MTOTable = ({
 
 export default MTOTable;
 
-export const isMatrixStartedFc = (
-  data: GetModelToOperationsMatrixQueryType | undefined
-): boolean => {
-  if (!data) {
-    return false;
-  }
-
-  const hasCategories = (data.categories || []).filter(
-    category => !category.isUncategorized
-  );
-
-  const hasSubcategories = hasCategories.filter(
-    subcategory => !subcategory.isUncategorized
-  );
-
-  if (
-    hasCategories.length ||
-    hasSubcategories.length ||
-    data.milestones.length
-  ) {
-    return true;
-  }
-  return false;
-};
-
 /**
  * Function to format Category and SubCategory data to mirror the structure of Milstone data
  * This is done to make the data homogenized and easier to work with in the table for drag, drop, sort and pagination
@@ -815,6 +790,10 @@ export const formatAndHomogenizeMilestoneData = (
           }))
         });
       });
+
+      formattedSubCategory.milestones.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
 
       const { milestones, ...subCategoryData } = subCategory;
       const { isUncategorized, ...restSubCategoryData } = subCategoryData;
