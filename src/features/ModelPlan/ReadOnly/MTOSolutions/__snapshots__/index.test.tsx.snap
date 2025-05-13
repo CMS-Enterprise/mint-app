@@ -199,7 +199,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                 colspan="1"
                 role="columnheader"
                 scope="col"
-                style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 350px;"
+                style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 320px;"
               >
                 <button
                   class="usa-button usa-button--unstyled position-relative"

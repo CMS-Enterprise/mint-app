@@ -28,8 +28,6 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
 
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
 
-  const hasNoMilestones = modelToOperationsMatrix.milestones?.length === 0;
-
   if (loading && !modelToOperationsMatrix) {
     <PageLoading />;
   }
@@ -54,18 +52,10 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 
-      {hasNoMilestones ? (
-        <>
-          {mtoNotStarted ? (
-            <Alert type="info" slim className="margin-bottom-2">
-              {t('emptyMTOReadView')}
-            </Alert>
-          ) : (
-            <Alert type="info" slim className="margin-bottom-2">
-              {t('noMilestonesReadView')}
-            </Alert>
-          )}
-        </>
+      {mtoNotStarted ? (
+        <Alert type="info" slim className="margin-bottom-2">
+          {t('emptyMTOReadView')}
+        </Alert>
       ) : (
         <MTOTable queryData={data} loading={loading} error={error} readView />
       )}
