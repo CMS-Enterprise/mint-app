@@ -664,8 +664,6 @@ const MTOTable = ({
                           padding: '1rem',
                           paddingLeft: index === 0 ? '.5rem' : '0px',
                           paddingBottom: '.25rem',
-                          textAlign:
-                            column.accessor === 'actions' ? 'right' : 'left',
                           width: column.width,
                           minWidth: column.width,
                           maxWidth: column.width
@@ -674,7 +672,7 @@ const MTOTable = ({
                         {column.canSort !== false ? (
                           <button
                             className={classNames(
-                              'usa-button usa-button--unstyled position-relative'
+                              'usa-button usa-button--unstyled position-relative display-block'
                             )}
                             onClick={() => {
                               const isSorted =
@@ -701,7 +699,7 @@ const MTOTable = ({
                         ) : (
                           <span
                             className={classNames(
-                              'usa-button usa-button--unstyled position-relative',
+                              'usa-button usa-button--unstyled position-relative display-block',
                               {
                                 'text-no-underline text-black':
                                   column.Header ===

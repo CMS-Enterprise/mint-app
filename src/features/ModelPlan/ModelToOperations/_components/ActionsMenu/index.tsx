@@ -228,7 +228,7 @@ const ActionMenu = ({
     );
 
   return (
-    <div style={{ textAlign: 'right' }}>
+    <div>
       <Button
         type="button"
         unstyled

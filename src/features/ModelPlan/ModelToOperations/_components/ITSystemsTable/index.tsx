@@ -215,7 +215,7 @@ const ITSystemsTable = ({
       {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
-        width: 350,
+        width: 320,
         Cell: ({ row }: any) => {
           const { openViewSolutionModal, setViewSolutionID } = useContext(
             MTOSolutionPanelContext
@@ -403,12 +403,12 @@ const ITSystemsTable = ({
       {
         Header: t<string, {}, string>('table.actions'),
         accessor: 'actions',
-        width: 120,
+        width: 150,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
           return (
-            <div style={{ textAlign: 'right' }}>
+            <div>
               <Button
                 type="button"
                 unstyled
