@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Button, Form } from '@trussworks/react-uswds';
 import {
@@ -42,7 +42,13 @@ const AddTemplateModal = () => {
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
               >
-                {t('modal.addTemplate.success')}
+                <Trans
+                  i18nKey="modal.addTemplate.success"
+                  t={t}
+                  components={{
+                    bold: <span className="text-bold " />
+                  }}
+                />
               </Alert>
             </>
           );
