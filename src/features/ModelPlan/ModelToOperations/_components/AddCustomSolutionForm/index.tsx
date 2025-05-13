@@ -62,7 +62,7 @@ const CustomSolutionForm = () => {
       pocName: '',
       pocEmail: ''
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   const {

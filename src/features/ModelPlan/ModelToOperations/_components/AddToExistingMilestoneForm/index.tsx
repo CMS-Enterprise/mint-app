@@ -87,7 +87,7 @@ const AddToExistingMilestoneForm = ({
     defaultValues: {
       linkedMilestones: []
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
   const { control, handleSubmit, reset, watch } = methods;
 

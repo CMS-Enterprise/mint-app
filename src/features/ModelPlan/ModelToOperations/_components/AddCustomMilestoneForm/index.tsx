@@ -68,7 +68,8 @@ const CustomMilestoneForm = () => {
       primaryCategory: categoryID ?? 'default',
       subcategory: subCategoryID ?? 'default',
       name: ''
-    }
+    },
+    mode: 'onChange'
   });
 
   const {

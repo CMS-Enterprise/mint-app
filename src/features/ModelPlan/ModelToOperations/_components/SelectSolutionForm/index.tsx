@@ -133,7 +133,7 @@ const SelectSolutionForm = () => {
     defaultValues: {
       linkedSolutions: initialValues
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   const {
