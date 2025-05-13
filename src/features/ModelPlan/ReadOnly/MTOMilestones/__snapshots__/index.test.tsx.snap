@@ -486,7 +486,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               class="padding-1 line-height-normal padding-left-0"
             >
               <button
-                class="usa-button usa-button--unstyled mint-print-link line-height-normal"
+                class="usa-button usa-button--unstyled mint-print-link"
                 data-testid="button"
                 type="button"
               >

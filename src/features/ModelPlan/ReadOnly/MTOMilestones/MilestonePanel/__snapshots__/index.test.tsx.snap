@@ -157,7 +157,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                         class="margin-0 padding-left-3"
                       >
                         <li>
-                          Not started: No work has started on any part of this milestone
+                          Not started: No work has started on any part of this milestone or any solution associated with it
                         </li>
                         <li>
                           In progress: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)
