@@ -212,9 +212,9 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               <div className="text-bold">
                 {needName}{' '}
                 <span className="text-normal">
-                  {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
+                  {t('solution')} {t(`auditUpdateType.${databaseAction}`)}:
                 </span>
-                : {solutionName}
+                {solutionName}
               </div>
             );
           })()}
@@ -323,9 +323,9 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               <span className="text-bold">
                 {t('milestone')}{' '}
                 <span className="text-normal">
-                  {t(`auditUpdateType.${change.action}`)}
+                  {t(`auditUpdateType.${change.action}`)}:
                 </span>{' '}
-                : {milestoneValue || t('dataNotAvailable')}
+                {milestoneValue || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -354,9 +354,9 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               <span className="text-bold">
                 {properlyCapitalizeInitiator(t('solution'))}{' '}
                 <span className="text-normal">
-                  {t(`auditUpdateType.${change.action}`)}
+                  {t(`auditUpdateType.${change.action}`)}:
                 </span>{' '}
-                : {solutionValue || t('dataNotAvailable')}
+                {solutionValue || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -410,7 +410,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* Render previous details/values */}
         {(() => {
           // If the table is a linking table, don't show previous details
-          if (isLinkingTable(change.tableName)) return <></>;
+          if (
+            isLinkingTable(change.tableName) ||
+            change.action === DatabaseOperation.INSERT
+          )
+            return <></>;
 
           return (
             <>
