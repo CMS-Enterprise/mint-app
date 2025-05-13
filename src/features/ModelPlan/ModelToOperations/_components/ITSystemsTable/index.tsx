@@ -215,7 +215,7 @@ const ITSystemsTable = ({
       {
         Header: t<string, {}, string>('table.solution'),
         accessor: 'name',
-        width: 320,
+        width: 300,
         Cell: ({ row }: any) => {
           const { openViewSolutionModal, setViewSolutionID } = useContext(
             MTOSolutionPanelContext
@@ -405,7 +405,8 @@ const ITSystemsTable = ({
       {
         Header: t<string, {}, string>('table.actions'),
         accessor: 'actions',
-        width: 150,
+        disableSortBy: true,
+        width: 170,
         Cell: ({ row }: any) => {
           if (row.original.__typename === 'MTOMilestone') return <></>;
 
@@ -598,7 +599,7 @@ const ITSystemsTable = ({
                             {...column.getSortByToggleProps()}
                           >
                             {column.render('Header')}
-                            {getHeaderSortIcon(column, false)}
+                            {column.canSort && getHeaderSortIcon(column, false)}
                           </button>
                         </th>
                       ))}
