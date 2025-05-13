@@ -51,7 +51,7 @@
     "font-awesome": "^4.7.0",
     "formik": "^2.4.6",
     "graphql": "^15.8.0",
-    "html-react-parser": "^5.2.4",
+    "html-react-parser": "^5.2.5",
     "i18next": "^23.16.5",
     "i18next-browser-languagedetector": "^5.0.0",
     "istanbul-lib-coverage": "^3.2.2",
@@ -130,7 +130,7 @@
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
-    "@cypress/code-coverage": "^3.14.1",
+    "@cypress/code-coverage": "^3.14.2",
     "@cypress/webpack-preprocessor": "^6.0.4",
     "@graphql-codegen/cli": "5.0.6",
     "@graphql-codegen/client-preset": "^4.5.1",
