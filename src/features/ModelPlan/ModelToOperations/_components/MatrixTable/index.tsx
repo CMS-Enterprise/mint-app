@@ -818,6 +818,10 @@ export const formatAndHomogenizeMilestoneData = (
         });
       });
 
+      formattedSubCategory.milestones.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+
       const { milestones, ...subCategoryData } = subCategory;
       const { isUncategorized, ...restSubCategoryData } = subCategoryData;
       formattedCategory.subCategories.push({
