@@ -47,7 +47,7 @@ const CustomSolutionForm = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { showMessage, showErrorMessageInModal } = useMessage();
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
   const {
     mtoModalState: { modalCalledFrom },
@@ -110,6 +110,7 @@ const CustomSolutionForm = () => {
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 <span className="mandatory-fields-alert__text">
                   <Trans

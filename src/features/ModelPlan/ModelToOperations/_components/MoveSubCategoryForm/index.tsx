@@ -40,7 +40,7 @@ const MoveSubCategoryForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { showMessage } = useMessage();
+  const { showMessage, clearMessage } = useMessage();
 
   const [mutationError, setMutationError] = useState<React.ReactNode | null>();
 
@@ -99,6 +99,7 @@ const MoveSubCategoryForm = () => {
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 {modelToOperationsMiscT('successReorder')}
               </Alert>

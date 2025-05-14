@@ -885,6 +885,7 @@ export const moveRow = (
             slim
             data-testid="error-alert"
             className="margin-y-4"
+            clearMessage={clearMessage}
           >
             {i18next.t('modelToOperationsMisc:errorReorder')}
           </Alert>

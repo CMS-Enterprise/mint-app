@@ -117,6 +117,7 @@ const AddToExistingMilestoneForm = ({
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 <span className="mandatory-fields-alert__text">
                   <Trans

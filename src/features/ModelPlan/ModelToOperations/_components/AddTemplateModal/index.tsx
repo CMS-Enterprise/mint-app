@@ -18,7 +18,7 @@ const AddTemplateModal = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { showErrorMessageInModal, showMessage } = useMessage();
+  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID },
@@ -41,6 +41,7 @@ const AddTemplateModal = () => {
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 {t('modal.addTemplate.success')}
               </Alert>

@@ -150,7 +150,7 @@ const EditMilestoneForm = ({
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
 
-  const { showMessage } = useMessage();
+  const { showMessage, clearMessage } = useMessage();
 
   const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
 
@@ -512,6 +512,7 @@ const EditMilestoneForm = ({
                   slim
                   data-testid="mandatory-fields-alert"
                   className="margin-y-4"
+                  clearMessage={clearMessage}
                 >
                   <span className="mandatory-fields-alert__text">
                     <Trans
@@ -553,6 +554,7 @@ const EditMilestoneForm = ({
       commonSolutionKeys,
       solutionIDs,
       showMessage,
+      clearMessage,
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
@@ -576,6 +578,7 @@ const EditMilestoneForm = ({
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
                   milestone: milestone?.name
