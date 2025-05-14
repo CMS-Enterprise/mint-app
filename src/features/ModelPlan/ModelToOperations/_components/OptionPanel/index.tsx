@@ -42,9 +42,14 @@ const MTOOptionsCard = ({
       className={classNames('desktop:grid-col-6 article', className)}
     >
       <div
-        style={{ paddingTop: '2px', paddingBottom: '2px' }}
+        style={{
+          paddingTop: '2px',
+          paddingBottom: '2px',
+          borderTopLeftRadius: '6px',
+          borderTopRightRadius: '6px'
+        }}
         className={classNames(
-          'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg',
+          'display-flex flex-justify bg-base-lightest padding-x-3 text-white',
           {
             'bg-green-50': mtoType === 'milestones',
             'indigo-cool-60': mtoType === 'solutions'
@@ -152,9 +157,14 @@ const MTOOptionsPanel = () => {
         className="margin-top-2"
       >
         <div
-          style={{ paddingTop: '2px', paddingBottom: '2px' }}
+          style={{
+            paddingTop: '2px',
+            paddingBottom: '2px',
+            borderTopLeftRadius: '6px',
+            borderTopRightRadius: '6px'
+          }}
           className={classNames(
-            'display-flex flex-justify bg-base-lightest padding-x-3 radius-top-lg bg-base-lighter'
+            'display-flex flex-justify bg-base-lightest padding-x-3 bg-base-lighter'
           )}
         >
           {t('optionsCard.template.label').toLocaleUpperCase()}{' '}
