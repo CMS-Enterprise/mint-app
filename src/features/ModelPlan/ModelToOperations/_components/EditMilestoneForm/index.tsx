@@ -722,11 +722,17 @@ const EditMilestoneForm = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {modelToOperationsMiscT('modal.editMilestone.areYouSure')}
+          {milestone.addedFromMilestoneLibrary
+            ? modelToOperationsMiscT('modal.editMilestone.areYouSureCommon')
+            : modelToOperationsMiscT('modal.editMilestone.areYouSure')}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
-          {modelToOperationsMiscT('modal.editMilestone.removeDescription')}
+          {milestone.addedFromMilestoneLibrary
+            ? modelToOperationsMiscT(
+                'modal.editMilestone.removeCommonDescription'
+              )
+            : modelToOperationsMiscT('modal.editMilestone.removeDescription')}
         </p>
 
         <Button
