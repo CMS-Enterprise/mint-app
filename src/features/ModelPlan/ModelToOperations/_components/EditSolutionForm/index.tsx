@@ -586,7 +586,9 @@ const EditSolutionForm = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {modelToOperationsMiscT('modal.editSolution.areYouSure')}
+          {solution.addedFromSolutionLibrary
+            ? modelToOperationsMiscT('modal.editSolution.areYouSure')
+            : modelToOperationsMiscT('modal.editSolution.areYouSureCustom')}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
