@@ -720,7 +720,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Check <link1>all available milestones</link1> or <button1>create a custom milestone</button1>.',
     addCustomMilestone: 'Create a custom milestone',
     aboutSolution: 'About this solution',
-    commonSolutions: 'Common solutions'
+    commonSolutions: 'Common solutions',
+    alertHeading: 'There are no model milestones that match your search.',
+    alertDescription:
+      'Please double-check your search and try again. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.'
   },
   solutionLibrary: {
     heading: 'Solution library',

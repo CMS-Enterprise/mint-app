@@ -20,6 +20,7 @@ import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
+import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
@@ -454,15 +455,23 @@ const MilstoneCardGroup = ({
               </Grid>
             </CardGroup>
 
-            {!!query && rowLength === 0 && (
-              <Alert
-                type="warning"
-                heading={tableT('results.alertHeading', {
-                  query
-                })}
-              >
-                {tableT('results.alertDescription')}
-              </Alert>
+            {!!query && currentItems.length === 0 && (
+              <>
+                <Alert
+                  type={addedMilestonesHidden ? 'info' : 'warning'}
+                  heading={t('milestoneLibrary.alertHeading', {
+                    query
+                  })}
+                >
+                  <Trans
+                    t={t}
+                    i18nKey="milestoneLibrary.alertDescription"
+                    components={{
+                      email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                    }}
+                  />
+                </Alert>
+              </>
             )}
 
             {/* Pagination */}
