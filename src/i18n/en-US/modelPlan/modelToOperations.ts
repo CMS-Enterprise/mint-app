@@ -736,6 +736,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       contracts: 'Contracts and contractors ({{count}})',
       crossCutting: 'Cross-cutting groups ({{count}})'
     },
+    cardTypes: {
+      IT_SYSTEM: 'IT system',
+      CONTRACTOR: 'Contracts and contractors',
+      CROSS_CUTTING_GROUP: 'Cross-cutting group',
+      OTHER: 'Other'
+    },
     dontSeeSolution: 'Don’t see the solution you need?',
     checkAllSolutions:
       'Check <link1>all available solutions</link1> or <button1>create a custom solution</button1>.',
