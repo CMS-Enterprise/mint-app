@@ -11,16 +11,17 @@ import (
 // TranslatedAuditMetaMTOCategory represents the data about an operational need to render an operational need human readable.
 type TranslatedAuditMetaMTOCategory struct {
 	TranslatedAuditMetaBaseStruct
-	CategoryName       string     `json:"categoryName"`
+	CategoryName       *string    `json:"categoryName"`
 	ParentCategoryID   *uuid.UUID `json:"parentCategoryID"`
 	ParentCategoryName *string    `json:"parentCategoryName"`
 }
 
 // NewTranslatedAuditMetaMTOCategory creates a New TranslatedAuditMetaMTOCategory
-func NewTranslatedAuditMetaMTOCategory(version int, parentCategoryName *string, parentCategoryID *uuid.UUID) TranslatedAuditMetaMTOCategory {
+func NewTranslatedAuditMetaMTOCategory(version int, categoryName *string, parentCategoryName *string, parentCategoryID *uuid.UUID) TranslatedAuditMetaMTOCategory {
 
 	return TranslatedAuditMetaMTOCategory{
 		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNMTOCategory, version),
+		CategoryName:                  categoryName,
 		ParentCategoryID:              parentCategoryID,
 		ParentCategoryName:            parentCategoryName,
 	}

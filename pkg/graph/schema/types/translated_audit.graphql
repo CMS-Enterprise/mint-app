@@ -125,7 +125,7 @@ type TranslatedAuditMetaMTOCategory {
     version: Int!
     tableName: TableName!
 
-    categoryName: String!
+    categoryName: String
     
     isSubCategory: Boolean!
     parentCategoryID: UUID
