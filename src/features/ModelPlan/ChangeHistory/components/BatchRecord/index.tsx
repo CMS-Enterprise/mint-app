@@ -287,6 +287,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               isMTOCategoryWithMetaData(change.metaData) &&
               change.metaData?.isSubCategory;
 
+            const subCategoryName =
+              change.metaData &&
+              isMTOCategoryWithMetaData(change.metaData) &&
+              change.metaData?.categoryName;
+
             return (
               <span className="text-bold">
                 {isSubCategory ? t('subCategory') : t('category')}{' '}
@@ -294,7 +299,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                   {t(`auditUpdateType.${change.action}`)}
                   {': '}
                 </span>
-                {categoryName || t('dataNotAvailable')}
+                {categoryName || subCategoryName || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -640,6 +645,11 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                     isMTOCategoryWithMetaData(change.metaData) &&
                     change.metaData?.isSubCategory;
 
+                  const subCategoryName =
+                    change.metaData &&
+                    isMTOCategoryWithMetaData(change.metaData) &&
+                    change.metaData?.categoryName;
+
                   return (
                     <Trans
                       shouldUnescape
@@ -649,7 +659,10 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                         mtoType: isSubCategory
                           ? t('subCategory')
                           : t('category'),
-                        name: categoryName || t('dataNotAvailable')
+                        name:
+                          categoryName ||
+                          subCategoryName ||
+                          t('dataNotAvailable')
                       }}
                     />
                   );

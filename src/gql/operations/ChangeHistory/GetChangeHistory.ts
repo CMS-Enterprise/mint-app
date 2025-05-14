@@ -90,6 +90,7 @@ export default gql(/* GraphQL */ `
           isSubCategory
           parentCategoryID
           parentCategoryName
+          categoryName
           tableName
           version
         }
