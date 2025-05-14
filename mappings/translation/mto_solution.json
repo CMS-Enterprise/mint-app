@@ -8,7 +8,7 @@
     "dataType": "ENUM",
     "formType": "SELECT",
     "options": {
-      "IT_SYSTEM": "IT System",
+      "IT_SYSTEM": "IT system",
       "CONTRACTOR": "Contract vehicle, contractor, or other contract",
       "CROSS_CUTTING_GROUP": "Cross-cutting group",
       "OTHER": "Other"

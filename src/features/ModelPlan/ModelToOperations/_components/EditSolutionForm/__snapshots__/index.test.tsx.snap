@@ -67,7 +67,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
               <p
                 class="text-base margin-bottom-0"
               >
-                IT System
+                IT system
               </p>
               <div
                 class="margin-top-2"

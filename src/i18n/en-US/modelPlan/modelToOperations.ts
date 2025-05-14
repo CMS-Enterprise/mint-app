@@ -738,7 +738,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Check <link1>all available solutions</link1> or <button1>create a custom solution</button1>.',
     addCustomSolution: 'Create a custom solution',
     aboutThisSolution: 'About this solution',
-    IT_SYSTEM: 'IT System',
+    IT_SYSTEM: 'IT system',
     CONTRACTOR: 'Contract vehicle, contractor, or other contract',
     CROSS_CUTTING_GROUP: 'Cross-cutting group',
     OTHER: 'Other',

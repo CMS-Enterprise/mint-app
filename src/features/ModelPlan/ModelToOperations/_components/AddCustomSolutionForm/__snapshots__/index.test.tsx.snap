@@ -42,7 +42,7 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           <option
             value="IT_SYSTEM"
           >
-            IT System
+            IT system
           </option>
           <option
             value="CONTRACTOR"
