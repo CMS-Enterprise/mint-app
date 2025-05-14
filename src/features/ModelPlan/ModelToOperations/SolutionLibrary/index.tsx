@@ -77,11 +77,12 @@ const SolutionLibrary = () => {
 
   const dataAvalilable: boolean = !loading || !!data?.modelPlan?.mtoMatrix;
 
-  const solutions = useMemo(
-    () =>
-      data?.modelPlan?.mtoMatrix.commonSolutions || ([] as SolutionCardType[]),
-    [data?.modelPlan?.mtoMatrix.commonSolutions]
-  );
+  const solutions = useMemo(() => {
+    const unsortedSolutions = data?.modelPlan?.mtoMatrix.commonSolutions
+      ? [...data?.modelPlan?.mtoMatrix.commonSolutions]
+      : ([] as SolutionCardType[]);
+    return unsortedSolutions.sort((a, b) => a.name.localeCompare(b.name));
+  }, [data?.modelPlan?.mtoMatrix.commonSolutions]);
 
   const addedSolutions = solutions.filter(solution => solution.isAdded);
 

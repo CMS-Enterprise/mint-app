@@ -82,7 +82,9 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
       } else {
         params.set('solution', link.link);
         linkObj[`link${index + 1}`] = (
-          <InternalSolutionButton params={params}>link</InternalSolutionButton>
+          <InternalSolutionButton params={params.toString()}>
+            link
+          </InternalSolutionButton>
         );
       }
     });
@@ -95,7 +97,7 @@ const InternalSolutionButton = ({
   params,
   children
 }: {
-  params: URLSearchParams;
+  params: string;
   children: React.ReactChild;
 }) => {
   const history = useHistory();
@@ -105,7 +107,7 @@ const InternalSolutionButton = ({
       type="button"
       unstyled
       onClick={() => {
-        history.push({ search: params.toString() });
+        history.push({ search: params });
         const modalCon = document?.getElementsByClassName(
           'ReactModal__Overlay'
         )?.[0];

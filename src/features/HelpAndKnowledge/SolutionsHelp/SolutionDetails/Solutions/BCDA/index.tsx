@@ -1,14 +1,14 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
+  Button,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
-
-import UswdsReactLink from 'components/LinkWrapper';
 
 import '../index.scss';
 
@@ -21,6 +21,16 @@ export interface ProcessListItemProps {
 
 const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const timelineConfig = timelineTranslationUtil(solution.key);
+
+  const history = useHistory();
+
+  const isMTORoute = history.location.pathname.includes('model-to-operations');
+
+  const params = new URLSearchParams(history.location.search);
+
+  if (isMTORoute) {
+    params.set('solution', '4-innovation');
+  }
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
@@ -49,9 +59,25 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             {item.description2 && (
               <p>
                 <Trans i18nKey="helpAndKnowledge:solutions.bcda.timeline.items.0.description2">
-                  <UswdsReactLink to="/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline">
-                    indexZero
-                  </UswdsReactLink>
+                  <Button
+                    type="button"
+                    unstyled
+                    onClick={() => {
+                      if (isMTORoute) {
+                        history.push({ search: params.toString() });
+                        const modalCon = document?.getElementsByClassName(
+                          'ReactModal__Overlay'
+                        )?.[0];
+                        modalCon.scrollTo(0, 0);
+                      } else {
+                        history.push(
+                          '/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline'
+                        );
+                      }
+                    }}
+                  >
+                    {' '}
+                  </Button>
                 </Trans>
               </p>
             )}
