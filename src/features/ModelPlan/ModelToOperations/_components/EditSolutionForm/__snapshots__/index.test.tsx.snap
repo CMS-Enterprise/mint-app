@@ -67,7 +67,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
               <p
                 class="text-base margin-bottom-0"
               >
-                IT system
+                IT System
               </p>
               <div
                 class="margin-top-2"
@@ -296,21 +296,6 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                   name="status"
                 >
                   <option
-                    value="BACKLOG"
-                  >
-                    Backlog
-                  </option>
-                  <option
-                    value="COMPLETED"
-                  >
-                    Completed
-                  </option>
-                  <option
-                    value="IN_PROGRESS"
-                  >
-                    In progress
-                  </option>
-                  <option
                     value="NOT_STARTED"
                   >
                     Not started
@@ -319,6 +304,21 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                     value="ONBOARDING"
                   >
                     Onboarding
+                  </option>
+                  <option
+                    value="BACKLOG"
+                  >
+                    Backlog
+                  </option>
+                  <option
+                    value="IN_PROGRESS"
+                  >
+                    In progress
+                  </option>
+                  <option
+                    value="COMPLETED"
+                  >
+                    Completed
                   </option>
                 </select>
               </div>
@@ -332,10 +332,11 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                   type="button"
                 >
                   <svg
-                    class="usa-icon margin-right-05 needs-question__rotate"
+                    class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
+                    style="transform: rotate(90deg);"
                     viewBox="0 0 24 24"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"

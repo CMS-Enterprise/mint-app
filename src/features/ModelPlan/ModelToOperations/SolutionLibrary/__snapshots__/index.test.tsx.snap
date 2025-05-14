@@ -267,7 +267,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 <span
                   class="text-base-dark"
                 >
-                  Contract vehicle, contractor, or other contract
+                  Contracts and contractors
                 </span>
               </div>
               <h3

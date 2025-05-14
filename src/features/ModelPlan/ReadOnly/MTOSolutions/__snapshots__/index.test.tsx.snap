@@ -430,7 +430,11 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               <td
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: auto;"
-              />
+              >
+                <em>
+                  None added yet
+                </em>
+              </td>
               <td
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: auto;"
