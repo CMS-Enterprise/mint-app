@@ -22,7 +22,7 @@ describe('MTO SolutionCard Component', () => {
     );
 
     // Check if the component renders prop data
-    expect(getByText('IT System')).toBeInTheDocument();
+    expect(getByText('IT system')).toBeInTheDocument();
     expect(getByText('4innovation')).toBeInTheDocument();
     expect(getByText('4i')).toBeInTheDocument();
 

@@ -85,7 +85,7 @@ const MTOSolutionCard = ({
         <CardHeader className="padding-3 padding-bottom-0">
           <div className="display-flex flex-justify">
             <span className="text-base-dark">
-              {t(`solutionLibrary.${solution.type}`)}
+              {t(`solutionLibrary.cardTypes.${solution?.type}`)}
             </span>
           </div>
           <h3 className="line-height-normal margin-y-1">

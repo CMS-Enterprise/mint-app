@@ -74,6 +74,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkSolutionForm from '../LinkSolutionForm';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
+import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
@@ -149,7 +150,7 @@ const EditMilestoneForm = ({
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
 
-  const { showMessage } = useMessage();
+  const { showMessage, clearMessage } = useMessage();
 
   const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
 
@@ -492,7 +493,9 @@ const EditMilestoneForm = ({
           changes: {
             ...formChanges,
             ...(isCategoryDirty && { mtoCategoryID }),
-            ...(!!needBy && { needBy: new Date(needBy)?.toISOString() }),
+            ...(needBy !== undefined && {
+              needBy: needBy ? new Date(needBy)?.toISOString() : ''
+            }),
             ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
           },
           solutionLinks: {
@@ -510,6 +513,7 @@ const EditMilestoneForm = ({
                   slim
                   data-testid="mandatory-fields-alert"
                   className="margin-y-4"
+                  clearMessage={clearMessage}
                 >
                   <span className="mandatory-fields-alert__text">
                     <Trans
@@ -517,7 +521,7 @@ const EditMilestoneForm = ({
                         'modal.editMilestone.successUpdated'
                       )}
                       components={{
-                        b: <span className="text-bold" />
+                        bold: <span className="text-bold" />
                       }}
                       values={{ milestone: formData.name }}
                     />
@@ -551,6 +555,7 @@ const EditMilestoneForm = ({
       commonSolutionKeys,
       solutionIDs,
       showMessage,
+      clearMessage,
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
@@ -574,6 +579,7 @@ const EditMilestoneForm = ({
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
                   milestone: milestone?.name
@@ -720,11 +726,17 @@ const EditMilestoneForm = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {modelToOperationsMiscT('modal.editMilestone.areYouSure')}
+          {milestone.addedFromMilestoneLibrary
+            ? modelToOperationsMiscT('modal.editMilestone.areYouSureCommon')
+            : modelToOperationsMiscT('modal.editMilestone.areYouSure')}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
-          {modelToOperationsMiscT('modal.editMilestone.removeDescription')}
+          {milestone.addedFromMilestoneLibrary
+            ? modelToOperationsMiscT(
+                'modal.editMilestone.removeCommonDescription'
+              )
+            : modelToOperationsMiscT('modal.editMilestone.removeDescription')}
         </p>
 
         <Button
@@ -1186,6 +1198,11 @@ const EditMilestoneForm = ({
                         </Select>
                       </FormGroup>
                     )}
+                  />
+
+                  <MTOStatusInfoToggle
+                    className="margin-bottom-4"
+                    type="milestone"
                   />
 
                   <Controller

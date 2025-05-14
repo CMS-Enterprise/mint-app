@@ -60,7 +60,7 @@ const CustomCategoryForm = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { showErrorMessageInModal, showMessage } = useMessage();
+  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
@@ -118,6 +118,7 @@ const CustomCategoryForm = () => {
                   slim
                   data-testid="mandatory-fields-alert"
                   className="margin-y-4"
+                  clearMessage={clearMessage}
                 >
                   <span className="mandatory-fields-alert__text">
                     <Trans
@@ -140,6 +141,7 @@ const CustomCategoryForm = () => {
                   slim
                   data-testid="mandatory-fields-alert"
                   className="margin-y-4"
+                  clearMessage={clearMessage}
                 >
                   <span className="mandatory-fields-alert__text">
                     <Trans

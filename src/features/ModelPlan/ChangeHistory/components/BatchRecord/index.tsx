@@ -473,6 +473,12 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
     ? condenseLinkingTableChanges(changeRecords)
     : changeRecords;
 
+  const shouldShowCollapse = !changeRecords.find(
+    change =>
+      change.action === DatabaseOperation.DELETE &&
+      change.tableName === TableName.MTO_CATEGORY
+  );
+
   return (
     <Card className="change-record">
       <div className={classNames('display-flex flex-align-center')}>
@@ -733,25 +739,27 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
         </ul>
       )}
 
-      <CollapsableLink
-        className="margin-left-5"
-        id={`batch-record-${index}`}
-        label={t('showDetails')}
-        closeLabel={t('hideDetails')}
-        labelPosition="bottom"
-        setParentOpen={setOpen}
-        styleLeftBar={false}
-      >
-        <div className="margin-bottom-neg-1">
-          {batchRecords.map(change => (
-            <BatchChanges
-              change={change}
-              connected={changeRecords.length > 1}
-              key={change.id}
-            />
-          ))}
-        </div>
-      </CollapsableLink>
+      {shouldShowCollapse && (
+        <CollapsableLink
+          className="margin-left-5"
+          id={`batch-record-${index}`}
+          label={t('showDetails')}
+          closeLabel={t('hideDetails')}
+          labelPosition="bottom"
+          setParentOpen={setOpen}
+          styleLeftBar={false}
+        >
+          <div className="margin-bottom-neg-1">
+            {batchRecords.map(change => (
+              <BatchChanges
+                change={change}
+                connected={changeRecords.length > 1}
+                key={change.id}
+              />
+            ))}
+          </div>
+        </CollapsableLink>
+      )}
     </Card>
   );
 };

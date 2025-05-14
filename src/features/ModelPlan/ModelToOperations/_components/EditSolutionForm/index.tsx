@@ -76,9 +76,9 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
-import ImplementationStatuses from '../ImplementationStatus';
 import LinkMilestoneForm from '../LinkMilestoneForm';
 import { MilestoneType } from '../MatrixTable/columns';
+import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
@@ -149,7 +149,7 @@ const EditSolutionForm = ({
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
 
-  const { showMessage } = useMessage();
+  const { showMessage, clearMessage } = useMessage();
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
 
@@ -331,7 +331,9 @@ const EditSolutionForm = ({
           id: editSolutionID || '',
           changes: {
             ...formChanges,
-            ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
+            ...(neededBy !== undefined && {
+              neededBy: neededBy ? new Date(neededBy)?.toISOString() : ''
+            }),
             ...(!!name && !solution?.addedFromSolutionLibrary && { name }),
             ...(!!type && !solution?.addedFromSolutionLibrary && { type })
           },
@@ -353,6 +355,7 @@ const EditSolutionForm = ({
                   slim
                   data-testid="mandatory-fields-alert"
                   className="margin-y-4"
+                  clearMessage={clearMessage}
                 >
                   <span className="mandatory-fields-alert__text">
                     <Trans
@@ -360,7 +363,7 @@ const EditSolutionForm = ({
                         'modal.editSolution.successUpdated'
                       )}
                       components={{
-                        b: <span className="text-bold" />
+                        bold: <span className="text-bold" />
                       }}
                       values={{ solution: formData.name }}
                     />
@@ -393,6 +396,7 @@ const EditSolutionForm = ({
       editSolutionID,
       milestoneIDs,
       showMessage,
+      clearMessage,
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
@@ -419,6 +423,7 @@ const EditSolutionForm = ({
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 {modelToOperationsMiscT('modal.editSolution.successRemoved', {
                   solution: solution?.name
@@ -581,7 +586,9 @@ const EditSolutionForm = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {modelToOperationsMiscT('modal.editSolution.areYouSure')}
+          {solution.addedFromSolutionLibrary
+            ? modelToOperationsMiscT('modal.editSolution.areYouSure')
+            : modelToOperationsMiscT('modal.editSolution.areYouSureCustom')}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
@@ -1077,7 +1084,7 @@ const EditSolutionForm = ({
                     )}
                   />
 
-                  <ImplementationStatuses className="margin-bottom-4" />
+                  <MTOStatusInfoToggle className="margin-bottom-4" />
 
                   <Controller
                     name="riskIndicator"
