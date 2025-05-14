@@ -123,7 +123,6 @@ const MilstoneCardGroup = ({
   milestones: MilestoneCardType[];
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const { t: tableT } = useTranslation('tableAndPagination');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -454,15 +453,23 @@ const MilstoneCardGroup = ({
               </Grid>
             </CardGroup>
 
-            {!!query && rowLength === 0 && (
-              <Alert
-                type="warning"
-                heading={tableT('results.alertHeading', {
-                  query
-                })}
-              >
-                {tableT('results.alertDescription')}
-              </Alert>
+            {!!query && currentItems.length === 0 && (
+              <>
+                <Alert
+                  type={addedMilestonesHidden ? 'info' : 'warning'}
+                  heading={t('milestoneLibrary.alertHeading', {
+                    query
+                  })}
+                >
+                  <Trans
+                    t={t}
+                    i18nKey="milestoneLibrary.alertDescription"
+                    components={{
+                      email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                    }}
+                  />
+                </Alert>
+              </>
             )}
 
             {/* Pagination */}

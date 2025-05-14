@@ -69,7 +69,7 @@ const MTOHome = () => {
 
   const location = useLocation();
 
-  const { message } = useMessage();
+  const { message, showMessage } = useMessage();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -122,7 +122,11 @@ const MTOHome = () => {
             ]}
           />
 
-          {message && <Expire delay={45000}>{message}</Expire>}
+          {message && (
+            <Expire delay={45000} callback={showMessage}>
+              {message}
+            </Expire>
+          )}
 
           <Grid row className="desktop:margin-bottom-6 margin-top-4">
             <Grid desktop={{ col: 9 }}>

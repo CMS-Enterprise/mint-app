@@ -48,7 +48,8 @@ const SelectSolutionForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { message, showMessage, showErrorMessageInModal } = useMessage();
+  const { message, showMessage, showErrorMessageInModal, clearMessage } =
+    useMessage();
 
   const { data: milestoneData } = useGetMtoMilestoneQuery({
     variables: {
@@ -196,6 +197,7 @@ const SelectSolutionForm = () => {
                 slim
                 data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
                 <span className="mandatory-fields-alert__text">
                   {t('modal.selectSolution.alert.success')}
