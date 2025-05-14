@@ -62,7 +62,7 @@ const CustomSolutionForm = () => {
       pocName: '',
       pocEmail: ''
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   const {
@@ -115,7 +115,7 @@ const CustomSolutionForm = () => {
                   <Trans
                     i18nKey={t('modal.solution.alert.success')}
                     components={{
-                      b: <span className="text-bold" />
+                      bold: <span className="text-bold" />
                     }}
                     values={{ solution: formData.solutionTitle }}
                   />

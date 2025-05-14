@@ -341,7 +341,8 @@ const EditMilestoneForm = ({
 
   const methods = useForm<FormValues>({
     defaultValues: formValues,
-    values: formValues
+    values: formValues,
+    mode: 'onChange'
   });
 
   const {

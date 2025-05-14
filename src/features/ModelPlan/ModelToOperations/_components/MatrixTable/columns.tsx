@@ -237,7 +237,7 @@ export const columns: ColumnType[] = [
           <Button
             type="button"
             unstyled
-            className="mint-print-link"
+            className="mint-print-link line-height-normal"
             onClick={() => {
               openEditMilestoneModal(row.id);
               setMilestoneID(row.id);
@@ -315,7 +315,7 @@ export const columns: ColumnType[] = [
               ) : (
                 <Button
                   type="button"
-                  className="display-block mint-print-link"
+                  className="display-block mint-print-link text-bold"
                   unstyled
                   onClick={() => {
                     if (clearMessage) clearMessage();

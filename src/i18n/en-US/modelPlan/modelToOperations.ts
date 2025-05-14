@@ -167,7 +167,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   solutions: 'Solutions and IT systems',
   needHelpDiscussion: 'Need help?',
   isMTOReady: 'Is this MTO ready for review?',
-  isMTOInProgress: 'Is this MTO still in progress',
+  isMTOInProgress: 'Is this MTO still in progress?',
   lastUpdated: 'MTO last updated {{date}}',
   warningRedirect:
     'Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). <link1>Go to your MTO</link1> to review any suggestions.',
@@ -296,7 +296,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     markAsReady: 'Mark as ready for review',
     markAsInProgress: 'Mark as in progress',
     goBack: 'Go back to MTO',
-    error: 'Failed to update MTO status'
+    error: 'Failed to update MTO status',
+    cancel: 'Cancel'
   },
   modal: {
     addButton: 'Add {{type}}',
@@ -351,7 +352,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         info: 'Before adding this milestone, consider checking the <milestoneLibrary>milestone library</milestoneLibrary> to see if MINT offers a similar preset milestone.',
         infoLibrary:
           'Once you create this custom milestone, it will be visible in your MTO but will not be visible in the milestone library.',
-        success: 'Your milestone ({{milestone}}) has been added.',
+        success: 'Your milestone (<bold>{{milestone}}</bold>) has been added.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       }
@@ -521,7 +522,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Add the name and contact information for the person or team who is the primary point of contact for this solution.',
       alert: {
         info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
-        success: 'Your solution ({{solution}}) has been added.',
+        success: 'Your solution (<bold>{{solution}}</bold>) has been added.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.',
         fromSolutionLibrary:
@@ -534,7 +535,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
       selectedMilestone: 'Selected milestone: ',
       alert: {
-        success: 'Your solution ({{solution}}) has been added.',
+        success: 'Your solution (<bold>{{solution}}</bold>) has been added.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       },
@@ -566,11 +567,6 @@ export const modelToOperationsMisc: Record<string, any> = {
         'This action will also move any milestones within this sub-category.',
       currentCategory: 'Current category',
       newCategory: 'New category',
-      alert: {
-        success: 'Your solution ({{solution}}) has been added.',
-        error:
-          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
-      },
       add: 'Add with {{count}} solution',
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions',
@@ -612,7 +608,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       item: '24 categories (including 9 primary categories)',
       description2:
         'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
-      success: 'Your template (Standard categories) has been added.',
+      success:
+        'Your template <bold>(Standard categories)</bold> has been added.',
       error:
         'There was an error adding this template. Please try again. If the error persists, please try again another time.',
       addTemplate: 'Add template',

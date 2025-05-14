@@ -87,7 +87,7 @@ const AddToExistingMilestoneForm = ({
     defaultValues: {
       linkedMilestones: []
     },
-    mode: 'onBlur'
+    mode: 'onChange'
   });
   const { control, handleSubmit, reset, watch } = methods;
 
@@ -122,7 +122,7 @@ const AddToExistingMilestoneForm = ({
                   <Trans
                     i18nKey={t('modal.addToExistingMilestone.alert.success')}
                     components={{
-                      b: <span className="text-bold" />
+                      bold: <span className="text-bold" />
                     }}
                     values={{ title: solutionName }}
                   />

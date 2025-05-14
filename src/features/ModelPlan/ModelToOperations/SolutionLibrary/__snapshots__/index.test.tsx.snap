@@ -197,6 +197,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 <button
                   class="usa-button usa-button--outline"
                   data-testid="button"
+                  style="border-radius: 0 .25rem .25rem 0;"
                   type="button"
                 >
                   Cross-cutting groups (1)

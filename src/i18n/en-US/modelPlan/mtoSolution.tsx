@@ -69,7 +69,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'riskIndicator',
     goField: 'RiskIndicator',
     dbField: 'risk_indicator',
-    label: 'Risk Indicator',
+    label: 'Risk indicator',
     exportLabel: 'Solution risk indicator',
     sublabel: 'Choose the applicable risk status for this solution.',
     questionTooltip: (

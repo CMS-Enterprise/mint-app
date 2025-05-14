@@ -334,7 +334,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       links: [
         {
           external: false,
-          link: `innovation-payment-contract`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -609,7 +609,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
       links: [
         {
           external: false,
-          link: `innovation-payment-contract`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -774,7 +774,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
       links: [
         {
           external: false,
-          link: `innovation-payment-contract`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -1989,7 +1989,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       links: [
         {
           external: false,
-          link: `innovation-payment-contract`
+          link: `innovation-support-platform`
         }
       ],
       components: [

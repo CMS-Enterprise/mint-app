@@ -67,7 +67,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem .5rem; width: 60px; min-width: 60px; max-width: 60px;"
             >
               <span
-                class="usa-button usa-button--unstyled position-relative"
+                class="usa-button usa-button--unstyled position-relative display-block"
               >
                 <svg
                   class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
@@ -88,7 +88,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 200px; min-width: 200px; max-width: 200px;"
             >
               <button
-                class="usa-button usa-button--unstyled position-relative"
+                class="usa-button usa-button--unstyled position-relative display-block"
                 type="button"
               >
                 Model milestone
@@ -112,7 +112,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 175px; min-width: 175px; max-width: 175px;"
             >
               <button
-                class="usa-button usa-button--unstyled position-relative"
+                class="usa-button usa-button--unstyled position-relative display-block"
                 type="button"
               >
                 Facilitated by
@@ -136,7 +136,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 150px; min-width: 150px; max-width: 150px;"
             >
               <button
-                class="usa-button usa-button--unstyled position-relative"
+                class="usa-button usa-button--unstyled position-relative display-block"
                 type="button"
               >
                 Solutions
@@ -160,7 +160,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 130px; min-width: 130px; max-width: 130px;"
             >
               <button
-                class="usa-button usa-button--unstyled position-relative"
+                class="usa-button usa-button--unstyled position-relative display-block"
                 type="button"
               >
                 Need by
@@ -184,7 +184,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               style="border-bottom: 1px solid black; padding: 1rem 1rem .25rem 0px; width: 130px; min-width: 130px; max-width: 130px;"
             >
               <button
-                class="usa-button usa-button--unstyled position-relative"
+                class="usa-button usa-button--unstyled position-relative display-block"
                 type="button"
               >
                 Status
@@ -486,7 +486,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               class="padding-1 line-height-normal padding-left-0"
             >
               <button
-                class="usa-button usa-button--unstyled mint-print-link"
+                class="usa-button usa-button--unstyled mint-print-link line-height-normal"
                 data-testid="button"
                 type="button"
               >
