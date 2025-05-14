@@ -331,7 +331,9 @@ const EditSolutionForm = ({
           id: editSolutionID || '',
           changes: {
             ...formChanges,
-            ...(!!neededBy && { neededBy: new Date(neededBy)?.toISOString() }),
+            ...(neededBy !== undefined && {
+              neededBy: neededBy ? new Date(neededBy)?.toISOString() : ''
+            }),
             ...(!!name && !solution?.addedFromSolutionLibrary && { name }),
             ...(!!type && !solution?.addedFromSolutionLibrary && { type })
           },
