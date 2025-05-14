@@ -423,7 +423,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       unsavedChanges_other: '{{count}} unsaved changes',
       removeMilestone: 'Remove milestone',
       noneSpecified: 'None specified',
-      areYouSure: 'Are you sure you want to remove this milestone?',
+      areYouSure: 'Are you sure you want to remove this custom milestone?',
       customTooltip:
         'As opposed to common milestones available in the MINT milestone library, custom milestones were created by this IT Lead and model team specifically for this model.',
       removeDescription:
