@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { transform } from 'lodash';
 
 import { tObject } from 'utils/translation';
 
