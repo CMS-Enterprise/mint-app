@@ -356,7 +356,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                   data-testid="label"
                   for="risk-indicator"
                 >
-                  Risk Indicator 
+                  Risk indicator 
                   <abbr
                     class="usa-hint usa-hint--required"
                     title="required"

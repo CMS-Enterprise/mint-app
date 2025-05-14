@@ -178,7 +178,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
               <dt
                 class="text-bold margin-bottom-05 font-body-sm margin-bottom-0"
               >
-                Risk Indicator
+                Risk indicator
                 <span
                   class="usa-tooltip top-2px margin-left-1"
                   data-testid="tooltipWrapper"
