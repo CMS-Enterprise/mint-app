@@ -4352,6 +4352,7 @@ export type TranslatedAuditMetaGeneric = {
 /** TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited */
 export type TranslatedAuditMetaMtoCategory = {
   __typename: 'TranslatedAuditMetaMTOCategory';
+  categoryName: Scalars['String']['output'];
   isSubCategory: Scalars['Boolean']['output'];
   parentCategoryID?: Maybe<Scalars['UUID']['output']>;
   parentCategoryName?: Maybe<Scalars['String']['output']>;

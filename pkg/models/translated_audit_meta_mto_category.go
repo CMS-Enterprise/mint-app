@@ -11,6 +11,7 @@ import (
 // TranslatedAuditMetaMTOCategory represents the data about an operational need to render an operational need human readable.
 type TranslatedAuditMetaMTOCategory struct {
 	TranslatedAuditMetaBaseStruct
+	CategoryName       string     `json:"categoryName"`
 	ParentCategoryID   *uuid.UUID `json:"parentCategoryID"`
 	ParentCategoryName *string    `json:"parentCategoryName"`
 }
