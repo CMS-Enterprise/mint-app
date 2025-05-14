@@ -20,7 +20,6 @@ import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
-import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
@@ -124,7 +123,6 @@ const MilstoneCardGroup = ({
   milestones: MilestoneCardType[];
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const { t: tableT } = useTranslation('tableAndPagination');
 
   const { modelID } = useParams<{ modelID: string }>();
 
