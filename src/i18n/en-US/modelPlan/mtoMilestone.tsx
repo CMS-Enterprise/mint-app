@@ -106,8 +106,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
         Milestone progress statuses:
         <ul className="margin-0 padding-left-3">
           <li>
-            Not started: No work has started on any part of this milestone or
-            any solution associated with it
+            Not started: No work has started on any part of this milestone
           </li>
           <li>
             In progress: Work for this milestone and/or any of its selected

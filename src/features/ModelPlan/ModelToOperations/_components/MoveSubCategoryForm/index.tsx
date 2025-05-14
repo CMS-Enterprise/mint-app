@@ -47,7 +47,8 @@ const MoveSubCategoryForm = () => {
   const methods = useForm<FormValues>({
     defaultValues: {
       parentID: 'default'
-    }
+    },
+    mode: 'onChange'
   });
 
   const {

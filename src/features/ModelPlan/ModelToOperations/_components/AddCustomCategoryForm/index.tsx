@@ -69,7 +69,8 @@ const CustomCategoryForm = () => {
     defaultValues: {
       primaryCategory: categoryID ?? 'default',
       name: ''
-    }
+    },
+    mode: 'onChange'
   });
 
   const {

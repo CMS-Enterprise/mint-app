@@ -108,7 +108,7 @@
                   "key": null,
                   "ref": null,
                   "props": {
-                    "children": "Not started: No work has started on any part of this milestone or any solution associated with it"
+                    "children": "Not started: No work has started on any part of this milestone"
                   },
                   "_owner": null,
                   "_store": {}

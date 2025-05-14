@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
+  Button,
   Grid,
   GridContainer,
   Header,
@@ -19,7 +20,9 @@ import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
+import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
+import ShareExportModal from 'components/ShareExport';
 import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
 import { EditMTOSolutionProvider } from 'contexts/EditMTOSolutionContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
@@ -41,6 +44,7 @@ export const mtoOptions: MTOOption[] = ['milestones', 'solutions'];
 
 const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -77,6 +81,8 @@ const MTOHome = () => {
 
   const [currentView, setCurrentView] = useState<MTOOption>('milestones');
 
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
       setCurrentView(viewparam as MTOOption);
@@ -92,6 +98,20 @@ const MTOHome = () => {
 
   return (
     <>
+      <Modal
+        isOpen={isExportModalOpen}
+        closeModal={() => setIsExportModalOpen(false)}
+        className="padding-0 radius-md share-export-modal__container"
+        navigation
+        shouldCloseOnOverlayClick
+      >
+        <ShareExportModal
+          closeModal={() => setIsExportModalOpen(false)}
+          modelID={modelID}
+          setStatusMessage={() => null}
+        />
+      </Modal>
+
       <div className="shadow-2 z-100 position-relative">
         <GridContainer>
           <Breadcrumbs
@@ -138,9 +158,17 @@ const MTOHome = () => {
             <Grid desktop={{ col: 3 }}>
               <AskAQuestion
                 modelID={modelID}
-                className="margin-top-3 desktop:margin-top-0 margin-bottom-5"
+                className="margin-top-3 desktop:margin-top-0 margin-bottom-2"
                 renderTextFor="modelToOperations"
               />
+
+              <Button
+                type="button"
+                unstyled
+                onClick={() => setIsExportModalOpen(true)}
+              >
+                {collaborationAreaT('mtoCard.shareOrExport')}
+              </Button>
             </Grid>
           </Grid>
 

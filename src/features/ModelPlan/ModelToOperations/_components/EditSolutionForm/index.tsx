@@ -260,7 +260,7 @@ const EditSolutionForm = ({
   const methods = useForm<FormValues>({
     defaultValues: formValues,
     values: formValues,
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   const {

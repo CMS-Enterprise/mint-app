@@ -46,7 +46,8 @@ const EditCategoryTitleForm = () => {
   const methods = useForm<FormValues>({
     defaultValues: {
       name: ''
-    }
+    },
+    mode: 'onChange'
   });
 
   const {

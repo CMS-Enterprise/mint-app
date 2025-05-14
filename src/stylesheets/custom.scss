@@ -292,6 +292,10 @@ th {
   text-decoration: none !important;
 }
 
+.usa-tooltip__body {
+  line-height: normal !important;
+}
+
 @media screen and (min-width: $mobile) {
   .mobile\:width-50 {
     width: 50%;

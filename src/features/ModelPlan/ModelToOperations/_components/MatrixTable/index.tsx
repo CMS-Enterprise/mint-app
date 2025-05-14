@@ -672,7 +672,7 @@ const MTOTable = ({
                         {column.canSort !== false ? (
                           <button
                             className={classNames(
-                              'usa-button usa-button--unstyled position-relative'
+                              'usa-button usa-button--unstyled position-relative display-block'
                             )}
                             onClick={() => {
                               const isSorted =
@@ -699,7 +699,7 @@ const MTOTable = ({
                         ) : (
                           <span
                             className={classNames(
-                              'usa-button usa-button--unstyled position-relative',
+                              'usa-button usa-button--unstyled position-relative display-block',
                               {
                                 'text-no-underline text-black':
                                   column.Header ===
