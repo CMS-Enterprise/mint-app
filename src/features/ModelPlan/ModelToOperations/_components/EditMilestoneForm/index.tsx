@@ -74,6 +74,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkSolutionForm from '../LinkSolutionForm';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
+import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
@@ -1185,6 +1186,11 @@ const EditMilestoneForm = ({
                         </Select>
                       </FormGroup>
                     )}
+                  />
+
+                  <MTOStatusInfoToggle
+                    className="margin-bottom-4"
+                    type="milestone"
                   />
 
                   <Controller

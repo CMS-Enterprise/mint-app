@@ -2,6 +2,8 @@ import { TranslationMTOInfo } from 'types/translation';
 
 import {
   MtoCommonMilestoneKey,
+  MtoMilestoneStatus,
+  MtoSolutionStatus,
   TableName,
   TranslationDataType,
   TranslationFormType
@@ -135,6 +137,49 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   [MtoCommonMilestoneKey.RECOVER_PAYMENTS]: {
     description:
       'When needed, recover payments from participants or providers. Payments may have been errors and may need to be recovered, or participants may have incurred losses and CMS may be recovering that money. For work related to this milestone, Medicare Fee-for-service (FFS) models will most often use the Innovation Payment Contractor (IPC), MAPD models are likely to use the Automated Plan Payment System (APPS), and in extremely rare cases, some FFS models may make non-claims based payments through Medicare Administrative Contractors (MAC).'
+  }
+};
+
+const solutionStatuses: Record<MtoSolutionStatus, any> = {
+  NOT_STARTED: {
+    status: 'Not started',
+    description: 'No work has started on this IT system or solution'
+  },
+  ONBOARDING: {
+    status: 'Onboarding',
+    description:
+      'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
+  },
+  BACKLOG: {
+    status: 'Backlog',
+    description: 'Model work is on the project team’s backlog'
+  },
+  IN_PROGRESS: {
+    status: 'In progress',
+    description:
+      'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
+  },
+  COMPLETED: {
+    status: 'Completed',
+    description: 'Work related to this model is finished'
+  }
+};
+
+const milestoneStatuses: Record<MtoMilestoneStatus, any> = {
+  NOT_STARTED: {
+    status: 'Not started',
+    description:
+      'No work has started on any part of this milestone or any solution associated with it'
+  },
+  IN_PROGRESS: {
+    status: 'In progress',
+    description:
+      'Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)'
+  },
+  COMPLETED: {
+    status: 'Completed',
+    description:
+      'Work for this milestone and all of its selected solutions is finished'
   }
 };
 
@@ -735,30 +780,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     fillOut: 'Please fill out the required field.'
   },
   solutionStatusButton: 'Solution implementation statuses',
-  solutionStatuses: {
-    NOT_STARTED: {
-      status: 'Not started',
-      description: 'No work has started on this IT system or solution'
-    },
-    ONBOARDING: {
-      status: 'Onboarding',
-      description:
-        'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
-    },
-    BACKLOG: {
-      status: 'Backlog',
-      description: 'Model work is on the project team’s backlog'
-    },
-    IN_PROGRESS: {
-      status: 'In progress',
-      description:
-        'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
-    },
-    COMPLETED: {
-      status: 'Completed',
-      description: 'Work related to this model is finished'
-    }
-  }
+  solutionStatuses,
+  milestoneStatusButton: 'Milestone implementation statuses',
+  milestoneStatuses
 };
 
 export default modelToOperations;

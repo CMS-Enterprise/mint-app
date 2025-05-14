@@ -76,9 +76,9 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
-import ImplementationStatuses from '../ImplementationStatus';
 import LinkMilestoneForm from '../LinkMilestoneForm';
 import { MilestoneType } from '../MatrixTable/columns';
+import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
@@ -1077,7 +1077,7 @@ const EditSolutionForm = ({
                     )}
                   />
 
-                  <ImplementationStatuses className="margin-bottom-4" />
+                  <MTOStatusInfoToggle className="margin-bottom-4" />
 
                   <Controller
                     name="riskIndicator"
