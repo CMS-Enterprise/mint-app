@@ -120,11 +120,11 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
-      BACKLOG: 'Backlog',
-      COMPLETED: 'Completed',
-      IN_PROGRESS: 'In progress',
       NOT_STARTED: 'Not started',
-      ONBOARDING: 'Onboarding'
+      ONBOARDING: 'Onboarding',
+      BACKLOG: 'Backlog',
+      IN_PROGRESS: 'In progress',
+      COMPLETED: 'Completed'
     },
     order: 1.6
   },
