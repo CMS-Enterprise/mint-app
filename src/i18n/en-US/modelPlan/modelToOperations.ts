@@ -352,7 +352,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         info: 'Before adding this milestone, consider checking the <milestoneLibrary>milestone library</milestoneLibrary> to see if MINT offers a similar preset milestone.',
         infoLibrary:
           'Once you create this custom milestone, it will be visible in your MTO but will not be visible in the milestone library.',
-        success: 'Your milestone ({{milestone}}) has been added.',
+        success: 'Your milestone (<bold>{{milestone}}</bold>) has been added.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       }
@@ -522,7 +522,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Add the name and contact information for the person or team who is the primary point of contact for this solution.',
       alert: {
         info: "Please double-check that you aren't creating an operational solution or IT system that already exists in the <s>solution library</s>.",
-        success: 'Your solution ({{solution}}) has been added.',
+        success: 'Your solution (<bold>{{solution}}</bold>) has been added.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.',
         fromSolutionLibrary:
@@ -535,7 +535,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'You may choose to add solution(s) for this milestone simultaneously, or you may do so later. Any added solutions will be associated with this milestone and will appear in the solution view of your MTO.',
       selectedMilestone: 'Selected milestone: ',
       alert: {
-        success: 'Your solution ({{solution}}) has been added.',
+        success: 'Your solution (<bold>{{solution}}</bold>) has been added.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       },
@@ -567,11 +567,6 @@ export const modelToOperationsMisc: Record<string, any> = {
         'This action will also move any milestones within this sub-category.',
       currentCategory: 'Current category',
       newCategory: 'New category',
-      alert: {
-        success: 'Your solution ({{solution}}) has been added.',
-        error:
-          'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
-      },
       add: 'Add with {{count}} solution',
       add_other: 'Add with {{count}} solutions',
       add_zero: 'Add without solutions',

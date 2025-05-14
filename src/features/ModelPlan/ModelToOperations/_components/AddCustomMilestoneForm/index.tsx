@@ -134,7 +134,7 @@ const CustomMilestoneForm = () => {
                   <Trans
                     i18nKey={t('modal.milestone.alert.success')}
                     components={{
-                      b: <span className="text-bold" />
+                      bold: <span className="text-bold" />
                     }}
                     values={{ milestone: formData.name }}
                   />
