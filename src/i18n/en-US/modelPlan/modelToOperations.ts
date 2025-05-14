@@ -407,7 +407,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
-        success: 'Your milestone ({{milestone}}) has been updated.',
+        success:
+          'Your milestone (<bold>{{milestone}}</bold>) has been updated.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       },
@@ -428,14 +429,15 @@ export const modelToOperationsMisc: Record<string, any> = {
       customTooltip:
         'As opposed to common milestones available in the MINT milestone library, custom milestones were created by this IT Lead and model team specifically for this model.',
       removeDescription:
-        'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
+        'This action cannot be undone. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
       removeCommonDescription:
         'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
       goBack: 'Go back',
       leave: 'Are you sure you want to leave ?',
       leaveDescription:
         'You have made {{count}} changes that will not be saved if you navigate away from this view.',
-      successUpdated: 'Your milestone ({{milestone}}) has been updated.',
+      successUpdated:
+        'Your milestone (<bold>{{milestone}}</bold>) has been updated.',
       errorUpdated:
         'There was an error updating your milestone. Please try again. If the error persists, please try again another time.',
       successRemoved: 'Your milestone ({{milestone}}) has been removed.',
@@ -487,7 +489,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       },
       alert: {
         info: 'Before adding this solution, consider checking the <s>solution library</s> to see if MINT offers a similar preset solution.',
-        success: 'Your milestone ({{solution}}) has been updated.',
+        success: 'Your milestone (<bold>{{solution}}</bold>) has been updated.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       },
@@ -517,7 +519,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       leave: 'Are you sure you want to leave ?',
       leaveDescription:
         'You have made {{count}} changes that will not be saved if you navigate away from this view.',
-      successUpdated: 'Your solution ({{solution}}) has been updated.',
+      successUpdated:
+        'Your solution (<bold>{{solution}}</bold>) has been updated.',
       errorUpdated:
         'There was an error updating your solution. Please try again. If the error persists, please try again another time.',
       successRemoved: 'Your solution ({{solution}}) has been removed.',

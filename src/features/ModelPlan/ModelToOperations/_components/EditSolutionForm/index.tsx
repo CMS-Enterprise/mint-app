@@ -363,7 +363,7 @@ const EditSolutionForm = ({
                         'modal.editSolution.successUpdated'
                       )}
                       components={{
-                        b: <span className="text-bold" />
+                        bold: <span className="text-bold" />
                       }}
                       values={{ solution: formData.name }}
                     />

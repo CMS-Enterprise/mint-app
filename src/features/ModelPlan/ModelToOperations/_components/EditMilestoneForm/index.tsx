@@ -520,7 +520,7 @@ const EditMilestoneForm = ({
                         'modal.editMilestone.successUpdated'
                       )}
                       components={{
-                        b: <span className="text-bold" />
+                        bold: <span className="text-bold" />
                       }}
                       values={{ milestone: formData.name }}
                     />
