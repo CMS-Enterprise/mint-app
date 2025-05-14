@@ -152,7 +152,7 @@ const solutionStatuses: Record<MtoSolutionStatus, any> = {
   },
   BACKLOG: {
     status: 'Backlog',
-    description: 'Model work is on the project team’s backlog'
+    description: 'Model work is in the project team’s backlog'
   },
   IN_PROGRESS: {
     status: 'In progress',
