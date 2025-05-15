@@ -7,6 +7,7 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import Sinon from 'sinon';
 import { allMilestonesMock, modelID, solutionMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -17,6 +18,8 @@ describe('EditSolutionForm Component', () => {
   // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
   // eslint-disable-next-line
   console.error = vi.fn();
+
+  Sinon.stub(Math, 'random').returns(0.5);
 
   const renderForm = (addedFromSolutionLibrary: boolean = true) => {
     return render(
