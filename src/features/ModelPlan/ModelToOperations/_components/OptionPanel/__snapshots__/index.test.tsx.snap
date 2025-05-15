@@ -27,8 +27,8 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
           class="usa-card__container radius-lg shadow-2 minh-mobile padding-0 margin-0"
         >
           <div
-            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-green-50"
-            style="padding-top: 2px; padding-bottom: 2px;"
+            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white bg-green-50"
+            style="padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-top-right-radius: 6px;"
           >
             MILESTONES 
             <svg
@@ -95,8 +95,8 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
           class="usa-card__container radius-lg shadow-2 minh-mobile padding-0 margin-0"
         >
           <div
-            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg indigo-cool-60"
-            style="padding-top: 2px; padding-bottom: 2px;"
+            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white indigo-cool-60"
+            style="padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-top-right-radius: 6px;"
           >
             OPERATIONAL SOLUTIONS 
             <svg
@@ -192,7 +192,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         <p
           class="mint-body-normal margin-y-0"
         >
-          Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.
+          Many teams find it useful to organize the milestones in their MTO into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.
         </p>
       </div>
     </div>
@@ -204,8 +204,8 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         class="usa-card__container radius-lg shadow-2 padding-0 margin-0"
       >
         <div
-          class="display-flex flex-justify bg-base-lightest padding-x-3 radius-top-lg bg-base-lighter"
-          style="padding-top: 2px; padding-bottom: 2px;"
+          class="display-flex flex-justify bg-base-lightest padding-x-3 bg-base-lighter"
+          style="padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-top-right-radius: 6px;"
         >
           TEMPLATE 
           <svg
