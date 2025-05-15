@@ -216,7 +216,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   lastUpdated: 'MTO last updated {{date}}',
   warningRedirect:
     'Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). <link1>Go to your MTO</link1> to review any suggestions.',
-  emptyMTO: 'Your model-to-operations matrix is a bit empty!',
+  emptyMTO: 'Your model-to-operations matrix (MTO) is a bit empty!',
   emptyMTOReadView:
     'The model-to-operations matrix (MTO) for this model hasn’t been started yet. Check back again later for updates.',
   emptyMTOReadViewWithSolutions:
@@ -227,7 +227,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',
   emptyMTOdescription: 'Choose an option below to get started.',
   returnToCollaboration: 'Return to model collaboration area',
-  returnToMTO: 'Return to model-to-operations matrix',
+  returnToMTO: 'Return to model-to-operations matrix (MTO)',
   startWithCategories: 'Start with categories or templates',
   aboutTemplates: 'About templates',
   aboutTemplatesDescription:
@@ -698,7 +698,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   milestoneLibrary: {
     heading: 'Milestone library',
     description:
-      'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix. Some milestones are suggested for your model based on answers to questions in your Model Plan.',
+      'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix (MTO). Some milestones are suggested for your model based on answers to questions in your Model Plan.',
     milestoneMap,
     suggestedMilestones: 'Suggested milestones only ({{count}})',
     allMilestones: 'All common milestones ({{count}})',
@@ -733,7 +733,7 @@ export const modelToOperationsMisc: Record<string, any> = {
   solutionLibrary: {
     heading: 'Solution library',
     description:
-      'Browse common available operational solutions and IT systems and add them to your model-to-operations matrix. Solutions in this library include IT systems, contractors and contract vehicles, cross-cutting groups, and more. You will be able to associate these solutions with any relevant model milestones.',
+      'Browse common available operational solutions and IT systems and add them to your model-to-operations matrix (MTO). Solutions in this library include IT systems, contractors and contract vehicles, cross-cutting groups, and more. You will be able to associate these solutions with any relevant model milestones.',
     hideAdded: 'Hide added solutions ({{count}})',
     tabs: {
       allSolutions: 'All common solutions ({{count}})',

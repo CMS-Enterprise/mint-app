@@ -856,7 +856,7 @@ export const moveRow = (
         newOrder: hoverIndex[0]
       }
     })
-      .then(() => {
+      ?.then(() => {
         if (setError) {
           setError(
             <Alert
@@ -871,7 +871,7 @@ export const moveRow = (
           );
         }
       })
-      .catch(() => {
+      ?.catch(() => {
         if (setError) {
           setError(
             <Alert
@@ -923,7 +923,7 @@ export const moveRow = (
         parentID: hoverParentCategoryID
       }
     })
-      .then(() => {
+      ?.then(() => {
         if (setError) {
           setError(
             <Alert
@@ -938,7 +938,7 @@ export const moveRow = (
           );
         }
       })
-      .catch(() => {
+      ?.catch(() => {
         if (setError) {
           setError(
             <Alert

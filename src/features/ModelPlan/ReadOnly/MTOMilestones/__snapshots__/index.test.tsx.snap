@@ -572,6 +572,11 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
             >
               Show 20 milestones
             </option>
+            <option
+              value="100000"
+            >
+              Show all milestones
+            </option>
           </select>
         </div>
       </div>
