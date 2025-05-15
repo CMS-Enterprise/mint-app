@@ -666,10 +666,7 @@ const EditMilestoneForm = ({
           if (!riskIndicator) return <></>;
 
           return (
-            <MTORiskIndicatorTag
-              riskIndicator={riskIndicator}
-              showTooltip={false}
-            />
+            <MTORiskIndicatorTag riskIndicator={riskIndicator} showTooltip />
           );
         }
       }
