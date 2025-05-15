@@ -168,7 +168,7 @@ describe('Model-to-Operations Matrix', () => {
         .check({ force: true })
         .should('be.checked');
       cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
-      cy.contains('Add with 1 milestone').click();
+      cy.contains('Add to 1 milestone').click();
     });
 
     cy.contains('a', 'Return to model-to-operations matrix').click();
