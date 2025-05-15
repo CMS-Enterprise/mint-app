@@ -37,7 +37,7 @@ export const SolutionCard = ({
   );
 
   return (
-    <Grid desktop={{ col: 9 }} className="display-flex">
+    <Grid desktop={{ col: 12 }} className="display-flex">
       {renderModal && selectedSolution && (
         <SolutionDetailsModal
           solution={selectedSolution}
