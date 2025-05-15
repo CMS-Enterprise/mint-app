@@ -679,8 +679,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'You have not yet added any milestones to your MTO. You may do so from the milestone library or by adding a custom milestone.',
       cta: {
         empty: 'Add without milestone',
-        add: 'Add with {{count}} milestone',
-        add_other: 'Add with {{count}} milestones'
+        add: 'Add to {{count}} milestone',
+        add_other: 'Add to {{count}} milestones'
       },
       alert: {
         error:
