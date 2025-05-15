@@ -29,8 +29,6 @@ type MultiPartType = {
 const formatMilestoneAnswers = (config: MilestoneFieldType, data: any) => {
   let answers: any;
 
-  console.log(data);
-
   const fieldAnswer =
     data[config?.parentField as keyof MilestoneSuggestedAnswerQueryType]?.[
       config?.fieldName as string
@@ -39,15 +37,19 @@ const formatMilestoneAnswers = (config: MilestoneFieldType, data: any) => {
   // If multipart, push an object to the answer array, rather than a string
   // Object contains an question field and an answer field
   if (config?.multiPart) {
-    console.log(config);
     answers = [];
 
     // Extracts the answer from the parent field of the GQL query return data
-    (config?.fieldName as string[]).forEach((field: any) => {
-      if (fieldAnswer !== null && fieldAnswer !== undefined) {
+    (config?.fieldName as string[]).forEach((field: string) => {
+      const multiFieldAnswer =
+        data[config?.parentField as keyof MilestoneSuggestedAnswerQueryType]?.[
+          field
+        ];
+
+      if (multiFieldAnswer !== null && multiFieldAnswer !== undefined) {
         answers.push({
           question: field,
-          answer: fieldAnswer
+          answer: multiFieldAnswer
         });
       }
     });
@@ -234,7 +236,7 @@ const SuggestedMilestoneToggle = ({
                 )}
 
                 {data && milestoneConfig && milestoneConfig.multiPart && (
-                  <ul className="padding-left-0">{formattedAnswers}</ul>
+                  <ul className="padding-left-4">{formattedAnswers}</ul>
                 )}
 
                 <p className="margin-bottom-0">
