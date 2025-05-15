@@ -297,6 +297,7 @@ const MTOTable = ({
     numberOfMilestones?: number;
   }) => {
     const { clearMessage } = useMessage();
+
     const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
     const renderActionMenu = () => {
@@ -335,7 +336,8 @@ const MTOTable = ({
                     rowType,
                     sortedData,
                     updateOrder,
-                    setError
+                    setError,
+                    clearMessage
                   )
                 );
               }}
@@ -366,7 +368,8 @@ const MTOTable = ({
                     rowType,
                     sortedData,
                     updateOrder,
-                    setError
+                    setError,
+                    clearMessage
                   )
                 );
               }}
@@ -479,7 +482,8 @@ const MTOTable = ({
   const renderSubCategories = (
     subCategories: SubCategoryType[],
     categoryID: string,
-    categoryIndex: number
+    categoryIndex: number,
+    clearMessage?: () => void
   ) =>
     subCategories.map((subCategory, index) => {
       const isExpanded = !expandedRows.includes(
@@ -508,7 +512,8 @@ const MTOTable = ({
                   'subcategory',
                   sortedData,
                   updateOrder,
-                  setError
+                  setError,
+                  clearMessage
                 )
               )
             }
@@ -540,8 +545,10 @@ const MTOTable = ({
       );
     });
 
-  const renderCategories = () =>
-    sortedData.map((category, index) => {
+  const RenderCategories = () => {
+    const { clearMessage } = useMessage();
+
+    return sortedData.map((category, index) => {
       // Don't render if the category is not in the rendered indexes
       if (!renderedRowIndexes.current.category.includes(index)) {
         return null;
@@ -567,7 +574,8 @@ const MTOTable = ({
                   'category',
                   sortedData,
                   updateOrder,
-                  setError
+                  setError,
+                  clearMessage
                 )
               )
             }
@@ -598,10 +606,16 @@ const MTOTable = ({
           {isExpanded &&
             category.subCategories &&
             category.id &&
-            renderSubCategories(category.subCategories, category.id, index)}
+            renderSubCategories(
+              category.subCategories,
+              category.id,
+              index,
+              clearMessage
+            )}
         </div>
       );
     });
+  };
 
   useEffect(() => {
     if (columns[currentColumn].sort && columnSort[currentColumn].isSorted) {
@@ -714,7 +728,7 @@ const MTOTable = ({
                     ))}
                   </tr>
                 </thead>
-                <tbody>{renderCategories()}</tbody>
+                <tbody>{RenderCategories()}</tbody>
               </table>
             </div>
             <div className="mint-no-print">
@@ -825,7 +839,8 @@ export const moveRow = (
   }: {
     variables: ReorderMtoCategoryMutationVariables;
   }) => Promise<any>,
-  setError?: (element: JSX.Element) => void
+  setError?: (element: JSX.Element) => void,
+  clearMessage?: () => void
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
@@ -840,7 +855,37 @@ export const moveRow = (
         id: draggedCategory.id,
         newOrder: hoverIndex[0]
       }
-    });
+    })
+      .then(() => {
+        if (setError) {
+          setError(
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              {i18next.t('modelToOperationsMisc:successReorder')}
+            </Alert>
+          );
+        }
+      })
+      .catch(() => {
+        if (setError) {
+          setError(
+            <Alert
+              type="error"
+              slim
+              data-testid="error-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              {i18next.t('modelToOperationsMisc:errorReorder')}
+            </Alert>
+          );
+        }
+      });
   } else if (type.includes('subcategory')) {
     const parentIndex = dragIndex[0];
     const hoverParentIndex = hoverIndex[0];
@@ -877,20 +922,37 @@ export const moveRow = (
         newOrder: hoverSubIndex,
         parentID: hoverParentCategoryID
       }
-    })?.catch(() => {
-      if (setError) {
-        setError(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {i18next.t('modelToOperationsMisc:errorReorder')}
-          </Alert>
-        );
-      }
-    });
+    })
+      .then(() => {
+        if (setError) {
+          setError(
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              {i18next.t('modelToOperationsMisc:successReorder')}
+            </Alert>
+          );
+        }
+      })
+      .catch(() => {
+        if (setError) {
+          setError(
+            <Alert
+              type="error"
+              slim
+              data-testid="error-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              {i18next.t('modelToOperationsMisc:errorReorder')}
+            </Alert>
+          );
+        }
+      });
   } else if (type.includes('milestone')) {
     // TODO: if needed, implement milestone reordering
     // // Find the parent category

@@ -1167,30 +1167,6 @@ const EditSolutionForm = ({
                       </Alert>
                     ) : (
                       <div ref={scrollRef}>
-                        <Alert type="info" slim className="margin-top-3">
-                          <Trans
-                            i18nKey={modelToOperationsMiscT(
-                              'modal.editSolution.milestoneInfo'
-                            )}
-                            components={{
-                              link1: (
-                                <Button
-                                  type="button"
-                                  unstyled
-                                  className="usa-button--unstyled margin-0"
-                                  onClick={() => {
-                                    setCloseDestination(
-                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
-                                    );
-                                  }}
-                                >
-                                  {' '}
-                                </Button>
-                              )
-                            }}
-                          />
-                        </Alert>
-
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}
@@ -1269,6 +1245,30 @@ const EditSolutionForm = ({
                             page={[]}
                           />
                         )}
+
+                        <Alert type="info" slim className="margin-top-3">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editSolution.milestoneInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
                       </div>
                     )}
                   </div>

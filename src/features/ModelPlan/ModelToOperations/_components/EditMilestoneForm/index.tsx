@@ -1298,30 +1298,6 @@ const EditMilestoneForm = ({
                       </Alert>
                     ) : (
                       <>
-                        <Alert type="info" slim className="margin-top-4">
-                          <Trans
-                            i18nKey={modelToOperationsMiscT(
-                              'modal.editMilestone.solutionInfo'
-                            )}
-                            components={{
-                              link1: (
-                                <Button
-                                  type="button"
-                                  unstyled
-                                  className="usa-button--unstyled margin-0"
-                                  onClick={() => {
-                                    setCloseDestination(
-                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-                                    );
-                                  }}
-                                >
-                                  {' '}
-                                </Button>
-                              )
-                            }}
-                          />
-                        </Alert>
-
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}
@@ -1403,6 +1379,30 @@ const EditMilestoneForm = ({
                             page={[]}
                           />
                         )}
+
+                        <Alert type="info" slim className="margin-top-4">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editMilestone.solutionInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
                       </>
                     )}
                   </div>
