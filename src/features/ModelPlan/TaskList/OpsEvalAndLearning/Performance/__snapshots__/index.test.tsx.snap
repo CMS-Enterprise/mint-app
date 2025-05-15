@@ -116,6 +116,7 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
+        data-scroll="benchmarkForPerformance"
       >
         <label
           class="usa-label"
@@ -526,6 +527,7 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-scroll="participantAppeal"
       >
         <label
           class="usa-label"

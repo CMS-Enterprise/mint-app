@@ -472,10 +472,14 @@ const EditMilestoneForm = ({
         mtoCategoryID = formData.categories.category.id;
       }
 
-      const { categories, needBy, name, ...formChanges } = dirtyInput(
-        milestone,
-        formData
-      );
+      const {
+        categories,
+        needBy,
+        name,
+        facilitatedBy,
+        facilitatedByOther,
+        ...formChanges
+      } = dirtyInput(milestone, formData);
 
       // Check if category has changed to determine if the category is dirty to add to payload
       let isCategoryDirty: boolean = false;
@@ -487,11 +491,21 @@ const EditMilestoneForm = ({
         isCategoryDirty = true;
       }
 
+      if (!facilitatedBy?.includes(MtoFacilitator.OTHER)) {
+        formChanges.facilitatedByOther = null;
+      }
+
       updateMilestone({
         variables: {
           id: editMilestoneID || '',
           changes: {
             ...formChanges,
+            ...(facilitatedBy && {
+              facilitatedBy
+            }),
+            ...(facilitatedByOther !== undefined && {
+              facilitatedByOther
+            }),
             ...(isCategoryDirty && { mtoCategoryID }),
             ...(needBy !== undefined && {
               needBy: needBy ? new Date(needBy)?.toISOString() : ''

@@ -29,6 +29,8 @@ type MultiPartType = {
 const formatMilestoneAnswers = (config: MilestoneFieldType, data: any) => {
   let answers: any;
 
+  console.log(data);
+
   const fieldAnswer =
     data[config?.parentField as keyof MilestoneSuggestedAnswerQueryType]?.[
       config?.fieldName as string
@@ -37,6 +39,7 @@ const formatMilestoneAnswers = (config: MilestoneFieldType, data: any) => {
   // If multipart, push an object to the answer array, rather than a string
   // Object contains an question field and an answer field
   if (config?.multiPart) {
+    console.log(config);
     answers = [];
 
     // Extracts the answer from the parent field of the GQL query return data
@@ -141,9 +144,9 @@ const SuggestedMilestoneToggle = ({
     const mappedAnswer = typeof answers[0] !== 'object' ? answers : answers[0];
 
     if (!milestoneConfig.multiPart) {
-      return mappedAnswer.map((answer: string | boolean) => {
+      return mappedAnswer.map((answer: string | boolean, index: number) => {
         return (
-          <li>
+          <span>
             {i18next.exists(
               `${milestoneConfig?.parentField}:${milestoneConfig?.fieldName}.options.${answer}`
             )
@@ -151,10 +154,12 @@ const SuggestedMilestoneToggle = ({
                   `${milestoneConfig?.parentField}:${milestoneConfig?.fieldName}.options.${answer}`
                 )
               : 'No answer'}
-          </li>
+            {index < mappedAnswer.length - 1 ? ', ' : ''}
+          </span>
         );
       });
     }
+
     return answers.map((answer: MultiPartType) => {
       return (
         <li className="margin-y-1" key={answer.question}>
@@ -180,6 +185,10 @@ const SuggestedMilestoneToggle = ({
     }
     return milestoneConfig?.fieldName;
   }, [milestoneConfig]);
+
+  if (milestoneConfig?.multiPart) {
+    // console.log(formattedAnswers);
+  }
 
   return (
     <div className={classNames(className)}>
@@ -214,12 +223,18 @@ const SuggestedMilestoneToggle = ({
                   {t('milestoneLibrary.youAnswered')}
                 </p>
 
-                <p data-testid="milestone-question">
-                  {t(milestoneConfig?.question)}
+                <p data-testid="milestone-question" className="margin-0">
+                  Q: {t(milestoneConfig?.question)}
                 </p>
 
-                {data && milestoneConfig && (
-                  <ul className="padding-left-4">{formattedAnswers}</ul>
+                {data && milestoneConfig && !milestoneConfig.multiPart && (
+                  <ul className="padding-left-0">
+                    <span>A: {formattedAnswers}</span>
+                  </ul>
+                )}
+
+                {data && milestoneConfig && milestoneConfig.multiPart && (
+                  <ul className="padding-left-0">{formattedAnswers}</ul>
                 )}
 
                 <p className="margin-bottom-0">

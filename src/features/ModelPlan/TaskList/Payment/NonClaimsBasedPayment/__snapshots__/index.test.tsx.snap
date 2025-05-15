@@ -135,6 +135,7 @@ exports[`Model Plan -- NonClaimsBasedPayment > matches snapshot 1`] = `
             </h3>
             <div
               class="usa-form-group margin-top-4"
+              data-scroll="nonClaimsPayments"
             >
               <label
                 class="usa-label"
