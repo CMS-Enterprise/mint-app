@@ -213,7 +213,10 @@ const NonClaimsBasedPayment = () => {
                           {paymentsMiscT('nonClaimsBasedPaymentQuestion')}
                         </PageHeading>
 
-                        <FieldGroup className="margin-top-4">
+                        <FieldGroup
+                          className="margin-top-4"
+                          scrollElement="nonClaimsPayments"
+                        >
                           <Label
                             htmlFor="payment-nonclaims-payments"
                             id="label-payment-nonclaims-payments"

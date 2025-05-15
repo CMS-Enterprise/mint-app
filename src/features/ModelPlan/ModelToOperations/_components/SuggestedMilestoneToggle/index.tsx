@@ -174,6 +174,13 @@ const SuggestedMilestoneToggle = ({
     });
   }, [answers, milestoneConfig]);
 
+  const fieldToScroll = useMemo(() => {
+    if (milestoneConfig?.multiPart) {
+      return milestoneConfig?.fieldName[0];
+    }
+    return milestoneConfig?.fieldName;
+  }, [milestoneConfig]);
+
   return (
     <div className={classNames(className)}>
       <button
@@ -222,7 +229,7 @@ const SuggestedMilestoneToggle = ({
                     to={{
                       pathname: `/models/${modelID}/collaboration-area/task-list/${milestoneConfig?.route}`,
                       state: {
-                        scrollElement: milestoneConfig.fieldName.toString()
+                        scrollElement: fieldToScroll.toString()
                       }
                     }}
                   >

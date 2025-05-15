@@ -256,7 +256,7 @@ export const ParticipantOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup>
+                  <FieldGroup scrollElement="recruitmentMethod">
                     <Label htmlFor="participants-and-providers-recruitment-method">
                       {participantsAndProvidersT('recruitmentMethod.label')}
                     </Label>
@@ -311,7 +311,10 @@ export const ParticipantOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-top-4">
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="selectionMethod"
+                  >
                     <Label
                       htmlFor="participants-and-providers-selection-method"
                       id="label-participants-and-providers-selection-method"

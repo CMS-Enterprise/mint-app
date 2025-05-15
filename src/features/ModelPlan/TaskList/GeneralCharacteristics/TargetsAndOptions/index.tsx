@@ -399,7 +399,7 @@ const TargetsAndOptions = () => {
                     field="participationOptionsNote"
                   />
 
-                  <FieldGroup>
+                  <FieldGroup scrollElement="agreementTypes">
                     <Label htmlFor="plan-characteristics-agreement-type">
                       {generalCharacteristicsT('agreementTypes.label')}
                     </Label>

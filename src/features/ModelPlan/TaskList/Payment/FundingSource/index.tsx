@@ -416,7 +416,10 @@ const FundingSource = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
+                        <FieldGroup
+                          className="margin-top-4"
+                          scrollElement="payType"
+                        >
                           <Label htmlFor="payType" className="maxw-none">
                             {paymentsT('payType.label')}
                           </Label>

@@ -338,7 +338,10 @@ export const ProviderOptions = () => {
                     disabled={loading}
                   />
 
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
+                  <FieldGroup
+                    className="margin-y-4 margin-bottom-8"
+                    scrollElement="providerOverlap"
+                  >
                     <Label htmlFor="participants-and-providers-provider-overlap">
                       {participantsAndProvidersT('providerOverlap.label')}
                     </Label>

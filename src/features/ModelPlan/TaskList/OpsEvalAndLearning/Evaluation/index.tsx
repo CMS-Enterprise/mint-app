@@ -203,7 +203,7 @@ const Evaluation = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup>
+                  <FieldGroup scrollElement="evaluationApproaches">
                     <Label
                       htmlFor="ops-eval-and-learning-evaluation-approach"
                       id="ops-eval-and-learning-evaluation-approach"
@@ -314,7 +314,10 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-top-4">
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="dataNeededForMonitoring"
+                  >
                     <Label
                       htmlFor="ops-eval-and-learning-data-needed"
                       id="label-ops-eval-and-learning-data-needed"
@@ -374,7 +377,10 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-top-4">
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="dataToSendParticicipants"
+                  >
                     <Label
                       htmlFor="ops-eval-and-learning-data-to-send"
                       id="label-ops-eval-and-learning-data-to-send"
