@@ -151,9 +151,6 @@ export const OpsEvalAndLearningContent = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const scrollElement = history.location.state?.scrollElement;
-  console.log('scrollElement', scrollElement);
-
   const { mutationError } = useHandleMutation(
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {

@@ -188,10 +188,6 @@ const SuggestedMilestoneToggle = ({
     return milestoneConfig?.fieldName;
   }, [milestoneConfig]);
 
-  if (milestoneConfig?.multiPart) {
-    // console.log(formattedAnswers);
-  }
-
   return (
     <div className={classNames(className)}>
       <button
