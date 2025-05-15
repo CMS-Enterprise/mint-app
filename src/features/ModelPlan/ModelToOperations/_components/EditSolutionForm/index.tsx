@@ -378,17 +378,39 @@ const EditSolutionForm = ({
             closeModal();
           }
         })
-        .catch(() => {
-          setMutationError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-            >
-              {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
-            </Alert>
-          );
+        .catch(err => {
+          if (
+            err?.message.includes(
+              'unique_name_per_model_plan_when_mto_common_solution_is_null'
+            )
+          ) {
+            setMutationError(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT(
+                  'modal.editSolution.errorNameAlreadyExists',
+                  {
+                    solution: formData.name
+                  }
+                )}
+              </Alert>
+            );
+          } else {
+            setMutationError(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
+              </Alert>
+            );
+          }
         });
     },
     [

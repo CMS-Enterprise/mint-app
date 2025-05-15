@@ -441,6 +441,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Your milestone (<bold>{{milestone}}</bold>) has been updated.',
       errorUpdated:
         'There was an error updating your milestone. Please try again. If the error persists, please try again another time.',
+      errorNameAlreadyExists:
+        'There is already a model milestone in your MTO named “{{milestone}}”. Please choose a different name for this milestone.',
       successRemoved: 'Your milestone ({{milestone}}) has been removed.',
       errorRemoved:
         'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
@@ -524,6 +526,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Your solution (<bold>{{solution}}</bold>) has been updated.',
       errorUpdated:
         'There was an error updating your solution. Please try again. If the error persists, please try again another time.',
+      errorNameAlreadyExists:
+        'There is already a solution in your MTO named “{{solution}}”. Please choose a different name for this solution.',
       successRemoved: 'Your solution ({{solution}}) has been removed.',
       errorRemoved:
         'There was an error removing your solution. Please try again. If the error persists, please try again another time.',
