@@ -24,9 +24,9 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     dbField: 'is_draft',
     label: 'Check if this milestone is a draft milestone',
     sublabel:
-      'The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
+      'The "draft" indicator will signal to others that this milestone is more of a work in progress than the rest of the model-to-operations matrix (MTO).',
     questionTooltip:
-      'The "draft" indicator indicates that this milestone is more of a work in progress than the rest of the model-to-operations matrix.',
+      'The "draft" indicator indicates that this milestone is more of a work in progress than the rest of the model-to-operations matrix (MTO).',
     exportLabel: 'Is this a draft milestone?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,

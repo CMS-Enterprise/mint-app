@@ -464,6 +464,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
+        data-scroll="communicationMethod"
       >
         <label
           class="usa-label"

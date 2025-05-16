@@ -211,7 +211,7 @@ export const Communication = () => {
                     disabled={loading}
                   />
 
-                  <FieldGroup>
+                  <FieldGroup scrollElement="communicationMethod">
                     <Label htmlFor="participants-and-providers-communication-method">
                       {participantsAndProvidersT('communicationMethod.label')}
                     </Label>

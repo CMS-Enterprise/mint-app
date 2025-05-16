@@ -116,6 +116,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
+        data-scroll="evaluationApproaches"
       >
         <label
           class="usa-label maxw-none"
@@ -375,6 +376,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
+        data-scroll="dataNeededForMonitoring"
       >
         <label
           class="usa-label maxw-none"
@@ -504,6 +506,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
+        data-scroll="dataToSendParticicipants"
       >
         <label
           class="usa-label maxw-none"

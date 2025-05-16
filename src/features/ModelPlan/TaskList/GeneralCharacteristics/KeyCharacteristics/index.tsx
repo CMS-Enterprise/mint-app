@@ -377,7 +377,10 @@ const KeyCharacteristics = () => {
                       KeyCharacteristic.PART_D
                     )) && (
                     <>
-                      <FieldGroup className="margin-y-4">
+                      <FieldGroup
+                        className="margin-y-4"
+                        scrollElement="collectPlanBids"
+                      >
                         <Label
                           htmlFor="plan-characteristics-collect-bids"
                           className="text-normal"
@@ -432,7 +435,10 @@ const KeyCharacteristics = () => {
                         className="margin-bottom-0"
                       />
 
-                      <FieldGroup className="margin-y-4">
+                      <FieldGroup
+                        className="margin-y-4"
+                        scrollElement="planContractUpdated"
+                      >
                         <Label
                           htmlFor="plan-characteristics-contact-updated"
                           className="text-normal"

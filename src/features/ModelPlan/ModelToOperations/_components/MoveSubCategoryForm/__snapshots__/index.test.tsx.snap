@@ -21,7 +21,7 @@ exports[`Custom Catergory form > matches snapshot 1`] = `
     id="edit-milestone-form"
   >
     <fieldset
-      class="usa-fieldset"
+      class="usa-fieldset margin-bottom-8"
       data-testid="fieldset"
     >
       <div

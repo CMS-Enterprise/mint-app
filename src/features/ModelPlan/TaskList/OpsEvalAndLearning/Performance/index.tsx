@@ -201,7 +201,7 @@ const Performance = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup>
+                  <FieldGroup scrollElement="benchmarkForPerformance">
                     <Label htmlFor="ops-eval-and-learning-benchmark-performance">
                       {opsEvalAndLearningT('benchmarkForPerformance.label')}
                     </Label>
@@ -323,7 +323,10 @@ const Performance = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-top-6">
+                  <FieldGroup
+                    className="margin-top-6"
+                    scrollElement="participantAppeal"
+                  >
                     <Label htmlFor="ops-eval-and-learning-appeals">
                       {opsEvalAndLearningMiscT('participantAppeal')}
                     </Label>

@@ -62,7 +62,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
             <p
               class="mint-body-large margin-top-1 margin-bottom-4"
             >
-              Learn more about the Model-to-operations matrix, what it’s for, and how to create and maintain an MTO in MINT.
+              Learn more about the Model-to-operations matrix (MTO), what it’s for, and how to create and maintain an MTO in MINT.
             </p>
             <h2
               class="margin-top-4 margin-bottom-1"
@@ -72,7 +72,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
             <p
               class="margin-bottom-3 margin-top-1"
             >
-              The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the solutions or IT systems used to implement those milestones, and when work for individual milestones must be completed by.
+              The Model-to-operations matrix is the main IT lead deliverable. It is usually started as soon as an IT lead is assigned to a model, shortly before model clearance, when model intake (and the model’s MINT Model Plan) are significantly completed and the model has a good chance of being cleared. A solid draft of an MTO is usually expected within 20 days of beginning to engage with a model team, though IT leads should expect to continue updating the MTO and its statuses as work on the operational aspects of the model progresses. The Model-to-operations matrix (MTO) documents a list of functions or milestones that a model needs to accomplish in order to go live and be successful, the solutions or IT systems used to implement those milestones, and when work for individual milestones must be completed by.
             </p>
             <h3
               class="margin-top-3 margin-bottom-1"

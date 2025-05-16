@@ -214,7 +214,7 @@ const Frequency = () => {
                         disabled={loading}
                       />
 
-                      <FieldGroup>
+                      <FieldGroup scrollElement="beneficiaryOverlap">
                         <Label htmlFor="beneficiaries-overlap">
                           {beneficiariesT('beneficiaryOverlap.label')}
                         </Label>

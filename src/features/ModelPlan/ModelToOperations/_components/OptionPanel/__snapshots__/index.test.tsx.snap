@@ -8,7 +8,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
     <h2
       class="margin-y-0"
     >
-      Your model-to-operations matrix is a bit empty!
+      Your model-to-operations matrix (MTO) is a bit empty!
     </h2>
     <p
       class="mint-body-large margin-bottom-0 margin-top-2"

@@ -225,7 +225,10 @@ const Recover = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup className="margin-top-4">
+                        <FieldGroup
+                          className="margin-top-4"
+                          scrollElement="willRecoverPayments"
+                        >
                           <Label
                             htmlFor="payment-recover-payment"
                             className="maxw-none"

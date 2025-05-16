@@ -246,7 +246,10 @@ const ClaimsBasedPayment = () => {
                           <AddNote id="pay-claims-note" field="payClaimsNote" />
                         </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
+                        <FieldGroup
+                          className="margin-top-4"
+                          scrollElement="shouldAnyProvidersExcludedFFSSystems"
+                        >
                           <Label
                             htmlFor="shouldAnyProvidersExcludedFFSSystems"
                             className="maxw-none"

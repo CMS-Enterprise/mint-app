@@ -839,6 +839,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
+        data-scroll="providerOverlap"
       >
         <label
           class="usa-label"

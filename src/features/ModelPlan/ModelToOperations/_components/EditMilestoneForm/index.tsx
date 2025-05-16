@@ -472,10 +472,14 @@ const EditMilestoneForm = ({
         mtoCategoryID = formData.categories.category.id;
       }
 
-      const { categories, needBy, name, ...formChanges } = dirtyInput(
-        milestone,
-        formData
-      );
+      const {
+        categories,
+        needBy,
+        name,
+        facilitatedBy,
+        facilitatedByOther,
+        ...formChanges
+      } = dirtyInput(milestone, formData);
 
       // Check if category has changed to determine if the category is dirty to add to payload
       let isCategoryDirty: boolean = false;
@@ -487,11 +491,21 @@ const EditMilestoneForm = ({
         isCategoryDirty = true;
       }
 
+      if (!facilitatedBy?.includes(MtoFacilitator.OTHER)) {
+        formChanges.facilitatedByOther = null;
+      }
+
       updateMilestone({
         variables: {
           id: editMilestoneID || '',
           changes: {
             ...formChanges,
+            ...(facilitatedBy && {
+              facilitatedBy
+            }),
+            ...(facilitatedByOther !== undefined && {
+              facilitatedByOther
+            }),
             ...(isCategoryDirty && { mtoCategoryID }),
             ...(needBy !== undefined && {
               needBy: needBy ? new Date(needBy)?.toISOString() : ''
@@ -535,17 +549,39 @@ const EditMilestoneForm = ({
             closeModal();
           }
         })
-        .catch(() => {
-          setMutationError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-            >
-              {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
-            </Alert>
-          );
+        .catch(err => {
+          if (
+            err?.message.includes(
+              'unique_name_per_model_plan_when_mto_common_milestone_is_null'
+            )
+          ) {
+            setMutationError(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT(
+                  'modal.editMilestone.errorNameAlreadyExists',
+                  {
+                    milestone: formData.name
+                  }
+                )}
+              </Alert>
+            );
+          } else {
+            setMutationError(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
+              </Alert>
+            );
+          }
         });
     },
     [
@@ -666,10 +702,7 @@ const EditMilestoneForm = ({
           if (!riskIndicator) return <></>;
 
           return (
-            <MTORiskIndicatorTag
-              riskIndicator={riskIndicator}
-              showTooltip={false}
-            />
+            <MTORiskIndicatorTag riskIndicator={riskIndicator} showTooltip />
           );
         }
       }
@@ -1301,30 +1334,6 @@ const EditMilestoneForm = ({
                       </Alert>
                     ) : (
                       <>
-                        <Alert type="info" slim className="margin-top-4">
-                          <Trans
-                            i18nKey={modelToOperationsMiscT(
-                              'modal.editMilestone.solutionInfo'
-                            )}
-                            components={{
-                              link1: (
-                                <Button
-                                  type="button"
-                                  unstyled
-                                  className="usa-button--unstyled margin-0"
-                                  onClick={() => {
-                                    setCloseDestination(
-                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-                                    );
-                                  }}
-                                >
-                                  {' '}
-                                </Button>
-                              )
-                            }}
-                          />
-                        </Alert>
-
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}
@@ -1406,6 +1415,30 @@ const EditMilestoneForm = ({
                             page={[]}
                           />
                         )}
+
+                        <Alert type="info" slim className="margin-top-4">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editMilestone.solutionInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
                       </>
                     )}
                   </div>

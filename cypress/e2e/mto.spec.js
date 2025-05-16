@@ -18,7 +18,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Fills out an empty MTO Matrix with milestones and solutions', () => {
-    cy.contains('h2', 'Your model-to-operations matrix is a bit empty!');
+    cy.contains('h2', 'Your model-to-operations matrix (MTO) is a bit empty!');
 
     cy.contains('a', 'Add solutions from library');
     cy.contains('button', 'Add this template');
@@ -83,9 +83,10 @@ describe('Model-to-Operations Matrix', () => {
       '/collaboration-area/model-to-operations/matrix'
     );
 
-    cy.contains('h2', 'Your model-to-operations matrix is a bit empty!').should(
-      'not.exist'
-    );
+    cy.contains(
+      'h2',
+      'Your model-to-operations matrix (MTO) is a bit empty!'
+    ).should('not.exist');
     cy.get('[data-testid="tasklist-tag"').contains('In progress');
 
     // Check to see saved milestone is inside the table
@@ -167,7 +168,7 @@ describe('Model-to-Operations Matrix', () => {
         .check({ force: true })
         .should('be.checked');
       cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
-      cy.contains('Add with 1 milestone').click();
+      cy.contains('Add to 1 milestone').click();
     });
 
     cy.contains('a', 'Return to model-to-operations matrix').click();

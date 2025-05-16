@@ -21,7 +21,12 @@ const scrollBypass: string[] = [
   '?solution=',
   '&solution=',
   '&scroll-to-bottom',
-  '/collaboration-area/model-to-operations'
+  '/collaboration-area/model-to-operations',
+  // Read view bypasses for MTO panels
+  '?view-milestone=',
+  '?view-solution=',
+  '&view-milestone=',
+  '&view-solution='
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {

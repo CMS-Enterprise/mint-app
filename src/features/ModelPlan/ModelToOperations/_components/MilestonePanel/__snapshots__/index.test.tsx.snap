@@ -78,7 +78,7 @@ exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] =
           Common solutions
         </h3>
         <div
-          class="desktop:grid-col-9 display-flex"
+          class="desktop:grid-col-12 display-flex"
           data-testid="grid"
         >
           <li

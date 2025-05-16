@@ -414,7 +414,7 @@ export const Coordination = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup>
+                  <FieldGroup scrollElement="participantsIds">
                     <Label
                       htmlFor="participants-and-providers-id"
                       className="maxw-none"

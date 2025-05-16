@@ -128,6 +128,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group margin-top-4"
+              data-scroll="willRecoverPayments"
             >
               <label
                 class="usa-label maxw-none"

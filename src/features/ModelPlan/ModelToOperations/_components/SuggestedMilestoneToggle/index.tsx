@@ -40,11 +40,16 @@ const formatMilestoneAnswers = (config: MilestoneFieldType, data: any) => {
     answers = [];
 
     // Extracts the answer from the parent field of the GQL query return data
-    (config?.fieldName as string[]).forEach((field: any) => {
-      if (fieldAnswer !== null && fieldAnswer !== undefined) {
+    (config?.fieldName as string[]).forEach((field: string) => {
+      const multiFieldAnswer =
+        data[config?.parentField as keyof MilestoneSuggestedAnswerQueryType]?.[
+          field
+        ];
+
+      if (multiFieldAnswer !== null && multiFieldAnswer !== undefined) {
         answers.push({
           question: field,
-          answer: fieldAnswer
+          answer: multiFieldAnswer
         });
       }
     });
@@ -141,9 +146,9 @@ const SuggestedMilestoneToggle = ({
     const mappedAnswer = typeof answers[0] !== 'object' ? answers : answers[0];
 
     if (!milestoneConfig.multiPart) {
-      return mappedAnswer.map((answer: string | boolean) => {
+      return mappedAnswer.map((answer: string | boolean, index: number) => {
         return (
-          <li>
+          <span>
             {i18next.exists(
               `${milestoneConfig?.parentField}:${milestoneConfig?.fieldName}.options.${answer}`
             )
@@ -151,10 +156,12 @@ const SuggestedMilestoneToggle = ({
                   `${milestoneConfig?.parentField}:${milestoneConfig?.fieldName}.options.${answer}`
                 )
               : 'No answer'}
-          </li>
+            {index < mappedAnswer.length - 1 ? ', ' : ''}
+          </span>
         );
       });
     }
+
     return answers.map((answer: MultiPartType) => {
       return (
         <li className="margin-y-1" key={answer.question}>
@@ -173,6 +180,13 @@ const SuggestedMilestoneToggle = ({
       );
     });
   }, [answers, milestoneConfig]);
+
+  const fieldToScroll = useMemo(() => {
+    if (milestoneConfig?.multiPart) {
+      return milestoneConfig?.fieldName[0];
+    }
+    return milestoneConfig?.fieldName;
+  }, [milestoneConfig]);
 
   return (
     <div className={classNames(className)}>
@@ -207,11 +221,17 @@ const SuggestedMilestoneToggle = ({
                   {t('milestoneLibrary.youAnswered')}
                 </p>
 
-                <p data-testid="milestone-question">
-                  {t(milestoneConfig?.question)}
+                <p data-testid="milestone-question" className="margin-0">
+                  Q: {t(milestoneConfig?.question)}
                 </p>
 
-                {data && milestoneConfig && (
+                {data && milestoneConfig && !milestoneConfig.multiPart && (
+                  <ul className="padding-left-0">
+                    <span>A: {formattedAnswers}</span>
+                  </ul>
+                )}
+
+                {data && milestoneConfig && milestoneConfig.multiPart && (
                   <ul className="padding-left-4">{formattedAnswers}</ul>
                 )}
 
@@ -222,7 +242,7 @@ const SuggestedMilestoneToggle = ({
                     to={{
                       pathname: `/models/${modelID}/collaboration-area/task-list/${milestoneConfig?.route}`,
                       state: {
-                        scrollElement: milestoneConfig.fieldName.toString()
+                        scrollElement: fieldToScroll.toString()
                       }
                     }}
                   >

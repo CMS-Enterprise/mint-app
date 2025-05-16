@@ -240,7 +240,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="ops-eval-and-learning-help-desk-use"
+        data-scroll="helpdeskUse"
       >
         <label
           class="usa-label"
@@ -462,6 +462,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
+        data-scroll="iddocSupport"
       >
         <label
           class="usa-label"

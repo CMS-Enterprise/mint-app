@@ -220,13 +220,14 @@ const MilstoneCardGroup = ({
   );
 
   // Filter the milestones based on the isSuggested field value
-  const selectedMilestones = useMemo(
-    () =>
+  const selectedMilestones = useMemo(() => {
+    const selected =
       viewParam === 'suggested'
         ? currentSuggestedMilestones
-        : currentNotAddedMilestones,
-    [currentNotAddedMilestones, currentSuggestedMilestones, viewParam]
-  );
+        : currentNotAddedMilestones;
+
+    return selected.sort((a, b) => a.name.localeCompare(b.name));
+  }, [currentNotAddedMilestones, currentSuggestedMilestones, viewParam]);
 
   const { query, setQuery, rowLength } = search;
 

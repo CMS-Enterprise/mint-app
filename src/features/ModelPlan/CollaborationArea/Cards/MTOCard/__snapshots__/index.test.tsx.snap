@@ -16,7 +16,7 @@ exports[`MTO Card > matches snapshot 1`] = `
         <h3
           class="usa-card__heading"
         >
-          Model-to-operations matrix
+          Model-to-operations matrix (MTO)
         </h3>
       </header>
       <div

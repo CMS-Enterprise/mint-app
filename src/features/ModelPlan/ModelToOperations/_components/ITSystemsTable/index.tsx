@@ -295,8 +295,25 @@ const ITSystemsTable = ({
             MTOSolutionPanelContext
           );
 
-          if (row.original.__typename === 'MTOMilestone')
-            return <>{row.original.name}</>;
+          if (row.original.__typename === 'MTOMilestone') {
+            if (!readView) {
+              return <>{row.original.name}</>;
+            }
+
+            return (
+              <Button
+                type="button"
+                unstyled
+                className="mint-print-link"
+                onClick={() => {
+                  openEditMilestoneModal(row.original.id);
+                  setMilestoneID(row.original.id);
+                }}
+              >
+                {row.original.name}
+              </Button>
+            );
+          }
 
           const { milestones } = row.original;
 

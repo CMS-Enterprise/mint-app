@@ -78,6 +78,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkMilestoneForm from '../LinkMilestoneForm';
 import { MilestoneType } from '../MatrixTable/columns';
+import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
 
@@ -321,16 +322,30 @@ const EditSolutionForm = ({
 
   const onSubmit: SubmitHandler<FormValues> = useCallback(
     formData => {
-      const { neededBy, name, type, ...formChanges } = dirtyInput(
-        solution,
-        formData
-      );
+      const {
+        neededBy,
+        name,
+        type,
+        facilitatedBy,
+        facilitatedByOther,
+        ...formChanges
+      } = dirtyInput(solution, formData);
+
+      if (!facilitatedBy?.includes(MtoFacilitator.OTHER)) {
+        formChanges.facilitatedByOther = null;
+      }
 
       updateSolution({
         variables: {
           id: editSolutionID || '',
           changes: {
             ...formChanges,
+            ...(facilitatedBy && {
+              facilitatedBy
+            }),
+            ...(facilitatedByOther !== undefined && {
+              facilitatedByOther
+            }),
             ...(neededBy !== undefined && {
               neededBy: neededBy ? new Date(neededBy)?.toISOString() : ''
             }),
@@ -377,17 +392,39 @@ const EditSolutionForm = ({
             closeModal();
           }
         })
-        .catch(() => {
-          setMutationError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-            >
-              {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
-            </Alert>
-          );
+        .catch(err => {
+          if (
+            err?.message.includes(
+              'unique_name_per_model_plan_when_mto_common_solution_is_null'
+            )
+          ) {
+            setMutationError(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT(
+                  'modal.editSolution.errorNameAlreadyExists',
+                  {
+                    solution: formData.name
+                  }
+                )}
+              </Alert>
+            );
+          } else {
+            setMutationError(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
+              </Alert>
+            );
+          }
         });
     },
     [
@@ -514,22 +551,7 @@ const EditSolutionForm = ({
           const { riskIndicator } = row.original;
 
           return (
-            <span className="text-bold text-base-lighter">
-              {(() => {
-                if (riskIndicator === MtoRiskIndicator.AT_RISK)
-                  return (
-                    <Icon.Error className="text-error-dark top-05" size={3} />
-                  );
-                if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
-                  return (
-                    <Icon.Warning
-                      className="text-warning-dark top-05"
-                      size={3}
-                    />
-                  );
-                return '';
-              })()}
-            </span>
+            <MTORiskIndicatorTag riskIndicator={riskIndicator} showTooltip />
           );
         }
       }
@@ -1181,30 +1203,6 @@ const EditSolutionForm = ({
                       </Alert>
                     ) : (
                       <div ref={scrollRef}>
-                        <Alert type="info" slim className="margin-top-3">
-                          <Trans
-                            i18nKey={modelToOperationsMiscT(
-                              'modal.editSolution.milestoneInfo'
-                            )}
-                            components={{
-                              link1: (
-                                <Button
-                                  type="button"
-                                  unstyled
-                                  className="usa-button--unstyled margin-0"
-                                  onClick={() => {
-                                    setCloseDestination(
-                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
-                                    );
-                                  }}
-                                >
-                                  {' '}
-                                </Button>
-                              )
-                            }}
-                          />
-                        </Alert>
-
                         <UswdsTable
                           bordered={false}
                           {...getTableProps()}
@@ -1283,6 +1281,30 @@ const EditSolutionForm = ({
                             page={[]}
                           />
                         )}
+
+                        <Alert type="info" slim className="margin-top-3">
+                          <Trans
+                            i18nKey={modelToOperationsMiscT(
+                              'modal.editSolution.milestoneInfo'
+                            )}
+                            components={{
+                              link1: (
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="usa-button--unstyled margin-0"
+                                  onClick={() => {
+                                    setCloseDestination(
+                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+                                    );
+                                  }}
+                                >
+                                  {' '}
+                                </Button>
+                              )
+                            }}
+                          />
+                        </Alert>
                       </div>
                     )}
                   </div>
