@@ -75,7 +75,10 @@ const ITSystemsTable = ({
 
   const { location } = history;
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const { openEditSolutionModal, setSolutionID } = useContext(
     EditMTOSolutionContext
