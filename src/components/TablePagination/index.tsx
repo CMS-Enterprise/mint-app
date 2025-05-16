@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { UsePaginationInstanceProps, UsePaginationState } from 'react-table';
 import classnames from 'classnames';
 
