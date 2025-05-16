@@ -16,7 +16,7 @@ exports[`MTO SolutionCard Component > renders correctly and matches snapshot 1`]
         <p
           class="margin-top-0 margin-bottom-05 text-base-dark"
         >
-          IT System
+          IT system
         </p>
         <h3
           class="margin-0"

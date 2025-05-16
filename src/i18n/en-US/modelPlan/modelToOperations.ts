@@ -2,6 +2,8 @@ import { TranslationMTOInfo } from 'types/translation';
 
 import {
   MtoCommonMilestoneKey,
+  MtoMilestoneStatus,
+  MtoSolutionStatus,
   TableName,
   TranslationDataType,
   TranslationFormType
@@ -135,6 +137,49 @@ const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   [MtoCommonMilestoneKey.RECOVER_PAYMENTS]: {
     description:
       'When needed, recover payments from participants or providers. Payments may have been errors and may need to be recovered, or participants may have incurred losses and CMS may be recovering that money. For work related to this milestone, Medicare Fee-for-service (FFS) models will most often use the Innovation Payment Contractor (IPC), MAPD models are likely to use the Automated Plan Payment System (APPS), and in extremely rare cases, some FFS models may make non-claims based payments through Medicare Administrative Contractors (MAC).'
+  }
+};
+
+const solutionStatuses: Record<MtoSolutionStatus, any> = {
+  NOT_STARTED: {
+    status: 'Not started',
+    description: 'No work has started on this IT system or solution'
+  },
+  ONBOARDING: {
+    status: 'Onboarding',
+    description:
+      'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
+  },
+  BACKLOG: {
+    status: 'Backlog',
+    description: 'Model work is in the project team’s backlog'
+  },
+  IN_PROGRESS: {
+    status: 'In progress',
+    description:
+      'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
+  },
+  COMPLETED: {
+    status: 'Completed',
+    description: 'Work related to this model is finished'
+  }
+};
+
+const milestoneStatuses: Record<MtoMilestoneStatus, any> = {
+  NOT_STARTED: {
+    status: 'Not started',
+    description:
+      'No work has started on any part of this milestone or any solution associated with it'
+  },
+  IN_PROGRESS: {
+    status: 'In progress',
+    description:
+      'Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)'
+  },
+  COMPLETED: {
+    status: 'Completed',
+    description:
+      'Work for this milestone and all of its selected solutions is finished'
   }
 };
 
@@ -363,7 +408,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
-        success: 'Your milestone ({{milestone}}) has been updated.',
+        success:
+          'Your milestone (<bold>{{milestone}}</bold>) has been updated.',
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       },
@@ -379,16 +425,20 @@ export const modelToOperationsMisc: Record<string, any> = {
       unsavedChanges_other: '{{count}} unsaved changes',
       removeMilestone: 'Remove milestone',
       noneSpecified: 'None specified',
-      areYouSure: 'Are you sure you want to remove this milestone?',
+      areYouSure: 'Are you sure you want to remove this custom milestone?',
+      areYouSureCommon: 'Are you sure you want to remove this milestone?',
       customTooltip:
         'As opposed to common milestones available in the MINT milestone library, custom milestones were created by this IT Lead and model team specifically for this model.',
       removeDescription:
+        'This action cannot be undone. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
+      removeCommonDescription:
         'This action cannot be undone. You may add this milestone again from the milestone library, but you will lose any changes you have made. Any operational solutions or IT systems associated with this milestone will remain visible in the solution view of your MTO, but will no longer be related to this milestone.',
       goBack: 'Go back',
       leave: 'Are you sure you want to leave ?',
       leaveDescription:
         'You have made {{count}} changes that will not be saved if you navigate away from this view.',
-      successUpdated: 'Your milestone ({{milestone}}) has been updated.',
+      successUpdated:
+        'Your milestone (<bold>{{milestone}}</bold>) has been updated.',
       errorUpdated:
         'There was an error updating your milestone. Please try again. If the error persists, please try again another time.',
       successRemoved: 'Your milestone ({{milestone}}) has been removed.',
@@ -440,7 +490,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       },
       alert: {
         info: 'Before adding this solution, consider checking the <s>solution library</s> to see if MINT offers a similar preset solution.',
-        success: 'Your milestone ({{solution}}) has been updated.',
+        success: 'Your milestone (<bold>{{solution}}</bold>) has been updated.',
         error:
           'There was an error adding your solution. Please try again. If the error persists, please try again another time.'
       },
@@ -461,6 +511,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       noMilestonesTable:
         'This solution is not yet related to any specific model milestones.',
       areYouSure: 'Are you sure you want to remove this solution?',
+      areYouSureCustom: 'Are you sure you want to remove this custom solution?',
       removeDescription:
         'This action cannot be undone. You may add this solution again from the solution library, but you will lose any changes you have made. Any milestones associated with this solution will remain visible in the milestone view of your MTO, but will no longer be related to this solution.',
       removeCustomDescription:
@@ -469,7 +520,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       leave: 'Are you sure you want to leave ?',
       leaveDescription:
         'You have made {{count}} changes that will not be saved if you navigate away from this view.',
-      successUpdated: 'Your solution ({{solution}}) has been updated.',
+      successUpdated:
+        'Your solution (<bold>{{solution}}</bold>) has been updated.',
       errorUpdated:
         'There was an error updating your solution. Please try again. If the error persists, please try again another time.',
       successRemoved: 'Your solution ({{solution}}) has been removed.',
@@ -667,7 +719,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Check <link1>all available milestones</link1> or <button1>create a custom milestone</button1>.',
     addCustomMilestone: 'Create a custom milestone',
     aboutSolution: 'About this solution',
-    commonSolutions: 'Common solutions'
+    commonSolutions: 'Common solutions',
+    alertHeading: 'There are no model milestones that match your search.',
+    alertDescription:
+      'Please double-check your search and try again. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.'
   },
   solutionLibrary: {
     heading: 'Solution library',
@@ -680,12 +735,18 @@ export const modelToOperationsMisc: Record<string, any> = {
       contracts: 'Contracts and contractors ({{count}})',
       crossCutting: 'Cross-cutting groups ({{count}})'
     },
+    cardTypes: {
+      IT_SYSTEM: 'IT system',
+      CONTRACTOR: 'Contracts and contractors',
+      CROSS_CUTTING_GROUP: 'Cross-cutting group',
+      OTHER: 'Other'
+    },
     dontSeeSolution: 'Don’t see the solution you need?',
     checkAllSolutions:
       'Check <link1>all available solutions</link1> or <button1>create a custom solution</button1>.',
     addCustomSolution: 'Create a custom solution',
     aboutThisSolution: 'About this solution',
-    IT_SYSTEM: 'IT System',
+    IT_SYSTEM: 'IT system',
     CONTRACTOR: 'Contract vehicle, contractor, or other contract',
     CROSS_CUTTING_GROUP: 'Cross-cutting group',
     OTHER: 'Other',
@@ -730,30 +791,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     fillOut: 'Please fill out the required field.'
   },
   solutionStatusButton: 'Solution implementation statuses',
-  solutionStatuses: {
-    NOT_STARTED: {
-      status: 'Not started',
-      description: 'No work has started on this IT system or solution'
-    },
-    ONBOARDING: {
-      status: 'Onboarding',
-      description:
-        'Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)'
-    },
-    BACKLOG: {
-      status: 'Backlog',
-      description: 'Model work is on the project team’s backlog'
-    },
-    IN_PROGRESS: {
-      status: 'In progress',
-      description:
-        'Work for this model is in progress (e.g., development, configuration, testing, etc.)'
-    },
-    COMPLETED: {
-      status: 'Completed',
-      description: 'Work related to this model is finished'
-    }
-  }
+  solutionStatuses,
+  milestoneStatusButton: 'Milestone implementation statuses',
+  milestoneStatuses
 };
 
 export default modelToOperations;

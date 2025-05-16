@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -483,8 +484,12 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 	// get the Category
 	var parentCategoryID *uuid.UUID
 	var parentName *string
-	parentIDChange, fieldPresent := changesFields["parent_id"]
-	if fieldPresent {
+	var category *models.MTOCategory
+	var categoryName *string
+	var categoryWasFetched bool
+	parentIDChange, parentIDFieldPresent := changesFields["parent_id"]
+	nameChange, nameFieldPresent := changesFields["name"]
+	if parentIDFieldPresent {
 		var parentCategoryIDString string
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			parentCategoryIDString = fmt.Sprint(parentIDChange.Old)
@@ -500,16 +505,43 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 		// Note, if a parent id wasn't set and deleted, it is excluded from the audit as it is unchanged. EG null --> null never shows up in the audit.
 
 		// attempt to fetch the category, and get parent id from the entry
-		category, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
+		retCategory, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
 		if err != nil {
 			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) { // this can be nil if the category was deleted
 				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
 			}
 		}
-		if category != nil {
-			parentCategoryID = category.ParentID
+		categoryWasFetched = true
+		if retCategory != nil {
+			category = retCategory
+			parentCategoryID = retCategory.ParentID
 		}
 
+	}
+	// prioritize the field change itself, fetch the category if needed
+	if nameFieldPresent {
+		if nameFieldPresent {
+			if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+				categoryName = models.StringPointer(fmt.Sprint(nameChange.Old))
+			} else {
+				categoryName = models.StringPointer(fmt.Sprint(nameChange.New))
+			}
+
+		}
+	} else {
+		if !categoryWasFetched {
+			retCategory, err := loaders.MTOCategory.ByID.Load(ctx, categoryID)
+			if err != nil {
+				if !errors.Is(err, loaders.ErrRecordNotFoundForKey) { // this can be nil if the category was deleted
+					return nil, nil, fmt.Errorf("there was an issue getting meta data for mto category. err %w", err)
+				}
+			}
+			category = retCategory
+		}
+
+		if category != nil {
+			categoryName = helpers.PointerTo(category.Name)
+		}
 	}
 
 	// get the parent category name if possible. This can fail if the parent was deleted
@@ -528,7 +560,7 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 
 	}
 
-	metaNeed := models.NewTranslatedAuditMetaMTOCategory(0, parentName, parentCategoryID)
+	metaNeed := models.NewTranslatedAuditMetaMTOCategory(0, categoryName, parentName, parentCategoryID)
 	metaType := models.TAMetaMTOCategory
 	return &metaNeed, &metaType, nil
 

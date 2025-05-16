@@ -210,6 +210,7 @@ const AddCommonMilestoneForm = ({
             slim
             data-testid="error-alert"
             className="margin-y-4"
+            clearMessage={clearMessage}
           >
             {t('modal.solution.alert.error')}
           </Alert>

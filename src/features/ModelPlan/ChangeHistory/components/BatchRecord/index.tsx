@@ -287,6 +287,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               isMTOCategoryWithMetaData(change.metaData) &&
               change.metaData?.isSubCategory;
 
+            const subCategoryName =
+              change.metaData &&
+              isMTOCategoryWithMetaData(change.metaData) &&
+              change.metaData?.categoryName;
+
             return (
               <span className="text-bold">
                 {isSubCategory ? t('subCategory') : t('category')}{' '}
@@ -294,7 +299,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                   {t(`auditUpdateType.${change.action}`)}
                   {': '}
                 </span>
-                {categoryName || t('dataNotAvailable')}
+                {categoryName || subCategoryName || t('dataNotAvailable')}
               </span>
             );
           })()}
@@ -473,6 +478,12 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
     ? condenseLinkingTableChanges(changeRecords)
     : changeRecords;
 
+  const shouldShowCollapse = !changeRecords.find(
+    change =>
+      change.action === DatabaseOperation.DELETE &&
+      change.tableName === TableName.MTO_CATEGORY
+  );
+
   return (
     <Card className="change-record">
       <div className={classNames('display-flex flex-align-center')}>
@@ -634,6 +645,11 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                     isMTOCategoryWithMetaData(change.metaData) &&
                     change.metaData?.isSubCategory;
 
+                  const subCategoryName =
+                    change.metaData &&
+                    isMTOCategoryWithMetaData(change.metaData) &&
+                    change.metaData?.categoryName;
+
                   return (
                     <Trans
                       shouldUnescape
@@ -643,7 +659,10 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                         mtoType: isSubCategory
                           ? t('subCategory')
                           : t('category'),
-                        name: categoryName || t('dataNotAvailable')
+                        name:
+                          categoryName ||
+                          subCategoryName ||
+                          t('dataNotAvailable')
                       }}
                     />
                   );
@@ -733,25 +752,27 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
         </ul>
       )}
 
-      <CollapsableLink
-        className="margin-left-5"
-        id={`batch-record-${index}`}
-        label={t('showDetails')}
-        closeLabel={t('hideDetails')}
-        labelPosition="bottom"
-        setParentOpen={setOpen}
-        styleLeftBar={false}
-      >
-        <div className="margin-bottom-neg-1">
-          {batchRecords.map(change => (
-            <BatchChanges
-              change={change}
-              connected={changeRecords.length > 1}
-              key={change.id}
-            />
-          ))}
-        </div>
-      </CollapsableLink>
+      {shouldShowCollapse && (
+        <CollapsableLink
+          className="margin-left-5"
+          id={`batch-record-${index}`}
+          label={t('showDetails')}
+          closeLabel={t('hideDetails')}
+          labelPosition="bottom"
+          setParentOpen={setOpen}
+          styleLeftBar={false}
+        >
+          <div className="margin-bottom-neg-1">
+            {batchRecords.map(change => (
+              <BatchChanges
+                change={change}
+                connected={changeRecords.length > 1}
+                key={change.id}
+              />
+            ))}
+          </div>
+        </CollapsableLink>
+      )}
     </Card>
   );
 };

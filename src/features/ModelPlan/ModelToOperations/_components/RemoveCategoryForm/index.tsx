@@ -21,7 +21,7 @@ const RemoveCategoryForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { showMessage, showErrorMessageInModal } = useMessage();
+  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
     refetchQueries: [
@@ -51,6 +51,7 @@ const RemoveCategoryForm = () => {
               slim
               data-testid="mandatory-fields-alert"
               className="margin-y-4"
+              clearMessage={clearMessage}
             >
               {t(`modal.${namespace}.successAlert`)}
             </Alert>

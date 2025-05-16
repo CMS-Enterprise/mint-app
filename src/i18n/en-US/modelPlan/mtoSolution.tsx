@@ -108,7 +108,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
             Onboarding: Work is being planned related to this model (e.g.,
             contract modification, change request, onboarding request, etc.)
           </li>
-          <li>Backlog: Model work is on the project team’s backlog</li>
+          <li>Backlog: Model work is in the project team’s backlog</li>
           <li>
             In progress: Work for this model is in progress (e.g., development,
             configuration, testing, etc.)
@@ -120,11 +120,11 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: {
-      BACKLOG: 'Backlog',
-      COMPLETED: 'Completed',
-      IN_PROGRESS: 'In progress',
       NOT_STARTED: 'Not started',
-      ONBOARDING: 'Onboarding'
+      ONBOARDING: 'Onboarding',
+      BACKLOG: 'Backlog',
+      IN_PROGRESS: 'In progress',
+      COMPLETED: 'Completed'
     },
     order: 1.6
   },
