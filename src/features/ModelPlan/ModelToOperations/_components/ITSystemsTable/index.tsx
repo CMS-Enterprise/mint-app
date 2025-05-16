@@ -75,7 +75,10 @@ const ITSystemsTable = ({
 
   const { location } = history;
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const { openEditSolutionModal, setSolutionID } = useContext(
     EditMTOSolutionContext
@@ -513,6 +516,13 @@ const ITSystemsTable = ({
     }
   }, [isPrintPDF, setPageSize, initPageSize]);
 
+  useEffect(() => {
+    if (params.get('page')) {
+      const pageNum = parseInt(params.get('page') || '0', 10);
+      gotoPage(pageNum - 1);
+    }
+  }, [params, gotoPage]);
+
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -679,6 +689,7 @@ const ITSystemsTable = ({
                       pageSize={state.pageSize}
                       setPageSize={setPageSize}
                       page={[]}
+                      setQueryParam
                     />
                   )}
 

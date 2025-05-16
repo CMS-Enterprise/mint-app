@@ -37,7 +37,7 @@ export const filteredGroupSolutions: Record<
     MtoCommonSolutionKey.IPC
   ],
   iddoc: [MtoCommonSolutionKey.INNOVATION, MtoCommonSolutionKey.ACO_OS],
-  mdm: [MtoCommonSolutionKey.MDM_POR],
+  mdm: [MtoCommonSolutionKey.MDM_POR, MtoCommonSolutionKey.MDM_NCBP],
   pbg: [
     MtoCommonSolutionKey.IPC,
     MtoCommonSolutionKey.SHARED_SYSTEMS,
