@@ -428,24 +428,29 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {(() => {
           const renderPreviousDetails =
             databaseAction !== DatabaseOperation.DELETE &&
-            !!fieldsToMap.find(field => field.oldTranslated) &&
-            change.tableName !== TableName.MTO_CATEGORY;
+            !!fieldsToMap.find(field => field.oldTranslated);
           // If the table is a linking table, don't show previous details
+
+          const hideCategoryDetails =
+            change.tableName === TableName.MTO_CATEGORY &&
+            change.action === DatabaseOperation.DELETE &&
+            fieldsToMap.length === 1 &&
+            fieldsToMap[0].fieldName === 'name';
+
           if (
             isLinkingTable(change.tableName) ||
             change.action === DatabaseOperation.INSERT ||
-            !renderPreviousDetails
+            !renderPreviousDetails ||
+            hideCategoryDetails
           )
             return <></>;
 
           return (
             <>
               {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
-              {renderPreviousDetails && (
-                <div className="text-bold padding-top-105 padding-bottom-1">
-                  {t('previousDetails')}
-                </div>
-              )}
+              <div className="text-bold padding-top-105 padding-bottom-1">
+                {t('previousDetails')}
+              </div>
 
               {fieldsToMap.map(field => {
                 if (!field.oldTranslated) return <div key={field.id} />;
