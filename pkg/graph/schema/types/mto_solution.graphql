@@ -1,0 +1,77 @@
+"""
+The possible statuses of a Solution.
+"""
+enum MTOSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+}
+
+# MTOSolution represents a Solution that has been added to a Model Plan's MTO
+type MTOSolution {
+  id: UUID!
+  name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  facilitatedBy:  [MTOFacilitator!]
+  """
+  A place to store the other facilitator information if selected as an option for facilitatedBy.
+  Note, this data will be cleared if other is removed as an option
+  """
+  facilitatedByOther: String
+  neededBy: Time
+  status: MTOSolutionStatus!
+  riskIndicator: MTORiskIndicator
+  key: MTOCommonSolutionKey
+  type: MTOSolutionType # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  pocName: String
+  pocEmail: String
+
+  #Meta Data
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  # Custom Resolvers
+  milestones: [MTOMilestone!]! # Can be empty, since you can have a solution with no milestones
+  addedFromSolutionLibrary: Boolean!
+  commonSolution: MTOCommonSolution
+}
+
+input MTOSolutionChanges @goModel(model: "map[string]interface{}") {
+  name: String # If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  facilitatedBy:  [MTOFacilitator!]
+  facilitatedByOther: String
+  neededBy: Time
+  status: MTOSolutionStatus
+  riskIndicator: MTORiskIndicator
+  """
+  If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!)
+  """
+  type: MTOSolutionType 
+  pocName: String
+  pocEmail: String
+}
+
+input MTOMilestoneLinks {
+  milestoneIDs: [UUID!]
+}
+
+extend type Mutation {
+  createMTOSolutionCustom(modelPlanID: UUID!, solutionType: MTOSolutionType!,  name: String!, pocName: String!, pocEmail: String!): MTOSolution!
+  @hasRole(role: MINT_USER)
+  createMTOSolutionCommon(modelPlanID: UUID!, key: MTOCommonSolutionKey!, milestonesToLink: [UUID!]): MTOSolution!
+  @hasRole(role: MINT_USER)
+  updateMTOSolution(id: UUID!, changes: MTOSolutionChanges!, milestoneLinks: MTOMilestoneLinks): MTOSolution!
+  @hasRole(role: MINT_USER)
+  deleteMTOSolution(id: UUID!): Boolean!
+  @hasRole(role: MINT_USER)
+}
+
+extend type Query {
+  mtoSolution(id: UUID!): MTOSolution!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

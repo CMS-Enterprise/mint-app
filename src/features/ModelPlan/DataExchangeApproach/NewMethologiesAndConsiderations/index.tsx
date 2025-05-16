@@ -92,7 +92,8 @@ const NewMethodologiesAndConsiderations = () => {
   const { __typename, id, ...defaultValues } = formData;
 
   const methods = useForm<NewMethodologiesAndConsiderationsType>({
-    defaultValues
+    defaultValues,
+    mode: 'onChange'
   });
 
   const {

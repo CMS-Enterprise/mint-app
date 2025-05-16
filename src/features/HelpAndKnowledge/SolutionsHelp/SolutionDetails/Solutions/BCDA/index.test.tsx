@@ -5,7 +5,7 @@ import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutions
 
 import BCDATimeLine from './index';
 
-describe('The ITSolutionsWarning component', () => {
+describe('The MTOWarning component', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter

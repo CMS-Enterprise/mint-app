@@ -1,6 +1,7 @@
 import {
   DataExchangeApproachStatus,
   ModelPhase,
+  MtoMilestoneStatus,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -21,14 +22,19 @@ const statusText: Record<ModelPhase, string> = {
 };
 
 const taskListStatus: Record<
-  TaskStatus | DataExchangeApproachStatus | PrepareForClearanceStatus,
+  | TaskStatus
+  | DataExchangeApproachStatus
+  | MtoMilestoneStatus
+  | PrepareForClearanceStatus,
   string
 > = {
   [TaskStatus.READY]: 'Ready to start',
+  [MtoMilestoneStatus.NOT_STARTED]: 'Not started',
   [TaskStatus.IN_PROGRESS]: 'In progress',
   [TaskStatus.READY_FOR_REVIEW]: 'Ready for review',
   [TaskStatus.READY_FOR_CLEARANCE]: 'Ready for clearance',
   [DataExchangeApproachStatus.COMPLETE]: 'Complete',
+  [MtoMilestoneStatus.COMPLETED]: 'Completed',
   [PrepareForClearanceStatus.CANNOT_START]: 'Cannot start yet'
 };
 

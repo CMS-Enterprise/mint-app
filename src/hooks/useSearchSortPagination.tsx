@@ -13,6 +13,7 @@ type SearchSortPaginationProps<T, K> = {
   sortOptions: SortProps<K>[];
   filterFunction: (query: string, items: T[]) => T[];
   sortFunction: (items: T[], sort: K) => T[];
+  defaultItemsPerPage?: number;
 } & JSX.IntrinsicElements['div'];
 
 /**
@@ -42,7 +43,8 @@ const useSearchSortPagination = <T, K extends string>({
   items,
   sortOptions,
   filterFunction,
-  sortFunction
+  sortFunction,
+  defaultItemsPerPage = 9
 }: SearchSortPaginationProps<T, K>) => {
   const history = useHistory();
 
@@ -65,7 +67,7 @@ const useSearchSortPagination = <T, K extends string>({
   const [query, setQuery] = useState<string>('');
 
   // Pagination Configuration
-  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(defaultItemsPerPage);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -97,18 +99,19 @@ const useSearchSortPagination = <T, K extends string>({
     }
 
     // Update the URL's query parameters
-    if (query) {
+    if (query.trim()) {
       params.set('query', query);
+      params.set('page', '1');
     } else {
       // Delete the 'query' parameter
       params.delete('query');
     }
-    params.delete('page');
+
     history.push({ search: params.toString() });
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
-  }, [query, searchChanges, setCurrentPage]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
@@ -139,14 +142,14 @@ const useSearchSortPagination = <T, K extends string>({
     setPageCount(Math.ceil(searchAndSortedItems.length / itemsPerPage));
   }, [searchAndSortedItems, currentPage, setPageCount, itemsPerPage]);
 
-  // Reset pagination if itemsPerPage changes and the current page is greater than the new page count
+  // Reset pagination if itemsPerPage changes and the current page is greater than the new page count or if items per page is set to "show all"
   useEffect(() => {
-    if (currentItems.length === 0) {
+    if (currentItems.length === 0 || itemsPerPage === 100000) {
       params.set('page', '1');
       history.push({ search: params.toString() });
       setCurrentPage(1);
     }
-  }, [currentItems]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentItems, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sort the changes when the sort option changes.
   useEffect(() => {
@@ -178,6 +181,7 @@ const useSearchSortPagination = <T, K extends string>({
   };
 
   return {
+    allItems: searchAndSortedItems,
     currentItems,
     pagination: {
       currentPage,

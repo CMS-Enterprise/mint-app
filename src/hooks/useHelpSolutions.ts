@@ -6,10 +6,10 @@ import {
   helpSolutions,
   HelpSolutionType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { GetPossibleSolutionsQuery } from 'gql/generated/graphql';
-import GetPossibleSolutions from 'gql/operations/Solutions/GetPossibleSolutions';
-
-import useCacheQuery from './useCacheQuery';
+import {
+  GetPossibleSolutionsQuery,
+  useGetPossibleSolutionsQuery
+} from 'gql/generated/graphql';
 
 type UseHelpSolutionType = {
   helpSolutions: HelpSolutionType[];
@@ -35,7 +35,7 @@ export const mapContactsToSolutions = (
 };
 
 const useHelpSolution = (): UseHelpSolutionType => {
-  const { data, loading } = useCacheQuery(GetPossibleSolutions);
+  const { data, loading } = useGetPossibleSolutionsQuery();
 
   const helpSolutionsWithContacts = useMemo(() => {
     return mapContactsToSolutions(

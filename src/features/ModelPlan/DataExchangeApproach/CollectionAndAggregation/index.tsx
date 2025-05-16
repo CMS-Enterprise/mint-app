@@ -89,7 +89,8 @@ const CollectionAndAggregation = () => {
   const { __typename, id, ...defaultValues } = formData;
 
   const methods = useForm<CollectionAndAggregationType>({
-    defaultValues
+    defaultValues,
+    mode: 'onChange'
   });
 
   const {

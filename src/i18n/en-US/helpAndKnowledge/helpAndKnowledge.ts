@@ -4,10 +4,11 @@ import {
 } from 'features/HelpAndKnowledge/Articles';
 import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+
 import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
-} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
+} from 'types/operationalSolutionCategories';
 
 interface SolutionModelType {
   about: AboutConfigType;
@@ -21,6 +22,11 @@ type SolutionTType = {
 type SolutionCategoryType = {
   header: string;
   subHeader?: string;
+  description: string;
+};
+
+type CardInfoType = {
+  title: string;
   description: string;
 };
 
@@ -132,7 +138,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link: 'innovation-payment-contract',
           external: false
         },
         {
@@ -238,7 +244,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link: 'innovation-payment-contract',
           external: false
         },
         {
@@ -328,7 +334,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -603,7 +609,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -768,7 +774,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -986,19 +992,19 @@ The Model team will receive an implementation milestone schedule that identifies
           items: [],
           links: [
             {
-              link: '/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
+              link: 'centralized-data-exchange',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
+              link: 'health-data-reporting',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
+              link: 'expanded-data-feedback-reporting',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=model-space&section=about',
+              link: 'model-space',
               external: false
             }
           ],
@@ -1846,7 +1852,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link: 'innovation-payment-contract',
           external: false
         },
         {
@@ -1983,7 +1989,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       links: [
         {
           external: false,
-          link: `/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about`
+          link: `innovation-support-platform`
         }
       ],
       components: [
@@ -2045,10 +2051,27 @@ Model Space offers model teams and their contractors templates or Databricks not
   }
 };
 
-const helpCategories: Record<ArticleCategories, string> = {
-  [ArticleCategories.GETTING_STARTED]: 'Getting started',
-  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation',
-  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: 'Model concept and design'
+const helpCategories: Record<ArticleCategories, CardInfoType> = {
+  [ArticleCategories.GETTING_STARTED]: {
+    title: 'Getting started',
+    description:
+      'Use these articles to help you get started with the creation of your Model Plan.'
+  },
+  [ArticleCategories.IT_IMPLEMENTATION]: {
+    title: 'IT implementation',
+    description:
+      'Use these articles to better understand what’s involved in your model to IT implementation.'
+  },
+  [ArticleCategories.MTO_TUTORIALS]: {
+    title: 'MINT tutorials',
+    description:
+      'Step-by-step guides to help you navigate MINT and it’s capabilities.'
+  },
+  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: {
+    title: 'Model concept and design',
+    description:
+      'Use these articles to better understand what’s involved in the model concept and design phase.'
+  }
 };
 
 const helpArticleNames: Record<HelpArticle, string> = {
@@ -2078,15 +2101,23 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]:
     'Fraud and abuse waiver templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
-    'Quality Vertical health equity resources on SharePoint'
+    'Quality Vertical health equity resources on SharePoint',
+  [HelpArticle.CREATING_MTO_MATRIX]:
+    'Creating your Model-to-operations matrix (MTO) in MINT',
+  [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
+  [HelpArticle.USING_MILESTONE_TABLE]: 'Using the milestone table',
+  [HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE]:
+    'Using the IT system and solution table',
+  [HelpArticle.USING_TABLE_ACTIONS]: 'Using the table actions area',
+  [HelpArticle.USING_MILESTONE_LIBRARY]: 'Using the milestone library',
+  [HelpArticle.USING_SOLUTION_LIBRARY]: 'Using the solution library',
+  [HelpArticle.ADD_CUSTOM_MILESTONE]: 'How to add a custom milestone',
+  [HelpArticle.ADD_CUSTOM_SOLUTION]: 'How to add a custom solution',
+  [HelpArticle.UPDATING_MTO_STATUS]: 'Updating your MTO status',
+  [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO'
 };
 
-type ExternalResourcesType = {
-  title: string;
-  description: string;
-};
-
-const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
+const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
     title: 'Announcement materials on SharePoint',
     description:

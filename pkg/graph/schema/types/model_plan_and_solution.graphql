@@ -1,0 +1,23 @@
+enum ModelBySolutionStatus {
+  PLANNED
+  ACTIVE
+  ENDED
+  OTHER
+}
+
+extend type ModelPlan {
+  modelBySolutionStatus: ModelBySolutionStatus!
+}
+
+
+type ModelPlanAndMTOCommonSolution {
+  mtoCommonSolution: MTOCommonSolution!
+  key: MTOCommonSolutionKey!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByMTOSolutionKey(solutionKey: MTOCommonSolutionKey!): [ModelPlanAndMTOCommonSolution!]!
+  @hasRole(role: MINT_USER)
+}

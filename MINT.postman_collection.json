@@ -25,7 +25,6 @@
 									"modelLeadID = responseData.collaborators[0].id",
 									"paymentsID = responseData.payments.id",
 									"dataExchangeApproachID = responseData.dataExchangeApproach.id",
-									"firstOpNeed = responseData.operationalNeeds[0].id",
 									"userID = responseData.createdByUserAccount.id",
 									"",
 									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
@@ -38,7 +37,6 @@
 									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
 									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
 									"pm.collectionVariables.set(\"dataExchangeApproachID\", dataExchangeApproachID)",
-									"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
 									"pm.collectionVariables.set(\"userID\", userID);"
 								],
 								"type": "text/javascript",
@@ -52,7 +50,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n    dataExchangeApproach{\n        id\n    }\n  }\n}\n  ",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n\n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n    dataExchangeApproach{\n        id\n    }\n  }\n}\n  ",
 								"variables": ""
 							}
 						},
@@ -74,7 +72,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -84,8 +83,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation shareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {\n    shareModelPlan(modelPlanID: $modelPlanID, viewFilter: $viewFilter, usernames: $usernames, optionalMessage: $optionalMessage)\n}\n",
-								"variables": "{\n  \"modelPlanID\": \"{{modelPlanID}}\",\n  \"viewFilter\": \"CMMI\",\n  \"usernames\": [\"ABCD\", \"TEST\"],\n  \"optionalMessage\": \"\"\n}\n"
+								"query": "mutation shareModelPlan {\n    shareModelPlan(\n        modelPlanID: \"{{modelPlanID}}\",\n        #Note viewFilter and share section are not meant to be used at once\n        # if both are provided, the Share section is prioritized\n        # viewFilter: CMMI,\n        modelShareSection: MODEL_PLAN\n        usernames: [\"ABCD\", \"TEST\"],\n        optionalMessage: \"This was a triumph. I'm making a note here, huge success\"\n        )\n}\n",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -233,6 +232,27 @@
 							"graphql": {
 								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        possibleOperationalSolution{\n            name\n        }\n        possibleOperationalSolutionID\n        key\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            taskListStatus\n            suggestedPhase {\n                phase\n                suggestedStatuses\n            }\n            previousSuggestedPhase\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
 								"variables": "{\n  \"operationalSolutionKey\": \"INNOVATION\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Model Plans By MTOCommonSolution Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlansByMTOSolutionKey {\n    modelPlansByMTOSolutionKey (solutionKey:\n     INNOVATION) {\n        mtoCommonSolution{\n            name\n        }\n        \n        key\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            taskListStatus\n            suggestedPhase {\n                phase\n                suggestedStatuses\n            }\n            previousSuggestedPhase\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -465,6 +485,69 @@
 							"graphql": {
 								"query": "mutation updatePlanItTools ($id: UUID!, $changes: PlanITToolsChanges!) {\n    updatePlanItTools (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        gcPartCD\n        gcPartCDOther\n        gcPartCDNote\n        gcCollectBids\n        gcCollectBidsOther\n        gcCollectBidsNote\n        gcUpdateContract\n        gcUpdateContractOther\n        gcUpdateContractNote\n        ppToAdvertise\n        ppToAdvertiseOther\n        ppToAdvertiseNote\n        ppCollectScoreReview\n        ppCollectScoreReviewOther\n        ppCollectScoreReviewNote\n        ppAppSupportContractor\n        ppAppSupportContractorOther\n        ppAppSupportContractorNote\n        ppCommunicateWithParticipant\n        ppCommunicateWithParticipantOther\n        ppCommunicateWithParticipantNote\n        ppManageProviderOverlap\n        ppManageProviderOverlapOther\n        ppManageProviderOverlapNote\n        bManageBeneficiaryOverlap\n        bManageBeneficiaryOverlapOther\n        bManageBeneficiaryOverlapNote\n        oelHelpdeskSupport\n        oelHelpdeskSupportOther\n        oelHelpdeskSupportNote\n        oelManageAco\n        oelManageAcoOther\n        oelManageAcoNote\n        oelPerformanceBenchmark\n        oelPerformanceBenchmarkOther\n        oelPerformanceBenchmarkNote\n        oelProcessAppeals\n        oelProcessAppealsOther\n        oelProcessAppealsNote\n        oelEvaluationContractor\n        oelEvaluationContractorOther\n        oelEvaluationContractorNote\n        oelCollectData\n        oelCollectDataOther\n        oelCollectDataNote\n        oelObtainData\n        oelObtainDataOther\n        oelObtainDataNote\n        oelClaimsBasedMeasures\n        oelClaimsBasedMeasuresOther\n        oelClaimsBasedMeasuresNote\n        oelQualityScores\n        oelQualityScoresOther\n        oelQualityScoresNote\n        oelSendReports\n        oelSendReportsOther\n        oelSendReportsNote\n        oelLearningContractor\n        oelLearningContractorOther\n        oelLearningContractorNote\n        oelParticipantCollaboration\n        oelParticipantCollaborationOther\n        oelParticipantCollaborationNote\n        oelEducateBeneficiaries\n        oelEducateBeneficiariesOther\n        oelEducateBeneficiariesNote\n        pMakeClaimsPayments\n        pMakeClaimsPaymentsOther\n        pMakeClaimsPaymentsNote\n        pInformFfs\n        pInformFfsOther\n        pInformFfsNote\n        pNonClaimsBasedPayments\n        pNonClaimsBasedPaymentsOther\n        pNonClaimsBasedPaymentsNote\n        pSharedSavingsPlan\n        pSharedSavingsPlanOther\n        pSharedSavingsPlanNote\n        pRecoverPayments\n        pRecoverPaymentsOther\n        pRecoverPaymentsNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        status\n    }\n}",
 								"variables": "{\n  \"id\": \"{{itToolsID}}\",\n  \"changes\": {\n    \"gcPartCD\": [\n      \"\"\n    ],\n    \"gcPartCDOther\": \"\",\n    \"gcPartCDNote\": \"\",\n    \"gcCollectBids\": [\n      \"\"\n    ],\n    \"gcCollectBidsOther\": \"\",\n    \"gcCollectBidsNote\": \"\",\n    \"gcUpdateContract\": [\n      \"\"\n    ],\n    \"gcUpdateContractOther\": \"\",\n    \"gcUpdateContractNote\": \"\",\n    \"ppToAdvertise\": [\n      \"\"\n    ],\n    \"ppToAdvertiseOther\": \"\",\n    \"ppToAdvertiseNote\": \"\",\n    \"ppCollectScoreReview\": [\n      \"\"\n    ],\n    \"ppCollectScoreReviewOther\": \"\",\n    \"ppCollectScoreReviewNote\": \"\",\n    \"ppAppSupportContractor\": [\n      \"\"\n    ],\n    \"ppAppSupportContractorOther\": \"\",\n    \"ppAppSupportContractorNote\": \"\",\n    \"ppCommunicateWithParticipant\": [\n      \"\"\n    ],\n    \"ppCommunicateWithParticipantOther\": \"\",\n    \"ppCommunicateWithParticipantNote\": \"\",\n    \"ppManageProviderOverlap\": [\n      \"\"\n    ],\n    \"ppManageProviderOverlapOther\": \"\",\n    \"ppManageProviderOverlapNote\": \"\",\n    \"bManageBeneficiaryOverlap\": [\n      \"\"\n    ],\n    \"bManageBeneficiaryOverlapOther\": \"\",\n    \"bManageBeneficiaryOverlapNote\": \"\",\n    \"oelHelpdeskSupport\": [\n      \"\"\n    ],\n    \"oelHelpdeskSupportOther\": \"\",\n    \"oelHelpdeskSupportNote\": \"\",\n    \"oelManageAco\": [\n      \"\"\n    ],\n    \"oelManageAcoOther\": \"\",\n    \"oelManageAcoNote\": \"\",\n    \"oelPerformanceBenchmark\": [\n      \"\"\n    ],\n    \"oelPerformanceBenchmarkOther\": \"\",\n    \"oelPerformanceBenchmarkNote\": \"\",\n    \"oelProcessAppeals\": [\n      \"\"\n    ],\n    \"oelProcessAppealsOther\": \"\",\n    \"oelProcessAppealsNote\": \"\",\n    \"oelEvaluationContractor\": [\n      \"\"\n    ],\n    \"oelEvaluationContractorOther\": \"\",\n    \"oelEvaluationContractorNote\": \"\",\n    \"oelCollectData\": [\n      \"\"\n    ],\n    \"oelCollectDataOther\": \"\",\n    \"oelCollectDataNote\": \"\",\n    \"oelObtainData\": [\n      \"\"\n    ],\n    \"oelObtainDataOther\": \"\",\n    \"oelObtainDataNote\": \"\",\n    \"oelClaimsBasedMeasures\": [\n      \"\"\n    ],\n    \"oelClaimsBasedMeasuresOther\": \"\",\n    \"oelClaimsBasedMeasuresNote\": \"\",\n    \"oelQualityScores\": [\n      \"\"\n    ],\n    \"oelQualityScoresOther\": \"\",\n    \"oelQualityScoresNote\": \"\",\n    \"oelSendReports\": [\n      \"\"\n    ],\n    \"oelSendReportsOther\": \"\",\n    \"oelSendReportsNote\": \"\",\n    \"oelLearningContractor\": [\n      \"\"\n    ],\n    \"oelLearningContractorOther\": \"\",\n    \"oelLearningContractorNote\": \"\",\n    \"oelParticipantCollaboration\": [\n      \"\"\n    ],\n    \"oelParticipantCollaborationOther\": \"\",\n    \"oelParticipantCollaborationNote\": \"\",\n    \"oelEducateBeneficiaries\": [\n      \"\"\n    ],\n    \"oelEducateBeneficiariesOther\": \"\",\n    \"oelEducateBeneficiariesNote\": \"\",\n    \"pMakeClaimsPayments\": [\n      \"\"\n    ],\n    \"pMakeClaimsPaymentsOther\": \"\",\n    \"pMakeClaimsPaymentsNote\": \"\",\n    \"pInformFfs\": [\n      \"\"\n    ],\n    \"pInformFfsOther\": \"\",\n    \"pInformFfsNote\": \"\",\n    \"pNonClaimsBasedPayments\": [\n      \"\"\n    ],\n    \"pNonClaimsBasedPaymentsOther\": \"\",\n    \"pNonClaimsBasedPaymentsNote\": \"\",\n    \"pSharedSavingsPlan\": [\n      \"\"\n    ],\n    \"pSharedSavingsPlanOther\": \"\",\n    \"pSharedSavingsPlanNote\": \"\",\n    \"pRecoverPayments\": [\n      \"\"\n    ],\n    \"pRecoverPaymentsOther\": \"\",\n    \"pRecoverPaymentsNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PlanParticipantsAndProvidersUpdate And make 6 suggested milestones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: true\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NEED_POLICIES\n    # providerOverlapHierarchy:\n    # providerOverlapNote:\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PlanParticipantsAndProvidersUpdate OverlapNotApplicable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: null\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to null makes the hierarchy question not apply.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PlanParticipantsAndProvidersUpdateGainshareNotApplicable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NO_ISSUES\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to Yes_No_Issues doesn't make the hierarchy question not apply. Make it null if you want to do that instead.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -2611,7 +2694,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query translatedAuditCollection {\n  translatedAuditCollection(modelPlanID: \"{{modelPlanID}}\"\n    # limit: 5 \n    # offset: 3\n  ) {\n    id\n    modelName\n    tableID\n    tableName\n    primaryKey\n    date\n    action\n\n    actorID\n    actorName\n\n    changeID\n    metaDataType\n    metaData {\n    ... on TranslatedAuditMetaBaseStruct{\n            version\n            tableName\n        }\n        ... on TranslatedAuditMetaGeneric {\n            version\n            tableName\n            relation\n            relationContent\n        }        \n        ... on TranslatedAuditMetaDiscussionReply {\n            version\n            tableName\n            discussionID\n            discussionContent\n            numberOfReplies\n        }    \n        ... on TranslatedAuditMetaOperationalNeed {\n            version\n            tableName\n            needName\n            isOther\n        }    \n        ... on TranslatedAuditMetaOperationalSolution {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n            numberOfSubtasks\n        }    \n        ... on TranslatedAuditMetaOperationalSolutionSubtask {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            numberOfSubtasks\n            solutionOtherHeader\n            solutionIsOther\n            subtaskName\n        } \n       ... on TranslatedAuditMetaDocumentSolutionLink {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n\n            documentID\n            \n            documentName\n            documentType\n            documentOtherType\n            documentVisibility\n        }            \n    }\n\n    createdBy\n    # createdByUserAccount\n    createdDts\n    modifiedBy\n    # modifiedByUserAccount\n    modifiedDts\n\n    translatedFields {\n        fieldName\n        fieldNameTranslated\n        id\n\n        changeType\n        dataType\n        formType\n\n        referenceLabel\n        questionType\n        notApplicableQuestions\n        old\n        oldTranslated\n        new\n        newTranslated\n\n    }\n\n  }\n}\n",
+								"query": "query translatedAuditCollection {\n  translatedAuditCollection(modelPlanID: \"{{modelPlanID}}\"\n    # limit: 5 \n    # offset: 3\n  ) {\n    id\n    # modelName\n    tableID\n    tableName\n    primaryKey\n    date\n    action\n\n    actorID\n    actorName\n\n    changeID\n    metaDataType\n    metaData {\n    ... on TranslatedAuditMetaBaseStruct{\n            version\n            tableName\n        }\n        ... on TranslatedAuditMetaGeneric {\n            version\n            tableName\n            relation\n            relationContent\n        }        \n        ... on TranslatedAuditMetaDiscussionReply {\n            version\n            tableName\n            discussionID\n            discussionContent\n            numberOfReplies\n        }    \n        ... on TranslatedAuditMetaOperationalNeed {\n            version\n            tableName\n            needName\n            isOther\n        }    \n        ... on TranslatedAuditMetaOperationalSolution {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n            numberOfSubtasks\n        }    \n        ... on TranslatedAuditMetaOperationalSolutionSubtask {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            numberOfSubtasks\n            solutionOtherHeader\n            solutionIsOther\n            subtaskName\n        } \n       ... on TranslatedAuditMetaDocumentSolutionLink {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n\n            documentID\n            \n            documentName\n            documentType\n            documentOtherType\n            documentVisibility\n        }            \n        ... on TranslatedAuditMetaMTOCategory {\n            version\n            tableName\n            categoryName\n            isSubCategory\n            parentCategoryID\n            parentCategoryName\n        }         \n    }\n\n    createdBy\n    # createdByUserAccount\n    createdDts\n    modifiedBy\n    # modifiedByUserAccount\n    modifiedDts\n\n    translatedFields {\n        fieldName\n        fieldNameTranslated\n        id\n\n        changeType\n        dataType\n        formType\n\n        referenceLabel\n        questionType\n        notApplicableQuestions\n        old\n        oldTranslated\n        new\n        newTranslated\n\n    }\n\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2644,7 +2727,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        solutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -2665,8 +2748,1191 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
-								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"ACO_OS\"]\n    }\n}"
+								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        solutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"solutions\": [\"ACO_OS\"]\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ECHIMP",
+			"item": [
+				{
+					"name": "CR Echimp by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpCR {\n    echimpCR(id: \"FFS3550\") {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary {\n            rawContent\n        }\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All CR Echimp data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpCR {\n    echimpCRs {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary {\n            rawContent\n        }\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Echimp CRS And TDLS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpCRAndTDLS {\n    echimpCRAndTDLS{\n        __typename\n    ... on EChimpCR {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary {\n            rawContent\n        }\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n    ... on     EChimpTDL {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TDL Echimp by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpTDL {\n    echimpTDL(id: \"TDL240535\") {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL TDL Echimp data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpTDL {\n    echimpTDLs {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Model Plan with ECHIMP data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        echimpCRs{\n            title\n        }\n        echimpTDLs{\n            title\n        }\n\n    }\n}",
+								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Models to Operations Matrix",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Create Standard Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation CreateStandardCategories {\n    createStandardCategories(modelPlanID: \"{{modelPlanID}}\")\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTOCategories",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOCategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoCategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoCategoryID\", mtoCategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOCategory {\ncreateMTOCategory(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Category 0\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    # modelPlanID\n    position\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteMTOCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation {\n  deleteMTOCategory(id: \"{{mtoCategoryID}}\")\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4 MTO Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data",
+											"",
+											"mtoCategory0ID = responseData.createCategory0.id",
+											"pm.collectionVariables.set(\"mtoCategory0ID\", mtoCategory0ID);",
+											"",
+											"mtoCategory1ID = responseData.createCategory1.id",
+											"pm.collectionVariables.set(\"mtoCategory1ID\", mtoCategory1ID);",
+											"",
+											"mtoCategory2ID = responseData.createCategory2.id",
+											"pm.collectionVariables.set(\"mtoCategory2ID\", mtoCategory2ID);",
+											"",
+											"mtoCategory3ID = responseData.createCategory3.id",
+											"pm.collectionVariables.set(\"mtoCategory3ID\", mtoCategory3ID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOCategories {\n  createCategory0: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Category 0\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  \n  createCategory1: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Category 1\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  \n  createCategory2: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Category 2\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  \n  createCategory3: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Category 3\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n}\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "16 MTO SubCategories for 4 Parent Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data;",
+											"",
+											"// Subcategories for Category 0",
+											"let mtoSubcategory00ID = responseData.createSubcategory00.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory00ID\", mtoSubcategory00ID);",
+											"",
+											"let mtoSubcategory01ID = responseData.createSubcategory01.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory01ID\", mtoSubcategory01ID);",
+											"",
+											"let mtoSubcategory02ID = responseData.createSubcategory02.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory02ID\", mtoSubcategory02ID);",
+											"",
+											"let mtoSubcategory03ID = responseData.createSubcategory03.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory03ID\", mtoSubcategory03ID);",
+											"",
+											"// Subcategories for Category 1",
+											"let mtoSubcategory10ID = responseData.createSubcategory10.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory10ID\", mtoSubcategory10ID);",
+											"",
+											"let mtoSubcategory11ID = responseData.createSubcategory11.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory11ID\", mtoSubcategory11ID);",
+											"",
+											"let mtoSubcategory12ID = responseData.createSubcategory12.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory12ID\", mtoSubcategory12ID);",
+											"",
+											"let mtoSubcategory13ID = responseData.createSubcategory13.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory13ID\", mtoSubcategory13ID);",
+											"",
+											"// Subcategories for Category 2",
+											"let mtoSubcategory20ID = responseData.createSubcategory20.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory20ID\", mtoSubcategory20ID);",
+											"",
+											"let mtoSubcategory21ID = responseData.createSubcategory21.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory21ID\", mtoSubcategory21ID);",
+											"",
+											"let mtoSubcategory22ID = responseData.createSubcategory22.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory22ID\", mtoSubcategory22ID);",
+											"",
+											"let mtoSubcategory23ID = responseData.createSubcategory23.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory23ID\", mtoSubcategory23ID);",
+											"",
+											"// Subcategories for Category 3",
+											"let mtoSubcategory30ID = responseData.createSubcategory30.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory30ID\", mtoSubcategory30ID);",
+											"",
+											"let mtoSubcategory31ID = responseData.createSubcategory31.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory31ID\", mtoSubcategory31ID);",
+											"",
+											"let mtoSubcategory32ID = responseData.createSubcategory32.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory32ID\", mtoSubcategory32ID);",
+											"",
+											"let mtoSubcategory33ID = responseData.createSubcategory33.id;",
+											"pm.collectionVariables.set(\"mtoSubcategory33ID\", mtoSubcategory33ID);",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOSubcategories {\n  # Subcategories for Category 0\n  createSubcategory00: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 00\",\n    parentID: \"{{mtoCategory0ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory01: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 01\",\n    parentID: \"{{mtoCategory0ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory02: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 02\",\n    parentID: \"{{mtoCategory0ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory03: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 03\",\n    parentID: \"{{mtoCategory0ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n\n  # Subcategories for Category 1\n  createSubcategory10: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 10\",\n    parentID: \"{{mtoCategory1ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory11: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 11\",\n    parentID: \"{{mtoCategory1ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory12: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 12\",\n    parentID: \"{{mtoCategory1ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory13: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 13\",\n    parentID: \"{{mtoCategory1ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n\n  # Subcategories for Category 2\n  createSubcategory20: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 20\",\n    parentID: \"{{mtoCategory2ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory21: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 21\",\n    parentID: \"{{mtoCategory2ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory22: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 22\",\n    parentID: \"{{mtoCategory2ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory23: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 23\",\n    parentID: \"{{mtoCategory2ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n\n  # Subcategories for Category 3\n  createSubcategory30: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 30\",\n    parentID: \"{{mtoCategory3ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory31: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 31\",\n    parentID: \"{{mtoCategory3ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory32: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 32\",\n    parentID: \"{{mtoCategory3ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n  createSubcategory33: createMTOCategory(\n    modelPlanID: \"{{modelPlanID}}\",\n    name: \"Awesome Subcategory 33\",\n    parentID: \"{{mtoCategory3ID}}\"\n  ) {\n    id\n    name\n    isUncategorized\n    position\n  }\n}\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RenameMTOCategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoCategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoCategoryID\", mtoCategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation RenameMTOCategory {\nrenameMTOCategory(id: \"{{mtoCategoryID}}\",\nname: \"Awesome renamed Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reorder MTO Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation ReorderMTOCategory {\nreorderMTOCategory(id: \"{{mtoCategoryID}}\"\n,newOrder: 0\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    position\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOSubcategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoSubcategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoSubcategoryID\", mtoSubcategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOCategory {\ncreateMTOCategory(modelPlanID: \"{{modelPlanID}}\",\nname: \"Awesome Sub Category 0\"\n,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    position\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reorder MTO Subcategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation ReorderMTOCategory {\nreorderMTOCategory(id: \"{{mtoSubcategoryID}}\"\n# ,newOrder: 0\n,parentID: \"{{mtoCategoryID}}\"\n) {\n    position\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RenameMTOSubcategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOCategory",
+											"",
+											"mtoCategoryID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoCategoryID\", mtoCategoryID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation RenameMTOSubcategory {\nrenameMTOCategory(id: \"{{mtoSubcategoryID}}\",\nname: \"Awesome renamed Sub Category\"\n# ,parentID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    isUncategorized\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Milestones",
+					"item": [
+						{
+							"name": "NewMTOMilestone (Custom)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOMilestoneCustom",
+											"",
+											"mtoMilestoneID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoMilestoneID\", mtoMilestoneID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCustom(modelPlanID: \"{{modelPlanID}}\",\n    name: \"Uncategorized milestone 2\"\n    # mtoCategoryID: \"\"\n) {\n    id\n    name\n    addedFromMilestoneLibrary\n    facilitatedBy\n    facilitatedByOther\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }    \n    key\n\n    # commonMilestone\n    # solutions\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOMilestone (Common)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOMilestoneCommon",
+											"",
+											"mtoMilestoneID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoMilestoneID\", mtoMilestoneID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOMilestone {\n    createMTOMilestoneCommon(modelPlanID: \"{{modelPlanID}}\",\n    commonMilestoneKey: MANAGE_CD,\n    commonSolutions: [INNOVATION, ACO_OS]\n) {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }        \n\n    # commonMilestone\n    # solutions\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMTOMilestone {\n    mtoMilestone(id: \"{{mtoMilestoneID}}\") {\n    id\n    name\n    key\n    addedFromMilestoneLibrary\n    facilitatedBy\n    facilitatedByOther\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n            position\n        }\n        subCategory{\n            name\n            position\n        }\n    }    \n\n    # commonMilestone\n    # solutions\n    # category\n    # subCategory\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation udpateMTOMilestone {\nupdateMTOMilestone(id: \"{{mtoMilestoneID}}\",\nchanges: {\n    mtoCategoryID: \"{{mtoCategoryID}}\"\n    facilitatedBy: [IT_LEAD, OTHER],\n    facilitatedByOther: \"Someone really cool\"\n    riskIndicator: AT_RISK,\n    status: IN_PROGRESS\n    needBy: \"2024-10-31T17:20:21.959953Z\"\n},\nsolutionLinks: {\n    solutionIDs: [\"{{mtoSolutionID}}\"],\n    commonSolutionKeys: [APPS],\n}\n) {\n    id\n    name\n    facilitatedBy\n    facilitatedByOther\n    needBy\n    status\n    riskIndicator\n    # isDraftMilestone\n    mtoCategoryID\n    categories {\n        category{\n            name\n        }\n        subCategory{\n            name\n        }\n    }\n    modifiedBy\n    modifiedDts\n    # addedFromMilestoneLibrary\n    # commonMilestone\n    solutions {\n        id\n        name\n    }\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateMTOMilestoneLinkedSolutions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation GetMTOMilestone {\n    mtoMilestoneUpdateLinkedSolutions(\n        id: \"{{mtoMilestoneID}}\",\n        solutionLinks: {\n            solutionIDs: [\"{{mtoSolutionID}}\"],\n            commonSolutionKeys: [INNOVATION]\n        }) {\n    id\n    name\n    facilitatedBy\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteMTOMilestone",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation deleteMTOMilestone {\n    deleteMTOMilestone(id: \"{{mtoMilestoneID}}\")\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTOCategories And Milestones",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        solutions {\n                            name\n                            key\n                            type\n                            milestones {\n                                name\n                                type\n                            }\n                        }\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTOCategories And Milestones Seeded Example",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{mtoSeededModelPlanID}}\") {\n    mtoMatrix{\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "MTO",
+					"item": [
+						{
+							"name": "GetMTOStatusAndEdits",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        status\n        milestonesWithNoLinkedSolutions {\n            name\n        }\n        recentEdit{\n            date\n            tableName\n            actorName\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            position\n            name\n            isUncategorized\n            subCategories {\n                id\n                position\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Common Milestones",
+					"item": [
+						{
+							"name": "GetMTO Common Milestones",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            facilitatedByRole\n            section\n\n            isAdded\n            # isSuggested\n            # commonSolutions:\n\n        }\n        status\n        recentEdit{\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Common Solutions",
+					"item": [
+						{
+							"name": "GetMTO Common Milestone with Solutions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    mtoMatrix{\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            section\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            commonSolutions {\n                name\n                key\n                type\n                subjects\n                filterView\n                isAdded\n            }\n\n        }\n\n            \n        }\n        id\n        modelName\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTO Common Solutions For MTO",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query mtoCommonSolutions {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All MTO Common Solutions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query mtoCommonSolutions {\nmtoCommonSolutions{\n\n        name\n        key\n        type\n        subjects\n        filterView\n        isAdded\n\n    }\n\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMTO Common Solutions With Contact information",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\nmodelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix{\n        commonSolutions {\n        name\n        key\n        type\n        contactInformation {\n            primaryContact {\n                name\n                email\n                isTeam\n                role\n                isPrimary\n            }\n            pointsOfContact {\n                name\n                email\n                isTeam\n                role\n                isPrimary\n            }\n        }\n        subjects\n        filterView\n        isAdded\n    }\n    }\n\n}\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Solutions",
+					"item": [
+						{
+							"name": "GetMTOSolutions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query ModelPlanMTOCategories {\n    modelPlan(id: \"{{modelPlanID}}\") {\n    id\n    modelName\n    mtoMatrix {\n        solutions\n        # If you want to get only solutions for a view, uncomment the params below\n        # ( filterView: IDDOC)\n         {\n        id\n        name\n        facilitatedBy\n        facilitatedByOther\n        neededBy\n        status\n        riskIndicator\n        key\n        type\n        pocName\n        pocEmail\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n        addedFromSolutionLibrary\n        commonSolution {\n            name\n            filterView\n        }\n        }\n    }\n    }\n}\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOSolution (Custom)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOSolutionCustom",
+											"",
+											"mtoSolutionID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoSolutionID\", mtoSolutionID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOSolution {\n    createMTOSolutionCustom(modelPlanID: \"{{modelPlanID}}\",\n    solutionType: IT_SYSTEM,\n    name: \"test_name\",\n    pocName: \"test_poc_name\",\n    pocEmail: \"poc@test.email\"\n) {\n    id\n    name\n    facilitatedBy\n    facilitatedByOther\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewMTOSolution (Common)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createMTOSolutionCommon",
+											"",
+											"mtoSolutionID = responseData.id",
+											"",
+											"",
+											"pm.collectionVariables.set(\"mtoSolutionID\", mtoSolutionID);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation NewMTOSolution {\n    createMTOSolutionCommon(modelPlanID: \"{{modelPlanID}}\",\n    # milestonesToLink: [\"{{mtoMilestoneID}}\"]\n    key: INNOVATION\n) {\n    id\n    name\n    facilitatedBy\n    facilitatedByOther\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateMTOSolution",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updateMTOSolution {\nupdateMTOSolution(id: \"{{mtoSolutionID}}\",\n    changes: {\n        name: \"Postman MTO Solution\"\n        facilitatedBy: [IT_LEAD, OTHER],\n        facilitatedByOther: \"Mr. Postman\",\n        neededBy: null,\n        status: IN_PROGRESS,\n        riskIndicator: AT_RISK,\n        type: IT_SYSTEM\n    }\n    ,milestoneLinks: {\n        milestoneIDs: [\n            \"{{mtoMilestoneID}}\"\n            ],\n    }\n# commonMilestoneID: \"{{mtoCommonMilestoneID}}\"\n# ,mtoCategoryID: \"{{mtoCategoryID}}\"\n) {\n    id\n    name\n    facilitatedBy\n    facilitatedByOther\n    neededBy\n    status\n    riskIndicator\n    key\n    type\n    pocName\n    pocEmail\n    \n    #Meta Data\n    createdBy\n    createdByUserAccount {\n        id\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        id\n        email\n    }\n    modifiedDts\n\n  # Custom Resolvers\n  #relatedMilestones {\n  #  id\n  #}\n  addedFromSolutionLibrary\n  commonSolution {\n    name\n  }\n  milestones {\n    id\n    name\n    key\n  }\n}\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteMTOSolution",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation deleteMTOSolution {\n    deleteMTOSolution(id: \"{{mtoSolutionID}}\")\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get All Model Plans And Get MTO data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlanCollectionMTO{\n    modelPlanCollection(filter: INCLUDE_ALL) {\n    id\n    modelName\n    mtoMatrix{\n        info {\n            readyForReviewBy\n            readyForReviewDTS\n            readyForReviewByUserAccount{\n                id\n                username\n                givenName\n                email\n            }\n        }\n        commonMilestones {\n            name\n            key\n            categoryName\n            subCategoryName\n            description\n            facilitatedByRole\n\n            isAdded\n            # isSuggested\n            # commonSolutions:\n\n        }\n        status\n        recentEdit{\n            modifiedBy\n            modifiedDts\n            modifiedByUserAccount{\n                commonName\n            }\n        }\n        milestones {\n            name\n            createdDts\n            createdBy\n        }\n        categories{\n            id\n            name\n            isUncategorized\n            subCategories {\n                id\n                name\n                isUncategorized\n                milestones {\n                        id\n                        name\n                        addedFromMilestoneLibrary\n                        key\n                        facilitatedBy\n                        needBy\n                        status\n                        riskIndicator\n                        # isDraftMilestone\n                }\n            }\n            }\n        }\n\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark MTO Ready for Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation markMTOReadyForReview {\nmarkMTOReadyForReview(modelPlanID: \"{{modelPlanID}}\",\nreadyForReview: true)\n    {\n        readyForReviewBy\n        readyForReviewDTS\n        readyForReviewByUserAccount{\n            id\n            username\n            givenName\n            email\n        }\n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -2734,7 +4000,7 @@
 		},
 		{
 			"key": "modelPlanID",
-			"value": ""
+			"value": "082b49d3-b548-48cb-9119-77a281bc2a8c"
 		},
 		{
 			"key": "basicsID",
@@ -2814,6 +4080,112 @@
 			"key": "sampleModelPlanID",
 			"value": "f25d8f70-6470-47e6-a6d9-debc10f26567",
 			"type": "string"
+		},
+		{
+			"key": "mtoCategoryID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategoryID",
+			"value": ""
+		},
+		{
+			"key": "mtoMilestoneID",
+			"value": ""
+		},
+		{
+			"key": "mtoSeededModelPlanID",
+			"value": "00000000-0000-0000-0000-000000000005",
+			"type": "string"
+		},
+		{
+			"key": "mtoCommonMilestoneID",
+			"value": "7b15b8bc-42db-493a-a0c1-1d4148945330",
+			"type": "string"
+		},
+		{
+			"key": "mtoCategory0ID",
+			"value": ""
+		},
+		{
+			"key": "mtoCategory1ID",
+			"value": ""
+		},
+		{
+			"key": "mtoCategory2ID",
+			"value": ""
+		},
+		{
+			"key": "mtoCategory3ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory00ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory01ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory02ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory03ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory10ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory11ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory12ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory13ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory20ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory21ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory22ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory23ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory30ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory31ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory32ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSubcategory33ID",
+			"value": ""
+		},
+		{
+			"key": "mtoSolutionID",
+			"value": ""
 		}
 	]
 }

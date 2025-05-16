@@ -1,0 +1,77 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.model-to-operations {
+    .usa-header--basic .usa-nav__primary-item > .usa-current::after, .usa-header--basic .usa-nav__link:hover::after {
+        bottom: 0 !important;
+    }
+
+    &__banner-buttons {
+        display: flex;
+    }
+
+    &__status-border {
+        border-right: 2px solid color('base-light') !important;
+        height: 100%;
+        @media screen and (max-width: $desktop) {
+            border: none;
+        }
+    }
+
+    &__options-panel {
+        border: 3px dashed color('base-lightest');
+        border-radius: .5rem;
+        padding-top: 3rem;
+        padding-right: 60px;
+        padding-left: 60px;
+        padding-bottom: 56px;
+    }
+
+    &__milestone-tag {
+        background-color: color('accent-cool-lighter');
+        top: 1px;
+        color: color('accent-cool-darker');
+    }
+
+    &__is-draft-tag {
+        background-color: color('accent-warm-lighter');
+        top: 1px;
+        color: color('accent-warm-darker');
+    }
+
+    &__milestone-added {
+        background-color: color('success-lighter') !important;
+        color: color('success-darker') !important;
+    }
+
+    &__custom-tag {
+        background-color: color('warning-lighter') !important;
+        color: color('warning-darker') !important;
+    }
+
+    &__selected-shadow {
+        border: 2px solid color($theme-color-primary-light) !important;
+        box-shadow: 0px 4px 15px rgba(115, 179, 231, 0.75) !important;
+    }
+}
+
+.save-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding-right: 2rem;
+    margin-top: -3rem;
+    margin-bottom: .9rem;
+    position: fixed;
+    right: 0;
+    z-index: 1000;
+}
+
+.panel-footer {
+    padding-left: 6rem;
+    position: fixed !important;
+    background-color: #fff;
+    width: 100%;
+    bottom: 0;
+    box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}

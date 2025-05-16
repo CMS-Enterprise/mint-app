@@ -2,46 +2,59 @@ package storage
 
 import (
 	"fmt"
+	"strings"
 
 	"go.uber.org/zap"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // TruncateAllTablesDANGEROUS is a function to reset all tables in the DB. It should only be called within test code.
 func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
-	tables := `
-	tag,
-	nda_agreement,
-    discussion_reply,
-    plan_basics,
-    plan_collaborator,
-	plan_data_exchange_approach,
-    plan_discussion,
-    plan_document_solution_link,
-    plan_document,
-    plan_general_characteristics,
-    plan_beneficiaries,
-    plan_participants_and_providers,
-    plan_ops_eval_and_learning,
-    plan_payments,
-    plan_favorite,
-    plan_cr,
-    plan_tdl,
-	operational_solution_subtask,
-    operational_solution,
-    operational_need,
-    analyzed_audit,
-	existing_model_link,
-    model_plan,
-	user_notification,
-	activity,
-	user_view_customization,
-	translated_audit_field,
-	translated_audit_queue,
-	translated_audit,
-	audit.change
-	`
+	// Using table names as constants defined in this file for better maintainability
+	tables := []string{
+		string(models.TNTag),
+		string(models.TNNdaAgreement),
+		string(models.TNDiscussionReply),
+		string(models.TNPlanBasics),
+		string(models.TNPlanCollaborator),
+		string(models.TNPlanDataExchangeApproach),
+		string(models.TNPlanDiscussion),
+		string(models.TNPlanDocumentSolutionLink),
+		string(models.TNPlanDocument),
+		string(models.TNPlanGeneralCharacteristics),
+		string(models.TNPlanBeneficiaries),
+		string(models.TNPlanParticipantsAndProviders),
+		string(models.TNPlanOpsEvalAndLearning),
+		string(models.TNPlanPayments),
+		string(models.TNPlanFavorite),
+		string(models.TNPlanCr),
+		string(models.TNPlanTdl),
+		string(models.TNOperationalSolutionSubtask),
+		string(models.TNOperationalSolution),
+		string(models.TNOperationalNeed),
+		string(models.TNAnalyzedAudit),
+		string(models.TNExistingModelLink),
+		string(models.TNMTOCategory),
+		string(models.TNMTOSuggestedMilestone),
+		string(models.TNMTOMilestone),
+		string(models.TNMTOSolution),
+		string(models.TNMTOMilestoneSolutionLink),
+		string(models.TNMTOInfo),
+		string(models.TNModelPlan),
+		string(models.TNUserNotification),
+		string(models.TNActivity),
+		string(models.TNUserViewCustomization),
+		string(models.TNTranslatedAuditField),
+		string(models.TNTranslatedAuditQueue),
+		string(models.TNTranslatedAudit),
+		"audit.change",
+	}
 
-	_, err := s.db.Exec("TRUNCATE " + tables)
+	// Join table names for the TRUNCATE statement
+	tablesStr := strings.Join(tables, ", ")
+
+	_, err := s.db.Exec("TRUNCATE " + tablesStr)
 	if err != nil {
 		return err
 	}

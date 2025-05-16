@@ -8,10 +8,7 @@ import {
   CardHeader,
   Grid
 } from '@trussworks/react-uswds';
-import {
-  getITSolutionsStatus,
-  StatusMessageType
-} from 'features/ModelPlan/TaskList';
+import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
   GetModelPlanQuery,
@@ -84,8 +81,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       modelPlan.participantsAndProviders.status,
       modelPlan.beneficiaries.status,
       modelPlan.opsEvalAndLearning.status,
-      modelPlan.payments.status,
-      getITSolutionsStatus(modelPlan.operationalNeeds)
+      modelPlan.payments.status
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;

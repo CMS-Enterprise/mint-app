@@ -37,6 +37,108 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
+                Evaluate your data exchange approach
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=getting-started"
+            >
+              <span
+                aria-label="Articles under the Getting started category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                Getting started
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome). We often collect health-related social needs data, such as socio-demographic data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Evaluate your data exchange approach article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Creating your Model-to-operations matrix (MTO) in MINT
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                Learn more about the Model-to-operations matrix, what it’s for, and how to create and maintain an MTO in MINT.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Creating your Model-to-operations matrix (MTO) in MINT article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
                 Sample Model Plan
               </h3>
             </header>
@@ -66,108 +168,6 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
             >
               <button
                 aria-label="Read Sample Model Plan article"
-                class="usa-button usa-button--outline"
-                type="button"
-              >
-                Read
-              </button>
-            </div>
-          </div>
-        </li>
-        <li
-          class="usa-card desktop:grid-col-4 article article-card--isLink"
-          data-testid="article-card"
-        >
-          <div
-            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-          >
-            <header
-              class="usa-card__header padding-0"
-              data-testid="CardHeader"
-            >
-              <h3
-                class="line-height-body-4 margin-bottom-1"
-              >
-                About 2-page concept papers and review meetings
-              </h3>
-            </header>
-            <a
-              class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=model-concept-and-design"
-            >
-              <span
-                aria-label="Articles under the Model concept and design category"
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                data-testid="tag"
-              >
-                Model concept and design
-              </span>
-            </a>
-            <div
-              class="usa-card__body padding-x-0 article__body padding-top-2"
-              data-testid="CardBody"
-            >
-              <p>
-                Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
-              </p>
-            </div>
-            <div
-              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-              data-testid="CardFooter"
-            >
-              <button
-                aria-label="Read About 2-page concept papers and review meetings article"
-                class="usa-button usa-button--outline"
-                type="button"
-              >
-                Read
-              </button>
-            </div>
-          </div>
-        </li>
-        <li
-          class="usa-card desktop:grid-col-4 article article-card--isLink"
-          data-testid="article-card"
-        >
-          <div
-            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-          >
-            <header
-              class="usa-card__header padding-0"
-              data-testid="CardHeader"
-            >
-              <h3
-                class="line-height-body-4 margin-bottom-1"
-              >
-                About 6-page concept papers and review meetings
-              </h3>
-            </header>
-            <a
-              class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=model-concept-and-design"
-            >
-              <span
-                aria-label="Articles under the Model concept and design category"
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                data-testid="tag"
-              >
-                Model concept and design
-              </span>
-            </a>
-            <div
-              class="usa-card__body padding-x-0 article__body padding-top-2"
-              data-testid="CardBody"
-            >
-              <p>
-                Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
-              </p>
-            </div>
-            <div
-              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-              data-testid="CardFooter"
-            >
-              <button
-                aria-label="Read About 6-page concept papers and review meetings article"
                 class="usa-button usa-button--outline"
                 type="button"
               >

@@ -10,25 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// CreateOperationalSolutionSubtasks is the resolver for the createOperationalSolutionSubtasks field.
-func (r *mutationResolver) CreateOperationalSolutionSubtasks(ctx context.Context, solutionID uuid.UUID, inputs []*model.CreateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	return OperationalSolutionSubtasksCreate(logger, r.store, inputs, solutionID, principal)
-}
-
-// UpdateOperationalSolutionSubtasks is the resolver for the updateOperationalSolutionSubtasks field.
-func (r *mutationResolver) UpdateOperationalSolutionSubtasks(ctx context.Context, inputs []*model.UpdateOperationalSolutionSubtaskInput) ([]*models.OperationalSolutionSubtask, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return OperationalSolutionSubtasksUpdateByID(logger, r.store, principal, inputs)
-}
 
 // DeleteOperationalSolutionSubtask is the resolver for the deleteOperationalSolutionSubtask field.
 func (r *mutationResolver) DeleteOperationalSolutionSubtask(ctx context.Context, id uuid.UUID) (int, error) {

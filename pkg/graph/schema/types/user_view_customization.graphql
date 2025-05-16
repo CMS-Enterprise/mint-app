@@ -3,7 +3,7 @@ enum ViewCustomizationType {
   ALL_MODEL_PLANS
   FOLLOWED_MODELS
   MODELS_WITH_CR_TDL
-  MODELS_BY_OPERATIONAL_SOLUTION
+  MODELS_BY_SOLUTION
   MODELS_APPROACHING_CLEARANCE
 }
 
@@ -12,7 +12,7 @@ type UserViewCustomization {
   userId: UUID!
   userAccount: UserAccount!
   viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [OperationalSolutionKey!]!
+  solutions: [MTOCommonSolutionKey!]!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -23,7 +23,7 @@ type UserViewCustomization {
 
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
   viewCustomization: [ViewCustomizationType!]
-  possibleOperationalSolutions: [OperationalSolutionKey!]
+  solutions: [MTOCommonSolutionKey!]
 }
 
 extend type Query {

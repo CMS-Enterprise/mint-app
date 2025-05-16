@@ -449,6 +449,53 @@ export default gql(/* GraphQL */ `
         createdDts
         status
       }
+      mtoMatrix {
+        info {
+          id
+          readyForReviewByUserAccount {
+            id
+            commonName
+          }
+          readyForReviewDTS
+        }
+        milestones {
+          id
+          name
+          isDraft
+          facilitatedBy
+          facilitatedByOther
+          needBy
+          status
+          riskIndicator
+          categories {
+            category {
+              id
+              name
+            }
+            subCategory {
+              id
+              name
+            }
+          }
+          solutions {
+            id
+            name
+          }
+        }
+        solutions {
+          id
+          name
+          facilitatedBy
+          facilitatedByOther
+          neededBy
+          status
+          riskIndicator
+          milestones {
+            id
+            name
+          }
+        }
+      }
       collaborators {
         id
         userAccount {

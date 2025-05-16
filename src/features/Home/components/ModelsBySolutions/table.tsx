@@ -7,10 +7,10 @@ import ModelsBySolutionsBanner, {
   StatusCategories
 } from 'features/Home/components/ModelsBySolutions/banner';
 import {
-  GetModelsBySolutionQuery,
+  GetModelsByMtoSolutionQuery,
   ModelCategory,
-  OperationalSolutionKey,
-  useGetModelsBySolutionQuery
+  MtoCommonSolutionKey,
+  useGetModelsByMtoSolutionQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -25,15 +25,13 @@ import { formatDateUtc } from 'utils/date';
 import ModelSolutionCard from './card';
 
 export type ModelsBySolutionType =
-  GetModelsBySolutionQuery['modelPlansByOperationalSolutionKey'];
+  GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'];
 
 type ModelPlansTableProps = {
-  operationalSolutionKey: OperationalSolutionKey;
+  solutionKey: MtoCommonSolutionKey;
 };
 
-const ModelsBySolutionTable = ({
-  operationalSolutionKey
-}: ModelPlansTableProps) => {
+const ModelsBySolutionTable = ({ solutionKey }: ModelPlansTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
   const [selectedStatus, setSelectedStatus] =
@@ -41,18 +39,19 @@ const ModelsBySolutionTable = ({
 
   const basicsConfig = usePlanTranslation('basics');
 
-  const { data, loading } = useGetModelsBySolutionQuery({
+  const { data, loading } = useGetModelsByMtoSolutionQuery({
     variables: {
-      operationalSolutionKey
+      solutionKey
     }
   });
 
   const modelsBySolution = useMemo(() => {
-    const models = data?.modelPlansByOperationalSolutionKey || [];
+    const models = (data?.modelPlansByMTOSolutionKey ||
+      []) as unknown as ModelsBySolutionType;
     return (
       [...models].sort((a, b) =>
         a.modelPlan.modelName.localeCompare(b.modelPlan.modelName)
-      ) || []
+      ) || ([] as ModelsBySolutionType)
     );
   }, [data]);
 
@@ -109,7 +108,7 @@ const ModelsBySolutionTable = ({
   return (
     <div id="models-by-solution-table">
       <ModelsBySolutionsBanner
-        solutionKey={operationalSolutionKey}
+        solutionKey={solutionKey}
         solutionModels={modelsBySolution}
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
@@ -124,9 +123,7 @@ const ModelsBySolutionTable = ({
               globalFilter={query}
               setGlobalFilter={setQuery}
               tableID="models-by-solution-table"
-              tableName={customHomeT(
-                'settings.MODELS_BY_OPERATIONAL_SOLUTION.heading'
-              )}
+              tableName={customHomeT('settings.MODELS_BY_SOLUTION.heading')}
               className="margin-bottom-3 maxw-none width-mobile-lg"
             />
 

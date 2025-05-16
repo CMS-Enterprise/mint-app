@@ -25,7 +25,8 @@ type AlertProps = {
   isClosable?: boolean;
   headingLevel?: HeadingLevel;
   closeAlert?: (closed: any) => void;
-  validation?: boolean; // Adds usa-alert--validation class, convert p to span to allow list nesting
+  validation?: boolean; // Adds usa-alert--validation class, convert p to span to allow list nesting,
+  clearMessage?: () => void;
 } & JSX.IntrinsicElements['div'];
 
 export const Alert = ({
@@ -43,6 +44,7 @@ export const Alert = ({
   isClosable = type === 'success' || type === 'error',
   closeAlert,
   validation,
+  clearMessage,
   ...props
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement => {
   const classes = classnames(
@@ -81,10 +83,16 @@ export const Alert = ({
             <Button
               type="button"
               role="button"
-              className="usa-button usa-button--unstyled text-no-underline text-black flex-align-end"
+              className="usa-button usa-button--unstyled text-no-underline text-black flex-align-start margin-top-05"
               tabIndex={0}
               aria-label="Close Button"
-              onClick={() => setClosed(true)}
+              onClick={() => {
+                if (clearMessage) {
+                  clearMessage();
+                } else {
+                  setClosed(true);
+                }
+              }}
             >
               &#10005;
             </Button>

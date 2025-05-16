@@ -148,6 +148,10 @@ button:disabled {
   }
 }
 
+abbr[title] {
+  text-decoration: none;
+}
+
 #main-content  {
   outline: none;
   border-top: 0;

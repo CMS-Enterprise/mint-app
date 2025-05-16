@@ -1,3 +1,6 @@
+import addCustomMilestone from './helpAndKnowledge/Articles/addCustomMilestone';
+import addCustomSolution from './helpAndKnowledge/Articles/addCustomSolution';
+import creatingMtoMatrix from './helpAndKnowledge/Articles/creatingMtoMatrix';
 import evaluatingDataExchangeApproach from './helpAndKnowledge/Articles/evaluatingDataExchangeApproach';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
@@ -6,8 +9,16 @@ import modelSolutionDesign from './helpAndKnowledge/Articles/modelSolutionDesign
 import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
 import phasesInvolved from './helpAndKnowledge/Articles/phasesInvolved';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
+import sharingExportingMto from './helpAndKnowledge/Articles/sharingExportingMto';
 import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
+import startingMto from './helpAndKnowledge/Articles/startingMto';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
+import updatingMtoStatus from './helpAndKnowledge/Articles/updatingMtoStatus';
+import usingItSystemsAndSolutionsTable from './helpAndKnowledge/Articles/usingItSystemsAndSolutionsTable';
+import usingMilestoneLibrary from './helpAndKnowledge/Articles/usingMilestoneLibrary';
+import usingMilestoneTable from './helpAndKnowledge/Articles/usingMilestoneTable';
+import usingSolutionLibrary from './helpAndKnowledge/Articles/usingSolutionLibrary';
+import usingTableActions from './helpAndKnowledge/Articles/usingTableActions';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import customHome from './home/customHome';
@@ -30,6 +41,12 @@ import {
 } from './modelPlan/generalCharacteristics';
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
+import modelToOperations, {
+  modelToOperationsMisc
+} from './modelPlan/modelToOperations';
+import mtoCategory from './modelPlan/mtoCategory';
+import mtoMilestone from './modelPlan/mtoMilestone';
+import mtoSolution from './modelPlan/mtoSolution';
 import operationalNeeds from './modelPlan/operationalNeeds';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
 import {
@@ -105,6 +122,11 @@ const enUS = {
   opsEvalAndLearningMisc,
   payments,
   paymentsMisc,
+  modelToOperations,
+  modelToOperationsMisc,
+  mtoCategory,
+  mtoMilestone,
+  mtoSolution,
   operationalNeeds,
   solutions,
   operationalSolutionSubtasks,
@@ -138,6 +160,17 @@ const enUS = {
   sixPageMeeting,
   twoPageMeeting,
   utilizingSolutions,
+  creatingMtoMatrix,
+  startingMto,
+  usingMilestoneTable,
+  usingItSystemsAndSolutionsTable,
+  usingTableActions,
+  usingMilestoneLibrary,
+  usingSolutionLibrary,
+  addCustomMilestone,
+  addCustomSolution,
+  updatingMtoStatus,
+  sharingExportingMto,
   // End Help and Knowledge Center Articles
   tableAndPagination,
   termsAndConditions,

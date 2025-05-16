@@ -31,6 +31,13 @@
   width: 100%;
 }
 
+.usa-pagination__previous-page {
+  border: none;
+  background-color: transparent;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
 .mint-textarea {
   min-height: 2.5rem !important;
   resize: both !important;
@@ -86,7 +93,27 @@ th {
 
 
 .width-fit-content {
-  width: fit-content;
+  width: fit-content !important;
+}
+@media (min-width: $mobile) {
+  .mobile\:width-fit-content {
+    width: fit-content !important;
+  }
+}
+@media (min-width: $tablet) {
+  .tablet\:width-fit-content {
+    width: fit-content !important;
+  }
+}
+@media (min-width: $tablet-lg) {
+  .tablet-lg\:width-fit-content {
+    width: fit-content !important;
+  }
+}
+@media (min-width: $desktop) {
+  .desktop\:width-fit-content {
+    width: fit-content !important;
+  }
 }
 
 .usa-date-picker__calendar {
@@ -119,6 +146,10 @@ th {
 
 .bg-white-opacity-50 {
   background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.border-top-mint-blue {
+  border-top: 1px solid $mint-blue !important;
 }
 
 .list-style-none {
@@ -173,6 +204,14 @@ th {
   background-color: $green-5;
 }
 
+.bg-green-50 {
+  background-color: $green-50  !important;
+}
+
+.indigo-cool-60 {
+  background-color: $indigo-cool-60 !important;
+}
+
 .text-overflow-wrap-break-word {
   overflow-wrap: break-word;
 }
@@ -201,6 +240,14 @@ th {
   .usa-pagination__button:hover{
     border-bottom: 1px solid;
   }
+}
+
+.mint-text-normal {
+  font-size: 1rem !important;
+}
+
+.mint-text-medium {
+  font-size: 1.0625rem !important;
 }
 
 .line-height-normal {
@@ -241,6 +288,14 @@ th {
   width: 50%;
 }
 
+.text-decoration-none {
+  text-decoration: none !important;
+}
+
+.usa-tooltip__body {
+  line-height: normal !important;
+}
+
 @media screen and (min-width: $mobile) {
   .mobile\:width-50 {
     width: 50%;
@@ -275,5 +330,33 @@ th {
     background-color: #fff;
     z-index: 1;
     line-height: 1.6em;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+
+  &__height {
+    max-height: 600px !important;
+  }
+
+  &__fixed-top {
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    z-index: 1;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    background-color: #fff;
+    width: 100%;
+    margin-left: -2rem;
+    padding-left: 2rem;
+    box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);  
   }
 }

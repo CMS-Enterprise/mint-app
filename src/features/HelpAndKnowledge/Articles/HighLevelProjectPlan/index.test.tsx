@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
-import { possibleSolutionsMock } from 'tests/mock/solutions';
+import { possibleSolutionsMock } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import HighLevelProjectPlan from '.';

@@ -22,10 +22,6 @@ export default gql(/* GraphQL */ `
         participantsIdsOther
         participantsIDSNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

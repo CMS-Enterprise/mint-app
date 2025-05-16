@@ -99,7 +99,7 @@ const ReadOnlySection = <
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
         <div className="read-only-section--question">
-          <span className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
+          <span className="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line">
             {heading}
             {config.questionTooltip && (
               <span className="text-normal line-height-sans-2 margin-left-1 position-relative">
@@ -226,7 +226,7 @@ export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <em className="text-base font-body-md">
+    <em className="text-base mint-text-medium">
       {other ? miscellaneousT('noAdditionalInformation') : miscellaneousT('na')}
     </em>
   );
@@ -250,7 +250,7 @@ export const SingleValue = ({
   };
 
   return (
-    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
+    <div className="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
       {formattedValue()}
     </div>
   );
@@ -298,7 +298,7 @@ export const RadioValue = <
   }
 
   return (
-    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
+    <div className="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
       {!isEmpty(value) && config.options[value as T]}
 
       {/* Renders a tooltip if mapped to the selected radio value */}

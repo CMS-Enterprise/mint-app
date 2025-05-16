@@ -25,10 +25,6 @@ export default gql(/* GraphQL */ `
         shareCclfData
         shareCclfDataNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

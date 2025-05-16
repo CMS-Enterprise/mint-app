@@ -27,7 +27,7 @@ import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -103,10 +103,6 @@ export const ProviderOptions = () => {
     {}) as ProviderOptionsFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   useScrollElement(!loading);
 
@@ -347,16 +343,7 @@ export const ProviderOptions = () => {
                       {participantsAndProvidersT('providerOverlap.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="participants-and-providers-provider-overlap-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="participants-and-providers-provider-overlap-warning" />
 
                     <Fieldset>
                       {getKeys(providerOverlapConfig.options).map(key => (

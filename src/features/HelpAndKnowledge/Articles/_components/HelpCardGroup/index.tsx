@@ -26,7 +26,7 @@ import './index.scss';
 type HelpCardGroupType = {
   className?: string;
   resources: ArticleProps[];
-  showFirstThree?: boolean;
+  homeItems?: boolean;
   tag?: boolean;
 };
 
@@ -53,7 +53,7 @@ const sortOptions: SortProps[] = [
 const HelpCardGroup = ({
   className,
   resources,
-  showFirstThree,
+  homeItems,
   tag
 }: HelpCardGroupType) => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -62,11 +62,13 @@ const HelpCardGroup = ({
     'helpAndKnowledge:helpArticleNames'
   );
 
-  resources.sort((a, b) =>
-    articleNames[a.key]
-      .toLowerCase()
-      .localeCompare(articleNames[b.key].toLowerCase())
-  );
+  if (!homeItems) {
+    resources.sort((a, b) =>
+      articleNames[a.key]
+        .toLowerCase()
+        .localeCompare(articleNames[b.key].toLowerCase())
+    );
+  }
 
   const { currentItems, pagination, search, pageSize, sort } =
     useSearchSortPagination<ArticleProps, SortOptionsType>({
@@ -96,13 +98,11 @@ const HelpCardGroup = ({
   const params = new URLSearchParams(history.location.search);
   const category = params.get('category');
 
-  const firstThreeArticles = showFirstThree
-    ? currentItems.slice(0, 3)
-    : currentItems;
+  const currentArticles = homeItems ? resources : currentItems;
 
   return (
     <div className="help-card-group">
-      {!showFirstThree && !category && (
+      {!homeItems && !category && (
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
             <Grid tablet={{ col: 6 }}>
@@ -165,7 +165,7 @@ const HelpCardGroup = ({
       )}
 
       <CardGroup className={className}>
-        {firstThreeArticles.map(article => (
+        {currentArticles.map(article => (
           <React.Fragment key={article.key}>
             {article.external ? (
               <ExternalResourceCard
@@ -190,20 +190,18 @@ const HelpCardGroup = ({
       {/* Pagination */}
 
       <div className="display-flex">
-        {!showFirstThree &&
-          resources.length > itemsPerPage &&
-          pageCount > 1 && (
-            <Pagination
-              pathname={history.location.pathname}
-              currentPage={currentPage}
-              maxSlots={7}
-              onClickNext={handleNext}
-              onClickPageNumber={handlePageNumber}
-              onClickPrevious={handlePrevious}
-              totalPages={pageCount}
-            />
-          )}
-        {!showFirstThree && !category && (
+        {!homeItems && resources.length > itemsPerPage && pageCount > 1 && (
+          <Pagination
+            pathname={history.location.pathname}
+            currentPage={currentPage}
+            maxSlots={7}
+            onClickNext={handleNext}
+            onClickPageNumber={handlePageNumber}
+            onClickPrevious={handlePrevious}
+            totalPages={pageCount}
+          />
+        )}
+        {!homeItems && !category && (
           <TablePageSize
             className="margin-left-auto desktop:grid-col-auto"
             pageSize={itemsPerPage}

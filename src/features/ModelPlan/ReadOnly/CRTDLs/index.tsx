@@ -18,7 +18,7 @@ const ReadOnlyCRTDLs = () => {
     >
       <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
 
-      <p className="font-body-md line-height-body-4">
+      <p className="font-body-md line-height-body-4 mint-no-print">
         <Trans
           t={t}
           i18nKey="readOnlyDescription"

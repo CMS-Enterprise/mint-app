@@ -6,7 +6,7 @@ import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutions
 import { ModelsBySolutionType } from 'features/Home/components/ModelsBySolutions/table';
 import {
   ModelBySolutionStatus,
-  OperationalSolutionKey
+  MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -25,7 +25,7 @@ const ModelsBySolutionsBanner = ({
   selectedStatus,
   setSelectedStatus
 }: {
-  solutionKey: OperationalSolutionKey;
+  solutionKey: MtoCommonSolutionKey;
   solutionModels: ModelsBySolutionType;
   selectedStatus: StatusCategories;
   setSelectedStatus: (status: StatusCategories) => void;
@@ -62,7 +62,7 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus('total')}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker': selectedStatus === 'total'
                 })}
               >
@@ -72,7 +72,7 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus(ModelBySolutionStatus.PLANNED)}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker':
                     selectedStatus === ModelBySolutionStatus.PLANNED
                 })}
@@ -91,7 +91,7 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus(ModelBySolutionStatus.ACTIVE)}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker':
                     selectedStatus === ModelBySolutionStatus.ACTIVE
                 })}
@@ -110,7 +110,7 @@ const ModelsBySolutionsBanner = ({
               <Button
                 type="button"
                 onClick={() => setSelectedStatus(ModelBySolutionStatus.ENDED)}
-                className={classNames({
+                className={classNames('padding-y-2', {
                   'bg-primary-darker':
                     selectedStatus === ModelBySolutionStatus.ENDED
                 })}

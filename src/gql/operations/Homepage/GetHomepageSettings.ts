@@ -5,7 +5,7 @@ export default gql(/* GraphQL */ `
     userViewCustomization {
       id
       viewCustomization
-      possibleOperationalSolutions
+      solutions
     }
   }
 `);

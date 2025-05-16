@@ -164,12 +164,13 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
           class="margin-top-0 margin-bottom-1"
         >
           Is your model also making payments through the 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Innovation Payment Contractor (IPC)
-          </a>
+          </button>
           ?
         </h4>
         <span>
@@ -369,12 +370,13 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
           class="margin-top-0 margin-bottom-1"
         >
           Is your model also making payments through the 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Innovation Payment Contractor (IPC)
-          </a>
+          </button>
           ?
         </h4>
         <span>
@@ -618,12 +620,13 @@ exports[`Operational Solutions About Components > matches the snapshot > Central
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
         Centralized Data Exchange (CDX) is a part of the 
-        <a
-          class="usa-link"
-          href="/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about"
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
         >
           Innovation Support Platform (ISP)
-        </a>
+        </button>
          Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
@@ -935,12 +938,13 @@ exports[`Operational Solutions About Components > matches the snapshot > Expande
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
         Expanded Data Feedback Reporting (eDFR) is part of the 
-        <a
-          class="usa-link"
-          href="/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about"
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
         >
           Innovation Support Platform (ISP)
-        </a>
+        </button>
          Suite of tools for non-ACO models; it provides transparency to stakeholders including the primary care physicians participating in CMMI Alternative Payment Models (APM) in the form of feedback for healthcare delivered from a utilization, cost, and quality perspective. The metrics are calculated based on Medicare provider and claims data. The system renders the information visually on dashboards and reports.
       </p>
       <div
@@ -1149,12 +1153,13 @@ exports[`Operational Solutions About Components > matches the snapshot > Health 
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
         Health Data Reporting (HDR) is part of the 
-        <a
-          class="usa-link"
-          href="/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about"
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
         >
           Innovation Support Platform (ISP)
-        </a>
+        </button>
          Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models.
 
 HDR leverages CMS’ Enterprise Portal and CMMI’s IC Portlet Services for secure access and a standardized look and feel.
@@ -1728,33 +1733,37 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           class="text-pre-wrap "
         >
           ISP supplies the capabilities below through: 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Centralized Data Exchange (CDX)
-          </a>
+          </button>
           , 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Health Data Reporting (HDR)
-          </a>
+          </button>
           , 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Expanded Data Feedback Reporting (eDFR)
-          </a>
+          </button>
           , and 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?solution=model-space&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Model Space
-          </a>
+          </button>
           . You can work with BSG to configure the specific capabilities you need for your model.
         </span>
         <ul
@@ -2648,12 +2657,13 @@ exports[`Operational Solutions About Components > matches the snapshot > Model S
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
         Model Space is a secure analytic platform that enables model teams and their contractors to access, share, and analyze data. As part of the 
-        <a
-          class="usa-link"
-          href="/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about"
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
         >
           Innovation Support Platform (ISP)
-        </a>
+        </button>
         , Model Space provides a single, secure platform for data-related tasks. It offers access to shared resources and technical assistance. Leveraging Databricks, a secure cloud-based data platform, each Model team and their contractor receives a dedicated space in Databricks, accessible only to them via a CMS user account.
 
 Model Space offers model teams and their contractors templates or Databricks notebooks of prewritten code for completing analysis, such as computing quality measures, attribution, or payment. You can save, reuse, and edit the Databricks notebooks based on your needs.
@@ -3714,12 +3724,13 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           class="margin-top-0 margin-bottom-1"
         >
           Is your model also making payments through the 
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about"
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
           >
             Innovation Payment Contractor (IPC)
-          </a>
+          </button>
           ?
         </h4>
         <span>

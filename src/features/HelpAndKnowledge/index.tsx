@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
 import AllArticles from './Articles/AllArticles';
+import CreatingMTOMatrix from './Articles/CreatingMTOMatrix';
 import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
@@ -83,6 +84,10 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/sample-model-plan/:subinfo" exact>
         <SampleModelPlan />
+      </Route>
+
+      <Route path="/help-and-knowledge/creating-mto-matrix" exact>
+        <CreatingMTOMatrix />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

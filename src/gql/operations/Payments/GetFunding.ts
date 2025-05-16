@@ -26,10 +26,6 @@ export default gql(/* GraphQL */ `
         payTypeNote
         payClaims
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

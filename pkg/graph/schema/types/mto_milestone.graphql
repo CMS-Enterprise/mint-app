@@ -1,0 +1,84 @@
+"""
+The possible statuses of Milestone.
+"""
+enum MTOMilestoneStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+
+# MTOMilestone represents a Milestone that has been added to a Model Plan's MTO
+type MTOMilestone {
+  # DB Fields
+  id: UUID!
+  name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  key: MTOCommonMilestoneKey
+  """
+  Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
+  This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
+  """
+  mtoCategoryID: UUID
+  facilitatedBy: [MTOFacilitator!]
+  """
+  A place to store the other facilitator information if selected as an option for facilitatedBy.
+  Note, this data will be cleared if other is removed as an option
+  """
+  facilitatedByOther: String
+  needBy: Time
+  status: MTOMilestoneStatus!
+  riskIndicator: MTORiskIndicator!
+  isDraft: Boolean!
+
+  #Meta Data
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  # Custom Resolvers
+  addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
+  commonMilestone: MTOCommonMilestone
+  solutions: [MTOSolution!]!
+  """
+  Category resolves relational category information.
+  """
+  categories: MTOCategories!
+}
+
+input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
+  name: String # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  mtoCategoryID: UUID
+  facilitatedBy: [MTOFacilitator!]
+  facilitatedByOther: String
+  needBy: Time
+  status: MTOMilestoneStatus
+  riskIndicator: MTORiskIndicator
+  isDraft: Boolean
+}
+
+input MTOSolutionLinks {
+  solutionIDs: [UUID!]
+  commonSolutionKeys: [MTOCommonSolutionKey!]
+}
+
+extend type Mutation {
+  createMTOMilestoneCustom(modelPlanID: UUID!, name: String!, mtoCategoryID: UUID): MTOMilestone!
+  @hasRole(role: MINT_USER)
+  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!, commonSolutions: [MTOCommonSolutionKey!]): MTOMilestone!
+  @hasRole(role: MINT_USER)
+  updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!, solutionLinks: MTOSolutionLinks): MTOMilestone!
+  @hasRole(role: MINT_USER)
+  deleteMTOMilestone(id: UUID!): Boolean!
+  @hasRole(role: MINT_USER)
+  mtoMilestoneUpdateLinkedSolutions(id: UUID!, solutionLinks: MTOSolutionLinks!): [MTOSolution!]
+  @hasRole(role: MINT_USER)
+}
+
+extend type Query {
+  mtoMilestone(id: UUID!): MTOMilestone!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+

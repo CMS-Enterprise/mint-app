@@ -140,13 +140,25 @@ export default gql(/* GraphQL */ `
         readyForClearanceDts
         status
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
       prepareForClearance {
         status
         modifiedDts: latestClearanceDts
+      }
+      mtoMatrix {
+        # Used to cache the mto matrix - always include
+        info {
+          id
+        }
+        status
+        recentEdit {
+          id
+          date
+          actorName
+        }
+        milestones {
+          id
+          name
+        }
       }
     }
   }
