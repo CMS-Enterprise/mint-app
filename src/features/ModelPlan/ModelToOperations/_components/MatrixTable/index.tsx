@@ -385,26 +385,6 @@ const MTOTable = ({
       );
     };
 
-    // // Milestone & Subcategory: special case with full-width label + separate ActionMenu cell
-    // if (rowType === 'subcategory' || rowType === 'category') {
-    //   return (
-    //     <>
-    //       <td />
-    //       <td
-    //         colSpan={filteredColumns.length - 2}
-    //         className="padding-1 padding-left-0"
-    //       >
-    //         {row.name}{' '}
-    //         <span className="text-base-dark margin-left-2 mint-body-normal">
-    //           {t('table.milestonesCount', {
-    //             count: numberOfMilestones
-    //           })}
-    //         </span>
-    //       </td>
-    //       <td className="padding-1">{renderActionMenu()}</td>
-    //     </>
-    //   );
-    // }
     // Category: standard row rendering
     return (
       <>
