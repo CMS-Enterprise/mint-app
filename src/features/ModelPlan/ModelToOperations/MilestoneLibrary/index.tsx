@@ -7,8 +7,7 @@ import {
   CardGroup,
   Grid,
   GridContainer,
-  Icon,
-  Link
+  Icon
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -419,15 +418,7 @@ const MilstoneCardGroup = ({
                     >
                       {' '}
                     </UswdsReactLink>
-                  ),
-                  link2: (
-                    <UswdsReactLink
-                      to={`/models/${modelID}/collaboration-area`}
-                    >
-                      {' '}
-                    </UswdsReactLink>
-                  ),
-                  email1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                  )
                 }}
               />
             </Alert>

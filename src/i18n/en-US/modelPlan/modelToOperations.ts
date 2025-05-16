@@ -662,7 +662,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     added: 'Added',
     noSuggestedHeading: 'There are no suggested milestones for your model.',
     noSuggestedDescription:
-      'MINT hasn’t yet suggested any milestones for your model. As you and your team fill out more of your Model Plan, MINT may display suggested common milestones for your model here. To view all available common milestones, click the button above labeled “All common milestones”.',
+      'MINT hasn’t yet suggested any milestones for your model. As you and your team fill out more of your <link1>Model Plan</link1>, MINT may display suggested common milestones for your model here. To view all available common milestones, click the button above labeled “All common milestones”.',
     checkMilestones:
       'Check <link1>all available milestones</link1> or <button1>create a custom milestone</button1>.',
     addCustomMilestone: 'Create a custom milestone',
