@@ -44,7 +44,7 @@ const MTOOptionsCard = ({
     >
       <div
         className={classNames(
-          'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-2 text-white radius-top-lg',
+          'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 text-white radius-top-lg',
           {
             'bg-green-50': mtoType === 'milestones',
             'indigo-cool-60': mtoType === 'solutions'
@@ -157,7 +157,7 @@ const MTOOptionsPanel = () => {
       >
         <div
           className={classNames(
-            'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-2 bg-base-lighter radius-top-lg'
+            'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg'
           )}
         >
           {t('optionsCard.template.label').toLocaleUpperCase()}{' '}
