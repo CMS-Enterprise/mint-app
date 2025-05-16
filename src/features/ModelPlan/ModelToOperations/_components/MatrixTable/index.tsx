@@ -706,7 +706,7 @@ const MTOTable = ({
                   pageSize={itemsPerPage}
                   setPageSize={setItemsPerPage}
                   setInitPageSize={setItemsPerPageInit}
-                  valueArray={[5, 10, 15, 20]}
+                  valueArray={[5, 10, 15, 20, 'all']}
                   suffix={t('modelToOperationsMisc:table.milestones')}
                 />
               </div>
