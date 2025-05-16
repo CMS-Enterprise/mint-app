@@ -96,13 +96,14 @@ const MTOSolutionCard = ({
           )}
         </CardHeader>
 
-        <CardBody className="padding-x-3 ">
+        <CardBody className="padding-x-3">
           {mappedSolution?.categories.map(categoryTag => (
             <SolutionsTag
               isBold={false}
               key={categoryTag}
               category={categoryTag}
               route={categoryTag}
+              inline
             />
           ))}
         </CardBody>

@@ -15,13 +15,15 @@ type SolutionsTagProps = {
   isBold?: boolean;
   route: OperationalSolutionCategoryRoute;
   category: OperationalSolutionCategories;
+  inline?: boolean;
 };
 
 export default function SolutionsTag({
   route,
   category,
   className,
-  isBold = true
+  isBold = true,
+  inline = false
 }: SolutionsTagProps) {
   const { t } = useTranslation('helpAndKnowledge');
   return (
@@ -30,7 +32,10 @@ export default function SolutionsTag({
       aria-label={t(
         `Articles under the ${t(`categories.${category}.header`)} category`
       )}
-      className="display-block margin-right-05 margin-bottom-1"
+      className={classNames('margin-right-05 margin-bottom-1', {
+        'display-inline-block': inline,
+        'display-block': !inline
+      })}
       data-testid="solutions-tag"
     >
       <Tag

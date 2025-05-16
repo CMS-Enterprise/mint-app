@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { UsePaginationInstanceProps, UsePaginationState } from 'react-table';
 import classnames from 'classnames';
 
@@ -9,6 +10,7 @@ import './index.scss';
 
 type ReactTablePaginationProps = {
   className?: string;
+  setQueryParam?: boolean;
 } & UsePaginationInstanceProps<{}> &
   UsePaginationState<{}>;
 
@@ -20,9 +22,15 @@ const TablePagination = ({
   canNextPage,
   pageIndex,
   pageOptions,
-  canPreviousPage
+  canPreviousPage,
+  setQueryParam
 }: ReactTablePaginationProps) => {
   const { t } = useTranslation('systemProfile');
+
+  const history = useHistory();
+
+  const params = new URLSearchParams(history.location.search);
+
   const classNames = classnames(
     'usa-pagination',
     'padding-bottom-1',
@@ -42,7 +50,15 @@ const TablePagination = ({
               type="button"
               className="usa-pagination__link usa-pagination__previous-page"
               aria-label="Previous page"
-              onClick={() => previousPage()}
+              onClick={() => {
+                if (setQueryParam) {
+                  params.set('page', pageIndex.toString());
+                  history.replace({
+                    search: params.toString()
+                  });
+                }
+                previousPage();
+              }}
               disabled={!canPreviousPage}
             >
               <span className="usa-pagination__link-text">
@@ -75,7 +91,15 @@ const TablePagination = ({
                               ? 'usa-pagination__button usa-current'
                               : 'usa-pagination__button'
                           }
-                          onClick={() => gotoPage(page - 1)}
+                          onClick={() => {
+                            if (setQueryParam) {
+                              params.set('page', page.toString());
+                              history.replace({
+                                search: params.toString()
+                              });
+                            }
+                            gotoPage(page - 1);
+                          }}
                         >
                           {page}
                         </button>
@@ -92,7 +116,15 @@ const TablePagination = ({
                             ? 'usa-pagination__button usa-current'
                             : 'usa-pagination__button'
                         }
-                        onClick={() => gotoPage(page - 1)}
+                        onClick={() => {
+                          if (setQueryParam) {
+                            params.set('page', page.toString());
+                            history.replace({
+                              search: params.toString()
+                            });
+                          }
+                          gotoPage(page - 1);
+                        }}
                       >
                         {page}
                       </button>
@@ -109,7 +141,15 @@ const TablePagination = ({
               type="button"
               className="usa-pagination__link usa-pagination__previous-page"
               aria-label="Next page"
-              onClick={() => nextPage()}
+              onClick={() => {
+                if (setQueryParam) {
+                  params.set('page', (pageIndex + 2).toString());
+                  history.replace({
+                    search: params.toString()
+                  });
+                }
+                nextPage();
+              }}
               disabled={!canNextPage}
             >
               <span className="usa-pagination__link-text">

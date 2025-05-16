@@ -174,7 +174,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                 class="description-definition margin-0 font-body-md text-base-darkest"
               >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-success-dark text-white width-fit-content"
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -419,7 +419,7 @@ exports[`MilestonePanel Component > renders correctly with milestone data 1`] = 
                 role="cell"
               >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white width-fit-content"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-success-dark text-white width-fit-content"
                   data-testid="tasklist-tag"
                 >
                   <span>

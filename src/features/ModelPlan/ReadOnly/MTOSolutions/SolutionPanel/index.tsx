@@ -327,7 +327,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
 
             <h3 className="margin-bottom-1">
               {modelToOperationsMiscT(
-                'modal.editSolution.selectedMilestoneCount',
+                'modal.editSolution.relatedMilestoneCount',
                 {
                   count: solution.milestones.length
                 }
