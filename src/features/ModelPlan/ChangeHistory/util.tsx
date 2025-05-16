@@ -191,14 +191,6 @@ export const hiddenFields: HiddenFieldTypes[] = [
   {
     table: TableName.PLAN_DOCUMENT,
     fields: ['is_link']
-  },
-  {
-    table: TableName.MTO_MILESTONE,
-    fields: ['mto_common_milestone_key', 'name']
-  },
-  {
-    table: TableName.MTO_SOLUTION,
-    fields: ['mto_common_solution_key', 'name']
   }
 ];
 

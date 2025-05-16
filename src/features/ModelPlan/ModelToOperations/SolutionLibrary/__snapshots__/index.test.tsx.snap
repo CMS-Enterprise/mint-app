@@ -283,12 +283,12 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               </p>
             </header>
             <div
-              class="usa-card__body padding-x-3 "
+              class="usa-card__body padding-x-3"
               data-testid="CardBody"
             >
               <a
                 aria-label="Articles under the Applications and participant interaction category"
-                class="usa-link display-block margin-right-05 margin-bottom-1"
+                class="usa-link margin-right-05 margin-bottom-1 display-inline-block"
                 data-testid="solutions-tag"
                 href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
               >
@@ -356,12 +356,12 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               </p>
             </header>
             <div
-              class="usa-card__body padding-x-3 "
+              class="usa-card__body padding-x-3"
               data-testid="CardBody"
             >
               <a
                 aria-label="Articles under the Medicare Advantage and Part D category"
-                class="usa-link display-block margin-right-05 margin-bottom-1"
+                class="usa-link margin-right-05 margin-bottom-1 display-inline-block"
                 data-testid="solutions-tag"
                 href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
               >

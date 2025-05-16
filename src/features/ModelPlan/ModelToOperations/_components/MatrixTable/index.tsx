@@ -493,7 +493,13 @@ const MTOTable = ({
         return null;
       }
 
-      const numberOfMilestones = subCategory.milestones.length;
+      const rawSubCategory = formattedData
+        .find(category => category.id === categoryID)
+        ?.subCategories.find(sub => sub.id === subCategory.id);
+
+      const numberOfMilestones = rawSubCategory
+        ? rawSubCategory.milestones.length
+        : 0;
 
       return (
         <div style={{ display: 'contents' }} key={subCategory.id}>
@@ -549,10 +555,14 @@ const MTOTable = ({
 
       const isExpanded = !expandedRows.includes(category.id);
 
-      const numberOfMilestones = category.subCategories.reduce(
-        (acc, subCategory) => acc + subCategory.milestones.length,
-        0
-      );
+      const rawCategory = formattedData.find(cat => cat.id === category.id);
+
+      const numberOfMilestones = rawCategory
+        ? rawCategory.subCategories.reduce(
+            (acc, subCategory) => acc + subCategory.milestones.length,
+            0
+          )
+        : 0;
 
       return (
         <div style={{ display: 'contents' }} key={category.id}>

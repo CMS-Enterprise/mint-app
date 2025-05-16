@@ -546,6 +546,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       status: 'Status',
       selectedMilestoneCount_other: '{{count}} selected milestones',
       selectedMilestoneCount: '{{count}} selected milestone',
+      relatedMilestoneCount_other: '{{count}} related milestones',
+      relatedMilestoneCount: '{{count}} related milestone',
       suggestedMilestones: 'Suggested milestones',
       selectedMilestonesDescription:
         'These milestones are commonly used for this solution.',

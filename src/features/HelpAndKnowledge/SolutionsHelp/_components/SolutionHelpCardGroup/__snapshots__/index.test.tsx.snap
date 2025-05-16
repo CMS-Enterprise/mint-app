@@ -47,7 +47,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
@@ -148,7 +148,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
@@ -249,7 +249,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Medicare Advantage and Part D category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                     >
@@ -347,7 +347,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
@@ -448,7 +448,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Data category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data"
                     >
@@ -558,7 +558,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                   >
                     <a
                       aria-label="Articles under the Data category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data"
                     >
@@ -655,7 +655,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     <a
                       aria-label="Articles under the Communication tools and help desk category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
                     >
@@ -748,7 +748,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
@@ -849,7 +849,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     <a
                       aria-label="Articles under the Communication tools and help desk category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
                     >
