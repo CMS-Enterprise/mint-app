@@ -1,0 +1,31 @@
+meta {
+  name: Reorder MTO Category
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation ReorderMTOCategory {
+  reorderMTOCategory(id: "{{mtoCategoryID}}"
+  ,newOrder: 0
+  # ,parentID: "{{mtoCategoryID}}"
+  ) {
+      position
+      id
+      name
+      isUncategorized
+      }
+  }
+}

@@ -1,0 +1,36 @@
+meta {
+  name: SearchChangeTableDateHistogramConsolidatedAggregations
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query searchChangeTableDateHistogramConsolidatedAggregations ($interval: String!, $limit: Int!, $offset: Int!) {
+      searchChangeTableDateHistogramConsolidatedAggregations (interval: $interval, limit: $limit, offset: $offset) {
+          key
+          docCount
+          maxModifiedDts
+          minModifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "interval": "5m",
+    "limit": 20,
+    "offset": 0
+  }
+}

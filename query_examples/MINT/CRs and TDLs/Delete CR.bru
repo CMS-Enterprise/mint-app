@@ -1,0 +1,41 @@
+meta {
+  name: Delete CR
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation deletePlanCR ($id: UUID!) {
+      deletePlanCR (id: $id) {
+          id
+          modelPlanID
+          idNumber
+          dateInitiated
+          dateImplemented
+          title
+          note
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": ""
+  }
+}

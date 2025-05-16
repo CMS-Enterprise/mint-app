@@ -1,0 +1,47 @@
+meta {
+  name: Get Model Plan
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query modelPlan ($id: UUID!) {
+      modelPlan (id: $id) {
+          id
+          modelName
+          abbreviation
+          archived
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          status
+          taskListStatus
+          suggestedPhase {
+              phase
+              suggestedStatuses
+          }
+          isFavorite
+          isCollaborator
+          opSolutionLastModifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}

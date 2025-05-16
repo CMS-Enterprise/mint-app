@@ -1,0 +1,40 @@
+meta {
+  name: All CR Echimp data
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query echimpCR {
+      echimpCRs {
+          id
+          versionNum
+          initiator
+          firstName
+          lastName
+          title
+          sensitiveFlag
+          implementationDate
+          crSummary {
+              rawContent
+          }
+          crStatus
+          emergencyCrFlag
+          relatedCrNumbers
+          relatedCrTdlNumbers
+          associatedModelUids
+      }
+  }
+}

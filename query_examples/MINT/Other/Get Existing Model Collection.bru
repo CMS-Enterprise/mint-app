@@ -1,0 +1,47 @@
+meta {
+  name: Get Existing Model Collection
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query existingModelCollection {
+      existingModelCollection {
+          id
+          modelName
+          stage
+          numberOfParticipants
+          category
+          authority
+          description
+          numberOfBeneficiariesImpacted
+          numberOfPhysiciansImpacted
+          dateBegan
+          dateEnded
+          states
+          keywords
+          url
+          displayModelSummary
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {}
+}

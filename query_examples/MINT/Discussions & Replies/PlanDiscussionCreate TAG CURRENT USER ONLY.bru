@@ -1,0 +1,74 @@
+meta {
+  name: PlanDiscussionCreate TAG CURRENT USER ONLY
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: http://localhost:8085/api/graph/query
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation createPlanDiscussion{
+    createPlanDiscussion(input:{
+        modelPlanID: "{{modelPlanID}}"
+        content: " <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"{{EUAID}}\" data-label=\"{{EUAID}}\">@{{EUAID}}</span>"
+        userRole:SHARED_SYSTEM_MAINTAINER
+   } ){
+      
+      id
+      modelPlanID
+      
+      content{
+          rawContent
+          tags{
+              id
+              taggedField
+              taggedContentTable
+              taggedContentID
+              entityUUID
+              entityIntID
+              entity{
+                  __typename
+                  ... on UserAccount{
+                      id
+                      commonName
+                      email
+                  }
+                  ... on PossibleOperationalSolution {
+                      name
+                      key
+                  }
+              }
+          }
+      }
+      
+      createdBy
+      createdByUserAccount{
+          commonName
+          email
+          username
+          }
+  
+      }
+    
+    
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createPlanDiscussion
+  
+  discussionID = responseData.id
+  
+  
+  bru.setVar("discussionID", discussionID);
+}

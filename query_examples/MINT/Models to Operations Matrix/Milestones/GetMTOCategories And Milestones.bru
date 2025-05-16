@@ -1,0 +1,58 @@
+meta {
+  name: GetMTOCategories And Milestones
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query ModelPlanMTOCategories {
+  modelPlan(id: "{{modelPlanID}}") {
+      mtoMatrix{
+          categories{
+              id
+              name
+              isUncategorized
+              subCategories {
+                  id
+                  name
+                  isUncategorized
+                  milestones {
+                          id
+                          name
+                          addedFromMilestoneLibrary
+                          key
+                          facilitatedBy
+                          needBy
+                          status
+                          riskIndicator
+                          solutions {
+                              name
+                              key
+                              type
+                              milestones {
+                                  name
+                                  type
+                              }
+                          }
+                          # isDraftMilestone
+                  }
+              }
+              }
+          }
+          id
+          modelName
+      }
+  }
+}

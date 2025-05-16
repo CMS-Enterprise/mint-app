@@ -1,0 +1,60 @@
+meta {
+  name: NewMTOMilestone (Custom)
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NewMTOMilestone {
+      createMTOMilestoneCustom(modelPlanID: "{{modelPlanID}}",
+      name: "Uncategorized milestone 2"
+      # mtoCategoryID: ""
+  ) {
+      id
+      name
+      addedFromMilestoneLibrary
+      facilitatedBy
+      facilitatedByOther
+      needBy
+      status
+      riskIndicator
+      # isDraftMilestone
+      mtoCategoryID
+      categories {
+          category{
+              name
+              position
+          }
+          subCategory{
+              name
+              position
+          }
+      }    
+      key
+  
+      # commonMilestone
+      # solutions
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOMilestoneCustom
+  
+  mtoMilestoneID = responseData.id
+  
+  
+  bru.setVar("mtoMilestoneID", mtoMilestoneID);
+}

@@ -1,0 +1,106 @@
+meta {
+  name: Update Data Exchange Approach
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanDataExchangeApproach {
+    updatePlanDataExchangeApproach(id: "{{dataExchangeApproachID}}", changes: {
+      # Page 1
+      dataToCollectFromParticipants: [CLINICAL_DATA, OTHER]
+      dataToCollectFromParticipantsReportsDetails: "Detailed reports information"
+      dataToCollectFromParticipantsOther: "Additional data to collect from participants"
+      dataWillNotBeCollectedFromParticipants: false
+      dataToCollectFromParticipantsNote: "Notes regarding data collection from participants"
+  
+      # Page 2
+      dataToSendToParticipants: [DATA_FEEDBACK_DASHBOARD]
+      dataToSendToParticipantsNote: "Notes about data being sent to participants"
+  
+      # Page 3
+      doesNeedToMakeMultiPayerDataAvailable: true
+      anticipatedMultiPayerDataAvailabilityUseCase: [MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION]
+      doesNeedToMakeMultiPayerDataAvailableNote: "Notes on multi-payer data availability"
+  
+      doesNeedToCollectAndAggregateMultiSourceData: true
+      multiSourceDataToCollect: [COMMERCIAL_CLAIMS]
+      multiSourceDataToCollectOther: "Additional multi-source data to collect"
+      doesNeedToCollectAndAggregateMultiSourceDataNote: "Notes on multi-source data collection"
+  
+      # Page 4
+      willImplementNewDataExchangeMethods: true
+      newDataExchangeMethodsDescription: "Description of new data exchange methods"
+      newDataExchangeMethodsNote: "Notes on new data exchange methods"
+  
+      # Meta
+      isDataExchangeApproachComplete: true
+    }) {
+      # Meta Fields
+      id
+      modelPlanID
+      isDataExchangeApproachComplete
+  
+      # Page 1
+      dataToCollectFromParticipants
+      dataToCollectFromParticipantsReportsDetails
+      dataToCollectFromParticipantsOther
+      dataWillNotBeCollectedFromParticipants
+      dataToCollectFromParticipantsNote
+  
+      # Page 2
+      dataToSendToParticipants
+      dataToSendToParticipantsNote
+  
+      # Page 3
+      doesNeedToMakeMultiPayerDataAvailable
+      anticipatedMultiPayerDataAvailabilityUseCase
+      doesNeedToMakeMultiPayerDataAvailableNote
+      doesNeedToCollectAndAggregateMultiSourceData
+      multiSourceDataToCollect
+      multiSourceDataToCollectOther
+      doesNeedToCollectAndAggregateMultiSourceDataNote
+  
+      # Page 4
+      willImplementNewDataExchangeMethods
+      newDataExchangeMethodsDescription
+      newDataExchangeMethodsNote
+      additionalDataExchangeConsiderationsDescription
+      isDataExchangeApproachComplete
+  
+      # User Accounts
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+      markedCompleteDts
+      markedCompleteBy
+      markedCompleteByUserAccount {
+          id
+          email
+      }
+  
+      createdByUserAccount {
+        commonName
+      }
+      modifiedByUserAccount {
+        commonName
+      }
+      
+      status
+    }
+  }
+  
+}

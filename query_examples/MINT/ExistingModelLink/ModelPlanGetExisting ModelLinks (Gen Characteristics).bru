@@ -1,0 +1,53 @@
+meta {
+  name: ModelPlanGetExisting ModelLinks (Gen Characteristics)
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query ModelPlan {
+    modelPlan(id: "{{modelPlanID}}") {
+      id
+      modelName
+      nameHistory
+      generalCharacteristics {
+        resemblesExistingModelWhich {
+          links {
+            id
+            modelPlanID
+            existingModelID
+            currentModelPlanID
+            fieldName
+            model {
+              __typename
+  
+              ... on ExistingModel {
+                modelName
+                stage
+                numberOfParticipants
+                keywords
+              }
+              ... on ModelPlan {
+                modelName
+                abbreviation
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}

@@ -1,0 +1,47 @@
+meta {
+  name: Update Customizations
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {
+      updateUserViewCustomization(changes: $changes) {
+          id
+          userId
+          viewCustomization
+          solutions
+          createdBy
+          createdByUserAccount {
+              username
+          }
+          createdDts
+          modifiedBy
+          modifiedByUserAccount {
+              username
+          }
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+      "changes": {
+          "viewCustomization": ["FOLLOWED_MODELS","MY_MODEL_PLANS"],
+          "solutions": ["ACO_OS"]
+      }
+  }
+}

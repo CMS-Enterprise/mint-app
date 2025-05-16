@@ -1,0 +1,23 @@
+meta {
+  name: PossibleOperationalSolutionSetPrimaryPointOfContact
+  type: graphql
+  seq: 11
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation SetPrimaryPointOfContact{
+      setPrimaryPointOfContact (possibleOperationalSolutionId: 1, pointOfContactId: "7f6163d2-c8d5-4349-95af-565cbdf1c45a")
+  }
+}

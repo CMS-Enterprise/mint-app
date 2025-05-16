@@ -1,0 +1,62 @@
+meta {
+  name: Create Plan Document Linked
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation linkNewPlanDocument  {
+      linkNewPlanDocument (input: {
+          modelPlanID: "{{modelPlanID}}",
+          name:"Google",
+          url: "https://www.google.com",
+          documentType:CONCEPT_PAPER,
+          restricted:false,
+          otherTypeDescription:"This is just a link to google",
+          optionalNotes:"You can find many documents here",
+  
+      }) {
+          id
+          modelPlanID
+          isLink
+          url
+          fileType
+          bucket
+          fileKey
+          virusScanned
+          virusClean
+          restricted
+          fileName
+          fileSize
+          documentType
+          otherType
+          optionalNotes
+          downloadUrl
+          deletedAt
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts        
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.linkNewPlanDocument
+  
+  documentID = responseData.id
+  
+  bru.setVar("documentID", documentID);
+}

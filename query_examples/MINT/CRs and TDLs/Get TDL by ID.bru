@@ -1,0 +1,40 @@
+meta {
+  name: Get TDL by ID
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query planTDL ($id: UUID!) {
+      planTDL (id: $id) {
+          id
+          modelPlanID
+          idNumber
+          dateInitiated
+          title
+          note
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": ""
+  }
+}

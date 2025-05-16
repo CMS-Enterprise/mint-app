@@ -1,0 +1,52 @@
+meta {
+  name: Update Plan Discussion
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanDiscussion ($id: UUID!, $changes: PlanDiscussionChanges!) {
+      updatePlanDiscussion (id: $id, changes: $changes) {
+          id
+          modelPlanID
+          content
+          userRole
+          userRoleDescription
+          isAssessment
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }             
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{discussionID}}",
+    "changes": {
+      "content": "Great Changes",
+      "userRole": "none_of_the_above"
+    }
+  }
+}

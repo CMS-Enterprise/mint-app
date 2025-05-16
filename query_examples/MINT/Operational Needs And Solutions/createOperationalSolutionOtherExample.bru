@@ -1,0 +1,66 @@
+meta {
+  name: createOperationalSolutionOtherExample
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation OperationalSolution{
+    
+    createOperationalSolution(operationalNeedID:"{{operationalNeedID}}",
+      # solutionType:MARX,
+      changes: {
+        needed: true
+        nameOther: "My special solution"
+      #   otherHeader: "The Happy Helper Team"
+        pocName: "Mr. Clean"
+        pocEmail: "cleanClean@cleaning.com"
+        mustStartDts: "2023-02-04T21:39:57.484167Z"
+        mustFinishDts: "2023-12-04T21:39:57.484167Z"
+    }){
+      
+      id
+      isCommonSolution
+      operationalNeedID
+      # needed
+  
+      name
+      key
+      nameOther
+      pocName
+      pocEmail
+      mustStartDts
+      mustFinishDts
+      isOther
+      otherHeader
+      status
+  
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+      }
+    }
+    
+  
+}
+
+tests {
+  let responseData = res.getBody().data.createOperationalSolution
+  
+  operationalSolutionID = responseData.id
+  
+  bru.setVar("operationalSolutionID", operationalSolutionID);
+}

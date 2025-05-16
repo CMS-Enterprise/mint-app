@@ -1,0 +1,50 @@
+meta {
+  name: GetMTOMilestone
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query GetMTOMilestone {
+      mtoMilestone(id: "{{mtoMilestoneID}}") {
+      id
+      name
+      key
+      addedFromMilestoneLibrary
+      facilitatedBy
+      facilitatedByOther
+      needBy
+      status
+      riskIndicator
+      # isDraftMilestone
+      mtoCategoryID
+      categories {
+          category{
+              name
+              position
+          }
+          subCategory{
+              name
+              position
+          }
+      }    
+  
+      # commonMilestone
+      # solutions
+      # category
+      # subCategory
+      }
+  }
+}

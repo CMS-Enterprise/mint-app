@@ -1,0 +1,38 @@
+meta {
+  name: ModelPlanGet(NameHistory)
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query ModelPlan($id:UUID!,$sort: SortDirection!){
+    
+    modelPlan(id:$id){
+      id
+      modelName
+      nameHistory(sort: $sort)
+  
+    }
+    
+    
+  }
+}
+
+body:graphql:vars {
+  {
+      "id": "{{modelPlanID}}",
+      "sort": "ASC"
+  }
+}
