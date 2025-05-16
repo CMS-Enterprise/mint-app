@@ -301,7 +301,11 @@ const ITSystemsTable = ({
           const { milestones } = row.original;
 
           if (!milestones || milestones?.length === 0)
-            return <>{t('table.noRelatedMilestones')}</>;
+            return (
+              <span className="text-italic">
+                {t('table.noRelatedMilestones')}
+              </span>
+            );
 
           return (
             <>
@@ -324,7 +328,7 @@ const ITSystemsTable = ({
                 <Button
                   type="button"
                   unstyled
-                  className="mint-print-link"
+                  className="mint-print-link display-block"
                   onClick={() => {
                     if (readView) {
                       openViewSolutionModal(row.original.id);

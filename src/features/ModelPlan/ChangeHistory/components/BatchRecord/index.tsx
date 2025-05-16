@@ -280,6 +280,12 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO category header */}
         {change.tableName === TableName.MTO_CATEGORY &&
           (() => {
+            fieldsToMap = fieldsToMap.filter(
+              field =>
+                field.fieldName !== 'name' ||
+                change.action !== DatabaseOperation.DELETE
+            );
+
             const categoryName = getTranslatedFieldValue(change, 'name');
 
             const isSubCategory =
@@ -387,6 +393,12 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
       {/* Render the fields that were changed */}
       <div className="change-record__answer margin-y-1">
         {(() => {
+          if (
+            change.action === DatabaseOperation.DELETE &&
+            change.tableName === TableName.MTO_CATEGORY
+          ) {
+            return <div className="margin-top-neg-1" />;
+          }
           // If the table is a linking table, show the fields in a list
           if (isLinkingTable(change.tableName)) {
             return (
@@ -414,22 +426,26 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
         {/* Render previous details/values */}
         {(() => {
+          const renderPreviousDetails =
+            databaseAction !== DatabaseOperation.DELETE &&
+            !!fieldsToMap.find(field => field.oldTranslated) &&
+            change.tableName !== TableName.MTO_CATEGORY;
           // If the table is a linking table, don't show previous details
           if (
             isLinkingTable(change.tableName) ||
-            change.action === DatabaseOperation.INSERT
+            change.action === DatabaseOperation.INSERT ||
+            !renderPreviousDetails
           )
             return <></>;
 
           return (
             <>
               {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
-              {databaseAction !== DatabaseOperation.DELETE &&
-                !!fieldsToMap.find(field => field.oldTranslated) && (
-                  <div className="text-bold padding-top-105 padding-bottom-1">
-                    {t('previousDetails')}
-                  </div>
-                )}
+              {renderPreviousDetails && (
+                <div className="text-bold padding-top-105 padding-bottom-1">
+                  {t('previousDetails')}
+                </div>
+              )}
 
               {fieldsToMap.map(field => {
                 if (!field.oldTranslated) return <div key={field.id} />;
@@ -481,7 +497,8 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
   const shouldShowCollapse = !changeRecords.find(
     change =>
       change.action === DatabaseOperation.DELETE &&
-      change.tableName === TableName.MTO_CATEGORY
+      change.tableName === TableName.MTO_CATEGORY &&
+      change.translatedFields.length === 1
   );
 
   return (
