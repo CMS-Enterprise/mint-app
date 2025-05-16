@@ -65,8 +65,8 @@ const CustomMilestoneForm = () => {
   // Variables for the form
   const methods = useForm<FormValues>({
     defaultValues: {
-      primaryCategory: categoryID ?? 'default',
-      subcategory: subCategoryID ?? 'default',
+      primaryCategory: categoryID === '' ? 'default' : categoryID,
+      subcategory: subCategoryID === '' ? 'default' : subCategoryID,
       name: ''
     },
     mode: 'onChange'
@@ -193,8 +193,7 @@ const CustomMilestoneForm = () => {
                 <Select
                   {...field}
                   id={convertCamelCaseToKebabCase(field.name)}
-                  value={field.value || ''}
-                  defaultValue="default"
+                  value={field.value || 'default'}
                 >
                   {selectOptionsAndMappedCategories.map(option => {
                     return (
@@ -231,8 +230,7 @@ const CustomMilestoneForm = () => {
                 <Select
                   {...field}
                   id={convertCamelCaseToKebabCase(field.name)}
-                  value={field.value || ''}
-                  defaultValue="default"
+                  value={field.value || 'default'}
                   disabled={watch('primaryCategory') === 'default'}
                 >
                   {[selectOptions[0], ...mappedSubcategories].map(option => {
