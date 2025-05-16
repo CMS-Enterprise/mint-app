@@ -319,7 +319,8 @@ export const columns: ColumnType[] = [
       setMTOModalState,
       initLocation,
       search,
-      readView
+      readView,
+      numberOfMilestones
     }: ExtendedRowProps) => {
       const { openViewSolutionModal, setViewSolutionID } = useContext(
         MTOSolutionPanelContext
