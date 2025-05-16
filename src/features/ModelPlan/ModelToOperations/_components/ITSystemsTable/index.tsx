@@ -509,6 +509,13 @@ const ITSystemsTable = ({
     }
   }, [isPrintPDF, setPageSize, initPageSize]);
 
+  useEffect(() => {
+    if (params.get('page')) {
+      const pageNum = parseInt(params.get('page') || '0', 10);
+      gotoPage(pageNum - 1);
+    }
+  }, [params, gotoPage]);
+
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -675,6 +682,7 @@ const ITSystemsTable = ({
                       pageSize={state.pageSize}
                       setPageSize={setPageSize}
                       page={[]}
+                      setQueryParam
                     />
                   )}
 
