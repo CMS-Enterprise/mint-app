@@ -24,11 +24,11 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         data-testid="article-card"
       >
         <div
-          class="usa-card__container radius-lg shadow-2 minh-mobile padding-0 margin-0"
+          class="usa-card__container shadow-2 minh-mobile padding-0 margin-0"
+          style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
         >
           <div
-            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white bg-green-50"
-            style="padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-top-right-radius: 6px;"
+            class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-2 text-white radius-top-lg bg-green-50"
           >
             MILESTONES 
             <svg
@@ -92,11 +92,11 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         data-testid="article-card"
       >
         <div
-          class="usa-card__container radius-lg shadow-2 minh-mobile padding-0 margin-0"
+          class="usa-card__container shadow-2 minh-mobile padding-0 margin-0"
+          style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
         >
           <div
-            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white indigo-cool-60"
-            style="padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-top-right-radius: 6px;"
+            class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-2 text-white radius-top-lg indigo-cool-60"
           >
             OPERATIONAL SOLUTIONS 
             <svg
@@ -201,11 +201,11 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
       data-testid="article-card"
     >
       <div
-        class="usa-card__container radius-lg shadow-2 padding-0 margin-0"
+        class="usa-card__container shadow-2 padding-0 margin-0"
+        style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
       >
         <div
-          class="display-flex flex-justify bg-base-lightest padding-x-3 bg-base-lighter"
-          style="padding-top: 2px; padding-bottom: 2px; border-top-left-radius: 6px; border-top-right-radius: 6px;"
+          class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-2 bg-base-lighter radius-top-lg"
         >
           TEMPLATE 
           <svg
