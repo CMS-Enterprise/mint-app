@@ -608,7 +608,27 @@ func ModelPlanMostRecentTranslatedAudit(
 ) (*models.TranslatedAudit, error) {
 	//TODO fill this out, move to a constant
 	tablesToInclude := []models.TableName{
-		models.TNModelPlan, models.TNPlanBasics,
+		models.TNModelPlan,
+
+		models.TNPlanBasics,
+		models.TNPlanBeneficiaries,
+		models.TNPlanCollaborator,
+		models.TNPlanDocument,
+		models.TNPlanGeneralCharacteristics,
+		models.TNPlanOpsEvalAndLearning,
+		models.TNPlanParticipantsAndProviders,
+		models.TNPlanPayments,
+		// we don't include a tag
+
+		models.TNPlanDataExchangeApproach,
+
+		models.TNMTOCategory,
+		models.TNMTOMilestone,
+		models.TNMTOSolution,
+		models.TNMTOMilestoneSolutionLink,
+		models.TNMTOInfo,
+		//exclude suggestedMilestone
+
 	}
 	//TODO, make sure that we don't include records from the system account, eg recommendations for suggested status etc
 	return TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx, logger, modelPlanID, tablesToInclude)
