@@ -190,7 +190,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     gqlField: 'milestones',
     goField: 'Milestones',
     dbField: 'milestones',
-    label: 'Linked milestones',
+    label: 'Milestones',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     order: 2.1,

@@ -283,7 +283,7 @@
     "gqlField": "milestones",
     "goField": "Milestones",
     "dbField": "milestones",
-    "label": "Linked milestones",
+    "label": "Milestones",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "order": 2.1,
