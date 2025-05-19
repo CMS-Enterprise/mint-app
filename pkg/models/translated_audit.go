@@ -41,8 +41,8 @@ type TranslatedAuditWithTranslatedFields struct {
 
 type TranslatedAuditWithFilteredView struct {
 	TranslatedAudit
-	TableNames string `json:"table_names"`
-	IsAdmin    bool   `json:"is_admin"`
+	TableNames string `json:"table_names" db:"table_names"`
+	IsAdmin    bool   `json:"is_admin" db:"is_admin"`
 }
 
 // ToTranslatedAudit returns the base translated object object for this parent type

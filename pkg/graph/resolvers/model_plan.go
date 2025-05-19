@@ -598,3 +598,18 @@ func ModelPlanGetTaskListStatus(
 
 	return taskListStatus, nil
 }
+
+// ModelPlanMostRecentTranslatedAudit returns the most recent translated audit for a given model plan id.
+// It looks at specific tables to include in the query.
+func ModelPlanMostRecentTranslatedAudit(
+	ctx context.Context,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+) (*models.TranslatedAudit, error) {
+	//TODO fill this out, move to a constant
+	tablesToInclude := []models.TableName{
+		models.TNModelPlan, models.TNPlanBasics,
+	}
+	//TODO, make sure that we don't include records from the system account, eg recommendations for suggested status etc
+	return TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx, logger, modelPlanID, tablesToInclude)
+}

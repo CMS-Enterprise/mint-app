@@ -176,6 +176,13 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
 }
 
+// MostRecentEdit is the resolver for the mostRecentEdit field.
+func (r *modelPlanResolver) MostRecentEdit(ctx context.Context, obj *models.ModelPlan) (*models.TranslatedAudit, error) {
+	logger := appcontext.ZLogger(ctx)
+	// TODO, do we need to pass principal here as well?
+	return ModelPlanMostRecentTranslatedAudit(ctx, logger, obj.ID)
+}
+
 // MtoMatrix is the resolver for the mtoMatrix field.
 func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan) (*models.ModelsToOperationMatrix, error) {
 	return &models.ModelsToOperationMatrix{

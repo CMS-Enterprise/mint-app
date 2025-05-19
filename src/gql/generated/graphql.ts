@@ -1189,6 +1189,11 @@ export type ModelPlan = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  /**
+   * Most recent edit to the model plan.
+   * This returns the most recent edit, that they are authorized to see.
+   */
+  mostRecentEdit?: Maybe<TranslatedAudit>;
   mtoMatrix: ModelsToOperationMatrix;
   nameHistory: Array<Scalars['String']['output']>;
   opSolutionLastModifiedDts: Scalars['Time']['output'];
