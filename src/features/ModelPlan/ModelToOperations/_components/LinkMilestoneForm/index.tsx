@@ -8,6 +8,7 @@ import {
   GetMtoSolutionQuery
 } from 'gql/generated/graphql';
 
+import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -100,7 +101,7 @@ const LinkMilestoneForm = ({
         <Grid col={10}>
           <h3 className="margin-bottom-2">
             {modelToOperationsMiscT(
-              'modal.editSolution.selectedMilestoneCount',
+              'modal.editSolution.associatedMilestoneCount',
               {
                 count: milestoneIDs.length
               }
@@ -128,6 +129,10 @@ const LinkMilestoneForm = ({
           <Label htmlFor="available-solutions">
             {solutionT('milestones.label')}
           </Label>
+
+          <HelpText className="margin-top-1">
+            {modelToOperationsMiscT('modal.editSolution.helpText')}
+          </HelpText>
 
           <MultiSelect
             id="available-milestones"
