@@ -24,11 +24,11 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         data-testid="article-card"
       >
         <div
-          class="usa-card__container radius-lg shadow-2 minh-mobile padding-0 margin-0"
+          class="usa-card__container shadow-2 minh-mobile padding-0 margin-0"
+          style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
         >
           <div
-            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg bg-green-50"
-            style="padding-top: 2px; padding-bottom: 2px;"
+            class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 text-white radius-top-lg bg-green-50"
           >
             MILESTONES 
             <svg
@@ -92,11 +92,11 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         data-testid="article-card"
       >
         <div
-          class="usa-card__container radius-lg shadow-2 minh-mobile padding-0 margin-0"
+          class="usa-card__container shadow-2 minh-mobile padding-0 margin-0"
+          style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
         >
           <div
-            class="display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg indigo-cool-60"
-            style="padding-top: 2px; padding-bottom: 2px;"
+            class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 text-white radius-top-lg indigo-cool-60"
           >
             OPERATIONAL SOLUTIONS 
             <svg
@@ -192,7 +192,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         <p
           class="mint-body-normal margin-y-0"
         >
-          Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.
+          Many teams find it useful to organize the milestones in their MTO into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.
         </p>
       </div>
     </div>
@@ -201,11 +201,11 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
       data-testid="article-card"
     >
       <div
-        class="usa-card__container radius-lg shadow-2 padding-0 margin-0"
+        class="usa-card__container shadow-2 padding-0 margin-0"
+        style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
       >
         <div
-          class="display-flex flex-justify bg-base-lightest padding-x-3 radius-top-lg bg-base-lighter"
-          style="padding-top: 2px; padding-bottom: 2px;"
+          class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg"
         >
           TEMPLATE 
           <svg

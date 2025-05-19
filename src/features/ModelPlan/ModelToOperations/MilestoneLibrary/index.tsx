@@ -415,19 +415,11 @@ const MilstoneCardGroup = ({
                 components={{
                   link1: (
                     <UswdsReactLink
-                      to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
-                    >
-                      {' '}
-                    </UswdsReactLink>
-                  ),
-                  link2: (
-                    <UswdsReactLink
                       to={`/models/${modelID}/collaboration-area`}
                     >
                       {' '}
                     </UswdsReactLink>
-                  ),
-                  email1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                  )
                 }}
               />
             </Alert>

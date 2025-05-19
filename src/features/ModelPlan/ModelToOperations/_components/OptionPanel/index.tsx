@@ -36,15 +36,15 @@ const MTOOptionsCard = ({
   return (
     <Card
       containerProps={{
-        className: 'radius-lg shadow-2 minh-mobile padding-0 margin-0'
+        className: 'shadow-2 minh-mobile padding-0 margin-0',
+        style: { borderTopLeftRadius: '.65rem', borderTopRightRadius: '.65rem' }
       }}
       data-testid="article-card"
       className={classNames('desktop:grid-col-6 article', className)}
     >
       <div
-        style={{ paddingTop: '2px', paddingBottom: '2px' }}
         className={classNames(
-          'display-flex flex-justify bg-base-lightest padding-x-3 text-white radius-top-lg',
+          'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 text-white radius-top-lg',
           {
             'bg-green-50': mtoType === 'milestones',
             'indigo-cool-60': mtoType === 'solutions'
@@ -146,15 +146,18 @@ const MTOOptionsPanel = () => {
 
       <Card
         containerProps={{
-          className: 'radius-lg shadow-2 padding-0 margin-0'
+          className: 'shadow-2 padding-0 margin-0',
+          style: {
+            borderTopLeftRadius: '.65rem',
+            borderTopRightRadius: '.65rem'
+          }
         }}
         data-testid="article-card"
         className="margin-top-2"
       >
         <div
-          style={{ paddingTop: '2px', paddingBottom: '2px' }}
           className={classNames(
-            'display-flex flex-justify bg-base-lightest padding-x-3 radius-top-lg bg-base-lighter'
+            'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg'
           )}
         >
           {t('optionsCard.template.label').toLocaleUpperCase()}{' '}

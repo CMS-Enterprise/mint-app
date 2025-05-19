@@ -28,7 +28,7 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('[data-testid="alert"]').contains(
       'h4',
-      'There are no suggested milestones that match your search.'
+      'There are no suggested milestones for your model.'
     );
 
     cy.contains('button', /All common milestones/).click();

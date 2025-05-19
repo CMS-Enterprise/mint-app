@@ -234,7 +234,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     'All models are unique, but many have similarities based on key characteristics of the model. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added.',
   aboutCategories: 'About categories',
   aboutCategoriesDescription:
-    'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
+    'Many teams find it useful to organize the milestones in their MTO into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.',
   successReorder: 'Your categories have been reordered.',
   errorReorderForm:
     'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
@@ -718,10 +718,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     changeAnswer: 'Want to change your answer?',
     goToQuestion: 'Go to the question',
     added: 'Added',
-    noSuggestedHeading:
-      'There are no suggested milestones that match your search.',
+    noSuggestedHeading: 'There are no suggested milestones for your model.',
     noSuggestedDescription:
-      'MINT hasn’t suggested any milestones for your model that match your search. You may also try checking <link1>all available milestones</link1>. As you and your team fill out more of your <link2>Model Plan</link2>, MINT may display suggested common milestones that match your search. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email1>MINTTeam@cms.hhs.gov</email1>.',
+      'MINT hasn’t yet suggested any milestones for your model. As you and your team fill out more of your <link1>Model Plan</link1>, MINT may display suggested common milestones for your model here. To view all available common milestones, click the button above labeled “All common milestones”.',
     dontSeeMilestone: 'Don’t see a milestone you need?',
     checkMilestones:
       'Check <link1>all available milestones</link1> or <button1>create a custom milestone</button1>.',
