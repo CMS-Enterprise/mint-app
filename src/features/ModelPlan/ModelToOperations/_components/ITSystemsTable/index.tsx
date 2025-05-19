@@ -521,7 +521,7 @@ const ITSystemsTable = ({
       const pageNum = parseInt(params.get('page') || '0', 10);
       gotoPage(pageNum - 1);
     }
-  }, [params, gotoPage]);
+  }, [params, gotoPage, data]);
 
   if (!data && loading) {
     return <PageLoading />;
