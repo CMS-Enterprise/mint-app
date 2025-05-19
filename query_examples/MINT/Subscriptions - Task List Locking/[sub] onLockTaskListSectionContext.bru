@@ -1,0 +1,38 @@
+meta {
+  name: [sub] onLockTaskListSectionContext
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  subscription onLockTaskListSectionContext ($modelPlanID: UUID!) {
+      onLockTaskListSectionContext (modelPlanID: $modelPlanID) {
+          changeType
+          actionType
+          lockStatus {
+              modelPlanID
+              section
+              lockedBy
+              isAssessment
+          }
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": ""
+  }
+}

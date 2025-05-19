@@ -1,0 +1,80 @@
+meta {
+  name: UpdateMTOSolution
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateMTOSolution {
+  updateMTOSolution(id: "{{mtoSolutionID}}",
+      changes: {
+          name: "Postman MTO Solution"
+          facilitatedBy: [IT_LEAD, OTHER],
+          facilitatedByOther: "Mr. Postman",
+          neededBy: null,
+          status: IN_PROGRESS,
+          riskIndicator: AT_RISK,
+          type: IT_SYSTEM
+      }
+      ,milestoneLinks: {
+          milestoneIDs: [
+              "{{mtoMilestoneID}}"
+              ],
+      }
+  # commonMilestoneID: "{{mtoCommonMilestoneID}}"
+  # ,mtoCategoryID: "{{mtoCategoryID}}"
+  ) {
+      id
+      name
+      facilitatedBy
+      facilitatedByOther
+      neededBy
+      status
+      riskIndicator
+      key
+      type
+      pocName
+      pocEmail
+      
+      #Meta Data
+      createdBy
+      createdByUserAccount {
+          id
+          email
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+          id
+          email
+      }
+      modifiedDts
+  
+    # Custom Resolvers
+    #relatedMilestones {
+    #  id
+    #}
+    addedFromSolutionLibrary
+    commonSolution {
+      name
+    }
+    milestones {
+      id
+      name
+      key
+    }
+  }
+  }
+}

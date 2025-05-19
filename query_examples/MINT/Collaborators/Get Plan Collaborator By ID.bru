@@ -1,0 +1,46 @@
+meta {
+  name: Get Plan Collaborator By ID
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query planCollaboratorByID ($id: UUID!) {
+      planCollaboratorByID (id: $id) {
+          id
+          modelPlanID
+          userID
+          teamRoles
+          userAccount 
+          {
+              commonName
+              familyName
+              givenName
+              email
+              locale
+          }  
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelLeadID}}"
+  }
+}

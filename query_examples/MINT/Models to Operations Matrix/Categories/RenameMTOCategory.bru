@@ -1,0 +1,39 @@
+meta {
+  name: RenameMTOCategory
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation RenameMTOCategory {
+  renameMTOCategory(id: "{{mtoCategoryID}}",
+  name: "Awesome renamed Category"
+  # ,parentID: "{{mtoCategoryID}}"
+  ) {
+      id
+      name
+      isUncategorized
+      }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOCategory
+  
+  mtoCategoryID = responseData.id
+  
+  
+  bru.setVar("mtoCategoryID", mtoCategoryID);
+}

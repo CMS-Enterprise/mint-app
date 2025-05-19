@@ -1,0 +1,44 @@
+meta {
+  name: ExistingModelLink GET
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query existingModelLink {
+    existingModelLink(id: "{{existingModelLinkID}}") {
+      id
+      modelPlanID
+      currentModelPlanID
+      existingModelID
+      fieldName
+      model {
+        __typename
+  
+        ... on ExistingModel {
+          modelName
+          stage
+          numberOfParticipants
+          keywords
+        }
+        ... on ModelPlan {
+          modelName
+          abbreviation
+        }
+      }
+    }
+  }
+  
+}

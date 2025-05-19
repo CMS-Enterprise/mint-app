@@ -1,0 +1,33 @@
+meta {
+  name: Get All MTO Common Solutions
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query mtoCommonSolutions {
+  mtoCommonSolutions{
+  
+          name
+          key
+          type
+          subjects
+          filterView
+          isAdded
+  
+      }
+  
+  }
+}

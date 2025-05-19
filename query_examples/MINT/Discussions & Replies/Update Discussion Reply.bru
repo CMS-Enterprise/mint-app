@@ -1,0 +1,53 @@
+meta {
+  name: Update Discussion Reply
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateDiscussionReply ($id: UUID!, $changes: DiscussionReplyChanges!) {
+      updateDiscussionReply (id: $id, changes: $changes) {
+          id
+          discussionID
+          content
+          userRole
+          userRoleDescription
+          isAssessment
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }             
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{discussionReplyID}}",
+    "changes": {
+      "content": "This is a resolution",
+      "userRole": "NONE_OF_THE_ABOVE",
+      "userRoleDescription": "this is a test"
+    }
+  }
+}

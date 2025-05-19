@@ -1,0 +1,71 @@
+meta {
+  name: NewMTOSolution (Custom)
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NewMTOSolution {
+      createMTOSolutionCustom(modelPlanID: "{{modelPlanID}}",
+      solutionType: IT_SYSTEM,
+      name: "test_name",
+      pocName: "test_poc_name",
+      pocEmail: "poc@test.email"
+  ) {
+      id
+      name
+      facilitatedBy
+      facilitatedByOther
+      status
+      riskIndicator
+      key
+      type
+      pocName
+      pocEmail
+      
+      #Meta Data
+      createdBy
+      createdByUserAccount {
+          id
+          email
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+          id
+          email
+      }
+      modifiedDts
+  
+    # Custom Resolvers
+    #relatedMilestones {
+    #  id
+    #}
+    addedFromSolutionLibrary
+    commonSolution {
+      name
+    }
+    }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOSolutionCustom
+  
+  mtoSolutionID = responseData.id
+  
+  
+  bru.setVar("mtoSolutionID", mtoSolutionID);
+}

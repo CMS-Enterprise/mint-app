@@ -1,0 +1,70 @@
+meta {
+  name: ExistingModelLinksUpdate
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateExistingModelLinks {
+    updateExistingModelLinks(
+      modelPlanID: "{{modelPlanID}}"
+      fieldName: 
+      #   GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH
+      GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
+      existingModelIDs:
+       null
+      #   [100014,100015]
+      currentModelPlanIDs:
+       #   null
+      ["{{modelPlanID}}"]
+    ) {
+      links {
+        id
+        modelPlanID
+        existingModelID
+        currentModelPlanID
+        fieldName
+        model {
+          __typename
+  
+          ... on ExistingModel {
+            modelName
+            stage
+            numberOfParticipants
+            keywords
+          }
+          ... on ModelPlan {
+            modelName
+            abbreviation
+          }
+        }
+      }
+    }
+  }
+  
+}
+
+tests {
+  let responseData = res.getBody().data.updateExistingModelLinks
+  
+  
+  if (responseData.length>0){
+  existingModelLinkID = responseData[0].id
+  
+  bru.setVar("existingModelLinkID", existingModelLinkID);
+  }
+  
+  
+}
