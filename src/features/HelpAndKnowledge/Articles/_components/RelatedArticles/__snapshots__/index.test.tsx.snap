@@ -108,7 +108,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                Learn more about the Model-to-operations matrix, what it’s for, and how to create and maintain an MTO in MINT.
+                Learn more about the Model-to-operations matrix (MTO), what it’s for, and how to create and maintain an MTO in MINT.
               </p>
             </div>
             <div

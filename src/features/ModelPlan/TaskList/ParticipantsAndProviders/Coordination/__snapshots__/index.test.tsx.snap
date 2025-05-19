@@ -498,6 +498,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
+        data-scroll="participantsIds"
       >
         <label
           class="usa-label maxw-none"

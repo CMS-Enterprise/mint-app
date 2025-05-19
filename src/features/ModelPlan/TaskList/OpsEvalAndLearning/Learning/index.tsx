@@ -175,7 +175,7 @@ const Learning = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup>
+                  <FieldGroup scrollElement="modelLearningSystems">
                     <Label htmlFor="ops-eval-and-learning-learning-systems">
                       {opsEvalAndLearningT('modelLearningSystems.label')}
                     </Label>

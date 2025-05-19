@@ -41,7 +41,10 @@ exports[`LinkSolutionForm > renders and matches snapshot 1`] = `
            to learn more about the solutions below.
         </div>
         <div
-          class="border-bottom-1px border-base-lighter border-top-1px padding-top-4 padding-bottom-2 margin-bottom-4"
+          class="border-bottom-1px border-base-lighter border-top-1px "
+        />
+        <div
+          class="padding-top-4 padding-bottom-2 margin-bottom-4"
         >
           <h4
             class="margin-0"
@@ -54,7 +57,7 @@ exports[`LinkSolutionForm > renders and matches snapshot 1`] = `
             These solutions are commonly used for this milestone.
           </p>
           <div
-            class="desktop:grid-col-9 display-flex"
+            class="desktop:grid-col-12 display-flex"
             data-testid="grid"
           >
             <li

@@ -213,30 +213,36 @@ const LinkSolutionForm = ({
             />
           </div>
 
-          <div className="border-bottom-1px border-base-lighter border-top-1px padding-top-4 padding-bottom-2 margin-bottom-4">
-            <h4 className="margin-0">
-              {modelToOperationsMiscT('modal.editMilestone.suggestedSolutions')}
-            </h4>
+          <div className="border-bottom-1px border-base-lighter border-top-1px " />
 
-            <p className="margin-top-0 margin-bottom-3 mint-body-normal text-base">
-              {modelToOperationsMiscT(
-                'modal.editMilestone.selectedSolutionsDescription'
+          {milestone.addedFromMilestoneLibrary && (
+            <div className="padding-top-4 padding-bottom-2 margin-bottom-4">
+              <h4 className="margin-0">
+                {modelToOperationsMiscT(
+                  'modal.editMilestone.suggestedSolutions'
+                )}
+              </h4>
+
+              <p className="margin-top-0 margin-bottom-3 mint-body-normal text-base">
+                {modelToOperationsMiscT(
+                  'modal.editMilestone.selectedSolutionsDescription'
+                )}
+              </p>
+
+              {mappedSolutions.map(solution =>
+                solution ? (
+                  <SolutionCard
+                    key={solution.key}
+                    solution={solution}
+                    setChecked={setChecked}
+                    checked={commonSolutionKeys.includes(
+                      solution.enum as MtoCommonSolutionKey
+                    )}
+                  />
+                ) : null
               )}
-            </p>
-
-            {mappedSolutions.map(solution =>
-              solution ? (
-                <SolutionCard
-                  key={solution.key}
-                  solution={solution}
-                  setChecked={setChecked}
-                  checked={commonSolutionKeys.includes(
-                    solution.enum as MtoCommonSolutionKey
-                  )}
-                />
-              ) : null
-            )}
-          </div>
+            </div>
+          )}
 
           <Label htmlFor="available-solutions">
             {milestoneT('solutions.label')}

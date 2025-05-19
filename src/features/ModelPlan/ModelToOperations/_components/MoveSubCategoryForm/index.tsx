@@ -144,7 +144,7 @@ const MoveSubCategoryForm = () => {
           id="edit-milestone-form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Fieldset disabled={loading}>
+          <Fieldset disabled={loading} className="margin-bottom-8">
             <Controller
               name="parentID"
               control={control}

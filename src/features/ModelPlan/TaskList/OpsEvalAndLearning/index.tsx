@@ -303,7 +303,7 @@ export const OpsEvalAndLearningContent = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="ops-eval-and-learning-help-desk-use"
+                    scrollElement="helpdeskUse"
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-help-desk-use">
@@ -395,7 +395,10 @@ export const OpsEvalAndLearningContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
+                  <FieldGroup
+                    className="margin-y-4 margin-bottom-8"
+                    scrollElement="iddocSupport"
+                  >
                     <Label htmlFor="ops-eval-and-learning-iddoc-support">
                       {opsEvalAndLearningT('iddocSupport.label')}
                     </Label>

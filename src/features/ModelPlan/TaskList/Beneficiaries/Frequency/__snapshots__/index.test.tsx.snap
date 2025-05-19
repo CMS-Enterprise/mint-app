@@ -474,6 +474,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group"
+            data-scroll="beneficiaryOverlap"
           >
             <label
               class="usa-label"

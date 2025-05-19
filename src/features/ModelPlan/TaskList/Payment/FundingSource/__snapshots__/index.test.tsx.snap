@@ -735,6 +735,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
+              data-scroll="payType"
             >
               <label
                 class="usa-label maxw-none"

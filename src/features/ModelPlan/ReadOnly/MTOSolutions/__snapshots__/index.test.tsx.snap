@@ -508,7 +508,13 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                 role="cell"
                 style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
               >
-                Milestone 1
+                <button
+                  class="usa-button usa-button--unstyled mint-print-link"
+                  data-testid="button"
+                  type="button"
+                >
+                  Milestone 1
+                </button>
               </td>
               <td
                 role="cell"

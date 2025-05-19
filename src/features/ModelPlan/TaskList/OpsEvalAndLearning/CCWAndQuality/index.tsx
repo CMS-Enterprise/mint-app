@@ -298,7 +298,7 @@ const CCWAndQuality = () => {
                     <>
                       <h3>{opsEvalAndLearningMiscT('qualityQuestions')}</h3>
 
-                      <FieldGroup>
+                      <FieldGroup scrollElement="developNewQualityMeasures">
                         <Label
                           htmlFor="ops-eval-and-learning-develop-measures"
                           className="maxw-none"
