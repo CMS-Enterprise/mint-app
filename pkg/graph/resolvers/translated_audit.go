@@ -25,7 +25,10 @@ func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context,
 	// 	//If desired, we could just return the non-privileged version on error there
 	// }
 
-	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{})
+	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{
+		ModelPlanID: modelPlanID,
+		TableNames:  tablesToInclude.String(),
+	})
 }
 
 // TranslatedAuditCollectionGetByModelPlanID returns all TranslatedAudit for a given model plan id

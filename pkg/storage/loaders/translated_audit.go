@@ -27,7 +27,24 @@ func batchTranslatedAuditGetMostRecentByModelPlanIDAndTableFilters(ctx context.C
 		return errorPerEachKey[storage.MostRecentByModelPlanIDAndTableFilters, *models.TranslatedAudit](keys, err)
 	}
 
-	//TODO implement. You might need to update the return type to also return with the filter as well for the sake of getting the result
-	return nil
+	data, err := storage.TranslatedAuditMostRecentGetByModelPlanIDAndTableNamesLoader(loaders.DataReader.Store, keys)
+	if err != nil {
+		return errorPerEachKey[storage.MostRecentByModelPlanIDAndTableFilters, *models.TranslatedAudit](keys, err)
+	}
+	getKeyFunc := func(data *models.TranslatedAuditWithFilteredView) storage.MostRecentByModelPlanIDAndTableFilters {
+		return storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID: data.ModelPlanID,
+			TableNames:  data.TableNames,
+			IsAdmin:     data.IsAdmin,
+		}
+	}
+	getResFunc := func(key storage.MostRecentByModelPlanIDAndTableFilters, resMap map[storage.MostRecentByModelPlanIDAndTableFilters]*models.TranslatedAuditWithFilteredView) (*models.TranslatedAudit, bool) {
+		res, ok := resMap[key]
+		if ok {
+			return res.ToTranslatedAudit(), ok
+		}
+		return nil, ok
+	}
+	return oneToOneWithCustomKeyDataLoaderAllowNil(keys, data, getKeyFunc, getResFunc)
 
 }

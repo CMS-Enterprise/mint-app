@@ -39,6 +39,17 @@ type TranslatedAuditWithTranslatedFields struct {
 	TranslatedFields []*TranslatedAuditField
 }
 
+type TranslatedAuditWithFilteredView struct {
+	TranslatedAudit
+	TableNames string `json:"table_names"`
+	IsAdmin    bool   `json:"is_admin"`
+}
+
+// ToTranslatedAudit returns the base translated object object for this parent type
+func (taf *TranslatedAuditWithFilteredView) ToTranslatedAudit() *TranslatedAudit {
+	return &taf.TranslatedAudit
+}
+
 // TranslatedAudit is a structure that shows grouped, humanReadable Audit data
 type TranslatedAudit struct {
 	baseStruct
