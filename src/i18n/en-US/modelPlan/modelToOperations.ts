@@ -550,7 +550,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       helpText: 'Select all that apply',
       status: 'Status',
       selectedMilestoneCount_other: '{{count}} selected milestones',
-      associatedMilestoneCount: '{{count}} associated milestone',
+      selectedMilestoneCount: '{{count}} associated milestone',
       relatedMilestoneCount_other: '{{count}} related milestones',
       relatedMilestoneCount: '{{count}} related milestone',
       suggestedMilestones: 'Suggested milestones',

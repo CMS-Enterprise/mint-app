@@ -101,7 +101,7 @@ const LinkMilestoneForm = ({
         <Grid col={10}>
           <h3 className="margin-bottom-2">
             {modelToOperationsMiscT(
-              'modal.editSolution.associatedMilestoneCount',
+              'modal.editSolution.selectedMilestoneCount',
               {
                 count: milestoneIDs.length
               }
