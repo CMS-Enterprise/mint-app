@@ -288,11 +288,6 @@ export enum ContractorSupportType {
   OTHER = 'OTHER'
 }
 
-export type CreateOperationalSolutionSubtaskInput = {
-  name: Scalars['String']['input'];
-  status: OperationalSolutionSubtaskStatus;
-};
-
 /** The current user of the application */
 export type CurrentUser = {
   __typename: 'CurrentUser';
@@ -694,6 +689,7 @@ export enum LockableSection {
   BENEFICIARIES = 'BENEFICIARIES',
   DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
   GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
+  MODELS_TO_OPERATION_MATRIX = 'MODELS_TO_OPERATION_MATRIX',
   OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
   PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
   PAYMENT = 'PAYMENT',
@@ -713,6 +709,414 @@ export type LockableSectionLockStatusChanged = {
   actionType: ActionType;
   changeType: ChangeType;
   lockStatus: LockableSectionLockStatus;
+};
+
+/**
+ * MTOCategories combines the concept of Category and Subcategory
+ * This allows it to be fetched more conveniently in one resolver
+ */
+export type MtoCategories = {
+  __typename: 'MTOCategories';
+  category: MtoCategory;
+  subCategory: MtoSubcategory;
+};
+
+export type MtoCategory = {
+  __typename: 'MTOCategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
+  subCategories: Array<MtoSubcategory>;
+};
+
+/** Represents MTO Category translation data */
+export type MtoCategoryTranslation = {
+  __typename: 'MTOCategoryTranslation';
+  name: TranslationField;
+  parentID: TranslationField;
+  position: TranslationField;
+};
+
+/** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
+export type MtoCommonMilestone = {
+  __typename: 'MTOCommonMilestone';
+  categoryName: Scalars['String']['output'];
+  commonSolutions: Array<MtoCommonSolution>;
+  facilitatedByRole: Array<MtoFacilitator>;
+  /**
+   * To represent if this Common Milestone is _already_ part of the Model Plan's MTO.
+   * This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+   */
+  isAdded: Scalars['Boolean']['output'];
+  /**
+   * To represent if this Common Milestone is suggested to be part of the Model Plan's MTO, according to answers provided elsewhere in the app.
+   * This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+   */
+  isSuggested: Scalars['Boolean']['output'];
+  key: MtoCommonMilestoneKey;
+  name: Scalars['String']['output'];
+  /** Specifies the Task List Section that corresponds to suggesting this common milestone */
+  section?: Maybe<TaskListSection>;
+  subCategoryName?: Maybe<Scalars['String']['output']>;
+};
+
+/** These are all the common milestone keys that we expect to for mto common milestones */
+export enum MtoCommonMilestoneKey {
+  ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
+  ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
+  ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
+  APP_SUPPORT_CON = 'APP_SUPPORT_CON',
+  CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
+  COMM_W_PART = 'COMM_W_PART',
+  COMPUTE_SHARED_SAVINGS_PAYMENT = 'COMPUTE_SHARED_SAVINGS_PAYMENT',
+  DATA_TO_MONITOR = 'DATA_TO_MONITOR',
+  DATA_TO_SUPPORT_EVAL = 'DATA_TO_SUPPORT_EVAL',
+  EDUCATE_BENEF = 'EDUCATE_BENEF',
+  ESTABLISH_BENCH = 'ESTABLISH_BENCH',
+  HELPDESK_SUPPORT = 'HELPDESK_SUPPORT',
+  IDDOC_SUPPORT = 'IDDOC_SUPPORT',
+  IT_PLATFORM_FOR_LEARNING = 'IT_PLATFORM_FOR_LEARNING',
+  MAKE_NON_CLAIMS_BASED_PAYMENTS = 'MAKE_NON_CLAIMS_BASED_PAYMENTS',
+  MANAGE_BEN_OVERLAP = 'MANAGE_BEN_OVERLAP',
+  MANAGE_CD = 'MANAGE_CD',
+  MANAGE_FFS_EXCL_PAYMENTS = 'MANAGE_FFS_EXCL_PAYMENTS',
+  MANAGE_PROV_OVERLAP = 'MANAGE_PROV_OVERLAP',
+  PART_TO_PART_COLLAB = 'PART_TO_PART_COLLAB',
+  PROCESS_PART_APPEALS = 'PROCESS_PART_APPEALS',
+  QUALITY_PERFORMANCE_SCORES = 'QUALITY_PERFORMANCE_SCORES',
+  RECOVER_PAYMENTS = 'RECOVER_PAYMENTS',
+  RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
+  REV_COL_BIDS = 'REV_COL_BIDS',
+  REV_SCORE_APP = 'REV_SCORE_APP',
+  SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
+  SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
+  UPDATE_CONTRACT = 'UPDATE_CONTRACT',
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
+}
+
+export type MtoCommonSolution = {
+  __typename: 'MTOCommonSolution';
+  contactInformation: MtoCommonSolutionContactInformation;
+  filterView?: Maybe<ModelViewFilter>;
+  /** Has this common solution been added to the MTO for a model plan? It is only evaluated when evaluated at the parent level, in the context of a model plan */
+  isAdded: Scalars['Boolean']['output'];
+  key: MtoCommonSolutionKey;
+  name: Scalars['String']['output'];
+  subjects: Array<MtoCommonSolutionSubject>;
+  type: MtoSolutionType;
+};
+
+export type MtoCommonSolutionContact = {
+  __typename: 'MTOCommonSolutionContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  isPrimary: Scalars['Boolean']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+/** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
+export type MtoCommonSolutionContactInformation = {
+  __typename: 'MTOCommonSolutionContactInformation';
+  /** This is the list of all points of contact for this common solution */
+  pointsOfContact: Array<MtoCommonSolutionContact>;
+  /** The point of contact who is determined to be the primary contact */
+  primaryContact: MtoCommonSolutionContact;
+};
+
+/** Represents a translation of a contact for a common solution */
+export type MtoCommonSolutionContactTranslation = {
+  __typename: 'MTOCommonSolutionContactTranslation';
+  email: TranslationField;
+  isPrimary: TranslationField;
+  isTeam: TranslationField;
+  key: TranslationField;
+  name: TranslationField;
+  role: TranslationField;
+};
+
+export enum MtoCommonSolutionKey {
+  ACO_OS = 'ACO_OS',
+  APPS = 'APPS',
+  ARS = 'ARS',
+  BCDA = 'BCDA',
+  CBOSC = 'CBOSC',
+  CCW = 'CCW',
+  CDX = 'CDX',
+  CMS_BOX = 'CMS_BOX',
+  CMS_QUALTRICS = 'CMS_QUALTRICS',
+  CONNECT = 'CONNECT',
+  CPI_VETTING = 'CPI_VETTING',
+  EDFR = 'EDFR',
+  EFT = 'EFT',
+  GOVDELIVERY = 'GOVDELIVERY',
+  GS = 'GS',
+  HDR = 'HDR',
+  HIGLAS = 'HIGLAS',
+  HPMS = 'HPMS',
+  IDR = 'IDR',
+  INNOVATION = 'INNOVATION',
+  IPC = 'IPC',
+  ISP = 'ISP',
+  LDG = 'LDG',
+  LOI = 'LOI',
+  LV = 'LV',
+  MARX = 'MARX',
+  MDM_NCBP = 'MDM_NCBP',
+  MDM_POR = 'MDM_POR',
+  MIDS = 'MIDS',
+  MODEL_SPACE = 'MODEL_SPACE',
+  OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
+  POST_PORTAL = 'POST_PORTAL',
+  QV = 'QV',
+  RFA = 'RFA',
+  RMADA = 'RMADA',
+  SHARED_SYSTEMS = 'SHARED_SYSTEMS'
+}
+
+export enum MtoCommonSolutionSubject {
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS',
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS',
+  COMMUNICATION_TOOLS_AND_HELP_DESK = 'COMMUNICATION_TOOLS_AND_HELP_DESK',
+  CONTRACT_VEHICLES = 'CONTRACT_VEHICLES',
+  DATA = 'DATA',
+  LEARNING = 'LEARNING',
+  LEGAL = 'LEGAL',
+  MEDICARE_ADVANTAGE_AND_PART_D = 'MEDICARE_ADVANTAGE_AND_PART_D',
+  MEDICARE_FEE_FOR_SERVICE = 'MEDICARE_FEE_FOR_SERVICE',
+  PAYMENTS_AND_FINANCIALS = 'PAYMENTS_AND_FINANCIALS',
+  QUALITY = 'QUALITY'
+}
+
+export enum MtoFacilitator {
+  APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
+  CONTRACTING_OFFICERS_REPRESENTATIVE = 'CONTRACTING_OFFICERS_REPRESENTATIVE',
+  DATA_ANALYTICS_CONTRACTOR = 'DATA_ANALYTICS_CONTRACTOR',
+  EVALUATION_CONTRACTOR = 'EVALUATION_CONTRACTOR',
+  IMPLEMENTATION_CONTRACTOR = 'IMPLEMENTATION_CONTRACTOR',
+  IT_LEAD = 'IT_LEAD',
+  IT_SYSTEM_PRODUCT_OWNER = 'IT_SYSTEM_PRODUCT_OWNER',
+  LEARNING_AND_DIFFUSION_GROUP = 'LEARNING_AND_DIFFUSION_GROUP',
+  LEARNING_CONTRACTOR = 'LEARNING_CONTRACTOR',
+  MODEL_DATA_LEAD = 'MODEL_DATA_LEAD',
+  MODEL_LEAD = 'MODEL_LEAD',
+  MODEL_TEAM = 'MODEL_TEAM',
+  MONITORING_CONTRACTOR = 'MONITORING_CONTRACTOR',
+  OTHER = 'OTHER',
+  PARTICIPANTS = 'PARTICIPANTS',
+  QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
+  RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP = 'RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP',
+  SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
+}
+
+/** This holds information specific to a models to operation matrix */
+export type MtoInfo = {
+  __typename: 'MTOInfo';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDTS?: Maybe<Scalars['Time']['output']>;
+};
+
+/** Represents mto info translation data */
+export type MtoInfoTranslation = {
+  __typename: 'MTOInfoTranslation';
+  readyForReviewBy: TranslationField;
+  readyForReviewDTS: TranslationField;
+};
+
+export type MtoMilestone = {
+  __typename: 'MTOMilestone';
+  addedFromMilestoneLibrary: Scalars['Boolean']['output'];
+  /** Category resolves relational category information. */
+  categories: MtoCategories;
+  commonMilestone?: Maybe<MtoCommonMilestone>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  facilitatedBy?: Maybe<Array<MtoFacilitator>>;
+  /**
+   * A place to store the other facilitator information if selected as an option for facilitatedBy.
+   * Note, this data will be cleared if other is removed as an option
+   */
+  facilitatedByOther?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  isDraft: Scalars['Boolean']['output'];
+  key?: Maybe<MtoCommonMilestoneKey>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  /**
+   * Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
+   * This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
+   */
+  mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
+  name: Scalars['String']['output'];
+  needBy?: Maybe<Scalars['Time']['output']>;
+  riskIndicator: MtoRiskIndicator;
+  solutions: Array<MtoSolution>;
+  status: MtoMilestoneStatus;
+};
+
+export type MtoMilestoneChanges = {
+  facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
+  isDraft?: InputMaybe<Scalars['Boolean']['input']>;
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  needBy?: InputMaybe<Scalars['Time']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoMilestoneStatus>;
+};
+
+export type MtoMilestoneLinks = {
+  milestoneIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
+/** Represents MTO Milestone Solution Link translation data */
+export type MtoMilestoneSolutionLinkTranslation = {
+  __typename: 'MTOMilestoneSolutionLinkTranslation';
+  milestoneID: TranslationField;
+  solutionID: TranslationField;
+};
+
+/** The possible statuses of Milestone. */
+export enum MtoMilestoneStatus {
+  COMPLETED = 'COMPLETED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_STARTED = 'NOT_STARTED'
+}
+
+/** Represents MTO Custom Milestone translation data */
+export type MtoMilestoneTranslation = {
+  __typename: 'MTOMilestoneTranslation';
+  commonSolutions: TranslationFieldWithOptions;
+  facilitatedBy: TranslationFieldWithOptions;
+  facilitatedByOther: TranslationField;
+  isDraft: TranslationFieldWithOptions;
+  key: TranslationField;
+  mtoCategoryID: TranslationField;
+  name: TranslationField;
+  needBy: TranslationField;
+  riskIndicator: TranslationFieldWithOptions;
+  solutions: TranslationFieldWithOptions;
+  status: TranslationFieldWithOptions;
+};
+
+export enum MtoRiskIndicator {
+  AT_RISK = 'AT_RISK',
+  OFF_TRACK = 'OFF_TRACK',
+  ON_TRACK = 'ON_TRACK'
+}
+
+export type MtoSolution = {
+  __typename: 'MTOSolution';
+  addedFromSolutionLibrary: Scalars['Boolean']['output'];
+  commonSolution?: Maybe<MtoCommonSolution>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  facilitatedBy?: Maybe<Array<MtoFacilitator>>;
+  /**
+   * A place to store the other facilitator information if selected as an option for facilitatedBy.
+   * Note, this data will be cleared if other is removed as an option
+   */
+  facilitatedByOther?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  key?: Maybe<MtoCommonSolutionKey>;
+  milestones: Array<MtoMilestone>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  neededBy?: Maybe<Scalars['Time']['output']>;
+  pocEmail?: Maybe<Scalars['String']['output']>;
+  pocName?: Maybe<Scalars['String']['output']>;
+  riskIndicator?: Maybe<MtoRiskIndicator>;
+  status: MtoSolutionStatus;
+  type?: Maybe<MtoSolutionType>;
+};
+
+export type MtoSolutionChanges = {
+  facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  neededBy?: InputMaybe<Scalars['Time']['input']>;
+  pocEmail?: InputMaybe<Scalars['String']['input']>;
+  pocName?: InputMaybe<Scalars['String']['input']>;
+  riskIndicator?: InputMaybe<MtoRiskIndicator>;
+  status?: InputMaybe<MtoSolutionStatus>;
+  /** If sourced from a Common Solution, this will resolve from the common solution table (you can't edit this for common solution!) */
+  type?: InputMaybe<MtoSolutionType>;
+};
+
+export type MtoSolutionLinks = {
+  commonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  solutionIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
+/** The possible statuses of a Solution. */
+export enum MtoSolutionStatus {
+  BACKLOG = 'BACKLOG',
+  COMPLETED = 'COMPLETED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_STARTED = 'NOT_STARTED',
+  ONBOARDING = 'ONBOARDING'
+}
+
+/** Represents MTO Custom Solution translation data */
+export type MtoSolutionTranslation = {
+  __typename: 'MTOSolutionTranslation';
+  facilitatedBy: TranslationFieldWithOptions;
+  facilitatedByOther: TranslationField;
+  key: TranslationField;
+  milestones: TranslationFieldWithOptions;
+  name: TranslationField;
+  neededBy: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  riskIndicator: TranslationFieldWithOptions;
+  solutionType: TranslationFieldWithOptions;
+  status: TranslationFieldWithOptions;
+};
+
+export enum MtoSolutionType {
+  CONTRACTOR = 'CONTRACTOR',
+  CROSS_CUTTING_GROUP = 'CROSS_CUTTING_GROUP',
+  IT_SYSTEM = 'IT_SYSTEM',
+  OTHER = 'OTHER'
+}
+
+export enum MtoStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  READY = 'READY',
+  READY_FOR_REVIEW = 'READY_FOR_REVIEW'
+}
+
+export type MtoSubcategory = {
+  __typename: 'MTOSubcategory';
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  milestones: Array<MtoMilestone>;
+  name: Scalars['String']['output'];
+  position: Scalars['Int']['output'];
 };
 
 export enum MintUses {
@@ -785,9 +1189,9 @@ export type ModelPlan = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoMatrix: ModelsToOperationMatrix;
   nameHistory: Array<Scalars['String']['output']>;
   opSolutionLastModifiedDts: Scalars['Time']['output'];
-  operationalNeeds: Array<OperationalNeed>;
   opsEvalAndLearning: PlanOpsEvalAndLearning;
   participantsAndProviders: PlanParticipantsAndProviders;
   payments: PlanPayments;
@@ -805,13 +1209,12 @@ export type ModelPlanNameHistoryArgs = {
   sort?: SortDirection;
 };
 
-export type ModelPlanAndPossibleOperationalSolution = {
-  __typename: 'ModelPlanAndPossibleOperationalSolution';
-  key: OperationalSolutionKey;
+export type ModelPlanAndMtoCommonSolution = {
+  __typename: 'ModelPlanAndMTOCommonSolution';
+  key: MtoCommonSolutionKey;
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];
-  possibleOperationalSolution: PossibleOperationalSolution;
-  possibleOperationalSolutionID: Scalars['Int']['output'];
+  mtoCommonSolution: MtoCommonSolution;
 };
 
 /**
@@ -855,6 +1258,19 @@ export type ModelPlanTranslation = {
   status: TranslationFieldWithOptions;
 };
 
+/** ModelShareSection is the section of the model plan that is being shared. */
+export enum ModelShareSection {
+  ALL = 'ALL',
+  /** Just share the model plan */
+  MODEL_PLAN = 'MODEL_PLAN',
+  /** Share all MTO info */
+  MTO_ALL = 'MTO_ALL',
+  /** Only share MTO Milestones */
+  MTO_MILESTONES = 'MTO_MILESTONES',
+  /** Only share MTO Solutions */
+  MTO_SOLUTIONS = 'MTO_SOLUTIONS'
+}
+
 export enum ModelStatus {
   ACTIVE = 'ACTIVE',
   ANNOUNCED = 'ANNOUNCED',
@@ -890,6 +1306,33 @@ export enum ModelViewFilter {
   PBG = 'PBG'
 }
 
+export type ModelsToOperationMatrix = {
+  __typename: 'ModelsToOperationMatrix';
+  categories: Array<MtoCategory>;
+  commonMilestones: Array<MtoCommonMilestone>;
+  commonSolutions: Array<MtoCommonSolution>;
+  info: MtoInfo;
+  milestones: Array<MtoMilestone>;
+  milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
+  /**
+   * RecentEdit returns the most recent translated audit for the MTO
+   * Note, this should not be called when fetching a list of model plans as it is not data loaded
+   */
+  recentEdit?: Maybe<TranslatedAudit>;
+  /**
+   * Solutions returns solutions that are linked to a Model Plan's MTO.
+   *  -- filterView is used to return only solutions that are relevant to a specific ModelViewFilter
+   *   -- This relationship is from common solutions used as a source for the solution
+   */
+  solutions: Array<MtoSolution>;
+  status: MtoStatus;
+};
+
+
+export type ModelsToOperationMatrixSolutionsArgs = {
+  filterView?: InputMaybe<ModelViewFilter>;
+};
+
 export enum MonitoringFileType {
   BENEFICIARY = 'BENEFICIARY',
   OTHER = 'OTHER',
@@ -911,19 +1354,36 @@ export enum MultiSourceDataToCollect {
 /** Mutations definition for the schema */
 export type Mutation = {
   __typename: 'Mutation';
-  addOrUpdateCustomOperationalNeed: OperationalNeed;
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  /**
+   * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
+   * Note, the parent must belong to the same model plan, or this will return an error
+   */
+  createMTOCategory: MtoCategory;
+  createMTOMilestoneCommon: MtoMilestone;
+  createMTOMilestoneCustom: MtoMilestone;
+  createMTOSolutionCommon: MtoSolution;
+  createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
-  createOperationalSolution: OperationalSolution;
-  createOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
   createPlanCR: PlanCr;
   createPlanCollaborator: PlanCollaborator;
   createPlanDiscussion: PlanDiscussion;
-  createPlanDocumentSolutionLinks?: Maybe<Array<PlanDocumentSolutionLink>>;
   createPlanTDL: PlanTdl;
-  deleteOperationalSolutionSubtask: Scalars['Int']['output'];
+  /**
+   * Automatically attempts to create a series of categories and subcategories by name. If any specific category/subcategory already exists, it will
+   * still create the others
+   */
+  createStandardCategories: Scalars['Boolean']['output'];
+  /**
+   * Deletes an MTO category. If the category has subcategories, it will delete them as well.
+   * If the target category is a subcategory, it will only delete the subcategory and redirect
+   * references to the parent category.
+   */
+  deleteMTOCategory: Scalars['Boolean']['output'];
+  deleteMTOMilestone: Scalars['Boolean']['output'];
+  deleteMTOSolution: Scalars['Boolean']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
   deletePlanDocument: Scalars['Int']['output'];
@@ -933,24 +1393,40 @@ export type Mutation = {
   lockLockableSection: Scalars['Boolean']['output'];
   /** Marks all notifications for the current user as read, and returns the updated notifications */
   markAllNotificationsAsRead: Array<UserNotification>;
+  markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
-  removePlanDocumentSolutionLinks: Scalars['Boolean']['output'];
+  mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
+  /**
+   * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
+   * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
+   */
+  renameMTOCategory: MtoCategory;
+  /**
+   * Allows you to change the position and parent of an MTO category. Other categories will automatically
+   * have their positions changed to adjust to the new position of the new category.
+   * If only the parent is changed, the category will be placed as the last category in order for the group of subcategories
+   * Note, a subcategory can't become a subcategory and vice versa
+   */
+  reorderMTOCategory: MtoCategory;
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
+  /**
+   * ShareModelPlan allows a user to share a model plan with other users.
+   * if both a view filter and a section are provided, the view filter will be ignored
+   */
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
   unlockLockableSection: Scalars['Boolean']['output'];
-  updateCustomOperationalNeedByID: OperationalNeed;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  updateMTOMilestone: MtoMilestone;
+  updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
-  updateOperationalSolution: OperationalSolution;
-  updateOperationalSolutionSubtasks?: Maybe<Array<OperationalSolutionSubtask>>;
   updatePlanBasics: PlanBasics;
   updatePlanBeneficiaries: PlanBeneficiaries;
   updatePlanCR: PlanCr;
@@ -965,14 +1441,6 @@ export type Mutation = {
   updateUserNotificationPreferences: UserNotificationPreferences;
   updateUserViewCustomization: UserViewCustomization;
   uploadNewPlanDocument: PlanDocument;
-};
-
-
-/** Mutations definition for the schema */
-export type MutationAddOrUpdateCustomOperationalNeedArgs = {
-  customNeedType: Scalars['String']['input'];
-  modelPlanID: Scalars['UUID']['input'];
-  needed: Scalars['Boolean']['input'];
 };
 
 
@@ -995,23 +1463,50 @@ export type MutationCreateDiscussionReplyArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationCreateMtoCategoryArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneCommonArgs = {
+  commonMilestoneKey: MtoCommonMilestoneKey;
+  commonSolutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneCustomArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+  name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCommonArgs = {
+  key: MtoCommonSolutionKey;
+  milestonesToLink?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoSolutionCustomArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  solutionType: MtoSolutionType;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationCreateModelPlanArgs = {
   modelName: Scalars['String']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationCreateOperationalSolutionArgs = {
-  changes: OperationalSolutionChanges;
-  operationalNeedID: Scalars['UUID']['input'];
-  solutionType?: InputMaybe<OperationalSolutionKey>;
-};
-
-
-/** Mutations definition for the schema */
-export type MutationCreateOperationalSolutionSubtasksArgs = {
-  inputs: Array<CreateOperationalSolutionSubtaskInput>;
-  solutionID: Scalars['UUID']['input'];
 };
 
 
@@ -1034,20 +1529,31 @@ export type MutationCreatePlanDiscussionArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationCreatePlanDocumentSolutionLinksArgs = {
-  documentIDs: Array<Scalars['UUID']['input']>;
-  solutionID: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationCreatePlanTdlArgs = {
   input: PlanTdlCreateInput;
 };
 
 
 /** Mutations definition for the schema */
-export type MutationDeleteOperationalSolutionSubtaskArgs = {
+export type MutationCreateStandardCategoriesArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoSolutionArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -1096,15 +1602,37 @@ export type MutationLockLockableSectionArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationMarkMtoReadyForReviewArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationMarkNotificationAsReadArgs = {
   notificationID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
-export type MutationRemovePlanDocumentSolutionLinksArgs = {
-  documentIDs: Array<Scalars['UUID']['input']>;
-  solutionID: Scalars['UUID']['input'];
+export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationRenameMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationReorderMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  newOrder?: InputMaybe<Scalars['Int']['input']>;
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
@@ -1123,6 +1651,7 @@ export type MutationSendFeedbackEmailArgs = {
 /** Mutations definition for the schema */
 export type MutationShareModelPlanArgs = {
   modelPlanID: Scalars['UUID']['input'];
+  modelShareSection?: InputMaybe<ModelShareSection>;
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
   usernames: Array<Scalars['String']['input']>;
   viewFilter?: InputMaybe<ModelViewFilter>;
@@ -1143,14 +1672,6 @@ export type MutationUnlockLockableSectionArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationUpdateCustomOperationalNeedByIdArgs = {
-  customNeedType?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['UUID']['input'];
-  needed: Scalars['Boolean']['input'];
-};
-
-
-/** Mutations definition for the schema */
 export type MutationUpdateExistingModelLinksArgs = {
   currentModelPlanIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
@@ -1160,22 +1681,25 @@ export type MutationUpdateExistingModelLinksArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationUpdateMtoMilestoneArgs = {
+  changes: MtoMilestoneChanges;
+  id: Scalars['UUID']['input'];
+  solutionLinks?: InputMaybe<MtoSolutionLinks>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoSolutionArgs = {
+  changes: MtoSolutionChanges;
+  id: Scalars['UUID']['input'];
+  milestoneLinks?: InputMaybe<MtoMilestoneLinks>;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationUpdateModelPlanArgs = {
   changes: ModelPlanChanges;
   id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationUpdateOperationalSolutionArgs = {
-  changes: OperationalSolutionChanges;
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationUpdateOperationalSolutionSubtasksArgs = {
-  inputs: Array<UpdateOperationalSolutionSubtaskInput>;
 };
 
 
@@ -1316,29 +1840,6 @@ export enum OpSolutionStatus {
   ONBOARDING = 'ONBOARDING'
 }
 
-export type OperationalNeed = {
-  __typename: 'OperationalNeed';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  key?: Maybe<OperationalNeedKey>;
-  modelPlanID: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  nameOther?: Maybe<Scalars['String']['output']>;
-  needed?: Maybe<Scalars['Boolean']['output']>;
-  section?: Maybe<TaskListSection>;
-  solutions: Array<OperationalSolution>;
-};
-
-
-export type OperationalNeedSolutionsArgs = {
-  includeNotNeeded?: Scalars['Boolean']['input'];
-};
-
 export enum OperationalNeedKey {
   ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
   ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
@@ -1385,44 +1886,6 @@ export type OperationalNeedTranslation = {
   section: TranslationFieldWithOptions;
 };
 
-export type OperationalSolution = {
-  __typename: 'OperationalSolution';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  documents: Array<PlanDocument>;
-  id: Scalars['UUID']['output'];
-  isCommonSolution: Scalars['Boolean']['output'];
-  isOther: Scalars['Boolean']['output'];
-  key?: Maybe<OperationalSolutionKey>;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  mustFinishDts?: Maybe<Scalars['Time']['output']>;
-  mustStartDts?: Maybe<Scalars['Time']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  nameOther?: Maybe<Scalars['String']['output']>;
-  needed?: Maybe<Scalars['Boolean']['output']>;
-  operationalNeedID: Scalars['UUID']['output'];
-  operationalSolutionSubtasks: Array<OperationalSolutionSubtask>;
-  otherHeader?: Maybe<Scalars['String']['output']>;
-  pocEmail?: Maybe<Scalars['String']['output']>;
-  pocName?: Maybe<Scalars['String']['output']>;
-  solutionType?: Maybe<Scalars['Int']['output']>;
-  status: OpSolutionStatus;
-};
-
-export type OperationalSolutionChanges = {
-  mustFinishDts?: InputMaybe<Scalars['Time']['input']>;
-  mustStartDts?: InputMaybe<Scalars['Time']['input']>;
-  nameOther?: InputMaybe<Scalars['String']['input']>;
-  needed?: InputMaybe<Scalars['Boolean']['input']>;
-  otherHeader?: InputMaybe<Scalars['String']['input']>;
-  pocEmail?: InputMaybe<Scalars['String']['input']>;
-  pocName?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<OpSolutionStatus>;
-};
-
 export enum OperationalSolutionKey {
   ACO_OS = 'ACO_OS',
   APPS = 'APPS',
@@ -1466,20 +1929,6 @@ export enum OperationalSolutionKey {
   RMADA = 'RMADA',
   SHARED_SYSTEMS = 'SHARED_SYSTEMS'
 }
-
-export type OperationalSolutionSubtask = {
-  __typename: 'OperationalSolutionSubtask';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-  solutionID: Scalars['UUID']['output'];
-  status: OperationalSolutionSubtaskStatus;
-};
 
 export enum OperationalSolutionSubtaskStatus {
   DONE = 'DONE',
@@ -2088,19 +2537,6 @@ export type PlanDocumentLinkInput = {
   otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
   restricted: Scalars['Boolean']['input'];
   url: Scalars['String']['input'];
-};
-
-export type PlanDocumentSolutionLink = {
-  __typename: 'PlanDocumentSolutionLink';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  documentID: Scalars['UUID']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  solutionID: Scalars['UUID']['output'];
 };
 
 /** Represents document solution link translation data */
@@ -3268,21 +3704,6 @@ export type PlanTdlTranslation = {
   title: TranslationField;
 };
 
-export type PossibleOperationalNeed = {
-  __typename: 'PossibleOperationalNeed';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['Int']['output'];
-  key: OperationalNeedKey;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-  possibleSolutions: Array<PossibleOperationalSolution>;
-  section?: Maybe<TaskListSection>;
-};
-
 export type PossibleOperationalSolution = {
   __typename: 'PossibleOperationalSolution';
   createdBy: Scalars['UUID']['output'];
@@ -3361,18 +3782,17 @@ export type Query = {
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
-  modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
+  modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoCommonSolutions: Array<MtoCommonSolution>;
+  mtoMilestone: MtoMilestone;
+  mtoSolution: MtoSolution;
   ndaInfo: NdaInfo;
-  operationalNeed: OperationalNeed;
-  operationalSolution: OperationalSolution;
-  operationalSolutions: Array<OperationalSolution>;
   planCR: PlanCr;
   planCollaboratorByID: PlanCollaborator;
   planDocument: PlanDocument;
   planPayments: PlanPayments;
   planTDL: PlanTdl;
-  possibleOperationalNeeds: Array<PossibleOperationalNeed>;
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   /**
@@ -3426,27 +3846,20 @@ export type QueryModelPlanCollectionArgs = {
 
 
 /** Query definition for the schema */
-export type QueryModelPlansByOperationalSolutionKeyArgs = {
-  operationalSolutionKey: OperationalSolutionKey;
+export type QueryModelPlansByMtoSolutionKeyArgs = {
+  solutionKey: MtoCommonSolutionKey;
 };
 
 
 /** Query definition for the schema */
-export type QueryOperationalNeedArgs = {
+export type QueryMtoMilestoneArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
 /** Query definition for the schema */
-export type QueryOperationalSolutionArgs = {
+export type QueryMtoSolutionArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryOperationalSolutionsArgs = {
-  includeNotNeeded?: Scalars['Boolean']['input'];
-  operationalNeedID: Scalars['UUID']['input'];
 };
 
 
@@ -3673,6 +4086,14 @@ export enum TableName {
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
   MODEL_PLAN = 'model_plan',
+  MTO_CATEGORY = 'mto_category',
+  MTO_COMMON_MILESTONE = 'mto_common_milestone',
+  MTO_COMMON_SOLUTION = 'mto_common_solution',
+  MTO_COMMON_SOLUTION_CONTACT = 'mto_common_solution_contact',
+  MTO_INFO = 'mto_info',
+  MTO_MILESTONE = 'mto_milestone',
+  MTO_MILESTONE_SOLUTION_LINK = 'mto_milestone_solution_link',
+  MTO_SOLUTION = 'mto_solution',
   NDA_AGREEMENT = 'nda_agreement',
   OPERATIONAL_NEED = 'operational_need',
   OPERATIONAL_SOLUTION = 'operational_solution',
@@ -3870,13 +4291,14 @@ export type TranslatedAuditMetaBaseStruct = {
 };
 
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
-export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaMtoCategory | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
 
 export enum TranslatedAuditMetaDataType {
   BASE = 'BASE',
   DISCUSSION_REPLY = 'DISCUSSION_REPLY',
   DOCUMENT_SOLUTION_LINK = 'DOCUMENT_SOLUTION_LINK',
   GENERIC = 'GENERIC',
+  MTO_CATEGORY = 'MTO_CATEGORY',
   OPERATIONAL_NEED = 'OPERATIONAL_NEED',
   OPERATIONAL_SOLUTION = 'OPERATIONAL_SOLUTION',
   OPERATIONAL_SOLUTION_SUBTASK = 'OPERATIONAL_SOLUTION_SUBTASK'
@@ -3922,6 +4344,17 @@ export type TranslatedAuditMetaGeneric = {
   relation: Scalars['String']['output'];
   /** Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated */
   relationContent?: Maybe<Scalars['String']['output']>;
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited */
+export type TranslatedAuditMetaMtoCategory = {
+  __typename: 'TranslatedAuditMetaMTOCategory';
+  categoryName?: Maybe<Scalars['String']['output']>;
+  isSubCategory: Scalars['Boolean']['output'];
+  parentCategoryID?: Maybe<Scalars['UUID']['output']>;
+  parentCategoryName?: Maybe<Scalars['String']['output']>;
   tableName: TableName;
   version: Scalars['Int']['output'];
 };
@@ -4184,16 +4617,6 @@ export enum TriStateAnswer {
   YES = 'YES'
 }
 
-export type UpdateOperationalSolutionSubtaskChangesInput = {
-  name: Scalars['String']['input'];
-  status: OperationalSolutionSubtaskStatus;
-};
-
-export type UpdateOperationalSolutionSubtaskInput = {
-  changes: UpdateOperationalSolutionSubtaskChangesInput;
-  id: Scalars['UUID']['input'];
-};
-
 export type UserAccount = {
   __typename: 'UserAccount';
   commonName: Scalars['String']['output'];
@@ -4300,14 +4723,14 @@ export type UserViewCustomization = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  possibleOperationalSolutions: Array<OperationalSolutionKey>;
+  solutions: Array<MtoCommonSolutionKey>;
   userAccount: UserAccount;
   userId: Scalars['UUID']['output'];
   viewCustomization: Array<ViewCustomizationType>;
 };
 
 export type UserViewCustomizationChanges = {
-  possibleOperationalSolutions?: InputMaybe<Array<OperationalSolutionKey>>;
+  solutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
   viewCustomization?: InputMaybe<Array<ViewCustomizationType>>;
 };
 
@@ -4315,7 +4738,7 @@ export enum ViewCustomizationType {
   ALL_MODEL_PLANS = 'ALL_MODEL_PLANS',
   FOLLOWED_MODELS = 'FOLLOWED_MODELS',
   MODELS_APPROACHING_CLEARANCE = 'MODELS_APPROACHING_CLEARANCE',
-  MODELS_BY_OPERATIONAL_SOLUTION = 'MODELS_BY_OPERATIONAL_SOLUTION',
+  MODELS_BY_SOLUTION = 'MODELS_BY_SOLUTION',
   MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
   MY_MODEL_PLANS = 'MY_MODEL_PLANS'
 }
@@ -4402,7 +4825,7 @@ export type GetFrequencyQueryVariables = Exact<{
 }>;
 
 
-export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetFrequencyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
 
 export type GetPeopleImpactedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -4424,7 +4847,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaMTOCategory', isSubCategory: boolean, parentCategoryID?: UUID | null, parentCategoryName?: string | null, categoryName?: string | null, tableName: TableName, version: number } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;
@@ -4622,14 +5045,14 @@ export type GetKeyCharacteristicsQueryVariables = Exact<{
 }>;
 
 
-export type GetKeyCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetKeyCharacteristicsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null } } };
 
 export type GetTargetsAndOptionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetTargetsAndOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null } } };
 
 export type UpdateExistingModelLinksMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -4652,7 +5075,7 @@ export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation',
 export type GetHomepageSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomepageSettingsQuery = { __typename: 'Query', userViewCustomization: { __typename: 'UserViewCustomization', id: UUID, viewCustomization: Array<ViewCustomizationType>, possibleOperationalSolutions: Array<OperationalSolutionKey> } };
+export type GetHomepageSettingsQuery = { __typename: 'Query', userViewCustomization: { __typename: 'UserViewCustomization', id: UUID, viewCustomization: Array<ViewCustomizationType>, solutions: Array<MtoCommonSolutionKey> } };
 
 export type UpdateHomepageSettingsMutationVariables = Exact<{
   changes: UserViewCustomizationChanges;
@@ -4660,158 +5083,6 @@ export type UpdateHomepageSettingsMutationVariables = Exact<{
 
 
 export type UpdateHomepageSettingsMutation = { __typename: 'Mutation', updateUserViewCustomization: { __typename: 'UserViewCustomization', id: UUID } };
-
-export type CreateDocumentSolutionLinksMutationVariables = Exact<{
-  solutionID: Scalars['UUID']['input'];
-  documentIDs: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
-}>;
-
-
-export type CreateDocumentSolutionLinksMutation = { __typename: 'Mutation', createPlanDocumentSolutionLinks?: Array<{ __typename: 'PlanDocumentSolutionLink', id: UUID }> | null };
-
-export type CreateOperationalSolutionMutationVariables = Exact<{
-  operationalNeedID: Scalars['UUID']['input'];
-  solutionType?: InputMaybe<OperationalSolutionKey>;
-  changes: OperationalSolutionChanges;
-}>;
-
-
-export type CreateOperationalSolutionMutation = { __typename: 'Mutation', createOperationalSolution: { __typename: 'OperationalSolution', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalSolutionKey | null } };
-
-export type CreateOperationalSolutionSubtasksMutationVariables = Exact<{
-  solutionID: Scalars['UUID']['input'];
-  inputs: Array<CreateOperationalSolutionSubtaskInput> | CreateOperationalSolutionSubtaskInput;
-}>;
-
-
-export type CreateOperationalSolutionSubtasksMutation = { __typename: 'Mutation', createOperationalSolutionSubtasks?: Array<{ __typename: 'OperationalSolutionSubtask', name: string, status: OperationalSolutionSubtaskStatus }> | null };
-
-export type DeleteDocumentSolutionLinkMutationVariables = Exact<{
-  solutionID: Scalars['UUID']['input'];
-  documentIDs: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
-}>;
-
-
-export type DeleteDocumentSolutionLinkMutation = { __typename: 'Mutation', removePlanDocumentSolutionLinks: boolean };
-
-export type DeleteOperationalSolutionSubtaskMutationVariables = Exact<{
-  id: Scalars['UUID']['input'];
-}>;
-
-
-export type DeleteOperationalSolutionSubtaskMutation = { __typename: 'Mutation', deleteOperationalSolutionSubtask: number };
-
-export type GetModelsBySolutionQueryVariables = Exact<{
-  operationalSolutionKey: OperationalSolutionKey;
-}>;
-
-
-export type GetModelsBySolutionQuery = { __typename: 'Query', modelPlansByOperationalSolutionKey: Array<{ __typename: 'ModelPlanAndPossibleOperationalSolution', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, status: ModelStatus, modelBySolutionStatus: ModelBySolutionStatus, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null } } }> };
-
-export type GetOperationalNeedQueryVariables = Exact<{
-  id: Scalars['UUID']['input'];
-  includeNotNeeded?: InputMaybe<Scalars['Boolean']['input']>;
-}>;
-
-
-export type GetOperationalNeedQuery = { __typename: 'Query', operationalNeed: { __typename: 'OperationalNeed', id: UUID, modelPlanID: UUID, name?: string | null, key?: OperationalNeedKey | null, nameOther?: string | null, needed?: boolean | null, solutions: Array<{ __typename: 'OperationalSolution', id: UUID, name?: string | null, key?: OperationalSolutionKey | null, pocName?: string | null, pocEmail?: string | null, needed?: boolean | null, nameOther?: string | null, isOther: boolean, isCommonSolution: boolean, otherHeader?: string | null, mustStartDts?: Time | null, mustFinishDts?: Time | null, status: OpSolutionStatus }> } };
-
-export type GetOperationalNeedAnswerQueryVariables = Exact<{
-  id: Scalars['UUID']['input'];
-  generalCharacteristics: Scalars['Boolean']['input'];
-  participantsAndProviders: Scalars['Boolean']['input'];
-  beneficiaries: Scalars['Boolean']['input'];
-  opsEvalAndLearning: Scalars['Boolean']['input'];
-  payments: Scalars['Boolean']['input'];
-  managePartCDEnrollment: Scalars['Boolean']['input'];
-  collectPlanBids: Scalars['Boolean']['input'];
-  planContractUpdated: Scalars['Boolean']['input'];
-  agreementTypes: Scalars['Boolean']['input'];
-  recruitmentMethod: Scalars['Boolean']['input'];
-  selectionMethod: Scalars['Boolean']['input'];
-  communicationMethod: Scalars['Boolean']['input'];
-  providerOverlap: Scalars['Boolean']['input'];
-  participantsIds: Scalars['Boolean']['input'];
-  beneficiaryOverlap: Scalars['Boolean']['input'];
-  helpdeskUse: Scalars['Boolean']['input'];
-  iddocSupport: Scalars['Boolean']['input'];
-  benchmarkForPerformance: Scalars['Boolean']['input'];
-  appealPerformance: Scalars['Boolean']['input'];
-  appealFeedback: Scalars['Boolean']['input'];
-  appealPayments: Scalars['Boolean']['input'];
-  appealOther: Scalars['Boolean']['input'];
-  evaluationApproaches: Scalars['Boolean']['input'];
-  dataNeededForMonitoring: Scalars['Boolean']['input'];
-  dataToSendParticicipants: Scalars['Boolean']['input'];
-  modelLearningSystems: Scalars['Boolean']['input'];
-  developNewQualityMeasures: Scalars['Boolean']['input'];
-  payType: Scalars['Boolean']['input'];
-  shouldAnyProvidersExcludedFFSSystems: Scalars['Boolean']['input'];
-  nonClaimsPayments: Scalars['Boolean']['input'];
-  willRecoverPayments: Scalars['Boolean']['input'];
-}>;
-
-
-export type GetOperationalNeedAnswerQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', managePartCDEnrollment?: boolean | null, collectPlanBids?: boolean | null, planContractUpdated?: boolean | null, agreementTypes?: Array<AgreementType> }, participantsAndProviders?: { __typename: 'PlanParticipantsAndProviders', recruitmentMethod?: RecruitmentType | null, selectionMethod?: Array<ParticipantSelectionType>, communicationMethod?: Array<ParticipantCommunicationType>, providerOverlap?: OverlapType | null, participantsIds?: Array<ParticipantsIdType> }, beneficiaries?: { __typename: 'PlanBeneficiaries', beneficiaryOverlap?: OverlapType | null }, opsEvalAndLearning?: { __typename: 'PlanOpsEvalAndLearning', helpdeskUse?: boolean | null, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, evaluationApproaches?: Array<EvaluationApproachType>, dataNeededForMonitoring?: Array<DataForMonitoringType>, dataToSendParticicipants?: Array<DataToSendParticipantsType>, modelLearningSystems?: Array<ModelLearningSystemType>, developNewQualityMeasures?: boolean | null }, payments?: { __typename: 'PlanPayments', payType?: Array<PayType>, shouldAnyProvidersExcludedFFSSystems?: boolean | null, nonClaimsPayments?: Array<NonClaimsBasedPayType>, willRecoverPayments?: boolean | null } } };
-
-export type GetOperationalNeedsQueryVariables = Exact<{
-  id: Scalars['UUID']['input'];
-}>;
-
-
-export type GetOperationalNeedsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, isCollaborator: boolean, opSolutionLastModifiedDts: Time, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modelPlanID: UUID, name?: string | null, key?: OperationalNeedKey | null, nameOther?: string | null, needed?: boolean | null, modifiedDts?: Time | null, solutions: Array<{ __typename: 'OperationalSolution', id: UUID, status: OpSolutionStatus, name?: string | null, mustStartDts?: Time | null, mustFinishDts?: Time | null, needed?: boolean | null, nameOther?: string | null, key?: OperationalSolutionKey | null, otherHeader?: string | null, pocEmail?: string | null, pocName?: string | null, createdBy: UUID, createdDts: Time, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID }> }> }> } };
-
-export type GetOperationalSolutionQueryVariables = Exact<{
-  id: Scalars['UUID']['input'];
-}>;
-
-
-export type GetOperationalSolutionQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, key?: OperationalSolutionKey | null, needed?: boolean | null, name?: string | null, nameOther?: string | null, pocName?: string | null, pocEmail?: string | null, status: OpSolutionStatus, isOther: boolean, isCommonSolution: boolean, otherHeader?: string | null, mustFinishDts?: Time | null, mustStartDts?: Time | null, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, numLinkedSolutions: number, isLink: boolean, url?: string | null }>, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
-
-export type GetOperationalSolutionSubtasksQueryVariables = Exact<{
-  id: Scalars['UUID']['input'];
-}>;
-
-
-export type GetOperationalSolutionSubtasksQuery = { __typename: 'Query', operationalSolution: { __typename: 'OperationalSolution', id: UUID, operationalSolutionSubtasks: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> } };
-
-export type GetPossibleOperationalSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetPossibleOperationalSolutionsQuery = { __typename: 'Query', possibleOperationalSolutions: Array<{ __typename: 'PossibleOperationalSolution', id: number, name: string, key: OperationalSolutionKey }> };
-
-export type UpdateCustomOperationalNeedMutationVariables = Exact<{
-  modelPlanID: Scalars['UUID']['input'];
-  customNeedType: Scalars['String']['input'];
-  needed: Scalars['Boolean']['input'];
-}>;
-
-
-export type UpdateCustomOperationalNeedMutation = { __typename: 'Mutation', addOrUpdateCustomOperationalNeed: { __typename: 'OperationalNeed', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalNeedKey | null } };
-
-export type UpdateCustomOperationalNeedByIdMutationVariables = Exact<{
-  id: Scalars['UUID']['input'];
-  customNeedType: Scalars['String']['input'];
-  needed: Scalars['Boolean']['input'];
-}>;
-
-
-export type UpdateCustomOperationalNeedByIdMutation = { __typename: 'Mutation', updateCustomOperationalNeedByID: { __typename: 'OperationalNeed', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalNeedKey | null } };
-
-export type UpdateOperationalSolutionMutationVariables = Exact<{
-  id: Scalars['UUID']['input'];
-  changes: OperationalSolutionChanges;
-}>;
-
-
-export type UpdateOperationalSolutionMutation = { __typename: 'Mutation', updateOperationalSolution: { __typename: 'OperationalSolution', id: UUID, nameOther?: string | null, needed?: boolean | null, key?: OperationalSolutionKey | null } };
-
-export type UpdateOperationalSolutionSubtasksMutationVariables = Exact<{
-  inputs: Array<UpdateOperationalSolutionSubtaskInput> | UpdateOperationalSolutionSubtaskInput;
-}>;
-
-
-export type UpdateOperationalSolutionSubtasksMutation = { __typename: 'Mutation', updateOperationalSolutionSubtasks?: Array<{ __typename: 'OperationalSolutionSubtask', id: UUID, solutionID: UUID, name: string, status: OperationalSolutionSubtaskStatus }> | null };
 
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4855,14 +5126,14 @@ export type CreateModelPlanReplyMutation = { __typename: 'Mutation', createDiscu
 export type GetAllModelDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllModelDataQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, isNewTypeOfProvidersOrSuppliers?: boolean | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, willBePaymentAdjustments?: boolean | null, willBePaymentAdjustmentsNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourcePatientProtectionInfo?: string | null, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRPatientProtectionInfo?: string | null, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, dataToCollectFromParticipants: Array<DataToCollectFromParticipants>, dataToCollectFromParticipantsReportsDetails?: string | null, dataToCollectFromParticipantsOther?: string | null, dataWillNotBeCollectedFromParticipants?: boolean | null, dataToCollectFromParticipantsNote?: string | null, dataToSendToParticipants: Array<DataToSendToParticipants>, dataToSendToParticipantsNote?: string | null, doesNeedToMakeMultiPayerDataAvailable?: boolean | null, anticipatedMultiPayerDataAvailabilityUseCase: Array<AnticipatedMultiPayerDataAvailabilityUseCase>, doesNeedToMakeMultiPayerDataAvailableNote?: string | null, doesNeedToCollectAndAggregateMultiSourceData?: boolean | null, multiSourceDataToCollect: Array<MultiSourceDataToCollect>, multiSourceDataToCollectOther?: string | null, doesNeedToCollectAndAggregateMultiSourceDataNote?: string | null, willImplementNewDataExchangeMethods?: boolean | null, newDataExchangeMethodsDescription?: string | null, newDataExchangeMethodsNote?: string | null, additionalDataExchangeConsiderationsDescription?: string | null, isDataExchangeApproachComplete: boolean, markedCompleteDts?: Time | null, modifiedDts?: Time | null, createdDts: Time, status: DataExchangeApproachStatus, markedCompleteByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> }> };
+export type GetAllModelDataQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, isNewTypeOfProvidersOrSuppliers?: boolean | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, willBePaymentAdjustments?: boolean | null, willBePaymentAdjustmentsNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourcePatientProtectionInfo?: string | null, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRPatientProtectionInfo?: string | null, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, dataToCollectFromParticipants: Array<DataToCollectFromParticipants>, dataToCollectFromParticipantsReportsDetails?: string | null, dataToCollectFromParticipantsOther?: string | null, dataWillNotBeCollectedFromParticipants?: boolean | null, dataToCollectFromParticipantsNote?: string | null, dataToSendToParticipants: Array<DataToSendToParticipants>, dataToSendToParticipantsNote?: string | null, doesNeedToMakeMultiPayerDataAvailable?: boolean | null, anticipatedMultiPayerDataAvailabilityUseCase: Array<AnticipatedMultiPayerDataAvailabilityUseCase>, doesNeedToMakeMultiPayerDataAvailableNote?: string | null, doesNeedToCollectAndAggregateMultiSourceData?: boolean | null, multiSourceDataToCollect: Array<MultiSourceDataToCollect>, multiSourceDataToCollectOther?: string | null, doesNeedToCollectAndAggregateMultiSourceDataNote?: string | null, willImplementNewDataExchangeMethods?: boolean | null, newDataExchangeMethodsDescription?: string | null, newDataExchangeMethodsNote?: string | null, additionalDataExchangeConsiderationsDescription?: string | null, isDataExchangeApproachComplete: boolean, markedCompleteDts?: Time | null, modifiedDts?: Time | null, createdDts: Time, status: DataExchangeApproachStatus, markedCompleteByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID, readyForReviewDTS?: Time | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, isDraft: boolean, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, categories: { __typename: 'MTOCategories', category: { __typename: 'MTOCategory', id: UUID, name: string }, subCategory: { __typename: 'MTOSubcategory', id: UUID, name: string } }, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null }> }>, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, neededBy?: Time | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string }> }> }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> }> };
 
 export type GetAllSingleModelDataQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetAllSingleModelDataQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, isNewTypeOfProvidersOrSuppliers?: boolean | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, willBePaymentAdjustments?: boolean | null, willBePaymentAdjustmentsNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourcePatientProtectionInfo?: string | null, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRPatientProtectionInfo?: string | null, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, dataToCollectFromParticipants: Array<DataToCollectFromParticipants>, dataToCollectFromParticipantsReportsDetails?: string | null, dataToCollectFromParticipantsOther?: string | null, dataWillNotBeCollectedFromParticipants?: boolean | null, dataToCollectFromParticipantsNote?: string | null, dataToSendToParticipants: Array<DataToSendToParticipants>, dataToSendToParticipantsNote?: string | null, doesNeedToMakeMultiPayerDataAvailable?: boolean | null, anticipatedMultiPayerDataAvailabilityUseCase: Array<AnticipatedMultiPayerDataAvailabilityUseCase>, doesNeedToMakeMultiPayerDataAvailableNote?: string | null, doesNeedToCollectAndAggregateMultiSourceData?: boolean | null, multiSourceDataToCollect: Array<MultiSourceDataToCollect>, multiSourceDataToCollectOther?: string | null, doesNeedToCollectAndAggregateMultiSourceDataNote?: string | null, willImplementNewDataExchangeMethods?: boolean | null, newDataExchangeMethodsDescription?: string | null, newDataExchangeMethodsNote?: string | null, additionalDataExchangeConsiderationsDescription?: string | null, isDataExchangeApproachComplete: boolean, markedCompleteDts?: Time | null, modifiedDts?: Time | null, createdDts: Time, status: DataExchangeApproachStatus, markedCompleteByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> } };
+export type GetAllSingleModelDataQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, nameHistory: Array<string>, abbreviation?: string | null, archived: boolean, createdDts: Time, status: ModelStatus, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, amsModelID?: string | null, demoCode?: string | null, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup>, modelType: Array<ModelType>, modelTypeOther?: string | null, problem?: string | null, goal?: string | null, testInterventions?: string | null, note?: string | null, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, phasedIn?: boolean | null, phasedInNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, rulemakingRequired?: boolean | null, rulemakingRequiredDescription?: string | null, rulemakingRequiredNote?: string | null, authorityAllowances: Array<AuthorityAllowance>, authorityAllowancesOther?: string | null, authorityAllowancesNote?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, waiversRequiredNote?: string | null, isNewModel?: boolean | null, existingModel?: string | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelNote?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, participationInModelPreconditionNote?: string | null, hasComponentsOrTracks?: boolean | null, hasComponentsOrTracksDiffer?: string | null, hasComponentsOrTracksNote?: string | null, careCoordinationInvolved?: boolean | null, careCoordinationInvolvedDescription?: string | null, careCoordinationInvolvedNote?: string | null, additionalServicesInvolved?: boolean | null, additionalServicesInvolvedDescription?: string | null, additionalServicesInvolvedNote?: string | null, communityPartnersInvolved?: boolean | null, communityPartnersInvolvedDescription?: string | null, communityPartnersInvolvedNote?: string | null, agencyOrStateHelp: Array<AgencyOrStateHelpType>, agencyOrStateHelpOther?: string | null, agencyOrStateHelpNote?: string | null, alternativePaymentModelTypes: Array<AlternativePaymentModelType>, alternativePaymentModelNote?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsNote?: string | null, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, collectPlanBidsNote?: string | null, managePartCDEnrollment?: boolean | null, managePartCDEnrollmentNote?: string | null, planContractUpdated?: boolean | null, planContractUpdatedNote?: string | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, geographiesTargetedNote?: string | null, participationOptions?: boolean | null, participationOptionsNote?: string | null, agreementTypes: Array<AgreementType>, agreementTypesOther?: string | null, multiplePatricipationAgreementsNeeded?: boolean | null, multiplePatricipationAgreementsNeededNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null, participants: Array<ParticipantsType>, medicareProviderType?: string | null, isNewTypeOfProvidersOrSuppliers?: boolean | null, statesEngagement?: string | null, participantsOther?: string | null, participantsNote?: string | null, participantsCurrentlyInModels?: boolean | null, participantsCurrentlyInModelsNote?: string | null, modelApplicationLevel?: string | null, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, beneficiaries: Array<BeneficiariesType>, beneficiariesNote?: string | null, beneficiariesOther?: string | null, beneficiaryOverlap?: OverlapType | null, beneficiaryOverlapNote?: string | null, beneficiarySelectionNote?: string | null, beneficiarySelectionOther?: string | null, beneficiarySelectionMethod: Array<SelectionMethodType>, treatDualElligibleDifferent?: TriStateAnswer | null, treatDualElligibleDifferentHow?: string | null, treatDualElligibleDifferentNote?: string | null, excludeCertainCharacteristics?: TriStateAnswer | null, excludeCertainCharacteristicsCriteria?: string | null, excludeCertainCharacteristicsNote?: string | null, beneficiarySelectionFrequency: Array<FrequencyType>, beneficiarySelectionFrequencyContinually?: string | null, beneficiarySelectionFrequencyNote?: string | null, beneficiarySelectionFrequencyOther?: string | null, beneficiaryRemovalFrequency: Array<FrequencyType>, beneficiaryRemovalFrequencyContinually?: string | null, beneficiaryRemovalFrequencyNote?: string | null, beneficiaryRemovalFrequencyOther?: string | null, precedenceRules: Array<YesNoType>, precedenceRulesYes?: string | null, precedenceRulesNo?: string | null, precedenceRulesNote?: string | null, numberPeopleImpacted?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null, dataSharingStarts?: DataStartsType | null, dataSharingStartsOther?: string | null, dataSharingFrequency: Array<FrequencyType>, dataSharingFrequencyContinually?: string | null, dataSharingFrequencyOther?: string | null, dataSharingStartsNote?: string | null, dataCollectionStarts?: DataStartsType | null, dataCollectionStartsOther?: string | null, dataCollectionFrequency: Array<FrequencyType>, dataCollectionFrequencyContinually?: string | null, dataCollectionFrequencyOther?: string | null, dataCollectionFrequencyNote?: string | null, qualityReportingStarts?: DataStartsType | null, qualityReportingStartsOther?: string | null, qualityReportingStartsNote?: string | null, qualityReportingFrequency: Array<FrequencyType>, qualityReportingFrequencyContinually?: string | null, qualityReportingFrequencyOther?: string | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, dataNeededForMonitoring: Array<DataForMonitoringType>, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<MonitoringFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, creatingDependenciesBetweenServices?: boolean | null, creatingDependenciesBetweenServicesNote?: string | null, needsClaimsDataCollection?: boolean | null, needsClaimsDataCollectionNote?: string | null, providingThirdPartyFile?: boolean | null, isContractorAwareTestDataRequirements?: boolean | null, beneficiaryCostSharingLevelAndHandling?: string | null, waiveBeneficiaryCostSharingForAnyServices?: boolean | null, waiveBeneficiaryCostSharingServiceSpecification?: string | null, waiverOnlyAppliesPartOfPayment?: boolean | null, waiveBeneficiaryCostSharingNote?: string | null, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null, willBePaymentAdjustments?: boolean | null, willBePaymentAdjustmentsNote?: string | null, expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null, expectedCalculationComplexityLevelNote?: string | null, claimsProcessingPrecedence?: boolean | null, claimsProcessingPrecedenceOther?: string | null, claimsProcessingPrecedenceNote?: string | null, canParticipantsSelectBetweenPaymentMechanisms?: boolean | null, canParticipantsSelectBetweenPaymentMechanismsHow?: string | null, canParticipantsSelectBetweenPaymentMechanismsNote?: string | null, anticipatedPaymentFrequency: Array<FrequencyType>, anticipatedPaymentFrequencyContinually?: string | null, anticipatedPaymentFrequencyOther?: string | null, anticipatedPaymentFrequencyNote?: string | null, fundingSource: Array<FundingSource>, fundingSourcePatientProtectionInfo?: string | null, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRPatientProtectionInfo?: string | null, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payTypeNote?: string | null, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, dataToCollectFromParticipants: Array<DataToCollectFromParticipants>, dataToCollectFromParticipantsReportsDetails?: string | null, dataToCollectFromParticipantsOther?: string | null, dataWillNotBeCollectedFromParticipants?: boolean | null, dataToCollectFromParticipantsNote?: string | null, dataToSendToParticipants: Array<DataToSendToParticipants>, dataToSendToParticipantsNote?: string | null, doesNeedToMakeMultiPayerDataAvailable?: boolean | null, anticipatedMultiPayerDataAvailabilityUseCase: Array<AnticipatedMultiPayerDataAvailabilityUseCase>, doesNeedToMakeMultiPayerDataAvailableNote?: string | null, doesNeedToCollectAndAggregateMultiSourceData?: boolean | null, multiSourceDataToCollect: Array<MultiSourceDataToCollect>, multiSourceDataToCollectOther?: string | null, doesNeedToCollectAndAggregateMultiSourceDataNote?: string | null, willImplementNewDataExchangeMethods?: boolean | null, newDataExchangeMethodsDescription?: string | null, newDataExchangeMethodsNote?: string | null, additionalDataExchangeConsiderationsDescription?: string | null, isDataExchangeApproachComplete: boolean, markedCompleteDts?: Time | null, modifiedDts?: Time | null, createdDts: Time, status: DataExchangeApproachStatus, markedCompleteByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID, readyForReviewDTS?: Time | null, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, isDraft: boolean, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, categories: { __typename: 'MTOCategories', category: { __typename: 'MTOCategory', id: UUID, name: string }, subCategory: { __typename: 'MTOSubcategory', id: UUID, name: string } }, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null }> }>, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, neededBy?: Time | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string }> }> }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string }, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, userRole?: DiscussionUserRole | null, userRoleDescription?: string | null, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, createdByUserAccount: { __typename: 'UserAccount', commonName: string } }> }> } };
 
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4888,14 +5159,14 @@ export type GetModelPlanQueryVariables = Exact<{
 }>;
 
 
-export type GetModelPlanQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, opSolutionLastModifiedDts: Time, archived: boolean, status: ModelStatus, taskListStatus: TaskStatus, isFavorite: boolean, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null, suggestedPhase?: { __typename: 'PhaseSuggestion', phase: ModelPhase, suggestedStatuses: Array<ModelStatus> } | null, basics: { __typename: 'PlanBasics', id: UUID, clearanceStarts?: Time | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, status: DataExchangeApproachStatus, modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, documents: Array<{ __typename: 'PlanDocument', id: UUID, fileName: string, fileType: string }>, echimpCRsAndTDLs: Array<{ __typename: 'EChimpCR', id: string } | { __typename: 'EChimpTDL', id: string }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null }> }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }>, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus, modifiedDts?: Time | null } } };
+export type GetModelPlanQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, opSolutionLastModifiedDts: Time, archived: boolean, status: ModelStatus, taskListStatus: TaskStatus, isFavorite: boolean, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null, suggestedPhase?: { __typename: 'PhaseSuggestion', phase: ModelPhase, suggestedStatuses: Array<ModelStatus> } | null, basics: { __typename: 'PlanBasics', id: UUID, clearanceStarts?: Time | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, collaborators: Array<{ __typename: 'PlanCollaborator', id: UUID, userID: UUID, teamRoles: Array<TeamRole>, modelPlanID: UUID, createdDts: Time, userAccount: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } }>, dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, status: DataExchangeApproachStatus, modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, documents: Array<{ __typename: 'PlanDocument', id: UUID, fileName: string, fileType: string }>, echimpCRsAndTDLs: Array<{ __typename: 'EChimpCR', id: string } | { __typename: 'EChimpTDL', id: string }>, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null, replies: Array<{ __typename: 'DiscussionReply', id: UUID, discussionID: UUID, createdBy: UUID, createdDts: Time, content?: { __typename: 'TaggedContent', rawContent: string } | null }> }>, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, beneficiaries: { __typename: 'PlanBeneficiaries', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, payments: { __typename: 'PlanPayments', id: UUID, createdBy: UUID, createdDts: Time, modifiedBy?: UUID | null, modifiedDts?: Time | null, readyForClearanceDts?: Time | null, status: TaskStatus, modifiedByUserAccount?: { __typename: 'UserAccount', commonName: string } | null }, prepareForClearance: { __typename: 'PrepareForClearance', status: PrepareForClearanceStatus, modifiedDts?: Time | null }, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, info: { __typename: 'MTOInfo', id: UUID }, recentEdit?: { __typename: 'TranslatedAudit', id: UUID, date: Time, actorName: string } | null, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string }> } } };
 
 export type GetModelPlanBaseQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, createdDts: Time, status: ModelStatus } };
+export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, createdDts: Time, status: ModelStatus, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, info: { __typename: 'MTOInfo', id: UUID } } } };
 
 export type GetModelPlansQueryVariables = Exact<{
   filter: ModelPlanFilter;
@@ -4957,6 +5228,252 @@ export type UnlockModelPlanSectionMutationVariables = Exact<{
 
 export type UnlockModelPlanSectionMutation = { __typename: 'Mutation', unlockLockableSection: boolean };
 
+export type CreateMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type CreateMtoCategoryMutation = { __typename: 'Mutation', createMTOCategory: { __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean } };
+
+export type CreateMtoMilestoneMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  commonMilestoneKey: MtoCommonMilestoneKey;
+  commonSolutions?: InputMaybe<Array<MtoCommonSolutionKey> | MtoCommonSolutionKey>;
+}>;
+
+
+export type CreateMtoMilestoneMutation = { __typename: 'Mutation', createMTOMilestoneCommon: { __typename: 'MTOMilestone', id: UUID, name: string } };
+
+export type CreateMtoMilestoneCustomMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+  mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type CreateMtoMilestoneCustomMutation = { __typename: 'Mutation', createMTOMilestoneCustom: { __typename: 'MTOMilestone', id: UUID, name: string } };
+
+export type CreateMtoSolutionCommonMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  milestonesToLink: Array<Scalars['UUID']['input']> | Scalars['UUID']['input'];
+  key: MtoCommonSolutionKey;
+}>;
+
+
+export type CreateMtoSolutionCommonMutation = { __typename: 'Mutation', createMTOSolutionCommon: { __typename: 'MTOSolution', id: UUID } };
+
+export type CreateMtoSolutionCustomMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  solutionType: MtoSolutionType;
+  name: Scalars['String']['input'];
+  pocName: Scalars['String']['input'];
+  pocEmail: Scalars['String']['input'];
+}>;
+
+
+export type CreateMtoSolutionCustomMutation = { __typename: 'Mutation', createMTOSolutionCustom: { __typename: 'MTOSolution', id: UUID, name?: string | null, status: MtoSolutionStatus, pocName?: string | null, pocEmail?: string | null, type?: MtoSolutionType | null } };
+
+export type CreateStandardCategoriesMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type CreateStandardCategoriesMutation = { __typename: 'Mutation', createStandardCategories: boolean };
+
+export type DeleteMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteMtoCategoryMutation = { __typename: 'Mutation', deleteMTOCategory: boolean };
+
+export type DeleteMtoMilestoneMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteMtoMilestoneMutation = { __typename: 'Mutation', deleteMTOMilestone: boolean };
+
+export type DeleteMtoSolutionMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteMtoSolutionMutation = { __typename: 'Mutation', deleteMTOSolution: boolean };
+
+export type GetCustomMtoSolutionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCustomMtoSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, addedFromSolutionLibrary: boolean }> } } };
+
+export type GetGlobalMtoCommonSolutionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetGlobalMtoCommonSolutionsQuery = { __typename: 'Query', mtoCommonSolutions: Array<{ __typename: 'MTOCommonSolution', name: string, key: MtoCommonSolutionKey }> };
+
+export type GetMtoAllMilestonesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoAllMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, commonMilestones: Array<{ __typename: 'MTOCommonMilestone', key: MtoCommonMilestoneKey, name: string, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }>, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, key?: MtoCommonMilestoneKey | null, name: string, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, solutions: Array<{ __typename: 'MTOSolution', key?: MtoCommonSolutionKey | null }> }> } } };
+
+export type GetMtoAllSolutionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoAllSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey, name: string }>, solutions: Array<{ __typename: 'MTOSolution', id: UUID, key?: MtoCommonSolutionKey | null, name?: string | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null }> } } };
+
+export type GetMtoCategoriesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoCategoriesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string, subCategories: Array<{ __typename: 'MTOSubcategory', id: UUID, name: string }> }> } } };
+
+export type GetMtoMilestonesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, commonMilestones: Array<{ __typename: 'MTOCommonMilestone', name: string, key: MtoCommonMilestoneKey, isAdded: boolean, isSuggested: boolean, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }> } } };
+
+export type GetMtoCommonSolutionsQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoCommonSolutionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, commonSolutions: Array<{ __typename: 'MTOCommonSolution', name: string, key: MtoCommonSolutionKey, type: MtoSolutionType, subjects: Array<MtoCommonSolutionSubject>, isAdded: boolean }> } } };
+
+export type GetModelToOperationsMatrixQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetModelToOperationsMatrixQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, info: { __typename: 'MTOInfo', id: UUID }, categories: Array<{ __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean, subCategories: Array<{ __typename: 'MTOSubcategory', id: UUID, name: string, isUncategorized: boolean, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, addedFromMilestoneLibrary: boolean, isDraft: boolean, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, key?: MtoCommonSolutionKey | null }> }> }> }>, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, key?: MtoCommonMilestoneKey | null, name: string }>, commonMilestones: Array<{ __typename: 'MTOCommonMilestone', isSuggested: boolean, isAdded: boolean }>, recentEdit?: { __typename: 'TranslatedAudit', id: UUID, date: Time, actorName: string } | null } } };
+
+export type GetMtoMilestoneQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoMilestoneQuery = { __typename: 'Query', mtoMilestone: { __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, needBy?: Time | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, addedFromMilestoneLibrary: boolean, isDraft: boolean, commonMilestone?: { __typename: 'MTOCommonMilestone', key: MtoCommonMilestoneKey, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> } | null, categories: { __typename: 'MTOCategories', category: { __typename: 'MTOCategory', id: UUID, name: string }, subCategory: { __typename: 'MTOSubcategory', id: UUID, name: string } }, solutions: Array<{ __typename: 'MTOSolution', id: UUID, name?: string | null, key?: MtoCommonSolutionKey | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null, commonSolution?: { __typename: 'MTOCommonSolution', name: string, key: MtoCommonSolutionKey, isAdded: boolean } | null }> } };
+
+export type GetMtoSolutionQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoSolutionQuery = { __typename: 'Query', mtoSolution: { __typename: 'MTOSolution', id: UUID, name?: string | null, key?: MtoCommonSolutionKey | null, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, neededBy?: Time | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null, addedFromSolutionLibrary: boolean, pocName?: string | null, pocEmail?: string | null, type?: MtoSolutionType | null, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string, key?: MtoCommonMilestoneKey | null, status: MtoMilestoneStatus, riskIndicator: MtoRiskIndicator, commonMilestone?: { __typename: 'MTOCommonMilestone', name: string, key: MtoCommonMilestoneKey, isAdded: boolean } | null }> } };
+
+export type GetMtoSolutionsAndMilestonesQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetMtoSolutionsAndMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', status: MtoStatus, recentEdit?: { __typename: 'TranslatedAudit', id: UUID, date: Time } | null, info: { __typename: 'MTOInfo', id: UUID }, solutions: Array<{ __typename: 'MTOSolution', id: UUID, type?: MtoSolutionType | null, key?: MtoCommonSolutionKey | null, name?: string | null, facilitatedBy?: Array<MtoFacilitator> | null, facilitatedByOther?: string | null, neededBy?: Time | null, status: MtoSolutionStatus, riskIndicator?: MtoRiskIndicator | null, addedFromSolutionLibrary: boolean, milestones: Array<{ __typename: 'MTOMilestone', id: UUID, name: string }> }>, milestonesWithNoLinkedSolutions: Array<{ __typename: 'MTOMilestone', id: UUID, name: string }> } } };
+
+export type GetMilestoneSuggestedAnswerQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  generalCharacteristics: Scalars['Boolean']['input'];
+  participantsAndProviders: Scalars['Boolean']['input'];
+  beneficiaries: Scalars['Boolean']['input'];
+  opsEvalAndLearning: Scalars['Boolean']['input'];
+  payments: Scalars['Boolean']['input'];
+  managePartCDEnrollment: Scalars['Boolean']['input'];
+  collectPlanBids: Scalars['Boolean']['input'];
+  planContractUpdated: Scalars['Boolean']['input'];
+  agreementTypes: Scalars['Boolean']['input'];
+  recruitmentMethod: Scalars['Boolean']['input'];
+  selectionMethod: Scalars['Boolean']['input'];
+  communicationMethod: Scalars['Boolean']['input'];
+  providerOverlap: Scalars['Boolean']['input'];
+  participantsIds: Scalars['Boolean']['input'];
+  beneficiaryOverlap: Scalars['Boolean']['input'];
+  helpdeskUse: Scalars['Boolean']['input'];
+  iddocSupport: Scalars['Boolean']['input'];
+  benchmarkForPerformance: Scalars['Boolean']['input'];
+  appealPerformance: Scalars['Boolean']['input'];
+  appealFeedback: Scalars['Boolean']['input'];
+  appealPayments: Scalars['Boolean']['input'];
+  appealOther: Scalars['Boolean']['input'];
+  evaluationApproaches: Scalars['Boolean']['input'];
+  dataNeededForMonitoring: Scalars['Boolean']['input'];
+  dataToSendParticicipants: Scalars['Boolean']['input'];
+  modelLearningSystems: Scalars['Boolean']['input'];
+  developNewQualityMeasures: Scalars['Boolean']['input'];
+  payType: Scalars['Boolean']['input'];
+  shouldAnyProvidersExcludedFFSSystems: Scalars['Boolean']['input'];
+  nonClaimsPayments: Scalars['Boolean']['input'];
+  willRecoverPayments: Scalars['Boolean']['input'];
+}>;
+
+
+export type GetMilestoneSuggestedAnswerQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, generalCharacteristics?: { __typename: 'PlanGeneralCharacteristics', managePartCDEnrollment?: boolean | null, collectPlanBids?: boolean | null, planContractUpdated?: boolean | null, agreementTypes?: Array<AgreementType> }, participantsAndProviders?: { __typename: 'PlanParticipantsAndProviders', recruitmentMethod?: RecruitmentType | null, selectionMethod?: Array<ParticipantSelectionType>, communicationMethod?: Array<ParticipantCommunicationType>, providerOverlap?: OverlapType | null, participantsIds?: Array<ParticipantsIdType> }, beneficiaries?: { __typename: 'PlanBeneficiaries', beneficiaryOverlap?: OverlapType | null }, opsEvalAndLearning?: { __typename: 'PlanOpsEvalAndLearning', helpdeskUse?: boolean | null, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, evaluationApproaches?: Array<EvaluationApproachType>, dataNeededForMonitoring?: Array<DataForMonitoringType>, dataToSendParticicipants?: Array<DataToSendParticipantsType>, modelLearningSystems?: Array<ModelLearningSystemType>, developNewQualityMeasures?: boolean | null }, payments?: { __typename: 'PlanPayments', payType?: Array<PayType>, shouldAnyProvidersExcludedFFSSystems?: boolean | null, nonClaimsPayments?: Array<NonClaimsBasedPayType>, willRecoverPayments?: boolean | null } } };
+
+export type GetModelsByMtoSolutionQueryVariables = Exact<{
+  solutionKey: MtoCommonSolutionKey;
+}>;
+
+
+export type GetModelsByMtoSolutionQuery = { __typename: 'Query', modelPlansByMTOSolutionKey: Array<{ __typename: 'ModelPlanAndMTOCommonSolution', modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, status: ModelStatus, modelBySolutionStatus: ModelBySolutionStatus, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null } } }> };
+
+export type RenameMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type RenameMtoCategoryMutation = { __typename: 'Mutation', renameMTOCategory: { __typename: 'MTOCategory', id: UUID, name: string, isUncategorized: boolean } };
+
+export type ReorderMtoCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  newOrder: Scalars['Int']['input'];
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type ReorderMtoCategoryMutation = { __typename: 'Mutation', reorderMTOCategory: { __typename: 'MTOCategory', id: UUID } };
+
+export type UpdateMtoMilestoneMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: MtoMilestoneChanges;
+  solutionLinks?: InputMaybe<MtoSolutionLinks>;
+}>;
+
+
+export type UpdateMtoMilestoneMutation = { __typename: 'Mutation', updateMTOMilestone: { __typename: 'MTOMilestone', id: UUID } };
+
+export type UpdateMtoMilestoneLinkedSolutionsMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  solutionLinks: MtoSolutionLinks;
+}>;
+
+
+export type UpdateMtoMilestoneLinkedSolutionsMutation = { __typename: 'Mutation', mtoMilestoneUpdateLinkedSolutions?: Array<{ __typename: 'MTOSolution', id: UUID }> | null };
+
+export type UpdateMtoReadyForReviewMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  readyForReview: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateMtoReadyForReviewMutation = { __typename: 'Mutation', markMTOReadyForReview: { __typename: 'MTOInfo', id: UUID } };
+
+export type UpdateMtoSolutionMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: MtoSolutionChanges;
+  milestoneLinks?: InputMaybe<MtoMilestoneLinks>;
+}>;
+
+
+export type UpdateMtoSolutionMutation = { __typename: 'Mutation', updateMTOSolution: { __typename: 'MTOSolution', id: UUID } };
+
 export type UpdateNdaMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5008,7 +5525,7 @@ export type GetCcwAndQualityQueryVariables = Exact<{
 }>;
 
 
-export type GetCcwAndQualityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetCcwAndQualityQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, sendFilesBetweenCcw?: boolean | null, sendFilesBetweenCcwNote?: string | null, appToSendFilesToKnown?: boolean | null, appToSendFilesToWhich?: string | null, appToSendFilesToNote?: string | null, useCcwForFileDistribiutionToParticipants?: boolean | null, useCcwForFileDistribiutionToParticipantsNote?: string | null, developNewQualityMeasures?: boolean | null, developNewQualityMeasuresNote?: string | null, qualityPerformanceImpactsPayment?: YesNoOtherType | null, qualityPerformanceImpactsPaymentOther?: string | null, qualityPerformanceImpactsPaymentNote?: string | null } } };
 
 export type GetDataSharingQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5022,7 +5539,7 @@ export type GetEvaluationQueryVariables = Exact<{
 }>;
 
 
-export type GetEvaluationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetEvaluationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, evaluationApproaches: Array<EvaluationApproachType>, evaluationApproachOther?: string | null, evalutaionApproachNote?: string | null, ccmInvolvmentOther?: string | null, ccmInvolvmentNote?: string | null, dataNeededForMonitoringOther?: string | null, dataNeededForMonitoringNote?: string | null, dataToSendParticicipants: Array<DataToSendParticipantsType>, dataToSendParticicipantsOther?: string | null, dataToSendParticicipantsNote?: string | null, shareCclfData?: boolean | null, shareCclfDataNote?: string | null } } };
 
 export type GetIddocQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5050,21 +5567,21 @@ export type GetLearningQueryVariables = Exact<{
 }>;
 
 
-export type GetLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, modelLearningSystems: Array<ModelLearningSystemType>, modelLearningSystemsOther?: string | null, modelLearningSystemsNote?: string | null, anticipatedChallenges?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
 
 export type GetOpsEvalAndLearningQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetOpsEvalAndLearningQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, stakeholders: Array<StakeholdersType>, stakeholdersOther?: string | null, stakeholdersNote?: string | null, helpdeskUse?: boolean | null, helpdeskUseNote?: string | null, contractorSupport: Array<ContractorSupportType>, contractorSupportOther?: string | null, contractorSupportHow?: string | null, contractorSupportNote?: string | null, iddocSupport?: boolean | null, iddocSupportNote?: string | null } } };
 
 export type GetPerformanceQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetPerformanceQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetPerformanceQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, opsEvalAndLearning: { __typename: 'PlanOpsEvalAndLearning', id: UUID, ccmInvolvment: Array<CcmInvolvmentType>, dataNeededForMonitoring: Array<DataForMonitoringType>, iddocSupport?: boolean | null, benchmarkForPerformance?: BenchmarkForPerformanceType | null, benchmarkForPerformanceNote?: string | null, computePerformanceScores?: boolean | null, computePerformanceScoresNote?: string | null, riskAdjustPerformance?: boolean | null, riskAdjustFeedback?: boolean | null, riskAdjustPayments?: boolean | null, riskAdjustOther?: boolean | null, riskAdjustNote?: string | null, appealPerformance?: boolean | null, appealFeedback?: boolean | null, appealPayments?: boolean | null, appealOther?: boolean | null, appealNote?: string | null } } };
 
 export type UpdatePlanOpsEvalAndLearningMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5086,21 +5603,21 @@ export type GetCommunicationQueryVariables = Exact<{
 }>;
 
 
-export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetCommunicationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantAddedFrequency: Array<FrequencyType>, participantAddedFrequencyContinually?: string | null, participantAddedFrequencyOther?: string | null, participantAddedFrequencyNote?: string | null, participantRemovedFrequency: Array<FrequencyType>, participantRemovedFrequencyContinually?: string | null, participantRemovedFrequencyOther?: string | null, participantRemovedFrequencyNote?: string | null, communicationMethod: Array<ParticipantCommunicationType>, communicationMethodOther?: string | null, communicationNote?: string | null, riskType: Array<ParticipantRiskType>, riskOther?: string | null, riskNote?: string | null, willRiskChange?: boolean | null, willRiskChangeNote?: string | null } } };
 
 export type GetCoordinationQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetCoordinationQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, participantRequireFinancialGuarantee?: boolean | null, participantRequireFinancialGuaranteeType: Array<ParticipantRequireFinancialGuaranteeType>, participantRequireFinancialGuaranteeOther?: string | null, participantRequireFinancialGuaranteeNote?: string | null, coordinateWork?: boolean | null, coordinateWorkNote?: string | null, gainsharePayments?: boolean | null, gainsharePaymentsEligibility: Array<GainshareArrangementEligibility>, gainsharePaymentsEligibilityOther?: string | null, gainsharePaymentsTrack?: boolean | null, gainsharePaymentsNote?: string | null, participantsIds: Array<ParticipantsIdType>, participantsIdsOther?: string | null, participantsIDSNote?: string | null } } };
 
 export type GetParticipantOptionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetParticipantOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetParticipantOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, expectedNumberOfParticipants?: number | null, estimateConfidence?: ConfidenceType | null, confidenceNote?: string | null, recruitmentMethod?: RecruitmentType | null, recruitmentOther?: string | null, recruitmentNote?: string | null, selectionMethod: Array<ParticipantSelectionType>, selectionOther?: string | null, selectionNote?: string | null } } };
 
 export type GetParticipantsAndProvidersQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5114,7 +5631,7 @@ export type GetProviderOptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetProviderOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetProviderOptionsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, participantsAndProviders: { __typename: 'PlanParticipantsAndProviders', id: UUID, providerAdditionFrequency: Array<FrequencyType>, providerAdditionFrequencyContinually?: string | null, providerAdditionFrequencyOther?: string | null, providerAdditionFrequencyNote?: string | null, providerAddMethod: Array<ProviderAddType>, providerAddMethodOther?: string | null, providerAddMethodNote?: string | null, providerLeaveMethod: Array<ProviderLeaveType>, providerLeaveMethodOther?: string | null, providerLeaveMethodNote?: string | null, providerRemovalFrequency: Array<FrequencyType>, providerRemovalFrequencyContinually?: string | null, providerRemovalFrequencyOther?: string | null, providerRemovalFrequencyNote?: string | null, providerOverlap?: OverlapType | null, providerOverlapHierarchy?: string | null, providerOverlapNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
 
 export type UpdatePlanParticipantsAndProvidersMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5150,7 +5667,7 @@ export type GetClaimsBasedPaymentQueryVariables = Exact<{
 }>;
 
 
-export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, payClaimsNote?: string | null, payClaimsOther?: string | null, shouldAnyProvidersExcludedFFSSystems?: boolean | null, shouldAnyProviderExcludedFFSSystemsNote?: string | null, changesMedicarePhysicianFeeSchedule?: boolean | null, changesMedicarePhysicianFeeScheduleNote?: string | null, affectsMedicareSecondaryPayerClaims?: boolean | null, affectsMedicareSecondaryPayerClaimsHow?: string | null, affectsMedicareSecondaryPayerClaimsNote?: string | null, payModelDifferentiation?: string | null } } };
 
 export type GetComplexityQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5164,21 +5681,21 @@ export type GetFundingQueryVariables = Exact<{
 }>;
 
 
-export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourcePatientProtectionInfo?: string | null, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRPatientProtectionInfo?: string | null, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetFundingQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, fundingSource: Array<FundingSource>, fundingSourcePatientProtectionInfo?: string | null, fundingSourceMedicareAInfo?: string | null, fundingSourceMedicareBInfo?: string | null, fundingSourceOther?: string | null, fundingSourceNote?: string | null, fundingSourceR: Array<FundingSource>, fundingSourceRPatientProtectionInfo?: string | null, fundingSourceRMedicareAInfo?: string | null, fundingSourceRMedicareBInfo?: string | null, fundingSourceROther?: string | null, fundingSourceRNote?: string | null, payRecipients: Array<PayRecipient>, payRecipientsOtherSpecification?: string | null, payRecipientsNote?: string | null, payType: Array<PayType>, payTypeNote?: string | null, payClaims: Array<ClaimsBasedPayType> } } };
 
 export type GetNonClaimsBasedPaymentQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetNonClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetNonClaimsBasedPaymentQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, nonClaimsPayments: Array<NonClaimsBasedPayType>, nonClaimsPaymentsNote?: string | null, nonClaimsPaymentOther?: string | null, paymentCalculationOwner?: string | null, numberPaymentsPerPayCycle?: string | null, numberPaymentsPerPayCycleNote?: string | null, sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null, sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null, planningToUseInnovationPaymentContractor?: boolean | null, planningToUseInnovationPaymentContractorNote?: string | null } } };
 
 export type GetRecoverQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetRecoverQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, operationalNeeds: Array<{ __typename: 'OperationalNeed', id: UUID, modifiedDts?: Time | null }> } };
+export type GetRecoverQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, payments: { __typename: 'PlanPayments', id: UUID, payType: Array<PayType>, payClaims: Array<ClaimsBasedPayType>, willRecoverPayments?: boolean | null, willRecoverPaymentsNote?: string | null, anticipateReconcilingPaymentsRetrospectively?: boolean | null, anticipateReconcilingPaymentsRetrospectivelyNote?: string | null, paymentReconciliationFrequency: Array<FrequencyType>, paymentReconciliationFrequencyContinually?: string | null, paymentReconciliationFrequencyOther?: string | null, paymentReconciliationFrequencyNote?: string | null, paymentDemandRecoupmentFrequency: Array<FrequencyType>, paymentDemandRecoupmentFrequencyContinually?: string | null, paymentDemandRecoupmentFrequencyOther?: string | null, paymentDemandRecoupmentFrequencyNote?: string | null, paymentStartDate?: Time | null, paymentStartDateNote?: string | null, readyForReviewDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
 
 export type UpdatePaymentsMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -5272,6 +5789,7 @@ export type GetModelSummaryQuery = { __typename: 'Query', modelPlan: { __typenam
 export type CreateShareModelPlanMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
   viewFilter?: InputMaybe<ModelViewFilter>;
+  modelShareSection?: InputMaybe<ModelShareSection>;
   usernames: Array<Scalars['String']['input']> | Scalars['String']['input'];
   optionalMessage?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -5757,10 +6275,6 @@ export const GetFrequencyDocument = gql`
       readyForReviewDts
       status
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -5966,6 +6480,14 @@ export const GetChangeHistoryDocument = gql`
         documentNote
         documentURL
         documentID
+      }
+      ... on TranslatedAuditMetaMTOCategory {
+        isSubCategory
+        parentCategoryID
+        parentCategoryName
+        categoryName
+        tableName
+        version
       }
     }
   }
@@ -7338,10 +7860,6 @@ export const GetKeyCharacteristicsDocument = gql`
       planContractUpdated
       planContractUpdatedNote
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -7399,10 +7917,6 @@ export const GetTargetsAndOptionsDocument = gql`
       agreementTypesOther
       multiplePatricipationAgreementsNeeded
       multiplePatricipationAgreementsNeededNote
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -7535,7 +8049,7 @@ export const GetHomepageSettingsDocument = gql`
   userViewCustomization {
     id
     viewCustomization
-    possibleOperationalSolutions
+    solutions
   }
 }
     `;
@@ -7604,796 +8118,6 @@ export function useUpdateHomepageSettingsMutation(baseOptions?: Apollo.MutationH
 export type UpdateHomepageSettingsMutationHookResult = ReturnType<typeof useUpdateHomepageSettingsMutation>;
 export type UpdateHomepageSettingsMutationResult = Apollo.MutationResult<UpdateHomepageSettingsMutation>;
 export type UpdateHomepageSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
-export const CreateDocumentSolutionLinksDocument = gql`
-    mutation CreateDocumentSolutionLinks($solutionID: UUID!, $documentIDs: [UUID!]!) {
-  createPlanDocumentSolutionLinks(
-    solutionID: $solutionID
-    documentIDs: $documentIDs
-  ) {
-    id
-  }
-}
-    `;
-export type CreateDocumentSolutionLinksMutationFn = Apollo.MutationFunction<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
-
-/**
- * __useCreateDocumentSolutionLinksMutation__
- *
- * To run a mutation, you first call `useCreateDocumentSolutionLinksMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateDocumentSolutionLinksMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createDocumentSolutionLinksMutation, { data, loading, error }] = useCreateDocumentSolutionLinksMutation({
- *   variables: {
- *      solutionID: // value for 'solutionID'
- *      documentIDs: // value for 'documentIDs'
- *   },
- * });
- */
-export function useCreateDocumentSolutionLinksMutation(baseOptions?: Apollo.MutationHookOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>(CreateDocumentSolutionLinksDocument, options);
-      }
-export type CreateDocumentSolutionLinksMutationHookResult = ReturnType<typeof useCreateDocumentSolutionLinksMutation>;
-export type CreateDocumentSolutionLinksMutationResult = Apollo.MutationResult<CreateDocumentSolutionLinksMutation>;
-export type CreateDocumentSolutionLinksMutationOptions = Apollo.BaseMutationOptions<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
-export const CreateOperationalSolutionDocument = gql`
-    mutation CreateOperationalSolution($operationalNeedID: UUID!, $solutionType: OperationalSolutionKey, $changes: OperationalSolutionChanges!) {
-  createOperationalSolution(
-    operationalNeedID: $operationalNeedID
-    solutionType: $solutionType
-    changes: $changes
-  ) {
-    id
-    nameOther
-    needed
-    key
-  }
-}
-    `;
-export type CreateOperationalSolutionMutationFn = Apollo.MutationFunction<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
-
-/**
- * __useCreateOperationalSolutionMutation__
- *
- * To run a mutation, you first call `useCreateOperationalSolutionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateOperationalSolutionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createOperationalSolutionMutation, { data, loading, error }] = useCreateOperationalSolutionMutation({
- *   variables: {
- *      operationalNeedID: // value for 'operationalNeedID'
- *      solutionType: // value for 'solutionType'
- *      changes: // value for 'changes'
- *   },
- * });
- */
-export function useCreateOperationalSolutionMutation(baseOptions?: Apollo.MutationHookOptions<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>(CreateOperationalSolutionDocument, options);
-      }
-export type CreateOperationalSolutionMutationHookResult = ReturnType<typeof useCreateOperationalSolutionMutation>;
-export type CreateOperationalSolutionMutationResult = Apollo.MutationResult<CreateOperationalSolutionMutation>;
-export type CreateOperationalSolutionMutationOptions = Apollo.BaseMutationOptions<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
-export const CreateOperationalSolutionSubtasksDocument = gql`
-    mutation CreateOperationalSolutionSubtasks($solutionID: UUID!, $inputs: [CreateOperationalSolutionSubtaskInput!]!) {
-  createOperationalSolutionSubtasks(solutionID: $solutionID, inputs: $inputs) {
-    name
-    status
-  }
-}
-    `;
-export type CreateOperationalSolutionSubtasksMutationFn = Apollo.MutationFunction<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
-
-/**
- * __useCreateOperationalSolutionSubtasksMutation__
- *
- * To run a mutation, you first call `useCreateOperationalSolutionSubtasksMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateOperationalSolutionSubtasksMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createOperationalSolutionSubtasksMutation, { data, loading, error }] = useCreateOperationalSolutionSubtasksMutation({
- *   variables: {
- *      solutionID: // value for 'solutionID'
- *      inputs: // value for 'inputs'
- *   },
- * });
- */
-export function useCreateOperationalSolutionSubtasksMutation(baseOptions?: Apollo.MutationHookOptions<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>(CreateOperationalSolutionSubtasksDocument, options);
-      }
-export type CreateOperationalSolutionSubtasksMutationHookResult = ReturnType<typeof useCreateOperationalSolutionSubtasksMutation>;
-export type CreateOperationalSolutionSubtasksMutationResult = Apollo.MutationResult<CreateOperationalSolutionSubtasksMutation>;
-export type CreateOperationalSolutionSubtasksMutationOptions = Apollo.BaseMutationOptions<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
-export const DeleteDocumentSolutionLinkDocument = gql`
-    mutation DeleteDocumentSolutionLink($solutionID: UUID!, $documentIDs: [UUID!]!) {
-  removePlanDocumentSolutionLinks(
-    solutionID: $solutionID
-    documentIDs: $documentIDs
-  )
-}
-    `;
-export type DeleteDocumentSolutionLinkMutationFn = Apollo.MutationFunction<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
-
-/**
- * __useDeleteDocumentSolutionLinkMutation__
- *
- * To run a mutation, you first call `useDeleteDocumentSolutionLinkMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteDocumentSolutionLinkMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteDocumentSolutionLinkMutation, { data, loading, error }] = useDeleteDocumentSolutionLinkMutation({
- *   variables: {
- *      solutionID: // value for 'solutionID'
- *      documentIDs: // value for 'documentIDs'
- *   },
- * });
- */
-export function useDeleteDocumentSolutionLinkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>(DeleteDocumentSolutionLinkDocument, options);
-      }
-export type DeleteDocumentSolutionLinkMutationHookResult = ReturnType<typeof useDeleteDocumentSolutionLinkMutation>;
-export type DeleteDocumentSolutionLinkMutationResult = Apollo.MutationResult<DeleteDocumentSolutionLinkMutation>;
-export type DeleteDocumentSolutionLinkMutationOptions = Apollo.BaseMutationOptions<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
-export const DeleteOperationalSolutionSubtaskDocument = gql`
-    mutation DeleteOperationalSolutionSubtask($id: UUID!) {
-  deleteOperationalSolutionSubtask(id: $id)
-}
-    `;
-export type DeleteOperationalSolutionSubtaskMutationFn = Apollo.MutationFunction<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>;
-
-/**
- * __useDeleteOperationalSolutionSubtaskMutation__
- *
- * To run a mutation, you first call `useDeleteOperationalSolutionSubtaskMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteOperationalSolutionSubtaskMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteOperationalSolutionSubtaskMutation, { data, loading, error }] = useDeleteOperationalSolutionSubtaskMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useDeleteOperationalSolutionSubtaskMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>(DeleteOperationalSolutionSubtaskDocument, options);
-      }
-export type DeleteOperationalSolutionSubtaskMutationHookResult = ReturnType<typeof useDeleteOperationalSolutionSubtaskMutation>;
-export type DeleteOperationalSolutionSubtaskMutationResult = Apollo.MutationResult<DeleteOperationalSolutionSubtaskMutation>;
-export type DeleteOperationalSolutionSubtaskMutationOptions = Apollo.BaseMutationOptions<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>;
-export const GetModelsBySolutionDocument = gql`
-    query GetModelsBySolution($operationalSolutionKey: OperationalSolutionKey!) {
-  modelPlansByOperationalSolutionKey(
-    operationalSolutionKey: $operationalSolutionKey
-  ) {
-    modelPlan {
-      id
-      modelName
-      abbreviation
-      status
-      modelBySolutionStatus
-      basics {
-        id
-        modelCategory
-        performancePeriodStarts
-        performancePeriodEnds
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useGetModelsBySolutionQuery__
- *
- * To run a query within a React component, call `useGetModelsBySolutionQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetModelsBySolutionQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetModelsBySolutionQuery({
- *   variables: {
- *      operationalSolutionKey: // value for 'operationalSolutionKey'
- *   },
- * });
- */
-export function useGetModelsBySolutionQuery(baseOptions: Apollo.QueryHookOptions<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables> & ({ variables: GetModelsBySolutionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>(GetModelsBySolutionDocument, options);
-      }
-export function useGetModelsBySolutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>(GetModelsBySolutionDocument, options);
-        }
-export function useGetModelsBySolutionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>(GetModelsBySolutionDocument, options);
-        }
-export type GetModelsBySolutionQueryHookResult = ReturnType<typeof useGetModelsBySolutionQuery>;
-export type GetModelsBySolutionLazyQueryHookResult = ReturnType<typeof useGetModelsBySolutionLazyQuery>;
-export type GetModelsBySolutionSuspenseQueryHookResult = ReturnType<typeof useGetModelsBySolutionSuspenseQuery>;
-export type GetModelsBySolutionQueryResult = Apollo.QueryResult<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>;
-export const GetOperationalNeedDocument = gql`
-    query GetOperationalNeed($id: UUID!, $includeNotNeeded: Boolean = true) {
-  operationalNeed(id: $id) {
-    id
-    modelPlanID
-    name
-    key
-    nameOther
-    needed
-    solutions(includeNotNeeded: $includeNotNeeded) {
-      id
-      name
-      key
-      pocName
-      pocEmail
-      needed
-      nameOther
-      isOther
-      isCommonSolution
-      otherHeader
-      mustStartDts
-      mustFinishDts
-      status
-    }
-  }
-}
-    `;
-
-/**
- * __useGetOperationalNeedQuery__
- *
- * To run a query within a React component, call `useGetOperationalNeedQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOperationalNeedQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOperationalNeedQuery({
- *   variables: {
- *      id: // value for 'id'
- *      includeNotNeeded: // value for 'includeNotNeeded'
- *   },
- * });
- */
-export function useGetOperationalNeedQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables> & ({ variables: GetOperationalNeedQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
-      }
-export function useGetOperationalNeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
-        }
-export function useGetOperationalNeedSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>(GetOperationalNeedDocument, options);
-        }
-export type GetOperationalNeedQueryHookResult = ReturnType<typeof useGetOperationalNeedQuery>;
-export type GetOperationalNeedLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedLazyQuery>;
-export type GetOperationalNeedSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedSuspenseQuery>;
-export type GetOperationalNeedQueryResult = Apollo.QueryResult<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>;
-export const GetOperationalNeedAnswerDocument = gql`
-    query GetOperationalNeedAnswer($id: UUID!, $generalCharacteristics: Boolean!, $participantsAndProviders: Boolean!, $beneficiaries: Boolean!, $opsEvalAndLearning: Boolean!, $payments: Boolean!, $managePartCDEnrollment: Boolean!, $collectPlanBids: Boolean!, $planContractUpdated: Boolean!, $agreementTypes: Boolean!, $recruitmentMethod: Boolean!, $selectionMethod: Boolean!, $communicationMethod: Boolean!, $providerOverlap: Boolean!, $participantsIds: Boolean!, $beneficiaryOverlap: Boolean!, $helpdeskUse: Boolean!, $iddocSupport: Boolean!, $benchmarkForPerformance: Boolean!, $appealPerformance: Boolean!, $appealFeedback: Boolean!, $appealPayments: Boolean!, $appealOther: Boolean!, $evaluationApproaches: Boolean!, $dataNeededForMonitoring: Boolean!, $dataToSendParticicipants: Boolean!, $modelLearningSystems: Boolean!, $developNewQualityMeasures: Boolean!, $payType: Boolean!, $shouldAnyProvidersExcludedFFSSystems: Boolean!, $nonClaimsPayments: Boolean!, $willRecoverPayments: Boolean!) {
-  modelPlan(id: $id) {
-    id
-    modelName
-    generalCharacteristics @include(if: $generalCharacteristics) {
-      managePartCDEnrollment @include(if: $managePartCDEnrollment)
-      collectPlanBids @include(if: $collectPlanBids)
-      planContractUpdated @include(if: $planContractUpdated)
-      agreementTypes @include(if: $agreementTypes)
-    }
-    participantsAndProviders @include(if: $participantsAndProviders) {
-      recruitmentMethod @include(if: $recruitmentMethod)
-      selectionMethod @include(if: $selectionMethod)
-      communicationMethod @include(if: $communicationMethod)
-      providerOverlap @include(if: $providerOverlap)
-      participantsIds @include(if: $participantsIds)
-    }
-    beneficiaries @include(if: $beneficiaries) {
-      beneficiaryOverlap @include(if: $beneficiaryOverlap)
-    }
-    opsEvalAndLearning @include(if: $opsEvalAndLearning) {
-      helpdeskUse @include(if: $helpdeskUse)
-      iddocSupport @include(if: $iddocSupport)
-      benchmarkForPerformance @include(if: $benchmarkForPerformance)
-      appealPerformance @include(if: $appealPerformance)
-      appealFeedback @include(if: $appealFeedback)
-      appealPayments @include(if: $appealPayments)
-      appealOther @include(if: $appealOther)
-      evaluationApproaches @include(if: $evaluationApproaches)
-      dataNeededForMonitoring @include(if: $dataNeededForMonitoring)
-      dataToSendParticicipants @include(if: $dataToSendParticicipants)
-      modelLearningSystems @include(if: $modelLearningSystems)
-      developNewQualityMeasures @include(if: $developNewQualityMeasures)
-    }
-    payments @include(if: $payments) {
-      payType @include(if: $payType)
-      shouldAnyProvidersExcludedFFSSystems @include(if: $shouldAnyProvidersExcludedFFSSystems)
-      nonClaimsPayments @include(if: $nonClaimsPayments)
-      willRecoverPayments @include(if: $willRecoverPayments)
-    }
-  }
-}
-    `;
-
-/**
- * __useGetOperationalNeedAnswerQuery__
- *
- * To run a query within a React component, call `useGetOperationalNeedAnswerQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOperationalNeedAnswerQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOperationalNeedAnswerQuery({
- *   variables: {
- *      id: // value for 'id'
- *      generalCharacteristics: // value for 'generalCharacteristics'
- *      participantsAndProviders: // value for 'participantsAndProviders'
- *      beneficiaries: // value for 'beneficiaries'
- *      opsEvalAndLearning: // value for 'opsEvalAndLearning'
- *      payments: // value for 'payments'
- *      managePartCDEnrollment: // value for 'managePartCDEnrollment'
- *      collectPlanBids: // value for 'collectPlanBids'
- *      planContractUpdated: // value for 'planContractUpdated'
- *      agreementTypes: // value for 'agreementTypes'
- *      recruitmentMethod: // value for 'recruitmentMethod'
- *      selectionMethod: // value for 'selectionMethod'
- *      communicationMethod: // value for 'communicationMethod'
- *      providerOverlap: // value for 'providerOverlap'
- *      participantsIds: // value for 'participantsIds'
- *      beneficiaryOverlap: // value for 'beneficiaryOverlap'
- *      helpdeskUse: // value for 'helpdeskUse'
- *      iddocSupport: // value for 'iddocSupport'
- *      benchmarkForPerformance: // value for 'benchmarkForPerformance'
- *      appealPerformance: // value for 'appealPerformance'
- *      appealFeedback: // value for 'appealFeedback'
- *      appealPayments: // value for 'appealPayments'
- *      appealOther: // value for 'appealOther'
- *      evaluationApproaches: // value for 'evaluationApproaches'
- *      dataNeededForMonitoring: // value for 'dataNeededForMonitoring'
- *      dataToSendParticicipants: // value for 'dataToSendParticicipants'
- *      modelLearningSystems: // value for 'modelLearningSystems'
- *      developNewQualityMeasures: // value for 'developNewQualityMeasures'
- *      payType: // value for 'payType'
- *      shouldAnyProvidersExcludedFFSSystems: // value for 'shouldAnyProvidersExcludedFFSSystems'
- *      nonClaimsPayments: // value for 'nonClaimsPayments'
- *      willRecoverPayments: // value for 'willRecoverPayments'
- *   },
- * });
- */
-export function useGetOperationalNeedAnswerQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables> & ({ variables: GetOperationalNeedAnswerQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>(GetOperationalNeedAnswerDocument, options);
-      }
-export function useGetOperationalNeedAnswerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>(GetOperationalNeedAnswerDocument, options);
-        }
-export function useGetOperationalNeedAnswerSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>(GetOperationalNeedAnswerDocument, options);
-        }
-export type GetOperationalNeedAnswerQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerQuery>;
-export type GetOperationalNeedAnswerLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerLazyQuery>;
-export type GetOperationalNeedAnswerSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedAnswerSuspenseQuery>;
-export type GetOperationalNeedAnswerQueryResult = Apollo.QueryResult<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>;
-export const GetOperationalNeedsDocument = gql`
-    query GetOperationalNeeds($id: UUID!) {
-  modelPlan(id: $id) {
-    id
-    modelName
-    isCollaborator
-    opSolutionLastModifiedDts
-    operationalNeeds {
-      id
-      modelPlanID
-      name
-      key
-      nameOther
-      needed
-      modifiedDts
-      solutions {
-        id
-        status
-        name
-        mustStartDts
-        mustFinishDts
-        needed
-        nameOther
-        key
-        otherHeader
-        operationalSolutionSubtasks {
-          id
-        }
-        pocEmail
-        pocName
-        createdBy
-        createdDts
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useGetOperationalNeedsQuery__
- *
- * To run a query within a React component, call `useGetOperationalNeedsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOperationalNeedsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOperationalNeedsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetOperationalNeedsQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables> & ({ variables: GetOperationalNeedsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
-      }
-export function useGetOperationalNeedsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
-        }
-export function useGetOperationalNeedsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>(GetOperationalNeedsDocument, options);
-        }
-export type GetOperationalNeedsQueryHookResult = ReturnType<typeof useGetOperationalNeedsQuery>;
-export type GetOperationalNeedsLazyQueryHookResult = ReturnType<typeof useGetOperationalNeedsLazyQuery>;
-export type GetOperationalNeedsSuspenseQueryHookResult = ReturnType<typeof useGetOperationalNeedsSuspenseQuery>;
-export type GetOperationalNeedsQueryResult = Apollo.QueryResult<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>;
-export const GetOperationalSolutionDocument = gql`
-    query GetOperationalSolution($id: UUID!) {
-  operationalSolution(id: $id) {
-    id
-    key
-    needed
-    name
-    nameOther
-    pocName
-    pocEmail
-    status
-    isOther
-    isCommonSolution
-    otherHeader
-    mustFinishDts
-    mustStartDts
-    documents {
-      id
-      virusScanned
-      virusClean
-      fileName
-      fileType
-      downloadUrl
-      restricted
-      documentType
-      createdDts
-      optionalNotes
-      otherType
-      numLinkedSolutions
-      isLink
-      url
-    }
-    operationalSolutionSubtasks {
-      id
-      name
-      status
-    }
-  }
-}
-    `;
-
-/**
- * __useGetOperationalSolutionQuery__
- *
- * To run a query within a React component, call `useGetOperationalSolutionQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOperationalSolutionQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOperationalSolutionQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetOperationalSolutionQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables> & ({ variables: GetOperationalSolutionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>(GetOperationalSolutionDocument, options);
-      }
-export function useGetOperationalSolutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>(GetOperationalSolutionDocument, options);
-        }
-export function useGetOperationalSolutionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>(GetOperationalSolutionDocument, options);
-        }
-export type GetOperationalSolutionQueryHookResult = ReturnType<typeof useGetOperationalSolutionQuery>;
-export type GetOperationalSolutionLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionLazyQuery>;
-export type GetOperationalSolutionSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSuspenseQuery>;
-export type GetOperationalSolutionQueryResult = Apollo.QueryResult<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>;
-export const GetOperationalSolutionSubtasksDocument = gql`
-    query GetOperationalSolutionSubtasks($id: UUID!) {
-  operationalSolution(id: $id) {
-    id
-    operationalSolutionSubtasks {
-      id
-      solutionID
-      name
-      status
-    }
-  }
-}
-    `;
-
-/**
- * __useGetOperationalSolutionSubtasksQuery__
- *
- * To run a query within a React component, call `useGetOperationalSolutionSubtasksQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOperationalSolutionSubtasksQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOperationalSolutionSubtasksQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetOperationalSolutionSubtasksQuery(baseOptions: Apollo.QueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables> & ({ variables: GetOperationalSolutionSubtasksQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
-      }
-export function useGetOperationalSolutionSubtasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
-        }
-export function useGetOperationalSolutionSubtasksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>(GetOperationalSolutionSubtasksDocument, options);
-        }
-export type GetOperationalSolutionSubtasksQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksQuery>;
-export type GetOperationalSolutionSubtasksLazyQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksLazyQuery>;
-export type GetOperationalSolutionSubtasksSuspenseQueryHookResult = ReturnType<typeof useGetOperationalSolutionSubtasksSuspenseQuery>;
-export type GetOperationalSolutionSubtasksQueryResult = Apollo.QueryResult<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>;
-export const GetPossibleOperationalSolutionsDocument = gql`
-    query GetPossibleOperationalSolutions {
-  possibleOperationalSolutions {
-    id
-    name
-    key
-  }
-}
-    `;
-
-/**
- * __useGetPossibleOperationalSolutionsQuery__
- *
- * To run a query within a React component, call `useGetPossibleOperationalSolutionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPossibleOperationalSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPossibleOperationalSolutionsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetPossibleOperationalSolutionsQuery(baseOptions?: Apollo.QueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
-      }
-export function useGetPossibleOperationalSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
-        }
-export function useGetPossibleOperationalSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>(GetPossibleOperationalSolutionsDocument, options);
-        }
-export type GetPossibleOperationalSolutionsQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsQuery>;
-export type GetPossibleOperationalSolutionsLazyQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsLazyQuery>;
-export type GetPossibleOperationalSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetPossibleOperationalSolutionsSuspenseQuery>;
-export type GetPossibleOperationalSolutionsQueryResult = Apollo.QueryResult<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>;
-export const UpdateCustomOperationalNeedDocument = gql`
-    mutation UpdateCustomOperationalNeed($modelPlanID: UUID!, $customNeedType: String!, $needed: Boolean!) {
-  addOrUpdateCustomOperationalNeed(
-    modelPlanID: $modelPlanID
-    customNeedType: $customNeedType
-    needed: $needed
-  ) {
-    id
-    nameOther
-    needed
-    key
-  }
-}
-    `;
-export type UpdateCustomOperationalNeedMutationFn = Apollo.MutationFunction<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>;
-
-/**
- * __useUpdateCustomOperationalNeedMutation__
- *
- * To run a mutation, you first call `useUpdateCustomOperationalNeedMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateCustomOperationalNeedMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateCustomOperationalNeedMutation, { data, loading, error }] = useUpdateCustomOperationalNeedMutation({
- *   variables: {
- *      modelPlanID: // value for 'modelPlanID'
- *      customNeedType: // value for 'customNeedType'
- *      needed: // value for 'needed'
- *   },
- * });
- */
-export function useUpdateCustomOperationalNeedMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>(UpdateCustomOperationalNeedDocument, options);
-      }
-export type UpdateCustomOperationalNeedMutationHookResult = ReturnType<typeof useUpdateCustomOperationalNeedMutation>;
-export type UpdateCustomOperationalNeedMutationResult = Apollo.MutationResult<UpdateCustomOperationalNeedMutation>;
-export type UpdateCustomOperationalNeedMutationOptions = Apollo.BaseMutationOptions<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>;
-export const UpdateCustomOperationalNeedByIdDocument = gql`
-    mutation UpdateCustomOperationalNeedById($id: UUID!, $customNeedType: String!, $needed: Boolean!) {
-  updateCustomOperationalNeedByID(
-    id: $id
-    customNeedType: $customNeedType
-    needed: $needed
-  ) {
-    id
-    nameOther
-    needed
-    key
-  }
-}
-    `;
-export type UpdateCustomOperationalNeedByIdMutationFn = Apollo.MutationFunction<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
-
-/**
- * __useUpdateCustomOperationalNeedByIdMutation__
- *
- * To run a mutation, you first call `useUpdateCustomOperationalNeedByIdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateCustomOperationalNeedByIdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateCustomOperationalNeedByIdMutation, { data, loading, error }] = useUpdateCustomOperationalNeedByIdMutation({
- *   variables: {
- *      id: // value for 'id'
- *      customNeedType: // value for 'customNeedType'
- *      needed: // value for 'needed'
- *   },
- * });
- */
-export function useUpdateCustomOperationalNeedByIdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>(UpdateCustomOperationalNeedByIdDocument, options);
-      }
-export type UpdateCustomOperationalNeedByIdMutationHookResult = ReturnType<typeof useUpdateCustomOperationalNeedByIdMutation>;
-export type UpdateCustomOperationalNeedByIdMutationResult = Apollo.MutationResult<UpdateCustomOperationalNeedByIdMutation>;
-export type UpdateCustomOperationalNeedByIdMutationOptions = Apollo.BaseMutationOptions<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
-export const UpdateOperationalSolutionDocument = gql`
-    mutation UpdateOperationalSolution($id: UUID!, $changes: OperationalSolutionChanges!) {
-  updateOperationalSolution(id: $id, changes: $changes) {
-    id
-    nameOther
-    needed
-    key
-  }
-}
-    `;
-export type UpdateOperationalSolutionMutationFn = Apollo.MutationFunction<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>;
-
-/**
- * __useUpdateOperationalSolutionMutation__
- *
- * To run a mutation, you first call `useUpdateOperationalSolutionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateOperationalSolutionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateOperationalSolutionMutation, { data, loading, error }] = useUpdateOperationalSolutionMutation({
- *   variables: {
- *      id: // value for 'id'
- *      changes: // value for 'changes'
- *   },
- * });
- */
-export function useUpdateOperationalSolutionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>(UpdateOperationalSolutionDocument, options);
-      }
-export type UpdateOperationalSolutionMutationHookResult = ReturnType<typeof useUpdateOperationalSolutionMutation>;
-export type UpdateOperationalSolutionMutationResult = Apollo.MutationResult<UpdateOperationalSolutionMutation>;
-export type UpdateOperationalSolutionMutationOptions = Apollo.BaseMutationOptions<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>;
-export const UpdateOperationalSolutionSubtasksDocument = gql`
-    mutation UpdateOperationalSolutionSubtasks($inputs: [UpdateOperationalSolutionSubtaskInput!]!) {
-  updateOperationalSolutionSubtasks(inputs: $inputs) {
-    id
-    solutionID
-    name
-    status
-  }
-}
-    `;
-export type UpdateOperationalSolutionSubtasksMutationFn = Apollo.MutationFunction<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
-
-/**
- * __useUpdateOperationalSolutionSubtasksMutation__
- *
- * To run a mutation, you first call `useUpdateOperationalSolutionSubtasksMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateOperationalSolutionSubtasksMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateOperationalSolutionSubtasksMutation, { data, loading, error }] = useUpdateOperationalSolutionSubtasksMutation({
- *   variables: {
- *      inputs: // value for 'inputs'
- *   },
- * });
- */
-export function useUpdateOperationalSolutionSubtasksMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>(UpdateOperationalSolutionSubtasksDocument, options);
-      }
-export type UpdateOperationalSolutionSubtasksMutationHookResult = ReturnType<typeof useUpdateOperationalSolutionSubtasksMutation>;
-export type UpdateOperationalSolutionSubtasksMutationResult = Apollo.MutationResult<UpdateOperationalSolutionSubtasksMutation>;
-export type UpdateOperationalSolutionSubtasksMutationOptions = Apollo.BaseMutationOptions<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
@@ -9111,6 +8835,53 @@ export const GetAllModelDataDocument = gql`
       createdDts
       status
     }
+    mtoMatrix {
+      info {
+        id
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
+        readyForReviewDTS
+      }
+      milestones {
+        id
+        name
+        isDraft
+        facilitatedBy
+        facilitatedByOther
+        needBy
+        status
+        riskIndicator
+        categories {
+          category {
+            id
+            name
+          }
+          subCategory {
+            id
+            name
+          }
+        }
+        solutions {
+          id
+          name
+        }
+      }
+      solutions {
+        id
+        name
+        facilitatedBy
+        facilitatedByOther
+        neededBy
+        status
+        riskIndicator
+        milestones {
+          id
+          name
+        }
+      }
+    }
     collaborators {
       id
       userAccount {
@@ -9632,6 +9403,53 @@ export const GetAllSingleModelDataDocument = gql`
       createdDts
       status
     }
+    mtoMatrix {
+      info {
+        id
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
+        readyForReviewDTS
+      }
+      milestones {
+        id
+        name
+        isDraft
+        facilitatedBy
+        facilitatedByOther
+        needBy
+        status
+        riskIndicator
+        categories {
+          category {
+            id
+            name
+          }
+          subCategory {
+            id
+            name
+          }
+        }
+        solutions {
+          id
+          name
+        }
+      }
+      solutions {
+        id
+        name
+        facilitatedBy
+        facilitatedByOther
+        neededBy
+        status
+        riskIndicator
+        milestones {
+          id
+          name
+        }
+      }
+    }
     collaborators {
       id
       userAccount {
@@ -10015,13 +9833,24 @@ export const GetModelPlanDocument = gql`
       readyForClearanceDts
       status
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
     prepareForClearance {
       status
       modifiedDts: latestClearanceDts
+    }
+    mtoMatrix {
+      info {
+        id
+      }
+      status
+      recentEdit {
+        id
+        date
+        actorName
+      }
+      milestones {
+        id
+        name
+      }
     }
   }
 }
@@ -10067,6 +9896,12 @@ export const GetModelPlanBaseDocument = gql`
     modifiedDts
     createdDts
     status
+    mtoMatrix {
+      status
+      info {
+        id
+      }
+    }
   }
 }
     `;
@@ -10469,6 +10304,1372 @@ export function useUnlockModelPlanSectionMutation(baseOptions?: Apollo.MutationH
 export type UnlockModelPlanSectionMutationHookResult = ReturnType<typeof useUnlockModelPlanSectionMutation>;
 export type UnlockModelPlanSectionMutationResult = Apollo.MutationResult<UnlockModelPlanSectionMutation>;
 export type UnlockModelPlanSectionMutationOptions = Apollo.BaseMutationOptions<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+export const CreateMtoCategoryDocument = gql`
+    mutation CreateMTOCategory($id: UUID!, $name: String!, $parentID: UUID) {
+  createMTOCategory(modelPlanID: $id, name: $name, parentID: $parentID) {
+    id
+    name
+    isUncategorized
+  }
+}
+    `;
+export type CreateMtoCategoryMutationFn = Apollo.MutationFunction<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+
+/**
+ * __useCreateMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoCategoryMutation, { data, loading, error }] = useCreateMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      parentID: // value for 'parentID'
+ *   },
+ * });
+ */
+export function useCreateMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>(CreateMtoCategoryDocument, options);
+      }
+export type CreateMtoCategoryMutationHookResult = ReturnType<typeof useCreateMtoCategoryMutation>;
+export type CreateMtoCategoryMutationResult = Apollo.MutationResult<CreateMtoCategoryMutation>;
+export type CreateMtoCategoryMutationOptions = Apollo.BaseMutationOptions<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+export const CreateMtoMilestoneDocument = gql`
+    mutation CreateMTOMilestone($modelPlanID: UUID!, $commonMilestoneKey: MTOCommonMilestoneKey!, $commonSolutions: [MTOCommonSolutionKey!]) {
+  createMTOMilestoneCommon(
+    modelPlanID: $modelPlanID
+    commonMilestoneKey: $commonMilestoneKey
+    commonSolutions: $commonSolutions
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type CreateMtoMilestoneMutationFn = Apollo.MutationFunction<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
+
+/**
+ * __useCreateMtoMilestoneMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoMilestoneMutation, { data, loading, error }] = useCreateMtoMilestoneMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      commonMilestoneKey: // value for 'commonMilestoneKey'
+ *      commonSolutions: // value for 'commonSolutions'
+ *   },
+ * });
+ */
+export function useCreateMtoMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>(CreateMtoMilestoneDocument, options);
+      }
+export type CreateMtoMilestoneMutationHookResult = ReturnType<typeof useCreateMtoMilestoneMutation>;
+export type CreateMtoMilestoneMutationResult = Apollo.MutationResult<CreateMtoMilestoneMutation>;
+export type CreateMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
+export const CreateMtoMilestoneCustomDocument = gql`
+    mutation CreateMTOMilestoneCustom($id: UUID!, $name: String!, $mtoCategoryID: UUID) {
+  createMTOMilestoneCustom(
+    modelPlanID: $id
+    name: $name
+    mtoCategoryID: $mtoCategoryID
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type CreateMtoMilestoneCustomMutationFn = Apollo.MutationFunction<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>;
+
+/**
+ * __useCreateMtoMilestoneCustomMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoMilestoneCustomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoMilestoneCustomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoMilestoneCustomMutation, { data, loading, error }] = useCreateMtoMilestoneCustomMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      mtoCategoryID: // value for 'mtoCategoryID'
+ *   },
+ * });
+ */
+export function useCreateMtoMilestoneCustomMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>(CreateMtoMilestoneCustomDocument, options);
+      }
+export type CreateMtoMilestoneCustomMutationHookResult = ReturnType<typeof useCreateMtoMilestoneCustomMutation>;
+export type CreateMtoMilestoneCustomMutationResult = Apollo.MutationResult<CreateMtoMilestoneCustomMutation>;
+export type CreateMtoMilestoneCustomMutationOptions = Apollo.BaseMutationOptions<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>;
+export const CreateMtoSolutionCommonDocument = gql`
+    mutation CreateMTOSolutionCommon($modelPlanID: UUID!, $milestonesToLink: [UUID!]!, $key: MTOCommonSolutionKey!) {
+  createMTOSolutionCommon(
+    modelPlanID: $modelPlanID
+    milestonesToLink: $milestonesToLink
+    key: $key
+  ) {
+    id
+  }
+}
+    `;
+export type CreateMtoSolutionCommonMutationFn = Apollo.MutationFunction<CreateMtoSolutionCommonMutation, CreateMtoSolutionCommonMutationVariables>;
+
+/**
+ * __useCreateMtoSolutionCommonMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoSolutionCommonMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoSolutionCommonMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoSolutionCommonMutation, { data, loading, error }] = useCreateMtoSolutionCommonMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      milestonesToLink: // value for 'milestonesToLink'
+ *      key: // value for 'key'
+ *   },
+ * });
+ */
+export function useCreateMtoSolutionCommonMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoSolutionCommonMutation, CreateMtoSolutionCommonMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoSolutionCommonMutation, CreateMtoSolutionCommonMutationVariables>(CreateMtoSolutionCommonDocument, options);
+      }
+export type CreateMtoSolutionCommonMutationHookResult = ReturnType<typeof useCreateMtoSolutionCommonMutation>;
+export type CreateMtoSolutionCommonMutationResult = Apollo.MutationResult<CreateMtoSolutionCommonMutation>;
+export type CreateMtoSolutionCommonMutationOptions = Apollo.BaseMutationOptions<CreateMtoSolutionCommonMutation, CreateMtoSolutionCommonMutationVariables>;
+export const CreateMtoSolutionCustomDocument = gql`
+    mutation CreateMTOSolutionCustom($modelPlanID: UUID!, $solutionType: MTOSolutionType!, $name: String!, $pocName: String!, $pocEmail: String!) {
+  createMTOSolutionCustom(
+    modelPlanID: $modelPlanID
+    solutionType: $solutionType
+    name: $name
+    pocName: $pocName
+    pocEmail: $pocEmail
+  ) {
+    id
+    name
+    status
+    pocName
+    pocEmail
+    type
+  }
+}
+    `;
+export type CreateMtoSolutionCustomMutationFn = Apollo.MutationFunction<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>;
+
+/**
+ * __useCreateMtoSolutionCustomMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoSolutionCustomMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoSolutionCustomMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoSolutionCustomMutation, { data, loading, error }] = useCreateMtoSolutionCustomMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      solutionType: // value for 'solutionType'
+ *      name: // value for 'name'
+ *      pocName: // value for 'pocName'
+ *      pocEmail: // value for 'pocEmail'
+ *   },
+ * });
+ */
+export function useCreateMtoSolutionCustomMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>(CreateMtoSolutionCustomDocument, options);
+      }
+export type CreateMtoSolutionCustomMutationHookResult = ReturnType<typeof useCreateMtoSolutionCustomMutation>;
+export type CreateMtoSolutionCustomMutationResult = Apollo.MutationResult<CreateMtoSolutionCustomMutation>;
+export type CreateMtoSolutionCustomMutationOptions = Apollo.BaseMutationOptions<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>;
+export const CreateStandardCategoriesDocument = gql`
+    mutation CreateStandardCategories($modelPlanID: UUID!) {
+  createStandardCategories(modelPlanID: $modelPlanID)
+}
+    `;
+export type CreateStandardCategoriesMutationFn = Apollo.MutationFunction<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>;
+
+/**
+ * __useCreateStandardCategoriesMutation__
+ *
+ * To run a mutation, you first call `useCreateStandardCategoriesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateStandardCategoriesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createStandardCategoriesMutation, { data, loading, error }] = useCreateStandardCategoriesMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useCreateStandardCategoriesMutation(baseOptions?: Apollo.MutationHookOptions<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>(CreateStandardCategoriesDocument, options);
+      }
+export type CreateStandardCategoriesMutationHookResult = ReturnType<typeof useCreateStandardCategoriesMutation>;
+export type CreateStandardCategoriesMutationResult = Apollo.MutationResult<CreateStandardCategoriesMutation>;
+export type CreateStandardCategoriesMutationOptions = Apollo.BaseMutationOptions<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>;
+export const DeleteMtoCategoryDocument = gql`
+    mutation DeleteMTOCategory($id: UUID!) {
+  deleteMTOCategory(id: $id)
+}
+    `;
+export type DeleteMtoCategoryMutationFn = Apollo.MutationFunction<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
+
+/**
+ * __useDeleteMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMtoCategoryMutation, { data, loading, error }] = useDeleteMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>(DeleteMtoCategoryDocument, options);
+      }
+export type DeleteMtoCategoryMutationHookResult = ReturnType<typeof useDeleteMtoCategoryMutation>;
+export type DeleteMtoCategoryMutationResult = Apollo.MutationResult<DeleteMtoCategoryMutation>;
+export type DeleteMtoCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
+export const DeleteMtoMilestoneDocument = gql`
+    mutation DeleteMTOMilestone($id: UUID!) {
+  deleteMTOMilestone(id: $id)
+}
+    `;
+export type DeleteMtoMilestoneMutationFn = Apollo.MutationFunction<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
+
+/**
+ * __useDeleteMtoMilestoneMutation__
+ *
+ * To run a mutation, you first call `useDeleteMtoMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMtoMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMtoMilestoneMutation, { data, loading, error }] = useDeleteMtoMilestoneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMtoMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>(DeleteMtoMilestoneDocument, options);
+      }
+export type DeleteMtoMilestoneMutationHookResult = ReturnType<typeof useDeleteMtoMilestoneMutation>;
+export type DeleteMtoMilestoneMutationResult = Apollo.MutationResult<DeleteMtoMilestoneMutation>;
+export type DeleteMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
+export const DeleteMtoSolutionDocument = gql`
+    mutation DeleteMTOSolution($id: UUID!) {
+  deleteMTOSolution(id: $id)
+}
+    `;
+export type DeleteMtoSolutionMutationFn = Apollo.MutationFunction<DeleteMtoSolutionMutation, DeleteMtoSolutionMutationVariables>;
+
+/**
+ * __useDeleteMtoSolutionMutation__
+ *
+ * To run a mutation, you first call `useDeleteMtoSolutionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMtoSolutionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMtoSolutionMutation, { data, loading, error }] = useDeleteMtoSolutionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMtoSolutionMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMtoSolutionMutation, DeleteMtoSolutionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMtoSolutionMutation, DeleteMtoSolutionMutationVariables>(DeleteMtoSolutionDocument, options);
+      }
+export type DeleteMtoSolutionMutationHookResult = ReturnType<typeof useDeleteMtoSolutionMutation>;
+export type DeleteMtoSolutionMutationResult = Apollo.MutationResult<DeleteMtoSolutionMutation>;
+export type DeleteMtoSolutionMutationOptions = Apollo.BaseMutationOptions<DeleteMtoSolutionMutation, DeleteMtoSolutionMutationVariables>;
+export const GetCustomMtoSolutionsDocument = gql`
+    query GetCustomMTOSolutions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      info {
+        id
+      }
+      solutions {
+        id
+        name
+        addedFromSolutionLibrary
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCustomMtoSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetCustomMtoSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomMtoSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomMtoSolutionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCustomMtoSolutionsQuery(baseOptions: Apollo.QueryHookOptions<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables> & ({ variables: GetCustomMtoSolutionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>(GetCustomMtoSolutionsDocument, options);
+      }
+export function useGetCustomMtoSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>(GetCustomMtoSolutionsDocument, options);
+        }
+export function useGetCustomMtoSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>(GetCustomMtoSolutionsDocument, options);
+        }
+export type GetCustomMtoSolutionsQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsQuery>;
+export type GetCustomMtoSolutionsLazyQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsLazyQuery>;
+export type GetCustomMtoSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetCustomMtoSolutionsSuspenseQuery>;
+export type GetCustomMtoSolutionsQueryResult = Apollo.QueryResult<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
+export const GetGlobalMtoCommonSolutionsDocument = gql`
+    query GetGlobalMTOCommonSolutions {
+  mtoCommonSolutions {
+    name
+    key
+  }
+}
+    `;
+
+/**
+ * __useGetGlobalMtoCommonSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetGlobalMtoCommonSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGlobalMtoCommonSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGlobalMtoCommonSolutionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGlobalMtoCommonSolutionsQuery(baseOptions?: Apollo.QueryHookOptions<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>(GetGlobalMtoCommonSolutionsDocument, options);
+      }
+export function useGetGlobalMtoCommonSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>(GetGlobalMtoCommonSolutionsDocument, options);
+        }
+export function useGetGlobalMtoCommonSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>(GetGlobalMtoCommonSolutionsDocument, options);
+        }
+export type GetGlobalMtoCommonSolutionsQueryHookResult = ReturnType<typeof useGetGlobalMtoCommonSolutionsQuery>;
+export type GetGlobalMtoCommonSolutionsLazyQueryHookResult = ReturnType<typeof useGetGlobalMtoCommonSolutionsLazyQuery>;
+export type GetGlobalMtoCommonSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetGlobalMtoCommonSolutionsSuspenseQuery>;
+export type GetGlobalMtoCommonSolutionsQueryResult = Apollo.QueryResult<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>;
+export const GetMtoAllMilestonesDocument = gql`
+    query GetMTOAllMilestones($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      info {
+        id
+      }
+      commonMilestones {
+        key
+        name
+        commonSolutions {
+          key
+        }
+      }
+      milestones {
+        id
+        key
+        name
+        status
+        riskIndicator
+        solutions {
+          key
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoAllMilestonesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoAllMilestonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoAllMilestonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoAllMilestonesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoAllMilestonesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables> & ({ variables: GetMtoAllMilestonesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>(GetMtoAllMilestonesDocument, options);
+      }
+export function useGetMtoAllMilestonesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>(GetMtoAllMilestonesDocument, options);
+        }
+export function useGetMtoAllMilestonesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>(GetMtoAllMilestonesDocument, options);
+        }
+export type GetMtoAllMilestonesQueryHookResult = ReturnType<typeof useGetMtoAllMilestonesQuery>;
+export type GetMtoAllMilestonesLazyQueryHookResult = ReturnType<typeof useGetMtoAllMilestonesLazyQuery>;
+export type GetMtoAllMilestonesSuspenseQueryHookResult = ReturnType<typeof useGetMtoAllMilestonesSuspenseQuery>;
+export type GetMtoAllMilestonesQueryResult = Apollo.QueryResult<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>;
+export const GetMtoAllSolutionsDocument = gql`
+    query GetMTOAllSolutions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      info {
+        id
+      }
+      commonSolutions {
+        key
+        name
+      }
+      solutions {
+        id
+        key
+        name
+        status
+        riskIndicator
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoAllSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetMtoAllSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoAllSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoAllSolutionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoAllSolutionsQuery(baseOptions: Apollo.QueryHookOptions<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables> & ({ variables: GetMtoAllSolutionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>(GetMtoAllSolutionsDocument, options);
+      }
+export function useGetMtoAllSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>(GetMtoAllSolutionsDocument, options);
+        }
+export function useGetMtoAllSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>(GetMtoAllSolutionsDocument, options);
+        }
+export type GetMtoAllSolutionsQueryHookResult = ReturnType<typeof useGetMtoAllSolutionsQuery>;
+export type GetMtoAllSolutionsLazyQueryHookResult = ReturnType<typeof useGetMtoAllSolutionsLazyQuery>;
+export type GetMtoAllSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetMtoAllSolutionsSuspenseQuery>;
+export type GetMtoAllSolutionsQueryResult = Apollo.QueryResult<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>;
+export const GetMtoCategoriesDocument = gql`
+    query GetMTOCategories($id: UUID!) {
+  modelPlan(id: $id) {
+    mtoMatrix {
+      info {
+        id
+      }
+      categories {
+        id
+        name
+        subCategories {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoCategoriesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoCategoriesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables> & ({ variables: GetMtoCategoriesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+      }
+export function useGetMtoCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+        }
+export function useGetMtoCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>(GetMtoCategoriesDocument, options);
+        }
+export type GetMtoCategoriesQueryHookResult = ReturnType<typeof useGetMtoCategoriesQuery>;
+export type GetMtoCategoriesLazyQueryHookResult = ReturnType<typeof useGetMtoCategoriesLazyQuery>;
+export type GetMtoCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetMtoCategoriesSuspenseQuery>;
+export type GetMtoCategoriesQueryResult = Apollo.QueryResult<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
+export const GetMtoMilestonesDocument = gql`
+    query GetMTOMilestones($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      info {
+        id
+      }
+      commonMilestones {
+        name
+        key
+        isAdded
+        isSuggested
+        categoryName
+        subCategoryName
+        facilitatedByRole
+        commonSolutions {
+          key
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoMilestonesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoMilestonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoMilestonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoMilestonesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoMilestonesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables> & ({ variables: GetMtoMilestonesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>(GetMtoMilestonesDocument, options);
+      }
+export function useGetMtoMilestonesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>(GetMtoMilestonesDocument, options);
+        }
+export function useGetMtoMilestonesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>(GetMtoMilestonesDocument, options);
+        }
+export type GetMtoMilestonesQueryHookResult = ReturnType<typeof useGetMtoMilestonesQuery>;
+export type GetMtoMilestonesLazyQueryHookResult = ReturnType<typeof useGetMtoMilestonesLazyQuery>;
+export type GetMtoMilestonesSuspenseQueryHookResult = ReturnType<typeof useGetMtoMilestonesSuspenseQuery>;
+export type GetMtoMilestonesQueryResult = Apollo.QueryResult<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>;
+export const GetMtoCommonSolutionsDocument = gql`
+    query GetMTOCommonSolutions($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      info {
+        id
+      }
+      commonSolutions {
+        name
+        key
+        type
+        subjects
+        isAdded
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoCommonSolutionsQuery__
+ *
+ * To run a query within a React component, call `useGetMtoCommonSolutionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoCommonSolutionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoCommonSolutionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoCommonSolutionsQuery(baseOptions: Apollo.QueryHookOptions<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables> & ({ variables: GetMtoCommonSolutionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>(GetMtoCommonSolutionsDocument, options);
+      }
+export function useGetMtoCommonSolutionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>(GetMtoCommonSolutionsDocument, options);
+        }
+export function useGetMtoCommonSolutionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>(GetMtoCommonSolutionsDocument, options);
+        }
+export type GetMtoCommonSolutionsQueryHookResult = ReturnType<typeof useGetMtoCommonSolutionsQuery>;
+export type GetMtoCommonSolutionsLazyQueryHookResult = ReturnType<typeof useGetMtoCommonSolutionsLazyQuery>;
+export type GetMtoCommonSolutionsSuspenseQueryHookResult = ReturnType<typeof useGetMtoCommonSolutionsSuspenseQuery>;
+export type GetMtoCommonSolutionsQueryResult = Apollo.QueryResult<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>;
+export const GetModelToOperationsMatrixDocument = gql`
+    query GetModelToOperationsMatrix($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      info {
+        id
+      }
+      status
+      categories {
+        id
+        name
+        isUncategorized
+        subCategories {
+          id
+          name
+          isUncategorized
+          milestones {
+            id
+            name
+            key
+            facilitatedBy
+            facilitatedByOther
+            needBy
+            status
+            riskIndicator
+            addedFromMilestoneLibrary
+            isDraft
+            solutions {
+              id
+              name
+              key
+            }
+          }
+        }
+      }
+      milestones {
+        id
+        key
+        name
+      }
+      commonMilestones {
+        isSuggested
+        isAdded
+      }
+      recentEdit {
+        id
+        date
+        actorName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelToOperationsMatrixQuery__
+ *
+ * To run a query within a React component, call `useGetModelToOperationsMatrixQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelToOperationsMatrixQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelToOperationsMatrixQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetModelToOperationsMatrixQuery(baseOptions: Apollo.QueryHookOptions<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables> & ({ variables: GetModelToOperationsMatrixQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>(GetModelToOperationsMatrixDocument, options);
+      }
+export function useGetModelToOperationsMatrixLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>(GetModelToOperationsMatrixDocument, options);
+        }
+export function useGetModelToOperationsMatrixSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>(GetModelToOperationsMatrixDocument, options);
+        }
+export type GetModelToOperationsMatrixQueryHookResult = ReturnType<typeof useGetModelToOperationsMatrixQuery>;
+export type GetModelToOperationsMatrixLazyQueryHookResult = ReturnType<typeof useGetModelToOperationsMatrixLazyQuery>;
+export type GetModelToOperationsMatrixSuspenseQueryHookResult = ReturnType<typeof useGetModelToOperationsMatrixSuspenseQuery>;
+export type GetModelToOperationsMatrixQueryResult = Apollo.QueryResult<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>;
+export const GetMtoMilestoneDocument = gql`
+    query GetMTOMilestone($id: UUID!) {
+  mtoMilestone(id: $id) {
+    id
+    name
+    key
+    facilitatedBy
+    facilitatedByOther
+    needBy
+    status
+    riskIndicator
+    addedFromMilestoneLibrary
+    isDraft
+    commonMilestone {
+      key
+      commonSolutions {
+        key
+      }
+    }
+    categories {
+      category {
+        id
+        name
+      }
+      subCategory {
+        id
+        name
+      }
+    }
+    solutions {
+      id
+      name
+      key
+      status
+      riskIndicator
+      commonSolution {
+        name
+        key
+        isAdded
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoMilestoneQuery__
+ *
+ * To run a query within a React component, call `useGetMtoMilestoneQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoMilestoneQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoMilestoneQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoMilestoneQuery(baseOptions: Apollo.QueryHookOptions<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables> & ({ variables: GetMtoMilestoneQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>(GetMtoMilestoneDocument, options);
+      }
+export function useGetMtoMilestoneLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>(GetMtoMilestoneDocument, options);
+        }
+export function useGetMtoMilestoneSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>(GetMtoMilestoneDocument, options);
+        }
+export type GetMtoMilestoneQueryHookResult = ReturnType<typeof useGetMtoMilestoneQuery>;
+export type GetMtoMilestoneLazyQueryHookResult = ReturnType<typeof useGetMtoMilestoneLazyQuery>;
+export type GetMtoMilestoneSuspenseQueryHookResult = ReturnType<typeof useGetMtoMilestoneSuspenseQuery>;
+export type GetMtoMilestoneQueryResult = Apollo.QueryResult<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>;
+export const GetMtoSolutionDocument = gql`
+    query GetMTOSolution($id: UUID!) {
+  mtoSolution(id: $id) {
+    id
+    name
+    key
+    facilitatedBy
+    facilitatedByOther
+    neededBy
+    status
+    riskIndicator
+    addedFromSolutionLibrary
+    pocName
+    pocEmail
+    type
+    milestones {
+      id
+      name
+      key
+      status
+      riskIndicator
+      commonMilestone {
+        name
+        key
+        isAdded
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoSolutionQuery__
+ *
+ * To run a query within a React component, call `useGetMtoSolutionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoSolutionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoSolutionQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoSolutionQuery(baseOptions: Apollo.QueryHookOptions<GetMtoSolutionQuery, GetMtoSolutionQueryVariables> & ({ variables: GetMtoSolutionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>(GetMtoSolutionDocument, options);
+      }
+export function useGetMtoSolutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>(GetMtoSolutionDocument, options);
+        }
+export function useGetMtoSolutionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>(GetMtoSolutionDocument, options);
+        }
+export type GetMtoSolutionQueryHookResult = ReturnType<typeof useGetMtoSolutionQuery>;
+export type GetMtoSolutionLazyQueryHookResult = ReturnType<typeof useGetMtoSolutionLazyQuery>;
+export type GetMtoSolutionSuspenseQueryHookResult = ReturnType<typeof useGetMtoSolutionSuspenseQuery>;
+export type GetMtoSolutionQueryResult = Apollo.QueryResult<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>;
+export const GetMtoSolutionsAndMilestonesDocument = gql`
+    query GetMTOSolutionsAndMilestones($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    mtoMatrix {
+      status
+      recentEdit {
+        id
+        date
+      }
+      info {
+        id
+      }
+      solutions {
+        id
+        type
+        key
+        name
+        facilitatedBy
+        facilitatedByOther
+        neededBy
+        status
+        riskIndicator
+        addedFromSolutionLibrary
+        milestones {
+          id
+          name
+        }
+      }
+      milestonesWithNoLinkedSolutions {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMtoSolutionsAndMilestonesQuery__
+ *
+ * To run a query within a React component, call `useGetMtoSolutionsAndMilestonesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMtoSolutionsAndMilestonesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMtoSolutionsAndMilestonesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetMtoSolutionsAndMilestonesQuery(baseOptions: Apollo.QueryHookOptions<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables> & ({ variables: GetMtoSolutionsAndMilestonesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>(GetMtoSolutionsAndMilestonesDocument, options);
+      }
+export function useGetMtoSolutionsAndMilestonesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>(GetMtoSolutionsAndMilestonesDocument, options);
+        }
+export function useGetMtoSolutionsAndMilestonesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>(GetMtoSolutionsAndMilestonesDocument, options);
+        }
+export type GetMtoSolutionsAndMilestonesQueryHookResult = ReturnType<typeof useGetMtoSolutionsAndMilestonesQuery>;
+export type GetMtoSolutionsAndMilestonesLazyQueryHookResult = ReturnType<typeof useGetMtoSolutionsAndMilestonesLazyQuery>;
+export type GetMtoSolutionsAndMilestonesSuspenseQueryHookResult = ReturnType<typeof useGetMtoSolutionsAndMilestonesSuspenseQuery>;
+export type GetMtoSolutionsAndMilestonesQueryResult = Apollo.QueryResult<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>;
+export const GetMilestoneSuggestedAnswerDocument = gql`
+    query GetMilestoneSuggestedAnswer($id: UUID!, $generalCharacteristics: Boolean!, $participantsAndProviders: Boolean!, $beneficiaries: Boolean!, $opsEvalAndLearning: Boolean!, $payments: Boolean!, $managePartCDEnrollment: Boolean!, $collectPlanBids: Boolean!, $planContractUpdated: Boolean!, $agreementTypes: Boolean!, $recruitmentMethod: Boolean!, $selectionMethod: Boolean!, $communicationMethod: Boolean!, $providerOverlap: Boolean!, $participantsIds: Boolean!, $beneficiaryOverlap: Boolean!, $helpdeskUse: Boolean!, $iddocSupport: Boolean!, $benchmarkForPerformance: Boolean!, $appealPerformance: Boolean!, $appealFeedback: Boolean!, $appealPayments: Boolean!, $appealOther: Boolean!, $evaluationApproaches: Boolean!, $dataNeededForMonitoring: Boolean!, $dataToSendParticicipants: Boolean!, $modelLearningSystems: Boolean!, $developNewQualityMeasures: Boolean!, $payType: Boolean!, $shouldAnyProvidersExcludedFFSSystems: Boolean!, $nonClaimsPayments: Boolean!, $willRecoverPayments: Boolean!) {
+  modelPlan(id: $id) {
+    id
+    generalCharacteristics @include(if: $generalCharacteristics) {
+      managePartCDEnrollment @include(if: $managePartCDEnrollment)
+      collectPlanBids @include(if: $collectPlanBids)
+      planContractUpdated @include(if: $planContractUpdated)
+      agreementTypes @include(if: $agreementTypes)
+    }
+    participantsAndProviders @include(if: $participantsAndProviders) {
+      recruitmentMethod @include(if: $recruitmentMethod)
+      selectionMethod @include(if: $selectionMethod)
+      communicationMethod @include(if: $communicationMethod)
+      providerOverlap @include(if: $providerOverlap)
+      participantsIds @include(if: $participantsIds)
+    }
+    beneficiaries @include(if: $beneficiaries) {
+      beneficiaryOverlap @include(if: $beneficiaryOverlap)
+    }
+    opsEvalAndLearning @include(if: $opsEvalAndLearning) {
+      helpdeskUse @include(if: $helpdeskUse)
+      iddocSupport @include(if: $iddocSupport)
+      benchmarkForPerformance @include(if: $benchmarkForPerformance)
+      appealPerformance @include(if: $appealPerformance)
+      appealFeedback @include(if: $appealFeedback)
+      appealPayments @include(if: $appealPayments)
+      appealOther @include(if: $appealOther)
+      evaluationApproaches @include(if: $evaluationApproaches)
+      dataNeededForMonitoring @include(if: $dataNeededForMonitoring)
+      dataToSendParticicipants @include(if: $dataToSendParticicipants)
+      modelLearningSystems @include(if: $modelLearningSystems)
+      developNewQualityMeasures @include(if: $developNewQualityMeasures)
+    }
+    payments @include(if: $payments) {
+      payType @include(if: $payType)
+      shouldAnyProvidersExcludedFFSSystems @include(if: $shouldAnyProvidersExcludedFFSSystems)
+      nonClaimsPayments @include(if: $nonClaimsPayments)
+      willRecoverPayments @include(if: $willRecoverPayments)
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMilestoneSuggestedAnswerQuery__
+ *
+ * To run a query within a React component, call `useGetMilestoneSuggestedAnswerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMilestoneSuggestedAnswerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMilestoneSuggestedAnswerQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      generalCharacteristics: // value for 'generalCharacteristics'
+ *      participantsAndProviders: // value for 'participantsAndProviders'
+ *      beneficiaries: // value for 'beneficiaries'
+ *      opsEvalAndLearning: // value for 'opsEvalAndLearning'
+ *      payments: // value for 'payments'
+ *      managePartCDEnrollment: // value for 'managePartCDEnrollment'
+ *      collectPlanBids: // value for 'collectPlanBids'
+ *      planContractUpdated: // value for 'planContractUpdated'
+ *      agreementTypes: // value for 'agreementTypes'
+ *      recruitmentMethod: // value for 'recruitmentMethod'
+ *      selectionMethod: // value for 'selectionMethod'
+ *      communicationMethod: // value for 'communicationMethod'
+ *      providerOverlap: // value for 'providerOverlap'
+ *      participantsIds: // value for 'participantsIds'
+ *      beneficiaryOverlap: // value for 'beneficiaryOverlap'
+ *      helpdeskUse: // value for 'helpdeskUse'
+ *      iddocSupport: // value for 'iddocSupport'
+ *      benchmarkForPerformance: // value for 'benchmarkForPerformance'
+ *      appealPerformance: // value for 'appealPerformance'
+ *      appealFeedback: // value for 'appealFeedback'
+ *      appealPayments: // value for 'appealPayments'
+ *      appealOther: // value for 'appealOther'
+ *      evaluationApproaches: // value for 'evaluationApproaches'
+ *      dataNeededForMonitoring: // value for 'dataNeededForMonitoring'
+ *      dataToSendParticicipants: // value for 'dataToSendParticicipants'
+ *      modelLearningSystems: // value for 'modelLearningSystems'
+ *      developNewQualityMeasures: // value for 'developNewQualityMeasures'
+ *      payType: // value for 'payType'
+ *      shouldAnyProvidersExcludedFFSSystems: // value for 'shouldAnyProvidersExcludedFFSSystems'
+ *      nonClaimsPayments: // value for 'nonClaimsPayments'
+ *      willRecoverPayments: // value for 'willRecoverPayments'
+ *   },
+ * });
+ */
+export function useGetMilestoneSuggestedAnswerQuery(baseOptions: Apollo.QueryHookOptions<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables> & ({ variables: GetMilestoneSuggestedAnswerQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>(GetMilestoneSuggestedAnswerDocument, options);
+      }
+export function useGetMilestoneSuggestedAnswerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>(GetMilestoneSuggestedAnswerDocument, options);
+        }
+export function useGetMilestoneSuggestedAnswerSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>(GetMilestoneSuggestedAnswerDocument, options);
+        }
+export type GetMilestoneSuggestedAnswerQueryHookResult = ReturnType<typeof useGetMilestoneSuggestedAnswerQuery>;
+export type GetMilestoneSuggestedAnswerLazyQueryHookResult = ReturnType<typeof useGetMilestoneSuggestedAnswerLazyQuery>;
+export type GetMilestoneSuggestedAnswerSuspenseQueryHookResult = ReturnType<typeof useGetMilestoneSuggestedAnswerSuspenseQuery>;
+export type GetMilestoneSuggestedAnswerQueryResult = Apollo.QueryResult<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>;
+export const GetModelsByMtoSolutionDocument = gql`
+    query GetModelsByMTOSolution($solutionKey: MTOCommonSolutionKey!) {
+  modelPlansByMTOSolutionKey(solutionKey: $solutionKey) {
+    modelPlanID
+    modelPlan {
+      id
+      modelName
+      abbreviation
+      status
+      modelBySolutionStatus
+      basics {
+        id
+        modelCategory
+        performancePeriodStarts
+        performancePeriodEnds
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetModelsByMtoSolutionQuery__
+ *
+ * To run a query within a React component, call `useGetModelsByMtoSolutionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetModelsByMtoSolutionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetModelsByMtoSolutionQuery({
+ *   variables: {
+ *      solutionKey: // value for 'solutionKey'
+ *   },
+ * });
+ */
+export function useGetModelsByMtoSolutionQuery(baseOptions: Apollo.QueryHookOptions<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables> & ({ variables: GetModelsByMtoSolutionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>(GetModelsByMtoSolutionDocument, options);
+      }
+export function useGetModelsByMtoSolutionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>(GetModelsByMtoSolutionDocument, options);
+        }
+export function useGetModelsByMtoSolutionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>(GetModelsByMtoSolutionDocument, options);
+        }
+export type GetModelsByMtoSolutionQueryHookResult = ReturnType<typeof useGetModelsByMtoSolutionQuery>;
+export type GetModelsByMtoSolutionLazyQueryHookResult = ReturnType<typeof useGetModelsByMtoSolutionLazyQuery>;
+export type GetModelsByMtoSolutionSuspenseQueryHookResult = ReturnType<typeof useGetModelsByMtoSolutionSuspenseQuery>;
+export type GetModelsByMtoSolutionQueryResult = Apollo.QueryResult<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>;
+export const RenameMtoCategoryDocument = gql`
+    mutation RenameMTOCategory($id: UUID!, $name: String!) {
+  renameMTOCategory(id: $id, name: $name) {
+    id
+    name
+    isUncategorized
+  }
+}
+    `;
+export type RenameMtoCategoryMutationFn = Apollo.MutationFunction<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
+
+/**
+ * __useRenameMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useRenameMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRenameMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [renameMtoCategoryMutation, { data, loading, error }] = useRenameMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useRenameMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>(RenameMtoCategoryDocument, options);
+      }
+export type RenameMtoCategoryMutationHookResult = ReturnType<typeof useRenameMtoCategoryMutation>;
+export type RenameMtoCategoryMutationResult = Apollo.MutationResult<RenameMtoCategoryMutation>;
+export type RenameMtoCategoryMutationOptions = Apollo.BaseMutationOptions<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
+export const ReorderMtoCategoryDocument = gql`
+    mutation ReorderMTOCategory($id: UUID!, $newOrder: Int!, $parentID: UUID) {
+  reorderMTOCategory(id: $id, newOrder: $newOrder, parentID: $parentID) {
+    id
+  }
+}
+    `;
+export type ReorderMtoCategoryMutationFn = Apollo.MutationFunction<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
+
+/**
+ * __useReorderMtoCategoryMutation__
+ *
+ * To run a mutation, you first call `useReorderMtoCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReorderMtoCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reorderMtoCategoryMutation, { data, loading, error }] = useReorderMtoCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      newOrder: // value for 'newOrder'
+ *      parentID: // value for 'parentID'
+ *   },
+ * });
+ */
+export function useReorderMtoCategoryMutation(baseOptions?: Apollo.MutationHookOptions<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>(ReorderMtoCategoryDocument, options);
+      }
+export type ReorderMtoCategoryMutationHookResult = ReturnType<typeof useReorderMtoCategoryMutation>;
+export type ReorderMtoCategoryMutationResult = Apollo.MutationResult<ReorderMtoCategoryMutation>;
+export type ReorderMtoCategoryMutationOptions = Apollo.BaseMutationOptions<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
+export const UpdateMtoMilestoneDocument = gql`
+    mutation UpdateMTOMilestone($id: UUID!, $changes: MTOMilestoneChanges!, $solutionLinks: MTOSolutionLinks) {
+  updateMTOMilestone(id: $id, changes: $changes, solutionLinks: $solutionLinks) {
+    id
+  }
+}
+    `;
+export type UpdateMtoMilestoneMutationFn = Apollo.MutationFunction<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+
+/**
+ * __useUpdateMtoMilestoneMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoMilestoneMutation, { data, loading, error }] = useUpdateMtoMilestoneMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *      solutionLinks: // value for 'solutionLinks'
+ *   },
+ * });
+ */
+export function useUpdateMtoMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>(UpdateMtoMilestoneDocument, options);
+      }
+export type UpdateMtoMilestoneMutationHookResult = ReturnType<typeof useUpdateMtoMilestoneMutation>;
+export type UpdateMtoMilestoneMutationResult = Apollo.MutationResult<UpdateMtoMilestoneMutation>;
+export type UpdateMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+export const UpdateMtoMilestoneLinkedSolutionsDocument = gql`
+    mutation UpdateMTOMilestoneLinkedSolutions($id: UUID!, $solutionLinks: MTOSolutionLinks!) {
+  mtoMilestoneUpdateLinkedSolutions(id: $id, solutionLinks: $solutionLinks) {
+    id
+  }
+}
+    `;
+export type UpdateMtoMilestoneLinkedSolutionsMutationFn = Apollo.MutationFunction<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+
+/**
+ * __useUpdateMtoMilestoneLinkedSolutionsMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoMilestoneLinkedSolutionsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoMilestoneLinkedSolutionsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoMilestoneLinkedSolutionsMutation, { data, loading, error }] = useUpdateMtoMilestoneLinkedSolutionsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      solutionLinks: // value for 'solutionLinks'
+ *   },
+ * });
+ */
+export function useUpdateMtoMilestoneLinkedSolutionsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>(UpdateMtoMilestoneLinkedSolutionsDocument, options);
+      }
+export type UpdateMtoMilestoneLinkedSolutionsMutationHookResult = ReturnType<typeof useUpdateMtoMilestoneLinkedSolutionsMutation>;
+export type UpdateMtoMilestoneLinkedSolutionsMutationResult = Apollo.MutationResult<UpdateMtoMilestoneLinkedSolutionsMutation>;
+export type UpdateMtoMilestoneLinkedSolutionsMutationOptions = Apollo.BaseMutationOptions<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+export const UpdateMtoReadyForReviewDocument = gql`
+    mutation UpdateMTOReadyForReview($modelPlanID: UUID!, $readyForReview: Boolean!) {
+  markMTOReadyForReview(
+    modelPlanID: $modelPlanID
+    readyForReview: $readyForReview
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateMtoReadyForReviewMutationFn = Apollo.MutationFunction<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
+
+/**
+ * __useUpdateMtoReadyForReviewMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoReadyForReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoReadyForReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoReadyForReviewMutation, { data, loading, error }] = useUpdateMtoReadyForReviewMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      readyForReview: // value for 'readyForReview'
+ *   },
+ * });
+ */
+export function useUpdateMtoReadyForReviewMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>(UpdateMtoReadyForReviewDocument, options);
+      }
+export type UpdateMtoReadyForReviewMutationHookResult = ReturnType<typeof useUpdateMtoReadyForReviewMutation>;
+export type UpdateMtoReadyForReviewMutationResult = Apollo.MutationResult<UpdateMtoReadyForReviewMutation>;
+export type UpdateMtoReadyForReviewMutationOptions = Apollo.BaseMutationOptions<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
+export const UpdateMtoSolutionDocument = gql`
+    mutation UpdateMTOSolution($id: UUID!, $changes: MTOSolutionChanges!, $milestoneLinks: MTOMilestoneLinks) {
+  updateMTOSolution(id: $id, changes: $changes, milestoneLinks: $milestoneLinks) {
+    id
+  }
+}
+    `;
+export type UpdateMtoSolutionMutationFn = Apollo.MutationFunction<UpdateMtoSolutionMutation, UpdateMtoSolutionMutationVariables>;
+
+/**
+ * __useUpdateMtoSolutionMutation__
+ *
+ * To run a mutation, you first call `useUpdateMtoSolutionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMtoSolutionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMtoSolutionMutation, { data, loading, error }] = useUpdateMtoSolutionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *      milestoneLinks: // value for 'milestoneLinks'
+ *   },
+ * });
+ */
+export function useUpdateMtoSolutionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMtoSolutionMutation, UpdateMtoSolutionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMtoSolutionMutation, UpdateMtoSolutionMutationVariables>(UpdateMtoSolutionDocument, options);
+      }
+export type UpdateMtoSolutionMutationHookResult = ReturnType<typeof useUpdateMtoSolutionMutation>;
+export type UpdateMtoSolutionMutationResult = Apollo.MutationResult<UpdateMtoSolutionMutation>;
+export type UpdateMtoSolutionMutationOptions = Apollo.BaseMutationOptions<UpdateMtoSolutionMutation, UpdateMtoSolutionMutationVariables>;
 export const UpdateNdaDocument = gql`
     mutation UpdateNDA {
   agreeToNDA(agree: true) {
@@ -11052,10 +12253,6 @@ export const GetCcwAndQualityDocument = gql`
       qualityPerformanceImpactsPaymentOther
       qualityPerformanceImpactsPaymentNote
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -11181,10 +12378,6 @@ export const GetEvaluationDocument = gql`
       dataToSendParticicipantsNote
       shareCclfData
       shareCclfDataNote
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -11407,10 +12600,6 @@ export const GetLearningDocument = gql`
       readyForReviewDts
       status
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -11467,10 +12656,6 @@ export const GetOpsEvalAndLearningDocument = gql`
       contractorSupportNote
       iddocSupport
       iddocSupportNote
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -11532,10 +12717,6 @@ export const GetPerformanceDocument = gql`
       appealPayments
       appealOther
       appealNote
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -11742,10 +12923,6 @@ export const GetCommunicationDocument = gql`
       willRiskChange
       willRiskChangeNote
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -11804,10 +12981,6 @@ export const GetCoordinationDocument = gql`
       participantsIdsOther
       participantsIDSNote
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -11860,10 +13033,6 @@ export const GetParticipantOptionsDocument = gql`
       selectionMethod
       selectionOther
       selectionNote
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -11984,10 +13153,6 @@ export const GetProviderOptionsDocument = gql`
       }
       readyForReviewDts
       status
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -12306,10 +13471,6 @@ export const GetClaimsBasedPaymentDocument = gql`
       affectsMedicareSecondaryPayerClaimsNote
       payModelDifferentiation
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -12430,10 +13591,6 @@ export const GetFundingDocument = gql`
       payTypeNote
       payClaims
     }
-    operationalNeeds {
-      id
-      modifiedDts
-    }
   }
 }
     `;
@@ -12489,10 +13646,6 @@ export const GetNonClaimsBasedPaymentDocument = gql`
       sharedSystemsInvolvedAdditionalClaimPaymentNote
       planningToUseInnovationPaymentContractor
       planningToUseInnovationPaymentContractorNote
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -12559,10 +13712,6 @@ export const GetRecoverDocument = gql`
       }
       readyForReviewDts
       status
-    }
-    operationalNeeds {
-      id
-      modifiedDts
     }
   }
 }
@@ -13136,10 +14285,11 @@ export type GetModelSummaryLazyQueryHookResult = ReturnType<typeof useGetModelSu
 export type GetModelSummarySuspenseQueryHookResult = ReturnType<typeof useGetModelSummarySuspenseQuery>;
 export type GetModelSummaryQueryResult = Apollo.QueryResult<GetModelSummaryQuery, GetModelSummaryQueryVariables>;
 export const CreateShareModelPlanDocument = gql`
-    mutation CreateShareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $usernames: [String!]!, $optionalMessage: String) {
+    mutation CreateShareModelPlan($modelPlanID: UUID!, $viewFilter: ModelViewFilter, $modelShareSection: ModelShareSection, $usernames: [String!]!, $optionalMessage: String) {
   shareModelPlan(
     modelPlanID: $modelPlanID
     viewFilter: $viewFilter
+    modelShareSection: $modelShareSection
     usernames: $usernames
     optionalMessage: $optionalMessage
   )
@@ -13162,6 +14312,7 @@ export type CreateShareModelPlanMutationFn = Apollo.MutationFunction<CreateShare
  *   variables: {
  *      modelPlanID: // value for 'modelPlanID'
  *      viewFilter: // value for 'viewFilter'
+ *      modelShareSection: // value for 'modelShareSection'
  *      usernames: // value for 'usernames'
  *      optionalMessage: // value for 'optionalMessage'
  *   },
@@ -13231,10 +14382,10 @@ export const TypedUpdateBasicsDocument = {"kind":"Document","definitions":[{"kin
 export const TypedUpdateModelPlanAndBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlanAndBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"basicsId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"basicsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBasicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanBasics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"basicsId"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"basicsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanAndBasicsMutation, UpdateModelPlanAndBasicsMutationVariables>;
 export const TypedGetAllBeneficiariesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllBeneficiaries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"diseaseSpecificGroup"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesNote"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferent"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentHow"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentNote"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsCriteria"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllBeneficiariesQuery, GetAllBeneficiariesQueryVariables>;
 export const TypedGetBeneficiaryIdentificationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBeneficiaryIdentification"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"diseaseSpecificGroup"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesNote"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferent"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentHow"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentNote"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsCriteria"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetBeneficiaryIdentificationQuery, GetBeneficiaryIdentificationQueryVariables>;
-export const TypedGetFrequencyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFrequency"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetFrequencyQuery, GetFrequencyQueryVariables>;
+export const TypedGetFrequencyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFrequency"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetFrequencyQuery, GetFrequencyQueryVariables>;
 export const TypedGetPeopleImpactedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPeopleImpacted"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}}]}}]}}]}}]} as unknown as DocumentNode<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>;
 export const TypedUpdateModelPlanBeneficiariesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlanBeneficiaries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBeneficiariesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBeneficiaries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
-export const TypedGetChangeHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetChangeHistory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translatedAuditCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}},{"kind":"Field","name":{"kind":"Name","value":"translatedFields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"dataType"}},{"kind":"Field","name":{"kind":"Name","value":"fieldName"}},{"kind":"Field","name":{"kind":"Name","value":"fieldNameTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"referenceLabel"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"notApplicableQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"old"}},{"kind":"Field","name":{"kind":"Name","value":"oldTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"new"}},{"kind":"Field","name":{"kind":"Name","value":"newTranslated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaBaseStruct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaGeneric"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"relation"}},{"kind":"Field","name":{"kind":"Name","value":"relationContent"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDiscussionReply"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"discussionContent"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfReplies"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalNeed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolution"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustStart"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustFinish"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolutionSubtask"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"subtaskName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDocumentSolutionLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"documentName"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"documentOtherType"}},{"kind":"Field","name":{"kind":"Name","value":"documentVisibility"}},{"kind":"Field","name":{"kind":"Name","value":"documentNote"}},{"kind":"Field","name":{"kind":"Name","value":"documentURL"}},{"kind":"Field","name":{"kind":"Name","value":"documentID"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
+export const TypedGetChangeHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetChangeHistory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translatedAuditCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}},{"kind":"Field","name":{"kind":"Name","value":"translatedFields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"dataType"}},{"kind":"Field","name":{"kind":"Name","value":"fieldName"}},{"kind":"Field","name":{"kind":"Name","value":"fieldNameTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"referenceLabel"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"notApplicableQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"old"}},{"kind":"Field","name":{"kind":"Name","value":"oldTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"new"}},{"kind":"Field","name":{"kind":"Name","value":"newTranslated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaBaseStruct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaGeneric"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"relation"}},{"kind":"Field","name":{"kind":"Name","value":"relationContent"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDiscussionReply"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"discussionContent"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfReplies"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalNeed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolution"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustStart"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustFinish"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolutionSubtask"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"subtaskName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDocumentSolutionLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"documentName"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"documentOtherType"}},{"kind":"Field","name":{"kind":"Name","value":"documentVisibility"}},{"kind":"Field","name":{"kind":"Name","value":"documentNote"}},{"kind":"Field","name":{"kind":"Name","value":"documentURL"}},{"kind":"Field","name":{"kind":"Name","value":"documentID"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaMTOCategory"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSubCategory"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"version"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
 export const TypedCreateModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanCollaboratorCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
 export const TypedDeleteModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
 export const TypedGetIndividualModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIndividualModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planCollaboratorByID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]} as unknown as DocumentNode<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>;
@@ -13262,41 +14413,25 @@ export const TypedGetAllGeneralCharacteristicsDocument = {"kind":"Document","def
 export const TypedGetAuthorityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAuthority"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequired"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredDescription"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowances"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesOther"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesNote"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequired"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredTypes"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAuthorityQuery, GetAuthorityQueryVariables>;
 export const TypedGetGeneralCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGeneralCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewModel"}},{"kind":"Field","name":{"kind":"Name","value":"currentModelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"currentModelPlanID"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSelected"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPrecondition"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"currentModelPlanID"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSelected"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionNote"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracks"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksDiffer"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetGeneralCharacteristicsQuery, GetGeneralCharacteristicsQueryVariables>;
 export const TypedGetInvolvementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetInvolvements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetInvolvementsQuery, GetInvolvementsQueryVariables>;
-export const TypedGetKeyCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetKeyCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelp"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpOther"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpNote"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelTypes"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBidsNote"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdatedNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>;
-export const TypedGetTargetsAndOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTargetsAndOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
+export const TypedGetKeyCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetKeyCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelp"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpOther"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpNote"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelTypes"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBidsNote"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdatedNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetKeyCharacteristicsQuery, GetKeyCharacteristicsQueryVariables>;
+export const TypedGetTargetsAndOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTargetsAndOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
 export const TypedUpdateExistingModelLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateExistingModelLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fieldName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ExisitingModelLinkFieldType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"existingModelIDs"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"currentModelPlanIDs"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateExistingModelLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"fieldName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fieldName"}}},{"kind":"Argument","name":{"kind":"Name","value":"existingModelIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"existingModelIDs"}}},{"kind":"Argument","name":{"kind":"Name","value":"currentModelPlanIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"currentModelPlanIDs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"model"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ExistingModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"stage"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"keywords"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlan"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>;
 export const TypedUpdatePlanGeneralCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanGeneralCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
-export const TypedGetHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomepageSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userViewCustomization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"viewCustomization"}},{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"}}]}}]}}]} as unknown as DocumentNode<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
+export const TypedGetHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomepageSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userViewCustomization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"viewCustomization"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"}}]}}]}}]} as unknown as DocumentNode<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
 export const TypedUpdateHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomepageSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserViewCustomizationChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserViewCustomization"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
-export const TypedCreateDocumentSolutionLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDocumentSolutionLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"documentIDs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanDocumentSolutionLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"solutionID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}}},{"kind":"Argument","name":{"kind":"Name","value":"documentIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"documentIDs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
-export const TypedCreateOperationalSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOperationalSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"operationalNeedID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OperationalSolutionKey"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OperationalSolutionChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOperationalSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"operationalNeedID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"operationalNeedID"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
-export const TypedCreateOperationalSolutionSubtasksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOperationalSolutionSubtasks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inputs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateOperationalSolutionSubtaskInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOperationalSolutionSubtasks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"solutionID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}}},{"kind":"Argument","name":{"kind":"Name","value":"inputs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inputs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
-export const TypedDeleteDocumentSolutionLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteDocumentSolutionLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"documentIDs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removePlanDocumentSolutionLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"solutionID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}}},{"kind":"Argument","name":{"kind":"Name","value":"documentIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"documentIDs"}}}]}]}}]} as unknown as DocumentNode<DeleteDocumentSolutionLinkMutation, DeleteDocumentSolutionLinkMutationVariables>;
-export const TypedDeleteOperationalSolutionSubtaskDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteOperationalSolutionSubtask"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteOperationalSolutionSubtask"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteOperationalSolutionSubtaskMutation, DeleteOperationalSolutionSubtaskMutationVariables>;
-export const TypedGetModelsBySolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelsBySolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"operationalSolutionKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OperationalSolutionKey"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlansByOperationalSolutionKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"operationalSolutionKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"operationalSolutionKey"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modelBySolutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelsBySolutionQuery, GetModelsBySolutionQueryVariables>;
-export const TypedGetOperationalNeedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOperationalNeed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"includeNotNeeded"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"operationalNeed"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"includeNotNeeded"},"value":{"kind":"Variable","name":{"kind":"Name","value":"includeNotNeeded"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"pocName"}},{"kind":"Field","name":{"kind":"Name","value":"pocEmail"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}},{"kind":"Field","name":{"kind":"Name","value":"isCommonSolution"}},{"kind":"Field","name":{"kind":"Name","value":"otherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"mustStartDts"}},{"kind":"Field","name":{"kind":"Name","value":"mustFinishDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetOperationalNeedQuery, GetOperationalNeedQueryVariables>;
-export const TypedGetOperationalNeedAnswerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOperationalNeedAnswer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"generalCharacteristics"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProviders"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaries"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearning"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"managePartCDEnrollment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"collectPlanBids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"planContractUpdated"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"agreementTypes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recruitmentMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"selectionMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"communicationMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"providerOverlap"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsIds"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaryOverlap"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"helpdeskUse"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"iddocSupport"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"benchmarkForPerformance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealPerformance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealFeedback"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealOther"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"evaluationApproaches"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dataNeededForMonitoring"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dataToSendParticicipants"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelLearningSystems"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"developNewQualityMeasures"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"nonClaimsPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"willRecoverPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"generalCharacteristics"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"managePartCDEnrollment"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"collectPlanBids"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"planContractUpdated"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"agreementTypes"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProviders"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recruitmentMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"selectionMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"communicationMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"providerOverlap"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsIds"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaries"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaryOverlap"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearning"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"helpdeskUse"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"iddocSupport"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"benchmarkForPerformance"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealPerformance"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealFeedback"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealPayments"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealOther"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealOther"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"evaluationApproaches"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dataNeededForMonitoring"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dataToSendParticicipants"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelLearningSystems"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"developNewQualityMeasures"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payments"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"payType"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payType"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"nonClaimsPayments"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"willRecoverPayments"}}}]}]}]}}]}}]}}]} as unknown as DocumentNode<GetOperationalNeedAnswerQuery, GetOperationalNeedAnswerQueryVariables>;
-export const TypedGetOperationalNeedsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOperationalNeeds"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"opSolutionLastModifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"mustStartDts"}},{"kind":"Field","name":{"kind":"Name","value":"mustFinishDts"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"otherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"operationalSolutionSubtasks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pocEmail"}},{"kind":"Field","name":{"kind":"Name","value":"pocName"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetOperationalNeedsQuery, GetOperationalNeedsQueryVariables>;
-export const TypedGetOperationalSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOperationalSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"operationalSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"pocName"}},{"kind":"Field","name":{"kind":"Name","value":"pocEmail"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}},{"kind":"Field","name":{"kind":"Name","value":"isCommonSolution"}},{"kind":"Field","name":{"kind":"Name","value":"otherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"mustFinishDts"}},{"kind":"Field","name":{"kind":"Name","value":"mustStartDts"}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"restricted"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"optionalNotes"}},{"kind":"Field","name":{"kind":"Name","value":"otherType"}},{"kind":"Field","name":{"kind":"Name","value":"numLinkedSolutions"}},{"kind":"Field","name":{"kind":"Name","value":"isLink"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalSolutionSubtasks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetOperationalSolutionQuery, GetOperationalSolutionQueryVariables>;
-export const TypedGetOperationalSolutionSubtasksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOperationalSolutionSubtasks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"operationalSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"operationalSolutionSubtasks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"solutionID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetOperationalSolutionSubtasksQuery, GetOperationalSolutionSubtasksQueryVariables>;
-export const TypedGetPossibleOperationalSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPossibleOperationalSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<GetPossibleOperationalSolutionsQuery, GetPossibleOperationalSolutionsQueryVariables>;
-export const TypedUpdateCustomOperationalNeedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCustomOperationalNeed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customNeedType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"needed"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addOrUpdateCustomOperationalNeed"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"customNeedType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customNeedType"}}},{"kind":"Argument","name":{"kind":"Name","value":"needed"},"value":{"kind":"Variable","name":{"kind":"Name","value":"needed"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<UpdateCustomOperationalNeedMutation, UpdateCustomOperationalNeedMutationVariables>;
-export const TypedUpdateCustomOperationalNeedByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCustomOperationalNeedById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customNeedType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"needed"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCustomOperationalNeedByID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"customNeedType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customNeedType"}}},{"kind":"Argument","name":{"kind":"Name","value":"needed"},"value":{"kind":"Variable","name":{"kind":"Name","value":"needed"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<UpdateCustomOperationalNeedByIdMutation, UpdateCustomOperationalNeedByIdMutationVariables>;
-export const TypedUpdateOperationalSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateOperationalSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OperationalSolutionChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateOperationalSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<UpdateOperationalSolutionMutation, UpdateOperationalSolutionMutationVariables>;
-export const TypedUpdateOperationalSolutionSubtasksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateOperationalSolutionSubtasks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inputs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateOperationalSolutionSubtaskInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateOperationalSolutionSubtasks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"inputs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inputs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"solutionID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<UpdateOperationalSolutionSubtasksMutation, UpdateOperationalSolutionSubtasksMutationVariables>;
 export const TypedGetExistingModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExistingModelPlans"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"existingModelCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetExistingModelPlansQuery, GetExistingModelPlansQueryVariables>;
 export const TypedGetModelPlansBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlansBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetModelPlansBaseQuery, GetModelPlansBaseQueryVariables>;
 export const TypedGetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;
 export const TypedArchiveModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ArchiveModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"archived"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"archived"},"value":{"kind":"Variable","name":{"kind":"Name","value":"archived"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>;
 export const TypedCreateModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanMutation, CreateModelPlanMutationVariables>;
 export const TypedCreateModelPlanReplyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanReply"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DiscussionReplyCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDiscussionReply"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanReplyMutation, CreateModelPlanReplyMutationVariables>;
-export const TypedGetAllModelDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllModelData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"EnumValue","value":"INCLUDE_ALL"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequired"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredDescription"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowances"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesOther"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesNote"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequired"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredTypes"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"isNewModel"}},{"kind":"Field","name":{"kind":"Name","value":"existingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPrecondition"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionNote"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracks"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksDiffer"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksNote"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelp"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpOther"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpNote"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelTypes"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBidsNote"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdatedNote"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"participants"}},{"kind":"Field","name":{"kind":"Name","value":"medicareProviderType"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTypeOfProvidersOrSuppliers"}},{"kind":"Field","name":{"kind":"Name","value":"statesEngagement"}},{"kind":"Field","name":{"kind":"Name","value":"participantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModels"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModelsNote"}},{"kind":"Field","name":{"kind":"Name","value":"modelApplicationLevel"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferent"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentHow"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentNote"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsCriteria"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServices"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServicesNote"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollection"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"providingThirdPartyFile"}},{"kind":"Field","name":{"kind":"Name","value":"isContractorAwareTestDataRequirements"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryCostSharingLevelAndHandling"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingForAnyServices"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingServiceSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"waiverOnlyAppliesPartOfPayment"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustments"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustmentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedence"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceOther"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanisms"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsHow"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsReportsDetails"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataWillNotBeCollectedFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedMultiPayerDataAvailabilityUseCase"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailableNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceData"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollect"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollectOther"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"willImplementNewDataExchangeMethods"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalDataExchangeConsiderationsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isDataExchangeApproachComplete"}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllModelDataQuery, GetAllModelDataQueryVariables>;
-export const TypedGetAllSingleModelDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSingleModelData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequired"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredDescription"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowances"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesOther"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesNote"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequired"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredTypes"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"isNewModel"}},{"kind":"Field","name":{"kind":"Name","value":"existingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPrecondition"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionNote"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracks"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksDiffer"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksNote"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelp"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpOther"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpNote"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelTypes"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBidsNote"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdatedNote"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"participants"}},{"kind":"Field","name":{"kind":"Name","value":"medicareProviderType"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTypeOfProvidersOrSuppliers"}},{"kind":"Field","name":{"kind":"Name","value":"statesEngagement"}},{"kind":"Field","name":{"kind":"Name","value":"participantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModels"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModelsNote"}},{"kind":"Field","name":{"kind":"Name","value":"modelApplicationLevel"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferent"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentHow"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentNote"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsCriteria"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServices"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServicesNote"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollection"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"providingThirdPartyFile"}},{"kind":"Field","name":{"kind":"Name","value":"isContractorAwareTestDataRequirements"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryCostSharingLevelAndHandling"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingForAnyServices"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingServiceSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"waiverOnlyAppliesPartOfPayment"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustments"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustmentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedence"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceOther"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanisms"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsHow"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsReportsDetails"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataWillNotBeCollectedFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedMultiPayerDataAvailabilityUseCase"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailableNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceData"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollect"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollectOther"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"willImplementNewDataExchangeMethods"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalDataExchangeConsiderationsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isDataExchangeApproachComplete"}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllSingleModelDataQuery, GetAllSingleModelDataQueryVariables>;
+export const TypedGetAllModelDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllModelData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"EnumValue","value":"INCLUDE_ALL"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequired"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredDescription"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowances"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesOther"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesNote"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequired"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredTypes"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"isNewModel"}},{"kind":"Field","name":{"kind":"Name","value":"existingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPrecondition"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionNote"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracks"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksDiffer"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksNote"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelp"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpOther"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpNote"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelTypes"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBidsNote"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdatedNote"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"participants"}},{"kind":"Field","name":{"kind":"Name","value":"medicareProviderType"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTypeOfProvidersOrSuppliers"}},{"kind":"Field","name":{"kind":"Name","value":"statesEngagement"}},{"kind":"Field","name":{"kind":"Name","value":"participantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModels"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModelsNote"}},{"kind":"Field","name":{"kind":"Name","value":"modelApplicationLevel"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferent"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentHow"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentNote"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsCriteria"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServices"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServicesNote"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollection"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"providingThirdPartyFile"}},{"kind":"Field","name":{"kind":"Name","value":"isContractorAwareTestDataRequirements"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryCostSharingLevelAndHandling"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingForAnyServices"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingServiceSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"waiverOnlyAppliesPartOfPayment"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustments"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustmentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedence"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceOther"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanisms"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsHow"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsReportsDetails"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataWillNotBeCollectedFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedMultiPayerDataAvailabilityUseCase"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailableNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceData"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollect"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollectOther"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"willImplementNewDataExchangeMethods"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalDataExchangeConsiderationsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isDataExchangeApproachComplete"}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDTS"}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isDraft"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"neededBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllModelDataQuery, GetAllModelDataQueryVariables>;
+export const TypedGetAllSingleModelDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSingleModelData"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequired"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredDescription"}},{"kind":"Field","name":{"kind":"Name","value":"rulemakingRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowances"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesOther"}},{"kind":"Field","name":{"kind":"Name","value":"authorityAllowancesNote"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequired"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredTypes"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredNote"}},{"kind":"Field","name":{"kind":"Name","value":"isNewModel"}},{"kind":"Field","name":{"kind":"Name","value":"existingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPrecondition"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionNote"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracks"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksDiffer"}},{"kind":"Field","name":{"kind":"Name","value":"hasComponentsOrTracksNote"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"careCoordinationInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"additionalServicesInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolved"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedDescription"}},{"kind":"Field","name":{"kind":"Name","value":"communityPartnersInvolvedNote"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelp"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpOther"}},{"kind":"Field","name":{"kind":"Name","value":"agencyOrStateHelpNote"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelTypes"}},{"kind":"Field","name":{"kind":"Name","value":"alternativePaymentModelNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBidsNote"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdatedNote"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"participants"}},{"kind":"Field","name":{"kind":"Name","value":"medicareProviderType"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTypeOfProvidersOrSuppliers"}},{"kind":"Field","name":{"kind":"Name","value":"statesEngagement"}},{"kind":"Field","name":{"kind":"Name","value":"participantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModels"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModelsNote"}},{"kind":"Field","name":{"kind":"Name","value":"modelApplicationLevel"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiariesOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferent"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentHow"}},{"kind":"Field","name":{"kind":"Name","value":"treatDualElligibleDifferentNote"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsCriteria"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCertainCharacteristicsNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServices"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServicesNote"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollection"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"providingThirdPartyFile"}},{"kind":"Field","name":{"kind":"Name","value":"isContractorAwareTestDataRequirements"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryCostSharingLevelAndHandling"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingForAnyServices"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingServiceSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"waiverOnlyAppliesPartOfPayment"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustments"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustmentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedence"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceOther"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanisms"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsHow"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsReportsDetails"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataWillNotBeCollectedFromParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToCollectFromParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedMultiPayerDataAvailabilityUseCase"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToMakeMultiPayerDataAvailableNote"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceData"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollect"}},{"kind":"Field","name":{"kind":"Name","value":"multiSourceDataToCollectOther"}},{"kind":"Field","name":{"kind":"Name","value":"doesNeedToCollectAndAggregateMultiSourceDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"willImplementNewDataExchangeMethods"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalDataExchangeConsiderationsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isDataExchangeApproachComplete"}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDTS"}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isDraft"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"neededBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllSingleModelDataQuery, GetAllSingleModelDataQueryVariables>;
 export const TypedGetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"launchDarkly"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userKey"}},{"kind":"Field","name":{"kind":"Name","value":"signedHash"}}]}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
 export const TypedGetEchimpCrandTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEchimpCrandTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyCrFlag"}},{"kind":"Field","name":{"kind":"Name","value":"sensitiveFlag"}},{"kind":"Field","name":{"kind":"Name","value":"crStatus"}},{"kind":"Field","name":{"kind":"Name","value":"implementationDate"}},{"kind":"Field","name":{"kind":"Name","value":"initiator"}},{"kind":"Field","name":{"kind":"Name","value":"crSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"relatedCrTdlNumbers"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"issuedDate"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEchimpCrandTdlQuery, GetEchimpCrandTdlQueryVariables>;
 export const TypedGetFavoritesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFavorites"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFavoritesQuery, GetFavoritesQueryVariables>;
-export const TypedGetModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opSolutionLastModifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"taskListStatus"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedPhase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phase"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedStatuses"}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"prepareForClearance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","alias":{"kind":"Name","value":"modifiedDts"},"name":{"kind":"Name","value":"latestClearanceDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanQuery, GetModelPlanQueryVariables>;
-export const TypedGetModelPlanBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
+export const TypedGetModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opSolutionLastModifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"taskListStatus"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedPhase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phase"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedStatuses"}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"prepareForClearance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","alias":{"kind":"Name","value":"modifiedDts"},"name":{"kind":"Name","value":"latestClearanceDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"recentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanQuery, GetModelPlanQueryVariables>;
+export const TypedGetModelPlanBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
 export const TypedGetModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlans"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlansQuery, GetModelPlansQueryVariables>;
 export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]} as unknown as DocumentNode<GetUserInfoQuery, GetUserInfoQueryVariables>;
 export const TypedSearchOktaUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchOktaUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchOktaUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
@@ -13305,6 +14440,34 @@ export const TypedGetLockedModelPlanSectionsDocument = {"kind":"Document","defin
 export const TypedLockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
 export const TypedModelPlanSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ModelPlanSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockLockableSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables>;
 export const TypedUnlockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
+export const TypedCreateMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
+export const TypedCreateMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commonMilestoneKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonMilestoneKey"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commonSolutions"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonSolutionKey"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOMilestoneCommon"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"commonMilestoneKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commonMilestoneKey"}}},{"kind":"Argument","name":{"kind":"Name","value":"commonSolutions"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commonSolutions"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
+export const TypedCreateMtoMilestoneCustomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOMilestoneCustom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mtoCategoryID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOMilestoneCustom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"mtoCategoryID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mtoCategoryID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateMtoMilestoneCustomMutation, CreateMtoMilestoneCustomMutationVariables>;
+export const TypedCreateMtoSolutionCommonDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOSolutionCommon"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"milestonesToLink"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"key"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonSolutionKey"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOSolutionCommon"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"milestonesToLink"},"value":{"kind":"Variable","name":{"kind":"Name","value":"milestonesToLink"}}},{"kind":"Argument","name":{"kind":"Name","value":"key"},"value":{"kind":"Variable","name":{"kind":"Name","value":"key"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateMtoSolutionCommonMutation, CreateMtoSolutionCommonMutationVariables>;
+export const TypedCreateMtoSolutionCustomDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOSolutionCustom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pocName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pocEmail"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOSolutionCustom"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"pocName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pocName"}}},{"kind":"Argument","name":{"kind":"Name","value":"pocEmail"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pocEmail"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"pocName"}},{"kind":"Field","name":{"kind":"Name","value":"pocEmail"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]} as unknown as DocumentNode<CreateMtoSolutionCustomMutation, CreateMtoSolutionCustomMutationVariables>;
+export const TypedCreateStandardCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateStandardCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createStandardCategories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}]}]}}]} as unknown as DocumentNode<CreateStandardCategoriesMutation, CreateStandardCategoriesMutationVariables>;
+export const TypedDeleteMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoCategoryMutation, DeleteMtoCategoryMutationVariables>;
+export const TypedDeleteMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
+export const TypedDeleteMtoSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoSolutionMutation, DeleteMtoSolutionMutationVariables>;
+export const TypedGetCustomMtoSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomMTOSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromSolutionLibrary"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
+export const TypedGetGlobalMtoCommonSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGlobalMTOCommonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoCommonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>;
+export const TypedGetMtoAllMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOAllMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoAllMilestonesQuery, GetMtoAllMilestonesQueryVariables>;
+export const TypedGetMtoAllSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOAllSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoAllSolutionsQuery, GetMtoAllSolutionsQueryVariables>;
+export const TypedGetMtoCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoCategoriesQuery, GetMtoCategoriesQueryVariables>;
+export const TypedGetMtoMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}},{"kind":"Field","name":{"kind":"Name","value":"isSuggested"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"subCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByRole"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestonesQuery, GetMtoMilestonesQueryVariables>;
+export const TypedGetMtoCommonSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOCommonSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"subjects"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoCommonSolutionsQuery, GetMtoCommonSolutionsQueryVariables>;
+export const TypedGetModelToOperationsMatrixDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelToOperationsMatrix"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromMilestoneLibrary"}},{"kind":"Field","name":{"kind":"Name","value":"isDraft"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSuggested"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}}]}},{"kind":"Field","name":{"kind":"Name","value":"recentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelToOperationsMatrixQuery, GetModelToOperationsMatrixQueryVariables>;
+export const TypedGetMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromMilestoneLibrary"}},{"kind":"Field","name":{"kind":"Name","value":"isDraft"}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestone"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"subCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolution"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestoneQuery, GetMtoMilestoneQueryVariables>;
+export const TypedGetMtoSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"neededBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromSolutionLibrary"}},{"kind":"Field","name":{"kind":"Name","value":"pocName"}},{"kind":"Field","name":{"kind":"Name","value":"pocEmail"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"commonMilestone"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"isAdded"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoSolutionQuery, GetMtoSolutionQueryVariables>;
+export const TypedGetMtoSolutionsAndMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOSolutionsAndMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"recentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"neededBy"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromSolutionLibrary"}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestonesWithNoLinkedSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoSolutionsAndMilestonesQuery, GetMtoSolutionsAndMilestonesQueryVariables>;
+export const TypedGetMilestoneSuggestedAnswerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMilestoneSuggestedAnswer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"generalCharacteristics"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProviders"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaries"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearning"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"managePartCDEnrollment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"collectPlanBids"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"planContractUpdated"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"agreementTypes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recruitmentMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"selectionMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"communicationMethod"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"providerOverlap"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsIds"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaryOverlap"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"helpdeskUse"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"iddocSupport"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"benchmarkForPerformance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealPerformance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealFeedback"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appealOther"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"evaluationApproaches"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dataNeededForMonitoring"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dataToSendParticicipants"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelLearningSystems"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"developNewQualityMeasures"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"nonClaimsPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"willRecoverPayments"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"generalCharacteristics"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"managePartCDEnrollment"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"collectPlanBids"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"planContractUpdated"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"agreementTypes"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProviders"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recruitmentMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"selectionMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"communicationMethod"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"providerOverlap"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsIds"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaries"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiaryOverlap"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearning"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"helpdeskUse"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"iddocSupport"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"benchmarkForPerformance"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealPerformance"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealFeedback"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealPayments"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"appealOther"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appealOther"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"evaluationApproaches"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dataNeededForMonitoring"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dataToSendParticicipants"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelLearningSystems"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"developNewQualityMeasures"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payments"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"payType"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payType"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"nonClaimsPayments"}}}]}]},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"willRecoverPayments"}}}]}]}]}}]}}]}}]} as unknown as DocumentNode<GetMilestoneSuggestedAnswerQuery, GetMilestoneSuggestedAnswerQueryVariables>;
+export const TypedGetModelsByMtoSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelsByMTOSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonSolutionKey"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlansByMTOSolutionKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"solutionKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionKey"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modelBySolutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelsByMtoSolutionQuery, GetModelsByMtoSolutionQueryVariables>;
+export const TypedRenameMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RenameMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"renameMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<RenameMtoCategoryMutation, RenameMtoCategoryMutationVariables>;
+export const TypedReorderMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ReorderMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newOrder"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reorderMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"newOrder"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newOrder"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ReorderMtoCategoryMutation, ReorderMtoCategoryMutationVariables>;
+export const TypedUpdateMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOMilestoneChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoMilestoneMutation, UpdateMtoMilestoneMutationVariables>;
+export const TypedUpdateMtoMilestoneLinkedSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOMilestoneLinkedSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionLinks"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoMilestoneUpdateLinkedSolutions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoMilestoneLinkedSolutionsMutation, UpdateMtoMilestoneLinkedSolutionsMutationVariables>;
+export const TypedUpdateMtoReadyForReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOReadyForReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readyForReview"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markMTOReadyForReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"readyForReview"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readyForReview"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoReadyForReviewMutation, UpdateMtoReadyForReviewMutationVariables>;
+export const TypedUpdateMtoSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateMTOSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOSolutionChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"milestoneLinks"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOMilestoneLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateMTOSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}},{"kind":"Argument","name":{"kind":"Name","value":"milestoneLinks"},"value":{"kind":"Variable","name":{"kind":"Name","value":"milestoneLinks"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateMtoSolutionMutation, UpdateMtoSolutionMutationVariables>;
 export const TypedUpdateNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreeToNDA"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"agree"},"value":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<UpdateNdaMutation, UpdateNdaMutationVariables>;
 export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedComplete"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedCompleteNotificationType"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
 export const TypedGetNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUnreadNotifications"}},{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}},{"kind":"Field","name":{"kind":"Name","value":"inAppSent"}},{"kind":"Field","name":{"kind":"Name","value":"emailSent"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"activity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activityType"}},{"kind":"Field","name":{"kind":"Name","value":"entityID"}},{"kind":"Field","name":{"kind":"Name","value":"actorID"}},{"kind":"Field","name":{"kind":"Name","value":"actorUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewDiscussionRepliedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DatesChangedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"dateChanges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isChanged"}},{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"isRange"}},{"kind":"Field","name":{"kind":"Name","value":"oldDate"}},{"kind":"Field","name":{"kind":"Name","value":"newDate"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeEnd"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeEnd"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInPlanDiscussionActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddedAsCollaboratorMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInDiscussionReplyActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanSharedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"optionalMessage"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewModelPlanActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DailyDigestCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanIDs"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"analyzedAudits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"changes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oldName"}},{"kind":"Field","name":{"kind":"Name","value":"statusChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crTdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planSections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReview"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearance"}},{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproachMarkedComplete"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelLeads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"added"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"planDiscussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}}]}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDataExchangeApproachMarkedCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationsQuery, GetNotificationsQueryVariables>;
@@ -13313,31 +14476,31 @@ export const TypedUpdateAllNotificationsAsReadDocument = {"kind":"Document","def
 export const TypedUpdateNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNotificationSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserNotificationPreferencesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserNotificationPreferences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}}]}}]}}]} as unknown as DocumentNode<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
 export const TypedMarkNotificationAsReadDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkNotificationAsRead"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"notificationID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markNotificationAsRead"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"notificationID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"notificationID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}}]}}]}}]} as unknown as DocumentNode<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
 export const TypedGetAllOpsEvalAndLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllOpsEvalAndLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>;
-export const TypedGetCcwAndQualityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCCWAndQuality"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetCcwAndQualityQuery, GetCcwAndQualityQueryVariables>;
+export const TypedGetCcwAndQualityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCCWAndQuality"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetCcwAndQualityQuery, GetCcwAndQualityQueryVariables>;
 export const TypedGetDataSharingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDataSharing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}}]}}]}}]}}]} as unknown as DocumentNode<GetDataSharingQuery, GetDataSharingQueryVariables>;
-export const TypedGetEvaluationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEvaluation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetEvaluationQuery, GetEvaluationQueryVariables>;
+export const TypedGetEvaluationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetEvaluation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetEvaluationQuery, GetEvaluationQueryVariables>;
 export const TypedGetIddocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOC"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuery, GetIddocQueryVariables>;
 export const TypedGetIddocMonitoringDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCMonitoring"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocMonitoringQuery, GetIddocMonitoringQueryVariables>;
 export const TypedGetIddocTestingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCTesting"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocTestingQuery, GetIddocTestingQueryVariables>;
-export const TypedGetLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetLearningQuery, GetLearningQueryVariables>;
-export const TypedGetOpsEvalAndLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOpsEvalAndLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>;
-export const TypedGetPerformanceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPerformance"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetPerformanceQuery, GetPerformanceQueryVariables>;
+export const TypedGetLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetLearningQuery, GetLearningQueryVariables>;
+export const TypedGetOpsEvalAndLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOpsEvalAndLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetOpsEvalAndLearningQuery, GetOpsEvalAndLearningQueryVariables>;
+export const TypedGetPerformanceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPerformance"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetPerformanceQuery, GetPerformanceQueryVariables>;
 export const TypedUpdatePlanOpsEvalAndLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanOpsEvalAndLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanOpsEvalAndLearningChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanOpsEvalAndLearning"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanOpsEvalAndLearningMutation, UpdatePlanOpsEvalAndLearningMutationVariables>;
 export const TypedGetAllParticipantsAndProvidersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllParticipantsAndProviders"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participants"}},{"kind":"Field","name":{"kind":"Name","value":"medicareProviderType"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTypeOfProvidersOrSuppliers"}},{"kind":"Field","name":{"kind":"Name","value":"statesEngagement"}},{"kind":"Field","name":{"kind":"Name","value":"participantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModels"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModelsNote"}},{"kind":"Field","name":{"kind":"Name","value":"modelApplicationLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllParticipantsAndProvidersQuery, GetAllParticipantsAndProvidersQueryVariables>;
-export const TypedGetCommunicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCommunication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetCommunicationQuery, GetCommunicationQueryVariables>;
-export const TypedGetCoordinationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCoordination"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetCoordinationQuery, GetCoordinationQueryVariables>;
-export const TypedGetParticipantOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetParticipantOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>;
+export const TypedGetCommunicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCommunication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantAddedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRemovedFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethod"}},{"kind":"Field","name":{"kind":"Name","value":"communicationMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"communicationNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskType"}},{"kind":"Field","name":{"kind":"Name","value":"riskOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChange"}},{"kind":"Field","name":{"kind":"Name","value":"willRiskChangeNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetCommunicationQuery, GetCommunicationQueryVariables>;
+export const TypedGetCoordinationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCoordination"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuarantee"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeType"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantRequireFinancialGuaranteeNote"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWork"}},{"kind":"Field","name":{"kind":"Name","value":"coordinateWorkNote"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePayments"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibility"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsEligibilityOther"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsTrack"}},{"kind":"Field","name":{"kind":"Name","value":"gainsharePaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIds"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIdsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsIDSNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetCoordinationQuery, GetCoordinationQueryVariables>;
+export const TypedGetParticipantOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetParticipantOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"expectedNumberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentMethod"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"selectionMethod"}},{"kind":"Field","name":{"kind":"Name","value":"selectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"selectionNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetParticipantOptionsQuery, GetParticipantOptionsQueryVariables>;
 export const TypedGetParticipantsAndProvidersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetParticipantsAndProviders"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"participants"}},{"kind":"Field","name":{"kind":"Name","value":"medicareProviderType"}},{"kind":"Field","name":{"kind":"Name","value":"isNewTypeOfProvidersOrSuppliers"}},{"kind":"Field","name":{"kind":"Name","value":"statesEngagement"}},{"kind":"Field","name":{"kind":"Name","value":"participantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"participantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModels"}},{"kind":"Field","name":{"kind":"Name","value":"participantsCurrentlyInModelsNote"}},{"kind":"Field","name":{"kind":"Name","value":"modelApplicationLevel"}}]}}]}}]}}]} as unknown as DocumentNode<GetParticipantsAndProvidersQuery, GetParticipantsAndProvidersQueryVariables>;
-export const TypedGetProviderOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProviderOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>;
+export const TypedGetProviderOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProviderOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAdditionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerAddMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethod"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerLeaveMethodNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"providerRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapHierarchy"}},{"kind":"Field","name":{"kind":"Name","value":"providerOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetProviderOptionsQuery, GetProviderOptionsQueryVariables>;
 export const TypedUpdatePlanParticipantsAndProvidersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanParticipantsAndProviders"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanParticipantsAndProvidersChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanParticipantsAndProviders"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanParticipantsAndProvidersMutation, UpdatePlanParticipantsAndProvidersMutationVariables>;
 export const TypedGetAllPaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllPayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustments"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustmentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServices"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServicesNote"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollection"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"providingThirdPartyFile"}},{"kind":"Field","name":{"kind":"Name","value":"isContractorAwareTestDataRequirements"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryCostSharingLevelAndHandling"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingForAnyServices"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingServiceSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"waiverOnlyAppliesPartOfPayment"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedence"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceOther"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanisms"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsHow"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllPaymentsQuery, GetAllPaymentsQueryVariables>;
 export const TypedGetAnticipateDependenciesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnticipateDependencies"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustments"}},{"kind":"Field","name":{"kind":"Name","value":"willBePaymentAdjustmentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServices"}},{"kind":"Field","name":{"kind":"Name","value":"creatingDependenciesBetweenServicesNote"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollection"}},{"kind":"Field","name":{"kind":"Name","value":"needsClaimsDataCollectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"providingThirdPartyFile"}},{"kind":"Field","name":{"kind":"Name","value":"isContractorAwareTestDataRequirements"}}]}}]}}]}}]} as unknown as DocumentNode<GetAnticipateDependenciesQuery, GetAnticipateDependenciesQueryVariables>;
 export const TypedGetBeneficiaryCostSharingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBeneficiaryCostSharing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryCostSharingLevelAndHandling"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingForAnyServices"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingServiceSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"waiverOnlyAppliesPartOfPayment"}},{"kind":"Field","name":{"kind":"Name","value":"waiveBeneficiaryCostSharingNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetBeneficiaryCostSharingQuery, GetBeneficiaryCostSharingQueryVariables>;
-export const TypedGetClaimsBasedPaymentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClaimsBasedPayment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>;
+export const TypedGetClaimsBasedPaymentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClaimsBasedPayment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaimsOther"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProvidersExcludedFFSSystems"}},{"kind":"Field","name":{"kind":"Name","value":"shouldAnyProviderExcludedFFSSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeSchedule"}},{"kind":"Field","name":{"kind":"Name","value":"changesMedicarePhysicianFeeScheduleNote"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaims"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsHow"}},{"kind":"Field","name":{"kind":"Name","value":"affectsMedicareSecondaryPayerClaimsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payModelDifferentiation"}}]}}]}}]}}]} as unknown as DocumentNode<GetClaimsBasedPaymentQuery, GetClaimsBasedPaymentQueryVariables>;
 export const TypedGetComplexityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetComplexity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevel"}},{"kind":"Field","name":{"kind":"Name","value":"expectedCalculationComplexityLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedence"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceOther"}},{"kind":"Field","name":{"kind":"Name","value":"claimsProcessingPrecedenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanisms"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsHow"}},{"kind":"Field","name":{"kind":"Name","value":"canParticipantsSelectBetweenPaymentMechanismsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedPaymentFrequencyNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetComplexityQuery, GetComplexityQueryVariables>;
-export const TypedGetFundingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFunding"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetFundingQuery, GetFundingQueryVariables>;
-export const TypedGetNonClaimsBasedPaymentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNonClaimsBasedPayment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>;
-export const TypedGetRecoverDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecover"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetRecoverQuery, GetRecoverQueryVariables>;
+export const TypedGetFundingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFunding"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSource"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourcePatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceOther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceNote"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceR"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRPatientProtectionInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareAInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRMedicareBInfo"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceROther"}},{"kind":"Field","name":{"kind":"Name","value":"fundingSourceRNote"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipients"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsOtherSpecification"}},{"kind":"Field","name":{"kind":"Name","value":"payRecipientsNote"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payTypeNote"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}}]}}]}}]}}]} as unknown as DocumentNode<GetFundingQuery, GetFundingQueryVariables>;
+export const TypedGetNonClaimsBasedPaymentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNonClaimsBasedPayment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPayments"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"nonClaimsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentCalculationOwner"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycle"}},{"kind":"Field","name":{"kind":"Name","value":"numberPaymentsPerPayCycleNote"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPayment"}},{"kind":"Field","name":{"kind":"Name","value":"sharedSystemsInvolvedAdditionalClaimPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractor"}},{"kind":"Field","name":{"kind":"Name","value":"planningToUseInnovationPaymentContractorNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetNonClaimsBasedPaymentQuery, GetNonClaimsBasedPaymentQueryVariables>;
+export const TypedGetRecoverDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecover"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"payType"}},{"kind":"Field","name":{"kind":"Name","value":"payClaims"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPayments"}},{"kind":"Field","name":{"kind":"Name","value":"willRecoverPaymentsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectively"}},{"kind":"Field","name":{"kind":"Name","value":"anticipateReconcilingPaymentsRetrospectivelyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentReconciliationFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"paymentDemandRecoupmentFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDateNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetRecoverQuery, GetRecoverQueryVariables>;
 export const TypedUpdatePaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePaymentsMutation, UpdatePaymentsMutationVariables>;
 export const TypedGetClearanceStatusesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetClearanceStatuses"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"includePrepareForClearance"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"prepareForClearance"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"includePrepareForClearance"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetClearanceStatusesQuery, GetClearanceStatusesQueryVariables>;
 export const TypedUpdateClearanceBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateClearanceBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBasicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBasics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<UpdateClearanceBasicsMutation, UpdateClearanceBasicsMutationVariables>;
@@ -13348,5 +14511,5 @@ export const TypedUpdateClearanceParticipantsAndProvidersDocument = {"kind":"Doc
 export const TypedUpdateClearancePaymentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateClearancePayments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<UpdateClearancePaymentsMutation, UpdateClearancePaymentsMutationVariables>;
 export const TypedUpdatePrepareForClearanceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePrepareForClearance"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"basicsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"basicsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBasicsChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanParticipantsAndProvidersChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiariesID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"benficiariesChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBeneficiariesChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanOpsEvalAndLearningChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"paymentsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"paymentsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBasics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"basicsID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"basicsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanParticipantsAndProviders"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanBeneficiaries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiariesID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"benficiariesChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanOpsEvalAndLearning"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"paymentsID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"paymentsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>;
 export const TypedGetModelSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelSummaryQuery, GetModelSummaryQueryVariables>;
-export const TypedCreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"usernames"},"value":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
+export const TypedCreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelShareSection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelShareSection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"modelShareSection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelShareSection"}}},{"kind":"Argument","name":{"kind":"Name","value":"usernames"},"value":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
 export const TypedGetPossibleSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPossibleSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"pointsOfContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isTeam"}},{"kind":"Field","name":{"kind":"Name","value":"isPrimary"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;

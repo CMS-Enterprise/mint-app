@@ -20,6 +20,18 @@
     display: none;
   }
 
+  .grid-container {
+      max-width: none !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+  }
+
+  .mint-print-link {
+    text-decoration: none !important;
+    color: black !important;
+  }
+
   .mint-only-print {
     display: block !important;
   }
@@ -57,7 +69,7 @@
 }
 
 @page {
-  margin: 0.75in;
+  margin: 0.35in;
   @bottom-left {
     content: 'Page ' counter(page) ' of ' counter(pages);
   }

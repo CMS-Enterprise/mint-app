@@ -6,6 +6,7 @@ import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskL
 import {
   DataExchangeApproachStatus,
   ModelStatus,
+  MtoStatus,
   TaskStatus
 } from 'gql/generated/graphql';
 
@@ -20,7 +21,7 @@ type StatusBannerProps = {
   icon?: boolean;
   modelID: string;
   type?: 'model' | 'task';
-  status: ModelStatus | TaskStatus | DataExchangeApproachStatus;
+  status: ModelStatus | TaskStatus | DataExchangeApproachStatus | MtoStatus;
   hasEditAccess?: boolean;
   statusLabel?: boolean;
   updateLabel?: boolean;

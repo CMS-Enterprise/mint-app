@@ -30,7 +30,7 @@ describe('Table Results Componenet', () => {
     );
 
     expect(
-      await screen.getByText(/Showing 41-50 of 456 results/)
+      screen.getByText(/Showing 41-50 of 456 results/)
     ).toBeInTheDocument();
   });
 
@@ -45,9 +45,7 @@ describe('Table Results Componenet', () => {
       />
     );
 
-    expect(
-      await screen.getByText(/Showing 1-10 of 42 results/)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Showing 1-10 of 42 results/)).toBeInTheDocument();
     expect(await screen.findByText('"Happiness"')).toBeInTheDocument();
   });
 

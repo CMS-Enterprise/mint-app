@@ -1,12 +1,14 @@
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
   IT_IMPLEMENTATION = 'it-implementation',
+  MTO_TUTORIALS = 'mto-tutorials',
   MODEL_CONCEPT_AND_DESIGN = 'model-concept-and-design'
 }
 
 export const articleCategories: ArticleCategories[] = [
   ArticleCategories.GETTING_STARTED,
   ArticleCategories.IT_IMPLEMENTATION,
+  ArticleCategories.MTO_TUTORIALS,
   ArticleCategories.MODEL_CONCEPT_AND_DESIGN
 ];
 
@@ -27,7 +29,18 @@ export enum HelpArticle {
   STRATEGY_REFRESH_RESOURCES = 'STRATEGY_REFRESH_RESOURCES',
   ICIP_REPOSITORY = 'ICIP_REPOSITORY',
   FRAUD_AND_ABUSE_WAIVER = 'FRAUD_AND_ABUSE_WAIVER',
-  QUALITY_VERTICAL_HEALTH_EQUITY = 'QUALITY_VERTICAL_HEALTH_EQUITY'
+  QUALITY_VERTICAL_HEALTH_EQUITY = 'QUALITY_VERTICAL_HEALTH_EQUITY',
+  CREATING_MTO_MATRIX = 'CREATING_MTO_MATRIX',
+  STARTING_MTO = 'STARTING_MTO',
+  USING_MILESTONE_TABLE = 'USING_MILESTONE_TABLE',
+  USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE = 'USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE',
+  USING_TABLE_ACTIONS = 'USING_TABLE_ACTIONS',
+  USING_MILESTONE_LIBRARY = 'USING_MILESTONE_LIBRARY',
+  USING_SOLUTION_LIBRARY = 'USING_SOLUTION_LIBRARY',
+  ADD_CUSTOM_MILESTONE = 'ADD_CUSTOM_MILESTONE',
+  ADD_CUSTOM_SOLUTION = 'ADD_CUSTOM_SOLUTION',
+  UPDATING_MTO_STATUS = 'UPDATING_MTO_STATUS',
+  SHARING_EXPORTING_MTO = 'SHARING_EXPORTING_MTO'
 }
 
 export type ArticleProps = {
@@ -38,14 +51,30 @@ export type ArticleProps = {
   external?: boolean;
 };
 
-// Help and Knowledge Articles
-const helpAndKnowledgeArticles: ArticleProps[] = [
+export const homeArticles: ArticleProps[] = [
+  {
+    key: HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH,
+    route: '/evaluating-data-exchange-approach',
+    translation: 'evaluatingDataExchangeApproach',
+    type: ArticleCategories.GETTING_STARTED
+  },
+  {
+    key: HelpArticle.CREATING_MTO_MATRIX,
+    route: '/creating-mto-matrix',
+    translation: 'creatingMtoMatrix',
+    type: ArticleCategories.IT_IMPLEMENTATION
+  },
   {
     key: HelpArticle.MODEL_PLAN_OVERVIEW,
     route: '/model-plan-overview', // route for hitting rendered article component
     translation: 'modelPlanOverview', // Should reference the translation used to index the title and description for cards
     type: ArticleCategories.GETTING_STARTED
-  },
+  }
+];
+
+// Help and Knowledge Articles
+const helpAndKnowledgeArticles: ArticleProps[] = [
+  ...homeArticles,
   {
     key: HelpArticle.SAMPLE_MODEL_PLAN,
     route: '/sample-model-plan',
@@ -93,12 +122,6 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     route: '/phases-involved',
     translation: 'phasesInvolved',
     type: ArticleCategories.IT_IMPLEMENTATION
-  },
-  {
-    key: HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH,
-    route: '/evaluating-data-exchange-approach',
-    translation: 'evaluatingDataExchangeApproach',
-    type: ArticleCategories.GETTING_STARTED
   },
   {
     key: HelpArticle.ANNOUNCEMENT_MATERIALS,
@@ -152,6 +175,66 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     translation: HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY,
     type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN,
     external: true
+  },
+  {
+    key: HelpArticle.STARTING_MTO,
+    route: '/starting-mto',
+    translation: 'startingMto',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.USING_MILESTONE_TABLE,
+    route: '/using-milestone-table',
+    translation: 'usingMilestoneTable',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE,
+    route: '/using-it-systems-and-solutions-table',
+    translation: 'usingItSystemsAndSolutionsTable',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.USING_TABLE_ACTIONS,
+    route: '/using-table-actions',
+    translation: 'usingTableActions',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.USING_MILESTONE_LIBRARY,
+    route: '/using-milestone-library',
+    translation: 'usingMilestoneLibrary',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.USING_SOLUTION_LIBRARY,
+    route: '/using-solution-library',
+    translation: 'usingSolutionLibrary',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.ADD_CUSTOM_MILESTONE,
+    route: '/add-custom-milestone',
+    translation: 'addCustomMilestone',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.ADD_CUSTOM_SOLUTION,
+    route: '/add-custom-solution',
+    translation: 'addCustomSolution',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.UPDATING_MTO_STATUS,
+    route: '/updating-mto-status',
+    translation: 'updatingMtoStatus',
+    type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.SHARING_EXPORTING_MTO,
+    route: '/sharing-exporting-mto',
+    translation: 'sharingExportingMto',
+    type: ArticleCategories.MTO_TUTORIALS
   }
 ];
 

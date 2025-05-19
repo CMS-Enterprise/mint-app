@@ -256,7 +256,7 @@ const ChangeHistory = () => {
               }`}
               className="display-flex flex-align-center margin-bottom-4"
             >
-              <Icon.ArrowBack className="text-primary margin-right-1" />
+              <Icon.ArrowBack className="margin-right-1" />
               {fromReadView ? t('backToReadView') : t('back')}
             </UswdsReactLink>
           </div>

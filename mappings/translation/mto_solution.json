@@ -1,0 +1,326 @@
+{
+  "solutionType": {
+    "gqlField": "solutionType",
+    "goField": "SolutionType",
+    "dbField": "type",
+    "label": "What type of solution is this",
+    "exportLabel": "Solution type",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "IT_SYSTEM": "IT System",
+      "CONTRACTOR": "Contract vehicle, contractor, or other contract",
+      "CROSS_CUTTING_GROUP": "Cross-cutting group",
+      "OTHER": "Other"
+    },
+    "order": 1
+  },
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "Please add a title for your solution",
+    "exportLabel": "Solution name",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.1
+  },
+  "pocName": {
+    "gqlField": "pocName",
+    "goField": "PocName",
+    "dbField": "poc_name",
+    "label": "Point of contact name",
+    "exportLabel": "Solution point of contact name",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.2
+  },
+  "pocEmail": {
+    "gqlField": "pocEmail",
+    "goField": "PocEmail",
+    "dbField": "poc_email",
+    "label": "Point of contact email address",
+    "exportLabel": "Solution point of contact email address",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.3
+  },
+  "key": {
+    "gqlField": "key",
+    "goField": "Key",
+    "dbField": "mto_common_solution_key",
+    "label": "MTO Common Solution",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "tableReference": "mto_common_solution",
+    "order": 1.4
+  },
+  "riskIndicator": {
+    "gqlField": "riskIndicator",
+    "goField": "RiskIndicator",
+    "dbField": "risk_indicator",
+    "label": "Risk indicator",
+    "exportLabel": "Solution risk indicator",
+    "sublabel": "Choose the applicable risk status for this solution.",
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "style": {
+          "fontSize": "0.875rem",
+          "fontWeight": 400,
+          "padding": "0.5rem"
+        },
+        "children": [
+          "Risk indicators:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "No risk (on track)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Some risk (off track)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Significantly at risk"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    },
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "ON_TRACK": "On track",
+      "OFF_TRACK": "Off track",
+      "AT_RISK": "At risk"
+    },
+    "order": 1.5
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Status",
+    "exportLabel": "Solution status",
+    "questionTooltip": {
+      "type": "div",
+      "key": null,
+      "ref": null,
+      "props": {
+        "style": {
+          "fontSize": "0.875rem",
+          "fontWeight": 400,
+          "padding": "0.5rem"
+        },
+        "children": [
+          "Solution implementation statuses:",
+          {
+            "type": "ul",
+            "key": null,
+            "ref": null,
+            "props": {
+              "className": "margin-0 padding-left-3",
+              "children": [
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Not started: No work has started on this IT system or solution"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Onboarding: Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Backlog: Model work is in the project team’s backlog"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "In progress: Work for this model is in progress (e.g., development, configuration, testing, etc.)"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                },
+                {
+                  "type": "li",
+                  "key": null,
+                  "ref": null,
+                  "props": {
+                    "children": "Completed: Work related to this model is finished"
+                  },
+                  "_owner": null,
+                  "_store": {}
+                }
+              ]
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    },
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "NOT_STARTED": "Not started",
+      "ONBOARDING": "Onboarding",
+      "BACKLOG": "Backlog",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed"
+    },
+    "order": 1.6
+  },
+  "neededBy": {
+    "gqlField": "neededBy",
+    "goField": "NeededBy",
+    "dbField": "needed_by",
+    "label": "Need by",
+    "exportLabel": "Solution needed by",
+    "sublabel": "Choose the date when onboarding and implementation work for this solution should be complete. Format: mm/dd/yyyy",
+    "dataType": "DATE",
+    "formType": "TEXT",
+    "order": 1.7
+  },
+  "facilitatedBy": {
+    "gqlField": "facilitatedBy",
+    "goField": "FacilitatedBy",
+    "dbField": "facilitated_by",
+    "label": "Facilitated by",
+    "exportLabel": "Solution facilitated by",
+    "sublabel": "Choose the role or group responsible for this work.",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "options": {
+      "IT_LEAD": "IT Lead",
+      "MODEL_TEAM": "Model team",
+      "MODEL_LEAD": "Model Lead",
+      "MODEL_DATA_LEAD": "Model Data Lead",
+      "SOLUTION_ARCHITECT": "Solution Architect",
+      "IT_SYSTEM_PRODUCT_OWNER": "IT System Product Owner",
+      "APPLICATION_SUPPORT_CONTRACTOR": "Application support contractor",
+      "DATA_ANALYTICS_CONTRACTOR": "Data analytics contractor",
+      "EVALUATION_CONTRACTOR": "Evaluation contractor",
+      "IMPLEMENTATION_CONTRACTOR": "Implementation contractor",
+      "LEARNING_CONTRACTOR": "Learning contractor",
+      "MONITORING_CONTRACTOR": "Monitoring contractor",
+      "QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR": "Quality measures development contractor",
+      "CONTRACTING_OFFICERS_REPRESENTATIVE": "Contracting Officers Representative (COR)",
+      "LEARNING_AND_DIFFUSION_GROUP": "Learning and Diffusion Group (LDG)",
+      "RESEARCH_AND_RAPID_CYCLE_EVALUATION_GROUP": "Research and Rapid Cycle Evaluation Group (RREG)",
+      "PARTICIPANTS": "Participants",
+      "OTHER": "Other"
+    },
+    "order": 1.8
+  },
+  "facilitatedByOther": {
+    "gqlField": "facilitatedByOther",
+    "goField": "FacilitatedByOther",
+    "dbField": "facilitated_by_other",
+    "label": "Please describe",
+    "exportLabel": "Milestone facilitated by (other)",
+    "sublabel": "Because you selected “Other” above, please provide a role or title.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.85
+  },
+  "milestones": {
+    "gqlField": "milestones",
+    "goField": "Milestones",
+    "dbField": "milestones",
+    "label": "Linked milestones",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 2.1,
+    "multiSelectLabel": "Selected milestones",
+    "flattenNestedData": "name",
+    "options": {
+      "MANAGE_CD": "Manage Part C/D enrollment",
+      "REV_COL_BIDS": "Review and collect plan bids",
+      "UPDATE_CONTRACT": "Update the plan’s contract",
+      "RECRUIT_PARTICIPANTS": "Recruit participants",
+      "REV_SCORE_APP": "Review and score applications",
+      "APP_SUPPORT_CON": "Obtain an application support contractor",
+      "COMM_W_PART": "Communicate with participants",
+      "MANAGE_PROV_OVERLAP": "Manage provider overlaps",
+      "MANAGE_BEN_OVERLAP": "Manage beneficiary overlaps",
+      "HELPDESK_SUPPORT": "Helpdesk support",
+      "IDDOC_SUPPORT": "IDDOC support",
+      "ESTABLISH_BENCH": "Establish a benchmark with participants",
+      "PROCESS_PART_APPEALS": "Process participant appeals",
+      "ACQUIRE_AN_EVAL_CONT": "Acquire an evaluation contractor",
+      "DATA_TO_MONITOR": "Data to monitor the model",
+      "DATA_TO_SUPPORT_EVAL": "Data to support model evaluation",
+      "CLAIMS_BASED_MEASURES": "Claims-based measures",
+      "QUALITY_PERFORMANCE_SCORES": "Quality performance scores",
+      "SEND_REPDATA_TO_PART": "Send reports/data to participants",
+      "ACQUIRE_A_LEARN_CONT": "Acquire a learning contractor",
+      "PART_TO_PART_COLLAB": "Participant-to-participant collaboration",
+      "EDUCATE_BENEF": "Educate beneficiaries",
+      "ADJUST_FFS_CLAIMS": "Adjust how FFS claims are paid",
+      "MANAGE_FFS_EXCL_PAYMENTS": "Manage FFS excluded payments",
+      "MAKE_NON_CLAIMS_BASED_PAYMENTS": "Make non-claims based payments",
+      "COMPUTE_SHARED_SAVINGS_PAYMENT": "Compute shared savings payment",
+      "RECOVER_PAYMENTS": "Recover payments",
+      "SIGN_PARTICIPATION_AGREEMENTS": "Sign Participation Agreements",
+      "VET_PROVIDERS_FOR_PROGRAM_INTEGRITY": "Vet providers for program integrity",
+      "UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR": "Utilize quality measures development contractor",
+      "IT_PLATFORM_FOR_LEARNING": "IT platform for learning"
+    }
+  }
+}

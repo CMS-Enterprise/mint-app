@@ -14,7 +14,12 @@ function useScrollElement(dataFetched: boolean) {
         `[data-scroll="${location?.state?.scrollElement}"]`
       );
       if (fieldGroup) {
-        fieldGroup.scrollIntoView({ behavior: 'smooth' });
+        const elementPosition =
+          fieldGroup.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          behavior: 'smooth',
+          top: elementPosition - 75
+        });
       }
     }, 0);
   }, [location?.state?.scrollElement, dataFetched]);

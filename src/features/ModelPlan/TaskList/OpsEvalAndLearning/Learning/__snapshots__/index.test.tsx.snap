@@ -75,7 +75,8 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
   </p>
   <div>
     <div
-      class="padding-2 bg-primary-lighter"
+      class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
+      style="gap: 1rem;"
     >
       <div
         class="display-flex"
@@ -115,6 +116,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
+        data-scroll="modelLearningSystems"
       >
         <label
           class="usa-label"
@@ -124,8 +126,9 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
           Will the model have a learning strategy?
         </label>
         <div
-          class="usa-alert usa-alert--warning flex it-solutions-warning"
+          class="usa-alert usa-alert--info flex mto-warning"
           data-testid="alert"
+          id="ops-eval-and-learning-learning-systems-warning"
         >
           <div
             class="usa-alert__body"
@@ -134,15 +137,14 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               class="usa-alert__text"
             >
               <span>
-                Changing your answer to this question may also affect your selections in the operational solutions and implementation status tracker.  
-                <button
-                  class="usa-button usa-button usa-button--unstyled"
-                  data-testid="button"
-                  id="ops-eval-and-learning-learning-systems-warning"
-                  type="button"
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
                 >
-                  Go to operational solutions tracker.
-                </button>
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
               </span>
             </p>
           </div>

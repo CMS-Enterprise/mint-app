@@ -1,0 +1,34 @@
+
+type MTOCommonSolutionContact {
+  id: UUID!
+  key: MTOCommonSolutionKey!
+
+  name: String!
+  email: String!
+  isTeam: Boolean!
+  role: String
+  isPrimary: Boolean!
+
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution
+"""
+type MTOCommonSolutionContactInformation {
+  """
+  This is the list of all points of contact for this common solution
+  """
+  pointsOfContact: [MTOCommonSolutionContact!]!
+  """
+  The point of contact who is determined to be the primary contact
+  """
+  primaryContact: MTOCommonSolutionContact!
+
+}

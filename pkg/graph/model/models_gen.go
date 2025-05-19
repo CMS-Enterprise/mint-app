@@ -14,11 +14,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CreateOperationalSolutionSubtaskInput struct {
-	Name   string                                  `json:"name"`
-	Status models.OperationalSolutionSubtaskStatus `json:"status"`
-}
-
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -59,6 +54,74 @@ type LockableSectionLockStatusChanged struct {
 	ChangeType ChangeType                `json:"changeType"`
 	LockStatus LockableSectionLockStatus `json:"lockStatus"`
 	ActionType ActionType                `json:"actionType"`
+}
+
+// Represents MTO Category translation data
+type MTOCategoryTranslation struct {
+	Name     models.TranslationField `json:"name" db:"name"`
+	Position models.TranslationField `json:"position" db:"position"`
+	ParentID models.TranslationField `json:"parentID" db:"parent_id"`
+}
+
+// Represents a translation of a contact for a common solution
+type MTOCommonSolutionContactTranslation struct {
+	Key       models.TranslationField `json:"key" db:"mto_common_solution_key"`
+	Name      models.TranslationField `json:"name" db:"name"`
+	Email     models.TranslationField `json:"email" db:"email"`
+	IsTeam    models.TranslationField `json:"isTeam" db:"is_team"`
+	Role      models.TranslationField `json:"role" db:"role"`
+	IsPrimary models.TranslationField `json:"isPrimary" db:"is_primary"`
+}
+
+// Represents mto info translation data
+type MTOInfoTranslation struct {
+	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts models.TranslationField `json:"readyForReviewDTS" db:"ready_for_review_dts"`
+}
+
+type MTOMilestoneLinks struct {
+	MilestoneIDs []uuid.UUID `json:"milestoneIDs,omitempty"`
+}
+
+// Represents MTO Milestone Solution Link translation data
+type MTOMilestoneSolutionLinkTranslation struct {
+	MilestoneID models.TranslationField `json:"milestoneID" db:"milestone_id"`
+	SolutionID  models.TranslationField `json:"solutionID" db:"solution_id"`
+}
+
+// Represents MTO Custom Milestone translation data
+type MTOMilestoneTranslation struct {
+	Name               models.TranslationField            `json:"name" db:"name"`
+	IsDraft            models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
+	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	NeedBy             models.TranslationField            `json:"needBy" db:"need_by"`
+	RiskIndicator      models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	CommonSolutions    models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
+	Solutions          models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
+	Status             models.TranslationFieldWithOptions `json:"status" db:"status"`
+	Key                models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCategoryID      models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+}
+
+type MTOSolutionLinks struct {
+	SolutionIDs        []uuid.UUID                   `json:"solutionIDs,omitempty"`
+	CommonSolutionKeys []models.MTOCommonSolutionKey `json:"commonSolutionKeys,omitempty"`
+}
+
+// Represents MTO Custom Solution translation data
+type MTOSolutionTranslation struct {
+	Name               models.TranslationField            `json:"name" db:"name"`
+	PocName            models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail           models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	SolutionType       models.TranslationFieldWithOptions `json:"solutionType" db:"type"`
+	Key                models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	RiskIndicator      models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	Status             models.TranslationFieldWithOptions `json:"status" db:"status"`
+	NeededBy           models.TranslationField            `json:"neededBy" db:"needed_by"`
+	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
 // Represents model plan base translation data
@@ -686,11 +749,6 @@ type SendFeedbackEmailInput struct {
 	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
 	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
-}
-
-type UpdateOperationalSolutionSubtaskInput struct {
-	ID      uuid.UUID              `json:"id"`
-	Changes map[string]interface{} `json:"changes"`
 }
 
 type ActionType string

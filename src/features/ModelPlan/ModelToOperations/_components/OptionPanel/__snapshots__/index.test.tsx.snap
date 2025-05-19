@@ -1,0 +1,272 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MTOOptionsPanel > renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="model-to-operations__options-panel"
+  >
+    <h2
+      class="margin-y-0"
+    >
+      Your model-to-operations matrix (MTO) is a bit empty!
+    </h2>
+    <p
+      class="mint-body-large margin-bottom-0 margin-top-2"
+    >
+      Choose an option below to get started.
+    </p>
+    <div
+      class="grid-row grid-gap-2 margin-top-4"
+      data-testid="grid"
+    >
+      <li
+        class="usa-card desktop:grid-col-6 article margin-top-2"
+        data-testid="article-card"
+      >
+        <div
+          class="usa-card__container shadow-2 minh-mobile padding-0 margin-0"
+          style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
+        >
+          <div
+            class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 text-white radius-top-lg bg-green-50"
+          >
+            MILESTONES 
+            <svg
+              class="usa-icon margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              style="top: 4px;"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6z"
+              />
+            </svg>
+          </div>
+          <div
+            class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1 margin-top-3"
+              >
+                Start with model milestones
+              </h3>
+            </header>
+            <div
+              class="usa-card__body padding-x-0 padding-top-0"
+              data-testid="CardBody"
+            >
+              Model milestones are the key activities and functions that models must accomplish in order to be ready to go live. Most will be fulfilled by one or more solutions or IT systems. Many milestones are similar across models, so MINT offers a library of common milestones to select from.
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <a
+                aria-label="Add milestones from library"
+                class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
+                href="/models/123/collaboration-area/model-to-operations/milestone-library"
+              >
+                Add milestones from library
+              </a>
+              <button
+                class="usa-button usa-button--unstyled display-block"
+                data-testid="button"
+                type="button"
+              >
+                or, create a custom milestone
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card desktop:grid-col-6 article margin-top-2"
+        data-testid="article-card"
+      >
+        <div
+          class="usa-card__container shadow-2 minh-mobile padding-0 margin-0"
+          style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
+        >
+          <div
+            class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 text-white radius-top-lg indigo-cool-60"
+          >
+            OPERATIONAL SOLUTIONS 
+            <svg
+              class="usa-icon margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              style="top: 4px;"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
+              />
+            </svg>
+          </div>
+          <div
+            class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1 margin-top-3"
+              >
+                Start with solutions or IT systems
+              </h3>
+            </header>
+            <div
+              class="usa-card__body padding-x-0 padding-top-0"
+              data-testid="CardBody"
+            >
+              Models use a variety of solutions or IT systems to fulfill model requirements. These could be IT systems, contracts or contract vehicles, cross-cutting groups, and more. Many models use similar methodologies, so MINT offers a library of common solutions to select from.
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <a
+                aria-label="Add solutions from library"
+                class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
+                href="/models/123/collaboration-area/model-to-operations/solution-library"
+              >
+                Add solutions from library
+              </a>
+              <button
+                class="usa-button usa-button--unstyled display-block"
+                data-testid="button"
+                type="button"
+              >
+                or, create a custom solution
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+    <h3
+      class="margin-y-0"
+    >
+      Start with categories or templates
+    </h3>
+    <div
+      class="grid-row grid-gap-2"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <h5
+          class="margin-bottom-0 margin-top-2 text-normal"
+        >
+          About templates
+        </h5>
+        <p
+          class="mint-body-normal margin-y-0"
+        >
+          All models are unique, but many have similarities based on key characteristics of the model. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added.
+        </p>
+      </div>
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <h5
+          class="margin-bottom-0 margin-top-2 text-normal"
+        >
+          About categories
+        </h5>
+        <p
+          class="mint-body-normal margin-y-0"
+        >
+          Many teams find it useful to organize the milestones in their MTO into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories can be further customized once added.
+        </p>
+      </div>
+    </div>
+    <li
+      class="usa-card margin-top-2"
+      data-testid="article-card"
+    >
+      <div
+        class="usa-card__container shadow-2 padding-0 margin-0"
+        style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
+      >
+        <div
+          class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg"
+        >
+          TEMPLATE 
+          <svg
+            class="usa-icon margin-right-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            style="top: 4px;"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 3v8h8V3H3zm6 6H5V5h4v4zm-6 4v8h8v-8H3zm6 6H5v-4h4v4zm4-16v8h8V3h-8zm6 6h-4V5h4v4zm-6 4v8h8v-8h-8zm6 6h-4v-4h4v4z"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <div
+          class="padding-x-3 display-flex flex-column height-full"
+        >
+          <div
+            class="usa-card__body padding-x-0 padding-y-2"
+            data-testid="CardBody"
+          >
+            <div
+              class="grid-row grid-gap-2"
+              data-testid="grid"
+            >
+              <div
+                class="tablet:grid-col-9 desktop:grid-col-9"
+                data-testid="grid"
+              >
+                <h4
+                  class="line-height-body-4 margin-y-0"
+                >
+                  Standard categories
+                </h4>
+                24 categories, 0 milestones, 0 solutions
+              </div>
+              <div
+                class="tablet:grid-col-3 desktop:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="display-flex flex-justify-end"
+                >
+                  <button
+                    class="usa-button usa-button--outline"
+                    data-testid="button"
+                    type="button"
+                  >
+                    Add this template
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </div>
+</DocumentFragment>
+`;

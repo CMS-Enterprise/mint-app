@@ -24,6 +24,7 @@ const DiscussionModalWrapper = ({
       isOpen={isOpen}
       modalHeading={discussionsMiscT('modalHeading')}
       testid="discussion-modal"
+      noScrollable
     >
       <GridContainer className="padding-y-6">
         <Grid desktop={{ col: 12 }}>{children}</Grid>

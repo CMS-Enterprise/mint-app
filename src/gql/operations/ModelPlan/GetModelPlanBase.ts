@@ -8,6 +8,12 @@ export default gql(/* GraphQL */ `
       modifiedDts
       createdDts
       status
+      mtoMatrix {
+        status
+        info {
+          id
+        }
+      }
     }
   }
 `);

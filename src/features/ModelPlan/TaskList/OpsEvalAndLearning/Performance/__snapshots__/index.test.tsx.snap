@@ -75,7 +75,8 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
   </p>
   <div>
     <div
-      class="padding-2 bg-primary-lighter"
+      class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
+      style="gap: 1rem;"
     >
       <div
         class="display-flex"
@@ -115,6 +116,7 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
+        data-scroll="benchmarkForPerformance"
       >
         <label
           class="usa-label"
@@ -123,6 +125,30 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
         >
           Will you establish a benchmark to capture performance?
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-benchmark-performance-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <fieldset
           class="usa-fieldset"
           data-testid="fieldset"
@@ -525,6 +551,7 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-scroll="participantAppeal"
       >
         <label
           class="usa-label"
@@ -533,6 +560,30 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
         >
           Will participants be able to appeal the following?
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning margin-top-2"
+          data-testid="alert"
+          id="ops-eval-and-learning-appeal-performance-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <div
           class="usa-alert usa-alert--info usa-alert--slim flex"
           data-testid="alert"

@@ -27,7 +27,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -94,10 +94,6 @@ const Evaluation = () => {
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as EvaluationFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -207,7 +203,7 @@ const Evaluation = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup>
+                  <FieldGroup scrollElement="evaluationApproaches">
                     <Label
                       htmlFor="ops-eval-and-learning-evaluation-approach"
                       id="ops-eval-and-learning-evaluation-approach"
@@ -216,16 +212,7 @@ const Evaluation = () => {
                       {opsEvalAndLearningT('evaluationApproaches.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-evaluation-approach-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-evaluation-approach-warning" />
 
                     {getKeys(evaluationApproachesConfig.options).map(type => {
                       return (
@@ -327,7 +314,10 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-top-4">
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="dataNeededForMonitoring"
+                  >
                     <Label
                       htmlFor="ops-eval-and-learning-data-needed"
                       id="label-ops-eval-and-learning-data-needed"
@@ -336,16 +326,7 @@ const Evaluation = () => {
                       {opsEvalAndLearningT('dataNeededForMonitoring.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-data-needed-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
 
                     <p className="text-base margin-y-1">
                       {opsEvalAndLearningT('dataNeededForMonitoring.sublabel')}
@@ -396,7 +377,10 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-top-4">
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="dataToSendParticicipants"
+                  >
                     <Label
                       htmlFor="ops-eval-and-learning-data-to-send"
                       id="label-ops-eval-and-learning-data-to-send"
@@ -405,16 +389,7 @@ const Evaluation = () => {
                       {opsEvalAndLearningT('dataToSendParticicipants.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-data-to-send-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-data-to-send-warning" />
 
                     <Field
                       as={MultiSelect}

@@ -1,4 +1,5 @@
 @use 'uswds-core' as *;
+@use 'viewports' as *;
 @use 'colors' as *;
 
 .read-only-model-plan {
@@ -19,7 +20,7 @@
 
     &.subNav {
       li {
-        margin-bottom: 1rem;
+        border: none;
         line-height: 1.62;
 
         &.subNav__item--group-border {
@@ -41,12 +42,13 @@
 
       a {
         display: flex;
-        color: color('white');
+        color: color('white') !important;
         text-decoration: none;
         position: relative;
+        padding-left: 0 !important;
 
         &.subNav--current {
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 1rem !important;
           font-weight: bold;
 
           &::after {
@@ -63,5 +65,15 @@
         }
       }
     }
+  }
+}
+
+.usa-sidenav {
+  border: none !important;
+}
+
+@media screen and (max-width: $mobile) {
+  .usa-sidenav a:not(.usa-button):hover {
+    background-color: transparent !important;
   }
 }

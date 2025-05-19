@@ -171,14 +171,16 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 	return ModelPlanNameHistory(logger, obj.ID, sort, r.store)
 }
 
-// OperationalNeeds is the resolver for the operationalNeeds field.
-func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
-	return OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
-}
-
 // OpSolutionLastModifiedDts is the resolver for the opSolutionLastModifiedDts field.
 func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error) {
 	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
+}
+
+// MtoMatrix is the resolver for the mtoMatrix field.
+func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan) (*models.ModelsToOperationMatrix, error) {
+	return &models.ModelsToOperationMatrix{
+		ModelPlan: obj, // pass a reference of the Model Plan to the MTO Matrix object so we can fetch stuff based on it!
+	}, nil
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -209,10 +211,9 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 }
 
 // ShareModelPlan is the resolver for the shareModelPlan field.
-func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, usernames []string, optionalMessage *string) (bool, error) {
+func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-
 	return ModelPlanShare(
 		ctx,
 		logger,
@@ -223,6 +224,7 @@ func (r *mutationResolver) ShareModelPlan(ctx context.Context, modelPlanID uuid.
 		r.addressBook,
 		modelPlanID,
 		viewFilter,
+		modelShareSection,
 		usernames,
 		optionalMessage,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
@@ -259,3 +261,13 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.Mo
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
 type modelPlanResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
+	return OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
+}

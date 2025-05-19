@@ -23,7 +23,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -86,10 +86,6 @@ const Learning = () => {
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetLearningFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -179,21 +175,12 @@ const Learning = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup>
+                  <FieldGroup scrollElement="modelLearningSystems">
                     <Label htmlFor="ops-eval-and-learning-learning-systems">
                       {opsEvalAndLearningT('modelLearningSystems.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-learning-systems-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-learning-systems-warning" />
 
                     {getKeys(modelLearningSystemsConfig.options).map(type => {
                       return (

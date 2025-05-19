@@ -1,15 +1,17 @@
-const scrollBlackList: string[] = [
+const scrollBypass: string[] = [
   'read-only',
   'sample-model-plan',
   '/help-and-knowledge/operational-solutions',
   '?solution=',
-  '&solution='
+  '&solution=',
+  '&scroll-to-bottom',
+  '/collaboration-area/model-to-operations'
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {
   return (
-    !scrollBlackList.some(r => path.includes(r)) &&
-    !scrollBlackList.some(r => prevPath?.includes(r))
+    !scrollBypass.some(r => path.includes(r)) &&
+    !scrollBypass.some(r => prevPath?.includes(r))
   );
 };
 

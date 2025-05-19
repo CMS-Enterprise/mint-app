@@ -26,17 +26,10 @@ const AddDocument = () => {
 
   const { state } = useLocation<{
     state: {
-      solutionDetailsLink?: string;
-      solutionID?: string;
       fromCollaborationArea?: boolean;
     };
-    solutionDetailsLink?: string;
-    solutionID?: string;
     fromCollaborationArea?: boolean;
   }>();
-
-  const solutionDetailsLink = state?.solutionDetailsLink;
-  const solutionID = state?.solutionID;
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -48,24 +41,12 @@ const AddDocument = () => {
     ? breadcrumbs.filter(item => item !== BreadcrumbItemOptions.DOCUMENTS)
     : breadcrumbs;
 
-  const solutionDocumentBreadcrumb = [
-    BreadcrumbItemOptions.HOME,
-    BreadcrumbItemOptions.COLLABORATION_AREA,
-    BreadcrumbItemOptions.TASK_LIST,
-    BreadcrumbItemOptions.IT_TRACKER,
-    BreadcrumbItemOptions.SOLUTION_DETAILS
-  ];
-
   return (
     <MainContent data-testid="add-document">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
-            items={
-              solutionDetailsLink
-                ? solutionDocumentBreadcrumb
-                : updatedBreadcrumbs
-            }
+            items={updatedBreadcrumbs}
             customItem={t('addDocument')}
           />
         </Grid>
@@ -103,17 +84,7 @@ const AddDocument = () => {
             </Button>
           </ButtonGroup>
 
-          {formState === 'upload' ? (
-            <DocumentUpload
-              solutionDetailsLink={solutionDetailsLink}
-              solutionID={solutionID}
-            />
-          ) : (
-            <LinkDocument
-              solutionDetailsLink={solutionDetailsLink}
-              solutionID={solutionID}
-            />
-          )}
+          {formState === 'upload' ? <DocumentUpload /> : <LinkDocument />}
 
           <div className="display-block">
             <Button

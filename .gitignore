@@ -41,6 +41,7 @@ package-lock.json
 # Various temp files
 tmp
 *.swp
+todos_in_diff.log
 
 # Binaries
 /bin/

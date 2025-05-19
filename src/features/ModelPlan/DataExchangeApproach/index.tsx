@@ -50,7 +50,6 @@ const DataEchangeApproach = () => {
         modelID={modelID}
         className="margin-top-2 margin-bottom-7"
         renderTextFor="dataExchangeApproach"
-        inlineText
       />
 
       <Switch>

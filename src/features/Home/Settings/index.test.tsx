@@ -1,11 +1,15 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import {
+  GetGlobalMtoCommonSolutionsDocument,
+  GetGlobalMtoCommonSolutionsQuery,
+  GetGlobalMtoCommonSolutionsQueryVariables,
   GetHomepageSettingsDocument,
-  GetPossibleOperationalSolutionsDocument,
-  OperationalSolutionKey,
+  GetHomepageSettingsQuery,
+  GetHomepageSettingsQueryVariables,
+  MtoCommonSolutionKey,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
@@ -15,22 +19,26 @@ import SelectSolutionSettings from './selectSolutions';
 import HomePageSettings from './settings';
 import SettingsOrder, { moveItem } from './settingsOrder';
 
-const mocks = [
+const mocks: MockedResponse<
+  GetHomepageSettingsQuery,
+  GetHomepageSettingsQueryVariables
+>[] = [
   {
     request: {
       query: GetHomepageSettingsDocument
     },
     result: {
       data: {
+        __typename: 'Query',
         userViewCustomization: {
           id: '3b29f11e-7dd4-4385-8056-27468d3dd562',
           viewCustomization: [
-            ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION,
+            ViewCustomizationType.MODELS_BY_SOLUTION,
             ViewCustomizationType.MODELS_WITH_CR_TDL
           ],
-          possibleOperationalSolutions: [
-            OperationalSolutionKey.INNOVATION,
-            OperationalSolutionKey.ACO_OS
+          solutions: [
+            MtoCommonSolutionKey.INNOVATION,
+            MtoCommonSolutionKey.ACO_OS
           ],
           __typename: 'UserViewCustomization'
         }
@@ -39,36 +47,36 @@ const mocks = [
   }
 ];
 
-const solutionsMock = {
+const solutionsMock: MockedResponse<
+  GetGlobalMtoCommonSolutionsQuery,
+  GetGlobalMtoCommonSolutionsQueryVariables
+> = {
   request: {
-    query: GetPossibleOperationalSolutionsDocument
+    query: GetGlobalMtoCommonSolutionsDocument
   },
   result: {
     data: {
-      possibleOperationalSolutions: [
+      __typename: 'Query',
+      mtoCommonSolutions: [
         {
-          id: 1,
           name: '4innovation (4i)',
-          key: OperationalSolutionKey.INNOVATION,
-          __typename: 'PossibleOperationalSolution'
+          key: MtoCommonSolutionKey.INNOVATION,
+          __typename: 'MTOCommonSolution'
         },
         {
-          id: 2,
           name: 'Accountable Care Organization - Operational System (ACO-OS)',
-          key: OperationalSolutionKey.ACO_OS,
-          __typename: 'PossibleOperationalSolution'
+          key: MtoCommonSolutionKey.ACO_OS,
+          __typename: 'MTOCommonSolution'
         },
         {
-          id: 3,
           name: 'Automated Plan Payment System (APPS)',
-          key: OperationalSolutionKey.APPS,
-          __typename: 'PossibleOperationalSolution'
+          key: MtoCommonSolutionKey.APPS,
+          __typename: 'MTOCommonSolution'
         },
         {
-          id: 4,
           name: 'Centralized Data Exchange (CDX)',
-          key: OperationalSolutionKey.CDX,
-          __typename: 'PossibleOperationalSolution'
+          key: MtoCommonSolutionKey.CDX,
+          __typename: 'MTOCommonSolution'
         }
       ]
     }

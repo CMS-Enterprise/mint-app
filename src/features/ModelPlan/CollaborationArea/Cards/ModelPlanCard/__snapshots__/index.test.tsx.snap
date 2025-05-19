@@ -79,7 +79,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         <a
           class="usa-button margin-right-1"
           data-testid="to-task-list"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
         >
           Go to Model Plan
         </a>

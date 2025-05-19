@@ -62,44 +62,45 @@ describe('Discussion Center', () => {
       'There are no new discussion topics. Start a discussion and it will appear here.'
     );
 
-    cy.contains('button', 'Start a discussion').click();
+    // TODO: Reimplement solutions cypress once we add to backend
+    // cy.contains('button', 'Start a discussion').click();
 
-    // Test discussion tagging/mention dropdown, selection, and readonly render
-    cy.get('#user-role').should('not.be.disabled');
+    // // Test discussion tagging/mention dropdown, selection, and readonly render
+    // cy.get('#user-role').should('not.be.disabled');
 
-    cy.get('#mention-editor').type('@');
+    // cy.get('#mention-editor').type('@');
 
-    cy.get('#INNOVATION').contains('4innovation (4i)');
+    // cy.get('#INNOVATION').contains('4innovation (4i)');
 
-    cy.get('#mention-editor').type('{downArrow}{enter}');
+    // cy.get('#mention-editor').type('{downArrow}{enter}');
 
-    cy.get('#mention-editor').should(
-      'have.text',
-      '@Accountable Care Organization - Operational System (ACO-OS) '
-    );
+    // cy.get('#mention-editor').should(
+    //   'have.text',
+    //   '@Accountable Care Organization - Operational System (ACO-OS) '
+    // );
 
-    cy.contains('button', 'Save discussion').click();
+    // cy.contains('button', 'Save discussion').click();
 
-    cy.get('#mention-editor').contains(
-      '@Accountable Care Organization - Operational System (ACO-OS) '
-    );
+    // cy.get('#mention-editor').contains(
+    //   '@Accountable Care Organization - Operational System (ACO-OS) '
+    // );
 
-    cy.get('[data-testid="close-discussions"]').click();
+    // cy.get('[data-testid="close-discussions"]').click();
 
-    cy.get('[data-testid="discussion-modal"]').should('not.exist');
+    // cy.get('[data-testid="discussion-modal"]').should('not.exist');
 
-    cy.get('[data-testid="return-to-collaboration"]').click();
+    // cy.get('[data-testid="return-to-collaboration"]').click();
 
-    cy.get('[data-testid="discussion-card-count"]').contains('2 discussions');
+    // cy.get('[data-testid="discussion-card-count"]').contains('2 discussions');
 
-    cy.contains('button', 'Start a discussion').click();
+    // cy.contains('button', 'Start a discussion').click();
 
-    cy.contains('button', 'Cancel').click();
+    // cy.contains('button', 'Cancel').click();
 
-    cy.get('[data-testid="close-discussions"]').click();
+    // cy.get('[data-testid="close-discussions"]').click();
 
-    cy.contains('button', 'View all').click();
+    // cy.contains('button', 'View all').click();
 
-    cy.get('[data-testid="close-discussions"]').click();
+    // cy.get('[data-testid="close-discussions"]').click();
   });
 });

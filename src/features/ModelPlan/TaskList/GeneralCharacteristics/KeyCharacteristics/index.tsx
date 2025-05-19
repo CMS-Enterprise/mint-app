@@ -27,7 +27,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -91,10 +91,6 @@ const KeyCharacteristics = () => {
     planContractUpdatedNote
   } = (data?.modelPlan?.generalCharacteristics ||
     {}) as KeyCharacteristicsFormType;
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -381,7 +377,10 @@ const KeyCharacteristics = () => {
                       KeyCharacteristic.PART_D
                     )) && (
                     <>
-                      <FieldGroup className="margin-y-4">
+                      <FieldGroup
+                        className="margin-y-4"
+                        scrollElement="collectPlanBids"
+                      >
                         <Label
                           htmlFor="plan-characteristics-collect-bids"
                           className="text-normal"
@@ -389,16 +388,7 @@ const KeyCharacteristics = () => {
                           {generalCharacteristicsT('collectPlanBids.label')}
                         </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="plan-characteristics-collect-bids-warning"
-                            onClick={() =>
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
+                        <MTOWarning id="plan-characteristics-collect-bids-warning" />
 
                         <BooleanRadio
                           field="collectPlanBids"
@@ -428,16 +418,7 @@ const KeyCharacteristics = () => {
                           )}
                         </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="plan-characteristics-manage-enrollment-warning"
-                            onClick={() =>
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
+                        <MTOWarning id="plan-characteristics-manage-enrollment-warning" />
 
                         <BooleanRadio
                           field="managePartCDEnrollment"
@@ -454,7 +435,10 @@ const KeyCharacteristics = () => {
                         className="margin-bottom-0"
                       />
 
-                      <FieldGroup className="margin-y-4">
+                      <FieldGroup
+                        className="margin-y-4"
+                        scrollElement="planContractUpdated"
+                      >
                         <Label
                           htmlFor="plan-characteristics-contact-updated"
                           className="text-normal"
@@ -462,16 +446,7 @@ const KeyCharacteristics = () => {
                           {generalCharacteristicsT('planContractUpdated.label')}
                         </Label>
 
-                        {itSolutionsStarted && (
-                          <ITSolutionsWarning
-                            id="plan-characteristics-contact-updated-warning"
-                            onClick={() =>
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                              )
-                            }
-                          />
-                        )}
+                        <MTOWarning id="plan-characteristics-contact-updated-warning" />
 
                         <BooleanRadio
                           field="planContractUpdated"

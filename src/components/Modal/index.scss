@@ -12,6 +12,9 @@
     border-radius: .5rem;
     font-size: 1.375em;
 
+    max-height: 90vh;
+    overflow: auto;
+
     @media screen and (min-width: $tablet) {
       width: 668px !important;
     }
@@ -22,9 +25,10 @@
   }
 
   &__x-button {
-    display: block;
-    margin: 1rem 1rem 1rem auto;
-    padding: 0;
+    display: flex;
+    padding: .5rem;
+    margin: auto;
+    margin-right: 0;
     background: none;
     border: 0;
     font-size: 1.5rem;
@@ -39,9 +43,10 @@
   &__body {
     padding: 0 2rem 1.5rem;
   }
+
 }
 
 .confirmation-modal {
   font-size: 1rem;
-  width: 480px;
+  width: 480px !important;
 }

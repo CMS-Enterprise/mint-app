@@ -83,7 +83,8 @@ const CollectingAndSendingData = () => {
   const { __typename, id, ...defaultValues } = formData;
 
   const methods = useForm<CollectingAndSendingDataType>({
-    defaultValues
+    defaultValues,
+    mode: 'onChange'
   });
 
   const {
