@@ -120,11 +120,11 @@ export const CreatingMTOMatrix = () => {
               </Grid>
 
               <h3 className="margin-top-3 margin-bottom-1">
-                {t('whyCreateMTO')}
+                {t('whoCreatesMTO')}
               </h3>
 
               <p className="margin-bottom-2 margin-top-1">
-                {t('whyCreateMTODescription')}
+                {t('whoCreatesMTODescription')}
               </p>
 
               <Grid row gap={2} className="margin-bottom-1">

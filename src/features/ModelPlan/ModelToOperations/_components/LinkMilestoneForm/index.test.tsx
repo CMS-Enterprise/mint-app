@@ -93,7 +93,7 @@ describe('LinkMilestoneForm Component', () => {
     renderComponent(['milestone-1']);
 
     // Check for the heading
-    expect(screen.getByText('1 selected milestone')).toBeInTheDocument();
+    expect(screen.getByText('1 associated milestone')).toBeInTheDocument();
 
     // Check for prepolutated milestone
     expect(screen.getByText('Milestone 1')).toBeInTheDocument();

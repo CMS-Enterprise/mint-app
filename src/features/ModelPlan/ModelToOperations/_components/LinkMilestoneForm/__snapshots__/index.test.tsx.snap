@@ -17,7 +17,7 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
         <h3
           class="margin-bottom-2"
         >
-          0 selected milestones
+          0 associated milestones
         </h3>
         <div
           class="text-base-dark mint-body-normal padding-bottom-4 border-bottom border-base-light"
@@ -36,8 +36,13 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
           data-testid="label"
           for="available-solutions"
         >
-          Linked milestones
+          Milestones
         </label>
+        <div
+          class="mint-help-text margin-top-1"
+        >
+          Select all that apply
+        </div>
         <div>
           <div
             class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
@@ -76,7 +81,7 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
                     aria-describedby="react-select-3-placeholder"
                     aria-expanded="false"
                     aria-haspopup="true"
-                    aria-labelledby="Linked milestones"
+                    aria-labelledby="Milestones"
                     autocapitalize="none"
                     autocomplete="off"
                     autocorrect="off"
