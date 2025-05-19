@@ -361,7 +361,7 @@ const csvFormatter = (
     const modelName =
       csvData.length > 1 ? 'All Model Plans' : csvData[0].modelName;
 
-    const modelNameFormatted = modelName.replace(/[^a-zA-Z0-9]/g, '_');
+    const modelNameFormatted = modelName.replace(/ /g, '_');
 
     const exportSectionFormatted =
       csvData.length > 1 ? '' : `-${exportSection.toUpperCase()}`;
