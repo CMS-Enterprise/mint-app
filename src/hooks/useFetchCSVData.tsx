@@ -358,6 +358,14 @@ const csvFormatter = (
           csvFields(i18next.t)[exportSection]
         );
 
+    const modelName = csvData.length > 1 ? 'Model Plans' : csvData[0].modelName;
+
+    const modelNameFormatted = modelName.replace(/[^a-zA-Z0-9]/g, '_');
+
+    const exportFileName = `MINT_${modelNameFormatted}_${exportSection}.csv`;
+
+    console.log('exportFileName', exportFileName);
+
     const parser = new Parser({
       fields: selectedCSVFields,
       transforms: [
