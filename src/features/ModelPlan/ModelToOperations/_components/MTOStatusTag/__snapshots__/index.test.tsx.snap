@@ -3,7 +3,7 @@
 exports[`MilestoneStatusTag Component > renders correctly and matches snapshot for COMPLETED status 1`] = `
 <DocumentFragment>
   <div
-    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-success-dark text-white "
+    class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-success-dark text-white "
     data-testid="tasklist-tag"
   >
     <span>

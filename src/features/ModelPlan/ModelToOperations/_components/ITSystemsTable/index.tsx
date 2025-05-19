@@ -75,7 +75,10 @@ const ITSystemsTable = ({
 
   const { location } = history;
 
-  const params = new URLSearchParams(history.location.search);
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const { openEditSolutionModal, setSolutionID } = useContext(
     EditMTOSolutionContext
@@ -318,7 +321,11 @@ const ITSystemsTable = ({
           const { milestones } = row.original;
 
           if (!milestones || milestones?.length === 0)
-            return <>{t('table.noRelatedMilestones')}</>;
+            return (
+              <span className="text-italic">
+                {t('table.noRelatedMilestones')}
+              </span>
+            );
 
           return (
             <>
@@ -341,7 +348,7 @@ const ITSystemsTable = ({
                 <Button
                   type="button"
                   unstyled
-                  className="mint-print-link"
+                  className="mint-print-link display-block"
                   onClick={() => {
                     if (readView) {
                       openViewSolutionModal(row.original.id);
@@ -526,6 +533,13 @@ const ITSystemsTable = ({
     }
   }, [isPrintPDF, setPageSize, initPageSize]);
 
+  useEffect(() => {
+    if (params.get('page')) {
+      const pageNum = parseInt(params.get('page') || '0', 10);
+      gotoPage(pageNum - 1);
+    }
+  }, [params, gotoPage, data]);
+
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -692,6 +706,7 @@ const ITSystemsTable = ({
                       pageSize={state.pageSize}
                       setPageSize={setPageSize}
                       page={[]}
+                      setQueryParam
                     />
                   )}
 

@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import './index.scss';
 
@@ -20,14 +19,8 @@ const MTOWarning = ({ className, id, route }: MTOWarningType) => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { isMTOStarted } = useContext(ModelInfoContext);
-
   const mtoRoute =
     route || `/models/${modelID}/collaboration-area/model-to-operations/matrix`;
-
-  if (!isMTOStarted) {
-    return null;
-  }
 
   return (
     <Alert type="info" className={classNames('mto-warning', className)} id={id}>

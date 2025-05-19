@@ -249,6 +249,30 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           Do you plan to use a helpdesk?
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-help-desk-use-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <fieldset
           class="usa-fieldset"
           data-testid="fieldset"
@@ -471,6 +495,30 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           Are you planning to use IDDOC support?
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-iddoc-support-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <p
           class="text-base margin-y-1"
         >

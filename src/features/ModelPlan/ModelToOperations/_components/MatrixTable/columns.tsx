@@ -114,6 +114,7 @@ type ExtendedRowProps = RowProps & {
   initLocation?: string;
   search?: string;
   readView?: boolean;
+  numberOfMilestones?: number;
 };
 
 export type ColumnType = {
@@ -226,7 +227,8 @@ export const columns: ColumnType[] = [
       setMTOModalState,
       initLocation,
       search,
-      readView
+      readView,
+      numberOfMilestones
     }: ExtendedRowProps) => {
       const { openEditMilestoneModal, setMilestoneID } = useContext(
         MTOMilestonePanelContext
@@ -243,11 +245,29 @@ export const columns: ColumnType[] = [
               setMilestoneID(row.id);
             }}
           >
-            {row.name}
+            {row.name}{' '}
+            {rowType !== 'milestone' && (
+              <span className="text-base-dark margin-left-2 mint-body-normal position-absolute">
+                {i18next.t('modelToOperationsMisc:table.milestonesCount', {
+                  count: numberOfMilestones
+                })}
+              </span>
+            )}
           </Button>
         );
       }
-      return <>{row.name}</>;
+      return (
+        <>
+          {row.name}{' '}
+          {rowType !== 'milestone' && (
+            <span className="text-base-dark margin-left-2 mint-body-normal position-absolute">
+              {i18next.t('modelToOperationsMisc:table.milestonesCount', {
+                count: numberOfMilestones
+              })}
+            </span>
+          )}
+        </>
+      );
     }
   },
   {
@@ -256,6 +276,8 @@ export const columns: ColumnType[] = [
     width: '175px',
     sort: sortNested,
     Cell: ({ row, rowType, expanded }: RowProps) => {
+      if (rowType !== 'milestone') return <></>;
+
       if (!row.facilitatedBy || row.facilitatedBy.length === 0)
         return <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>;
       return (
@@ -297,7 +319,8 @@ export const columns: ColumnType[] = [
       setMTOModalState,
       initLocation,
       search,
-      readView
+      readView,
+      numberOfMilestones
     }: ExtendedRowProps) => {
       const { openViewSolutionModal, setViewSolutionID } = useContext(
         MTOSolutionPanelContext
