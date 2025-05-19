@@ -91,7 +91,7 @@ const changeHistory = {
   solution: 'solution',
   subtask: 'Subtask',
   category: 'Category',
-  subCategory: 'Subcategory',
+  subCategory: 'Sub-category',
   milestone: 'Milestone',
   status: 'Status',
   readyForReview: 'Ready for review',

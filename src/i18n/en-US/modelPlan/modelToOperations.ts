@@ -547,9 +547,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       noMilestones:
         'You haven’t identified any specific milestones that this solution will help implement.',
       milestone: 'Milestone',
+      helpText: 'Select all that apply',
       status: 'Status',
-      selectedMilestoneCount_other: '{{count}} selected milestones',
-      selectedMilestoneCount: '{{count}} selected milestone',
+      selectedMilestoneCount_other: '{{count}} associated milestones',
+      selectedMilestoneCount: '{{count}} associated milestone',
       relatedMilestoneCount_other: '{{count}} related milestones',
       relatedMilestoneCount: '{{count}} related milestone',
       suggestedMilestones: 'Suggested milestones',
