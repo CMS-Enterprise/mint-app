@@ -175,12 +175,12 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
             <h3
               class="margin-top-3 margin-bottom-1"
             >
-              Why create an MTO?
+              Who creates and uses an MTO?
             </h3>
             <p
               class="margin-bottom-2 margin-top-1"
             >
-              MTOs help to make sense of and document the very complex set of systems, contracts, and activities used to implement a model. It helps keep track of the status of a variety of moving parts, and allows all interested parties to stay informed about model implementation progress. In the past, MTOs have been maintained by individual IT Leads as Powerpoint or Excel files, but MINT allows for more streamlined setup and update capabilities for IT Leads, as well as improved self-service access for all other interested parties.
+              IT Leads are responsible for creating the MTO and keeping it up-to-date. Model team members are able to make updates to the MTO if they have that working arrangement with their IT Lead and work closely with or keep their IT Lead informed. MINT Team users (also known as Assessment Team) are also able to edit MTOs if needed, and are available to help IT leads.
             </p>
             <div
               class="grid-row grid-gap-2 margin-bottom-1"
