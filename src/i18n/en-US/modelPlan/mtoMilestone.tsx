@@ -13,7 +13,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     gqlField: 'name',
     goField: 'Name',
     dbField: 'name',
-    label: 'Milestone name',
+    label: 'Milestone title',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.0

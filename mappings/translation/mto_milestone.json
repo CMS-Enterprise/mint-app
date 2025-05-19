@@ -3,7 +3,7 @@
     "gqlField": "name",
     "goField": "Name",
     "dbField": "name",
-    "label": "Milestone name",
+    "label": "Milestone title",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1
