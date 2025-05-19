@@ -6,19 +6,20 @@ import classNames from 'classnames';
 import Discussions from 'features/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
 
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-
 type AskAQuestionType = {
   modelID: string;
-  renderTextFor?: 'need' | 'solution' | 'status' | 'dataExchangeApproach';
-  inlineText?: boolean;
+  renderTextFor?:
+    | 'need'
+    | 'solution'
+    | 'status'
+    | 'dataExchangeApproach'
+    | 'modelToOperations';
   className?: string;
 };
 
 const AskAQuestion = ({
   modelID,
   renderTextFor,
-  inlineText,
   className
 }: AskAQuestionType) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
@@ -26,9 +27,9 @@ const AskAQuestion = ({
   const { t: dataExchangeApproachT } = useTranslation(
     'dataExchangeApproachMisc'
   );
-  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+  const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
 
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const renderText = (text: string | undefined) => {
     switch (text) {
@@ -38,6 +39,8 @@ const AskAQuestion = ({
         return opSolutionsMiscT('helpTiming');
       case 'dataExchangeApproach':
         return dataExchangeApproachT('needHelpDiscussion');
+      case 'modelToOperations':
+        return modelToOperationsT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');
@@ -46,28 +49,24 @@ const AskAQuestion = ({
 
   return (
     <div className={className}>
-      {isDiscussionOpen && (
-        <DiscussionModalWrapper
-          isOpen={isDiscussionOpen}
-          closeModal={() => setIsDiscussionOpen(false)}
-        >
-          <Discussions modelID={modelID} askAQuestion />
-        </DiscussionModalWrapper>
-      )}
+      <DiscussionModalWrapper
+        isOpen={isDiscussionOpen}
+        closeModal={() => setIsDiscussionOpen(false)}
+      >
+        <Discussions modelID={modelID} askAQuestion />
+      </DiscussionModalWrapper>
 
       <div
-        className={classNames('padding-2 bg-primary-lighter', {
-          'display-flex flex-justify flex-align-center': inlineText && !isMobile
-        })}
+        className={classNames(
+          'padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center',
+          {
+            'padding-bottom-205': renderTextFor === 'modelToOperations'
+          }
+        )}
+        style={{ gap: '1rem' }}
       >
         {renderTextFor && (
-          <p
-            className={classNames('text-bold margin-top-0', {
-              'margin-0': inlineText && !isMobile
-            })}
-          >
-            {renderText(renderTextFor)}
-          </p>
+          <p className="text-bold margin-0">{renderText(renderTextFor)}</p>
         )}
 
         <div className="display-flex" data-testid="ask-a-question">

@@ -41,7 +41,7 @@ func OperationalSolutionCreate(
 
 	// Send an email to the selected POCs
 	go func() {
-		sendEmailErr := sendSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
+		sendEmailErr := sendOperationalSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
 		if sendEmailErr != nil {
 			logger.Error("error sending solution selected emails",
 				zap.String("solutionID", sol.ID.String()),
@@ -87,8 +87,8 @@ func OperationalSolutionGetByIDLOADER(ctx context.Context, id uuid.UUID) (*model
 	return loaders.OperationalSolutions.ByID.Load(ctx, id)
 }
 
-// sendSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
-func sendSolutionSelectedEmails(
+// sendOperationalSolutionSelectedEmails gets the data and sends the emails for when a solution is selected
+func sendOperationalSolutionSelectedEmails(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
@@ -105,7 +105,7 @@ func sendSolutionSelectedEmails(
 		logger.Info("operational solution is of the other type, no solution selected email being sent", zap.Any("solution", operationalSolution))
 		return nil
 	}
-	solSelectedDB, err := store.GetSolutionSelectedDetails(operationalSolution.ID)
+	solSelectedDB, err := store.GetOperationalSolutionSelectedDetails(operationalSolution.ID)
 	if err != nil {
 		return err
 	}
@@ -124,7 +124,7 @@ func sendSolutionSelectedEmails(
 		return err
 	}
 
-	err = sendSolutionSelectedForUseByModelEmail(
+	err = sendOperationalSolutionSelectedForUseByModelEmail(
 		emailService,
 		emailTemplateService,
 		addressBook,
@@ -135,12 +135,12 @@ func sendSolutionSelectedEmails(
 	return err
 }
 
-// sendSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
-func sendSolutionSelectedForUseByModelEmail(
+// sendOperationalSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
+func sendOperationalSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	solutionSelectedDB *email.SolutionSelectedDB,
+	solutionSelectedDB *email.OperationalSolutionSelectedDB,
 	pocEmailAddress []string,
 ) error {
 
@@ -148,12 +148,12 @@ func sendSolutionSelectedForUseByModelEmail(
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SolutionSelectedTemplateName)
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.OperationalSolutionSelectedTemplateName)
 	if err != nil {
 		return err
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.SolutionSelectedSubjectContent{
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
 		ModelName:    solutionSelectedDB.ModelName,
 		SolutionName: solutionSelectedDB.SolutionName,
 	})

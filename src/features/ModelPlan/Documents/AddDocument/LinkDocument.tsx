@@ -4,10 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import {
-  DocumentType,
-  useCreateDocumentSolutionLinksMutation
-} from 'gql/generated/graphql';
+import { DocumentType } from 'gql/generated/graphql';
 import LinkNewPlanDocument from 'gql/operations/Documents/LinkNewPlanDocument';
 
 import Alert from 'components/Alert';
@@ -65,8 +62,6 @@ const LinkDocument = ({
       </Alert>
     );
 
-  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
-
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = ({
     name,
@@ -91,41 +86,17 @@ const LinkDocument = ({
     })
       .then(response => {
         if (!response.errors) {
-          // Checking if need to link new doc to existing solution
-          if (
-            solutionID &&
-            solutionDetailsLink &&
-            response?.data?.linkNewPlanDocument?.id
-          ) {
-            createSolutionLinks({
-              variables: {
-                solutionID,
-                documentIDs: [response?.data?.linkNewPlanDocument?.id]
-              }
-            })
-              .then(res => {
-                if (res && !res.errors) {
-                  messageOnNextPage('documentUploadSolutionSuccess', name);
-                  history.push(solutionDetailsLink);
-                } else if (response.errors) {
-                  setFileNameError(name);
-                  setMutationError(true);
-                }
-              })
-              .catch(() => {
-                setFileNameError(name);
-                setMutationError(true);
-                window.scrollTo(0, 0);
-              });
-          } else {
-            messageOnNextPage('documentUploadSuccess', name);
+          messageOnNextPage('documentUploadSuccess', name);
 
-            if (solutionDetailsLink) {
-              history.push(solutionDetailsLink);
-            } else {
-              history.push(`/models/${modelID}/collaboration-area/documents`);
-            }
+          if (solutionDetailsLink) {
+            history.push(solutionDetailsLink);
+          } else {
+            history.push(`/models/${modelID}/collaboration-area/documents`);
           }
+        } else {
+          setFileNameError(name);
+          setMutationError(true);
+          window.scrollTo(0, 0);
         }
       })
       .catch(errors => {

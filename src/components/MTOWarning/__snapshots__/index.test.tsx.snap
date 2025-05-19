@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The MTOWarning component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="usa-alert usa-alert--info flex mto-warning"
+    data-testid="alert"
+    id="test-id"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        <span>
+          Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+          <a
+            class="usa-link usa-button usa-button--unstyled"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+          >
+            Go to your MTO
+          </a>
+           to review any suggestions.
+        </span>
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

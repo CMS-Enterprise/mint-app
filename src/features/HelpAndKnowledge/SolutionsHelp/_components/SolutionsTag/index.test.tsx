@@ -1,7 +1,8 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { OperationalSolutionCategories } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
+
+import { OperationalSolutionCategories } from 'types/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 

@@ -71,8 +71,8 @@ func createAndInitializeUserViewCustomization(
 	logger *zap.Logger,
 ) (*models.UserViewCustomization, error) {
 	uvcToCreate := models.UserViewCustomization{
-		ViewCustomization:            pq.StringArray{},
-		PossibleOperationalSolutions: pq.StringArray{},
+		ViewCustomization: pq.StringArray{},
+		Solutions:         pq.StringArray{},
 	}
 
 	// should be created for (and by) the user who made the query

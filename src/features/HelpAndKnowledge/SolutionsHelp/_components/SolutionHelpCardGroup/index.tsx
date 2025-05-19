@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
-  OperationalSolutionCategoryRoute,
-  OperationalSolutionSubCategories
-} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import Alert from 'components/Alert';
 import usePagination from 'hooks/usePagination';
+import {
+  OperationalSolutionCategoryRoute,
+  OperationalSolutionSubCategories
+} from 'types/operationalSolutionCategories';
 
 import {
   HelpSolutionType,

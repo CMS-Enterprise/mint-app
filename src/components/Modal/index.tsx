@@ -16,6 +16,9 @@ type ModalProps = {
   modalHeading?: string;
   openModal?: () => void;
   closeModal: () => void;
+  noScrollable?: boolean;
+  fixed?: boolean;
+  zTop?: boolean;
 };
 
 const Modal = ({
@@ -27,7 +30,10 @@ const Modal = ({
   shouldCloseOnOverlayClick = false,
   modalHeading,
   openModal,
-  closeModal
+  closeModal,
+  noScrollable = true,
+  fixed = false,
+  zTop
 }: ModalProps) => {
   const handleOpenModal = () => {
     if (!scroll) noScroll.on();
@@ -40,10 +46,19 @@ const Modal = ({
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-modal__overlay"
-      className={classNames('mint-modal__content', className)}
+      overlayClassName={classNames('mint-modal__overlay', {
+        'overflow-y-scroll': !fixed,
+        'z-top': zTop
+      })}
+      className={classNames('mint-modal__content', className, {
+        'overflow-hidden': fixed
+      })}
       onAfterOpen={handleOpenModal}
-      onAfterClose={noScroll.off}
+      onAfterClose={() => {
+        if (noScrollable) {
+          noScroll.off();
+        }
+      }}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}
@@ -51,24 +66,36 @@ const Modal = ({
       {!navigation ? (
         <>
           <div
-            className={`mint-modal__top-section display-flex text-base ${
-              modalHeading ? 'border-bottom-1px border-base-lighter' : ''
-            }`}
+            className={classNames(
+              'mint-modal__top-section display-flex text-base',
+              {
+                'mint-modal__fixed-top': fixed,
+                'border-bottom-1px border-base-lighter': modalHeading
+              }
+            )}
           >
-            <h4 className="margin-0 padding-left-4 padding-top-2">
-              {modalHeading}
-            </h4>
+            {modalHeading && (
+              <h4 className="margin-0 padding-left-4 padding-top-2">
+                {modalHeading}
+              </h4>
+            )}
             <button
               type="button"
               className="mint-modal__x-button text-base"
               aria-label="Close Modal"
               onClick={closeModal}
             >
-              <Icon.Close />
+              <Icon.Close size={4} />
             </button>
           </div>
 
-          <div className="mint-modal__body">{children}</div>
+          <div
+            className={classNames('mint-modal__body', {
+              'margin-top-6 mint-modal__height overflow-y-auto': fixed
+            })}
+          >
+            {children}
+          </div>
         </>
       ) : (
         <>{children}</>

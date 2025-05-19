@@ -75,7 +75,8 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
   </p>
   <div>
     <div
-      class="padding-2 bg-primary-lighter"
+      class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
+      style="gap: 1rem;"
     >
       <div
         class="display-flex"
@@ -115,6 +116,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
+        data-scroll="evaluationApproaches"
       >
         <label
           class="usa-label maxw-none"
@@ -124,6 +126,30 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           What type of evaluation approach are you considering? Select all that apply.
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-evaluation-approach-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <div
           class="mint-checkbox usa-checkbox"
         >
@@ -374,6 +400,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
+        data-scroll="dataNeededForMonitoring"
       >
         <label
           class="usa-label maxw-none"
@@ -383,6 +410,30 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           What data do you need to monitor the model? Select all that apply.
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-data-needed-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <p
           class="text-base margin-y-1"
         >
@@ -503,6 +554,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
+        data-scroll="dataToSendParticicipants"
       >
         <label
           class="usa-label maxw-none"
@@ -512,6 +564,30 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           What data will you send to participants? Select all that apply.
         </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-data-to-send-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
         <div>
           <div
             class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"

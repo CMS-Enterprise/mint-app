@@ -21,10 +21,6 @@ export default gql(/* GraphQL */ `
         iddocSupport
         iddocSupportNote
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

@@ -1,31 +1,35 @@
-import i18next from 'i18next';
+import { ModelShareSection } from 'gql/generated/graphql';
+import { TFunction } from 'i18next';
+
+// Notes: passing in translation t function here for all mapped sections, as for some reason, i18next library is not accessible here.
+// TODOL I plan to come back later to address this
 
 type CSVLabel = {
   label: string;
   value: string;
 };
 
-const csvFields: (CSVLabel | string)[] = [
+const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   {
-    label: i18next.t<string, {}, string>('modelPlanMisc:modelID'),
+    label: t<string, {}, string>('modelPlanMisc:modelID'),
     value: 'id'
   },
   'modelName',
   {
-    label: i18next.t<string, {}, string>('modelPlan:previousName.label'),
+    label: t<string, {}, string>('modelPlan:previousName.label'),
     value: 'nameHistory'
   },
   'abbreviation',
   {
-    label: i18next.t<string, {}, string>('modelPlan:archived.label'),
+    label: t<string, {}, string>('modelPlan:archived.label'),
     value: 'archived'
   },
   {
-    label: i18next.t<string, {}, string>('modelPlanMisc:createdBy'),
+    label: t<string, {}, string>('modelPlanMisc:createdBy'),
     value: 'createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string, {}, string>('modelPlanMisc:createdAt'),
+    label: t<string, {}, string>('modelPlanMisc:createdAt'),
     value: 'createdDts'
   },
   'status',
@@ -438,85 +442,129 @@ const csvFields: (CSVLabel | string)[] = [
 
   // Collaborators
   {
-    label: `${i18next.t<string, {}, string>(
+    label: `${t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string, {}, string>('collaboratorsMisc:EUAID')}`,
+    )} ${t<string, {}, string>('collaboratorsMisc:EUAID')}`,
     value: 'collaborators.userAccount.username'
   },
   {
-    label: `${i18next.t<string, {}, string>(
+    label: `${t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string, {}, string>('collaborators:username.label')}`,
+    )} ${t<string, {}, string>('collaborators:username.label')}`,
     value: 'collaborators.userAccount.commonName'
   },
   {
-    label: `${i18next.t<string, {}, string>(
+    label: `${t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string, {}, string>('collaborators:teamRoles.label')}`,
+    )} ${t<string, {}, string>('collaborators:teamRoles.label')}`,
     value: 'collaborators.teamRoles'
   },
 
   // Discussions
   {
-    label: i18next.t<string, {}, string>(
-      'discussionsMisc:discussionCSV.content'
-    ),
+    label: t<string, {}, string>('discussionsMisc:discussionCSV.content'),
     value: 'discussions.content.rawContent'
   },
   {
-    label: i18next.t<string, {}, string>(
-      'discussionsMisc:discussionCSV.createdBy'
-    ),
+    label: t<string, {}, string>('discussionsMisc:discussionCSV.createdBy'),
     value: 'discussions.createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string, {}, string>(
-      'discussionsMisc:discussionCSV.userRole'
-    ),
+    label: t<string, {}, string>('discussionsMisc:discussionCSV.userRole'),
     value: 'discussions.userRole'
   },
   {
-    label: i18next.t<string, {}, string>(
+    label: t<string, {}, string>(
       'discussionsMisc:discussionCSV.userRoleDescription'
     ),
     value: 'discussions.userRoleDescription'
   },
   {
-    label: i18next.t<string, {}, string>(
-      'discussionsMisc:discussionCSV.createdAt'
-    ),
+    label: t<string, {}, string>('discussionsMisc:discussionCSV.createdAt'),
     value: 'discussions.createdDts'
   },
 
   // Discussion Replies
   {
-    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.content'),
+    label: t<string, {}, string>('discussionsMisc:replyCSV.content'),
     value: 'discussions.replies.content.rawContent'
   },
   {
-    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.createdBy'),
+    label: t<string, {}, string>('discussionsMisc:replyCSV.createdBy'),
     value: 'discussions.replies.createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.userRole'),
+    label: t<string, {}, string>('discussionsMisc:replyCSV.userRole'),
     value: 'discussions.replies.userRole'
   },
   {
-    label: i18next.t<string, {}, string>(
+    label: t<string, {}, string>(
       'discussionsMisc:replyCSV.userRoleDescription'
     ),
     value: 'discussions.replies.userRoleDescription'
   },
   {
-    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.createdAt'),
+    label: t<string, {}, string>('discussionsMisc:replyCSV.createdAt'),
     value: 'discussions.replies.createdDts'
   }
 ];
 
+const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
+  'mtoMilestone.name',
+  'mtoMilestone.isDraft',
+  {
+    label: t('modelToOperationsMisc:modal.milestone.milestoneCategory.label'),
+    value: 'mtoMilestone.categories.category.name'
+  },
+  {
+    label: t(
+      'modelToOperationsMisc:modal.milestone.milestoneSubcategory.label'
+    ),
+    value: 'mtoMilestone.categories.subCategory.name'
+  },
+  'mtoMilestone.facilitatedBy',
+  'mtoMilestone.facilitatedByOther',
+  'mtoMilestone.needBy',
+  'mtoMilestone.status',
+  'mtoMilestone.riskIndicator',
+  'mtoMilestone.solutions'
+];
+
+const csvFieldsMTOSolution = (t: TFunction): (CSVLabel | string)[] => [
+  'mtoSolution.name',
+  'mtoSolution.facilitatedBy',
+  'mtoSolution.facilitatedByOther',
+  'mtoSolution.neededBy',
+  'mtoSolution.status',
+  'mtoSolution.riskIndicator',
+  'mtoSolution.milestones'
+];
+
+const csvFieldsMTO = (t: TFunction): (CSVLabel | string)[] => [
+  ...csvFieldsMTOMilestone(t),
+  ...csvFieldsMTOSolution(t),
+  'modelToOperations.readyForReviewByUserAccount.commonName',
+  'modelToOperations.readyForReviewDTS'
+];
+
+const csvFields = (
+  t: TFunction
+): Record<ModelShareSection, (CSVLabel | string)[]> => {
+  return {
+    ALL: [...csvFieldsModelPlan(t), ...csvFieldsMTO(t)],
+    [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan(t),
+    [ModelShareSection.MTO_ALL]: csvFieldsMTO(t),
+    [ModelShareSection.MTO_MILESTONES]: csvFieldsMTOMilestone(t),
+    [ModelShareSection.MTO_SOLUTIONS]: csvFieldsMTOSolution(t)
+  };
+};
+
 const fieldsToUnwind: string[] = [
   'collaborators',
   'discussions',
-  'discussions.replies'
+  'discussions.replies',
+  'mtoMilestone',
+  'mtoSolution'
 ];
 
 export { csvFields, fieldsToUnwind };

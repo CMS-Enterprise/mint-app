@@ -21,6 +21,10 @@ import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/SectionContainer';
 import ShareExportModal from 'components/ShareExport';
+import {
+  modelSectionRouteKey,
+  ModelSubSectionRouteKey
+} from 'components/ShareExport/util';
 import StatusBanner from 'components/StatusBanner';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import PrintPDFWrapper from 'contexts/PrintPDFContext';
@@ -52,7 +56,8 @@ import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDataExchangeApproach from './DataExchangeapproach';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
-import ReadOnlyOperationalNeeds from './OperationalNeeds';
+import ReadOnlyMTOMilestones from './MTOMilestones';
+import ReadOnlyMTOSolutions from './MTOSolutions';
 import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
@@ -61,30 +66,25 @@ import './index.scss';
 
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 
+export const readViewGroup = [
+  'model-plan',
+  'model-design-activities',
+  'model-to-operations',
+  'other-model-info'
+] as const;
+
+export type ReadViewGroupType = (typeof readViewGroup)[number];
+
 export type subComponentProps = {
   route: string;
   helpRoute: string;
+  group?: ReadViewGroupType;
   component: React.ReactNode;
 };
 
 export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
-
-const listOfSubpageKey: string[] = [
-  'model-basics',
-  'general-characteristics',
-  'participants-and-providers',
-  'beneficiaries',
-  'operations-evaluation-and-learning',
-  'payment',
-  'it-solutions',
-  'team',
-  'discussions',
-  'documents',
-  'crs-and-tdl',
-  'data-exchange-approach'
-];
 
 export const ReadOnlyComponents = (
   modelID: string,
@@ -94,98 +94,115 @@ export const ReadOnlyComponents = (
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
       helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
+      group: 'model-plan',
       component: <ReadOnlyModelBasics modelID={modelID} />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/general-characteristics',
+      group: 'model-plan',
       component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
     },
     'participants-and-providers': {
       route: `/models/${modelID}/read-only/participants-and-providers`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/participants-and-providers',
+      group: 'model-plan',
       component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
       helpRoute: '/help-and-knowledge/sample-model-plan/beneficiaries',
+      group: 'model-plan',
       component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
+      group: 'model-plan',
       component: <ReadOnlyOpsEvalAndLearning modelID={modelID} />
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
       helpRoute: '/help-and-knowledge/sample-model-plan/payment',
+      group: 'model-plan',
       component: <ReadOnlyPayments modelID={modelID} />
-    },
-    'it-solutions': {
-      route: `/models/${modelID}/read-only/it-solutions`,
-      component: <ReadOnlyOperationalNeeds modelID={modelID} />,
-      helpRoute: '/help-and-knowledge/sample-model-plan/it-solutions'
     },
     'data-exchange-approach': {
       route: `/models/${modelID}/read-only/data-exchange-approach`,
       helpRoute: '/help-and-knowledge/sample-model-plan/data-exchange-approach',
-      component: <ReadOnlyDataExchangeApproach modelID={modelID} />
+      component: <ReadOnlyDataExchangeApproach modelID={modelID} />,
+      group: 'model-design-activities'
+    },
+    milestones: {
+      route: `/models/${modelID}/read-only/milestones`,
+      component: <ReadOnlyMTOMilestones modelID={modelID} />,
+      helpRoute: '/help-and-knowledge/sample-model-plan/milestones',
+      group: 'model-to-operations'
+    },
+    'it-systems-and-solutions': {
+      route: `/models/${modelID}/read-only/it-systems-and-solutions`,
+      component: <ReadOnlyMTOSolutions modelID={modelID} />,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/it-systems-and-solutions',
+      group: 'model-to-operations'
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
       helpRoute: '/help-and-knowledge/sample-model-plan/team',
-      component: <ReadOnlyTeamInfo modelID={modelID} />
+      component: <ReadOnlyTeamInfo modelID={modelID} />,
+      group: 'other-model-info'
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
       helpRoute: '/help-and-knowledge/sample-model-plan/discussions',
-      component: <ReadOnlyDiscussions modelID={modelID} />
+      component: <ReadOnlyDiscussions modelID={modelID} />,
+      group: 'other-model-info'
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
       helpRoute: '/help-and-knowledge/sample-model-plan/documents',
       component: (
         <ReadOnlyDocuments modelID={modelID} isHelpArticle={isHelpArticle} />
-      )
+      ),
+      group: 'other-model-info'
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
       helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
-      component: <ReadOnlyCRTDLs />
+      component: <ReadOnlyCRTDLs />,
+      group: 'other-model-info'
     }
   };
 };
 
-export type SubpageKey = (typeof listOfSubpageKey)[number];
-
 const isSubpage = (
-  x: SubpageKey,
+  x: ModelSubSectionRouteKey,
   flags: any,
   isHelpArticle?: boolean
 ): boolean => {
   if (isHelpArticle) {
-    return listOfSubpageKey
+    return modelSectionRouteKey
       .filter(subpage => subpage !== 'discussions')
       .includes(x);
   }
-  if (flags.hideITLeadExperience) {
-    return listOfSubpageKey
-      .filter(subpage => subpage !== 'it-solutions')
-      .includes(x);
-  }
-  return listOfSubpageKey.includes(x);
+  return modelSectionRouteKey.includes(x);
 };
 
 export const filteredViewOutput = (value: string) => {
   if (value === 'cmmi') {
-    return groupOptions.filter(n => n.value.includes(value))[0].label;
+    return groupOptions.filter(n => n.value?.includes(value))[0].label;
   }
-  return groupOptions
-    .filter(n => n.value.includes(value))[0]
-    .value.toUpperCase();
+
+  const foundFilterGroup = groupOptions.find(n => n.value?.includes(value));
+
+  if (!foundFilterGroup) {
+    return '';
+  }
+
+  return foundFilterGroup.value.toUpperCase();
 };
 
 // Checks if the url query param is a valid filteredView and converts to lowercase
@@ -204,7 +221,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '', subinfo } =
     useParams<{
       modelID: string;
-      subinfo: SubpageKey;
+      subinfo: ModelSubSectionRouteKey;
     }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
@@ -274,10 +291,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const subComponents = ReadOnlyComponents(modelID, isHelpArticle);
 
   if (isHelpArticle) delete subComponents.discussions;
-
-  if (flags.hideITLeadExperience) {
-    delete subComponents['it-solutions'];
-  }
 
   const subComponent = subComponents[subinfo];
 
@@ -480,8 +493,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     className="padding-right-4 sticky-nav"
                   >
                     <SideNav
-                      subComponents={subComponents}
                       isHelpArticle={isHelpArticle}
+                      subComponents={subComponents}
                     />
                   </Grid>
                 )}
@@ -502,7 +515,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                             col:
                               subinfo === 'documents' ||
                               subinfo === 'crs-and-tdl' ||
-                              subinfo === 'it-solutions'
+                              subinfo === 'milestones' ||
+                              subinfo === 'it-systems-and-solutions'
                                 ? 12
                                 : 8
                           }}
@@ -512,7 +526,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         {/* Contact info sidebar */}
                         {subinfo !== 'documents' &&
                           subinfo !== 'crs-and-tdl' &&
-                          subinfo !== 'it-solutions' && (
+                          subinfo !== 'milestones' &&
+                          subinfo !== 'it-systems-and-solutions' && (
                             <Grid
                               desktop={{ col: 4 }}
                               className={classnames({

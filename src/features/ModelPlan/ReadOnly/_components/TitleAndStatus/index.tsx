@@ -2,6 +2,7 @@ import React from 'react';
 import {
   DataExchangeApproachStatus,
   ModelStatus,
+  MtoStatus,
   TaskStatus
 } from 'gql/generated/graphql';
 
@@ -12,8 +13,9 @@ type TitleAndStatusProps = {
   clearance: boolean | undefined;
   clearanceTitle: string;
   heading: string;
+  subHeading?: string;
   isViewingFilteredView?: boolean;
-  status: ModelStatus | TaskStatus | DataExchangeApproachStatus;
+  status: ModelStatus | TaskStatus | DataExchangeApproachStatus | MtoStatus;
   modifiedOrCreatedDts?: string | null;
 };
 
@@ -22,15 +24,24 @@ const TitleAndStatus = ({
   clearance,
   clearanceTitle,
   heading,
+  subHeading,
   isViewingFilteredView,
   status,
   modifiedOrCreatedDts
 }: TitleAndStatusProps) => {
   return (
     <div>
-      <h2 className="margin-top-0 margin-bottom-2">
-        {clearance ? clearanceTitle : heading}
-      </h2>
+      <div className="display-flex margin-bottom-2 ">
+        <h2 className="margin-y-0 margin-right-2">
+          {clearance ? clearanceTitle : heading}
+        </h2>
+
+        {subHeading && (
+          <p className="mint-body-large text-base-dark margin-y-0 flex-align-self-end">
+            {subHeading}
+          </p>
+        )}
+      </div>
 
       {!isViewingFilteredView && status && (
         <StatusBanner

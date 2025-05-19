@@ -12,6 +12,7 @@ import {
 
 import { AvatarCircle } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
+import properlyCapitalizeInitiator from 'components/CRAndTDLSidePanel/_utils';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
@@ -23,11 +24,15 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
+  getTranslatedFieldValue,
   hiddenFields,
+  isGenericWithMetaData,
   isLinkingTable,
+  isMTOCategoryWithMetaData,
   isOperationalSolutionWithMetaData,
   isSolutionDocumentLinkWithMetaData,
   linkingTableQuestions,
+  mtoTables,
   solutionDeleteFields,
   solutionDocumentLinkFields,
   solutionInsertFields
@@ -59,7 +64,10 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
   // Remove hidden fields from the fields to map
   fieldsToMap = fieldsToMap.filter(
-    field => !hiddenFields.includes(field.fieldName)
+    field =>
+      !hiddenFields.find(
+        f => f.fields.includes(field.fieldName) && f.table === change.tableName
+      )
   );
 
   // If the change is connected to another table, only show the fields that are connected
@@ -204,9 +212,9 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               <div className="text-bold">
                 {needName}{' '}
                 <span className="text-normal">
-                  {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
+                  {t('solution')} {t(`auditUpdateType.${databaseAction}`)}:
                 </span>
-                : {solutionName}
+                {solutionName}
               </div>
             );
           })()}
@@ -268,11 +276,129 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               />
             );
           })()}
+
+        {/* MTO category header */}
+        {change.tableName === TableName.MTO_CATEGORY &&
+          (() => {
+            fieldsToMap = fieldsToMap.filter(
+              field =>
+                field.fieldName !== 'name' ||
+                change.action !== DatabaseOperation.DELETE
+            );
+
+            const categoryName = getTranslatedFieldValue(change, 'name');
+
+            const isSubCategory =
+              change.metaData &&
+              isMTOCategoryWithMetaData(change.metaData) &&
+              change.metaData?.isSubCategory;
+
+            const subCategoryName =
+              change.metaData &&
+              isMTOCategoryWithMetaData(change.metaData) &&
+              change.metaData?.categoryName;
+
+            return (
+              <span className="text-bold">
+                {isSubCategory ? t('subCategory') : t('category')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}
+                  {': '}
+                </span>
+                {categoryName || subCategoryName || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO milestone header */}
+        {change.tableName === TableName.MTO_MILESTONE &&
+          (() => {
+            const milestoneKey = getTranslatedFieldValue(
+              change,
+              'mto_common_milestone_key'
+            );
+
+            const milestoneName = getTranslatedFieldValue(change, 'name');
+
+            let milestoneValue = milestoneName || milestoneKey;
+
+            if (
+              change.action === DatabaseOperation.UPDATE &&
+              change.metaData &&
+              isGenericWithMetaData(change.metaData)
+            ) {
+              milestoneValue = change.metaData.relationContent;
+            }
+
+            return (
+              <span className="text-bold">
+                {t('milestone')}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}:
+                </span>{' '}
+                {milestoneValue || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO solution header */}
+        {change.tableName === TableName.MTO_SOLUTION &&
+          (() => {
+            const solutionKey = getTranslatedFieldValue(
+              change,
+              'mto_common_solution_key'
+            );
+
+            const solutionName = getTranslatedFieldValue(change, 'name');
+
+            let solutionValue = solutionName || solutionKey;
+
+            if (
+              change.action === DatabaseOperation.UPDATE &&
+              change.metaData &&
+              isGenericWithMetaData(change.metaData)
+            ) {
+              solutionValue = change.metaData.relationContent;
+            }
+
+            return (
+              <span className="text-bold">
+                {properlyCapitalizeInitiator(t('solution'))}{' '}
+                <span className="text-normal">
+                  {t(`auditUpdateType.${change.action}`)}:
+                </span>{' '}
+                {solutionValue || t('dataNotAvailable')}
+              </span>
+            );
+          })()}
+
+        {/* MTO solution link  header */}
+        {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
+          (() => {
+            return (
+              <Trans
+                shouldUnescape
+                i18nKey="changeHistory:milestoneAndSolution"
+                values={{
+                  action: t(`solutionLinkType.${change.action}`)
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
+            );
+          })()}
       </div>
 
       {/* Render the fields that were changed */}
       <div className="change-record__answer margin-y-1">
         {(() => {
+          if (
+            change.action === DatabaseOperation.DELETE &&
+            change.tableName === TableName.MTO_CATEGORY
+          ) {
+            return <div className="margin-top-neg-1" />;
+          }
           // If the table is a linking table, show the fields in a list
           if (isLinkingTable(change.tableName)) {
             return (
@@ -300,31 +426,44 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
         {/* Render previous details/values */}
         {(() => {
+          const renderPreviousDetails =
+            databaseAction !== DatabaseOperation.DELETE &&
+            !!fieldsToMap.find(field => field.oldTranslated);
           // If the table is a linking table, don't show previous details
-          if (isLinkingTable(change.tableName)) return <></>;
+
+          const hideCategoryDetails =
+            change.tableName === TableName.MTO_CATEGORY &&
+            change.action === DatabaseOperation.DELETE &&
+            fieldsToMap.length === 1 &&
+            fieldsToMap[0].fieldName === 'name';
+
+          if (
+            isLinkingTable(change.tableName) ||
+            change.action === DatabaseOperation.INSERT ||
+            !renderPreviousDetails ||
+            hideCategoryDetails
+          )
+            return <></>;
 
           return (
             <>
               {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
-              {databaseAction !== DatabaseOperation.DELETE &&
-                !!fieldsToMap.find(field => field.old) && (
-                  <div className="text-bold padding-top-105 padding-bottom-1">
-                    {t('previousDetails')}
-                  </div>
-                )}
+              <div className="text-bold padding-top-105 padding-bottom-1">
+                {t('previousDetails')}
+              </div>
 
               {fieldsToMap.map(field => {
-                if (!field.old) return <div key={field.id} />;
+                if (!field.oldTranslated) return <div key={field.id} />;
 
                 return (
                   <div key={field.id}>
-                    {field.old && (
+                    {field.oldTranslated && (
                       <>
                         <span>{field.fieldNameTranslated}: </span>
                         <RenderChangeValue
                           change={field}
                           valueType="oldTranslated"
-                          previous={!!field.old}
+                          previous={!!field.oldTranslated}
                         />
                       </>
                     )}
@@ -360,6 +499,13 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
     ? condenseLinkingTableChanges(changeRecords)
     : changeRecords;
 
+  const shouldShowCollapse = !changeRecords.find(
+    change =>
+      change.action === DatabaseOperation.DELETE &&
+      change.tableName === TableName.MTO_CATEGORY &&
+      change.translatedFields.length === 1
+  );
+
   return (
     <Card className="change-record">
       <div className={classNames('display-flex flex-align-center')}>
@@ -380,7 +526,8 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                 : changeRecords.length,
               section: t(`sections.${tableName}`),
               date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
-              time: formatTime(changeRecords[0].date)
+              time: formatTime(changeRecords[0].date),
+              inOrTo: mtoTables.includes(tableName) ? t('to') : t('in')
             }}
             components={{
               datetime: <span />
@@ -509,30 +656,145 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                     />
                   );
                 })()}
+
+              {/* MTO category audits */}
+              {change.tableName === TableName.MTO_CATEGORY &&
+                (() => {
+                  const categoryName = getTranslatedFieldValue(change, 'name');
+
+                  const isSubCategory =
+                    change.metaData &&
+                    isMTOCategoryWithMetaData(change.metaData) &&
+                    change.metaData?.isSubCategory;
+
+                  const subCategoryName =
+                    change.metaData &&
+                    isMTOCategoryWithMetaData(change.metaData) &&
+                    change.metaData?.categoryName;
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: isSubCategory
+                          ? t('subCategory')
+                          : t('category'),
+                        name:
+                          categoryName ||
+                          subCategoryName ||
+                          t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO milestone audits */}
+              {change.tableName === TableName.MTO_MILESTONE &&
+                (() => {
+                  const milestoneKey = getTranslatedFieldValue(
+                    change,
+                    'mto_common_milestone_key'
+                  );
+
+                  const milestoneName = getTranslatedFieldValue(change, 'name');
+
+                  let milestoneValue = milestoneName || milestoneKey;
+
+                  if (
+                    change.action === DatabaseOperation.UPDATE &&
+                    change.metaData &&
+                    isGenericWithMetaData(change.metaData)
+                  ) {
+                    milestoneValue = change.metaData.relationContent;
+                  }
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: t('milestone'),
+                        name: milestoneValue || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO solution audits */}
+              {change.tableName === TableName.MTO_SOLUTION &&
+                (() => {
+                  const solutionKey = getTranslatedFieldValue(
+                    change,
+                    'mto_common_solution_key'
+                  );
+
+                  const solutionName = getTranslatedFieldValue(change, 'name');
+
+                  let solutionValue = solutionName || solutionKey;
+
+                  if (
+                    change.action === DatabaseOperation.UPDATE &&
+                    change.metaData &&
+                    isGenericWithMetaData(change.metaData)
+                  ) {
+                    solutionValue = change.metaData.relationContent;
+                  }
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: properlyCapitalizeInitiator(t('solution')),
+                        name: solutionValue || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* MTO solution link audits */}
+              {change.tableName === TableName.MTO_MILESTONE_SOLUTION_LINK &&
+                (() => {
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoLinkUpdate"
+                      values={{
+                        action: t(`solutionLinkType.${change.action}`)
+                      }}
+                    />
+                  );
+                })()}
             </li>
           ))}
         </ul>
       )}
 
-      <CollapsableLink
-        className="margin-left-5"
-        id={`batch-record-${index}`}
-        label={t('showDetails')}
-        closeLabel={t('hideDetails')}
-        labelPosition="bottom"
-        setParentOpen={setOpen}
-        styleLeftBar={false}
-      >
-        <div className="margin-bottom-neg-1">
-          {batchRecords.map(change => (
-            <BatchChanges
-              change={change}
-              connected={changeRecords.length > 1}
-              key={change.id}
-            />
-          ))}
-        </div>
-      </CollapsableLink>
+      {shouldShowCollapse && (
+        <CollapsableLink
+          className="margin-left-5"
+          id={`batch-record-${index}`}
+          label={t('showDetails')}
+          closeLabel={t('hideDetails')}
+          labelPosition="bottom"
+          setParentOpen={setOpen}
+          styleLeftBar={false}
+        >
+          <div className="margin-bottom-neg-1">
+            {batchRecords.map(change => (
+              <BatchChanges
+                change={change}
+                connected={changeRecords.length > 1}
+                key={change.id}
+              />
+            ))}
+          </div>
+        </CollapsableLink>
+      )}
     </Card>
   );
 };

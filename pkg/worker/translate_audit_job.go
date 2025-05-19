@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
 
@@ -42,10 +43,13 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	if err != nil {
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
+	// Wrap the context with the loaders so that we can use them in the translation
+	// Future Enhancement: See if we can move this to the worker instantiation lifecycle, so that we don't have to do this on every job
+	ctxWithLoaders := loaders.CTXWithLoaders(ctx, loaders.NewDataLoaders(w.Store))
 
 	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
 
-	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, logger, auditID, queueID)
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, logger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}

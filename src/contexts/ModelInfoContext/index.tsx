@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import {
   GetModelPlanBaseQuery,
   ModelStatus,
+  MtoStatus,
   useGetModelPlanBaseQuery
 } from 'gql/generated/graphql';
 
@@ -17,7 +18,12 @@ type ModelInfoWrapperProps = {
   children: React.ReactNode;
 };
 
-type GetModelPlanBaseModelPlan = GetModelPlanBaseQuery['modelPlan'];
+type GetModelPlanBaseModelPlan = Omit<
+  GetModelPlanBaseQuery['modelPlan'],
+  'mtoMatrix'
+> & {
+  isMTOStarted: boolean;
+};
 
 // Create the model Info context - can be used anywhere in a model plan
 export const ModelInfoContext = createContext<GetModelPlanBaseModelPlan>({
@@ -26,7 +32,8 @@ export const ModelInfoContext = createContext<GetModelPlanBaseModelPlan>({
   modelName: '',
   modifiedDts: '',
   createdDts: '2024-01-01T00:00:00Z',
-  status: ModelStatus.PLAN_DRAFT
+  status: ModelStatus.PLAN_DRAFT,
+  isMTOStarted: false
 });
 
 const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
@@ -50,12 +57,20 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
     modelName: '',
     modifiedDts: '',
     createdDts: '2024-01-01T00:00:00Z',
-    status: ModelStatus.PLAN_DRAFT
+    status: ModelStatus.PLAN_DRAFT,
+    isMTOStarted: false
   });
 
   if (data) {
+    // If data is fetched, check if the MTO is started
+    const isMTOStarted = data.modelPlan.mtoMatrix?.status !== MtoStatus.READY;
+
+    const { mtoMatrix, ...modelData } = data.modelPlan;
+
+    const modelWithMTOStarted = { ...modelData, isMTOStarted };
+
     // Sets the model plan ref info once fetched
-    modelContextData.current = { ...data.modelPlan };
+    modelContextData.current = modelWithMTOStarted;
   } else {
     // If no data is fetched, set the model plan ref info to default
     modelContextData.current = {
@@ -64,7 +79,8 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
       modelName: '',
       modifiedDts: '',
       createdDts: '2024-01-01T00:00:00Z',
-      status: ModelStatus.PLAN_DRAFT
+      status: ModelStatus.PLAN_DRAFT,
+      isMTOStarted: false
     };
   }
 

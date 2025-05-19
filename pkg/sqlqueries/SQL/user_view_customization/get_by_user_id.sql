@@ -2,7 +2,7 @@ SELECT
     id,
     user_id,
     view_customization,
-    possible_operational_solutions,
+    solutions,
     created_by,
     created_dts,
     modified_by,

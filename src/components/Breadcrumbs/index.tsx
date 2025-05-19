@@ -21,6 +21,7 @@ export enum BreadcrumbItemOptions {
   TASK_LIST = 'TASK_LIST',
   COLLABORATION_AREA = 'COLLABORATION_AREA',
   DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
+  MODEL_TO_OPERATIONS = 'MODEL_TO_OPERATIONS',
   NOTIFICATIONS = 'NOTIFICATIONS',
   HELP_CENTER = 'HELP_CENTER',
   HELP_SOLUTIONS = 'HELP_SOLUTIONS',
@@ -30,9 +31,6 @@ export enum BreadcrumbItemOptions {
   BENEFICIARIES = 'BENEFICIARIES',
   OPS_EVAL_AND_LEARNING = 'OPS_EVAL_AND_LEARNING',
   PAYMENTS = 'PAYMENTS',
-  IT_TRACKER = 'IT_TRACKER',
-  ADD_SOLUTION = 'ADD_SOLUTION',
-  SOLUTION_DETAILS = 'SOLUTION_DETAILS',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
   COLLABORATORS = 'COLLABORATORS',
   DOCUMENTS = 'DOCUMENTS',
@@ -71,6 +69,10 @@ export const commonBreadCrumbs = (
     text: 'dataExchangeApproachMisc:heading',
     url: `/models/${modelID}/collaboration-area/data-exchange-approach`
   },
+  MODEL_TO_OPERATIONS: {
+    text: 'modelToOperationsMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-to-operations`
+  },
   NOTIFICATIONS: {
     text: 'notifications:breadcrumb',
     url: '/notifications'
@@ -106,18 +108,6 @@ export const commonBreadCrumbs = (
   PAYMENTS: {
     text: 'paymentsMisc:heading',
     url: `/models/${modelID}/collaboration-area/task-list/payments`
-  },
-  IT_TRACKER: {
-    text: 'opSolutionsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/it-solutions`
-  },
-  ADD_SOLUTION: {
-    text: 'opSolutionsMisc:addSolution',
-    url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
-  },
-  SOLUTION_DETAILS: {
-    text: 'opSolutionsMisc:solutionDetails',
-    url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
   },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',

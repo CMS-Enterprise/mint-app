@@ -47,12 +47,12 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -148,12 +148,12 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -249,12 +249,12 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Medicare Advantage and Part D category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Medicare Advantage and Part D
@@ -347,12 +347,12 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -448,12 +448,12 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     <a
                       aria-label="Articles under the Data category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Data
@@ -464,12 +464,13 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                     class="solution-card__body"
                   >
                     Centralized Data Exchange (CDX) is a part of the 
-                    <a
-                      class="usa-link"
-                      href="/help-and-knowledge/operational-solutions?solution=innovation-support-platform&section=about"
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
                     >
                       Innovation Support Platform (ISP)
-                    </a>
+                    </button>
                      Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
 CDX is to exchange files between authorized users. This is implemented through the concept of a shared drive where authorized users can upload files and give access to those files to other authorized users. All users have a Home folder containing a list of all the files and folders to which they have access. The home folder is the Users "default/root" folder and contains all the files and folders to which the current user has access.
@@ -557,12 +558,12 @@ The business function of CDX is a centralized data exchange to enable interopera
                   >
                     <a
                       aria-label="Articles under the Data category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=data"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Data
@@ -654,12 +655,12 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     <a
                       aria-label="Articles under the Communication tools and help desk category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Communication tools and help desk
@@ -747,12 +748,12 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     <a
                       aria-label="Articles under the Applications and participant interaction category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Applications and participant interaction
@@ -848,12 +849,12 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     <a
                       aria-label="Articles under the Communication tools and help desk category"
-                      class="usa-link display-block margin-right-05 margin-bottom-1"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
                       href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
                     >
                       <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm margin-right-0 width-fit-content line-height-sans-2"
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
                         data-testid="tag"
                       >
                         Communication tools and help desk

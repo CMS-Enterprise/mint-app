@@ -53,7 +53,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
         </button>
         <h1
           aria-live="polite"
-          class="mint-h1"
+          class="mint-h1 margin-bottom-2"
           tabindex="-1"
         >
           All help resources
@@ -159,9 +159,10 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   <span>
                     <div
                       aria-live="polite"
+                      class="margin-bottom-2"
                       role="status"
                     >
-                      Showing 1-9 of 17 results 
+                      Showing 1-9 of 28 results 
                     </div>
                   </span>
                 </div>
@@ -169,7 +170,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             </div>
           </div>
           <ul
-            class="usa-card-group margin-y-2"
+            class="usa-card-group margin-y-2 margin-top-6"
             data-testid="CardGroup"
           >
             <li
@@ -528,6 +529,57 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   <h3
                     class="line-height-body-4 margin-bottom-1"
                   >
+                    Creating your Model-to-operations matrix (MTO) in MINT
+                  </h3>
+                </header>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  href="/help-and-knowledge/articles?category=it-implementation"
+                >
+                  <span
+                    aria-label="Articles under the IT implementation category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    IT implementation
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    Learn more about the Model-to-operations matrix (MTO), what it’s for, and how to create and maintain an MTO in MINT.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read Creating your Model-to-operations matrix (MTO) in MINT article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
                     Evaluate your data exchange approach
                   </h3>
                 </header>
@@ -737,242 +789,53 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </div>
             </li>
             <li
-              class="usa-card desktop:grid-col-4 article"
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
               data-testid="article-card"
             >
               <div
-                class="usa-card__container radius-md shadow-2 minh-mobile padding-0"
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <div
-                  class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
                 >
-                  <svg
-                    class="usa-icon margin-right-05"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
                   >
-                    <path
-                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                    />
-                  </svg>
-                   External resource
+                    How to add a custom milestone
+                  </h3>
+                </header>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  href="/help-and-knowledge/articles?category=mto-tutorials"
+                >
+                  <span
+                    aria-label="Articles under the MINT tutorials category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    MINT tutorials
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. IT Leads are able to create custom milestones directly from the Model-to-operations matrix (MTO) for their model.
+                  </p>
                 </div>
                 <div
-                  class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
                 >
-                  <header
-                    class="usa-card__header padding-0"
-                    data-testid="CardHeader"
+                  <button
+                    aria-label="Read How to add a custom milestone article"
+                    class="usa-button usa-button--outline"
+                    type="button"
                   >
-                    <h3
-                      class="line-height-body-4 margin-bottom-1 margin-top-3"
-                    >
-                      ICIP Repository on SharePoint
-                    </h3>
-                  </header>
-                  <a
-                    class="usa-link width-fit-content display-block "
-                    href="/help-and-knowledge/articles?category=model-concept-and-design"
-                  >
-                    <span
-                      aria-label="Articles under the Model concept and design category"
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                      data-testid="tag"
-                    >
-                      Model concept and design
-                    </span>
-                  </a>
-                  <div
-                    class="usa-card__body padding-x-0 padding-top-2"
-                    data-testid="CardBody"
-                  >
-                    <div
-                      class="truncated-text"
-                      data-testid="truncated-text"
-                    >
-                      <div
-                        class=""
-                      >
-                        The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is  ...
-                      </div>
-                      <button
-                        aria-controls="ICIP_REPOSITORY"
-                        aria-expanded="true"
-                        class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
-                        data-testid="button"
-                        type="button"
-                      >
-                        Read more
-                        <svg
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                    data-testid="CardFooter"
-                  >
-                    <button
-                      class="usa-button usa-button usa-button--outline"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center"
-                        style="column-gap: 0.25rem;"
-                      >
-                        View on SharePoint
-                        <svg
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li
-              class="usa-card desktop:grid-col-4 article"
-              data-testid="article-card"
-            >
-              <div
-                class="usa-card__container radius-md shadow-2 minh-mobile padding-0"
-              >
-                <div
-                  class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
-                >
-                  <svg
-                    class="usa-icon margin-right-05"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                    />
-                  </svg>
-                   External resource
-                </div>
-                <div
-                  class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
-                >
-                  <header
-                    class="usa-card__header padding-0"
-                    data-testid="CardHeader"
-                  >
-                    <h3
-                      class="line-height-body-4 margin-bottom-1 margin-top-3"
-                    >
-                      IT Lead training materials on SharePoint
-                    </h3>
-                  </header>
-                  <a
-                    class="usa-link width-fit-content display-block "
-                    href="/help-and-knowledge/articles?category=it-implementation"
-                  >
-                    <span
-                      aria-label="Articles under the IT implementation category"
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                      data-testid="tag"
-                    >
-                      IT implementation
-                    </span>
-                  </a>
-                  <div
-                    class="usa-card__body padding-x-0 padding-top-2"
-                    data-testid="CardBody"
-                  >
-                    <div
-                      class="truncated-text"
-                      data-testid="truncated-text"
-                    >
-                      <div
-                        class=""
-                      >
-                        IT leads are BSG team members who work with model teams. Access training slides and recordings to understand I ...
-                      </div>
-                      <button
-                        aria-controls="IT_LEAD_TRAINING_MATERIALS"
-                        aria-expanded="true"
-                        class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
-                        data-testid="button"
-                        type="button"
-                      >
-                        Read more
-                        <svg
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                    data-testid="CardFooter"
-                  >
-                    <button
-                      class="usa-button usa-button usa-button--outline"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center"
-                        style="column-gap: 0.25rem;"
-                      >
-                        View on SharePoint
-                        <svg
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
+                    Read
+                  </button>
                 </div>
               </div>
             </li>
@@ -1010,6 +873,30 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     type="button"
                   >
                     2
+                  </button>
+                </li>
+                <li
+                  class="usa-pagination__item usa-pagination__page-no"
+                >
+                  <button
+                    aria-label="Page 3"
+                    class="usa-button usa-button--unstyled usa-pagination__button"
+                    data-testid="pagination-page-number"
+                    type="button"
+                  >
+                    3
+                  </button>
+                </li>
+                <li
+                  class="usa-pagination__item usa-pagination__page-no"
+                >
+                  <button
+                    aria-label="Page 4"
+                    class="usa-button usa-button--unstyled usa-pagination__button"
+                    data-testid="pagination-page-number"
+                    type="button"
+                  >
+                    4
                   </button>
                 </li>
                 <li
@@ -1055,17 +942,17 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <option
                   value="6"
                 >
-                  Show 6
+                  Show 6 
                 </option>
                 <option
                   value="9"
                 >
-                  Show 9
+                  Show 9 
                 </option>
                 <option
                   value="100000"
                 >
-                  Show all
+                  Show all 
                 </option>
               </select>
             </div>
@@ -1085,7 +972,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-4"
+            class="desktop:grid-col-4 margin-bottom-4"
             data-testid="grid"
           >
             <div
@@ -1105,7 +992,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="desktop:grid-col-4"
+            class="desktop:grid-col-4 margin-bottom-4"
             data-testid="grid"
           >
             <div
@@ -1121,12 +1008,12 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <p
                 class="margin-y-1"
               >
-                5 resources
+                6 resources
               </p>
             </div>
           </div>
           <div
-            class="desktop:grid-col-4"
+            class="desktop:grid-col-4 margin-bottom-4"
             data-testid="grid"
           >
             <div

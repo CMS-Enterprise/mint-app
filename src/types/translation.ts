@@ -44,6 +44,19 @@ import {
   ModelType,
   ModelViewFilter,
   MonitoringFileType,
+  MtoCategoryTranslation,
+  MtoCommonMilestoneKey,
+  MtoCommonSolutionContactTranslation,
+  MtoCommonSolutionKey,
+  MtoFacilitator,
+  MtoInfoTranslation,
+  MtoMilestoneSolutionLinkTranslation,
+  MtoMilestoneStatus,
+  MtoMilestoneTranslation,
+  MtoRiskIndicator,
+  MtoSolutionStatus,
+  MtoSolutionTranslation,
+  MtoSolutionType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OperationalNeedKey,
@@ -125,6 +138,7 @@ export type TranslationFieldProperties = Omit<
   pageLabel?: string; // Label for the page
   modalLink?: string; // Adds a modal link,
   hideIfFalsy?: boolean; // Hide question if the value is falsy - ex: dataWillNotBeCollectedFromParticipants
+  flattenNestedData?: string; // Flatten nested data for export - ex: milestone.solutions = [{name:  "Solution 1"}] => milestone.solutions = ["Solution 1"]
 };
 
 /*
@@ -1219,6 +1233,133 @@ export type TranslationExistingModelLink = {
   [K in keyof TranslationExistingModelLinkGQL]: TranslationExistingModelLinkForm[K]; // FE form type
 };
 
+// MTO Info - Change History purposes only
+export type TranslationMTOInfoForm = {
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDTS: TranslationFieldProperties;
+};
+
+type TranslationMTOInfoGQL = Omit<
+  MtoInfoTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOInfo = {
+  [K in keyof TranslationMTOInfoGQL]: TranslationMTOInfoForm[K]; // FE form type
+};
+
+// MTO Category - Change History purposes only
+export type TranslationMTOCategoryForm = {
+  name: TranslationFieldProperties;
+  parentID: TranslationFieldProperties;
+  position: TranslationFieldProperties;
+};
+
+type TranslationMTOCategoryGQL = Omit<
+  MtoCategoryTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOCategory = {
+  [K in keyof TranslationMTOCategoryGQL]: TranslationMTOCategoryForm[K]; // FE form type
+};
+
+// MTO Milestone Solution Link - Change History purposes only
+export type TranslationMTOMilestoneSolutionLinkCustomForm = {
+  milestoneID: TranslationFieldProperties;
+  solutionID: TranslationFieldProperties;
+};
+type TranslationMTOMilestoneSolutionLinkCustomGQL = Omit<
+  MtoMilestoneSolutionLinkTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOMilestoneSolutionLinkCustom = {
+  [K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
+};
+
+// MTO Milestone - Change History purposes only
+export type TranslationMTOMilestoneCustomForm = {
+  name: TranslationFieldProperties;
+  isDraft: TranslationFieldPropertiesWithOptions<Bool>;
+  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  facilitatedByOther: TranslationFieldProperties;
+  needBy: TranslationFieldProperties;
+  riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
+  commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
+  solutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
+  status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
+  key: TranslationFieldProperties;
+  mtoCategoryID: TranslationFieldProperties;
+};
+
+type TranslationMTOMilestoneCustomGQL = Omit<
+  MtoMilestoneTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOMilestoneCustom = {
+  [K in keyof TranslationMTOMilestoneCustomGQL]: TranslationMTOMilestoneCustomForm[K]; // FE form type
+};
+
+// MTO Solution - Change History purposes only
+export type TranslationMTOSolutionCustomForm = {
+  name: TranslationFieldProperties;
+  pocName: TranslationFieldProperties;
+  pocEmail: TranslationFieldProperties;
+  solutionType: TranslationFieldPropertiesWithOptions<MtoSolutionType>;
+  key: TranslationFieldProperties;
+  riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
+  status: TranslationFieldPropertiesWithOptions<MtoSolutionStatus>;
+  neededBy: TranslationFieldProperties;
+  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  facilitatedByOther: TranslationFieldProperties;
+  milestones: TranslationFieldPropertiesWithOptions<MtoCommonMilestoneKey>;
+};
+
+type TranslationMTOSolutionCustomGQL = Omit<
+  MtoSolutionTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOSolutionCustom = {
+  [K in keyof TranslationMTOSolutionCustomGQL]: TranslationMTOSolutionCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution Contact - Change History purposes only
+export type TransltionMTOCommonSolutionContactCustomForm = {
+  key: TranslationFieldProperties;
+  name: TranslationFieldProperties;
+  email: TranslationFieldProperties;
+  isTeam: TranslationFieldProperties;
+  role: TranslationFieldProperties;
+  isPrimary: TranslationFieldProperties;
+};
+type TranslationMTOCommonSolutionContactCustomGQL = Omit<
+  MtoCommonSolutionContactTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionContactCustom = {
+  [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -1236,6 +1377,10 @@ export type TranslationPlan = {
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
   dataExchangeApproach: TranslationDataExchangeApproach;
+  modelToOperations: TranslationMTOInfo;
+  mtoCategory: TranslationMTOCategory;
+  mtoMilestone: TranslationMTOMilestoneCustom;
+  mtoSolution: TranslationMTOSolutionCustom;
 };
 
 export type TranslationPlanSection =
@@ -1264,5 +1409,9 @@ export enum PlanSection {
   OPERATIONAL_NEEDS = 'operationalNeeds',
   OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
-  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach'
+  DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
+  MTO_INFO = 'modelToOperations',
+  MTO_CATEGORY = 'mtoCategory',
+  MTO_MILESTONE = 'mtoMilestone',
+  MTO_SOLUTION = 'mtoSolution'
 }

@@ -16,12 +16,13 @@ exports[`Sidepanel > matches snapshot 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay mint-sidepanel__overlay overflow-y-scroll"
+      class="ReactModal__Overlay mint-sidepanel__overlay overflow-y-auto"
     >
       <div
         aria-label="ariaLabel"
         aria-modal="true"
         class="ReactModal__Content mint-sidepanel__content"
+        data-testid="side-panel"
         role="dialog"
         tabindex="-1"
       >
@@ -33,7 +34,7 @@ exports[`Sidepanel > matches snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="mint-sidepanel__x-button margin-right-2"
+              class="mint-sidepanel__x-button margin-right-1"
               data-testid="close-discussions"
               type="button"
             >
@@ -57,9 +58,16 @@ exports[`Sidepanel > matches snapshot 1`] = `
               modalHeading
             </h4>
           </div>
-          <div>
-            children
+          <div
+            class="mint-modal__body padding-x-0"
+          >
+            <div>
+              children
+            </div>
           </div>
+          <div
+            class="fixed-bottom"
+          />
         </div>
       </div>
     </div>

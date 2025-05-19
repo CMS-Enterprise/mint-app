@@ -13,9 +13,7 @@ describe('Homepage Settings', () => {
     cy.get('#ALL_MODEL_PLANS').should('be.visible').should('not.be.checked');
     cy.get('#FOLLOWED_MODELS').should('be.visible').should('not.be.checked');
     cy.get('#MODELS_WITH_CR_TDL').should('be.visible').should('not.be.checked');
-    cy.get('#MODELS_BY_OPERATIONAL_SOLUTION')
-      .should('be.visible')
-      .should('not.be.checked');
+    cy.get('#MODELS_BY_SOLUTION').should('be.visible').should('not.be.checked');
 
     // Add solutions
     cy.get('[data-testid="add-solutions-settings"]').click();
@@ -42,9 +40,7 @@ describe('Homepage Settings', () => {
 
     cy.get('[data-testid="selected-solutions"]').contains('CCW');
 
-    cy.get('#MODELS_BY_OPERATIONAL_SOLUTION')
-      .should('be.visible')
-      .should('be.checked');
+    cy.get('#MODELS_BY_SOLUTION').should('be.visible').should('be.checked');
 
     cy.get('#ALL_MODEL_PLANS')
       .should('be.visible')

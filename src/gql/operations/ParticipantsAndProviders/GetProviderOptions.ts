@@ -31,10 +31,6 @@ export default gql(/* GraphQL */ `
         readyForReviewDts
         status
       }
-      operationalNeeds {
-        id
-        modifiedDts
-      }
     }
   }
 `);

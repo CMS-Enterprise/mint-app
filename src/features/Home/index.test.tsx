@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import {
   render,
   waitFor,
@@ -10,9 +10,13 @@ import {
 import {
   GetFavoritesDocument,
   GetFavoritesQuery,
+  GetFavoritesQueryVariables,
   GetHomepageSettingsDocument,
+  GetHomepageSettingsQuery,
+  GetHomepageSettingsQueryVariables,
   ModelPlanFilter,
   ModelStatus,
+  MtoCommonSolutionKey,
   TeamRole,
   ViewCustomizationType
 } from 'gql/generated/graphql';
@@ -24,8 +28,6 @@ import VerboseMockedProvider from 'tests/MockedProvider';
 import MessageProvider from 'contexts/MessageContext';
 
 import HomeNew from '.';
-
-type FavoritesType = GetFavoritesQuery['modelPlanCollection'][0];
 
 vi.mock('@okta/okta-react', () => ({
   useOktaAuth: () => {
@@ -41,60 +43,32 @@ vi.mock('@okta/okta-react', () => ({
   }
 }));
 
-const mockModel: FavoritesType = {
-  id: '0186774a-80b0-454c-b69e-c4e949343483',
-  modelName: 'Plan For General Characteristics',
-  nameHistory: ['first', 'second'],
-  isFavorite: true,
-  status: ModelStatus.PLAN_DRAFT,
-  isCollaborator: false,
-  echimpCRsAndTDLs: [
-    {
-      id: '123',
-      __typename: 'EChimpCR'
-    },
-    {
-      id: '456',
-      __typename: 'EChimpTDL'
-    }
-  ],
-  basics: {
-    id: '123',
-    performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
-    goal: 'The goal',
-    __typename: 'PlanBasics'
-  },
-  collaborators: [
-    {
-      userAccount: {
-        id: '890',
-        __typename: 'UserAccount',
-        commonName: 'Test User'
-      },
-      id: '2134234',
-      teamRoles: [TeamRole.MODEL_LEAD],
-      __typename: 'PlanCollaborator'
-    }
-  ],
-  __typename: 'ModelPlan'
-};
-
-const settingsMock = [
+const settingsMock: MockedResponse<
+  GetHomepageSettingsQuery,
+  GetHomepageSettingsQueryVariables
+>[] = [
   {
     request: {
       query: GetHomepageSettingsDocument
     },
     result: {
       data: {
+        __typename: 'Query',
         userViewCustomization: {
           id: '3b29f11e-7dd4-4385-8056-27468d3dd562',
           viewCustomization: [] as ViewCustomizationType[],
-          possibleOperationalSolutions: [] as ViewCustomizationType[],
+          solutions: [] as unknown as MtoCommonSolutionKey[],
           __typename: 'UserViewCustomization'
         }
       }
     }
-  },
+  }
+];
+
+const favoritesMock: MockedResponse<
+  GetFavoritesQuery,
+  GetFavoritesQueryVariables
+>[] = [
   {
     request: {
       query: GetFavoritesDocument,
@@ -104,7 +78,46 @@ const settingsMock = [
     },
     result: {
       data: {
-        modelPlanCollection: [mockModel]
+        __typename: 'Query',
+        modelPlanCollection: [
+          {
+            id: '0186774a-80b0-454c-b69e-c4e949343483',
+            modelName: 'Plan For General Characteristics',
+            nameHistory: ['first', 'second'],
+            isFavorite: true,
+            status: ModelStatus.PLAN_DRAFT,
+            isCollaborator: false,
+            echimpCRsAndTDLs: [
+              {
+                id: '123',
+                __typename: 'EChimpCR'
+              },
+              {
+                id: '456',
+                __typename: 'EChimpTDL'
+              }
+            ],
+            basics: {
+              id: '123',
+              performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
+              goal: 'The goal',
+              __typename: 'PlanBasics'
+            },
+            collaborators: [
+              {
+                userAccount: {
+                  id: '890',
+                  __typename: 'UserAccount',
+                  commonName: 'Test User'
+                },
+                id: '2134234',
+                teamRoles: [TeamRole.MODEL_LEAD],
+                __typename: 'PlanCollaborator'
+              }
+            ],
+            __typename: 'ModelPlan'
+          }
+        ]
       }
     }
   }
@@ -126,6 +139,7 @@ describe('The home page', () => {
         <VerboseMockedProvider
           mocks={[
             ...settingsMock,
+            ...favoritesMock,
             ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
             ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
           ]}
@@ -164,6 +178,7 @@ describe('The home page', () => {
         <MockedProvider
           mocks={[
             ...settingsWithOrder,
+            ...favoritesMock,
             ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
             ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
           ]}
@@ -203,6 +218,7 @@ describe('The home page', () => {
         <MockedProvider
           mocks={[
             ...settingsWithOrder,
+            ...favoritesMock,
             ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
             ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
           ]}

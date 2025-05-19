@@ -1,0 +1,10 @@
+
+"""
+Represents MTO Category translation data
+"""
+
+type MTOCategoryTranslation {
+  name: TranslationField! @goTag(key: "db", value: "name")
+  position: TranslationField! @goTag(key: "db", value: "position")
+  parentID: TranslationField! @goTag(key: "db", value: "parent_id")
+}

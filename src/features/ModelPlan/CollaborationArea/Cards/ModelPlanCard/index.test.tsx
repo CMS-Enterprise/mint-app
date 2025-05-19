@@ -7,6 +7,7 @@ import {
   GetModelPlanQuery,
   ModelPhase,
   ModelStatus,
+  MtoStatus,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -15,7 +16,7 @@ import setup from 'tests/util';
 
 import ModelPlanCard, { getLastModifiedSection } from './index';
 
-const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
 const modelPlan: GetModelPlanTypes = {
@@ -125,6 +126,16 @@ const modelPlan: GetModelPlanTypes = {
     }
   },
   echimpCRsAndTDLs: [],
+  mtoMatrix: {
+    __typename: 'ModelsToOperationMatrix',
+    status: MtoStatus.IN_PROGRESS,
+    recentEdit: null,
+    info: {
+      __typename: 'MTOInfo',
+      id: '123'
+    },
+    milestones: []
+  },
   dataExchangeApproach: {
     __typename: 'PlanDataExchangeApproach',
     id: '123',
@@ -136,7 +147,6 @@ const modelPlan: GetModelPlanTypes = {
       commonName: 'John Doe'
     }
   },
-  operationalNeeds: [] as any,
   documents: [
     {
       __typename: 'PlanDocument',

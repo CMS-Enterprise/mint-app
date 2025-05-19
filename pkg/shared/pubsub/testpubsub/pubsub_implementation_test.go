@@ -26,7 +26,7 @@ func setupPubSubTest(t *testing.T) (*pubsub.ServicePubSub, *mockpubsub.MockSubsc
 	subscriber := mockpubsub.NewMockSubscriber(mockController)
 	eventType := mockpubsub.MockEvent
 	payload := "test"
-	modelPlanID, _ := uuid.Parse("f11eb129-2c80-4080-9440-439cbe1a286f")
+	modelPlanID, _ := uuid.Parse("ce3405a0-3399-4e3a-88d7-3cfc613d2905")
 	subscriberID := "MOCK_SUBSCRIBER"
 	disconnectChannel := make(chan struct{})
 	return ps, subscriber, eventType, payload, modelPlanID, subscriberID, disconnectChannel

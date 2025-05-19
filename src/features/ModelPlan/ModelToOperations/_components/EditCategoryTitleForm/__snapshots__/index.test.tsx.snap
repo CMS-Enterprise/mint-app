@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Custom Catergory form > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none"
+    data-testid="custom-category-form"
+    id="custom-category-form"
+  >
+    <fieldset
+      class="usa-fieldset margin-bottom-8 padding-bottom-4"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-y-0"
+        data-testid="formGroup"
+      >
+        <p
+          class="margin-y-0 text-bold"
+        >
+          Current title
+        </p>
+        <p
+          class="margin-top-0"
+        />
+        <label
+          class="usa-label mint-body-normal maxw-none margin-top-2"
+          data-testid="label"
+          for="name"
+        >
+          New title 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <input
+          class="usa-input"
+          data-testid="textInput"
+          id="name"
+          name="name"
+          type="text"
+          value=""
+        />
+      </div>
+    </fieldset>
+    <div
+      class="mint-modal__footer"
+    >
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Save changes
+      </button>
+      <button
+        class="usa-button usa-button margin-top-0 usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

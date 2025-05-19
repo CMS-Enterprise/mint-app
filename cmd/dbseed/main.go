@@ -441,20 +441,6 @@ func (s *Seeder) SeedData() {
 		},
 	)
 
-	_ = s.operationalSolutionSubtasksCreate(
-		planWithBasics,
-		operationalSolution.ID,
-		[]*model.CreateOperationalSolutionSubtaskInput{
-			{
-				Name:   "Create the thing!",
-				Status: models.OperationalSolutionSubtaskStatusInProgress,
-			}, {
-				Name:   "Do the thing!",
-				Status: models.OperationalSolutionSubtaskStatusTodo,
-			},
-		},
-	)
-
 	// Seed a plan that is has a clearance start date 3 months from today
 	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT", nil)
 	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
@@ -479,6 +465,10 @@ func (s *Seeder) SeedData() {
 			"highLevelNote":   "Some high level note",
 		},
 	)
+
+	s.seedModelPlanWithMTOData("Model Plan for MTO testing", "MINT", &mtoModelPlanUUID)
+
+	s.seedModelPlanWithMTOStandardCategories("Model Plan for with MTO categories", "MINT", &mtoModelPlanWithCategoriesUUID)
 
 	// Send a notification for Data Exchange Approach Completed
 	dataExchangeApproach := models.NewPlanDataExchangeApproach(
@@ -520,8 +510,8 @@ func (s *Seeder) SeedData() {
 func (s *Seeder) SetDefaultUserViews() {
 	mintPrinc := s.getTestPrincipalByUsername("MINT")
 	s.updateUserView(mintPrinc, map[string]interface{}{
-		"viewCustomization":            []models.ViewCustomizationType{models.ViewCustomizationTypeModelsByOperationalSolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
-		"possibleOperationalSolutions": []models.OperationalSolutionKey{models.OpSKInnovation, models.OpSKAcoOs},
+		"viewCustomization": []models.ViewCustomizationType{models.ViewCustomizationTypeModelsBySolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
+		"solutions":         []models.MTOCommonSolutionKey{models.MTOCSKInnovation, models.MTOCSKAcoOs},
 	},
 	)
 }

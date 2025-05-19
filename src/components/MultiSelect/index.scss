@@ -32,3 +32,9 @@
     align-items: center;
   }
 }
+
+.grouped-options {
+  .usa-combo-box__list-option {
+    border: none !important
+  }
+}

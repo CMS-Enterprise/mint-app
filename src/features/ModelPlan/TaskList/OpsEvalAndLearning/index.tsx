@@ -29,8 +29,8 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MainContent from 'components/MainContent';
+import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -147,10 +147,6 @@ export const OpsEvalAndLearningContent = () => {
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as OpsEvalAndLearningFormType;
 
   const modelName = data?.modelPlan?.modelName || '';
-
-  const itSolutionsStarted: boolean = !!data?.modelPlan.operationalNeeds.find(
-    need => need.modifiedDts
-  );
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -307,23 +303,14 @@ export const OpsEvalAndLearningContent = () => {
                   </FieldGroup>
 
                   <FieldGroup
-                    scrollElement="ops-eval-and-learning-help-desk-use"
+                    scrollElement="helpdeskUse"
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-help-desk-use">
                       {opsEvalAndLearningT('helpdeskUse.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-help-desk-use-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-help-desk-use-warning" />
 
                     <BooleanRadio
                       field="helpdeskUse"
@@ -408,21 +395,15 @@ export const OpsEvalAndLearningContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
+                  <FieldGroup
+                    className="margin-y-4 margin-bottom-8"
+                    scrollElement="iddocSupport"
+                  >
                     <Label htmlFor="ops-eval-and-learning-iddoc-support">
                       {opsEvalAndLearningT('iddocSupport.label')}
                     </Label>
 
-                    {itSolutionsStarted && (
-                      <ITSolutionsWarning
-                        id="ops-eval-and-learning-iddoc-support-warning"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
-                          )
-                        }
-                      />
-                    )}
+                    <MTOWarning id="ops-eval-and-learning-iddoc-support-warning" />
 
                     <p className="text-base margin-y-1">
                       {opsEvalAndLearningT('iddocSupport.sublabel')}
