@@ -4,10 +4,11 @@ WITH QUERIED_IDS AS (
         model_plan_id,
         is_admin,
         user_id,
-        table_names        
+        table_names,
+        excluded_fields        
     FROM
         JSON_TO_RECORDSET(:paramTableJSON)
-        AS x("model_plan_id" UUID, "is_admin" BOOLEAN, "user_id" UUID, "table_names" table_name[]) -- noqa
+        AS x("model_plan_id" UUID, "is_admin" BOOLEAN, "user_id" UUID, "table_names" table_name[], "excluded_fields" TEXT[]) -- noqa
 ),
 
 KEYS_WITH_ACCESS_CHECK AS (
@@ -21,7 +22,8 @@ KEYS_WITH_ACCESS_CHECK AS (
             WHEN qID.is_admin OR pc.user_id IS NOT NULL THEN TRUE
             ELSE FALSE
         END AS has_restricted_access,
-        COALESCE(CARDINALITY(qID.table_names) > 0, FALSE) AS should_filter -- are there tables to filter? if null, false, if less than 1, false
+        COALESCE(CARDINALITY(qID.table_names) > 0, FALSE) AS should_filter, -- are there tables to filter? if null, false, if less than 1, false
+        COALESCE(CARDINALITY(qID.excluded_fields) > 0, FALSE) AS should_exclude_fields -- are there tables to filter? if null, false, if less than 1, false
     FROM
         QUERIED_IDS qID
     LEFT JOIN plan_collaborator pc
@@ -47,7 +49,8 @@ SELECT
     tAudit.modified_by,
     tAudit.modified_dts,
     qID.table_names,
-    qID.is_admin
+    qID.is_admin,
+    qID.excluded_fields
 
 
 FROM translated_audit AS tAudit
@@ -62,6 +65,24 @@ WHERE
     AND (
         NOT (qID.should_filter)
         OR  table_config.name = ANY(qID.table_names) -- filter by table names
+    )
+    AND (         
+        NOT (qID.should_exclude_fields)        
+        OR
+        (
+            -- This ensures that theres is at least one field that is not excluded, or there are no fields (like for an insert)
+            EXISTS (
+                SELECT 1
+                FROM translated_audit_field taf
+                WHERE
+                    taf.translated_audit_id = tAudit.id
+                    AND (
+                        taf.field_name IS NULL
+                        OR
+                        taf.field_name <> ALL(qID.excluded_fields)
+                    )
+            )
+        )
     )
 ORDER BY tAudit.change_id DESC
 LIMIT 1
