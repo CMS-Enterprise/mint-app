@@ -34,7 +34,7 @@ const CollaborationStatusBanner = ({
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   return (
-    <div>
+    <div className={classNames(className)}>
       <Grid
         row
         gap="05"
