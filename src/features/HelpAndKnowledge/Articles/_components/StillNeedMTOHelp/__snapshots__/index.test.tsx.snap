@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StillNeedMTOHelp > matches the snapshot 1`] = `
+<DocumentFragment>
+  <h2
+    class="margin-top-5 margin-bottom-1 line-height-large"
+  >
+    Still need help?
+  </h2>
+  <p
+    class="margin-bottom-6 margin-top-1"
+  >
+    If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+    <a
+      class="usa-link"
+      href="mailto:MINTTeam@cms.hhs.gov"
+    >
+      MINTTeam@cms.hhs.gov
+    </a>
+     or 
+    <button
+      class="usa-button usa-button--unstyled"
+      data-testid="button"
+      type="button"
+    >
+      <span
+        class="display-flex flex-align-center"
+        style="column-gap: 0.25rem;"
+      >
+        chat with us on Slack
+        <svg
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+          />
+        </svg>
+      </span>
+    </button>
+    .
+  </p>
+</DocumentFragment>
+`;
