@@ -56,7 +56,7 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
             data-testid="grid"
           >
             <span
-              class="usa-tag mint-tag bg-base text-white margin-right-1"
+              class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1"
               data-testid="tag"
             >
               Draft Model Plan

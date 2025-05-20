@@ -17,7 +17,7 @@ export const ModelStatusTag = ({
   return (
     <Tag
       className={classNames(
-        'mint-tag bg-base text-white margin-right-1',
+        'mint-tag bg-base text-white margin-right-1 padding-x-1',
         classname
       )}
     >
