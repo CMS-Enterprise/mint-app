@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import StatusBanner2 from 'features/ModelPlan/CollaborationArea/StatusBanner';
 import NotFound from 'features/NotFound';
 import {
   GetModelSummaryQuery,
@@ -372,7 +373,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           </h1>
         )}
 
-        <StatusBanner
+        <StatusBanner2
           isReadView
           modelID={modelID}
           status={status}
