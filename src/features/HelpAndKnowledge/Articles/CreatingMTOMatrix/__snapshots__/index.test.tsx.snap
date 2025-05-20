@@ -533,7 +533,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
-                    href="/help-and-knowledge/starting-mto"
+                    href="/help-and-knowledge/starting-mto-matrix"
                   >
                     <span>
                       Starting an MTO for a new model
