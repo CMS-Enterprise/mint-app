@@ -76,6 +76,27 @@ exports[`ResourcesByCategory > matches the snapshot 1`] = `
           </p>
         </div>
       </div>
+      <div
+        class="desktop:grid-col-4 margin-bottom-4"
+        data-testid="grid"
+      >
+        <div
+          class="display-block"
+        >
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/articles?category=mto-tutorials"
+          >
+            MINT tutorials
+          </a>
+           
+          <p
+            class="margin-top-1 margin-bottom-0"
+          >
+            10 resources
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
