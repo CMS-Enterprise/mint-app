@@ -24,10 +24,13 @@ func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context,
 	// 	return nil, fmt.Errorf("unable to determine appropriate access level to view audit collection. err %w", err)
 	// 	//If desired, we could just return the non-privileged version on error there
 	// }
+	hasPrivilegedAccess := false
+	// TODO, we need to check if a user is an admin or not
 
 	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{
 		ModelPlanID: modelPlanID,
 		TableNames:  tablesToInclude.String(),
+		IsAdmin:     hasPrivilegedAccess,
 	})
 }
 
