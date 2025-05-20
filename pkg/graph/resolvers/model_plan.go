@@ -606,6 +606,7 @@ func ModelPlanMostRecentTranslatedAudit(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 ) (*models.TranslatedAudit, error) {
+	excludedFields := []string{"previous_suggested_phase"}
 	//TODO fill this out, move to a constant
 	tablesToInclude := []models.TableName{
 		models.TNModelPlan,
@@ -631,5 +632,5 @@ func ModelPlanMostRecentTranslatedAudit(
 
 	}
 	//TODO, make sure that we don't include records from the system account, eg recommendations for suggested status etc
-	return TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx, logger, modelPlanID, tablesToInclude)
+	return TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx, logger, modelPlanID, tablesToInclude, excludedFields)
 }

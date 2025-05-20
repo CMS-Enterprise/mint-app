@@ -27,6 +27,10 @@ type MostRecentByModelPlanIDAndTableFilters struct {
 	// It really uses  models.TableName as the type, but must be comparable to work with a dataloader
 	// We make a compromise here to fit the dataloader interface
 	TableNames string `json:"table_names"`
+
+	// ExcludedFields is a list of fields to exclude from the result.
+	// It is provided as a string to  fit the comparable interface
+	ExcludedFields string `json:"excluded_fields"`
 }
 
 // MTOMilestoneByModelPlanAndCategoryKey is a key to get MTO milestones by a model plan id and category combination

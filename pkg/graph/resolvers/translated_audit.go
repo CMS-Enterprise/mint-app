@@ -9,6 +9,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -17,7 +18,7 @@ import (
 // TranslatedAuditGetMostRecentByModelPlanIDAndTableNames returns the most recent TranslatedAudit for a given model plan id and table names
 // if one doesn't exist, it will return nil.
 // TODO, should we include some filtering to not get changes by the system account? Or just specifically ignore changes for suggestions?
-func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude models.TableNames) (*models.TranslatedAudit, error) {
+func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude models.TableNames, excludedFields []string) (*models.TranslatedAudit, error) {
 	// TODO handle access control, either in the code or in the query. Note, that it is also controlled by job codes :thinking
 	// hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
 	// if err != nil {
@@ -28,9 +29,10 @@ func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context,
 	// TODO, we need to check if a user is an admin or not
 
 	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{
-		ModelPlanID: modelPlanID,
-		TableNames:  tablesToInclude.String(),
-		IsAdmin:     hasPrivilegedAccess,
+		ModelPlanID:    modelPlanID,
+		TableNames:     tablesToInclude.String(),
+		ExcludedFields: helpers.JoinStringSlice(excludedFields, true),
+		IsAdmin:        hasPrivilegedAccess,
 	})
 }
 
