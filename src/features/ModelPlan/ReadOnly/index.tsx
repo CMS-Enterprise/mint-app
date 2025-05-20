@@ -49,6 +49,7 @@ import { groupOptions } from './_components/FilterView/util';
 import MobileNav from './_components/MobileNav';
 import ModelSummary from './_components/ModelSummary';
 import SideNav from './_components/Sidenav';
+import ReadViewStatusBanner from './_components/StatusBanner';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
@@ -373,12 +374,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           </h1>
         )}
 
-        <StatusBanner2
-          isReadView
+        <ReadViewStatusBanner
           modelID={modelID}
           status={status}
-          statusLabel
-          modifiedOrCreateLabel={!!modifiedDts}
+          createdDts={createdDts}
           modifiedDts={modifiedDts ?? createdDts}
           hasEditAccess={hasEditAccess}
         />
