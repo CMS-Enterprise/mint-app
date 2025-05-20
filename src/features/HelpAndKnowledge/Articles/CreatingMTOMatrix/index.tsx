@@ -5,7 +5,6 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -13,7 +12,6 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import i18next from 'i18next';
 
-import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -21,6 +19,7 @@ import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import RelatedArticles from '../_components/RelatedArticles';
+import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import helpAndKnowledgeArticles, { ArticleCategories, HelpArticle } from '..';
 
 export const CreatingMTOMatrix = () => {
@@ -299,23 +298,7 @@ export const CreatingMTOMatrix = () => {
                 </Grid>
               </div>
 
-              <h2 className="margin-top-5 margin-bottom-1 line-height-large">
-                {t('stillNeedHelp')}
-              </h2>
-
-              <p className="margin-bottom-6 margin-top-1">
-                <Trans
-                  i18nKey="creatingMtoMatrix:stillNeedHelpDescription"
-                  components={{
-                    email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>,
-                    slack: (
-                      <ExternalLink href="https://cmsgov.slack.com/archives/C04B10ZN6A2">
-                        {' '}
-                      </ExternalLink>
-                    )
-                  }}
-                />
-              </p>
+              <StillNeedMTOHelp />
             </div>
           </Grid>
         </GridContainer>
