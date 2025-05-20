@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { filteredViewOutput } from 'features/ModelPlan/ReadOnly';
 import FilterViewBanner from 'features/ModelPlan/ReadOnly/_components/FilterView/Banner';
 import { filterGroups } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import ReadViewStatusBanner from 'features/ModelPlan/ReadOnly/_components/StatusBanner';
 import NotFound from 'features/NotFound';
 import {
   GetModelSummaryQuery,
@@ -16,7 +17,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
 import PageHeading from 'components/PageHeading';
-import StatusBanner from 'components/StatusBanner';
 
 import NDABanner from '../NDABanner';
 
@@ -68,14 +68,12 @@ const PDFSummary = ({
             )}
           </PageHeading>
 
-          <StatusBanner
-            isReadView
+          <ReadViewStatusBanner
             modelID={modelID}
             status={status}
-            statusLabel
+            createdDts={createdDts}
+            modifiedDts={modifiedDts}
             changeHistoryLink={false}
-            modifiedOrCreateLabel={!!modifiedDts}
-            modifiedDts={modifiedDts ?? createdDts}
           />
         </GridContainer>
       </SummaryBox>

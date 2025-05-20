@@ -17,6 +17,7 @@ type ReadViewStatusBannerStatusBannerProps = {
   hasEditAccess?: boolean;
   modifiedDts?: string | null;
   createdDts?: string | null;
+  changeHistoryLink?: boolean;
   className?: string;
 };
 
@@ -35,6 +36,7 @@ const ReadViewStatusBanner = ({
   hasEditAccess = false,
   modifiedDts,
   createdDts,
+  changeHistoryLink = true,
   className
 }: ReadViewStatusBannerStatusBannerProps) => {
   const { t } = useTranslation('modelPlanTaskList');
@@ -44,7 +46,7 @@ const ReadViewStatusBanner = ({
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   return (
-    <div>
+    <div data-testid="task-list-status" className={className}>
       <Grid
         row
         desktop={{ col: 12 }}
@@ -63,19 +65,21 @@ const ReadViewStatusBanner = ({
           {!isMobile && <Divider className="margin-left-1" />}
 
           <div className="display-flex flex-align-center flex-wrap">
-            <UswdsReactLink
-              to={`/models/${modelID}/change-history`}
-              className={classNames(
-                'display-flex flex-align-center padding-right-2',
-                {
-                  'padding-y-1': isMobile
-                }
-              )}
-            >
-              <Icon.History className="margin-right-1" />
+            {changeHistoryLink && (
+              <UswdsReactLink
+                to={`/models/${modelID}/change-history`}
+                className={classNames(
+                  'display-flex flex-align-center padding-right-2',
+                  {
+                    'padding-y-1': isMobile
+                  }
+                )}
+              >
+                <Icon.History className="margin-right-1" />
 
-              {changeHistoryT('viewChangeHistory')}
-            </UswdsReactLink>
+                {changeHistoryT('viewChangeHistory')}
+              </UswdsReactLink>
+            )}
 
             <div className="display-flex flex-align-center flex-wrap margin-right-1">
               <p

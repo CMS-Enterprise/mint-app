@@ -166,12 +166,11 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
             </span>
           </h1>
           <div
-            class="padding-0 task-list-status"
             data-testid="task-list-status"
-            style="line-height: initial;"
           >
             <div
-              class="display-flex flex-align-center"
+              class="grid-row desktop:grid-col-12 margin-bottom-2 flex-align-center flex-justify-start"
+              data-testid="grid"
             >
               <p
                 class="margin-y-0 text-bold margin-right-1"
@@ -179,66 +178,77 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 Status:
               </p>
               <span
-                class="mint-tag bg-base text-white margin-right-1"
+                class="usa-tag mint-tag bg-base text-white margin-right-1 margin-right-2"
                 data-testid="tag"
               >
                 Draft Model Plan
               </span>
               <div
-                class="display-flex flex-align-center flex-wrap margin-right-1"
+                class="grid-row"
+                data-testid="grid"
               >
-                <p
-                  class="margin-y-0 text-normal margin-right-1"
+                <div
+                  class="status-banner__border border-base-light margin-05 margin-right-2 margin-left-1"
+                />
+                <div
+                  class="display-flex flex-align-center flex-wrap"
                 >
-                  Last updated on 08/27/2022
-                </p>
+                  <a
+                    class="usa-link display-flex flex-align-center padding-right-2"
+                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
+                  >
+                    <svg
+                      class="usa-icon margin-right-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                      />
+                    </svg>
+                    View change history
+                  </a>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1"
+                    >
+                      Model last updated 08/27/2022
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="status-banner__border border-base-light margin-05 margin-right-2"
+                />
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <a
+                    class="usa-link display-flex flex-align-center"
+                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+                  >
+                    <svg
+                      class="usa-icon margin-right-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                    Edit Model Plan
+                  </a>
+                </div>
               </div>
-            </div>
-            <div
-              class="display-flex flex-align-center margin-right-2"
-            >
-              <a
-                class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light "
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
-              >
-                <svg
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                  />
-                </svg>
-                View change history
-              </a>
-            </div>
-            <div
-              class="display-flex flex-align-center"
-            >
-              <a
-                class="usa-link display-flex flex-align-center"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
-              >
-                <svg
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                  />
-                </svg>
-                Edit Model Plan
-              </a>
             </div>
           </div>
           <div
@@ -659,35 +669,29 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                           </h2>
                         </div>
                         <div
-                          class="padding-0 margin-bottom-4"
-                          data-testid="task-list-status-condensed"
-                          style="line-height: initial;"
+                          class="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4"
                         >
+                          <p
+                            class="margin-y-0 text-bold margin-right-1"
+                          >
+                            Status:
+                          </p>
                           <div
-                            class="display-flex flex-align-center"
+                            class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                            data-testid="tasklist-tag"
+                          >
+                            <span>
+                              In progress
+                            </span>
+                          </div>
+                          <div
+                            class="display-flex flex-align-center flex-wrap margin-right-1"
                           >
                             <p
-                              class="margin-y-0 text-bold margin-right-1"
+                              class="margin-y-0 text-normal margin-right-1 text-base"
                             >
-                              Status:
+                              Model last updated 06/03/2022
                             </p>
-                            <div
-                              class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
-                              data-testid="tasklist-tag"
-                            >
-                              <span>
-                                In progress
-                              </span>
-                            </div>
-                            <div
-                              class="display-flex flex-align-center flex-wrap margin-right-1"
-                            >
-                              <p
-                                class="margin-y-0 text-normal margin-right-1 text-base"
-                              >
-                                Last updated on 06/03/2022
-                              </p>
-                            </div>
                           </div>
                         </div>
                       </div>

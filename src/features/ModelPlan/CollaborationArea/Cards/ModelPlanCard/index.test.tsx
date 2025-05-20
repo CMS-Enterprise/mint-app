@@ -28,6 +28,7 @@ const modelPlan: GetModelPlanTypes = {
   modelName: 'Test',
   opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
   modifiedDts: '2022-05-12T15:01:39.190679Z',
+  createdDts: '2022-05-12T15:01:39.190679Z',
   modifiedByUserAccount: {
     __typename: 'UserAccount',
     commonName: 'John Doe'

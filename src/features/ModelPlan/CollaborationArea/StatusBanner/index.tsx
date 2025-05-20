@@ -37,6 +37,7 @@ const CollaborationStatusBanner = ({
     <div>
       <Grid
         row
+        gap="05"
         desktop={{ col: 10 }}
         tablet={{ col: 12 }}
         className={classNames(
