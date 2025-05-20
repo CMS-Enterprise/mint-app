@@ -17,20 +17,15 @@ import (
 
 // TranslatedAuditGetMostRecentByModelPlanIDAndTableNames returns the most recent TranslatedAudit for a given model plan id and table names
 // if one doesn't exist, it will return nil.
-// TODO, should we include some filtering to not get changes by the system account? Or just specifically ignore changes for suggestions?
-func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude models.TableNames, excludedFields []string) (*models.TranslatedAudit, error) {
-	// TODO handle access control, either in the code or in the query. Note, that it is also controlled by job codes :thinking
-	// hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
-	// if err != nil {
-	// 	return nil, fmt.Errorf("unable to determine appropriate access level to view audit collection. err %w", err)
-	// 	//If desired, we could just return the non-privileged version on error there
-	// }
+// Note we specifically exclude privelleged access here so it's consistent for all users
+func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude []models.TableName, excludedFields []string) (*models.TranslatedAudit, error) {
+
+	// Note, if desired in the future, we can check if the user has privileged access here. The data loader has that concept, but leaving as is for consistency
 	hasPrivilegedAccess := false
-	// TODO, we need to check if a user is an admin or not
 
 	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{
 		ModelPlanID:    modelPlanID,
-		TableNames:     tablesToInclude.String(),
+		TableNames:     helpers.JoinStringSlice(tablesToInclude, true),
 		ExcludedFields: helpers.JoinStringSlice(excludedFields, true),
 		IsAdmin:        hasPrivilegedAccess,
 	})
