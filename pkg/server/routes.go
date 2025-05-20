@@ -319,6 +319,7 @@ func (s *Server) routes(
 		AddressBook:          addressBook,
 		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
 		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
+		OktaAPIClient:        oktaClient,
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
