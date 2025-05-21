@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  GetPossibleSolutionsQuery,
+  GetMtoSolutionContactsQuery,
   MtoCommonSolutionKey,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
@@ -82,7 +82,7 @@ export const operationalSolutionSubCategoryMap: Record<
 };
 
 export type SolutionContactType =
-  GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
+  GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['contactInformation']['pointsOfContact'][0];
 
 export interface HelpSolutionType extends HelpSolutionBaseType {
   pointsOfContact?: SolutionContactType[];

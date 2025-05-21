@@ -648,6 +648,104 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
                     style="word-break: break-word;"
                   >
+                    CMMI Data Aggregation Contract
+                  </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    CDAC
+                  </p>
+                  <div
+                    class="display-flex flex-wrap padding-top-05"
+                  >
+                    <a
+                      aria-label="Articles under the Data category"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=data"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
+                        data-testid="tag"
+                      >
+                        Data
+                      </span>
+                    </a>
+                  </div>
+                  <p
+                    class="solution-card__body"
+                  >
+                    The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
+                  </p>
+                  <div
+                    class="tablet:grid-col-6 margin-bottom-2"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-bold margin-bottom-0"
+                    >
+                      Point of contact
+                    </p>
+                    <p
+                      class="margin-y-0"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="mint-divider"
+                  />
+                  <a
+                    aria-label="Click to learn more about this solution: CMMI Data Aggregation Contract"
+                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
+                    href="/help-and-knowledge/operational-solutions?solution=cmmi-data-aggregation-contract&section=about"
+                  >
+                    About this solution
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-4 display-flex flex-align-stretch"
+        data-testid="grid"
+      >
+        <ul
+          class="usa-card-group flex-no-wrap"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card solution-card margin-bottom-2 shadow"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="padding-3 solution-card__container solution-card__fill-card-space"
+              >
+                <div
+                  class="solution-card__header solution-card__fill-card-space"
+                >
+                  <h3
+                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
+                    style="word-break: break-word;"
+                  >
                     CMS Box
                   </h3>
                   <div
@@ -812,104 +910,6 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
           </li>
         </ul>
       </div>
-      <div
-        class="tablet:grid-col-6 desktop:grid-col-4 display-flex flex-align-stretch"
-        data-testid="grid"
-      >
-        <ul
-          class="usa-card-group flex-no-wrap"
-          data-testid="CardGroup"
-        >
-          <li
-            class="usa-card solution-card margin-bottom-2 shadow"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container"
-            >
-              <div
-                class="padding-3 solution-card__container solution-card__fill-card-space"
-              >
-                <div
-                  class="solution-card__header solution-card__fill-card-space"
-                >
-                  <h3
-                    class="margin-bottom-0 margin-top-0 solutions-checkbox__header"
-                    style="word-break: break-word;"
-                  >
-                    Consolidated Business Operations Support Center
-                  </h3>
-                  <p
-                    class="margin-y-0"
-                  >
-                    CBOSC
-                  </p>
-                  <div
-                    class="display-flex flex-wrap padding-top-05"
-                  >
-                    <a
-                      aria-label="Articles under the Communication tools and help desk category"
-                      class="usa-link margin-right-05 margin-bottom-1 display-block"
-                      data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
-                    >
-                      <span
-                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
-                        data-testid="tag"
-                      >
-                        Communication tools and help desk
-                      </span>
-                    </a>
-                  </div>
-                  <p
-                    class="solution-card__body"
-                  >
-                    The Consolidated Business Operations Support Center (CBOSC) contract provides IT and programmatic help desk inquiry support, help desk operations and Business Operations support for the Innovation Center Models, the Alternative Payment Model (APM) track of the Quality Payment Program (QPP) and CM. CBOSC manages intake, resolution and escalation of all inquiries related to Innovations and Shared Savings Program Business Operations centrally. Support is provided through Pre-Implementation, Post-Implementation, Operation, Reporting, and Information Support phases as models test innovative payment and service delivery models to reduce program expenditures while preserving or enhancing the quality of care furnished to individuals.
-                  </p>
-                  <div
-                    class="tablet:grid-col-6 margin-bottom-2"
-                    data-testid="grid"
-                  >
-                    <p
-                      class="text-bold margin-bottom-0"
-                    >
-                      Point of contact
-                    </p>
-                    <p
-                      class="margin-y-0"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="mint-divider"
-                  />
-                  <a
-                    aria-label="Click to learn more about this solution: Consolidated Business Operations Support Center"
-                    class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=consolidated-business-operations-support-center&section=about"
-                  >
-                    About this solution
-                    <svg
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
     </div>
     <div
       class=""
@@ -968,6 +968,18 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
               type="button"
             >
               4
+            </button>
+          </li>
+          <li
+            class="usa-pagination__item usa-pagination__page-no"
+          >
+            <button
+              aria-label="Page 5"
+              class="usa-button usa-button--unstyled usa-pagination__button"
+              data-testid="pagination-page-number"
+              type="button"
+            >
+              5
             </button>
           </li>
           <li

@@ -515,6 +515,40 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Bene
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > CMMI Data Aggregation Contract 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <p>
+        The timeline for working with CDAC varies based on model requirements. Please reach out to the CDAC team to get started.
+      </p>
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Reach out to CDAC team
+          </h3>
+          If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to Megha Mirchandani and William Gordon to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. 
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > CMS Box 1`] = `
 <DocumentFragment>
   <div>
