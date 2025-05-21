@@ -265,7 +265,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     enum: OperationalSolutionKey.CDAC,
     key: 'cdac',
     route: 'cmmi-data-aggregation-contract',
-    categories: [OperationalSolutionCategories.DATA],
+    categories: [
+      OperationalSolutionCategories.CONTRACT_VEHICLES,
+      OperationalSolutionCategories.DATA
+    ],
     acronym: 'CDAC',
     type: 'Contracts and contractors',
     name: 'CMMI Data Aggregation Contract',

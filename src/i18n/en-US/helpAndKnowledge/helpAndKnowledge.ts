@@ -482,8 +482,22 @@ Performing model implementation, design, monitoring, and evaluation activities t
   },
   cdac: {
     about: {
-      description:
-        'The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.'
+      description: `The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
+        
+  CDAC could support a model/project if:`,
+      items: [
+        'The model team would benefit from enhanced monitoring capabilities that include the integration of external data sources with internal CMS data sources for more comprehensive monitoring. <italic>For example, the Cell & Gene Therapy Access (CGT) Model Team leverages aggregated clinical and claims data insights alongside Medicaid claims for longitudinal patient tracking to monitor drug therapy outcomes as patients transition across care settings and health plans.</italic>',
+        'The model participants or patients would benefit from more comprehensive, real-time clinical and claims data across care settings and providers (e.g., specialists, hospitals), as well as actionable insights to improve value-based care outcomes. <italic>For example, participants in primary care models have received real-time hospital notifications on their attributed patients, contributing to a reduction in avoidable readmissions. They have also received multi-payer gaps in care reports to improve performance on quality measures.</italic>'
+      ],
+      ordered: true,
+      subDescription:
+        '<link1>Process diagram depicting the flow of data through CDAC (view on Confluence)</link1>',
+      links: [
+        {
+          link: 'https://confluenceent.cms.gov/display/CDAC/Data+Aggregation+Conceptual+Flow?src=contextnavpagetreemode',
+          external: true
+        }
+      ]
     },
     timeline: {
       description:
