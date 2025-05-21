@@ -2176,7 +2176,7 @@ const helpAndKnowledge = {
   relatedDescription:
     'Below are some additional help articles that you may find useful.',
   addtionalResources: 'Additional resources',
-  viewAllRelated: 'View all help resources',
+  viewAllRelated: 'View all help articles',
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
     'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.',

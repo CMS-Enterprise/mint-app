@@ -6,6 +6,7 @@ import AllArticles from './Articles/AllArticles';
 import CreatingMTOMatrix from './Articles/CreatingMTOMatrix';
 import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
+import UsingMilestoneTable from './Articles/MilestoneTable';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
 import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
@@ -88,6 +89,11 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/creating-mto-matrix" exact>
         <CreatingMTOMatrix />
+      </Route>
+
+      {/* Tutorials Articles */}
+      <Route path="/help-and-knowledge/using-milestone-table" exact>
+        <UsingMilestoneTable />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />
