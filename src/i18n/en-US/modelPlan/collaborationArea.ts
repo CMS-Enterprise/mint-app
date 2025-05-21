@@ -4,7 +4,8 @@ const collaborationArea = {
   modelPlan: 'for {{modelName}}',
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
-  switchToReadView: 'Switch to the read view for the model',
+  switchToReadView: 'Switch to the Read View for the model',
+  updateStatus: 'Update model status',
   areas: 'Areas',
   goToModelPlan: 'Go to Model Plan',
   modelPlanCard: {
