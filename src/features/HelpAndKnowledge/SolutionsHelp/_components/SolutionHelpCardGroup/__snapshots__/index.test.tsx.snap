@@ -659,6 +659,19 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="display-flex flex-wrap padding-top-05"
                   >
                     <a
+                      aria-label="Articles under the Contract vehicles category"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=contract-vehicles"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
+                        data-testid="tag"
+                      >
+                        Contract vehicles
+                      </span>
+                    </a>
+                    <a
                       aria-label="Articles under the Data category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
@@ -676,6 +689,8 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="solution-card__body"
                   >
                     The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
+        
+  CDAC could support a model/project if:
                   </p>
                   <div
                     class="tablet:grid-col-6 margin-bottom-2"

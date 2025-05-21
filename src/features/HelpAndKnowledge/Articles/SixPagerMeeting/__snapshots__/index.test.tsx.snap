@@ -240,7 +240,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Go to the Strategy Refresh landing page
@@ -265,7 +265,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Go to the Resources page
@@ -319,7 +319,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Go to the template on SharePoint
@@ -696,7 +696,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         Health Equity Resources on the Quality Vertical SharePoint
@@ -726,7 +726,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         CMS Framework for Health Equity
@@ -864,7 +864,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Strategy Refresh Model Development Library
@@ -900,7 +900,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             2-pager repository
@@ -927,7 +927,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             6-pager repository
@@ -954,7 +954,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             ICIP repository
@@ -981,7 +981,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Waiver database
@@ -1008,7 +1008,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Model Interactions framework resource PPT
@@ -1035,7 +1035,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Guidance on Model Expansion and Other Opportunities for Scaling
@@ -1069,7 +1069,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Quality Design Process
@@ -1096,7 +1096,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Patient Reported Outcome Measure(PROM) strategy
@@ -1130,7 +1130,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Quality Vertical Health Equity Resource Guide
@@ -1157,7 +1157,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Implicit Bias Guide
@@ -1184,7 +1184,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo
@@ -1211,7 +1211,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             HRSN Screening and Referral Implementation Guide
@@ -1238,7 +1238,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo
@@ -1272,7 +1272,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span
-                            class="display-flex flex-align-center"
+                            class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
                             BSG Checklist
@@ -1389,7 +1389,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         type="button"
                       >
                         <span
-                          class="display-flex flex-align-center"
+                          class="display-flex flex-align-center line-height-normal"
                           style="column-gap: 0.25rem;"
                         >
                           AHEAD 6-page concept paper
@@ -1418,7 +1418,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         type="button"
                       >
                         <span
-                          class="display-flex flex-align-center"
+                          class="display-flex flex-align-center line-height-normal"
                           style="column-gap: 0.25rem;"
                         >
                           Enhancing Oncology Model 6-page concept paper
@@ -1447,7 +1447,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         type="button"
                       >
                         <span
-                          class="display-flex flex-align-center"
+                          class="display-flex flex-align-center line-height-normal"
                           style="column-gap: 0.25rem;"
                         >
                           Making Care Primary 6-page concept paper

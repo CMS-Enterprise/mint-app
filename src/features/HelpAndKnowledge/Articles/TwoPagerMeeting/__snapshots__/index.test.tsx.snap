@@ -219,7 +219,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Go to the Strategy Refresh landing page
@@ -244,7 +244,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Go to the Resources page
@@ -298,7 +298,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span
-                      class="display-flex flex-align-center"
+                      class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
                       Go to the template on SharePoint
@@ -716,7 +716,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         AHEAD 2-page concept paper
@@ -745,7 +745,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         Enhancing Oncology Model 2-page concept paper
@@ -774,7 +774,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         Innovation in Behavioral Health 2-pager concept paper
@@ -803,7 +803,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         Making Care Primary 2-pager concept paper
