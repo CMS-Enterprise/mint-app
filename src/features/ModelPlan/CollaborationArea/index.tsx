@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import { HelpArticle } from 'features/HelpAndKnowledge/Articles';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import CollaborationStatusBanner from 'features/ModelPlan/CollaborationArea/StatusBanner';
 import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -15,7 +16,6 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
-import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
@@ -189,14 +189,12 @@ const CollaborationArea = () => {
             </Grid>
 
             <Grid desktop={{ col: 12 }}>
-              <StatusBanner
+              <CollaborationStatusBanner
                 modelID={modelID}
                 status={status}
-                updateLabel
-                statusLabel
-                isCollaborationArea
                 modifiedDts={modelPlan.modifiedDts}
-                modifiedOrCreateLabel
+                createdDts={modelPlan.createdDts}
+                className="margin-top-2"
               />
             </Grid>
 
