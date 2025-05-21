@@ -12,5 +12,6 @@ func (w *Worker) RefreshOktaCronJob(ctx context.Context, args ...interface{}) er
 	if err != nil {
 		w.Logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
 	}
+	w.Logger.Info("okta token refreshed")
 	return nil
 }

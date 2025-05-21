@@ -16,5 +16,5 @@
 [[cron]]
   schedule = "0 0 */15 * *"
   [cron.job]
-    type = "RefreshOktaTokenCronJob"
+    type = "RefreshOktaCronJob"
     queue = "critical"
