@@ -262,6 +262,18 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
+    enum: OperationalSolutionKey.CDAC,
+    key: 'cdac',
+    route: 'cmmi-data-aggregation-contract',
+    categories: [OperationalSolutionCategories.DATA],
+    acronym: 'CDAC',
+    type: 'Contracts and contractors',
+    name: 'CMMI Data Aggregation Contract',
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
     enum: OperationalSolutionKey.CMS_BOX,
     key: 'cmsBox',
     route: 'cms-box',

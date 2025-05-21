@@ -115,6 +115,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
       APPS: 'Automated Plan Payment System',
       CDX: 'Centralized Data Exchange',
       CCW: 'Chronic Conditions Warehouse',
+      CDAC: 'CMMI Data Aggregation Contract',
       CMS_BOX: 'CMS Box',
       CMS_QUALTRICS: 'CMS Qualtrics',
       CBOSC: 'Consolidated Business Operations Support Center',

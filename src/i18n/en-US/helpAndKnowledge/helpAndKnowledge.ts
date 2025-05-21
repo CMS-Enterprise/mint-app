@@ -480,6 +480,23 @@ Performing model implementation, design, monitoring, and evaluation activities t
       links: ['Data Disclosures and Data Use Agreements']
     }
   },
+  cdac: {
+    about: {
+      description:
+        'The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.'
+    },
+    timeline: {
+      description:
+        'The timeline for working with CDAC varies based on model requirements. Please reach out to the CDAC team to get started.',
+      items: [
+        {
+          header: 'Reach out to CDAC team',
+          description:
+            'If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to Megha Mirchandani and William Gordon to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. '
+        }
+      ]
+    }
+  },
   cmsBox: {
     about: {
       description:
