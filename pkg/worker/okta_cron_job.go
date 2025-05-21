@@ -13,7 +13,7 @@ func (w *Worker) RefreshOktaCronJob(ctx context.Context, args ...interface{}) er
 	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
 	_, err := w.OktaAPIClient.SearchByName(context.Background(), "MINT")
 	if err != nil {
-		logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
+		logger.Warn("failed to refresh okta token", zap.Error(err))
 	}
 	logger.Info("okta token refreshed")
 	return nil
