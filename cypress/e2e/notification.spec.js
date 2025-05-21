@@ -346,7 +346,7 @@ describe('Notification Center', () => {
     cy.get('[data-testid="spinner"]').should('not.exist');
 
     cy.get('[data-testid="individual-notification"]').contains(
-      'Dates have been updated for Empty Plan.'
+      'updated the dates for Empty Plan.'
     );
 
     cy.contains('button', 'View changes').click();
