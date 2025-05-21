@@ -17,35 +17,29 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
         </h2>
       </div>
       <div
-        class="padding-0 margin-bottom-4"
-        data-testid="task-list-status-condensed"
-        style="line-height: initial;"
+        class="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4"
       >
+        <p
+          class="margin-y-0 text-bold margin-right-1"
+        >
+          Status:
+        </p>
         <div
-          class="display-flex flex-align-center"
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <div
+          class="display-flex flex-align-center flex-wrap margin-right-1"
         >
           <p
-            class="margin-y-0 text-bold margin-right-1"
+            class="margin-y-0 text-normal margin-right-1 text-base"
           >
-            Status:
+            Model last updated 06/03/2022
           </p>
-          <div
-            class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
-            data-testid="tasklist-tag"
-          >
-            <span>
-              In progress
-            </span>
-          </div>
-          <div
-            class="display-flex flex-align-center flex-wrap margin-right-1"
-          >
-            <p
-              class="margin-y-0 text-normal margin-right-1 text-base"
-            >
-              Last updated on 06/03/2022
-            </p>
-          </div>
         </div>
       </div>
     </div>
