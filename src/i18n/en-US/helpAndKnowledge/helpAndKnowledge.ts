@@ -490,12 +490,45 @@ Performing model implementation, design, monitoring, and evaluation activities t
         'The model participants or patients would benefit from more comprehensive, real-time clinical and claims data across care settings and providers (e.g., specialists, hospitals), as well as actionable insights to improve value-based care outcomes. <italic>For example, participants in primary care models have received real-time hospital notifications on their attributed patients, contributing to a reduction in avoidable readmissions. They have also received multi-payer gaps in care reports to improve performance on quality measures.</italic>'
       ],
       ordered: true,
-      subDescription:
+      descriptionFooter:
         '<link1>Process diagram depicting the flow of data through CDAC (view on Confluence)</link1>',
       links: [
         {
           link: 'https://confluenceent.cms.gov/display/CDAC/Data+Aggregation+Conceptual+Flow?src=contextnavpagetreemode',
           external: true
+        }
+      ],
+      components: [
+        {
+          header: 'Capabilities',
+          description:
+            'CDAC offers several core capabilities to models, which can be tailored to meet unique needs of model teams and participants. Below are some of the core CDAC capabilities, along with examples of where they have been or can be applied: ',
+          level: 'h3',
+          items: []
+        },
+        {
+          header: 'Integrated data and insights for Model Teams',
+          description: `Supporting model teams with integrating data from various data sources (e.g., clinical registry, commercial payer data), across time and at a patient and/or population level to support monitoring of patient or model outcomes.
+            
+Examples and impact:`,
+          level: 'h4',
+          items: [
+            'Integrated Datasets for Longitudinal Patient Tracking: Acquiring and integrating data from clinical data registries, Medicaid, states (e.g., prior authorization), and commercial payers supports the CGT Model Team in monitoring longitudinal patient outcomes for 10 years after a therapy is administered. These aggregated patient data span across time and sources to provide insights that substantiate outcomes-based payment arrangements with drug manufacturers.',
+            'Clinical Data Integration: Accessing and integrating clinical data from the Center for International Blood and Marrow Transplant Research (CIBMTR) registry supports the CGT Model Team in tracking adverse events (e.g., RBC transfusion, vaso-occlusive crisis) by using and integrating data not otherwise available in CMS claims.',
+            'Comprehensive Chronic Condition Control: Acquiring granular patient data such as patient lab results (e.g., HbA1c results) supports the Model Team in monitoring chronic condition management across patient populations to understand model impact and further targeted opportunities for disease management. '
+          ]
+        },
+        {
+          header: 'Integrated data and insights to Model Participants',
+          description: `Supporting model participants with timely, comprehensive, and actionable insights on their attributed patients supports improvement on model measures and reduces burden (when compared to reconciling multiple reports and portals). This is typically achieved by working in collaboration with aggregators such as Health Information Exchanges (HIEs) and EHR Vendors.
+            
+Examples and impact:`,
+          level: 'h4',
+          items: [
+            'Encounter Notification Services: Practices participating in the Comprehensive Primary Care Plus (CPC+) and Primary Care First (PCF) Models received real-time emergency department (ED) and hospital alerts on their Medicare FFS beneficiaries, enabling timely follow up to promote the reduction in avoidable readmissions and length of stay. Alerts prompted providers to collaborate with inpatient teams, redirect care to the outpatient settings, and coordinate post-discharge follow-up, improving care transitions and patient outcomes. As part of the PCF Model, the ENS use case enabled a single practice to avoid $114,372 in hospital spending; this amount, when projected over the whole model, would be over $2.3M in savings.',
+            'Gaps in Care Reports: Practices participating in the CPC+ and PCF Models received integrated reports combining claims and clinical data to create a comprehensive view of gaps in preventative or chronic disease management. Reports supported providers in conducting targeted outreach and intervention to close care gaps.',
+            'Focused Clinical Reports: Practices participating in the PCF Model received reports including the HbA1c results for their attributed patients to establish a comprehensive view of patient lab results. Over 70% of practices reported receiving results that they were previously unaware of (e.g., from specialists, hospitals). Reports supported timely intervention to improve outcomes and reduced avoidable utilization and duplicative testing.'
+          ]
         }
       ]
     },

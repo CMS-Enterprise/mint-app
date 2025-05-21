@@ -36,6 +36,7 @@ export interface AboutConfigType {
   description: string;
   links?: LinkType[];
   subDescription?: string;
+  descriptionFooter?: string;
   items?: string[];
   noList?: boolean;
   ordered?: boolean;
@@ -162,6 +163,18 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
             </li>
           ))}
         </ListType>
+      )}
+
+      {aboutConfig.descriptionFooter && (
+        <span className="line-height-normal">
+          <Trans
+            i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.descriptionFooter`}
+            components={{
+              ...getTransLinkComponents(aboutConfig.links),
+              bold: <strong className="line-height-normal" />
+            }}
+          />
+        </span>
       )}
 
       {hasComponents &&
