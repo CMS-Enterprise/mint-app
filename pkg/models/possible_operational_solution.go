@@ -57,6 +57,7 @@ const (
 	OpSKISP                       OperationalSolutionKey = "ISP"
 	OpSKMIDS                      OperationalSolutionKey = "MIDS"
 	OpSKModelSpace                OperationalSolutionKey = "MODEL_SPACE"
+	OpSKCdac                      OperationalSolutionKey = "CDAC"
 )
 
 // IsTaggedEntity is a method to satisfy the IsTaggedEntity interface for PossibleOperationalSolution.
