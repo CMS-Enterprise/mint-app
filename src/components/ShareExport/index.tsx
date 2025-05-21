@@ -31,6 +31,7 @@ import FieldGroup from 'components/FieldGroup';
 import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
@@ -101,10 +102,18 @@ const ShareExportModal = ({
     if (filteredView) setExportSection(filteredView);
   }, [filteredView]);
 
+  const { modelName } = useContext(ModelInfoContext);
+
+  const modelNameFormatted = modelName.replace(/ /g, '_');
+
+  const exportSectionFormatted = `-${exportSection.toUpperCase()}`;
+
+  const exportFileName = `MINT-${modelNameFormatted}${exportSectionFormatted}.pdf`;
+
   // Submit handler for exporting PDF
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: generalReadOnlyT('modal.documentTitle'),
+    documentTitle: exportFileName,
     onAfterPrint: () => {
       setPrintPDF(false);
       closeModal();
