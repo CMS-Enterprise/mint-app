@@ -372,7 +372,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         View on SharePoint
@@ -492,7 +492,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         View on SharePoint
@@ -714,7 +714,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       type="button"
                     >
                       <span
-                        class="display-flex flex-align-center"
+                        class="display-flex flex-align-center line-height-normal"
                         style="column-gap: 0.25rem;"
                       >
                         View on SharePoint

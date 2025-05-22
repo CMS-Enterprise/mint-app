@@ -1,4 +1,4 @@
-import { OperationalSolutionKey } from 'gql/generated/graphql';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import { OperationalSolutionCategories } from 'types/operationalSolutionCategories';
 
@@ -14,7 +14,7 @@ describe('solution help utils', () => {
 
     const expectedSolutions = [
       {
-        enum: OperationalSolutionKey.LV,
+        enum: MtoCommonSolutionKey.LV,
         key: 'legalVertical',
         route: 'legal-vertical',
         categories: [OperationalSolutionCategories.LEGAL],

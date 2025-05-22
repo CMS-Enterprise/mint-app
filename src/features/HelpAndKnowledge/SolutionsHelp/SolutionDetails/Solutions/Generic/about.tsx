@@ -36,6 +36,7 @@ export interface AboutConfigType {
   description: string;
   links?: LinkType[];
   subDescription?: string;
+  descriptionFooter?: string;
   items?: string[];
   noList?: boolean;
   ordered?: boolean;
@@ -149,12 +150,31 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
 
       {hasDescriptionItems && (
         <ListType className="padding-left-4 margin-top-0">
-          {descriptionItems?.map((item: string) => (
+          {descriptionItems?.map((item: string, index) => (
             <li key={item} className="list-item">
-              {item}
+              <Trans
+                i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.items.${index}`}
+                components={{
+                  ...getTransLinkComponents(aboutConfig.links),
+                  bold: <strong />,
+                  italic: <span className="text-italic text-base" />
+                }}
+              />
             </li>
           ))}
         </ListType>
+      )}
+
+      {aboutConfig.descriptionFooter && (
+        <span className="line-height-normal">
+          <Trans
+            i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.descriptionFooter`}
+            components={{
+              ...getTransLinkComponents(aboutConfig.links),
+              bold: <strong className="line-height-normal" />
+            }}
+          />
+        </span>
       )}
 
       {hasComponents &&
@@ -230,7 +250,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                                 i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}.header`}
                                 components={{
                                   ...getTransLinkComponents(component.links),
-                                  bold: <strong />
+                                  bold: <strong />,
+                                  italic: (
+                                    <span className="text-italic text-base" />
+                                  )
                                 }}
                               />
                             </span>
@@ -245,7 +268,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                                         ...getTransLinkComponents(
                                           component.links
                                         ),
-                                        bold: <strong />
+                                        bold: <strong />,
+                                        italic: (
+                                          <span className="text-italic text-base" />
+                                        )
                                       }}
                                     />
                                   </li>
@@ -261,7 +287,8 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                             i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.components.${componentIndex}.items.${index}`}
                             components={{
                               ...getTransLinkComponents(component.links),
-                              bold: <strong />
+                              bold: <strong />,
+                              italic: <span className="text-italic text-base" />
                             }}
                           />
                         )}
@@ -275,12 +302,12 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
         })}
 
       {aboutConfig.subDescription && (
-        <span>
+        <span className="line-height-normal">
           <Trans
             i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.subDescription`}
             components={{
               ...getTransLinkComponents(aboutConfig.links),
-              bold: <strong />
+              bold: <strong className="line-height-normal" />
             }}
           />
         </span>

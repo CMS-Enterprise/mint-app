@@ -5,10 +5,7 @@ Hook used to get the state/route of the modal for IT lead solution details
 import { useLocation } from 'react-router-dom';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import {
-  MtoCommonSolutionKey,
-  OperationalSolutionKey
-} from 'gql/generated/graphql';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import usePrevLocation from 'hooks/usePrevious';
 
@@ -22,7 +19,7 @@ type SolutionModalState = {
 };
 
 export const findSolutionByKey = (
-  key: OperationalSolutionKey | null,
+  key: MtoCommonSolutionKey | null,
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
   if (!key) return undefined;
@@ -30,7 +27,7 @@ export const findSolutionByKey = (
 };
 
 const useModalSolutionState = (
-  solutionKey?: OperationalSolutionKey | MtoCommonSolutionKey
+  solutionKey?: MtoCommonSolutionKey
 ): SolutionModalState => {
   const location = useLocation();
 
@@ -49,7 +46,7 @@ const useModalSolutionState = (
   );
 
   const solutionMap = findSolutionByKey(
-    solutionKey as OperationalSolutionKey | null,
+    solutionKey as MtoCommonSolutionKey | null,
     helpSolutions
   );
 

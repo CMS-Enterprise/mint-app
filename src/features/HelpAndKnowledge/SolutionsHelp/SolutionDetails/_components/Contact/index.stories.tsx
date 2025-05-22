@@ -6,7 +6,7 @@ import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/sol
 import Contact from '.';
 
 const contact: SolutionContactType = {
-  __typename: 'PossibleOperationalSolutionContact',
+  __typename: 'MTOCommonSolutionContact',
   id: '123',
   name: 'Aliza Kim',
   email: 'aliza.kim@cms.hhs.gov',
