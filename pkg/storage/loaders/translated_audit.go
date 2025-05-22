@@ -33,9 +33,10 @@ func batchTranslatedAuditGetMostRecentByModelPlanIDAndTableFilters(ctx context.C
 	}
 	getKeyFunc := func(data *models.TranslatedAuditWithFilteredView) storage.MostRecentByModelPlanIDAndTableFilters {
 		return storage.MostRecentByModelPlanIDAndTableFilters{
-			ModelPlanID: data.ModelPlanID,
-			TableNames:  data.TableNames,
-			IsAdmin:     data.IsAdmin,
+			ModelPlanID:    data.ModelPlanID,
+			TableNames:     data.TableNames,
+			IsAdmin:        data.IsAdmin,
+			ExcludedFields: data.ExcludedFields,
 		}
 	}
 	getResFunc := func(key storage.MostRecentByModelPlanIDAndTableFilters, resMap map[storage.MostRecentByModelPlanIDAndTableFilters]*models.TranslatedAuditWithFilteredView) (*models.TranslatedAudit, bool) {
