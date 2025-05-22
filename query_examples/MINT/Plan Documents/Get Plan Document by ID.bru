@@ -1,0 +1,56 @@
+meta {
+  name: Get Plan Document by ID
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query planDocument ($id: UUID!) {
+      planDocument (id: $id) {
+          id
+          modelPlanID
+          fileType
+          bucket
+          fileKey
+          virusScanned
+          virusClean
+          fileName
+          fileSize
+          documentType
+          otherType
+          optionalNotes
+          deletedAt
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+  
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }            
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{documentID}}"
+  }
+}

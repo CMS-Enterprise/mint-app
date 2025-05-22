@@ -1,0 +1,32 @@
+meta {
+  name: RemovePlanDocumentSolutionLinks
+  type: graphql
+  seq: 15
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation removePlanDocumentSolutionLinks ($solutionID: UUID!, $documentIDs: [UUID!]!) {
+      removePlanDocumentSolutionLinks (solutionID: $solutionID, documentIDs: $documentIDs)
+  }
+}
+
+body:graphql:vars {
+  {
+    "solutionID": "",
+    "documentIDs": [
+      ""
+    ]
+  }
+}

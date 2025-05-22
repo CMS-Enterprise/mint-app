@@ -1,0 +1,34 @@
+meta {
+  name: TDL Echimp by id
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query echimpTDL {
+      echimpTDL(id: "TDL240535") {
+          id
+          versionNum
+          initiator
+          firstName
+          lastName
+          title
+          issuedDate
+          status
+          associatedModelUids
+      }
+  
+  }
+}

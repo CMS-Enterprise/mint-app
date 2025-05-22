@@ -1,0 +1,138 @@
+meta {
+  name: TranslatedAuditCollectionGET NORMALIZED
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: http://localhost:8085/api/graph/query
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query translatedAuditCollection {
+    translatedAuditCollection(modelPlanID: "{{modelPlanID}}"
+      # limit: 5 
+      # offset: 3
+    ) {
+      id
+      # modelName
+      tableID
+      tableName
+      primaryKey
+      date
+      action
+  
+      actorID
+      actorName
+  
+      changeID
+      metaDataType
+      metaData {
+      ... on TranslatedAuditMetaBaseStruct{
+              version
+              tableName
+          }
+          ... on TranslatedAuditMetaGeneric {
+              version
+              tableName
+              relation
+              relationContent
+          }        
+          ... on TranslatedAuditMetaDiscussionReply {
+              version
+              tableName
+              discussionID
+              discussionContent
+              numberOfReplies
+          }    
+          ... on TranslatedAuditMetaOperationalNeed {
+              version
+              tableName
+              needName
+              isOther
+          }    
+          ... on TranslatedAuditMetaOperationalSolution {
+              version
+              tableName
+              needName
+              needIsOther
+              solutionName
+              solutionOtherHeader
+              solutionIsOther
+              numberOfSubtasks
+          }    
+          ... on TranslatedAuditMetaOperationalSolutionSubtask {
+              version
+              tableName
+              needName
+              needIsOther
+              solutionName
+              numberOfSubtasks
+              solutionOtherHeader
+              solutionIsOther
+              subtaskName
+          } 
+         ... on TranslatedAuditMetaDocumentSolutionLink {
+              version
+              tableName
+              needName
+              needIsOther
+              solutionName
+              solutionOtherHeader
+              solutionIsOther
+  
+              documentID
+              
+              documentName
+              documentType
+              documentOtherType
+              documentVisibility
+          }            
+          ... on TranslatedAuditMetaMTOCategory {
+              version
+              tableName
+              categoryName
+              isSubCategory
+              parentCategoryID
+              parentCategoryName
+          }         
+      }
+  
+      createdBy
+      # createdByUserAccount
+      createdDts
+      modifiedBy
+      # modifiedByUserAccount
+      modifiedDts
+  
+      translatedFields {
+          fieldName
+          fieldNameTranslated
+          id
+  
+          changeType
+          dataType
+          formType
+  
+          referenceLabel
+          questionType
+          notApplicableQuestions
+          old
+          oldTranslated
+          new
+          newTranslated
+  
+      }
+  
+    }
+  }
+  
+}

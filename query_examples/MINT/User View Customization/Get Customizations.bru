@@ -1,0 +1,38 @@
+meta {
+  name: Get Customizations
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query userViewCustomization {
+      userViewCustomization {
+          id
+          userId
+          viewCustomization
+          solutions
+          createdBy
+          createdByUserAccount {
+              username
+          }
+          createdDts
+          modifiedBy
+          modifiedByUserAccount {
+              username
+          }
+          modifiedDts
+      }
+  }
+}
