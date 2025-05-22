@@ -102,7 +102,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 </p>
                 <img
                   alt="MINT homepage"
-                  class="border-1px border-base-lightest radius-md shadow-2"
+                  class="border-1px border-gray-10 radius-md shadow-2"
                   src="/src/assets/images/09_MINT%20home.png"
                 />
                 <p>
@@ -123,7 +123,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 </p>
                 <img
                   alt="Collaboration area not started"
-                  class="border-1px border-base-lightest radius-md shadow-2"
+                  class="border-1px border-gray-10 radius-md shadow-2"
                   src="/src/assets/images/01_Collaboration%20area%20not%20started.png"
                 />
                 <p>
@@ -139,7 +139,9 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 >
                   Choose an option to start your MTO
                 </h3>
-                <p>
+                <p
+                  class="margin-bottom-0"
+                >
                   After navigating to the MTO, you should see an empty state that will give you a variety of options to start. You may choose to begin by:
                 </p>
                 <ul
@@ -168,7 +170,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 </ul>
                 <img
                   alt="Empty MTO"
-                  class="border-1px border-base-lightest radius-md shadow-2"
+                  class="border-1px border-gray-10 radius-md shadow-2"
                   src="/src/assets/images/02_Empty%20MTO.png"
                 />
                 <p>

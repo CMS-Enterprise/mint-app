@@ -81,7 +81,7 @@ export const StartingMTOMatrix = () => {
                   <img
                     alt={t('step2.altText')}
                     src={MINTHome}
-                    className="border-1px border-base-lightest radius-md shadow-2"
+                    className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
                   <p>{t('step2.caption')}</p>
@@ -98,7 +98,7 @@ export const StartingMTOMatrix = () => {
                   <img
                     alt={t('step3.altText')}
                     src={collaborationAreaNotStarted}
-                    className="border-1px border-base-lightest radius-md shadow-2"
+                    className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
                   <p>{t('step3.caption')}</p>
@@ -110,7 +110,7 @@ export const StartingMTOMatrix = () => {
                     {t('step4.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step4.text')}</p>
+                  <p className="margin-bottom-0">{t('step4.text')}</p>
 
                   <ul className="margin-bottom-2">
                     {step4List.map(item => (
@@ -123,7 +123,7 @@ export const StartingMTOMatrix = () => {
                   <img
                     alt={t('step4.altText')}
                     src={emptyMTO}
-                    className="border-1px border-base-lightest radius-md shadow-2"
+                    className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
                   <p>{t('step4.caption')}</p>
