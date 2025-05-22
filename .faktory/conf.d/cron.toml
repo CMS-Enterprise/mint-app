@@ -13,3 +13,8 @@
   [cron.job]
     type = "ModelStatusUpdateCronJob"
     queue = "critical"
+[[cron]]
+  schedule = "0 0 */15 * *"
+  [cron.job]
+    type = "RefreshOktaCronJob"
+    queue = "critical"
