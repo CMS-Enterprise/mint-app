@@ -1,0 +1,54 @@
+meta {
+  name: NotificationPreferencesUpdate
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: http://localhost:8085/api/graph/query
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NotificationUpdate {
+  updateUserNotificationPreferences( changes:{
+      dailyDigestComplete: [EMAIL,IN_APP]
+      
+      addedAsCollaborator: [EMAIL,IN_APP]
+  
+      taggedInDiscussion:[IN_APP]
+  
+      taggedInDiscussionReply:[EMAIL,IN_APP]
+  
+      newDiscussionReply: [EMAIL,IN_APP]
+  
+      modelPlanShared: [EMAIL,IN_APP]
+  
+      newModelPlan: [EMAIL, IN_APP]
+  
+  }) {
+  
+          dailyDigestComplete
+  
+          addedAsCollaborator
+  
+          taggedInDiscussion
+  
+          taggedInDiscussionReply
+  
+          newDiscussionReply
+  
+          modelPlanShared
+  
+          newModelPlan
+      }
+  }
+  
+}

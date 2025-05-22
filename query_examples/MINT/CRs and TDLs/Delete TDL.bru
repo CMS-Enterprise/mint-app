@@ -1,0 +1,40 @@
+meta {
+  name: Delete TDL
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation deletePlanTDL ($id: UUID!) {
+      deletePlanTDL (id: $id) {
+          id
+          modelPlanID
+          idNumber
+          dateInitiated
+          title
+          note
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": ""
+  }
+}

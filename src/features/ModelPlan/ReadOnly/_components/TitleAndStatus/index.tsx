@@ -1,4 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
   DataExchangeApproachStatus,
   ModelStatus,
@@ -6,7 +9,7 @@ import {
   TaskStatus
 } from 'gql/generated/graphql';
 
-import StatusBanner from 'components/StatusBanner';
+import { formatDateLocal } from 'utils/date';
 
 type TitleAndStatusProps = {
   modelID: string;
@@ -29,6 +32,9 @@ const TitleAndStatus = ({
   status,
   modifiedOrCreatedDts
 }: TitleAndStatusProps) => {
+  const { t } = useTranslation('modelPlanTaskList');
+  const { t: h } = useTranslation('generalReadOnly');
+
   return (
     <div>
       <div className="display-flex margin-bottom-2 ">
@@ -44,17 +50,27 @@ const TitleAndStatus = ({
       </div>
 
       {!isViewingFilteredView && status && (
-        <StatusBanner
-          modelID={modelID}
-          status={status}
-          updateLabel
-          statusLabel
-          modifiedDts={modifiedOrCreatedDts}
-          modifiedOrCreateLabel
-          condensed
-          className="margin-bottom-4"
-          type="task"
-        />
+        <div className="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4">
+          <p className="margin-y-0 text-bold margin-right-1">{t('status')}</p>
+
+          <TaskListStatusTag
+            status={status}
+            classname="width-fit-content margin-right-1"
+          />
+
+          <div className="display-flex flex-align-center flex-wrap margin-right-1">
+            {!!modifiedOrCreatedDts && (
+              <p
+                className={classNames(
+                  'margin-y-0 text-normal margin-right-1 text-base'
+                )}
+              >
+                {h('lastUpdate')}
+                {formatDateLocal(modifiedOrCreatedDts, 'MM/dd/yyyy')}
+              </p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

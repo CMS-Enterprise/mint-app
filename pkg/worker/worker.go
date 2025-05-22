@@ -6,6 +6,7 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
@@ -19,6 +20,7 @@ type Worker struct {
 	AddressBook          email.AddressBook
 	Connections          int
 	ProcessJobs          bool
+	OktaAPIClient        oktaapi.Client
 }
 
 const (
@@ -72,6 +74,10 @@ const (
 	modelStatusUpdateJobName             string = "ModelStatusUpdateJob"
 )
 
+const (
+	refreshOktaCronJobName string = "RefreshOktaCronJob"
+)
+
 // Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
@@ -107,6 +113,8 @@ func (w *Worker) Work() {
 	mgr.Register(modelStatusUpdateBatchJobName, JobWithPanicProtection(w.ModelStatusUpdateBatchJob))
 	mgr.Register(modelStatusUpdateBatchJobSuccessName, JobWithPanicProtection(w.ModelStatusUpdateBatchJobSuccess))
 	mgr.Register(modelStatusUpdateJobName, JobWithPanicProtection(w.ModelStatusUpdateJob))
+
+	mgr.Register(refreshOktaCronJobName, JobWithPanicProtection(w.RefreshOktaCronJob))
 
 	/**********************
 	* //Future Enhancement

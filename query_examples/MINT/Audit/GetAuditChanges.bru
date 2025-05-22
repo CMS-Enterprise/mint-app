@@ -1,0 +1,48 @@
+meta {
+  name: GetAuditChanges
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query auditChanges($tableName: String!, $primaryKey: UUID!){
+    auditChanges(tableName: $tableName,primaryKey: $primaryKey)
+     {
+          id
+          primaryKey
+          foreignKey
+          tableName
+          action
+          fields
+          modifiedBy
+          modifiedByUserAccount
+          {
+              commonName
+              familyName
+              givenName
+              email
+              locale
+          }  
+          modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "tableName": "model_plan",
+    "primaryKey":"{{modelPlanID}}"
+  }
+}

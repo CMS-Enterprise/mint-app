@@ -1,0 +1,94 @@
+meta {
+  name: SearchChanges
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query searchChanges($filters: [SearchFilter!], $sortBy: ChangeHistorySortParams, $page: PageParams) {
+    searchChanges(filters: $filters, sortBy: $sortBy, page: $page) {
+      guid
+      modelPlanID
+      tableID
+      tableName
+      primaryKey
+      foreignKey
+      fields {
+        changes {
+          name
+          value {
+            ... on FieldValue {
+              new
+              old
+            }
+          }
+        }
+      }
+      modifiedDts
+      modifiedBy {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+    }
+  }
+  
+}
+
+body:graphql:vars {
+  {
+    "filters": [
+      {
+          "type": "CHANGED_AFTER",
+          "value": "2023-01-01T00:00:00.000Z"
+      },
+      {
+          "type": "CHANGED_BEFORE",
+          "value": "2024-01-01T00:00:00.000Z"
+      },
+      {
+          "type": "MODEL_PLAN_SECTION",
+          "value": "BASICS"
+      },
+      {
+          "type": "CHANGED_BY_ACTOR",
+          "value": "MINT"
+      },
+      {
+          "type": "FREE_TEXT",
+          "value": "high level note"
+      },
+      {
+          "type": "MODEL_PLAN_ID",
+          "value": "b7dbeec2-bbd0-4097-9a0e-650f74e4c307"
+      }
+    ],
+    "sortBy": {
+      "field": "CHANGE_DATE",
+      "order": "DESC"   
+    },
+    "page": {
+      "limit": 200,
+      "offset": 0
+    }
+  }
+}

@@ -1,0 +1,258 @@
+meta {
+  name: Update Plan IT Tools
+  type: graphql
+  seq: 9
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanItTools ($id: UUID!, $changes: PlanITToolsChanges!) {
+      updatePlanItTools (id: $id, changes: $changes) {
+          id
+          modelPlanID
+          gcPartCD
+          gcPartCDOther
+          gcPartCDNote
+          gcCollectBids
+          gcCollectBidsOther
+          gcCollectBidsNote
+          gcUpdateContract
+          gcUpdateContractOther
+          gcUpdateContractNote
+          ppToAdvertise
+          ppToAdvertiseOther
+          ppToAdvertiseNote
+          ppCollectScoreReview
+          ppCollectScoreReviewOther
+          ppCollectScoreReviewNote
+          ppAppSupportContractor
+          ppAppSupportContractorOther
+          ppAppSupportContractorNote
+          ppCommunicateWithParticipant
+          ppCommunicateWithParticipantOther
+          ppCommunicateWithParticipantNote
+          ppManageProviderOverlap
+          ppManageProviderOverlapOther
+          ppManageProviderOverlapNote
+          bManageBeneficiaryOverlap
+          bManageBeneficiaryOverlapOther
+          bManageBeneficiaryOverlapNote
+          oelHelpdeskSupport
+          oelHelpdeskSupportOther
+          oelHelpdeskSupportNote
+          oelManageAco
+          oelManageAcoOther
+          oelManageAcoNote
+          oelPerformanceBenchmark
+          oelPerformanceBenchmarkOther
+          oelPerformanceBenchmarkNote
+          oelProcessAppeals
+          oelProcessAppealsOther
+          oelProcessAppealsNote
+          oelEvaluationContractor
+          oelEvaluationContractorOther
+          oelEvaluationContractorNote
+          oelCollectData
+          oelCollectDataOther
+          oelCollectDataNote
+          oelObtainData
+          oelObtainDataOther
+          oelObtainDataNote
+          oelClaimsBasedMeasures
+          oelClaimsBasedMeasuresOther
+          oelClaimsBasedMeasuresNote
+          oelQualityScores
+          oelQualityScoresOther
+          oelQualityScoresNote
+          oelSendReports
+          oelSendReportsOther
+          oelSendReportsNote
+          oelLearningContractor
+          oelLearningContractorOther
+          oelLearningContractorNote
+          oelParticipantCollaboration
+          oelParticipantCollaborationOther
+          oelParticipantCollaborationNote
+          oelEducateBeneficiaries
+          oelEducateBeneficiariesOther
+          oelEducateBeneficiariesNote
+          pMakeClaimsPayments
+          pMakeClaimsPaymentsOther
+          pMakeClaimsPaymentsNote
+          pInformFfs
+          pInformFfsOther
+          pInformFfsNote
+          pNonClaimsBasedPayments
+          pNonClaimsBasedPaymentsOther
+          pNonClaimsBasedPaymentsNote
+          pSharedSavingsPlan
+          pSharedSavingsPlanOther
+          pSharedSavingsPlanNote
+          pRecoverPayments
+          pRecoverPaymentsOther
+          pRecoverPaymentsNote
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          readyForReviewBy
+          readyForReviewDts
+          status
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{itToolsID}}",
+    "changes": {
+      "gcPartCD": [
+        ""
+      ],
+      "gcPartCDOther": "",
+      "gcPartCDNote": "",
+      "gcCollectBids": [
+        ""
+      ],
+      "gcCollectBidsOther": "",
+      "gcCollectBidsNote": "",
+      "gcUpdateContract": [
+        ""
+      ],
+      "gcUpdateContractOther": "",
+      "gcUpdateContractNote": "",
+      "ppToAdvertise": [
+        ""
+      ],
+      "ppToAdvertiseOther": "",
+      "ppToAdvertiseNote": "",
+      "ppCollectScoreReview": [
+        ""
+      ],
+      "ppCollectScoreReviewOther": "",
+      "ppCollectScoreReviewNote": "",
+      "ppAppSupportContractor": [
+        ""
+      ],
+      "ppAppSupportContractorOther": "",
+      "ppAppSupportContractorNote": "",
+      "ppCommunicateWithParticipant": [
+        ""
+      ],
+      "ppCommunicateWithParticipantOther": "",
+      "ppCommunicateWithParticipantNote": "",
+      "ppManageProviderOverlap": [
+        ""
+      ],
+      "ppManageProviderOverlapOther": "",
+      "ppManageProviderOverlapNote": "",
+      "bManageBeneficiaryOverlap": [
+        ""
+      ],
+      "bManageBeneficiaryOverlapOther": "",
+      "bManageBeneficiaryOverlapNote": "",
+      "oelHelpdeskSupport": [
+        ""
+      ],
+      "oelHelpdeskSupportOther": "",
+      "oelHelpdeskSupportNote": "",
+      "oelManageAco": [
+        ""
+      ],
+      "oelManageAcoOther": "",
+      "oelManageAcoNote": "",
+      "oelPerformanceBenchmark": [
+        ""
+      ],
+      "oelPerformanceBenchmarkOther": "",
+      "oelPerformanceBenchmarkNote": "",
+      "oelProcessAppeals": [
+        ""
+      ],
+      "oelProcessAppealsOther": "",
+      "oelProcessAppealsNote": "",
+      "oelEvaluationContractor": [
+        ""
+      ],
+      "oelEvaluationContractorOther": "",
+      "oelEvaluationContractorNote": "",
+      "oelCollectData": [
+        ""
+      ],
+      "oelCollectDataOther": "",
+      "oelCollectDataNote": "",
+      "oelObtainData": [
+        ""
+      ],
+      "oelObtainDataOther": "",
+      "oelObtainDataNote": "",
+      "oelClaimsBasedMeasures": [
+        ""
+      ],
+      "oelClaimsBasedMeasuresOther": "",
+      "oelClaimsBasedMeasuresNote": "",
+      "oelQualityScores": [
+        ""
+      ],
+      "oelQualityScoresOther": "",
+      "oelQualityScoresNote": "",
+      "oelSendReports": [
+        ""
+      ],
+      "oelSendReportsOther": "",
+      "oelSendReportsNote": "",
+      "oelLearningContractor": [
+        ""
+      ],
+      "oelLearningContractorOther": "",
+      "oelLearningContractorNote": "",
+      "oelParticipantCollaboration": [
+        ""
+      ],
+      "oelParticipantCollaborationOther": "",
+      "oelParticipantCollaborationNote": "",
+      "oelEducateBeneficiaries": [
+        ""
+      ],
+      "oelEducateBeneficiariesOther": "",
+      "oelEducateBeneficiariesNote": "",
+      "pMakeClaimsPayments": [
+        ""
+      ],
+      "pMakeClaimsPaymentsOther": "",
+      "pMakeClaimsPaymentsNote": "",
+      "pInformFfs": [
+        ""
+      ],
+      "pInformFfsOther": "",
+      "pInformFfsNote": "",
+      "pNonClaimsBasedPayments": [
+        ""
+      ],
+      "pNonClaimsBasedPaymentsOther": "",
+      "pNonClaimsBasedPaymentsNote": "",
+      "pSharedSavingsPlan": [
+        ""
+      ],
+      "pSharedSavingsPlanOther": "",
+      "pSharedSavingsPlanNote": "",
+      "pRecoverPayments": [
+        ""
+      ],
+      "pRecoverPaymentsOther": "",
+      "pRecoverPaymentsNote": "",
+      "status": ""
+    }
+  }
+}

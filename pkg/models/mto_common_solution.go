@@ -55,6 +55,7 @@ const (
 	MTOCSKMids           MTOCommonSolutionKey = "MIDS"
 	MTOCSKMdmNcbp        MTOCommonSolutionKey = "MDM_NCBP"
 	MTOCSKModelSpace     MTOCommonSolutionKey = "MODEL_SPACE"
+	MTOCSKCdac           MTOCommonSolutionKey = "CDAC"
 )
 
 type MTOCommonSolutionSubject string
