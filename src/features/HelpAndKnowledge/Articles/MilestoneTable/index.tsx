@@ -1,9 +1,8 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -13,28 +12,35 @@ import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/Help
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import milestoneTableMenuImg from 'assets/images/03_Milestone table menu open.png';
-import ExternalLink from 'components/ExternalLink';
+import milestoneEditPanelImg from 'assets/images/08_Milestone edit panel.png';
+import mtoMilestoneTableOption1Img from 'assets/images/10_MTO milestone table_option 1.png';
+import milestoneRemovalModalImg from 'assets/images/15_Milestone removal modal.png';
+import milestoneRemovalButtonImg from 'assets/images/17_Milestone removal button.png';
+import collaborationAreaInProgressImg from 'assets/images/33_Collaboration area in progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
 
+import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
 const UsingMilestoneTable = () => {
   const { t } = useTranslation('usingMilestoneTable');
   const columsInMilestoneTableList = tArray<{
-    title: string;
-    description: string;
-  }>('usingMilestoneTable:columsInMilestoneTableList');
+    point: string;
+    text: string;
+  }>('usingMilestoneTable:columsInMilestoneTable:list');
   const addingMilestoneList = tArray<string>(
-    'usingMilestoneTable:addingMilestoneList'
+    'usingMilestoneTable:addingMilestone:list'
   );
-  const editingMilestoneList = tArray<any>(
-    'usingMilestoneTable:editingMilestoneList'
-  );
-  const removingMilestoneList = tArray<any>(
-    'usingMilestoneTable:removingMilestoneList'
-  );
+  const editingMilestoneStep4List = tArray<{
+    point: string;
+    text: string;
+  }>('usingMilestoneTable:editingMilestone.step4.list');
+  const organizingCategoriesList = tArray<{
+    point: string;
+    text: string;
+  }>('usingMilestoneTable:organizingCategories:list');
 
   return (
     <div>
@@ -52,16 +58,16 @@ const UsingMilestoneTable = () => {
               {/* Columns in the milestone table */}
               <div>
                 <h2 className="margin-bottom-2">
-                  {t('columsInMilestoneTable')}
+                  {t('columsInMilestoneTable.title')}
                 </h2>
                 <p className="margin-y-0">
                   {t('columsInMilestoneTableDescription')}
                 </p>
                 <ul className="margin-y-0 padding-left-3">
                   {columsInMilestoneTableList.map(item => (
-                    <li key={item.title}>
-                      <span className="text-bold">{item.title}</span>
-                      <span>{item.description}</span>
+                    <li key={item.point}>
+                      <span className="text-bold">{item.point}</span>
+                      <span>{item.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -72,60 +78,159 @@ const UsingMilestoneTable = () => {
 
               {/* Adding a milestone */}
               <div>
-                <h2 className="margin-bottom-2">{t('addingMilestone')}</h2>
-                <p className="margin-y-0">{t('addingMilestoneDescription')}</p>
+                <h2 className="margin-bottom-2">
+                  {t('addingMilestone.title')}
+                </h2>
+                <p className="margin-y-0">{t('addingMilestone.description')}</p>
                 <ul className="margin-top-0 padding-left-3">
                   {addingMilestoneList.map(item => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
+
                 <div className="border-1px radius-md border-gray-10 shadow-3">
                   <img
                     src={milestoneTableMenuImg}
                     alt={t('milestoneTableMenuImgAltText')}
                   />
                 </div>
+                <p>{t('addingMilestone.caption')}</p>
               </div>
               {/* Editing a milestone */}
               <div>
-                <h2 className="margin-bottom-2">{t('editingMilestone')}</h2>
-                <p className="margin-y-0">{t('editingMilestoneDescription')}</p>
-
-                <ProcessList>
-                  {editingMilestoneList.map(item => (
-                    <ProcessListItem key={item.title} className="maxw-none">
-                      <ProcessListHeading type="h3">
-                        {item.title}
-                      </ProcessListHeading>
-                      <p>{item.description}</p>
-                    </ProcessListItem>
-                  ))}
-                </ProcessList>
-              </div>
-              {/* Removing a milestone */}
-              <div>
-                <h2 className="margin-bottom-2">{t('removingMilestone')}</h2>
+                <h2 className="margin-bottom-2">
+                  {t('editingMilestone.title')}
+                </h2>
                 <p className="margin-y-0">
-                  {t('removingMilestoneDescription')}
+                  {t('editingMilestone.description')}
                 </p>
                 <ProcessList>
-                  {removingMilestoneList.map(item => (
-                    <ProcessListItem key={item.title} className="maxw-none">
-                      <ProcessListHeading type="h3">
-                        {item.title}
-                      </ProcessListHeading>
-                      <p>{item.description}</p>
-                    </ProcessListItem>
-                  ))}
+                  {/* step 1 */}
+                  <ProcessListItem className="maxw-none">
+                    <ProcessListHeading type="h3">
+                      {t('editingMilestone.step1.title')}
+                    </ProcessListHeading>
+                    <p>{t('editingMilestone.step1.description')}</p>
+                    <img
+                      alt={t('editingMilestone.step1.altText')}
+                      src={collaborationAreaInProgressImg}
+                      className="border-1px border-gray-10 radius-md shadow-3"
+                    />
+                    <p>{t('editingMilestone.step1.caption')}</p>
+                  </ProcessListItem>
+
+                  {/* step 2 */}
+                  <ProcessListItem className="maxw-none">
+                    <ProcessListHeading type="h3">
+                      {t('editingMilestone.step2.title')}
+                    </ProcessListHeading>
+                    <p>{t('editingMilestone.step2.description')}</p>
+                    <img
+                      alt={t('editingMilestone.step2.altText')}
+                      src={mtoMilestoneTableOption1Img}
+                      className="border-1px border-gray-10 radius-md shadow-3"
+                    />
+                    <p>{t('editingMilestone.step2.caption')}</p>
+                  </ProcessListItem>
+
+                  {/* step 3 */}
+                  <ProcessListItem className="maxw-none">
+                    <ProcessListHeading type="h3">
+                      {t('editingMilestone.step3.title')}
+                    </ProcessListHeading>
+                    <p>{t('editingMilestone.step3.description')}</p>
+                  </ProcessListItem>
+
+                  {/* step 4 */}
+                  <ProcessListItem className="maxw-none">
+                    <ProcessListHeading type="h3">
+                      {t('editingMilestone.step4.title')}
+                    </ProcessListHeading>
+                    <p className="margin-bottom-0">
+                      {t('editingMilestone.step4.description')}
+                    </p>
+                    <ul className="margin-bottom-2 padding-left-3">
+                      {editingMilestoneStep4List.map(item => (
+                        <li key={item.point}>
+                          <span className="text-bold">{item.point}</span>
+                          <span>{item.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <img
+                      alt={t('editingMilestone.step4.altText')}
+                      src={milestoneEditPanelImg}
+                      className="border-1px border-gray-10 radius-md shadow-3"
+                    />
+                    <p>{t('editingMilestone.step4.caption')}</p>
+                  </ProcessListItem>
+
+                  {/* step 5 */}
+                  <ProcessListItem className="maxw-none padding-bottom-0">
+                    <ProcessListHeading type="h3">
+                      {t('editingMilestone.step5.title')}
+                    </ProcessListHeading>
+                    <p>{t('editingMilestone.step5.description')}</p>
+                  </ProcessListItem>
+                </ProcessList>
+              </div>
+
+              {/* Removing a milestone */}
+              <div>
+                <h2 className="margin-bottom-2">
+                  {t('removingMilestone.title')}
+                </h2>
+                <p className="margin-y-0">
+                  {t('removingMilestone.description')}
+                </p>
+                <ProcessList>
+                  {/* step 1-3 */}
+                  <ProcessListItem className="maxw-none">
+                    {/* <div className="position-relative">
+                      <div className="position-absolute top-0 left-1 bg-white circle-3" />
+                    </div> */}
+                    <ProcessListHeading type="h3">
+                      {t('removingMilestone.step1to3.title')}
+                    </ProcessListHeading>
+                    <p>{t('removingMilestone.step1to3.description')}</p>
+                  </ProcessListItem>
+
+                  {/* step 4 */}
+                  <ProcessListItem className="maxw-none">
+                    <ProcessListHeading type="h3">
+                      {t('removingMilestone.step4.title')}
+                    </ProcessListHeading>
+                    <p>{t('removingMilestone.step4.description')}</p>
+                    <img
+                      alt={t('removingMilestone.step4.altText')}
+                      src={milestoneRemovalButtonImg}
+                      className="border-1px border-gray-10 radius-md shadow-3"
+                    />
+                    <p>{t('removingMilestone.step4.caption')}</p>
+                  </ProcessListItem>
+
+                  {/* step 5 */}
+                  <ProcessListItem className="maxw-none padding-bottom-0">
+                    <ProcessListHeading type="h3">
+                      {t('removingMilestone.step5.title')}
+                    </ProcessListHeading>
+                    <p>{t('removingMilestone.step5.description')}</p>
+                    <img
+                      alt={t('removingMilestone.step5.altText')}
+                      src={milestoneRemovalModalImg}
+                      className="border-1px border-gray-10 radius-md shadow-3"
+                    />
+                    <p>{t('removingMilestone.step5.caption')}</p>
+                  </ProcessListItem>
                 </ProcessList>
               </div>
               {/* Adding or removing a category */}
               <div>
                 <h2 className="margin-bottom-2">
-                  {t('addingOrRemovingCategory')}
+                  {t('addingOrRemovingCategory.title')}
                 </h2>
                 <p className="margin-top-0">
-                  {t('addingOrRemovingCategoryDescription')}
+                  {t('addingOrRemovingCategory.description')}
                 </p>
                 <div className="border-1px radius-md border-gray-10 shadow-3">
                   <img
@@ -133,50 +238,27 @@ const UsingMilestoneTable = () => {
                     alt={t('milestoneTableMenuImgAltText')}
                   />
                 </div>
+                <p>{t('addingOrRemovingCategory.caption')}</p>
               </div>
               {/* Organizing categoriesy */}
               <div>
-                <h2 className="margin-bottom-2">{t('OrganizingCategories')}</h2>
-                <p className="margin-y-0">
-                  {t('organizingCategoriesDescription')}
-                </p>
-
-                <h3 className="margin-bottom-1">{t('reorderingCategories')}</h3>
-                <p className="margin-y-0">
-                  {t('reorderingCategoriesDescription')}
-                </p>
-
-                <h3 className="margin-bottom-1">{t('renamingCategories')}</h3>
-                <p className="margin-y-0">
-                  {t('renamingCategoriesDescription')}
-                </p>
-
-                <h3 className="margin-bottom-1">
-                  {t('ExpandingCollapsingCategories')}
-                </h3>
-                <p className="margin-y-0">
-                  {t('ExpandingCollapsingCategoriesDescription')}
-                </p>
-              </div>
-              {/* Still need help */}
-              <div>
-                <h2 className="margin-top-5 margin-bottom-2 line-height-large">
-                  {t('stillNeedHelp')}
+                <h2 className="margin-bottom-2">
+                  {t('organizingCategories.title')}
                 </h2>
-                <p className="margin-bottom-6 margin-top-1">
-                  <Trans
-                    i18nKey="creatingMtoMatrix:stillNeedHelpDescription"
-                    components={{
-                      email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>,
-                      slack: (
-                        <ExternalLink href="https://cmsgov.slack.com/archives/C04B10ZN6A2">
-                          {' '}
-                        </ExternalLink>
-                      )
-                    }}
-                  />
+                <p className="margin-y-0">
+                  {t('organizingCategories.description')}
                 </p>
+
+                {organizingCategoriesList.map(item => (
+                  <div key={item.point}>
+                    <h3 className="margin-bottom-1">{t(item.point)}</h3>
+                    <p className="margin-y-0">{t(item.text)}</p>
+                  </div>
+                ))}
               </div>
+
+              {/* Still need help */}
+              <StillNeedMTOHelp />
             </div>
           </Grid>
         </GridContainer>
