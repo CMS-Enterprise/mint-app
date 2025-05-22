@@ -12,6 +12,7 @@ import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpB
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
+import milestoneTableMenuImg from 'assets/images/03_Milestone table menu open.png';
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -80,8 +81,8 @@ const UsingMilestoneTable = () => {
                 </ul>
                 <div className="border-1px radius-md border-gray-10 shadow-3">
                   <img
-                    src="/public/help-center/adding-milestone.png"
-                    alt="A screenshot of the table actions area and part of the MTO milestone table including an open category row menu."
+                    src={milestoneTableMenuImg}
+                    alt={t('milestoneTableMenuImgAltText')}
                   />
                 </div>
               </div>
@@ -128,8 +129,8 @@ const UsingMilestoneTable = () => {
                 </p>
                 <div className="border-1px radius-md border-gray-10 shadow-3">
                   <img
-                    src="/public/help-center/adding-removing-category.png"
-                    alt="A screenshot of the table actions area and part of the MTO milestone table including an open category row menu."
+                    src={milestoneTableMenuImg}
+                    alt={t('milestoneTableMenuImgAltText')}
                   />
                 </div>
               </div>

@@ -48,6 +48,8 @@ const usingMilestoneTable = {
     'Users may also choose to add a custom milestone, which can be done from the table actions area or from the milestone library.',
     'Users may also add a milestone directly to a category by using the menu icon on the right side of any category row.'
   ],
+  milestoneTableMenuImgAltText:
+    'A screenshot of the table actions area and part of the MTO milestone table including an open category row menu.',
   editingMilestone: 'Editing a milestone',
   editingMilestoneDescription:
     'As described above, users can use the “Actions” column in the milestone table to edit the details of a milestone, including things like updating the status and risk indicator. Custom milestones may have additional editable fields, such as milestone title. Common milestones added from the milestone library have some details preset that cannot be edited.',
