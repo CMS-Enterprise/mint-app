@@ -100,6 +100,11 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 <p>
                   From the MINT homepage, navigate to the new model that you have been assigned to. You can find a list of models you have been assigned to in the “My Model Plans” section of the homepage. Because MINT offers customizable homepages, it’s possible that this section may not appear on your homepage. If you don’t see it, locate the area titled “Did you know you can customize this page?” in the top right of the page and click the “Edit homepage settings” link to add the “My Model Plans” section to your home page.
                 </p>
+                <img
+                  alt="MINT homepage"
+                  class="border-1px border-base-lightest radius-md shadow-2"
+                  src="/src/assets/images/09_MINT%20home.png"
+                />
                 <p>
                   Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.
                 </p>
@@ -116,6 +121,11 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 <p>
                   From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
                 </p>
+                <img
+                  alt="Collaboration area not started"
+                  class="border-1px border-base-lightest radius-md shadow-2"
+                  src="/src/assets/images/01_Collaboration%20area%20not%20started.png"
+                />
                 <p>
                   Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
                 </p>
@@ -132,7 +142,9 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 <p>
                   After navigating to the MTO, you should see an empty state that will give you a variety of options to start. You may choose to begin by:
                 </p>
-                <ul>
+                <ul
+                  class="margin-bottom-2"
+                >
                   <li
                     class="margin-0"
                   >
@@ -154,6 +166,11 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                     or creating a custom milestone or solution.
                   </li>
                 </ul>
+                <img
+                  alt="Empty MTO"
+                  class="border-1px border-base-lightest radius-md shadow-2"
+                  src="/src/assets/images/02_Empty%20MTO.png"
+                />
                 <p>
                   Image caption: A screenshot of the empty state for the model-to-operations matrix for the Rural Health Enablement model. The empty state shows a variety of options for starting an MTO.
                 </p>
