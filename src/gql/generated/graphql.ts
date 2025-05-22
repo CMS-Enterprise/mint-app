@@ -1894,7 +1894,6 @@ export enum OperationalSolutionKey {
   BCDA = 'BCDA',
   CBOSC = 'CBOSC',
   CCW = 'CCW',
-  CDAC = 'CDAC',
   CDX = 'CDX',
   CMS_BOX = 'CMS_BOX',
   CMS_QUALTRICS = 'CMS_QUALTRICS',
