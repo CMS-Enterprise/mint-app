@@ -178,7 +178,7 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.STARTING_MTO,
-    route: '/starting-mto',
+    route: '/starting-mto-matrix',
     translation: 'startingMto',
     type: ArticleCategories.MTO_TUTORIALS
   },
