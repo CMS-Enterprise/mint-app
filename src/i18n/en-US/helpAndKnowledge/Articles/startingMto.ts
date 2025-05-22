@@ -8,18 +8,21 @@ const startingMto = {
   },
   step2: {
     heading: 'Navigate to your new model',
+    altText: 'MINT homepage',
     text: 'From the MINT homepage, navigate to the new model that you have been assigned to. You can find a list of models you have been assigned to in the “My Model Plans” section of the homepage. Because MINT offers customizable homepages, it’s possible that this section may not appear on your homepage. If you don’t see it, locate the area titled “Did you know you can customize this page?” in the top right of the page and click the “Edit homepage settings” link to add the “My Model Plans” section to your home page.',
     caption:
       'Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.'
   },
   step3: {
     heading: 'Navigate to the MTO',
+    altText: 'Collaboration area not started',
     text: 'From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.',
     caption:
       'Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.'
   },
   step4: {
     heading: 'Choose an option to start your MTO',
+    altText: 'Empty MTO',
     text: 'After navigating to the MTO, you should see an empty state that will give you a variety of options to start. You may choose to begin by:',
     list: [
       'adding a template such as the one for standard categories,',

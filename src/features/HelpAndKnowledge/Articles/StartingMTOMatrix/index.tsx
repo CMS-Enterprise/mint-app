@@ -10,6 +10,9 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
+import collaborationAreaNotStarted from 'assets/images/01_Collaboration area not started.png';
+import emptyMTO from 'assets/images/02_Empty MTO.png';
+import MINTHome from 'assets/images/09_MINT home.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
@@ -75,6 +78,12 @@ export const StartingMTOMatrix = () => {
 
                   <p>{t('step2.text')}</p>
 
+                  <img
+                    alt={t('step2.altText')}
+                    src={MINTHome}
+                    className="border-1px border-base-lightest radius-md shadow-2"
+                  />
+
                   <p>{t('step2.caption')}</p>
                 </ProcessListItem>
 
@@ -86,6 +95,12 @@ export const StartingMTOMatrix = () => {
 
                   <p>{t('step3.text')}</p>
 
+                  <img
+                    alt={t('step3.altText')}
+                    src={collaborationAreaNotStarted}
+                    className="border-1px border-base-lightest radius-md shadow-2"
+                  />
+
                   <p>{t('step3.caption')}</p>
                 </ProcessListItem>
 
@@ -96,13 +111,20 @@ export const StartingMTOMatrix = () => {
                   </ProcessListHeading>
 
                   <p>{t('step4.text')}</p>
-                  <ul>
+
+                  <ul className="margin-bottom-2">
                     {step4List.map(item => (
                       <li key={item} className="margin-0">
                         {item}
                       </li>
                     ))}
                   </ul>
+
+                  <img
+                    alt={t('step4.altText')}
+                    src={emptyMTO}
+                    className="border-1px border-base-lightest radius-md shadow-2"
+                  />
 
                   <p>{t('step4.caption')}</p>
                 </ProcessListItem>
