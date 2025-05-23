@@ -19,6 +19,7 @@ var TranslatedAudit = &translatedAuditLoaders{
 }
 
 func batchTranslatedAuditGetMostRecentByModelPlanIDAndTableFilters(ctx context.Context, keys []storage.MostRecentByModelPlanIDAndTableFilters) []*dataloader.Result[*models.TranslatedAudit] {
+	// Note, we could also add a limit param to this, but it would be a bit more complex. That would make this return potentially multiple results per key. If we did this, we could reuse for all places we retrieve translated audits
 	logger := appcontext.ZLogger(ctx)
 	loaders, err := Loaders(ctx)
 	_ = loaders

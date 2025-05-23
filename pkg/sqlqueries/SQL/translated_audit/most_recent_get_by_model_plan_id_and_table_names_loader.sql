@@ -120,5 +120,5 @@ SELECT
     is_admin,
     excluded_fields
 FROM RANKED_AUDIT
-WHERE rn = 1
+WHERE rn = 1  -- note, if desired we could introduce a limit field in queried params which would enable variable number of records returned
 ORDER BY input_idx;

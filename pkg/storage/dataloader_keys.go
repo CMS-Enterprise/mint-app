@@ -15,6 +15,7 @@ type SolutionAndPossibleKey struct {
 }
 
 // MostRecentByModelPlanIDAndTableFilters is a key to get the most recent record by model plan ID and table filters
+// Note, if desired we could also introduce a limit param which would allow you to dynamically address how many entries get returned per key
 type MostRecentByModelPlanIDAndTableFilters struct {
 	// ModelPlanID is the ID of the model plan
 	ModelPlanID uuid.UUID `json:"model_plan_id"`
