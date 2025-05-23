@@ -8,9 +8,17 @@ WITH QUERIED_IDS AS (
         user_id,
         table_names,
         excluded_fields        
-    FROM
-        JSON_TO_RECORDSET(:paramTableJSON)
+    FROM (
+        SELECT DISTINCT -- This ensures that keys are deduplicated early on in the process
+            model_plan_id,
+            is_admin,
+            user_id,
+            table_names,
+            excluded_fields
+        FROM
+            JSON_TO_RECORDSET(:paramTableJSON)
         AS x("model_plan_id" UUID, "is_admin" BOOLEAN, "user_id" UUID, "table_names" table_name[], "excluded_fields" TEXT[]) -- noqa
+    ) deduped
 ),
 
 KEYS_WITH_ACCESS_CHECK AS (
