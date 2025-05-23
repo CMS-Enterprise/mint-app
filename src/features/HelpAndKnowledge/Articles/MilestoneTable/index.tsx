@@ -24,6 +24,8 @@ import { tArray } from 'utils/translation';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
+import './index.scss';
+
 const UsingMilestoneTable = () => {
   const { t } = useTranslation('usingMilestoneTable');
   const columsInMilestoneTableList = tArray<{
@@ -183,12 +185,10 @@ const UsingMilestoneTable = () => {
                 <p className="margin-y-0">
                   {t('removingMilestone.description')}
                 </p>
-                <ProcessList>
+                {/* ol start number is set in class skipStepsList via css */}
+                <ProcessList className="skipStepsList">
                   {/* step 1-3 */}
                   <ProcessListItem className="maxw-none">
-                    {/* <div className="position-relative">
-                      <div className="position-absolute top-0 left-1 bg-white circle-3" />
-                    </div> */}
                     <ProcessListHeading type="h3">
                       {t('removingMilestone.step1to3.title')}
                     </ProcessListHeading>
