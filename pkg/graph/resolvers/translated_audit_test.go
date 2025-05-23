@@ -8,13 +8,44 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
 
+func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTableNames() {
+	plan1 := suite.createModelPlan("test plan for changes1")
+	plan2 := suite.createModelPlan("test plan for changes2")
+
+	suite.dangerousQueueAndTranslateAllAudits()
+	// TODO verify this and expand to be a more robust validation
+	expectedResults := []loaders.KeyAndExpected[storage.MostRecentByModelPlanIDAndTableFilters, models.TableName]{
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan1.ID,
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanOpsEvalAndLearning}, true),
+			ExcludedFields: "{}",
+			IsAdmin:        false,
+		}, Expected: models.TNPlanOpsEvalAndLearning},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan2.ID,
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanBasics}, true),
+			ExcludedFields: "{}",
+			IsAdmin:        false,
+		}, Expected: models.TNPlanBasics},
+	}
+	verifyFunc := func(data *models.TranslatedAudit, expected models.TableName) bool {
+		if data == nil {
+			return false
+		}
+		return data.TableName == expected
+	}
+
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters, expectedResults, verifyFunc)
+}
 func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("test plan for changes")
 

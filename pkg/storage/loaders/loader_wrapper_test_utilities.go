@@ -3,6 +3,7 @@ package loaders
 import (
 	"context"
 	"fmt"
+	"runtime/debug"
 
 	"github.com/stretchr/testify/suite"
 	"golang.org/x/sync/errgroup"
@@ -47,12 +48,20 @@ example
 func VerifyLoaders[K comparable, V any, Expected any](ctx context.Context, suite *suite.Suite, loaderWrapper LoaderWrapper[K, V], expectedResults []KeyAndExpected[K, Expected], validateResult func(V, Expected) bool) {
 	g, ctx := errgroup.WithContext(ctx)
 	for _, expected := range expectedResults {
-		g.Go(func() error {
+		expected := expected      // capture range variable by rebinding to prevent nil reference issue
+		g.Go(func() (err error) { // named error allows us to pass an error from defer
+			defer func() {
+				if r := recover(); r != nil {
+					stack := debug.Stack()
+					err = fmt.Errorf("panic in loader verification for key %#v: %v\n%s", expected.Key, r, stack)
+				}
+
+			}()
 			passed := verifyLoader[K, V, Expected](ctx, suite, loaderWrapper, expected.Key, expected.Expected, validateResult)
 			if !passed {
-				return fmt.Errorf("dataloader verification function failed")
+				err = fmt.Errorf("dataloader verification function failed")
 			}
-			return nil
+			return
 		})
 	}
 	err := g.Wait()
