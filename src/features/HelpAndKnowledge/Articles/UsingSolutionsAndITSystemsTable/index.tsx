@@ -199,19 +199,15 @@ export const UsingSolutionsAndITSystemsTable = () => {
                 {t('removingASolutionDescription')}
               </p>
 
-              <ProcessList>
+              <ProcessList className="skipStepsList">
                 {/* STEP 1 */}
-                <ProcessListItem className="maxw-none ellipsis-icon">
+                <ProcessListItem className="maxw-none">
                   <ProcessListHeading type="h3">
                     {t('removeStep1.heading')}
                   </ProcessListHeading>
 
                   <p>{t('removeStep1.text')}</p>
                 </ProcessListItem>
-
-                {/* Empty items to progress count to 4 */}
-                <ProcessListItem className="opacity-0 padding-0" />
-                <ProcessListItem className="opacity-0 padding-0" />
 
                 {/* STEP 4 */}
                 <ProcessListItem className="maxw-none">

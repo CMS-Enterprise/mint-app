@@ -344,10 +344,10 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
               As described above, users can use the “Actions” column in the solution table to open the solution edit panel. From the edit panel, users may also remove a solution.
             </p>
             <ol
-              class="usa-process-list"
+              class="usa-process-list skipStepsList"
             >
               <li
-                class="usa-process-list__item maxw-none ellipsis-icon"
+                class="usa-process-list__item maxw-none"
               >
                 <h3
                   class="usa-process-list__heading"
@@ -359,12 +359,6 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   Complete steps 1-4 (“Navigate to your model’s MTO”, “Navigate to “Solutions and IT systems”, “Find the solution you want to edit”, and “Click ‘Edit details’”) from the process described above in the “Editing a solution” section.
                 </p>
               </li>
-              <li
-                class="usa-process-list__item opacity-0 padding-0"
-              />
-              <li
-                class="usa-process-list__item opacity-0 padding-0"
-              />
               <li
                 class="usa-process-list__item maxw-none"
               >
