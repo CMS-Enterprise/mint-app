@@ -30,35 +30,40 @@ const usingSolutionsAndITSystemsTable = {
       'Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.'
   },
   step2: {
-    heading: 'Navigate to your new model',
-    altText: 'MINT homepage',
-    text: 'From the MINT homepage, navigate to the new model that you have been assigned to. You can find a list of models you have been assigned to in the “My Model Plans” section of the homepage. Because MINT offers customizable homepages, it’s possible that this section may not appear on your homepage. If you don’t see it, locate the area titled “Did you know you can customize this page?” in the top right of the page and click the “Edit homepage settings” link to add the “My Model Plans” section to your home page.',
+    heading: 'Navigate to “Solutions and IT systems”',
+    altText: 'MTO table tabs',
+    text: 'From the tab bar above the table and below the page header, click the tab labeled “Solutions and IT systems”.',
     caption:
-      'Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.'
+      'Image caption: A screenshot of the tab bar at the top of the model-to-operations matrix showing the tabs for the milestone view and the solutions and IT systems view.'
   },
   step3: {
-    heading: 'Navigate to the MTO',
-    altText: 'Collaboration area not started',
-    text: 'From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.',
+    heading: 'Find the solution you want to edit',
+    altText: 'MTO solution table option',
+    text: 'Using the solutions and IT systems table, locate the row for the solution you wish to edit.',
     caption:
-      'Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.'
+      'Image caption: A screenshot of the solutions and IT systems table view of the MTO, showing the header area and part of the table including three added solutions.'
   },
   step4: {
-    heading: 'Choose an option to start your MTO',
-    altText: 'Empty MTO',
-    text: 'After navigating to the MTO, you should see an empty state that will give you a variety of options to start. You may choose to begin by:',
-    list: [
-      'adding a template such as the one for standard categories,',
-      'adding common milestones from the milestone library,',
-      'adding common solutions from the solution library,',
-      'or creating a custom milestone or solution.'
-    ],
-    caption:
-      'Image caption: A screenshot of the empty state for the model-to-operations matrix for the Rural Health Enablement model. The empty state shows a variety of options for starting an MTO.'
+    heading: 'Click “Edit details”',
+    text: 'In the far right column of the solution row, click the button labeled “Edit details”. This will open a panel on the right side of your screen which allows you to edit a variety of details about the solution.'
   },
   step5: {
-    heading: 'Continue adding content',
-    text: 'Once you choose an option from the above step to get started, you will be taken to the main MTO view where you can continue adding milestones, solutions, categories, and more.'
+    heading: 'Edit details in the solution panel',
+    altText: 'Solution edit panel',
+    text: 'The solution panel allows users to edit a variety of information about solutions in their MTO, including:',
+    list: [
+      '<bold>Facilitated by:</bold> the main individual or role responsible for ensuring the work for this solution is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.',
+      '<bold>Need by:</bold> the date that the work for this solution needs to be completed by. This date could help account for interdependencies between solutions, or it could be related to the go live date of the model if this solution does not impact other milestones or solutions.',
+      '<bold>Status:</bold> the progress status of the solution. This will default to “Not started”, but can be manually set to “Onboarding”, “Backlog”, “In progress” or “Completed”. IT Leads can select one of the five options from the edit panel.',
+      '<bold>Risk indicator:</bold> an icon that shows whether or not work for this solution is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.',
+      '<bold>Related milestones:</bold> the milestones that rely on this IT system or solution. From the edit panel, an IT Lead can add or remove milestones that are related to this solution.'
+    ],
+    caption:
+      'Image caption: A screenshot of the side panel used to edit details about a solution or IT system.'
+  },
+  step6: {
+    heading: 'Save your changes',
+    text: 'There are two options to save changes within the solution panel. Any changes will be reflected in a changes counter in the righthand side of the panel header bar. Next to the counter is a button labeled “Save”. Users may click this to save the changes made in the solution panel. Users may also save changes by clicking the button labeled “Save changes” at the bottom of the edit panel.'
   }
 };
 export default usingSolutionsAndITSystemsTable;

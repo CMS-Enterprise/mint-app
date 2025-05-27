@@ -9,9 +9,10 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import collaborationAreaNotStarted from 'assets/images/01_Collaboration area not started.png';
 import emptyMTO from 'assets/images/02_Empty MTO.png';
-import MINTHome from 'assets/images/09_MINT home.png';
+import MTOTableTabs from 'assets/images/13_MTO table tabs.png';
+import SolutinEditPanel from 'assets/images/16_Solution edit panel.png';
+import MTOSolutionTableOption from 'assets/images/19_MTO solution table_option 3.png';
 import CollaborationAreaInProgress from 'assets/images/33_Collaboration area in progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -29,7 +30,9 @@ export const UsingSolutionsAndITSystemsTable = () => {
     'usingSolutionsAndITSystemsTable:solutionTableList'
   );
 
-  // const step5List = tArray<string>('usingSolutionsAndITSystemsTable:step5List.list');
+  const step5List = tArray<string>(
+    'usingSolutionsAndITSystemsTable:step5.list'
+  );
 
   return (
     <div>
@@ -111,7 +114,7 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <img
                     alt={t('step2.altText')}
-                    src={MINTHome}
+                    src={MTOTableTabs}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -128,7 +131,7 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <img
                     alt={t('step3.altText')}
-                    src={collaborationAreaNotStarted}
+                    src={MTOSolutionTableOption}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -141,15 +144,7 @@ export const UsingSolutionsAndITSystemsTable = () => {
                     {t('step4.heading')}
                   </ProcessListHeading>
 
-                  <p className="margin-bottom-0">{t('step4.text')}</p>
-
-                  <img
-                    alt={t('step4.altText')}
-                    src={emptyMTO}
-                    className="border-1px border-gray-10 radius-md shadow-2"
-                  />
-
-                  <p>{t('step4.caption')}</p>
+                  <p>{t('step4.text')}</p>
                 </ProcessListItem>
 
                 {/* STEP 5 */}
@@ -158,7 +153,38 @@ export const UsingSolutionsAndITSystemsTable = () => {
                     {t('step5.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step5.text')}</p>
+                  <p className="margin-bottom-0">{t('step5.text')}</p>
+
+                  <ul className="margin-bottom-2">
+                    {step5List.map((item, index) => (
+                      <li key={item} className="margin-0">
+                        <Trans
+                          t={t}
+                          i18nKey={`step5.list.${index}`}
+                          components={{
+                            bold: <span className="text-bold" />
+                          }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+
+                  <img
+                    alt={t('step5.altText')}
+                    src={SolutinEditPanel}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('step5.caption')}</p>
+                </ProcessListItem>
+
+                {/* STEP 6 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('step6.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('step6.text')}</p>
                 </ProcessListItem>
               </ProcessList>
 
