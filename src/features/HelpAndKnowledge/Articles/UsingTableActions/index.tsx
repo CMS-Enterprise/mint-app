@@ -343,7 +343,7 @@ const UsingTableActions = () => {
                       <ProcessListHeading type="h3">
                         {t(step.title)}
                       </ProcessListHeading>
-                      <p className="margin-bottom-0">{t(step.description)}</p>
+                      <p>{t(step.description)}</p>
                       {step.altText && step.src && (
                         <img
                           className="border-1px radius-md border-gray-10 shadow-3"

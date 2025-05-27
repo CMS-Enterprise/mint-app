@@ -444,9 +444,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   >
                     Navigate to your model’s MTO
                   </h3>
-                  <p
-                    class="margin-bottom-0"
-                  >
+                  <p>
                     From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
                   </p>
                   <img
@@ -467,9 +465,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   >
                     Locate the table actions area
                   </h3>
-                  <p
-                    class="margin-bottom-0"
-                  >
+                  <p>
                     If you have already started your MTO, you will find the “Table actions” area below the page header and above the main MTO table.
                   </p>
                   <img
@@ -490,9 +486,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   >
                     Click to add a template
                   </h3>
-                  <p
-                    class="margin-bottom-0"
-                  >
+                  <p>
                     Locate the “Templates and categories” section of the table actions area and click the button in the middle labeled “Add this template”. This will open a screen asking you to confirm that you wish to add this template.
                   </p>
                 </li>
@@ -505,9 +499,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   >
                     Confirm adding your template
                   </h3>
-                  <p
-                    class="margin-bottom-0"
-                  >
+                  <p>
                     Click the button labeled “Add template”. You will then see the new items from the template on your main MTO tables. If at any time you change your mind, you may click the “Don’t add template” button or the X icon in the top right corner to close the pop-up without adding the template.
                   </p>
                   <img
