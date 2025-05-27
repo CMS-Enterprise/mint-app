@@ -347,7 +347,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
               class="usa-process-list"
             >
               <li
-                class="usa-process-list__item maxw-none elipsis-icon"
+                class="usa-process-list__item maxw-none ellipsis-icon"
               >
                 <h3
                   class="usa-process-list__heading"

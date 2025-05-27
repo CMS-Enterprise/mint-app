@@ -201,7 +201,7 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
               <ProcessList>
                 {/* STEP 1 */}
-                <ProcessListItem className="maxw-none elipsis-icon">
+                <ProcessListItem className="maxw-none ellipsis-icon">
                   <ProcessListHeading type="h3">
                     {t('removeStep1.heading')}
                   </ProcessListHeading>
