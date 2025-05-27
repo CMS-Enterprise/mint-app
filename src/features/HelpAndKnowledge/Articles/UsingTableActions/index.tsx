@@ -103,7 +103,8 @@ const UsingTableActions = () => {
                     components={{
                       link1: (
                         <Link
-                          href="https://mint.cms.gov"
+                          aria-label="Open using the milestone library article in a new tab"
+                          href="using-milestone-library"
                           target="_blank"
                           variant="nav"
                         >
@@ -128,7 +129,8 @@ const UsingTableActions = () => {
                     components={{
                       link1: (
                         <Link
-                          href="https://mint.cms.gov"
+                          aria-label="Open how to add custom milestone article in a new tab"
+                          href="add-custom-milestone"
                           target="_blank"
                           variant="nav"
                         >
@@ -256,7 +258,8 @@ const UsingTableActions = () => {
                       components={{
                         link1: (
                           <Link
-                            href="https://mint.cms.gov"
+                            aria-label="Open operational solutions in a new tab"
+                            href="operational-solutions?page=1"
                             target="_blank"
                             variant="nav"
                           >
@@ -283,7 +286,8 @@ const UsingTableActions = () => {
                     components={{
                       link1: (
                         <Link
-                          href="https://mint.cms.gov"
+                          aria-label="Open using the solution library article in a new tab"
+                          href="using-solution-library"
                           target="_blank"
                           variant="nav"
                         >
@@ -310,7 +314,8 @@ const UsingTableActions = () => {
                     components={{
                       link1: (
                         <Link
-                          href="https://mint.cms.gov"
+                          aria-label="Open how to add custom solution article in a new tab"
+                          href="add-custom-solution"
                           target="_blank"
                           variant="nav"
                         >
