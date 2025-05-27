@@ -1,0 +1,64 @@
+meta {
+  name: MINT
+}
+
+auth {
+  mode: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+vars:pre-request {
+  url: http://localhost:8085/api/graph/query
+  jobCodes: ["MINT_ASSESSMENT_NONPROD", "MINT_USER_NONPROD"]
+  EUAID: PSTM
+  modelPlanID: 082b49d3-b548-48cb-9119-77a281bc2a8c
+  basicsID: 
+  generalCharacteristicsID: 
+  participantsAndProvidersID: 
+  beneficiariesID: 
+  opsEvalAndLearningID: 
+  modelLeadID: 
+  paymentsID: 
+  dataExchangeApproachID: 
+  operationalNeedID: 
+  operationalSolutionID: 
+  discussionID: 
+  discussionReplyID: 
+  operationalSolutionSubtaskID0: 
+  operationalSolutionSubtaskID1: 
+  documentID: 0b188e43-21a6-45b4-8dc2-a09929d3402d
+  existingModelLinkID: 
+  userID: 
+  userNotificationID: 
+  sampleModelPlanID: f25d8f70-6470-47e6-a6d9-debc10f26567
+  mtoCategoryID: 
+  mtoSubcategoryID: 
+  mtoMilestoneID: 
+  mtoSeededModelPlanID: 00000000-0000-0000-0000-000000000005
+  mtoCommonMilestoneID: 7b15b8bc-42db-493a-a0c1-1d4148945330
+  mtoCategory0ID: 
+  mtoCategory1ID: 
+  mtoCategory2ID: 
+  mtoCategory3ID: 
+  mtoSubcategory00ID: 
+  mtoSubcategory01ID: 
+  mtoSubcategory02ID: 
+  mtoSubcategory03ID: 
+  mtoSubcategory10ID: 
+  mtoSubcategory11ID: 
+  mtoSubcategory12ID: 
+  mtoSubcategory13ID: 
+  mtoSubcategory20ID: 
+  mtoSubcategory21ID: 
+  mtoSubcategory22ID: 
+  mtoSubcategory23ID: 
+  mtoSubcategory30ID: 
+  mtoSubcategory31ID: 
+  mtoSubcategory32ID: 
+  mtoSubcategory33ID: 
+  mtoSolutionID: 
+}

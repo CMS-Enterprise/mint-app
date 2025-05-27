@@ -359,7 +359,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 Learn more about CMMI Internal Clearance on SharePoint
@@ -600,7 +600,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 Learn more about Clearance on SharePoint
@@ -762,7 +762,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                         type="button"
                       >
                         <span
-                          class="display-flex flex-align-center"
+                          class="display-flex flex-align-center line-height-normal"
                           style="column-gap: 0.25rem;"
                         >
                           Learn more about announcement materials on SharePoint
@@ -856,7 +856,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                         type="button"
                       >
                         <span
-                          class="display-flex flex-align-center"
+                          class="display-flex flex-align-center line-height-normal"
                           style="column-gap: 0.25rem;"
                         >
                           Learn more about Fraud, Waste, Abuse Waivers on SharePoint

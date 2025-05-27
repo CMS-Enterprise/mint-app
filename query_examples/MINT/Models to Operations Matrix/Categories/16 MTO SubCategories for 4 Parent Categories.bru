@@ -1,0 +1,247 @@
+meta {
+  name: 16 MTO SubCategories for 4 Parent Categories
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation NewMTOSubcategories {
+    # Subcategories for Category 0
+    createSubcategory00: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 00",
+      parentID: "{{mtoCategory0ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory01: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 01",
+      parentID: "{{mtoCategory0ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory02: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 02",
+      parentID: "{{mtoCategory0ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory03: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 03",
+      parentID: "{{mtoCategory0ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+  
+    # Subcategories for Category 1
+    createSubcategory10: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 10",
+      parentID: "{{mtoCategory1ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory11: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 11",
+      parentID: "{{mtoCategory1ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory12: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 12",
+      parentID: "{{mtoCategory1ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory13: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 13",
+      parentID: "{{mtoCategory1ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+  
+    # Subcategories for Category 2
+    createSubcategory20: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 20",
+      parentID: "{{mtoCategory2ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory21: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 21",
+      parentID: "{{mtoCategory2ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory22: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 22",
+      parentID: "{{mtoCategory2ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory23: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 23",
+      parentID: "{{mtoCategory2ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+  
+    # Subcategories for Category 3
+    createSubcategory30: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 30",
+      parentID: "{{mtoCategory3ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory31: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 31",
+      parentID: "{{mtoCategory3ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory32: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 32",
+      parentID: "{{mtoCategory3ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+    createSubcategory33: createMTOCategory(
+      modelPlanID: "{{modelPlanID}}",
+      name: "Awesome Subcategory 33",
+      parentID: "{{mtoCategory3ID}}"
+    ) {
+      id
+      name
+      isUncategorized
+      position
+    }
+  }
+  
+}
+
+tests {
+  let responseData = res.getBody().data;
+  
+  // Subcategories for Category 0
+  let mtoSubcategory00ID = responseData.createSubcategory00.id;
+  bru.setVar("mtoSubcategory00ID", mtoSubcategory00ID);
+  
+  let mtoSubcategory01ID = responseData.createSubcategory01.id;
+  bru.setVar("mtoSubcategory01ID", mtoSubcategory01ID);
+  
+  let mtoSubcategory02ID = responseData.createSubcategory02.id;
+  bru.setVar("mtoSubcategory02ID", mtoSubcategory02ID);
+  
+  let mtoSubcategory03ID = responseData.createSubcategory03.id;
+  bru.setVar("mtoSubcategory03ID", mtoSubcategory03ID);
+  
+  // Subcategories for Category 1
+  let mtoSubcategory10ID = responseData.createSubcategory10.id;
+  bru.setVar("mtoSubcategory10ID", mtoSubcategory10ID);
+  
+  let mtoSubcategory11ID = responseData.createSubcategory11.id;
+  bru.setVar("mtoSubcategory11ID", mtoSubcategory11ID);
+  
+  let mtoSubcategory12ID = responseData.createSubcategory12.id;
+  bru.setVar("mtoSubcategory12ID", mtoSubcategory12ID);
+  
+  let mtoSubcategory13ID = responseData.createSubcategory13.id;
+  bru.setVar("mtoSubcategory13ID", mtoSubcategory13ID);
+  
+  // Subcategories for Category 2
+  let mtoSubcategory20ID = responseData.createSubcategory20.id;
+  bru.setVar("mtoSubcategory20ID", mtoSubcategory20ID);
+  
+  let mtoSubcategory21ID = responseData.createSubcategory21.id;
+  bru.setVar("mtoSubcategory21ID", mtoSubcategory21ID);
+  
+  let mtoSubcategory22ID = responseData.createSubcategory22.id;
+  bru.setVar("mtoSubcategory22ID", mtoSubcategory22ID);
+  
+  let mtoSubcategory23ID = responseData.createSubcategory23.id;
+  bru.setVar("mtoSubcategory23ID", mtoSubcategory23ID);
+  
+  // Subcategories for Category 3
+  let mtoSubcategory30ID = responseData.createSubcategory30.id;
+  bru.setVar("mtoSubcategory30ID", mtoSubcategory30ID);
+  
+  let mtoSubcategory31ID = responseData.createSubcategory31.id;
+  bru.setVar("mtoSubcategory31ID", mtoSubcategory31ID);
+  
+  let mtoSubcategory32ID = responseData.createSubcategory32.id;
+  bru.setVar("mtoSubcategory32ID", mtoSubcategory32ID);
+  
+  let mtoSubcategory33ID = responseData.createSubcategory33.id;
+  bru.setVar("mtoSubcategory33ID", mtoSubcategory33ID);
+  
+}

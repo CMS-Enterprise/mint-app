@@ -1,0 +1,165 @@
+meta {
+  name: Update Plan Payments
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanPayments
+  {
+      updatePlanPayments (id: "{{paymentsID}}",changes:     
+      {
+              status: READY_FOR_CLEARANCE
+          # Page 1
+          fundingSource: [PATIENT_PROTECTION_AFFORDABLE_CARE_ACT,  MEDICARE_PART_A_HI_TRUST_FUND,MEDICARE_PART_B_SMI_TRUST_FUND,   OTHER]
+          fundingSourceMedicareAInfo: "hello medicare A"
+          fundingSourceMedicareBInfo: "hello medicare B"
+          fundingSourceOther: "My cool note"
+          fundingSourceNote: "hello this is a note"
+          fundingSourceR: [PATIENT_PROTECTION_AFFORDABLE_CARE_ACT,   OTHER]
+          fundingSourceRMedicareAInfo: "hello medicare A --> R"
+          fundingSourceRMedicareBInfo: "hello medicare B ---> R"
+          fundingSourceROther: "Trust others"
+          fundingSourceRNote: " Please trust us"
+          payRecipients: [PROVIDERS, BENEFICIARIES, PARTICIPANTS, STATES, OTHER]
+          payRecipientsOtherSpecification: "asdhjkasdlhjk"
+          payRecipientsNote: "hasdjkaskhjd"
+          payType: [CLAIMS_BASED_PAYMENTS, NON_CLAIMS_BASED_PAYMENTS]
+          payTypeNote: "ashjkdasdhjkasd"
+  
+          # Page 2
+          payClaims:   [ADJUSTMENTS_TO_FFS_PAYMENTS, CARE_MANAGEMENT_HOME_VISITS, REDUCTIONS_TO_BENEFICIARY_COST_SHARING, SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS, TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE, SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE, OTHER]
+          
+          #Page 3
+          willBePaymentAdjustments: true
+          willBePaymentAdjustmentsNote: "Yes this is a note about payment adjustments"
+  
+  
+      })
+       {
+          readyForReviewBy
+          readyForReviewDts
+          readyForClearanceBy
+          readyForClearanceDts
+          status
+      nonClaimsPaymentsNote
+    
+      id
+      modelPlanID
+  
+      # Page 1
+      fundingSource
+      fundingSourceMedicareAInfo
+      fundingSourceMedicareBInfo
+      fundingSourceOther
+      fundingSourceNote
+      fundingSourceR
+      fundingSourceRMedicareAInfo
+      fundingSourceRMedicareBInfo
+      fundingSourceROther
+      fundingSourceRNote
+      payRecipients
+      payRecipientsOtherSpecification
+      payRecipientsNote
+      payType
+      payTypeNote
+  
+      # Page 2
+      payClaims
+      payClaimsOther
+      shouldAnyProvidersExcludedFFSSystems
+      shouldAnyProviderExcludedFFSSystemsNote
+      changesMedicarePhysicianFeeSchedule
+      changesMedicarePhysicianFeeScheduleNote
+      affectsMedicareSecondaryPayerClaims
+      affectsMedicareSecondaryPayerClaimsHow
+      affectsMedicareSecondaryPayerClaimsNote
+      payModelDifferentiation
+  
+      # Page 3
+      willBePaymentAdjustments
+      willBePaymentAdjustmentsNote
+      creatingDependenciesBetweenServices
+      creatingDependenciesBetweenServicesNote
+      needsClaimsDataCollection
+      needsClaimsDataCollectionNote
+      providingThirdPartyFile
+      isContractorAwareTestDataRequirements
+  
+      # Page 4
+      beneficiaryCostSharingLevelAndHandling
+      waiveBeneficiaryCostSharingForAnyServices
+      waiveBeneficiaryCostSharingServiceSpecification
+      waiverOnlyAppliesPartOfPayment
+      waiveBeneficiaryCostSharingNote
+  
+      # Page 5
+      nonClaimsPayments
+      nonClaimsPaymentOther
+      paymentCalculationOwner
+      numberPaymentsPerPayCycle
+      numberPaymentsPerPayCycleNote
+      sharedSystemsInvolvedAdditionalClaimPayment
+      sharedSystemsInvolvedAdditionalClaimPaymentNote
+      planningToUseInnovationPaymentContractor
+      planningToUseInnovationPaymentContractorNote
+  
+  
+      # Page 6
+      expectedCalculationComplexityLevel
+      expectedCalculationComplexityLevelNote
+      canParticipantsSelectBetweenPaymentMechanisms
+      canParticipantsSelectBetweenPaymentMechanismsHow
+      canParticipantsSelectBetweenPaymentMechanismsNote
+      anticipatedPaymentFrequency
+      anticipatedPaymentFrequencyOther
+      anticipatedPaymentFrequencyNote
+  
+      # Page 7
+      willRecoverPayments
+      willRecoverPaymentsNote
+      anticipateReconcilingPaymentsRetrospectively
+      anticipateReconcilingPaymentsRetrospectivelyNote
+      paymentStartDate
+      paymentStartDateNote
+  
+      # Meta
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+      
+      
+  
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }     
+          readyForReviewByUserAccount 
+          {
+              commonName
+          }
+          readyForClearanceByUserAccount 
+          {
+              commonName
+          }    
+  
+      }
+  }
+}

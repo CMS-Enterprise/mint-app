@@ -1,0 +1,50 @@
+meta {
+  name: Create Plan Collaborator
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation createPlanCollaborator ($input: PlanCollaboratorCreateInput!) {
+      createPlanCollaborator (input: $input) {
+          id
+          modelPlanID
+          userID
+          teamRoles
+          userAccount 
+          {
+              commonName
+              familyName
+              givenName
+              email
+              locale
+          }  
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "input": {
+      "modelPlanID": "{{modelPlanID}}",
+      "userName": "MINT",
+      "teamRoles": ["MODEL_LEAD", "IT_LEAD"]
+    }
+  }
+}

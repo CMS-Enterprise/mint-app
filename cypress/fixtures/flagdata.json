@@ -1,8 +1,6 @@
 {
   "segments": {},
-  "flagValues": {
-    "echimpEnabled": true
-  },
+  "flagValues": {},
   "flags": {
     "hideITLeadExperience": {
       "key": "hideITLeadExperience",

@@ -1,0 +1,99 @@
+meta {
+  name: Get Plan Payments (Deprecated)
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query planPayments ($id: UUID!) {
+      planPayments (id: $id) {
+          id
+          modelPlanID
+          fundingSource
+          fundingSourceTrustFund
+          fundingSourceTrustFundType
+          fundingSourceOther
+          fundingSourceNote
+          fundingSourceR
+          fundingSourceRTrustFund
+          fundingSourceRTrustFundType
+          fundingSourceROther
+          fundingSourceRNote
+          payRecipients
+          payRecipientsOtherSpecification
+          payRecipientsNote
+          payType
+          payTypeNote
+          payClaims
+          payClaimsOther
+          payClaimsNote
+          shouldAnyProvidersExcludedFFSSystems
+          shouldAnyProviderExcludedFFSSystemsNote
+          changesMedicarePhysicianFeeSchedule
+          changesMedicarePhysicianFeeScheduleNote
+          affectsMedicareSecondaryPayerClaims
+          affectsMedicareSecondaryPayerClaimsHow
+          affectsMedicareSecondaryPayerClaimsNote
+          payModelDifferentiation
+          creatingDependenciesBetweenServices
+          creatingDependenciesBetweenServicesNote
+          needsClaimsDataCollection
+          needsClaimsDataCollectionNote
+          providingThirdPartyFile
+          isContractorAwareTestDataRequirements
+          beneficiaryCostSharingLevelAndHandling
+          waiveBeneficiaryCostSharingForAnyServices
+          waiveBeneficiaryCostSharingServiceSpecification
+          waiverOnlyAppliesPartOfPayment
+          waiveBeneficiaryCostSharingNote
+          nonClaimsPayments
+          nonClaimsPaymentOther
+          paymentCalculationOwner
+          numberPaymentsPerPayCycle
+          numberPaymentsPerPayCycleNote
+          sharedSystemsInvolvedAdditionalClaimPayment
+          sharedSystemsInvolvedAdditionalClaimPaymentNote
+          planningToUseInnovationPaymentContractor
+          planningToUseInnovationPaymentContractorNote
+          expectedCalculationComplexityLevel
+          expectedCalculationComplexityLevelNote
+          canParticipantsSelectBetweenPaymentMechanisms
+          canParticipantsSelectBetweenPaymentMechanismsHow
+          canParticipantsSelectBetweenPaymentMechanismsNote
+          anticipatedPaymentFrequency
+          anticipatedPaymentFrequencyOther
+          anticipatedPaymentFrequencyNote
+          willRecoverPayments
+          willRecoverPaymentsNote
+          anticipateReconcilingPaymentsRetrospectively
+          anticipateReconcilingPaymentsRetrospectivelyNote
+          paymentStartDate
+          paymentStartDateNote
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          readyForReviewBy
+          readyForReviewDts
+          status
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{paymentsID}}"
+  }
+}
