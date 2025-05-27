@@ -242,6 +242,19 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Points of Contact Components > matches the snapshot > CMMI Data Aggregation Contract 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > CMS Box 1`] = `
 <DocumentFragment>
   <div>

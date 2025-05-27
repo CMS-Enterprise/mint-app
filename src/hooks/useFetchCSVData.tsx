@@ -317,13 +317,13 @@ export const removedUnneededData = (
 };
 
 // Initiates the downloading of the formatted csv data
-const downloadFile = (data: string) => {
+const downloadFile = (data: string, filename: string) => {
   const element = document.createElement('a');
   const file = new Blob([data], {
     type: 'text/csv'
   });
   element.href = URL.createObjectURL(file);
-  element.download = 'modelPlans.csv'; // TODO: make this configurable
+  element.download = filename;
   document.body.appendChild(element);
   element.click();
 };
@@ -358,6 +358,16 @@ const csvFormatter = (
           csvFields(i18next.t)[exportSection]
         );
 
+    const modelName =
+      csvData.length > 1 ? 'All Model Plans' : csvData[0].modelName;
+
+    const modelNameFormatted = modelName.replace(/ /g, '_');
+
+    const exportSectionFormatted =
+      csvData.length > 1 ? '' : `-${exportSection.toUpperCase()}`;
+
+    const exportFileName = `MINT-${modelNameFormatted}${exportSectionFormatted}.csv`;
+
     const parser = new Parser({
       fields: selectedCSVFields,
       transforms: [
@@ -378,7 +388,7 @@ const csvFormatter = (
       }
     });
     const csv = parser.parse(flattenedData);
-    downloadFile(csv);
+    downloadFile(csv, exportFileName);
   } catch (err) {
     // TODO: add more robust error handling: display a modal/message if download fails?
     console.error(err); // eslint-disable-line

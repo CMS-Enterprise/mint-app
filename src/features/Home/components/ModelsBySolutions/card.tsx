@@ -4,7 +4,7 @@ import { Card, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import StatusBanner from 'components/StatusBanner';
+import ModelStatusTag from 'components/ModelStatusTag';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 
@@ -22,7 +22,6 @@ const ModelSolutionCard = ({
   modelPlan
 }: ModelSolutionCardProps) => {
   const { t: customHomeT } = useTranslation('customHome');
-
   const basicsConfig = usePlanTranslation('basics');
 
   const { id, basics, modelName, abbreviation, status } = modelPlan;
@@ -44,15 +43,11 @@ const ModelSolutionCard = ({
           </Grid>
 
           <Grid desktop={{ col: 12 }}>
-            <div className="display-flex">
-              <p className="text-bold margin-top-0 margin-right-1">
+            <div className="display-flex margin-bottom-1">
+              <p className="text-bold margin-top-0 margin-right-1 margin-bottom-0">
                 {customHomeT('solutionCard.status')}
               </p>
-              <StatusBanner
-                modelID={id}
-                status={status}
-                changeHistoryLink={false}
-              />
+              <ModelStatusTag status={status} />
             </div>
           </Grid>
 

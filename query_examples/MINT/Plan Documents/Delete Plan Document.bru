@@ -1,0 +1,41 @@
+meta {
+  name: Delete Plan Document
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation deletePlanDocument ($input: PlanDocumentInput!) {
+      deletePlanDocument (input: $input)
+  }
+}
+
+body:graphql:vars {
+  {
+    "input": {
+      "id": "",
+      "modelPlanID": "",
+      "documentParameters": {
+        "fileName": "",
+        "fileSize": 0,
+        "fileType": "",
+        "documentType": "",
+        "otherTypeDescription": "",
+        "optionalNotes": ""
+      },
+      "url": ""
+    }
+  }
+}

@@ -4,7 +4,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { GridContainer, Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/generated/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import './index.scss';
 
@@ -74,8 +73,6 @@ const NavigationBar = ({
   className
 }: NavigationProps) => {
   const { t } = useTranslation();
-
-  const flags = useFlags();
 
   const { pathname } = useLocation();
 
@@ -151,9 +148,7 @@ const NavigationBar = ({
     </div>
   );
 
-  const navItemsWithNotification = flags.notificationsEnabled
-    ? primaryLinks.concat(notificationLink)
-    : primaryLinks;
+  const navItemsWithNotification = primaryLinks.concat(notificationLink);
 
   const userLinks = (
     <div className="mint-nav__signout-container">
@@ -193,8 +188,7 @@ const NavigationBar = ({
           onClick={() => expandMobileSideNav(false)}
           mobileExpanded={isMobile}
           aria-label="Primary navigation"
-          className={classNames({
-            'navigation-link': flags.notificationsEnabled,
+          className={classNames('navigation-link', {
             'width-full': !isMobile
           })}
           items={navItems}

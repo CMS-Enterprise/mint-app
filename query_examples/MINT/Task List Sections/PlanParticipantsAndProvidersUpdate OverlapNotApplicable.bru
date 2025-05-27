@@ -1,0 +1,167 @@
+meta {
+  name: PlanParticipantsAndProvidersUpdate OverlapNotApplicable
+  type: graphql
+  seq: 11
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) 
+  {
+      updatePlanParticipantsAndProviders (id: "{{participantsAndProvidersID}}",changes:     
+      {
+          status: READY_FOR_CLEARANCE
+  
+  
+      #Page 1
+      participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]
+      # medicareProviderType:
+      statesEngagement: "Very good engagement"
+      # participantsOther:
+      # participantsNote:
+      participantsCurrentlyInModels: null
+      # participantsCurrentlyInModelsNote:
+      # modelApplicationLevel:
+  
+      #Page 2
+      # expectedNumberOfParticipants:
+      # estimateConfidence:
+      # confidenceNote:
+      recruitmentMethod: APPLICATION_COLLECTION_TOOL
+      # recruitmentOther:
+      # recruitmentNote:
+      selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL
+      ,APPLICATION_SUPPORT_CONTRACTOR]
+      # selectionOther:
+      # selectionNote:
+  
+      #Page 3
+      communicationMethod: [IT_TOOL]
+      communicationMethodOther: "New And Awesome Method"
+      # communicationNote:
+      # participantAssumeRisk:
+      # riskType:
+      # riskOther:
+      # riskNote:
+      # willRiskChange:
+      # willRiskChangeNote:
+  
+      #Page 4
+      # coordinateWork:
+      # coordinateWorkNote:
+      gainsharePayments: false
+      # gainsharePaymentsTrack:
+      # gainsharePaymentsNote:
+      participantsIds: [TINS,CCNS]
+      # participantsIdsOther:
+      # participantsIDSNote:
+  
+      #Page 5
+      # providerAdditionFrequency:
+      # providerAdditionFrequencyOther:
+      # providerAdditionFrequencyNote:
+      # providerAddMethod:
+      # providerAddMethodOther:
+      # providerAddMethodNote:
+      # providerLeaveMethod:
+      # providerLeaveMethodOther:
+      # providerLeaveMethodNote:
+      providerOverlap: null
+      # providerOverlapHierarchy:
+      providerOverlapNote: "Note, that changing this to null makes the hierarchy question not apply."
+  
+  
+  
+  
+  
+      }) {
+          readyForReviewBy
+          readyForReviewDts
+          readyForClearanceBy
+          readyForClearanceDts
+          status
+          id
+          modelPlanID
+          participants
+          medicareProviderType
+          statesEngagement
+          participantsOther
+          participantsNote
+          participantsCurrentlyInModels
+          participantsCurrentlyInModelsNote
+          modelApplicationLevel
+          expectedNumberOfParticipants
+          estimateConfidence
+          confidenceNote
+          recruitmentMethod
+          recruitmentOther
+          recruitmentNote
+          selectionMethod
+          selectionOther
+          selectionNote
+          communicationMethod
+          communicationMethodOther
+          communicationNote
+          # participantAssumeRisk
+          riskType
+          riskOther
+          riskNote
+          willRiskChange
+          willRiskChangeNote
+          coordinateWork
+          coordinateWorkNote
+          gainsharePayments
+          gainsharePaymentsTrack
+          gainsharePaymentsNote
+          participantsIds
+          participantsIdsOther
+          participantsIDSNote
+          providerAdditionFrequency
+          providerAdditionFrequencyOther
+          providerAdditionFrequencyNote
+          providerAddMethod
+          providerAddMethodOther
+          providerAddMethodNote
+          providerLeaveMethod
+          providerLeaveMethodOther
+          providerLeaveMethodNote
+          providerOverlap
+          providerOverlapHierarchy
+          providerOverlapNote
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+  
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }     
+          readyForReviewByUserAccount 
+          {
+              commonName
+          }
+          readyForClearanceByUserAccount 
+          {
+              commonName
+          }
+  
+          status
+      }
+  }
+}

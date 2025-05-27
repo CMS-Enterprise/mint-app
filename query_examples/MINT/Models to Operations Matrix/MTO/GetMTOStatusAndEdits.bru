@@ -1,0 +1,70 @@
+meta {
+  name: GetMTOStatusAndEdits
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query ModelPlanMTOCategories {
+  modelPlan(id: "{{modelPlanID}}") {
+      mtoMatrix{
+          status
+          milestonesWithNoLinkedSolutions {
+              name
+          }
+          recentEdit{
+              date
+              tableName
+              actorName
+              modifiedBy
+              modifiedDts
+              modifiedByUserAccount{
+                  commonName
+              }
+          }
+          milestones {
+              name
+              createdDts
+              createdBy
+          }
+          categories{
+              id
+              position
+              name
+              isUncategorized
+              subCategories {
+                  id
+                  position
+                  name
+                  isUncategorized
+                  milestones {
+                          id
+                          name
+                          addedFromMilestoneLibrary
+                          key
+                          facilitatedBy
+                          needBy
+                          status
+                          riskIndicator
+                          # isDraftMilestone
+                  }
+              }
+              }
+          }
+          id
+          modelName
+      }
+  }
+}

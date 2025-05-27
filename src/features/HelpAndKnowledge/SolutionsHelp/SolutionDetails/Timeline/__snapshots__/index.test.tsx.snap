@@ -33,7 +33,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > 4inn
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               ACO-OIT@cms.hhs.gov
@@ -224,7 +224,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Acco
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               ACO-OIT@cms.hhs.gov
@@ -515,6 +515,40 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Bene
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > CMMI Data Aggregation Contract 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <p>
+        The timeline for working with CDAC varies based on model requirements. Please reach out to the CDAC team to get started.
+      </p>
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Reach out to CDAC team
+          </h3>
+          If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to Megha Mirchandani and William Gordon to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. 
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > CMS Box 1`] = `
 <DocumentFragment>
   <div>
@@ -533,7 +567,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
         type="button"
       >
         <span
-          class="display-flex flex-align-center"
+          class="display-flex flex-align-center line-height-normal"
           style="column-gap: 0.25rem;"
         >
           MINTTeam@cms.hhs.gov
@@ -573,7 +607,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 Go to CMS Box
@@ -611,7 +645,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 View resources on CMS Intranet
@@ -656,7 +690,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
         type="button"
       >
         <span
-          class="display-flex flex-align-center"
+          class="display-flex flex-align-center line-height-normal"
           style="column-gap: 0.25rem;"
         >
           MINTTeam@cms.hhs.gov
@@ -696,7 +730,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 Go to CMS Qualtrics
@@ -776,7 +810,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 MINTTeam@cms.hhs.gov
@@ -835,7 +869,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               MINTTeam@cms.hhs.gov
@@ -877,7 +911,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
                 type="button"
               >
                 <span
-                  class="display-flex flex-align-center"
+                  class="display-flex flex-align-center line-height-normal"
                   style="column-gap: 0.25rem;"
                 >
                   CMS Enterprise Portal
@@ -963,7 +997,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 Data Disclosures and Data Use Agreements
@@ -1000,7 +1034,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               CCWAccess@cms.hhs.gov
@@ -1072,7 +1106,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               CCWAccess@cms.hhs.gov
@@ -1256,7 +1290,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 MINTTeam@cms.hhs.gov
@@ -1574,7 +1608,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 MINTTeam@cms.hhs.gov
@@ -1620,7 +1654,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
         type="button"
       >
         <span
-          class="display-flex flex-align-center"
+          class="display-flex flex-align-center line-height-normal"
           style="column-gap: 0.25rem;"
         >
           donna.schmidt@cms.hhs.gov
@@ -1908,7 +1942,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 MINTTeam@cms.hhs.gov
@@ -2102,7 +2136,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Onboarding Request Form for MDM-POR
@@ -2151,7 +2185,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to ICD and Onboarding Mapping for MDM-POR
@@ -2234,7 +2268,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Onboarding Request Form for MDM-NCBP
@@ -2283,7 +2317,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to ICD and Onboarding Mapping for MDM-NCBP
@@ -2429,7 +2463,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 MINTTeam@cms.hhs.gov
@@ -2524,7 +2558,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mode
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Databricks
@@ -2663,7 +2697,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               cms_it_service_desk@cms.hhs.gov
@@ -2776,7 +2810,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Rese
         type="button"
       >
         <span
-          class="display-flex flex-align-center"
+          class="display-flex flex-align-center line-height-normal"
           style="column-gap: 0.25rem;"
         >
           Procurement Administrative Lead Time (PALT)
@@ -2873,7 +2907,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Salesforce CMT
@@ -3021,7 +3055,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Salesforce CMT
@@ -3169,7 +3203,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Salesforce CMT
@@ -3317,7 +3351,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Salesforce CMT
@@ -3465,7 +3499,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             type="button"
           >
             <span
-              class="display-flex flex-align-center"
+              class="display-flex flex-align-center line-height-normal"
               style="column-gap: 0.25rem;"
             >
               Go to Salesforce CMT
@@ -3588,7 +3622,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Shar
               type="button"
             >
               <span
-                class="display-flex flex-align-center"
+                class="display-flex flex-align-center line-height-normal"
                 style="column-gap: 0.25rem;"
               >
                 Go to Fee For Service Change Request Resource Center

@@ -1,0 +1,53 @@
+meta {
+  name: Update Model Plan
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {
+      updateModelPlan (id: $id, changes: $changes) {
+          id
+          modelName
+          abbreviation
+          archived
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          status
+          taskListStatus
+          suggestedPhase {
+              phase
+              suggestedStatuses
+          }
+          previousSuggestedPhase
+          isFavorite
+          isCollaborator
+          opSolutionLastModifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}",
+    "changes": {
+      "modelName": "My Updated Model",
+      "archived": true,
+      "status": "PLAN_DRAFT"
+    }
+  }
+}

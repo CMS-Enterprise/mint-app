@@ -7,8 +7,8 @@ import {
   HelpSolutionType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
-  GetPossibleSolutionsQuery,
-  useGetPossibleSolutionsQuery
+  GetMtoSolutionContactsQuery,
+  useGetMtoSolutionContactsQuery
 } from 'gql/generated/graphql';
 
 type UseHelpSolutionType = {
@@ -18,7 +18,7 @@ type UseHelpSolutionType = {
 
 export const mapContactsToSolutions = (
   solutions: HelpSolutionBaseType[],
-  contactSolutions: GetPossibleSolutionsQuery['possibleOperationalSolutions']
+  contactSolutions: GetMtoSolutionContactsQuery['mtoCommonSolutions']
 ): HelpSolutionType[] => {
   return solutions.map(solution => {
     // Find fetch possible solution that corresponds to the FE `enum` mapped solution
@@ -29,20 +29,20 @@ export const mapContactsToSolutions = (
     // Add fetch pointsOfContact field to existing FE solution map
     return {
       ...solution,
-      pointsOfContact: foundSolution?.pointsOfContact
+      pointsOfContact: foundSolution?.contactInformation.pointsOfContact
     };
   });
 };
 
 const useHelpSolution = (): UseHelpSolutionType => {
-  const { data, loading } = useGetPossibleSolutionsQuery();
+  const { data, loading } = useGetMtoSolutionContactsQuery();
 
   const helpSolutionsWithContacts = useMemo(() => {
     return mapContactsToSolutions(
       helpSolutions,
-      data?.possibleOperationalSolutions || []
+      data?.mtoCommonSolutions || []
     );
-  }, [data?.possibleOperationalSolutions]);
+  }, [data?.mtoCommonSolutions]);
 
   return { helpSolutions: helpSolutionsWithContacts, loading };
 };

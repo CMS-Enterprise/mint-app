@@ -1,0 +1,39 @@
+meta {
+  name: UpdateMTOMilestoneLinkedSolutions
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation GetMTOMilestone {
+      mtoMilestoneUpdateLinkedSolutions(
+          id: "{{mtoMilestoneID}}",
+          solutionLinks: {
+              solutionIDs: ["{{mtoSolutionID}}"],
+              commonSolutionKeys: [INNOVATION]
+          }) {
+      id
+      name
+      facilitatedBy
+      neededBy
+      status
+      riskIndicator
+      key
+      type
+      pocName
+      pocEmail
+      }
+  }
+}

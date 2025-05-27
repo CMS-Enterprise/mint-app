@@ -1,0 +1,48 @@
+meta {
+  name: Update CR
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanCR ($id: UUID!, $changes: PlanCRChanges!) {
+      updatePlanCR (id: $id, changes: $changes) {
+          id
+          modelPlanID
+          idNumber
+          dateInitiated
+          dateImplemented
+          title
+          note
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "",
+    "changes": {
+      "idNumber": "",
+      "dateInitiated": "",
+      "dateImplemented": "",
+      "title": "",
+      "note": ""
+    }
+  }
+}
