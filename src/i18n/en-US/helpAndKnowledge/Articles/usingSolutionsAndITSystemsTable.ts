@@ -64,6 +64,27 @@ const usingSolutionsAndITSystemsTable = {
   step6: {
     heading: 'Save your changes',
     text: 'There are two options to save changes within the solution panel. Any changes will be reflected in a changes counter in the righthand side of the panel header bar. Next to the counter is a button labeled “Save”. Users may click this to save the changes made in the solution panel. Users may also save changes by clicking the button labeled “Save changes” at the bottom of the edit panel.'
+  },
+  removingASolution: 'Removing a solution',
+  removingASolutionDescription:
+    'As described above, users can use the “Actions” column in the solution table to open the solution edit panel. From the edit panel, users may also remove a solution.',
+  removeStep1: {
+    heading: 'Follow steps 1-4 from the process above',
+    text: 'Complete steps 1-4 (“Navigate to your model’s MTO”, “Navigate to “Solutions and IT systems”, “Find the solution you want to edit”, and “Click ‘Edit details’”) from the process described above in the “Editing a solution” section.'
+  },
+  removeStep4: {
+    heading: 'Click “Remove solution”',
+    altText: 'Solution removal button',
+    text: 'At the bottom of the edit panel, click the button labeled “Remove solution”. This will open a confirmation screen.',
+    caption:
+      'Image caption: A screenshot of the side panel used to edit details about a solution or IT system, including removing a solution.'
+  },
+  removeStep5: {
+    heading: 'Confirm solution removal',
+    altText: 'Solution removal modal',
+    text: 'In the confirmation screen, click the button labeled “Remove solution”. Doing so will remove this solution from your MTO completely, it you have added it to any milestones, it will no longer be associated with those milestones, and and all details about its status will be removed from your MTO. If you change your mind, you may click the X icon in the top right corner or click the button labeled “Go back” to close the pop-up without removing your milestone.',
+    caption:
+      'Image caption: A screenshot of the solution removal confirmation screen.'
   }
 };
 export default usingSolutionsAndITSystemsTable;

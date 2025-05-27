@@ -9,10 +9,11 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import emptyMTO from 'assets/images/02_Empty MTO.png';
 import MTOTableTabs from 'assets/images/13_MTO table tabs.png';
 import SolutinEditPanel from 'assets/images/16_Solution edit panel.png';
+import SolutionRemovalButton from 'assets/images/18_Solution removal button.png';
 import MTOSolutionTableOption from 'assets/images/19_MTO solution table_option 3.png';
+import SolutionRemovalModal from 'assets/images/20_Solution removal modal.png';
 import CollaborationAreaInProgress from 'assets/images/33_Collaboration area in progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -22,6 +23,8 @@ import HelpCategoryTag from '../_components/HelpCategoryTag';
 import RelatedArticles from '../_components/RelatedArticles';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
+
+import '../index.scss';
 
 export const UsingSolutionsAndITSystemsTable = () => {
   const { t } = useTranslation('usingSolutionsAndITSystemsTable');
@@ -185,6 +188,63 @@ export const UsingSolutionsAndITSystemsTable = () => {
                   </ProcessListHeading>
 
                   <p>{t('step6.text')}</p>
+                </ProcessListItem>
+              </ProcessList>
+
+              <h2 className="margin-top-2 margin-bottom-2">
+                {t('removingASolution')}
+              </h2>
+
+              <p className="margin-top-0">
+                {t('removingASolutionDescription')}
+              </p>
+
+              <ProcessList>
+                {/* STEP 1 */}
+                <ProcessListItem className="maxw-none elipsis-icon">
+                  <ProcessListHeading type="h3">
+                    {t('removeStep1.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('removeStep1.text')}</p>
+                </ProcessListItem>
+
+                {/* Empty items to progress count to 4 */}
+                <ProcessListItem className="opacity-0 padding-0" />
+                <ProcessListItem className="opacity-0 padding-0" />
+
+                {/* STEP 4 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('removeStep4.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('removeStep4.text')}</p>
+
+                  <img
+                    alt={t('removeStep4.altText')}
+                    src={SolutionRemovalButton}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('removeStep4.caption')}</p>
+                </ProcessListItem>
+
+                {/* STEP 5 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('removeStep5.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('removeStep5.text')}</p>
+
+                  <img
+                    alt={t('removeStep5.altText')}
+                    src={SolutionRemovalModal}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('removeStep5.caption')}</p>
                 </ProcessListItem>
               </ProcessList>
 
