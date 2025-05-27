@@ -1,0 +1,643 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              Using the solutions and IT systems table
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=mto-tutorials"
+            >
+              <span
+                aria-label="Articles under the MINT tutorials category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                MINT tutorials
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              The solutions and IT systems table is accessible from the tab bar below the model-to-operations matrix (MTO) header area and is one of the main MTO content views in MINT. It is closely related to the milestone table, since each one offers a slightly different view of content you have added to your MTO.
+            </p>
+            <h2
+              class="margin-top-0 margin-bottom-2"
+            >
+              Columns in the solution table
+            </h2>
+            <p
+              class="margin-y-0"
+            >
+              The solutions and IT systems table includes a variety of information about the solutions you’ve added to your MTO. This information is contained within the following columns:
+            </p>
+            <ul
+              class="margin-y-05"
+            >
+              <li
+                class="margin-0"
+              >
+                <span
+                  class="text-bold"
+                >
+                  Risk indicator:
+                </span>
+                 an icon that shows whether or not this solution is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon.
+              </li>
+              <li
+                class="margin-0"
+              >
+                <span
+                  class="text-bold"
+                >
+                  Solution:
+                </span>
+                 the title of the solution or IT system
+              </li>
+              <li
+                class="margin-0"
+              >
+                <span
+                  class="text-bold"
+                >
+                  Related milestones:
+                </span>
+                 the milestones that rely on this solution or IT system. From the edit panel, an IT Lead can add or remove milestones that are related to this solution.
+              </li>
+              <li
+                class="margin-0"
+              >
+                <span
+                  class="text-bold"
+                >
+                  Facilitated by:
+                </span>
+                 the main individual or role responsible for ensuring the work for this solution is completed. Users may also choose to list alternative individuals or roles who will assist with the work.
+              </li>
+              <li
+                class="margin-0"
+              >
+                <span
+                  class="text-bold"
+                >
+                  Need by:
+                </span>
+                 the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.
+              </li>
+              <li
+                class="margin-0"
+              >
+                <span
+                  class="text-bold"
+                >
+                  Status:
+                </span>
+                 the progress status of the solution. This will default to “Not started”, but can be manually set to “Onboarding”, “Backlog”, “In progress” or “Completed”.
+              </li>
+            </ul>
+            <p
+              class="margin-top-0"
+            >
+              The last column is the “Actions” column, which includes a button on every row that is labeled “Edit details”. This button will open a side panel that allows users to edit the details of a solution, including many of the fields above.
+            </p>
+            <h2
+              class="margin-top-5 margin-bottom-2"
+            >
+              Adding a solution
+            </h2>
+            <p
+              class="margin-y-0"
+            >
+              There are a few ways to add a new solution to your MTO. IT Leads could navigate to the solution library and add common solutions from there. Users may also choose to add a custom solution, which can be done from the table actions area or from the solution library. Users may also add a solution by adding it to a milestone from the milestone table view of the MTO.
+            </p>
+            <h2
+              class="margin-top-5 margin-bottom-2"
+            >
+              Editing a solution
+            </h2>
+            <p
+              class="margin-top-0"
+            >
+              As described above, users can use the “Actions” column in the solution table to edit the details of a solution, including things like updating the status and risk indicator. Custom solutions may have additional editable fields, such as solution title. Common solutions added from the solution library have some details preset that cannot be edited.
+            </p>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to your model’s MTO
+                </h3>
+                <p>
+                  From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
+                </p>
+                <img
+                  alt="Collaboration area in progress"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/33_Collaboration%20area%20in%20progress.png"
+                />
+                <p>
+                  Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to “Solutions and IT systems”
+                </h3>
+                <p>
+                  From the tab bar above the table and below the page header, click the tab labeled “Solutions and IT systems”.
+                </p>
+                <img
+                  alt="MTO table tabs"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/13_MTO%20table%20tabs.png"
+                />
+                <p>
+                  Image caption: A screenshot of the tab bar at the top of the model-to-operations matrix showing the tabs for the milestone view and the solutions and IT systems view.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Find the solution you want to edit
+                </h3>
+                <p>
+                  Using the solutions and IT systems table, locate the row for the solution you wish to edit.
+                </p>
+                <img
+                  alt="MTO solution table option"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/19_MTO%20solution%20table_option%203.png"
+                />
+                <p>
+                  Image caption: A screenshot of the solutions and IT systems table view of the MTO, showing the header area and part of the table including three added solutions.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Edit details”
+                </h3>
+                <p>
+                  In the far right column of the solution row, click the button labeled “Edit details”. This will open a panel on the right side of your screen which allows you to edit a variety of details about the solution.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Edit details in the solution panel
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  The solution panel allows users to edit a variety of information about solutions in their MTO, including:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Facilitated by:
+                    </span>
+                     the main individual or role responsible for ensuring the work for this solution is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Need by:
+                    </span>
+                     the date that the work for this solution needs to be completed by. This date could help account for interdependencies between solutions, or it could be related to the go live date of the model if this solution does not impact other milestones or solutions.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Status:
+                    </span>
+                     the progress status of the solution. This will default to “Not started”, but can be manually set to “Onboarding”, “Backlog”, “In progress” or “Completed”. IT Leads can select one of the five options from the edit panel.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Risk indicator:
+                    </span>
+                     an icon that shows whether or not work for this solution is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Related milestones:
+                    </span>
+                     the milestones that rely on this IT system or solution. From the edit panel, an IT Lead can add or remove milestones that are related to this solution.
+                  </li>
+                </ul>
+                <img
+                  alt="Solution edit panel"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/16_Solution%20edit%20panel.png"
+                />
+                <p>
+                  Image caption: A screenshot of the side panel used to edit details about a solution or IT system.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Save your changes
+                </h3>
+                <p>
+                  There are two options to save changes within the solution panel. Any changes will be reflected in a changes counter in the righthand side of the panel header bar. Next to the counter is a button labeled “Save”. Users may click this to save the changes made in the solution panel. Users may also save changes by clicking the button labeled “Save changes” at the bottom of the edit panel.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-2 margin-bottom-2"
+            >
+              Removing a solution
+            </h2>
+            <p
+              class="margin-top-0"
+            >
+              As described above, users can use the “Actions” column in the solution table to open the solution edit panel. From the edit panel, users may also remove a solution.
+            </p>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none elipsis-icon"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Follow steps 1-4 from the process above
+                </h3>
+                <p>
+                  Complete steps 1-4 (“Navigate to your model’s MTO”, “Navigate to “Solutions and IT systems”, “Find the solution you want to edit”, and “Click ‘Edit details’”) from the process described above in the “Editing a solution” section.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item opacity-0 padding-0"
+              />
+              <li
+                class="usa-process-list__item opacity-0 padding-0"
+              />
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Remove solution”
+                </h3>
+                <p>
+                  At the bottom of the edit panel, click the button labeled “Remove solution”. This will open a confirmation screen.
+                </p>
+                <img
+                  alt="Solution removal button"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/18_Solution%20removal%20button.png"
+                />
+                <p>
+                  Image caption: A screenshot of the side panel used to edit details about a solution or IT system, including removing a solution.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Confirm solution removal
+                </h3>
+                <p>
+                  In the confirmation screen, click the button labeled “Remove solution”. Doing so will remove this solution from your MTO completely, it you have added it to any milestones, it will no longer be associated with those milestones, and and all details about its status will be removed from your MTO. If you change your mind, you may click the X icon in the top right corner or click the button labeled “Go back” to close the pop-up without removing your milestone.
+                </p>
+                <img
+                  alt="Solution removal modal"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/20_Solution%20removal%20modal.png"
+                />
+                <p>
+                  Image caption: A screenshot of the solution removal confirmation screen.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help articles
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help articles that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the milestone library
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or Model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the milestone library article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the solution library
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or Model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the solution library article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to add a custom milestone
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. IT Leads are able to create custom milestones directly from the Model-to-operations matrix (MTO) for their model.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to add a custom milestone article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
