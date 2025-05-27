@@ -60,94 +60,94 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
               </span>
             </a>
             <p
-              class="mint-body-large margin-y-1"
+              class="mint-body-large margin-top-1 margin-bottom-4"
             >
               The milestone table is the main model-to-operations matrix (MTO) content view in MINT. It is closely related to the solutions and IT systems table, since each one offers a slightly different view of content you have added to your MTO.
             </p>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-0 margin-bottom-2"
               >
                 Columns in the milestone table
               </h2>
               <p
                 class="margin-y-0"
               >
-                columsInMilestoneTableDescription
+                The milestone table includes a variety of information about the model milestones you’ve added to your MTO. This information is contained within the following columns:
               </p>
               <ul
                 class="margin-y-0 padding-left-3"
               >
-                <li>
+                <li
+                  class="margin-0"
+                >
                   <span
                     class="text-bold"
                   >
                     Risk indicator:
                   </span>
-                  <span>
-                     an icon that shows whether or not this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon.
-                  </span>
+                   an icon that shows whether or not this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon.
                 </li>
-                <li>
+                <li
+                  class="margin-0"
+                >
                   <span
                     class="text-bold"
                   >
                     Model milestone:
                   </span>
-                  <span>
-                     the title of the milestone. Usually fairly descriptive of the work that needs to take place.
-                  </span>
+                   the title of the milestone. Usually fairly descriptive of the work that needs to take place.
                 </li>
-                <li>
+                <li
+                  class="margin-0"
+                >
                   <span
                     class="text-bold"
                   >
                     Facilitated by:
                   </span>
-                  <span>
-                     the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work.
-                  </span>
+                   the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work.
                 </li>
-                <li>
+                <li
+                  class="margin-0"
+                >
                   <span
                     class="text-bold"
                   >
                     Solutions:
                   </span>
-                  <span>
-                     the solutions and IT systems selected to implement this milestone. Some milestones may not have solutions yet if the IT Lead or other team member has not yet selected any for a variety of reasons.
-                  </span>
+                   the solutions and IT systems selected to implement this milestone. Some milestones may not have solutions yet if the IT Lead or other team member has not yet selected any for a variety of reasons.
                 </li>
-                <li>
+                <li
+                  class="margin-0"
+                >
                   <span
                     class="text-bold"
                   >
                     Need by:
                   </span>
-                  <span>
-                     the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.
-                  </span>
+                   the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.
                 </li>
-                <li>
+                <li
+                  class="margin-0"
+                >
                   <span
                     class="text-bold"
                   >
                     Status:
                   </span>
-                  <span>
-                     the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”.
-                  </span>
+                   the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”.
                 </li>
               </ul>
               <p
-                class="margin-y-0"
+                class="margin-top-0"
               >
                 columsInMilestoneTableSummary
               </p>
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Adding a milestone
               </h2>
@@ -173,7 +173,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 class="border-1px radius-md border-gray-10 shadow-3"
               >
                 <img
-                  alt="milestoneTableMenuImgAltText"
+                  alt="A screenshot of the table actions area."
                   src="/src/assets/images/03_Milestone%20table%20menu%20open.png"
                 />
               </div>
@@ -183,7 +183,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Editing a milestone
               </h2>
@@ -271,81 +271,65 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                       <span
                         class="text-bold"
                       >
-                        Draft milestone: 
+                        Draft milestone:
                       </span>
-                      <span>
-                        checking the draft milestone box will mark this as a draft milestone, which will will signal to others that this milestone is more of a work in progress than the rest of the MTO.
-                      </span>
+                       checking the draft milestone box will mark this as a draft milestone, which will will signal to others that this milestone is more of a work in progress than the rest of the MTO.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Category: 
+                        Category:
                       </span>
-                      <span>
-                        the primary category containing this milestone. This could be “Uncategorized”.
-                      </span>
+                       the primary category containing this milestone. This could be “Uncategorized”.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Sub-category: 
+                        Sub-category:
                       </span>
-                      <span>
-                        the secondary category within the primary category that contains this milestone. This could be “Uncategorized”.
-                      </span>
+                       the secondary category within the primary category that contains this milestone. This could be “Uncategorized”.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Facilitated by: 
+                        Facilitated by:
                       </span>
-                      <span>
-                         the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.
-                      </span>
+                       the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Need by: 
+                        Need by:
                       </span>
-                      <span>
-                        the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.
-                      </span>
+                       the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Status: 
+                        Status:
                       </span>
-                      <span>
-                        the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”. IT Leads can select one of the three options from the edit panel.
-                      </span>
+                       the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”. IT Leads can select one of the three options from the edit panel.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Risk indicator: 
+                        Risk indicator:
                       </span>
-                      <span>
-                        an icon that shows whether or not work for this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.
-                      </span>
+                       an icon that shows whether or not work for this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.
                     </li>
                     <li>
                       <span
                         class="text-bold"
                       >
-                        Selected solutions: 
+                        Selected solutions:
                       </span>
-                      <span>
-                        the solutions and/or IT systems selected to implement this milestone. From the edit panel, an IT Lead can add or remove solutions selected to implement this milestone.
-                      </span>
+                       the solutions and/or IT systems selected to implement this milestone. From the edit panel, an IT Lead can add or remove solutions selected to implement this milestone.
                     </li>
                   </ul>
                   <img
@@ -374,7 +358,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Removing a milestone
               </h2>
@@ -445,7 +429,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Adding or removing a category
               </h2>
@@ -458,7 +442,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 class="border-1px radius-md border-gray-10 shadow-3"
               >
                 <img
-                  alt="milestoneTableMenuImgAltText"
+                  alt="a screenshot of the table actions area"
                   src="/src/assets/images/03_Milestone%20table%20menu%20open.png"
                 />
               </div>
@@ -468,7 +452,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Organizing categories
               </h2>
@@ -536,7 +520,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 type="button"
               >
                 <span
-                  class="display-flex flex-align-center"
+                  class="display-flex flex-align-center line-height-normal"
                   style="column-gap: 0.25rem;"
                 >
                   chat with us on Slack
@@ -616,7 +600,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or Model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
                 </p>
               </div>
               <div
