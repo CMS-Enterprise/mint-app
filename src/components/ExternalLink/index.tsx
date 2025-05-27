@@ -106,7 +106,7 @@ const ExternalLink = ({
           }}
         >
           <span
-            className="display-flex flex-align-center"
+            className="display-flex flex-align-center line-height-normal"
             style={{ columnGap: '0.25rem' }}
           >
             {children}

@@ -1,0 +1,30 @@
+meta {
+  name: Get NDA Info
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query ndaInfo {
+      ndaInfo {
+          agreed
+          agreedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {}
+}

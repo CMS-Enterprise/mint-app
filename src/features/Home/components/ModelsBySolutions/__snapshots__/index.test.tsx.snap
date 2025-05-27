@@ -208,40 +208,19 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="grid"
                 >
                   <div
-                    class="display-flex"
+                    class="display-flex margin-bottom-1"
                   >
                     <p
-                      class="text-bold margin-top-0 margin-right-1"
+                      class="text-bold margin-top-0 margin-right-1 margin-bottom-0"
                     >
                       Status
                     </p>
-                    <div
-                      class="padding-0"
-                      data-testid="task-list-status"
-                      style="line-height: initial;"
+                    <span
+                      class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1"
+                      data-testid="tag"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        <span
-                          class="mint-tag bg-base text-white margin-right-1"
-                          data-testid="tag"
-                        >
-                          Draft Model Plan
-                        </span>
-                        <div
-                          class="display-flex flex-align-center flex-wrap margin-right-1"
-                        />
-                        <div
-                          class="mint-no-print margin-right-2"
-                        >
-                          <a
-                            class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
-                            href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/collaboration-area/status"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      Draft Model Plan
+                    </span>
                   </div>
                 </div>
                 <div
@@ -336,40 +315,19 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="grid"
                 >
                   <div
-                    class="display-flex"
+                    class="display-flex margin-bottom-1"
                   >
                     <p
-                      class="text-bold margin-top-0 margin-right-1"
+                      class="text-bold margin-top-0 margin-right-1 margin-bottom-0"
                     >
                       Status
                     </p>
-                    <div
-                      class="padding-0"
-                      data-testid="task-list-status"
-                      style="line-height: initial;"
+                    <span
+                      class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1"
+                      data-testid="tag"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        <span
-                          class="mint-tag bg-base text-white margin-right-1"
-                          data-testid="tag"
-                        >
-                          Draft Model Plan
-                        </span>
-                        <div
-                          class="display-flex flex-align-center flex-wrap margin-right-1"
-                        />
-                        <div
-                          class="mint-no-print margin-right-2"
-                        >
-                          <a
-                            class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
-                            href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/collaboration-area/status"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      Draft Model Plan
+                    </span>
                   </div>
                 </div>
                 <div
@@ -476,40 +434,19 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   data-testid="grid"
                 >
                   <div
-                    class="display-flex"
+                    class="display-flex margin-bottom-1"
                   >
                     <p
-                      class="text-bold margin-top-0 margin-right-1"
+                      class="text-bold margin-top-0 margin-right-1 margin-bottom-0"
                     >
                       Status
                     </p>
-                    <div
-                      class="padding-0"
-                      data-testid="task-list-status"
-                      style="line-height: initial;"
+                    <span
+                      class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1"
+                      data-testid="tag"
                     >
-                      <div
-                        class="display-flex flex-align-center"
-                      >
-                        <span
-                          class="mint-tag bg-base text-white margin-right-1"
-                          data-testid="tag"
-                        >
-                          Ended
-                        </span>
-                        <div
-                          class="display-flex flex-align-center flex-wrap margin-right-1"
-                        />
-                        <div
-                          class="mint-no-print margin-right-2"
-                        >
-                          <a
-                            class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
-                            href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/collaboration-area/status"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                      Ended
+                    </span>
                   </div>
                 </div>
                 <div

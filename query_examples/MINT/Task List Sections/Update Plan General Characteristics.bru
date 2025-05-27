@@ -1,0 +1,209 @@
+meta {
+  name: Update Plan General Characteristics
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updatePlanGeneralCharacteristics ($id: UUID!, $changes: PlanGeneralCharacteristicsChanges!) {
+      updatePlanGeneralCharacteristics (id: $id, changes: $changes) {
+          id
+          modelPlanID
+          isNewModel
+          currentModelPlanID
+          existingModelID
+          resemblesExistingModel
+          resemblesExistingModelWhyHow
+          resemblesExistingModelOtherSpecify
+          resemblesExistingModelWhich {
+              links
+              names
+          }
+          resemblesExistingModelOtherSelected
+          resemblesExistingModelOtherOption
+          resemblesExistingModelHow
+          resemblesExistingModelNote
+          hasComponentsOrTracks
+          hasComponentsOrTracksDiffer
+          hasComponentsOrTracksNote
+          agencyOrStateHelp
+          agencyOrStateHelpOther
+          agencyOrStateHelpNote
+          alternativePaymentModelTypes
+          alternativePaymentModelNote
+          keyCharacteristics
+          keyCharacteristicsOther
+          keyCharacteristicsNote
+          collectPlanBids
+          collectPlanBidsNote
+          managePartCDEnrollment
+          managePartCDEnrollmentNote
+          planContractUpdated
+          planContractUpdatedNote
+          careCoordinationInvolved
+          careCoordinationInvolvedDescription
+          careCoordinationInvolvedNote
+          additionalServicesInvolved
+          additionalServicesInvolvedDescription
+          additionalServicesInvolvedNote
+          communityPartnersInvolved
+          communityPartnersInvolvedDescription
+          communityPartnersInvolvedNote
+          geographiesTargeted
+          geographiesTargetedTypes
+          geographiesStatesAndTerritories
+          geographiesRegionTypes
+          geographiesTargetedTypesOther
+          geographiesTargetedAppliedTo
+          geographiesTargetedAppliedToOther
+          geographiesTargetedNote
+          participationOptions
+          participationOptionsNote
+          agreementTypes
+          agreementTypesOther
+          multiplePatricipationAgreementsNeeded
+          multiplePatricipationAgreementsNeededNote
+          rulemakingRequired
+          rulemakingRequiredDescription
+          rulemakingRequiredNote
+          authorityAllowances
+          authorityAllowancesOther
+          authorityAllowancesNote
+          waiversRequired
+          waiversRequiredTypes
+          waiversRequiredNote
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          readyForReviewBy
+          readyForReviewDts
+          readyForClearanceBy
+          readyForClearanceDts
+          status
+  
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }     
+          readyForReviewByUserAccount 
+          {
+              commonName
+          }
+          readyForClearanceByUserAccount 
+          {
+              commonName
+          }            
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{generalCharacteristicsID}}",
+    "changes": {
+      "isNewModel": true,
+      "currentModelPlanID": null,
+      "existingModelID": null,
+      "resemblesExistingModel": true,
+      "resemblesExistingModelWhyHow": "",
+      "resemblesExistingModelOtherSpecify": "",
+      "resemblesExistingModelWhich": {
+          "links": [],
+          "names": []
+      },
+      "resemblesExistingModelOtherSelected": false,
+      "resemblesExistingModelOtherOption": "",
+      "resemblesExistingModelHow": "",
+      "resemblesExistingModelNote": "",
+      "hasComponentsOrTracks": true,
+      "hasComponentsOrTracksDiffer": "",
+      "hasComponentsOrTracksNote": "",
+      "agencyOrStateHelp": [
+        ""
+      ],
+      "agencyOrStateHelpOther": "",
+      "agencyOrStateHelpNote": "",
+      "alternativePaymentModelTypes": [
+        ""
+      ],
+      "alternativePaymentModelNote": "",
+      "keyCharacteristics": [
+        ""
+      ],
+      "keyCharacteristicsOther": "",
+      "keyCharacteristicsNote": "",
+      "collectPlanBids": true,
+      "collectPlanBidsNote": "",
+      "managePartCDEnrollment": true,
+      "managePartCDEnrollmentNote": "",
+      "planContractUpdated": true,
+      "planContractUpdatedNote": "",
+      "careCoordinationInvolved": true,
+      "careCoordinationInvolvedDescription": "",
+      "careCoordinationInvolvedNote": "",
+      "additionalServicesInvolved": true,
+      "additionalServicesInvolvedDescription": "",
+      "additionalServicesInvolvedNote": "",
+      "communityPartnersInvolved": true,
+      "communityPartnersInvolvedDescription": "",
+      "communityPartnersInvolvedNote": "",
+      "geographiesTargeted": true,
+      "geographiesTargetedTypes": [
+        ""
+      ],
+      "geographiesStatesAndTerritories": [
+          "FL",
+          "NY"
+      ],
+      "geographiesRegionTypes": [
+          "CBSA",
+          "HRR"
+      ],
+      "geographiesTargetedTypesOther": "",
+      "geographiesTargetedAppliedTo": [
+        ""
+      ],
+      "geographiesTargetedAppliedToOther": "",
+      "geographiesTargetedNote": "",
+      "participationOptions": true,
+      "participationOptionsNote": "",
+      "agreementTypes": [
+        ""
+      ],
+      "agreementTypesOther": "",
+      "multiplePatricipationAgreementsNeeded": true,
+      "multiplePatricipationAgreementsNeededNote": "",
+      "rulemakingRequired": true,
+      "rulemakingRequiredDescription": "",
+      "rulemakingRequiredNote": "",
+      "authorityAllowances": [
+        ""
+      ],
+      "authorityAllowancesOther": "",
+      "authorityAllowancesNote": "",
+      "waiversRequired": true,
+      "waiversRequiredTypes": [
+        ""
+      ],
+      "waiversRequiredNote": "",
+      "status": ""
+    }
+  }
+}

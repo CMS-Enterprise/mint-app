@@ -10,7 +10,7 @@ const notifications = {
     },
     activityType: {
       ADDED_AS_COLLABORATOR: {
-        text: ' added you to the team for {{-modelName}}.',
+        text: ' added you to the team for {{modelName}}.',
         cta: 'Start collaborating'
       },
       DAILY_DIGEST_COMPLETE: {
@@ -21,7 +21,7 @@ const notifications = {
         }
       },
       DATES_CHANGED: {
-        text: 'Dates have been updated for {{-modelName}}.',
+        text: ' updated the dates for {{modelName}}.',
         cta: {
           view: 'View changes',
           hide: 'Hide changes'

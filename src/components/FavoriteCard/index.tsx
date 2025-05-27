@@ -8,7 +8,7 @@ import i18next from 'i18next';
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
-import StatusBanner from 'components/StatusBanner';
+import ModelStatusTag from 'components/ModelStatusTag';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
 
@@ -81,15 +81,12 @@ const FavoriteCard = ({
               </h3>
             </div>
           </Grid>
-          <Grid tablet={{ col: 3 }} mobile={{ col: 12 }}>
-            <StatusBanner
-              modelID={id}
-              status={status}
-              changeHistoryLink={false}
-              className={classNames({
-                bookmark__status: !isMobile
-              })}
-            />
+          <Grid
+            tablet={{ col: 3 }}
+            mobile={{ col: 12 }}
+            className="display-flex flex-justify-end"
+          >
+            <ModelStatusTag status={status} />
           </Grid>
         </div>
         {nameHistory && nameHistory.length > 1 && (

@@ -3,10 +3,10 @@ import { Button, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   MtoCommonMilestoneKey,
+  MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator,
-  OperationalSolutionKey
+  MtoRiskIndicator
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
@@ -32,7 +32,7 @@ export type MTORowType = 'category' | 'subcategory' | 'milestone';
 
 type MtoSolutionType = {
   id: string;
-  key?: OperationalSolutionKey | null;
+  key?: MtoCommonSolutionKey | null;
   name?: string | null;
 };
 

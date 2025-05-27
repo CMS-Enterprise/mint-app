@@ -1,0 +1,42 @@
+meta {
+  name: Report a Problem
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation reportAProblem{
+    
+    reportAProblem(input:{
+        isAnonymousSubmission: false
+        allowContact: true
+        section: OTHER
+        sectionOther: "Awesome Section"
+        whatDoing: "Making an awesome model"
+        whatWentWrong: "I made a mistake"
+        severity: OTHER
+        severityOther: "Made me sad"
+        })
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.sendFeedbackEmail
+  
+  test("Feedback Email was sent", function (){
+      expect(responseData).to.equal(true)
+  });
+  
+}

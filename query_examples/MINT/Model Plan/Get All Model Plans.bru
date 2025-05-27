@@ -1,0 +1,48 @@
+meta {
+  name: Get All Model Plans
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query modelPlanCollection($filter: ModelPlanFilter!) {
+      modelPlanCollection(filter: $filter) {
+          id
+          modelName
+          abbreviation
+          archived
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          status
+          taskListStatus
+          suggestedPhase {
+              phase
+              suggestedStatuses
+          }
+          previousSuggestedPhase
+          isFavorite
+          isCollaborator
+          opSolutionLastModifiedDts
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+      "filter": "INCLUDE_ALL"
+  }
+}

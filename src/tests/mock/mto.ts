@@ -22,15 +22,14 @@ import {
   GetMtoMilestonesDocument,
   GetMtoMilestonesQuery,
   GetMtoMilestonesQueryVariables,
+  GetMtoSolutionContactsDocument,
+  GetMtoSolutionContactsQuery,
   GetMtoSolutionDocument,
   GetMtoSolutionQuery,
   GetMtoSolutionQueryVariables,
   GetMtoSolutionsAndMilestonesDocument,
   GetMtoSolutionsAndMilestonesQuery,
   GetMtoSolutionsAndMilestonesQueryVariables,
-  GetPossibleSolutionsDocument,
-  GetPossibleSolutionsQuery,
-  GetPossibleSolutionsQueryVariables,
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoCommonSolutionSubject,
@@ -39,8 +38,7 @@ import {
   MtoRiskIndicator,
   MtoSolutionStatus,
   MtoSolutionType,
-  MtoStatus,
-  OperationalSolutionKey
+  MtoStatus
 } from 'gql/generated/graphql';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
@@ -330,32 +328,34 @@ export const commonSolutionsMock: MockedResponse<
 ];
 
 export const possibleSolutionsMock: MockedResponse<
-  GetPossibleSolutionsQuery,
-  GetPossibleSolutionsQueryVariables
+  GetMtoSolutionContactsQuery,
+  GetMtoSolutionContactsQuery
 >[] = [
   {
     request: {
-      query: GetPossibleSolutionsDocument
+      query: GetMtoSolutionContactsDocument
     },
     result: {
       data: {
         __typename: 'Query',
-        possibleOperationalSolutions: [
+        mtoCommonSolutions: [
           {
-            __typename: 'PossibleOperationalSolution',
-            id: 123,
-            key: OperationalSolutionKey.ACO_OS,
-            pointsOfContact: [
-              {
-                __typename: 'PossibleOperationalSolutionContact',
-                id: '123',
-                name: 'test',
-                email: 'email@email.com',
-                isTeam: true,
-                isPrimary: true,
-                role: 'role'
-              }
-            ]
+            __typename: 'MTOCommonSolution',
+            key: MtoCommonSolutionKey.ACO_OS,
+            contactInformation: {
+              __typename: 'MTOCommonSolutionContactInformation',
+              pointsOfContact: [
+                {
+                  __typename: 'MTOCommonSolutionContact',
+                  id: '123',
+                  name: 'test',
+                  email: 'email@email.com',
+                  isTeam: true,
+                  isPrimary: true,
+                  role: 'role'
+                }
+              ]
+            }
           }
         ]
       }

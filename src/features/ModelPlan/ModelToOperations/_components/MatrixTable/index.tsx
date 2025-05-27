@@ -12,7 +12,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
-  OperationalSolutionKey,
+  MtoCommonSolutionKey,
   ReorderMtoCategoryMutationVariables,
   useReorderMtoCategoryMutation
 } from 'gql/generated/graphql';
@@ -790,7 +790,7 @@ export const formatAndHomogenizeMilestoneData = (
           ...milestone,
           solutions: milestone.solutions.map(solution => ({
             ...solution,
-            key: solution.key as OperationalSolutionKey | null | undefined
+            key: solution.key as MtoCommonSolutionKey | null | undefined
           }))
         });
       });

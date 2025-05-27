@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -19,8 +18,6 @@ export const CRTDLs = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
   const { modelName } = useContext(ModelInfoContext);
-
-  const flags = useFlags();
 
   return (
     <MainContent data-testid="model-crtdls">
@@ -73,7 +70,7 @@ export const CRTDLs = () => {
 
           {/* TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134 */}
           <Alert type="info" slim className="margin-bottom-6">
-            {crtdlsT(flags.echimpEnabled ? 'echimp' : 'echimpDisabled')}
+            {crtdlsT('echimp')}
           </Alert>
 
           <EChimpCardsTable />

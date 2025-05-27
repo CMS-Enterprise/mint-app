@@ -1,0 +1,34 @@
+meta {
+  name: Unlock All Task List Sections
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation unlockAllTaskListSections ($modelPlanID: UUID!) {
+      unlockAllTaskListSections (modelPlanID: $modelPlanID) {
+          modelPlanID
+          section
+          lockedBy
+          isAssessment
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": ""
+  }
+}
