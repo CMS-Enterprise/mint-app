@@ -4,7 +4,6 @@ export type Flags = {
   hideGroupView: boolean;
   helpScoutEnabled: boolean;
   feedbackEnabled: boolean;
-  notificationsEnabled: boolean;
   changeHistoryEnabled: boolean;
   changeHistoryReleaseDate: string;
   modelsApproachingClearanceEnabled: boolean;
