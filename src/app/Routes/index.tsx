@@ -270,7 +270,6 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/change-history"
             component={ChangeHistory}
-            enabled={flags.changeHistoryEnabled}
           />
 
           {/* Locked Task List Section */}
