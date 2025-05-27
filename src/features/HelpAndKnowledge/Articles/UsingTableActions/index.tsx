@@ -35,11 +35,8 @@ type TemplatesStepWithImg = TemplatesStep & { src?: string };
 const UsingTableActions = () => {
   const { t } = useTranslation('usingTableActions');
   const milestonesList = tArray<string>('usingTableActions:milestones:list');
-  const categoriesList = tArray<{
-    point: string;
-    text: string;
-  }>('usingTableActions:categories.list');
-  const addCustomCategoriesStep4List = tArray<{ point: string; text: string }>(
+  const categoriesList = tArray<string>('usingTableActions:categories.list');
+  const addCustomCategoriesStep4List = tArray<string>(
     'usingTableActions:categories:step4:list'
   );
   const solutionsAndItSystemsList = tArray<string>(
@@ -149,10 +146,15 @@ const UsingTableActions = () => {
                 <h2 className="margin-bottom-2">{t('categories.title')}</h2>
                 <p className="margin-y-0">{t('categories.description')}</p>
                 <ul className="margin-top-0 padding-left-3">
-                  {categoriesList.map(item => (
-                    <li key={item.point}>
-                      <span className="text-bold">{item.point}</span>
-                      <span>{item.text}</span>
+                  {categoriesList.map((item, index) => (
+                    <li key={item}>
+                      <Trans
+                        t={t}
+                        i18nKey={`usingMilestoneTable:columsInMilestoneTable:list.${index}`}
+                        components={{
+                          bold: <span className="text-bold" />
+                        }}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -199,10 +201,15 @@ const UsingTableActions = () => {
                       {t('categories.step4.description')}
                     </p>
                     <ul className="margin-bottom-2 padding-left-3">
-                      {addCustomCategoriesStep4List.map(item => (
-                        <li key={item.point}>
-                          <span className="text-bold">{item.point}</span>
-                          <span>{item.text}</span>
+                      {addCustomCategoriesStep4List.map((item, index) => (
+                        <li key={item}>
+                          <Trans
+                            t={t}
+                            i18nKey={`usingTableActions:categories:step4:list.${index}`}
+                            components={{
+                              bold: <span className="text-bold" />
+                            }}
+                          />
                         </li>
                       ))}
                     </ul>

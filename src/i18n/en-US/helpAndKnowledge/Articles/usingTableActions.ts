@@ -32,14 +32,8 @@ const usingTableActions = {
     description:
       'Categories are an easy way for IT Leads to arrange milestones into functional groups or model phases. This can make the MTO more easily digestible for other MINT users and can help organize milestones in a more chronological manner according to operational phase. There are two kinds of categories:',
     list: [
-      {
-        point: 'Standard categories: ',
-        text: 'standard categories are added to your MTO by adding the standard category template (read how to do this in the “Templates” section of this article) or by adding a common milestone from the milestone library which will add the corresponding standard category.'
-      },
-      {
-        point: 'Custom categories: ',
-        text: 'custom categories are specific to an individual model’s MTO. Users can add a custom category from the table actions area by following the steps below.'
-      }
+      '<bold>Standard categories:</bold> standard categories are added to your MTO by adding the standard category template (read how to do this in the “Templates” section of this article) or by adding a common milestone from the milestone library which will add the corresponding standard category.',
+      '<bold>Custom categories:</bold> custom categories are specific to an individual model’s MTO. Users can add a custom category from the table actions area by following the steps below.'
     ],
     step1: {
       title: 'Navigate to your model’s MTO',
@@ -66,14 +60,8 @@ const usingTableActions = {
       title: 'Add information about your custom category',
       description: 'Complete the required fields in the custom category form:',
       list: [
-        {
-          point: 'Primary category: ',
-          text: 'Selecting a primary category will add your new category as a sub-category. If you are adding a new primary category, you can choose “None”.'
-        },
-        {
-          point: 'Title: ',
-          text: 'the name of your new category, which will be displayed on the category’s row in your MTO’s milestone table.'
-        }
+        '<bold>Primary category:</bold> Selecting a primary category will add your new category as a sub-category. If you are adding a new primary category, you can choose “None”.',
+        '<bold>Title:</bold> the name of your new category, which will be displayed on the category’s row in your MTO’s milestone table.'
       ],
       altText:
         'A screenshot of the form that allows a user to add a new category.',
