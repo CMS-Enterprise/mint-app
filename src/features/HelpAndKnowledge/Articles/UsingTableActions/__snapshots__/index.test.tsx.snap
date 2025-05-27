@@ -60,7 +60,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
               </span>
             </a>
             <p
-              class="mint-body-large margin-y-1"
+              class="mint-body-large margin-top-1 margin-bottom-4"
             >
               The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
             </p>
@@ -74,7 +74,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </p>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Milestones
               </h2>
@@ -108,7 +108,6 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Open using the milestone library article in a new tab"
                   class="usa-link usa-nav__link"
                   href="using-milestone-library"
-                  target="_blank"
                 >
                   Using the milestone library
                 </a>
@@ -116,7 +115,6 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Open using the milestone library article in a new tab"
                   class="usa-link usa-nav__link"
                   href="using-milestone-library"
-                  target="_blank"
                 />
                 <svg
                   class="usa-icon margin-left-1 top-05 text-primary"
@@ -147,7 +145,6 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Open how to add custom milestone article in a new tab"
                   class="usa-link usa-nav__link"
                   href="add-custom-milestone"
-                  target="_blank"
                 >
                   How to add a custom milestone
                 </a>
@@ -168,7 +165,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Categories
               </h2>
@@ -318,7 +315,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             <div>
               <div>
                 <h2
-                  class="margin-bottom-2"
+                  class="margin-top-5 margin-bottom-2"
                 >
                   Solutions and IT systems
                 </h2>
@@ -348,7 +345,6 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                     aria-label="Open operational solutions in a new tab"
                     class="usa-link usa-nav__link"
                     href="operational-solutions?page=1"
-                    target="_blank"
                   >
                     Operational solutions area of the Help Center
                   </a>
@@ -372,7 +368,6 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Open using the solution library article in a new tab"
                   class="usa-link usa-nav__link"
                   href="using-solution-library"
-                  target="_blank"
                 >
                   Using the solution library
                 </a>
@@ -405,7 +400,6 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Open how to add custom solution article in a new tab"
                   class="usa-link usa-nav__link"
                   href="add-custom-solution"
-                  target="_blank"
                 >
                   How to add a custom solution
                 </a>
@@ -426,7 +420,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             </div>
             <div>
               <h2
-                class="margin-bottom-2"
+                class="margin-top-5 margin-bottom-2"
               >
                 Templates
               </h2>
@@ -549,7 +543,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 type="button"
               >
                 <span
-                  class="display-flex flex-align-center"
+                  class="display-flex flex-align-center line-height-normal"
                   style="column-gap: 0.25rem;"
                 >
                   chat with us on Slack
