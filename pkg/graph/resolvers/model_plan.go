@@ -379,7 +379,7 @@ func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, 
 	case model.ModelPlanFilterCollabOnly:
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
-		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+		modelPlans, err = ModelPlansWithEchimpCRAndTDLS(echimpS3Client, viperConfig, logger, store)
 	case model.ModelPlanFilterFavorited:
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterApproachingClearance:
