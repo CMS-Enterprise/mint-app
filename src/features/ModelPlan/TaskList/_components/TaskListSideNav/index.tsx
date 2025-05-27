@@ -8,7 +8,6 @@ import {
   GetModelPlanQuery,
   useArchiveModelPlanMutation
 } from 'gql/generated/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -38,8 +37,6 @@ const TaskListSideNav = ({
 
   const { t } = useTranslation('modelPlanTaskList');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
-
-  const flags = useFlags();
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -176,7 +173,7 @@ const TaskListSideNav = ({
           </div>
         </div>
 
-        {flags.changeHistoryEnabled && <RecentChanges modelID={modelID} />}
+        <RecentChanges modelID={modelID} />
       </div>
     </>
   );
