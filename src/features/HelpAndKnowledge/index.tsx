@@ -14,6 +14,7 @@ import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import StartingMTOMatrix from './Articles/StartingMTOMatrix';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
+import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
 import UtilizingSolutions from './Articles/UtilizingSolutions';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
@@ -94,6 +95,13 @@ export const HelpAndKnowledge = () => {
       {/* MTO Tutorial Arcticles */}
       <Route path="/help-and-knowledge/starting-mto-matrix" exact>
         <StartingMTOMatrix />
+      </Route>
+
+      <Route
+        path="/help-and-knowledge/using-solutions-and-it-systems-table"
+        exact
+      >
+        <UsingSolutionsAndITSystemsTable />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />
