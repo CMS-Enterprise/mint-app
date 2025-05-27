@@ -14,10 +14,10 @@ import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import startingMto from './helpAndKnowledge/Articles/startingMto';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
 import updatingMtoStatus from './helpAndKnowledge/Articles/updatingMtoStatus';
-import usingItSystemsAndSolutionsTable from './helpAndKnowledge/Articles/usingItSystemsAndSolutionsTable';
 import usingMilestoneLibrary from './helpAndKnowledge/Articles/usingMilestoneLibrary';
 import usingMilestoneTable from './helpAndKnowledge/Articles/usingMilestoneTable';
 import usingSolutionLibrary from './helpAndKnowledge/Articles/usingSolutionLibrary';
+import usingSolutionsAndITSystemsTable from './helpAndKnowledge/Articles/usingSolutionsAndITSystemsTable';
 import usingTableActions from './helpAndKnowledge/Articles/usingTableActions';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
@@ -163,7 +163,7 @@ const enUS = {
   creatingMtoMatrix,
   startingMto,
   usingMilestoneTable,
-  usingItSystemsAndSolutionsTable,
+  usingSolutionsAndITSystemsTable,
   usingTableActions,
   usingMilestoneLibrary,
   usingSolutionLibrary,
