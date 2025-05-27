@@ -1,0 +1,7 @@
+.skipStepsList {
+    counter-reset: usa-numbered-list 2 !important;
+    
+    > .usa-process-list__item:first-child::before {
+        content: "...";
+    }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
@@ -24,19 +24,19 @@ import { tArray } from 'utils/translation';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
+import './index.scss';
+
 const UsingMilestoneTable = () => {
   const { t } = useTranslation('usingMilestoneTable');
-  const columsInMilestoneTableList = tArray<{
-    point: string;
-    text: string;
-  }>('usingMilestoneTable:columsInMilestoneTable:list');
+  const columsInMilestoneTableList = tArray<string>(
+    'usingMilestoneTable:columsInMilestoneTable:list'
+  );
   const addingMilestoneList = tArray<string>(
     'usingMilestoneTable:addingMilestone:list'
   );
-  const editingMilestoneStep4List = tArray<{
-    point: string;
-    text: string;
-  }>('usingMilestoneTable:editingMilestone.step4.list');
+  const editingMilestoneStep4List = tArray<string>(
+    'usingMilestoneTable:editingMilestone.step4.list'
+  );
   const organizingCategoriesList = tArray<{
     point: string;
     text: string;
@@ -61,13 +61,18 @@ const UsingMilestoneTable = () => {
                   {t('columsInMilestoneTable.title')}
                 </h2>
                 <p className="margin-y-0">
-                  {t('columsInMilestoneTableDescription')}
+                  {t('columsInMilestoneTable.description')}
                 </p>
                 <ul className="margin-y-0 padding-left-3">
-                  {columsInMilestoneTableList.map(item => (
-                    <li key={item.point}>
-                      <span className="text-bold">{item.point}</span>
-                      <span>{item.text}</span>
+                  {columsInMilestoneTableList.map((item, index) => (
+                    <li key={item} className="margin-0">
+                      <Trans
+                        t={t}
+                        i18nKey={`usingMilestoneTable:columsInMilestoneTable:list.${index}`}
+                        components={{
+                          bold: <span className="text-bold" />
+                        }}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -150,10 +155,15 @@ const UsingMilestoneTable = () => {
                       {t('editingMilestone.step4.description')}
                     </p>
                     <ul className="margin-bottom-2 padding-left-3">
-                      {editingMilestoneStep4List.map(item => (
-                        <li key={item.point}>
-                          <span className="text-bold">{item.point}</span>
-                          <span>{item.text}</span>
+                      {editingMilestoneStep4List.map((item, index) => (
+                        <li key={item}>
+                          <Trans
+                            t={t}
+                            i18nKey={`usingMilestoneTable:editingMilestone.step4.list.${index}`}
+                            components={{
+                              bold: <span className="text-bold" />
+                            }}
+                          />
                         </li>
                       ))}
                     </ul>
@@ -183,12 +193,10 @@ const UsingMilestoneTable = () => {
                 <p className="margin-y-0">
                   {t('removingMilestone.description')}
                 </p>
-                <ProcessList>
+                {/* ol start number is set in class skipStepsList via css */}
+                <ProcessList className="skipStepsList">
                   {/* step 1-3 */}
                   <ProcessListItem className="maxw-none">
-                    {/* <div className="position-relative">
-                      <div className="position-absolute top-0 left-1 bg-white circle-3" />
-                    </div> */}
                     <ProcessListHeading type="h3">
                       {t('removingMilestone.step1to3.title')}
                     </ProcessListHeading>

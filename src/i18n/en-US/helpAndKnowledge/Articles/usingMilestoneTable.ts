@@ -8,30 +8,13 @@ const usingMilestoneTable = {
     description:
       'The milestone table includes a variety of information about the model milestones you’ve added to your MTO. This information is contained within the following columns:',
     list: [
-      {
-        point: 'Risk indicator:',
-        text: ' an icon that shows whether or not this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon.'
-      },
-      {
-        point: 'Model milestone:',
-        text: ' the title of the milestone. Usually fairly descriptive of the work that needs to take place.'
-      },
-      {
-        point: 'Facilitated by:',
-        text: ' the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work.'
-      },
-      {
-        point: 'Solutions:',
-        text: ' the solutions and IT systems selected to implement this milestone. Some milestones may not have solutions yet if the IT Lead or other team member has not yet selected any for a variety of reasons.'
-      },
-      {
-        point: 'Need by:',
-        text: ' the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.'
-      },
-      {
-        point: 'Status:',
-        text: ' the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”.'
-      }
+      '<bold>Risk indicator:</bold> an icon that shows whether or not this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon.',
+      '<bold>Model milestone:</bold> the title of the milestone. Usually fairly descriptive of the work that needs to take place.',
+
+      '<bold>Facilitated by:</bold> the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work.',
+      '<bold>Solutions:</bold> the solutions and IT systems selected to implement this milestone. Some milestones may not have solutions yet if the IT Lead or other team member has not yet selected any for a variety of reasons.',
+      '<bold>Need by:</bold> the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.',
+      '<bold>Status:</bold> the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”.'
     ],
     summary:
       'The last column is the “Actions” column, which includes a button on every row that is labeled “Edit details”. This button will open a side panel that allows users to edit the details of a milestone, including many of the fields above.'
@@ -77,38 +60,14 @@ const usingMilestoneTable = {
       description:
         'The milestone panel allows users to edit a variety of information about milestones in their MTO, including:',
       list: [
-        {
-          point: 'Draft milestone: ',
-          text: 'checking the draft milestone box will mark this as a draft milestone, which will will signal to others that this milestone is more of a work in progress than the rest of the MTO.'
-        },
-        {
-          point: 'Category: ',
-          text: 'the primary category containing this milestone. This could be “Uncategorized”.'
-        },
-        {
-          point: 'Sub-category: ',
-          text: 'the secondary category within the primary category that contains this milestone. This could be “Uncategorized”.'
-        },
-        {
-          point: 'Facilitated by: ',
-          text: ' the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.'
-        },
-        {
-          point: 'Need by: ',
-          text: 'the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.'
-        },
-        {
-          point: 'Status: ',
-          text: 'the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”. IT Leads can select one of the three options from the edit panel.'
-        },
-        {
-          point: 'Risk indicator: ',
-          text: 'an icon that shows whether or not work for this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.'
-        },
-        {
-          point: 'Selected solutions: ',
-          text: 'the solutions and/or IT systems selected to implement this milestone. From the edit panel, an IT Lead can add or remove solutions selected to implement this milestone.'
-        }
+        '<bold>Draft milestone:</bold> checking the draft milestone box will mark this as a draft milestone, which will will signal to others that this milestone is more of a work in progress than the rest of the MTO.',
+        '<bold>Category:</bold> the primary category containing this milestone. This could be “Uncategorized”.',
+        '<bold>Sub-category:</bold> the secondary category within the primary category that contains this milestone. This could be “Uncategorized”.',
+        '<bold>Facilitated by:</bold> the main individual or role responsible for ensuring the work for this milestone is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.',
+        '<bold>Need by:</bold> the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.',
+        '<bold>Status:</bold> the progress status of the milestone. This will default to “Not started”, but can be manually set to “In progress” or “Completed”. IT Leads can select one of the three options from the edit panel.',
+        '<bold>Risk indicator:</bold> an icon that shows whether or not work for this milestone is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.',
+        '<bold>Selected solutions:</bold> the solutions and/or IT systems selected to implement this milestone. From the edit panel, an IT Lead can add or remove solutions selected to implement this milestone.'
       ],
       altText: 'screenshot of milestone edit panel',
       caption:
