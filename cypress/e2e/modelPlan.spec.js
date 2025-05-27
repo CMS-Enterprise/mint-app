@@ -139,40 +139,40 @@ describe('The Model Plan Form', () => {
     cy.contains('h3', 'Anticipated high level timeline');
 
     cy.get('#Milestone-completeICIP')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-clearanceStarts')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-clearanceEnds')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-announced')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-applicationsStart')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-applicationsEnd')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-performancePeriodStarts')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-performancePeriodEnds')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#Milestone-wrapUpEnds')
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
+      .type('05/23/2065')
+      .should('have.value', '05/23/2065');
 
     cy.get('#phasedIn-true')
       .first()

@@ -585,10 +585,10 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
-                    href="/help-and-knowledge/using-it-systems-and-solutions-table"
+                    href="/help-and-knowledge/using-solutions-and-it-systems-table"
                   >
                     <span>
-                      Using the IT system and solution table
+                      Using the solutions and IT systems table
                       <svg
                         class="usa-icon margin-left-1 top-2px"
                         focusable="false"
@@ -811,7 +811,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 type="button"
               >
                 <span
-                  class="display-flex flex-align-center"
+                  class="display-flex flex-align-center line-height-normal"
                   style="column-gap: 0.25rem;"
                 >
                   chat with us on Slack

@@ -1,0 +1,39 @@
+meta {
+  name: MarkAllNotificationAsRead
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: http://localhost:8085/api/graph/query
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation notifications {
+      markAllNotificationsAsRead
+     {
+      id
+      isRead
+      activity {
+        activityType
+        entityID
+        actorID
+        createdByUserAccount {
+          commonName
+        }
+      }
+      createdByUserAccount {
+        commonName
+      }
+    }
+  }
+  
+}

@@ -27,6 +27,7 @@ const usingMilestoneTable = {
       'Users may also choose to add a custom milestone, which can be done from the table actions area or from the milestone library.',
       'Users may also add a milestone directly to a category by using the menu icon on the right side of any category row.'
     ],
+    altText: 'A screenshot of the table actions area.',
     caption:
       'Image caption: A screenshot of the table actions area and part of the MTO milestone table including an open category row menu.'
   },

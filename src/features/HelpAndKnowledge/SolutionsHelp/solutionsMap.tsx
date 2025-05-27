@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  GetPossibleSolutionsQuery,
-  MtoCommonSolutionKey,
-  OperationalSolutionKey
+  GetMtoSolutionContactsQuery,
+  MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 
 import {
@@ -82,7 +81,7 @@ export const operationalSolutionSubCategoryMap: Record<
 };
 
 export type SolutionContactType =
-  GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
+  GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['contactInformation']['pointsOfContact'][0];
 
 export interface HelpSolutionType extends HelpSolutionBaseType {
   pointsOfContact?: SolutionContactType[];
@@ -108,7 +107,7 @@ export type ModalSolutionComponentType = {
 };
 
 export interface HelpSolutionBaseType {
-  enum: OperationalSolutionKey | MtoCommonSolutionKey;
+  enum: MtoCommonSolutionKey;
   key: string; // used for translations
   route: string;
   categories: OperationalSolutionCategories[];
@@ -128,7 +127,7 @@ export interface HelpSolutionBaseType {
 
 export const helpSolutions: HelpSolutionBaseType[] = [
   {
-    enum: OperationalSolutionKey.INNOVATION,
+    enum: MtoCommonSolutionKey.INNOVATION,
     key: 'innovation',
     route: '4-innovation',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
@@ -154,7 +153,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.ACO_OS,
+    enum: MtoCommonSolutionKey.ACO_OS,
     key: 'accountableCare',
     route: 'accountable-care-organization',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
@@ -183,7 +182,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.APPS,
+    enum: MtoCommonSolutionKey.APPS,
     key: 'automatedPlanPayment',
     route: 'automated-plan-payment-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
@@ -197,7 +196,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {}
   },
   {
-    enum: OperationalSolutionKey.BCDA,
+    enum: MtoCommonSolutionKey.BCDA,
     key: 'bcda',
     route: 'beneficiary-claims-data-api',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
@@ -214,7 +213,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.CDX,
+    enum: MtoCommonSolutionKey.CDX,
     key: 'centralizedDataExhange',
     route: 'centralized-data-exchange',
     categories: [OperationalSolutionCategories.DATA],
@@ -238,7 +237,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.CCW,
+    enum: MtoCommonSolutionKey.CCW,
     key: 'ccWarehouse',
     route: 'chronic-conditions-warehouse',
     categories: [OperationalSolutionCategories.DATA],
@@ -262,7 +261,22 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.CMS_BOX,
+    enum: MtoCommonSolutionKey.CDAC,
+    key: 'cdac',
+    route: 'cmmi-data-aggregation-contract',
+    categories: [
+      OperationalSolutionCategories.CONTRACT_VEHICLES,
+      OperationalSolutionCategories.DATA
+    ],
+    acronym: 'CDAC',
+    type: 'Contracts and contractors',
+    name: 'CMMI Data Aggregation Contract',
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.CMS_BOX,
     key: 'cmsBox',
     route: 'cms-box',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
@@ -274,7 +288,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.CMS_QUALTRICS,
+    enum: MtoCommonSolutionKey.CMS_QUALTRICS,
     key: 'cmsQualtrics',
     route: 'cms-qualtrics',
     categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
@@ -288,7 +302,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.CBOSC,
+    enum: MtoCommonSolutionKey.CBOSC,
     key: 'cbosc',
     route: 'consolidated-business-operations-support-center',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
@@ -309,7 +323,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {}
   },
   {
-    enum: OperationalSolutionKey.CPI_VETTING,
+    enum: MtoCommonSolutionKey.CPI_VETTING,
     key: 'cpiVetting',
     route: 'cpi-vetting',
     categories: [
@@ -330,7 +344,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.EFT,
+    enum: MtoCommonSolutionKey.EFT,
     key: 'electronicFileTransfer',
     route: 'electronic-file-transfer',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
@@ -345,7 +359,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.EDFR,
+    enum: MtoCommonSolutionKey.EDFR,
     key: 'expandedDataFeedback',
     route: 'expanded-data-feedback-reporting',
     categories: [OperationalSolutionCategories.DATA],
@@ -367,7 +381,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.GOVDELIVERY,
+    enum: MtoCommonSolutionKey.GOVDELIVERY,
     key: 'govDelivery',
     route: 'gov-delivery',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
@@ -379,7 +393,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.GS,
+    enum: MtoCommonSolutionKey.GS,
     key: 'grantSolutions',
     route: 'grant-solutions',
     categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
@@ -394,7 +408,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.HIGLAS,
+    enum: MtoCommonSolutionKey.HIGLAS,
     key: 'higlas',
     route: 'healthcare-integrated-general-kedger-accounting-system',
     categories: [OperationalSolutionCategories.PAYMENT_FINANCIALS],
@@ -410,7 +424,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.HDR,
+    enum: MtoCommonSolutionKey.HDR,
     key: 'healthDataReporting',
     route: 'health-data-reporting',
     categories: [
@@ -435,7 +449,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.HPMS,
+    enum: MtoCommonSolutionKey.HPMS,
     key: 'healthPlanManagement',
     route: 'health-plan-management-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
@@ -453,7 +467,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.IPC,
+    enum: MtoCommonSolutionKey.IPC,
     key: 'innovationPayment',
     route: 'innovation-payment-contract',
     categories: [
@@ -477,7 +491,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.ISP,
+    enum: MtoCommonSolutionKey.ISP,
     key: 'innovationSupport',
     route: 'innovation-support-platform',
     categories: [
@@ -511,7 +525,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.IDR,
+    enum: MtoCommonSolutionKey.IDR,
     key: 'integratedDataRepository',
     route: 'integrated-data-repository',
     categories: [OperationalSolutionCategories.DATA],
@@ -530,7 +544,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.LDG,
+    enum: MtoCommonSolutionKey.LDG,
     key: 'learningAndDiffusion',
     route: 'learning-and-diffusion-group',
     categories: [OperationalSolutionCategories.LEARNING],
@@ -542,7 +556,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.LV,
+    enum: MtoCommonSolutionKey.LV,
     key: 'legalVertical',
     route: 'legal-vertical',
     categories: [OperationalSolutionCategories.LEGAL],
@@ -554,7 +568,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MDM_POR,
+    enum: MtoCommonSolutionKey.MDM_POR,
     key: 'masterDataManagementProgramOrganizationRelationship',
     route: 'master-data-management-program-organization-relationship',
     categories: [OperationalSolutionCategories.DATA],
@@ -570,7 +584,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MDM_NCBP,
+    enum: MtoCommonSolutionKey.MDM_NCBP,
     key: 'masterDataManagementForNCBP',
     route: 'master-data-management-for-ncbp',
     categories: [
@@ -589,7 +603,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MIDS,
+    enum: MtoCommonSolutionKey.MIDS,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',
     categories: [
@@ -604,7 +618,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MARX,
+    enum: MtoCommonSolutionKey.MARX,
     key: 'marx',
     route: 'medicare-advantage-prescription-drug-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
@@ -622,7 +636,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MODEL_SPACE,
+    enum: MtoCommonSolutionKey.MODEL_SPACE,
     key: 'modelSpace',
     route: 'model-space',
     categories: [OperationalSolutionCategories.DATA],
@@ -643,7 +657,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     ]
   },
   {
-    enum: OperationalSolutionKey.OUTLOOK_MAILBOX,
+    enum: MtoCommonSolutionKey.OUTLOOK_MAILBOX,
     key: 'outlookMailbox',
     route: 'outlook-mailbox',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
@@ -657,7 +671,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.QV,
+    enum: MtoCommonSolutionKey.QV,
     key: 'qualityVertical',
     route: 'quality-vertical',
     categories: [OperationalSolutionCategories.QUALITY],
@@ -669,7 +683,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.RMADA,
+    enum: MtoCommonSolutionKey.RMADA,
     key: 'rmada',
     route: 'research-measurement-assessment-design-and-analysis',
     categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
@@ -681,7 +695,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.ARS,
+    enum: MtoCommonSolutionKey.ARS,
     key: 'ars',
     route: 'salesforce-application-review-and-scoring',
     categories: [
@@ -712,7 +726,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.CONNECT,
+    enum: MtoCommonSolutionKey.CONNECT,
     key: 'salesforceConnect',
     route: 'salesforce-connect',
     categories: [OperationalSolutionCategories.LEARNING],
@@ -739,7 +753,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.LOI,
+    enum: MtoCommonSolutionKey.LOI,
     key: 'salesforceLOI',
     route: 'salesforce-letter-of-intent',
     categories: [
@@ -773,7 +787,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.POST_PORTAL,
+    enum: MtoCommonSolutionKey.POST_PORTAL,
     key: 'salesforcePortal',
     route: 'salesforce-project-officer-support-tool-portal',
     categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
@@ -801,7 +815,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.RFA,
+    enum: MtoCommonSolutionKey.RFA,
     key: 'salesforceRequestApplication',
     route: 'salesforce-request-for-application',
     categories: [
@@ -835,7 +849,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.SHARED_SYSTEMS,
+    enum: MtoCommonSolutionKey.SHARED_SYSTEMS,
     key: 'sharedSystems',
     route: 'shared-systems',
     categories: [OperationalSolutionCategories.MEDICARE_FFS],

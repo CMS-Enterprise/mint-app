@@ -15,6 +15,7 @@ import SixPagerMeeting from './Articles/SixPagerMeeting';
 import StartingMTOMatrix from './Articles/StartingMTOMatrix';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
 import UsingMilestoneTable from './Articles/UsingMilestoneTable';
+import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
 import UsingTableActions from './Articles/UsingTableActions';
 import UtilizingSolutions from './Articles/UtilizingSolutions';
 import HelpAndKnowledgeHome from './home';
@@ -104,6 +105,13 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/using-table-actions" exact>
         <UsingTableActions />
+      </Route>
+
+      <Route
+        path="/help-and-knowledge/using-solutions-and-it-systems-table"
+        exact
+      >
+        <UsingSolutionsAndITSystemsTable />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

@@ -17,7 +17,6 @@ describe('The CRAndTDLSidePanel component', () => {
     expect(screen.getByText('abc123')).toBeInTheDocument();
     expect(screen.getByText('Test Title')).toBeInTheDocument();
     expect(screen.getByText('Test Status')).toBeInTheDocument();
-    expect(screen.queryByText('View this in ECHIMP')).not.toBeInTheDocument(); // TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134
     expect(asFragment()).toMatchSnapshot();
   });
 });

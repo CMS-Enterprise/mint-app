@@ -1,0 +1,15 @@
+@use 'viewports' as *;
+
+.status-banner {
+    display: flex;
+    @media screen and (max-width: $tablet) {
+        display: block;
+    }
+
+    &__border {
+        border-right: 2px solid;
+        @media screen and (max-width: $tablet) {
+            border: none;
+        }
+    }
+}

@@ -213,7 +213,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 type="button"
               >
                 <span
-                  class="display-flex flex-align-center"
+                  class="display-flex flex-align-center line-height-normal"
                   style="column-gap: 0.25rem;"
                 >
                   chat with us on Slack
@@ -293,7 +293,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or Model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
                 </p>
               </div>
               <div

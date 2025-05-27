@@ -1,0 +1,86 @@
+meta {
+  name: OperationSolutionGetByID
+  type: graphql
+  seq: 10
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query operationalSolution ($id: UUID!) {
+      operationalSolution (id: $id) {
+          id
+          isCommonSolution
+          operationalNeedID
+          solutionType
+          needed
+          name
+          key
+          nameOther
+          pocName
+          pocEmail
+          mustStartDts
+          mustFinishDts
+          status
+          documents {
+              id
+              modelPlanID
+              fileType
+              bucket
+              fileKey
+              virusScanned
+              virusClean
+              restricted
+              fileName
+              fileSize
+              documentType
+              otherType
+              optionalNotes
+              downloadUrl
+              deletedAt
+              createdBy
+              createdDts
+              modifiedBy
+              modifiedDts
+          }
+          operationalSolutionSubtasks {
+              id
+              solutionID
+              name
+              status
+              createdBy
+              createdDts
+              modifiedBy
+              modifiedDts
+          }
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          createdByUserAccount 
+          {
+              commonName
+          }   
+          modifiedByUserAccount
+          {
+              commonName
+          }         
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{operationalSolutionID}}"
+  }
+}
