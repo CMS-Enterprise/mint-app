@@ -72,7 +72,9 @@ const UsingTableActions = () => {
                 {t('title')}
               </PageHeading>
               <HelpCategoryTag type={ArticleCategories.MTO_TUTORIALS} />
-              <p className="mint-body-large margin-y-1">{t('description')}</p>
+              <p className="mint-body-large margin-top-1 margin-bottom-4">
+                {t('description')}
+              </p>
               <img
                 className="border-1px radius-md border-gray-10 shadow-3"
                 src={tableActionsAreaImg}
@@ -82,7 +84,9 @@ const UsingTableActions = () => {
 
               {/* Milestones */}
               <div>
-                <h2 className="margin-bottom-2">{t('milestones.title')}</h2>
+                <h2 className="margin-top-5 margin-bottom-2">
+                  {t('milestones.title')}
+                </h2>
                 <p className="margin-y-0">{t('milestones.description')}</p>
                 <ul className="margin-y-0 padding-left-3">
                   {milestonesList.map(item => (
@@ -105,7 +109,6 @@ const UsingTableActions = () => {
                         <Link
                           aria-label="Open using the milestone library article in a new tab"
                           href="using-milestone-library"
-                          target="_blank"
                           variant="nav"
                         >
                           {' '}
@@ -131,7 +134,6 @@ const UsingTableActions = () => {
                         <Link
                           aria-label="Open how to add custom milestone article in a new tab"
                           href="add-custom-milestone"
-                          target="_blank"
                           variant="nav"
                         >
                           {' '}
@@ -145,7 +147,9 @@ const UsingTableActions = () => {
 
               {/* Categories */}
               <div>
-                <h2 className="margin-bottom-2">{t('categories.title')}</h2>
+                <h2 className="margin-top-5 margin-bottom-2">
+                  {t('categories.title')}
+                </h2>
                 <p className="margin-y-0">{t('categories.description')}</p>
                 <ul className="margin-top-0 padding-left-3">
                   {categoriesList.map((item, index) => (
@@ -237,7 +241,7 @@ const UsingTableActions = () => {
               {/* Solutions and IT systems */}
               <div>
                 <div>
-                  <h2 className="margin-bottom-2">
+                  <h2 className="margin-top-5 margin-bottom-2">
                     {t('solutionsAndItSystems.title')}
                   </h2>
                   <p className="margin-y-0">
@@ -260,7 +264,6 @@ const UsingTableActions = () => {
                           <Link
                             aria-label="Open operational solutions in a new tab"
                             href="operational-solutions?page=1"
-                            target="_blank"
                             variant="nav"
                           >
                             {' '}
@@ -288,7 +291,6 @@ const UsingTableActions = () => {
                         <Link
                           aria-label="Open using the solution library article in a new tab"
                           href="using-solution-library"
-                          target="_blank"
                           variant="nav"
                         >
                           {' '}
@@ -316,7 +318,6 @@ const UsingTableActions = () => {
                         <Link
                           aria-label="Open how to add custom solution article in a new tab"
                           href="add-custom-solution"
-                          target="_blank"
                           variant="nav"
                         >
                           {' '}
@@ -330,7 +331,9 @@ const UsingTableActions = () => {
 
               {/* Templates */}
               <div>
-                <h2 className="margin-bottom-2">{t('templates.title')}</h2>
+                <h2 className="margin-top-5 margin-bottom-2">
+                  {t('templates.title')}
+                </h2>
                 <p>{t('templates.description1')}</p>
                 <p className="margin-y-0">{t('templates.description2')}</p>
 
