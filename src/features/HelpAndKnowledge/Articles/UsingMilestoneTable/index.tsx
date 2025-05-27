@@ -53,11 +53,13 @@ const UsingMilestoneTable = () => {
                 {t('title')}
               </PageHeading>
               <HelpCategoryTag type={ArticleCategories.MTO_TUTORIALS} />
-              <p className="mint-body-large margin-y-1">{t('description')}</p>
+              <p className="mint-body-large margin-top-1 margin-bottom-4">
+                {t('description')}
+              </p>
 
               {/* Columns in the milestone table */}
               <div>
-                <h2 className="margin-bottom-2">
+                <h2 className="margin-top-0 margin-bottom-2">
                   {t('columsInMilestoneTable.title')}
                 </h2>
                 <p className="margin-y-0">
@@ -76,14 +78,14 @@ const UsingMilestoneTable = () => {
                     </li>
                   ))}
                 </ul>
-                <p className="margin-y-0">
+                <p className="margin-top-0">
                   {t('columsInMilestoneTableSummary')}
                 </p>
               </div>
 
               {/* Adding a milestone */}
               <div>
-                <h2 className="margin-bottom-2">
+                <h2 className="margin-top-5 margin-bottom-2">
                   {t('addingMilestone.title')}
                 </h2>
                 <p className="margin-y-0">{t('addingMilestone.description')}</p>
@@ -103,7 +105,7 @@ const UsingMilestoneTable = () => {
               </div>
               {/* Editing a milestone */}
               <div>
-                <h2 className="margin-bottom-2">
+                <h2 className="margin-top-5 margin-bottom-2">
                   {t('editingMilestone.title')}
                 </h2>
                 <p className="margin-y-0">
@@ -187,7 +189,7 @@ const UsingMilestoneTable = () => {
 
               {/* Removing a milestone */}
               <div>
-                <h2 className="margin-bottom-2">
+                <h2 className="margin-top-5 margin-bottom-2">
                   {t('removingMilestone.title')}
                 </h2>
                 <p className="margin-y-0">
@@ -234,7 +236,7 @@ const UsingMilestoneTable = () => {
               </div>
               {/* Adding or removing a category */}
               <div>
-                <h2 className="margin-bottom-2">
+                <h2 className="margin-top-5 margin-bottom-2">
                   {t('addingOrRemovingCategory.title')}
                 </h2>
                 <p className="margin-top-0">
@@ -250,7 +252,7 @@ const UsingMilestoneTable = () => {
               </div>
               {/* Organizing categoriesy */}
               <div>
-                <h2 className="margin-bottom-2">
+                <h2 className="margin-top-5 margin-bottom-2">
                   {t('organizingCategories.title')}
                 </h2>
                 <p className="margin-y-0">
