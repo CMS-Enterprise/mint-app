@@ -96,7 +96,7 @@ const UsingMilestoneTable = () => {
                 <div className="border-1px radius-md border-gray-10 shadow-3">
                   <img
                     src={milestoneTableMenuImg}
-                    alt={t('milestoneTableMenuImgAltText')}
+                    alt={t('addingMilestone.altText')}
                   />
                 </div>
                 <p>{t('addingMilestone.caption')}</p>
@@ -243,7 +243,7 @@ const UsingMilestoneTable = () => {
                 <div className="border-1px radius-md border-gray-10 shadow-3">
                   <img
                     src={milestoneTableMenuImg}
-                    alt={t('milestoneTableMenuImgAltText')}
+                    alt={t('addingOrRemovingCategory.altText')}
                   />
                 </div>
                 <p>{t('addingOrRemovingCategory.caption')}</p>
