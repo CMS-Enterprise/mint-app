@@ -333,7 +333,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Using the milestone library
+                  How to add a custom solution
                 </h3>
               </header>
               <a
@@ -353,7 +353,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or Model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                  When possible, MINT encourages users to add solutions to a Model-to-operations matrix (MTO) via the solution library. However, MINT’s solution library does not currently offer a comprehensive list of all IT systems, contracts, and other operational solutions used for models. because of this and the unique needs of individual models, IT Leads may need to create custom solutions for a given model. IT Leads are able to create custom solutions directly from the Model-to-operations matrix (MTO) for their model.
                 </p>
               </div>
               <div
@@ -361,7 +361,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read Using the milestone library article"
+                  aria-label="Read How to add a custom solution article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -384,7 +384,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Using the solution library
+                  Using the solutions and IT systems table
                 </h3>
               </header>
               <a
@@ -404,7 +404,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                  The solutions and IT systems table is accessible from the tab bar below the model-to-operations matrix (MTO) header area and is one of the main MTO content views in MINT. It is closely related to the milestone table, since each one offers a slightly different view of content you have added to your MTO.
                 </p>
               </div>
               <div
@@ -412,7 +412,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read Using the solution library article"
+                  aria-label="Read Using the solutions and IT systems table article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -435,7 +435,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  How to add a custom milestone
+                  Using the table actions area
                 </h3>
               </header>
               <a
@@ -455,7 +455,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. IT Leads are able to create custom milestones directly from the Model-to-operations matrix (MTO) for their model.
+                  The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
                 </p>
               </div>
               <div
@@ -463,7 +463,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read How to add a custom milestone article"
+                  aria-label="Read Using the table actions area article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >

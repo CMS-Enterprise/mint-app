@@ -169,9 +169,9 @@ export const UsingSolutionLibrary = () => {
       <RelatedArticles
         currentArticle={HelpArticle.STARTING_MTO}
         specificArticles={[
-          HelpArticle.USING_MILESTONE_LIBRARY,
-          HelpArticle.USING_SOLUTION_LIBRARY,
-          HelpArticle.ADD_CUSTOM_MILESTONE
+          HelpArticle.ADD_CUSTOM_SOLUTION,
+          HelpArticle.USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE,
+          HelpArticle.USING_TABLE_ACTIONS
         ]}
         viewAllLink
       />
