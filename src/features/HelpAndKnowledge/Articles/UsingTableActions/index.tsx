@@ -4,7 +4,6 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -17,6 +16,7 @@ import tableActionsAreaImg from 'assets/images/11_Table actions area.png';
 import newCategoryModalImg from 'assets/images/21_New category modal.png';
 import templateConfirmationModalImg from 'assets/images/22_Template confirmation modal.png';
 import collaborationAreaInProgressImg from 'assets/images/33_Collaboration area in progress.png';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
@@ -106,13 +106,10 @@ const UsingTableActions = () => {
                     i18nKey="milestones.addingMilestonesFromLibrary.usingMilestoneLibrary"
                     components={{
                       link1: (
-                        <Link
-                          aria-label="Open using the milestone library article in a new tab"
-                          href="using-milestone-library"
-                          variant="nav"
-                        >
-                          {' '}
-                        </Link>
+                        <UswdsReactLink
+                          aria-label="Redirect to using the milestone library article"
+                          to="using-milestone-library"
+                        />
                       )
                     }}
                   />
@@ -131,13 +128,10 @@ const UsingTableActions = () => {
                     i18nKey="milestones.addingCustomMilestone.howToAddCustomMilestone"
                     components={{
                       link1: (
-                        <Link
-                          aria-label="Open how to add custom milestone article in a new tab"
-                          href="add-custom-milestone"
-                          variant="nav"
-                        >
-                          {' '}
-                        </Link>
+                        <UswdsReactLink
+                          aria-label="Redirect to how to add custom milestone article"
+                          to="add-custom-milestone"
+                        />
                       )
                     }}
                   />
@@ -261,13 +255,10 @@ const UsingTableActions = () => {
                       i18nKey="solutionsAndItSystems.summary"
                       components={{
                         link1: (
-                          <Link
-                            aria-label="Open operational solutions in a new tab"
-                            href="operational-solutions?page=1"
-                            variant="nav"
-                          >
-                            {' '}
-                          </Link>
+                          <UswdsReactLink
+                            aria-label="Redirect to operational solutions"
+                            to="operational-solutions?page=1"
+                          />
                         )
                       }}
                     />
@@ -288,13 +279,10 @@ const UsingTableActions = () => {
                     i18nKey="solutionsAndItSystems.browsingSolutionLibrary.usingSolutionLibrary"
                     components={{
                       link1: (
-                        <Link
-                          aria-label="Open using the solution library article in a new tab"
-                          href="using-solution-library"
-                          variant="nav"
-                        >
-                          {' '}
-                        </Link>
+                        <UswdsReactLink
+                          aria-label="Redirect to using the solution library articleb"
+                          to="using-solution-library"
+                        />
                       )
                     }}
                   />
@@ -315,13 +303,10 @@ const UsingTableActions = () => {
                     i18nKey="solutionsAndItSystems.addingCustomSolution.howToAddCustomSolution"
                     components={{
                       link1: (
-                        <Link
-                          aria-label="Open how to add custom solution article in a new tab"
-                          href="add-custom-solution"
-                          variant="nav"
-                        >
-                          {' '}
-                        </Link>
+                        <UswdsReactLink
+                          aria-label="Redirect to how to add custom solution article"
+                          to="add-custom-solution"
+                        />
                       )
                     }}
                   />
