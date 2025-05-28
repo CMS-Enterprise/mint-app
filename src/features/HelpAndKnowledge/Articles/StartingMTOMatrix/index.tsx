@@ -10,9 +10,9 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import collaborationAreaNotStarted from 'assets/images/01_Collaboration area not started.png';
-import emptyMTO from 'assets/images/02_Empty MTO.png';
-import MINTHome from 'assets/images/09_MINT home.png';
+import collaborationAreaNotStarted from 'assets/images/01_collaboration_area_not_started.png';
+import emptyMTO from 'assets/images/02_empty_MTO.png';
+import MINTHome from 'assets/images/09_MINT_home.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';

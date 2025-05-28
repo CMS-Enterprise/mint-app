@@ -9,15 +9,9 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import MTOTableTabs from 'assets/images/13_MTO_table_tabs.png';
-import SolutinEditPanel from 'assets/images/16_solution_edit_panel.png';
-import SolutionRemovalButton from 'assets/images/18_solution_removal_button.png';
-import MTOSolutionTableOption from 'assets/images/19_MTO_solution_table_option_3.png';
-import SolutionRemovalModal from 'assets/images/20_solution_removal_modal.png';
-import CollaborationAreaInProgress from 'assets/images/33_collaboration_area_in_progress.png';
+import SolutionLibraryAll from 'assets/images/27_solution_library_all.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import RelatedArticles from '../_components/RelatedArticles';
@@ -26,16 +20,16 @@ import { ArticleCategories, HelpArticle } from '..';
 
 import '../index.scss';
 
-export const UsingSolutionsAndITSystemsTable = () => {
-  const { t } = useTranslation('usingSolutionsAndITSystemsTable');
+export const UsingSolutionLibrary = () => {
+  const { t } = useTranslation('usingSolutionLibrary');
 
-  const solutionTableList = tArray<string>(
-    'usingSolutionsAndITSystemsTable:solutionTableList'
-  );
+  //   const solutionTableList = tArray<string>(
+  //     'usingSolutionsAndITSystemsTable:solutionTableList'
+  //   );
 
-  const step5List = tArray<string>(
-    'usingSolutionsAndITSystemsTable:step5.list'
-  );
+  //   const step5List = tArray<string>(
+  //     'usingSolutionsAndITSystemsTable:step5.list'
+  //   );
 
   return (
     <div>
@@ -56,24 +50,18 @@ export const UsingSolutionsAndITSystemsTable = () => {
               </p>
 
               <h2 className="margin-top-0 margin-bottom-2">
-                {t('solutionTable')}
+                {t('browsingAllAvailableSolutions')}
               </h2>
 
-              <p className="margin-y-0">{t('solutionTableDescription')}</p>
+              <p>{t('browsingAllAvailableSolutionsDescription')}</p>
 
-              <ul className="margin-y-05">
-                {solutionTableList.map((item, index) => (
-                  <li key={item} className="margin-0">
-                    <Trans
-                      t={t}
-                      i18nKey={`solutionTableList.${index}`}
-                      components={{
-                        bold: <span className="text-bold" />
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
+              <img
+                alt={t('step1.altText')}
+                src={SolutionLibraryAll}
+                className="border-1px border-gray-10 radius-md shadow-2"
+              />
+
+              <p>{t('browsingAllAvailableSolutionsCaption')}</p>
 
               <p className="margin-top-0">{t('solutionTableSubDescription')}</p>
 
@@ -98,11 +86,11 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <p>{t('step1.text')}</p>
 
-                  <img
+                  {/* <img
                     alt={t('step1.altText')}
                     src={CollaborationAreaInProgress}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  />
+                  /> */}
 
                   <p>{t('step1.caption')}</p>
                 </ProcessListItem>
@@ -115,11 +103,11 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <p>{t('step2.text')}</p>
 
-                  <img
+                  {/* <img
                     alt={t('step2.altText')}
                     src={MTOTableTabs}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  />
+                  /> */}
 
                   <p>{t('step2.caption')}</p>
                 </ProcessListItem>
@@ -132,11 +120,11 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <p>{t('step3.text')}</p>
 
-                  <img
+                  {/* <img
                     alt={t('step3.altText')}
                     src={MTOSolutionTableOption}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  />
+                  /> */}
 
                   <p>{t('step3.caption')}</p>
                 </ProcessListItem>
@@ -158,7 +146,7 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <p className="margin-bottom-0">{t('step5.text')}</p>
 
-                  <ul className="margin-bottom-2">
+                  {/* <ul className="margin-bottom-2">
                     {step5List.map((item, index) => (
                       <li key={item} className="margin-0">
                         <Trans
@@ -170,13 +158,13 @@ export const UsingSolutionsAndITSystemsTable = () => {
                         />
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
 
-                  <img
+                  {/* <img
                     alt={t('step5.altText')}
                     src={SolutinEditPanel}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  />
+                  /> */}
 
                   <p>{t('step5.caption')}</p>
                 </ProcessListItem>
@@ -217,11 +205,11 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <p>{t('removeStep4.text')}</p>
 
-                  <img
+                  {/* <img
                     alt={t('removeStep4.altText')}
                     src={SolutionRemovalButton}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  />
+                  /> */}
 
                   <p>{t('removeStep4.caption')}</p>
                 </ProcessListItem>
@@ -234,11 +222,11 @@ export const UsingSolutionsAndITSystemsTable = () => {
 
                   <p>{t('removeStep5.text')}</p>
 
-                  <img
+                  {/* <img
                     alt={t('removeStep5.altText')}
                     src={SolutionRemovalModal}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  />
+                  /> */}
 
                   <p>{t('removeStep5.caption')}</p>
                 </ProcessListItem>
@@ -263,4 +251,4 @@ export const UsingSolutionsAndITSystemsTable = () => {
   );
 };
 
-export default UsingSolutionsAndITSystemsTable;
+export default UsingSolutionLibrary;
