@@ -16,7 +16,7 @@ import milestoneEditPanelImg from 'assets/images/08_Milestone edit panel.png';
 import mtoMilestoneTableOption1Img from 'assets/images/10_MTO milestone table_option 1.png';
 import milestoneRemovalModalImg from 'assets/images/15_Milestone removal modal.png';
 import milestoneRemovalButtonImg from 'assets/images/17_Milestone removal button.png';
-import collaborationAreaInProgressImg from 'assets/images/33_Collaboration area in progress.png';
+import collaborationAreaInProgressImg from 'assets/images/33_collaboration_area_in_progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
