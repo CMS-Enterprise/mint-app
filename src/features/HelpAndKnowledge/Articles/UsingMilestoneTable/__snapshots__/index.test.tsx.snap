@@ -210,7 +210,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="collaboration area in progress"
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/33_Collaboration%20area%20in%20progress.png"
+                    src="/src/assets/images/33_collaboration_area_in_progress.png"
                   />
                   <p>
                     Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
@@ -651,7 +651,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or Model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
                 </p>
               </div>
               <div
