@@ -52,7 +52,7 @@ export const UsingSolutionLibrary = () => {
               <p>{t('browsingAllAvailableSolutionsDescription')}</p>
 
               <img
-                alt={t('step1.altText')}
+                alt={t('browsingAllAvailableSolutionsAltText')}
                 src={SolutionLibraryAll}
                 className="border-1px border-gray-10 radius-md shadow-2"
               />

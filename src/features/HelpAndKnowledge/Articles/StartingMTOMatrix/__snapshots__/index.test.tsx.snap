@@ -103,7 +103,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 <img
                   alt="MINT homepage"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/09_MINT%20home.png"
+                  src="/src/assets/images/09_MINT_home.png"
                 />
                 <p>
                   Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.
@@ -124,7 +124,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 <img
                   alt="Collaboration area not started"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/01_Collaboration%20area%20not%20started.png"
+                  src="/src/assets/images/01_collaboration_area_not_started.png"
                 />
                 <p>
                   Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
@@ -171,7 +171,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 <img
                   alt="Empty MTO"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/02_Empty%20MTO.png"
+                  src="/src/assets/images/02_empty_MTO.png"
                 />
                 <p>
                   Image caption: A screenshot of the empty state for the model-to-operations matrix for the Rural Health Enablement model. The empty state shows a variety of options for starting an MTO.
@@ -344,7 +344,7 @@ exports[`StartingMTOMatrix > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or Model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
                 </p>
               </div>
               <div

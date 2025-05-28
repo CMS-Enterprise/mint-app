@@ -73,7 +73,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
               The MINT solution library offers a variety of ways to browse the available solutions and IT systems. You can search, filter, and paginate through all the available solutions to find what you’re looking for.
             </p>
             <img
-              alt="step1.altText"
+              alt="A screenshot of the solution library showing all common solutions"
               class="border-1px border-gray-10 radius-md shadow-2"
               src="/src/assets/images/27_solution_library_all.png"
             />
