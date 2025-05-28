@@ -3,14 +3,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import emptyMTO from 'assets/images/02_Empty MTO.png';
 import TableActionsArea from 'assets/images/11_table_actions_area.png';
 import NewMilestoneModal from 'assets/images/24_new_milestone_modal.png';
 import CollaborationAreaInProgress from 'assets/images/33_collaboration_area_in_progress.png';
