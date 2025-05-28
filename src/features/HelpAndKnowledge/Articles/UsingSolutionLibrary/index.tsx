@@ -3,13 +3,17 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
+  Icon,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
+import SolutionLibraryAbout from 'assets/images/25_solution_library_about_solution.png';
+import SolutionLibraryAddModal from 'assets/images/26_solution_library_add_to_milestone_modal.png';
 import SolutionLibraryAll from 'assets/images/27_solution_library_all.png';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
@@ -22,14 +26,6 @@ import '../index.scss';
 
 export const UsingSolutionLibrary = () => {
   const { t } = useTranslation('usingSolutionLibrary');
-
-  //   const solutionTableList = tArray<string>(
-  //     'usingSolutionsAndITSystemsTable:solutionTableList'
-  //   );
-
-  //   const step5List = tArray<string>(
-  //     'usingSolutionsAndITSystemsTable:step5.list'
-  //   );
 
   return (
     <div>
@@ -63,19 +59,17 @@ export const UsingSolutionLibrary = () => {
 
               <p>{t('browsingAllAvailableSolutionsCaption')}</p>
 
-              <p className="margin-top-0">{t('solutionTableSubDescription')}</p>
+              <h3 className="margin-bottom-1">{t('searching')}</h3>
 
-              <h2 className="margin-top-5 margin-bottom-2">
-                {t('addingASolution')}
-              </h2>
+              <p className="margin-y-0">{t('searchingDescription')}</p>
 
-              <p className="margin-y-0">{t('addingASolutionDescription')}</p>
+              <h3 className="margin-bottom-1">{t('filtering')}</h3>
 
-              <h2 className="margin-top-5 margin-bottom-2">
-                {t('editingASolution')}
-              </h2>
+              <p className="margin-top-0">{t('filteringDescription')}</p>
 
-              <p className="margin-top-0">{t('editingASolutionDescription')}</p>
+              <h3 className="margin-bottom-1">{t('pagination')}</h3>
+
+              <p className="margin-top-0">{t('paginationDescription')}</p>
 
               <ProcessList>
                 {/* STEP 1 */}
@@ -86,13 +80,19 @@ export const UsingSolutionLibrary = () => {
 
                   <p>{t('step1.text')}</p>
 
-                  {/* <img
-                    alt={t('step1.altText')}
-                    src={CollaborationAreaInProgress}
-                    className="border-1px border-gray-10 radius-md shadow-2"
-                  /> */}
+                  <UswdsReactLink
+                    to="/help-and-knowledge/using-table-actions"
+                    className="display-block margin-y-05"
+                  >
+                    {t('step1.link1')} <Icon.ArrowForward className="top-3px" />
+                  </UswdsReactLink>
 
-                  <p>{t('step1.caption')}</p>
+                  <UswdsReactLink
+                    to="/help-and-knowledge/using-table-actions"
+                    className="display-block"
+                  >
+                    {t('step1.link2')} <Icon.ArrowForward className="top-3px" />
+                  </UswdsReactLink>
                 </ProcessListItem>
 
                 {/* STEP 2 */}
@@ -103,11 +103,11 @@ export const UsingSolutionLibrary = () => {
 
                   <p>{t('step2.text')}</p>
 
-                  {/* <img
+                  <img
                     alt={t('step2.altText')}
-                    src={MTOTableTabs}
+                    src={SolutionLibraryAbout}
                     className="border-1px border-gray-10 radius-md shadow-2"
-                  /> */}
+                  />
 
                   <p>{t('step2.caption')}</p>
                 </ProcessListItem>
@@ -119,14 +119,6 @@ export const UsingSolutionLibrary = () => {
                   </ProcessListHeading>
 
                   <p>{t('step3.text')}</p>
-
-                  {/* <img
-                    alt={t('step3.altText')}
-                    src={MTOSolutionTableOption}
-                    className="border-1px border-gray-10 radius-md shadow-2"
-                  /> */}
-
-                  <p>{t('step3.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 4 */}
@@ -135,7 +127,27 @@ export const UsingSolutionLibrary = () => {
                     {t('step4.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step4.text')}</p>
+                  <p className="margin-bottom-0">{t('step4.text')}</p>
+
+                  <ul className="margin-bottom-2">
+                    <li className="margin-0">
+                      <Trans
+                        t={t}
+                        i18nKey="step4.listItem"
+                        components={{
+                          bold: <span className="text-bold" />
+                        }}
+                      />
+                    </li>
+                  </ul>
+
+                  <img
+                    alt={t('step4.altText')}
+                    src={SolutionLibraryAddModal}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('step4.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 5 */}
@@ -145,90 +157,6 @@ export const UsingSolutionLibrary = () => {
                   </ProcessListHeading>
 
                   <p className="margin-bottom-0">{t('step5.text')}</p>
-
-                  {/* <ul className="margin-bottom-2">
-                    {step5List.map((item, index) => (
-                      <li key={item} className="margin-0">
-                        <Trans
-                          t={t}
-                          i18nKey={`step5.list.${index}`}
-                          components={{
-                            bold: <span className="text-bold" />
-                          }}
-                        />
-                      </li>
-                    ))}
-                  </ul> */}
-
-                  {/* <img
-                    alt={t('step5.altText')}
-                    src={SolutinEditPanel}
-                    className="border-1px border-gray-10 radius-md shadow-2"
-                  /> */}
-
-                  <p>{t('step5.caption')}</p>
-                </ProcessListItem>
-
-                {/* STEP 6 */}
-                <ProcessListItem className="maxw-none">
-                  <ProcessListHeading type="h3">
-                    {t('step6.heading')}
-                  </ProcessListHeading>
-
-                  <p>{t('step6.text')}</p>
-                </ProcessListItem>
-              </ProcessList>
-
-              <h2 className="margin-top-2 margin-bottom-2">
-                {t('removingASolution')}
-              </h2>
-
-              <p className="margin-top-0">
-                {t('removingASolutionDescription')}
-              </p>
-
-              <ProcessList className="skipStepsList">
-                {/* STEP 1 */}
-                <ProcessListItem className="maxw-none">
-                  <ProcessListHeading type="h3">
-                    {t('removeStep1.heading')}
-                  </ProcessListHeading>
-
-                  <p>{t('removeStep1.text')}</p>
-                </ProcessListItem>
-
-                {/* STEP 4 */}
-                <ProcessListItem className="maxw-none">
-                  <ProcessListHeading type="h3">
-                    {t('removeStep4.heading')}
-                  </ProcessListHeading>
-
-                  <p>{t('removeStep4.text')}</p>
-
-                  {/* <img
-                    alt={t('removeStep4.altText')}
-                    src={SolutionRemovalButton}
-                    className="border-1px border-gray-10 radius-md shadow-2"
-                  /> */}
-
-                  <p>{t('removeStep4.caption')}</p>
-                </ProcessListItem>
-
-                {/* STEP 5 */}
-                <ProcessListItem className="maxw-none">
-                  <ProcessListHeading type="h3">
-                    {t('removeStep5.heading')}
-                  </ProcessListHeading>
-
-                  <p>{t('removeStep5.text')}</p>
-
-                  {/* <img
-                    alt={t('removeStep5.altText')}
-                    src={SolutionRemovalModal}
-                    className="border-1px border-gray-10 radius-md shadow-2"
-                  /> */}
-
-                  <p>{t('removeStep5.caption')}</p>
                 </ProcessListItem>
               </ProcessList>
 
