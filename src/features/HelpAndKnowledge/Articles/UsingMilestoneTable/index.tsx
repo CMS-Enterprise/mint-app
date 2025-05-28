@@ -11,11 +11,11 @@ import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpB
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
-import milestoneTableMenuImg from 'assets/images/03_Milestone table menu open.png';
-import milestoneEditPanelImg from 'assets/images/08_Milestone edit panel.png';
-import mtoMilestoneTableOption1Img from 'assets/images/10_MTO milestone table_option 1.png';
-import milestoneRemovalModalImg from 'assets/images/15_Milestone removal modal.png';
-import milestoneRemovalButtonImg from 'assets/images/17_Milestone removal button.png';
+import milestoneTableMenuImg from 'assets/images/03_milestone_table_menu_open.png';
+import milestoneEditPanelImg from 'assets/images/08_milestone_edit_panel.png';
+import mtoMilestoneTableOption1Img from 'assets/images/10_MTO_milestone_table_option_1.png';
+import milestoneRemovalModalImg from 'assets/images/15_milestone_removal_modal.png';
+import milestoneRemovalButtonImg from 'assets/images/17_milestone_removal_button.png';
 import collaborationAreaInProgressImg from 'assets/images/33_collaboration_area_in_progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
