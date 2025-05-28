@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
+import AddCustomMilestone from './Articles/AddCustomMilestone';
 import AllArticles from './Articles/AllArticles';
 import CreatingMTOMatrix from './Articles/CreatingMTOMatrix';
 import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
@@ -112,6 +113,10 @@ export const HelpAndKnowledge = () => {
         exact
       >
         <UsingSolutionsAndITSystemsTable />
+      </Route>
+
+      <Route path="/help-and-knowledge/add-custom-milestone" exact>
+        <AddCustomMilestone />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />
