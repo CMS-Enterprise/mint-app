@@ -15,7 +15,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import tableActionsAreaImg from 'assets/images/11_Table actions area.png';
 import newCategoryModalImg from 'assets/images/21_New category modal.png';
 import templateConfirmationModalImg from 'assets/images/22_Template confirmation modal.png';
-import collaborationAreaInProgressImg from 'assets/images/33_Collaboration area in progress.png';
+import collaborationAreaInProgressImg from 'assets/images/33_collaboration_area_in_progress.png';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';

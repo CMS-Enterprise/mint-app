@@ -181,7 +181,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <img
                   alt="Collaboration area in progress"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/33_Collaboration%20area%20in%20progress.png"
+                  src="/src/assets/images/33_collaboration_area_in_progress.png"
                 />
                 <p>
                   Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
@@ -202,7 +202,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <img
                   alt="MTO table tabs"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/13_MTO%20table%20tabs.png"
+                  src="/src/assets/images/13_MTO_table_tabs.png"
                 />
                 <p>
                   Image caption: A screenshot of the tab bar at the top of the model-to-operations matrix showing the tabs for the milestone view and the solutions and IT systems view.
@@ -223,7 +223,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <img
                   alt="MTO solution table option"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/19_MTO%20solution%20table_option%203.png"
+                  src="/src/assets/images/19_MTO_solution_table_option_3.png"
                 />
                 <p>
                   Image caption: A screenshot of the solutions and IT systems table view of the MTO, showing the header area and part of the table including three added solutions.
@@ -313,7 +313,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <img
                   alt="Solution edit panel"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/16_Solution%20edit%20panel.png"
+                  src="/src/assets/images/16_solution_edit_panel.png"
                 />
                 <p>
                   Image caption: A screenshot of the side panel used to edit details about a solution or IT system.
@@ -374,7 +374,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <img
                   alt="Solution removal button"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/18_Solution%20removal%20button.png"
+                  src="/src/assets/images/18_solution_removal_button.png"
                 />
                 <p>
                   Image caption: A screenshot of the side panel used to edit details about a solution or IT system, including removing a solution.
@@ -395,7 +395,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <img
                   alt="Solution removal modal"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/20_Solution%20removal%20modal.png"
+                  src="/src/assets/images/20_solution_removal_modal.png"
                 />
                 <p>
                   Image caption: A screenshot of the solution removal confirmation screen.
@@ -555,7 +555,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or Model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
                 </p>
               </div>
               <div

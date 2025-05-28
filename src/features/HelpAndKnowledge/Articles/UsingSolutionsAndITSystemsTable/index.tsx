@@ -9,12 +9,12 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import MTOTableTabs from 'assets/images/13_MTO table tabs.png';
-import SolutinEditPanel from 'assets/images/16_Solution edit panel.png';
-import SolutionRemovalButton from 'assets/images/18_Solution removal button.png';
-import MTOSolutionTableOption from 'assets/images/19_MTO solution table_option 3.png';
-import SolutionRemovalModal from 'assets/images/20_Solution removal modal.png';
-import CollaborationAreaInProgress from 'assets/images/33_Collaboration area in progress.png';
+import MTOTableTabs from 'assets/images/13_MTO_table_tabs.png';
+import SolutinEditPanel from 'assets/images/16_solution_edit_panel.png';
+import SolutionRemovalButton from 'assets/images/18_solution_removal_button.png';
+import MTOSolutionTableOption from 'assets/images/19_MTO_solution_table_option_3.png';
+import SolutionRemovalModal from 'assets/images/20_solution_removal_modal.png';
+import CollaborationAreaInProgress from 'assets/images/33_collaboration_area_in_progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
