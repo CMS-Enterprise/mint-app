@@ -95,9 +95,9 @@ describe('Model Plan -- Complexity', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('payment-multiple-payments-how')).toHaveValue(
-        'lorem ipsum'
-      );
+      expect(
+        screen.getByTestId('payment-claims-processing-precendece-note')
+      ).toHaveValue('claim note');
     });
 
     expect(asFragment()).toMatchSnapshot();
