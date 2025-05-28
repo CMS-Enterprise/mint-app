@@ -101,19 +101,14 @@ const UsingTableActions = () => {
                   <p className="margin-y-1">
                     {t('milestones.addingMilestonesFromLibrary.description')}
                   </p>
-                  <Trans
-                    t={t}
-                    i18nKey="milestones.addingMilestonesFromLibrary.usingMilestoneLibrary"
-                    components={{
-                      link1: (
-                        <UswdsReactLink
-                          aria-label="Redirect to using the milestone library article"
-                          to="using-milestone-library"
-                        />
-                      )
-                    }}
-                  />
-                  <Icon.ArrowForward className="margin-left-1 top-05 text-primary" />
+                  <UswdsReactLink
+                    aria-label="Redirect to using the milestone library article"
+                    to="using-milestone-library"
+                    className="display-block margin-y-05"
+                  >
+                    {t('milestones.addingMilestonesFromLibrary.link1')}{' '}
+                    <Icon.ArrowForward className="top-3px" />
+                  </UswdsReactLink>
                 </div>
 
                 <div>
@@ -123,19 +118,14 @@ const UsingTableActions = () => {
                   <p className="margin-y-1">
                     {t('milestones.addingCustomMilestone.description')}
                   </p>
-                  <Trans
-                    t={t}
-                    i18nKey="milestones.addingCustomMilestone.howToAddCustomMilestone"
-                    components={{
-                      link1: (
-                        <UswdsReactLink
-                          aria-label="Redirect to how to add custom milestone article"
-                          to="add-custom-milestone"
-                        />
-                      )
-                    }}
-                  />
-                  <Icon.ArrowForward className="margin-left-1 top-05 text-primary" />
+                  <UswdsReactLink
+                    aria-label="Redirect to how to add custom milestone article"
+                    to="add-custom-milestone"
+                    className="display-block margin-y-05"
+                  >
+                    {t('milestones.addingCustomMilestone.link1')}{' '}
+                    <Icon.ArrowForward className="top-3px" />
+                  </UswdsReactLink>
                 </div>
               </div>
 
@@ -274,19 +264,14 @@ const UsingTableActions = () => {
                       'solutionsAndItSystems.browsingSolutionLibrary.description'
                     )}
                   </p>
-                  <Trans
-                    t={t}
-                    i18nKey="solutionsAndItSystems.browsingSolutionLibrary.usingSolutionLibrary"
-                    components={{
-                      link1: (
-                        <UswdsReactLink
-                          aria-label="Redirect to using the solution library articleb"
-                          to="using-solution-library"
-                        />
-                      )
-                    }}
-                  />
-                  <Icon.ArrowForward className="margin-left-1 top-05 text-primary" />
+                  <UswdsReactLink
+                    aria-label="Redirect to using the solution library articleb"
+                    to="using-solution-library"
+                    className="display-block margin-y-05"
+                  >
+                    {t('solutionsAndItSystems.browsingSolutionLibrary.link1')}{' '}
+                    <Icon.ArrowForward className="top-3px" />
+                  </UswdsReactLink>
                 </div>
 
                 <div>
@@ -298,19 +283,14 @@ const UsingTableActions = () => {
                       'solutionsAndItSystems.addingCustomSolution.description'
                     )}
                   </p>
-                  <Trans
-                    t={t}
-                    i18nKey="solutionsAndItSystems.addingCustomSolution.howToAddCustomSolution"
-                    components={{
-                      link1: (
-                        <UswdsReactLink
-                          aria-label="Redirect to how to add custom solution article"
-                          to="add-custom-solution"
-                        />
-                      )
-                    }}
-                  />
-                  <Icon.ArrowForward className="margin-left-1 top-05 text-primary" />
+                  <UswdsReactLink
+                    aria-label="Redirect to how to add custom solution article"
+                    to="add-custom-solution"
+                    className="display-block margin-y-05"
+                  >
+                    {t('solutionsAndItSystems.addingCustomSolution.link1')}{' '}
+                    <Icon.ArrowForward className="top-3px" />
+                  </UswdsReactLink>
                 </div>
               </div>
 
