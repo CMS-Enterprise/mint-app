@@ -88,7 +88,7 @@ export const UsingSolutionLibrary = () => {
                   </UswdsReactLink>
 
                   <UswdsReactLink
-                    to="/help-and-knowledge/using-table-actions"
+                    to="/help-and-knowledge/starting-mto-matrix"
                     className="display-block"
                   >
                     {t('step1.link2')} <Icon.ArrowForward className="top-3px" />
