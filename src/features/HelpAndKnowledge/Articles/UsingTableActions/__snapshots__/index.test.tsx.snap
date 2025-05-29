@@ -67,7 +67,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             <img
               alt="A screenshot of the table actions area."
               class="border-1px radius-md border-gray-10 shadow-3"
-              src="/src/assets/images/11_Table%20actions%20area.png"
+              src="/src/assets/images/11_table_actions_area.png"
             />
             <p>
               Image caption: A screenshot of the table actions area visible at the top of the main MTO table views.
@@ -233,7 +233,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="A screenshot of the table actions area."
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/11_Table%20actions%20area.png"
+                    src="/src/assets/images/11_table_actions_area.png"
                   />
                   <p>
                     Image caption: A screenshot of the table actions area visible at the top of the main MTO table views.
@@ -289,7 +289,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="A screenshot of the form that allows a user to add a new category."
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/21_New%20category%20modal.png"
+                    src="/src/assets/images/21_new_category_modal.png"
                   />
                   <p>
                     Image caption: A screenshot of the form that allows a user to add a new category. This includes the fields for category title and setting a primary category.
@@ -471,7 +471,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="A screenshot of the table actions area."
                     class="border-1px radius-md border-gray-10 shadow-3"
-                    src="/src/assets/images/11_Table%20actions%20area.png"
+                    src="/src/assets/images/11_table_actions_area.png"
                   />
                   <p>
                     Image caption: A screenshot of the table actions area visible at the top of the main MTO table views.
@@ -505,7 +505,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="A screenshot of the confirmation pop-up."
                     class="border-1px radius-md border-gray-10 shadow-3"
-                    src="/src/assets/images/22_Template%20confirmation%20modal.png"
+                    src="/src/assets/images/22_template_confirmation_modal.png"
                   />
                   <p>
                     Image caption: A screenshot of the confirmation pop-up when adding the “Standard categories” template to an MTO.
@@ -717,7 +717,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. IT Leads are able to create custom milestones directly from the Model-to-operations matrix (MTO) for their model.
+                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
                 </p>
               </div>
               <div

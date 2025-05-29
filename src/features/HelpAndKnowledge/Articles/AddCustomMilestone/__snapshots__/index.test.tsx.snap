@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
+exports[`AddCustomMilestone > matches the snapshot 1`] = `
 <DocumentFragment>
   <div>
     <main
@@ -45,7 +45,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
               class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
               tabindex="-1"
             >
-              Using the solution library
+              How to add a custom milestone
             </h1>
             <a
               class="usa-link width-fit-content display-block "
@@ -62,53 +62,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
             <p
               class="mint-body-large margin-top-1 margin-bottom-4"
             >
-              The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
-            </p>
-            <h2
-              class="margin-top-0 margin-bottom-2"
-            >
-              Browsing all available solutions
-            </h2>
-            <p>
-              The MINT solution library offers a variety of ways to browse the available solutions and IT systems. You can search, filter, and paginate through all the available solutions to find what you’re looking for.
-            </p>
-            <img
-              alt="A screenshot of the solution library showing all common solutions"
-              class="border-1px border-gray-10 radius-md shadow-2"
-              src="/src/assets/images/27_solution_library_all.png"
-            />
-            <p>
-              Image caption: A screenshot of the solution library showing all common solutions.
-            </p>
-            <h3
-              class="margin-bottom-1"
-            >
-              Searching
-            </h3>
-            <p
-              class="margin-y-0"
-            >
-              Use the search bar located below the page header area to narrow the list of solutions and IT systems to those with your search keywords in the title or category.
-            </p>
-            <h3
-              class="margin-bottom-1"
-            >
-              Filtering
-            </h3>
-            <p
-              class="margin-top-0"
-            >
-              Use the tabbed button group below the search bar to narrow the list of solutions and IT systems you are browsing. You can see the number of solutions of that type displayed next to the button label. The available filters are “All common solutions” (the default selection), “IT systems”, “Contracts and contractors”, and “Cross-cutting groups”. You may also choose to check the box labeled “Hide added solutions” to filter out solutions you have already added to your MTO.
-            </p>
-            <h3
-              class="margin-bottom-1"
-            >
-              Pagination
-            </h3>
-            <p
-              class="margin-top-0"
-            >
-              Use the pagination below the list of solution cards to page through the available common solutions. You may also change the number of solutions displayed per page using the dropdown to the right of the pagination buttons.
+              MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
             </p>
             <ol
               class="usa-process-list"
@@ -120,69 +74,18 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Navigate to the solution library
+                  Navigate to your model’s MTO
                 </h3>
                 <p>
-                  From the table actions area or the MTO empty state, click the button labeled “Add solutions from library”. Visit either of the tutorials below to learn more about navigating to the milestone library.
-                </p>
-                <a
-                  class="usa-link display-block margin-y-05"
-                  href="/help-and-knowledge/using-table-actions"
-                >
-                  Using the table actions area 
-                  <svg
-                    class="usa-icon top-3px"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                    />
-                  </svg>
-                </a>
-                <a
-                  class="usa-link display-block"
-                  href="/help-and-knowledge/starting-mto-matrix"
-                >
-                  Starting an MTO for a new model 
-                  <svg
-                    class="usa-icon top-3px"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li
-                class="usa-process-list__item maxw-none"
-              >
-                <h3
-                  class="usa-process-list__heading"
-                  data-testid="processListHeading"
-                >
-                  (Optional) Click “About this solution”
-                </h3>
-                <p>
-                  From the solution library, find the card for the solution you want to add to your MTO. At the bottom of the card, click on the button labeled “About this solution”.  When you click this button, it will open a side panel that contains additional information about the solution you are considering for your MTO, including: an overview of the solution, a high-level timeline of steps to get up and running with the solution and your model, and a list of points of contact for the IT system or solution. You may click the X in the top left corner of the panel to close the informational panel.
+                  From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
                 </p>
                 <img
-                  alt="A screenshot of the solution library showing all common solutions"
+                  alt="A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/25_solution_library_about_solution.png"
+                  src="/src/assets/images/33_collaboration_area_in_progress.png"
                 />
                 <p>
-                  Image caption: A screenshot of the solution library showing all common solutions.
+                  Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
                 </p>
               </li>
               <li
@@ -192,10 +95,18 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Click “Add to matrix”
+                  Locate the table actions area
                 </h3>
                 <p>
-                  From the solution library, find the card for the solution you want to add to your MTO. At the bottom of the card, click on the button labeled “Add to matrix”.  When you click this button, it will open a screen titled “Add to existing milestone?” which will allow you to optionally add this solution to a milestone you have already added to your MTO.
+                  If you have already started your MTO, you will find the “Table actions” area below the page header and above the main MTO table.
+                </p>
+                <img
+                  alt="A screenshot of the table actions area visible at the top of the main MTO table views"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/11_table_actions_area.png"
+                />
+                <p>
+                  Image caption: A screenshot of the table actions area visible at the top of the main MTO table views.
                 </p>
               </li>
               <li
@@ -205,12 +116,25 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  (Optional) Add this solution to a milestone
+                  Click create a custom milestone
+                </h3>
+                <p>
+                  In the “Milestones” section of the table actions area, click the button labeled “or, create a custom milestone”. This button will open a form, allowing you to input content for your custom milestone.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Complete the content in the form
                 </h3>
                 <p
                   class="margin-bottom-0"
                 >
-                  Complete the optional fields in the form to add this solution to milestone(s) you have already added to your MTO:
+                  The new milestone form will ask you to complete the following fields:
                 </p>
                 <ul
                   class="margin-bottom-2"
@@ -221,18 +145,38 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                     <span
                       class="text-bold"
                     >
-                      Milestones:
+                      Primary category:
                     </span>
-                     select from a list of milestones you have already added to your MTO. You may select multiple, and are encouraged to select all that apply.
+                     the main milestone category that this milestone fits within. You may later create a new category if your MTO does not currently have one that fits your new milestone. There is also an “Uncategorized” primary category.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Sub-category:
+                    </span>
+                     the category within the primary category that your milestone fits within. You may later create a new sub-category if this category in your MTO does not currently have a sub-category that fits your new milestone. For every primary category, there is also an “Uncategorized” sub-category.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Milestone title:
+                    </span>
+                     a concise description of your milestone. Try to keep these brief and understandable.
                   </li>
                 </ul>
                 <img
-                  alt="A screenshot of the form to add a chosen solution to existing milestones"
+                  alt="A screenshot of the form that allows a user to add a custom milestone."
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/26_solution_library_add_to_milestone_modal.png"
+                  src="/src/assets/images/24_new_milestone_modal.png"
                 />
                 <p>
-                  Image caption: A screenshot of the form to add a chosen solution to existing milestones.
+                  Image caption: A screenshot of the form that allows a user to add a custom milestone.
                 </p>
               </li>
               <li
@@ -242,12 +186,10 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Click “Add without milestone” or “Add with x milestones”
+                  Click “Add milestone”
                 </h3>
-                <p
-                  class="margin-bottom-0"
-                >
-                  If you have chosen to add the solution without adding additional milestones, click the button labeled “Add without milestones”. If you have chosen to add your solution with milestones, click the button labeled “Add with x milestones”, with x being the number of milestones you have selected from the list. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without adding the solution to your MTO.
+                <p>
+                  Once you have completed all fields in the form, click the “Add milestone” button. Once you do so, your milestone will be visible in the “Milestones” tab of your MTO. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without adding a new milestone.
                 </p>
               </li>
             </ol>
@@ -333,7 +275,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  How to add a custom solution
+                  Using the milestone library
                 </h3>
               </header>
               <a
@@ -353,7 +295,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  When possible, MINT encourages users to add solutions to a Model-to-operations matrix (MTO) via the solution library. However, MINT’s solution library does not currently offer a comprehensive list of all IT systems, contracts, and other operational solutions used for models. because of this and the unique needs of individual models, IT Leads may need to create custom solutions for a given model. IT Leads are able to create custom solutions directly from the Model-to-operations matrix (MTO) for their model.
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or Model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
                 </p>
               </div>
               <div
@@ -361,7 +303,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read How to add a custom solution article"
+                  aria-label="Read Using the milestone library article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -384,7 +326,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Using the solutions and IT systems table
+                  Using the milestone table
                 </h3>
               </header>
               <a
@@ -404,7 +346,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The solutions and IT systems table is accessible from the tab bar below the model-to-operations matrix (MTO) header area and is one of the main MTO content views in MINT. It is closely related to the milestone table, since each one offers a slightly different view of content you have added to your MTO.
+                  The milestone table is the main model-to-operations matrix (MTO) content view in MINT. It is closely related to the solutions and IT systems table, since each one offers a slightly different view of content you have added to your MTO.
                 </p>
               </div>
               <div
@@ -412,7 +354,7 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read Using the solutions and IT systems table article"
+                  aria-label="Read Using the milestone table article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >

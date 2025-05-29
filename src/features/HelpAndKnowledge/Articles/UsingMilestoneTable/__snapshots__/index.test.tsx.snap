@@ -174,7 +174,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
               >
                 <img
                   alt="A screenshot of the table actions area."
-                  src="/src/assets/images/03_Milestone%20table%20menu%20open.png"
+                  src="/src/assets/images/03_milestone_table_menu_open.png"
                 />
               </div>
               <p>
@@ -231,7 +231,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="MTO milestone table option"
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/10_MTO%20milestone%20table_option%201.png"
+                    src="/src/assets/images/10_MTO_milestone_table_option%201.png"
                   />
                   <p>
                     Image caption: A screenshot of the model-to-operations matrix including part of the milestone table with three milestones showing.
@@ -335,7 +335,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="screenshot of milestone edit panel"
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/08_Milestone%20edit%20panel.png"
+                    src="/src/assets/images/08_milestone_edit_panel.png"
                   />
                   <p>
                     Image caption: A screenshot of the side panel that allows users to edit details about a milestone.
@@ -398,7 +398,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="a screenshot of the side panel"
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/17_Milestone%20removal%20button.png"
+                    src="/src/assets/images/17_milestone_removal_button.png"
                   />
                   <p>
                     Image caption: A screenshot of the side panel that allows users to edit details about a milestone, including removing a milestone.
@@ -419,7 +419,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="a screenshot of the milestone removal confirmation screen"
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/15_Milestone%20removal%20modal.png"
+                    src="/src/assets/images/15_milestone_removal_modal.png"
                   />
                   <p>
                     Image caption: A screenshot of the milestone removal confirmation screen.
@@ -443,7 +443,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
               >
                 <img
                   alt="a screenshot of the table actions area"
-                  src="/src/assets/images/03_Milestone%20table%20menu%20open.png"
+                  src="/src/assets/images/03_milestone_table_menu_open.png"
                 />
               </div>
               <p>
@@ -702,7 +702,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. IT Leads are able to create custom milestones directly from the Model-to-operations matrix (MTO) for their model.
+                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
                 </p>
               </div>
               <div
