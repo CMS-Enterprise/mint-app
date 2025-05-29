@@ -18,13 +18,13 @@ const usingTableActions = {
       title: 'Adding milestones from the milestone library',
       description:
         'The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or MTO. To view all of the common model milestones included in MINT, navigate to the table actions area and click the button labeled “Add milestones from library”. Doing so will open the MINT milestone library, allowing you to learn more about MINT’s common milestones and quickly add them to your MTO.',
-      usingMilestoneLibrary: '<link1>Using the milestone library<link1>'
+      link1: 'Using the milestone library'
     },
     addingCustomMilestone: {
       title: 'Adding a custom milestone',
       description:
         'MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. If the MINT milestone library does not offer the model milestone you need, you may add a custom milestone. To do so from the table actions area, click the button labeled “or, create a custom milestone”. This will open a screen that will allow you to input basic details about your custom milestone and add it to your MTO.',
-      howToAddCustomMilestone: '<link1>How to add a custom milestone</link1>'
+      link1: 'How to add a custom milestone'
     }
   },
   categories: {
@@ -90,13 +90,13 @@ const usingTableActions = {
       title: 'Browsing the solution library',
       description:
         'The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or MTO. To view all of the solutions and IT systems included in MINT, navigate to the table actions area and click the button labeled “Add solutions from library”. Doing so will open the MINT solution library, allowing you to learn more about available solutions and IT systems and quickly add them to your MTO.',
-      usingSolutionLibrary: '<link1>Using the solution library</link1>'
+      link1: 'Using the solution library'
     },
     addingCustomSolution: {
       title: 'Adding a custom solution',
       description:
         'When possible, MINT encourages users to add solutions to an MTO via the solution library. However, MINT’s solution library does not currently offer a comprehensive list of all IT systems, contracts, and other operational solutions used for models. Because of this and the unique needs of individual models, IT Leads may need to create custom solutions for a given model. If the MINT solution library does not offer the solution or IT system you need, you may add a custom solution. To do so from the table actions area, click the button labeled “or, create a custom solution”. This will open a screen that will allow you to input basic details about your custom solution and add it to your MTO.',
-      howToAddCustomSolution: '<link1>How to add a custom solution</link1>'
+      link1: 'How to add a custom solution'
     }
   },
   templates: {

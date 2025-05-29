@@ -231,7 +231,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   <img
                     alt="MTO milestone table option"
                     class="border-1px border-gray-10 radius-md shadow-3"
-                    src="/src/assets/images/10_MTO_milestone_table_option%201.png"
+                    src="/src/assets/images/10_MTO_milestone_table_option_1.png"
                   />
                   <p>
                     Image caption: A screenshot of the model-to-operations matrix including part of the milestone table with three milestones showing.

@@ -106,29 +106,24 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 </p>
                 <a
                   aria-label="Redirect to using the milestone library article"
-                  class="usa-link"
+                  class="usa-link display-block margin-y-05"
                   href="/using-milestone-library"
                 >
-                  Using the milestone library
+                  Using the milestone library 
+                  <svg
+                    class="usa-icon top-3px"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
                 </a>
-                <a
-                  aria-label="Redirect to using the milestone library article"
-                  class="usa-link"
-                  href="/using-milestone-library"
-                />
-                <svg
-                  class="usa-icon margin-left-1 top-05 text-primary"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
               </div>
               <div>
                 <h3
@@ -143,24 +138,24 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 </p>
                 <a
                   aria-label="Redirect to how to add custom milestone article"
-                  class="usa-link"
+                  class="usa-link display-block margin-y-05"
                   href="/add-custom-milestone"
                 >
-                  How to add a custom milestone
+                  How to add a custom milestone 
+                  <svg
+                    class="usa-icon top-3px"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
                 </a>
-                <svg
-                  class="usa-icon margin-left-1 top-05 text-primary"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
               </div>
             </div>
             <div>
@@ -366,24 +361,24 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 </p>
                 <a
                   aria-label="Redirect to using the solution library articleb"
-                  class="usa-link"
+                  class="usa-link display-block margin-y-05"
                   href="/using-solution-library"
                 >
-                  Using the solution library
+                  Using the solution library 
+                  <svg
+                    class="usa-icon top-3px"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
                 </a>
-                <svg
-                  class="usa-icon margin-left-1 top-05 text-primary"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
               </div>
               <div>
                 <h3
@@ -398,24 +393,24 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 </p>
                 <a
                   aria-label="Redirect to how to add custom solution article"
-                  class="usa-link"
+                  class="usa-link display-block margin-y-05"
                   href="/add-custom-solution"
                 >
-                  How to add a custom solution
+                  How to add a custom solution 
+                  <svg
+                    class="usa-icon top-3px"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
                 </a>
-                <svg
-                  class="usa-icon margin-left-1 top-05 text-primary"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
               </div>
             </div>
             <div>

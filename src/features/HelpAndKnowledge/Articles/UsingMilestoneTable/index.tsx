@@ -13,7 +13,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 
 import milestoneTableMenuImg from 'assets/images/03_milestone_table_menu_open.png';
 import milestoneEditPanelImg from 'assets/images/08_milestone_edit_panel.png';
-import mtoMilestoneTableOption1Img from 'assets/images/10_MTO_milestone_table_option 1.png';
+import mtoMilestoneTableOption1Img from 'assets/images/10_MTO_milestone_table_option_1.png';
 import milestoneRemovalModalImg from 'assets/images/15_milestone_removal_modal.png';
 import milestoneRemovalButtonImg from 'assets/images/17_milestone_removal_button.png';
 import collaborationAreaInProgressImg from 'assets/images/33_collaboration_area_in_progress.png';
