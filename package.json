@@ -11,7 +11,7 @@
     "@json2csv/transforms": "^7.0.6",
     "@okta/okta-auth-js": "^6.1.0",
     "@okta/okta-react": "^6.10.0",
-    "@okta/okta-signin-widget": "^7.31.1",
+    "@okta/okta-signin-widget": "^7.31.2",
     "@tiptap/core": "^2.12.0",
     "@tiptap/extension-character-count": "^2.12.0",
     "@tiptap/extension-document": "^2.12.0",
@@ -26,7 +26,7 @@
     "@trussworks/react-uswds": "^6.0.0",
     "@types/apollo-upload-client": "^17.0.5",
     "@types/jest": "26.0.23",
-    "@types/lodash": "^4.17.16",
+    "@types/lodash": "^4.17.17",
     "@types/luxon": "^3.6.2",
     "@types/no-scroll": "^2.1.2",
     "@types/node": "15.12.5",
@@ -43,7 +43,7 @@
     "@types/redux-saga-routines": "^3.1.8",
     "@types/sinon": "^10.0.16",
     "@types/text-encoding": "^0.0.40",
-    "@uswds/uswds": "^3.12.0",
+    "@uswds/uswds": "^3.13.0",
     "apollo-upload-client": "^17.0.0",
     "axios": "^1.9.0",
     "classnames": "^2.5.1",
@@ -135,7 +135,7 @@
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
-    "@cypress/code-coverage": "^3.14.2",
+    "@cypress/code-coverage": "^3.14.3",
     "@cypress/webpack-preprocessor": "^6.0.4",
     "@graphql-codegen/cli": "5.0.6",
     "@graphql-codegen/client-preset": "^4.5.1",
@@ -153,7 +153,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/json2csv": "^5.0.7",
-    "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-react": "^4.5.0",
     "@vitest/coverage-v8": "^0.34.3",
     "apollo-link": "^1.2.14",
     "apollo-link-error": "^1.1.13",
@@ -190,7 +190,7 @@
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^2.1.9",
-    "webpack": "^5.99.8"
+    "webpack": "^5.99.9"
   },
   "resolutions": {
     "prismjs": "1.24.0",
