@@ -45,7 +45,110 @@ export const SharingAndExportingMTO = () => {
                 {t('description')}
               </p>
 
+              {/* From the collab area */}
               <h2>{t('fromCollabArea')}</h2>
+
+              <ProcessList>
+                {/* STEP 1 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('step1.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('step1.text')}</p>
+
+                  <img
+                    alt={t('step1.altText')}
+                    src={CollaborationAreaInProgress}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('step1.caption')}</p>
+                </ProcessListItem>
+
+                {/* STEP 2 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('step2.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('step2.text')}</p>
+
+                  <img
+                    alt={t('step2.altText')}
+                    src={TableActionsArea}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('step2.caption')}</p>
+                </ProcessListItem>
+
+                {/* STEP 3 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('step3.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('step3.text')}</p>
+                </ProcessListItem>
+
+                {/* STEP 4 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('step4.heading')}
+                  </ProcessListHeading>
+
+                  <p className="margin-bottom-0">{t('step4.text')}</p>
+
+                  <ul className="margin-bottom-0">
+                    {step4List.map((item, index) => (
+                      <li key={item} className="margin-0">
+                        <Trans
+                          i18nKey={`sharingExportingMto:step4.list.${index}`}
+                          components={{
+                            bold: <span className="text-bold" />
+                          }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="margin-y-0">{t('step4.text2')}</p>
+
+                  <ul className="margin-bottom-2">
+                    {step4List2.map((item, index) => (
+                      <li key={item} className="margin-0">
+                        <Trans
+                          i18nKey={`sharingExportingMto:step4.list2.${index}`}
+                          components={{
+                            bold: <span className="text-bold" />
+                          }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+
+                  <img
+                    alt={t('step4.altText')}
+                    src={NewMilestoneModal}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('step4.caption')}</p>
+                </ProcessListItem>
+
+                {/* STEP 5 */}
+                <ProcessListItem className="maxw-none">
+                  <ProcessListHeading type="h3">
+                    {t('step5.heading')}
+                  </ProcessListHeading>
+
+                  <p>{t('step5.text')}</p>
+                </ProcessListItem>
+              </ProcessList>
+
+              {/* From the read view */}
+              <h2>{t('fromReadView')}</h2>
 
               <ProcessList>
                 {/* STEP 1 */}

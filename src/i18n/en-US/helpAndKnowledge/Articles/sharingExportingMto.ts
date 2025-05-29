@@ -44,7 +44,8 @@ To share, complete the following fields in the form:`,
   step5: {
     heading: 'Click “Share” or “Export”',
     text: 'If you have chosen to share your content, click the button labeled “Share”. From the Share screen, you may also choose to click the button labeled “Copy link to Read View”. This will copy a link to your MTO content to your clipboard, allowing you to paste that link in other situations such as email, Slack, or another chat tool. If you have chosen to export, click the button labeled “Export”. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without sharing or exporting.'
-  }
+  },
+  fromReadView: 'From the read view'
 };
 
 export default sharingExportingMto;
