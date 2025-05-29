@@ -100,7 +100,7 @@ export const AddCustomSolution = () => {
                     {step4List.map((item, index) => (
                       <li key={item} className="margin-0">
                         <Trans
-                          i18nKey={`addCustomMilestone:step4.list.${index}`}
+                          i18nKey={`addCustomSolution:step4.list.${index}`}
                           components={{
                             bold: <span className="text-bold" />
                           }}

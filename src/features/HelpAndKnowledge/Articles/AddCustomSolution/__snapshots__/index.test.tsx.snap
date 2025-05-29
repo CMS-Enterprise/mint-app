@@ -145,9 +145,9 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
                     <span
                       class="text-bold"
                     >
-                      Primary category:
+                      Solution type:
                     </span>
-                     the main milestone category that this milestone fits within. You may later create a new category if your MTO does not currently have one that fits your new milestone. There is also an “Uncategorized” primary category.
+                     choose the solution type most applicable to the solution you are adding. The available options are: IT system; Contract vehicle, contractor, or other contract; Cross-cutting group; or Other.
                   </li>
                   <li
                     class="margin-0"
@@ -155,9 +155,9 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
                     <span
                       class="text-bold"
                     >
-                      Sub-category:
+                      Solution title:
                     </span>
-                     the category within the primary category that your milestone fits within. You may later create a new sub-category if this category in your MTO does not currently have a sub-category that fits your new milestone. For every primary category, there is also an “Uncategorized” sub-category.
+                     a concise description of your solution. Try to keep these brief and understandable.
                   </li>
                   <li
                     class="margin-0"
@@ -165,9 +165,9 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
                     <span
                       class="text-bold"
                     >
-                      Milestone title:
+                      Point of contact email address:
                     </span>
-                     a concise description of your milestone. Try to keep these brief and understandable.
+                     The email address (likely a cms.hhs.gov address) for the person or team mailbox that is the primary point of contact for the solution you are adding.
                   </li>
                 </ul>
                 <img
