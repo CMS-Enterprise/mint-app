@@ -174,7 +174,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                   <a
                     aria-label="Redirect to starting mto for a new model article"
                     class="usa-link display-block margin-y-05"
-                    href="/starting-mto-matix"
+                    href="/starting-mto-matrix"
                   >
                     Starting an MTO for a new model 
                     <svg

@@ -109,7 +109,7 @@ const UsingMilestoneLibrary = () => {
                     </UswdsReactLink>
                     <UswdsReactLink
                       aria-label="Redirect to starting mto for a new model article"
-                      to="starting-mto-matix"
+                      to="starting-mto-matrix"
                       className="display-block margin-y-05"
                     >
                       {t('addingMilestoneToMto.step1.link2')}{' '}
