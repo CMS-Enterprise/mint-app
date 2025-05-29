@@ -33,7 +33,7 @@ export enum HelpArticle {
   CREATING_MTO_MATRIX = 'CREATING_MTO_MATRIX',
   STARTING_MTO = 'STARTING_MTO',
   USING_MILESTONE_TABLE = 'USING_MILESTONE_TABLE',
-  USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE = 'USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE',
+  USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE = 'USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE',
   USING_TABLE_ACTIONS = 'USING_TABLE_ACTIONS',
   USING_MILESTONE_LIBRARY = 'USING_MILESTONE_LIBRARY',
   USING_SOLUTION_LIBRARY = 'USING_SOLUTION_LIBRARY',
@@ -178,7 +178,7 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.STARTING_MTO,
-    route: '/starting-mto',
+    route: '/starting-mto-matrix',
     translation: 'startingMto',
     type: ArticleCategories.MTO_TUTORIALS
   },
@@ -189,9 +189,9 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     type: ArticleCategories.MTO_TUTORIALS
   },
   {
-    key: HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE,
-    route: '/using-it-systems-and-solutions-table',
-    translation: 'usingItSystemsAndSolutionsTable',
+    key: HelpArticle.USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE,
+    route: '/using-solutions-and-it-systems-table',
+    translation: 'usingSolutionsAndITSystemsTable',
     type: ArticleCategories.MTO_TUTORIALS
   },
   {

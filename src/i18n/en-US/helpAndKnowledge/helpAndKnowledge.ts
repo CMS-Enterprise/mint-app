@@ -2170,8 +2170,8 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Creating your Model-to-operations matrix (MTO) in MINT',
   [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
   [HelpArticle.USING_MILESTONE_TABLE]: 'Using the milestone table',
-  [HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE]:
-    'Using the IT system and solution table',
+  [HelpArticle.USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE]:
+    'Using the solutions and IT systems table',
   [HelpArticle.USING_TABLE_ACTIONS]: 'Using the table actions area',
   [HelpArticle.USING_MILESTONE_LIBRARY]: 'Using the milestone library',
   [HelpArticle.USING_SOLUTION_LIBRARY]: 'Using the solution library',
