@@ -3,29 +3,28 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  Icon,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import SolutionLibraryAbout from 'assets/images/25_solution_library_about_solution.png';
-import SolutionLibraryAddModal from 'assets/images/26_solution_library_add_to_milestone_modal.png';
-import SolutionLibraryAll from 'assets/images/27_solution_library_all.png';
-import UswdsReactLink from 'components/LinkWrapper';
+import TableActionsArea from 'assets/images/11_table_actions_area.png';
+import NewMilestoneModal from 'assets/images/24_new_milestone_modal.png';
+import CollaborationAreaInProgress from 'assets/images/33_collaboration_area_in_progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import RelatedArticles from '../_components/RelatedArticles';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
-import '../index.scss';
+export const AddCustomMilestone = () => {
+  const { t } = useTranslation('addCustomMilestone');
 
-export const UsingSolutionLibrary = () => {
-  const { t } = useTranslation('usingSolutionLibrary');
+  const step4List = tArray<string>('addCustomMilestone:step4.list');
 
   return (
     <div>
@@ -45,32 +44,6 @@ export const UsingSolutionLibrary = () => {
                 {t('description')}
               </p>
 
-              <h2 className="margin-top-0 margin-bottom-2">
-                {t('browsingAllAvailableSolutions')}
-              </h2>
-
-              <p>{t('browsingAllAvailableSolutionsDescription')}</p>
-
-              <img
-                alt={t('browsingAllAvailableSolutionsAltText')}
-                src={SolutionLibraryAll}
-                className="border-1px border-gray-10 radius-md shadow-2"
-              />
-
-              <p>{t('browsingAllAvailableSolutionsCaption')}</p>
-
-              <h3 className="margin-bottom-1">{t('searching')}</h3>
-
-              <p className="margin-y-0">{t('searchingDescription')}</p>
-
-              <h3 className="margin-bottom-1">{t('filtering')}</h3>
-
-              <p className="margin-top-0">{t('filteringDescription')}</p>
-
-              <h3 className="margin-bottom-1">{t('pagination')}</h3>
-
-              <p className="margin-top-0">{t('paginationDescription')}</p>
-
               <ProcessList>
                 {/* STEP 1 */}
                 <ProcessListItem className="maxw-none">
@@ -80,19 +53,13 @@ export const UsingSolutionLibrary = () => {
 
                   <p>{t('step1.text')}</p>
 
-                  <UswdsReactLink
-                    to="/help-and-knowledge/using-table-actions"
-                    className="display-block margin-y-05"
-                  >
-                    {t('step1.link1')} <Icon.ArrowForward className="top-3px" />
-                  </UswdsReactLink>
+                  <img
+                    alt={t('step1.altText')}
+                    src={CollaborationAreaInProgress}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
 
-                  <UswdsReactLink
-                    to="/help-and-knowledge/starting-mto-matrix"
-                    className="display-block"
-                  >
-                    {t('step1.link2')} <Icon.ArrowForward className="top-3px" />
-                  </UswdsReactLink>
+                  <p>{t('step1.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 2 */}
@@ -105,7 +72,7 @@ export const UsingSolutionLibrary = () => {
 
                   <img
                     alt={t('step2.altText')}
-                    src={SolutionLibraryAbout}
+                    src={TableActionsArea}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -130,20 +97,21 @@ export const UsingSolutionLibrary = () => {
                   <p className="margin-bottom-0">{t('step4.text')}</p>
 
                   <ul className="margin-bottom-2">
-                    <li className="margin-0">
-                      <Trans
-                        t={t}
-                        i18nKey="step4.listItem"
-                        components={{
-                          bold: <span className="text-bold" />
-                        }}
-                      />
-                    </li>
+                    {step4List.map((item, index) => (
+                      <li key={item} className="margin-0">
+                        <Trans
+                          i18nKey={`addCustomMilestone:step4.list.${index}`}
+                          components={{
+                            bold: <span className="text-bold" />
+                          }}
+                        />
+                      </li>
+                    ))}
                   </ul>
 
                   <img
                     alt={t('step4.altText')}
-                    src={SolutionLibraryAddModal}
+                    src={NewMilestoneModal}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -156,7 +124,7 @@ export const UsingSolutionLibrary = () => {
                     {t('step5.heading')}
                   </ProcessListHeading>
 
-                  <p className="margin-bottom-0">{t('step5.text')}</p>
+                  <p>{t('step5.text')}</p>
                 </ProcessListItem>
               </ProcessList>
 
@@ -169,8 +137,8 @@ export const UsingSolutionLibrary = () => {
       <RelatedArticles
         currentArticle={HelpArticle.STARTING_MTO}
         specificArticles={[
-          HelpArticle.ADD_CUSTOM_SOLUTION,
-          HelpArticle.USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE,
+          HelpArticle.USING_MILESTONE_LIBRARY,
+          HelpArticle.USING_MILESTONE_TABLE,
           HelpArticle.USING_TABLE_ACTIONS
         ]}
         viewAllLink
@@ -179,4 +147,4 @@ export const UsingSolutionLibrary = () => {
   );
 };
 
-export default UsingSolutionLibrary;
+export default AddCustomMilestone;
