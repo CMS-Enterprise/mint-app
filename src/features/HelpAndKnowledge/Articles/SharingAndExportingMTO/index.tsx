@@ -9,8 +9,12 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
-import TableActionsArea from 'assets/images/11_table_actions_area.png';
-import NewMilestoneModal from 'assets/images/24_new_milestone_modal.png';
+import MINTHome from 'assets/images/09_MINT_home.png';
+import MINTTopTabs from 'assets/images/14_MINT_top_tabs.png';
+import ShareModal from 'assets/images/29_share_modal.png';
+import ExportModal from 'assets/images/30_export_modal.png';
+import ModelsTabOption1 from 'assets/images/31_models_tab_option_1.png';
+import ReadViewModelHeader from 'assets/images/32_read_view_model_header.png';
 import CollaborationAreaInProgress from 'assets/images/33_collaboration_area_in_progress.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -26,6 +30,12 @@ export const SharingAndExportingMTO = () => {
 
   const step4List = tArray<string>('sharingExportingMto:step4.list');
   const step4List2 = tArray<string>('sharingExportingMto:step4.list2');
+  const readViewStepList = tArray<string>(
+    'sharingExportingMto:readViewStep4.list'
+  );
+  const readViewStepList2 = tArray<string>(
+    'sharingExportingMto:readViewStep4.list2'
+  );
 
   return (
     <div>
@@ -59,7 +69,7 @@ export const SharingAndExportingMTO = () => {
 
                   <img
                     alt={t('step1.altText')}
-                    src={CollaborationAreaInProgress}
+                    src={MINTHome}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -76,7 +86,7 @@ export const SharingAndExportingMTO = () => {
 
                   <img
                     alt={t('step2.altText')}
-                    src={TableActionsArea}
+                    src={CollaborationAreaInProgress}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -130,7 +140,7 @@ export const SharingAndExportingMTO = () => {
 
                   <img
                     alt={t('step4.altText')}
-                    src={NewMilestoneModal}
+                    src={ShareModal}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
@@ -154,59 +164,67 @@ export const SharingAndExportingMTO = () => {
                 {/* STEP 1 */}
                 <ProcessListItem className="maxw-none">
                   <ProcessListHeading type="h3">
-                    {t('step1.heading')}
+                    {t('readViewStep1.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step1.text')}</p>
+                  <p>{t('readViewStep1.text')}</p>
 
                   <img
-                    alt={t('step1.altText')}
-                    src={CollaborationAreaInProgress}
+                    alt={t('readViewStep1.altText')}
+                    src={MINTTopTabs}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
-                  <p>{t('step1.caption')}</p>
+                  <p>{t('readViewStep1.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 2 */}
                 <ProcessListItem className="maxw-none">
                   <ProcessListHeading type="h3">
-                    {t('step2.heading')}
+                    {t('readViewStep2.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step2.text')}</p>
+                  <p>{t('readViewStep2.text')}</p>
 
                   <img
-                    alt={t('step2.altText')}
-                    src={TableActionsArea}
+                    alt={t('readViewStep2.altText')}
+                    src={ModelsTabOption1}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
-                  <p>{t('step2.caption')}</p>
+                  <p>{t('readViewStep2.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 3 */}
                 <ProcessListItem className="maxw-none">
                   <ProcessListHeading type="h3">
-                    {t('step3.heading')}
+                    {t('readViewStep3.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step3.text')}</p>
+                  <p>{t('readViewStep3.text')}</p>
+
+                  <img
+                    alt={t('readViewStep3.altText')}
+                    src={ReadViewModelHeader}
+                    className="border-1px border-gray-10 radius-md shadow-2"
+                  />
+
+                  <p>{t('readViewStep3.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 4 */}
                 <ProcessListItem className="maxw-none">
                   <ProcessListHeading type="h3">
-                    {t('step4.heading')}
+                    {t('readViewStep4.heading')}
                   </ProcessListHeading>
 
-                  <p className="margin-bottom-0">{t('step4.text')}</p>
+                  <p className="margin-bottom-0">{t('readViewStep4.text')}</p>
 
                   <ul className="margin-bottom-0">
-                    {step4List.map((item, index) => (
+                    {readViewStepList.map((item, index) => (
                       <li key={item} className="margin-0">
                         <Trans
-                          i18nKey={`sharingExportingMto:step4.list.${index}`}
+                          i18nKey={`sharingExportingMto:readViewStep4.list.${index}`}
                           components={{
                             bold: <span className="text-bold" />
                           }}
@@ -215,13 +233,13 @@ export const SharingAndExportingMTO = () => {
                     ))}
                   </ul>
 
-                  <p className="margin-y-0">{t('step4.text2')}</p>
+                  <p className="margin-y-0">{t('readViewStep4.text2')}</p>
 
                   <ul className="margin-bottom-2">
-                    {step4List2.map((item, index) => (
+                    {readViewStepList2.map((item, index) => (
                       <li key={item} className="margin-0">
                         <Trans
-                          i18nKey={`sharingExportingMto:step4.list2.${index}`}
+                          i18nKey={`sharingExportingMto:readViewStep4.list2.${index}`}
                           components={{
                             bold: <span className="text-bold" />
                           }}
@@ -231,21 +249,21 @@ export const SharingAndExportingMTO = () => {
                   </ul>
 
                   <img
-                    alt={t('step4.altText')}
-                    src={NewMilestoneModal}
+                    alt={t('readViewStep4.altText')}
+                    src={ExportModal}
                     className="border-1px border-gray-10 radius-md shadow-2"
                   />
 
-                  <p>{t('step4.caption')}</p>
+                  <p>{t('readViewStep4.caption')}</p>
                 </ProcessListItem>
 
                 {/* STEP 5 */}
                 <ProcessListItem className="maxw-none">
                   <ProcessListHeading type="h3">
-                    {t('step5.heading')}
+                    {t('readViewStep5.heading')}
                   </ProcessListHeading>
 
-                  <p>{t('step5.text')}</p>
+                  <p>{t('readViewStep5.text')}</p>
                 </ProcessListItem>
               </ProcessList>
 
@@ -258,9 +276,9 @@ export const SharingAndExportingMTO = () => {
       <RelatedArticles
         currentArticle={HelpArticle.STARTING_MTO}
         specificArticles={[
-          HelpArticle.USING_MILESTONE_LIBRARY,
-          HelpArticle.USING_MILESTONE_TABLE,
-          HelpArticle.USING_TABLE_ACTIONS
+          HelpArticle.USING_TABLE_ACTIONS,
+          HelpArticle.UPDATING_MTO_STATUS,
+          HelpArticle.STARTING_MTO
         ]}
         viewAllLink
       />
