@@ -15,6 +15,7 @@ import SampleModelPlan from './Articles/SampleModelPlan';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import StartingMTOMatrix from './Articles/StartingMTOMatrix';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
+import UpdatingMTOStatus from './Articles/UpdatingMTOStatus';
 import UsingMilestoneTable from './Articles/UsingMilestoneTable';
 import UsingSolutionLibrary from './Articles/UsingSolutionLibrary';
 import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
@@ -122,6 +123,10 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/using-solution-library" exact>
         <UsingSolutionLibrary />
+      </Route>
+
+      <Route path="/help-and-knowledge/updating-mto-status" exact>
+        <UpdatingMTOStatus />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />
