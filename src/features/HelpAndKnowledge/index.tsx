@@ -12,10 +12,12 @@ import ModelSolutionDesign from './Articles/ModelSolutionDesign';
 import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
 import PhasesInvolved from './Articles/PhasesInvolved';
 import SampleModelPlan from './Articles/SampleModelPlan';
+import SharingAndExportingMTO from './Articles/SharingAndExportingMTO';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
 import StartingMTOMatrix from './Articles/StartingMTOMatrix';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
 import UpdatingMTOStatus from './Articles/UpdatingMTOStatus';
+import UsingMilestoneLibrary from './Articles/UsingMilestoneLibrary';
 import UsingMilestoneTable from './Articles/UsingMilestoneTable';
 import UsingSolutionLibrary from './Articles/UsingSolutionLibrary';
 import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
@@ -125,8 +127,16 @@ export const HelpAndKnowledge = () => {
         <UsingSolutionLibrary />
       </Route>
 
+      <Route path="/help-and-knowledge/using-milestone-library" exact>
+        <UsingMilestoneLibrary />
+      </Route>
+
       <Route path="/help-and-knowledge/updating-mto-status" exact>
         <UpdatingMTOStatus />
+      </Route>
+
+      <Route path="/help-and-knowledge/sharing-exporting-mto" exact>
+        <SharingAndExportingMTO />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

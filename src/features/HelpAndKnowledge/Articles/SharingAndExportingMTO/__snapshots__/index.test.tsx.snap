@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
+exports[`SharingAndExportingMTO > matches the snapshot 1`] = `
 <DocumentFragment>
   <div>
     <main
@@ -45,7 +45,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
               class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
               tabindex="-1"
             >
-              Using the solutions and IT systems table
+              Sharing and exporting your MTO
             </h1>
             <a
               class="usa-link width-fit-content display-block "
@@ -62,107 +62,11 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
             <p
               class="mint-body-large margin-top-1 margin-bottom-4"
             >
-              The solutions and IT systems table is accessible from the tab bar below the model-to-operations matrix (MTO) header area and is one of the main MTO content views in MINT. It is closely related to the milestone table, since each one offers a slightly different view of content you have added to your MTO.
+              Sharing your Model-to-operations matrix (MTO) with colleagues or other interested parties is easy in MINT. You may share your MTO (or a section of it) via email, you may export it as a PDF or CSV, and may also copy a link to the read view of your MTO in MINT. When you share your MTO via email, MINT will automatically send an email to your desired recipients which includes a link to the read view of your MTO in MINT. CMS staff who do not already have MINT access will be able to find instructions to get access to MINT, and those who do already have MINT access will be able to sign in to see your MTO.
             </p>
-            <h2
-              class="margin-top-0 margin-bottom-2"
-            >
-              Columns in the solution table
+            <h2>
+              From the model collaboration area
             </h2>
-            <p
-              class="margin-y-0"
-            >
-              The solutions and IT systems table includes a variety of information about the solutions you’ve added to your MTO. This information is contained within the following columns:
-            </p>
-            <ul
-              class="margin-y-05"
-            >
-              <li
-                class="margin-0"
-              >
-                <span
-                  class="text-bold"
-                >
-                  Risk indicator:
-                </span>
-                 an icon that shows whether or not this solution is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon.
-              </li>
-              <li
-                class="margin-0"
-              >
-                <span
-                  class="text-bold"
-                >
-                  Solution:
-                </span>
-                 the title of the solution or IT system
-              </li>
-              <li
-                class="margin-0"
-              >
-                <span
-                  class="text-bold"
-                >
-                  Related milestones:
-                </span>
-                 the milestones that rely on this solution or IT system. From the edit panel, an IT Lead can add or remove milestones that are related to this solution.
-              </li>
-              <li
-                class="margin-0"
-              >
-                <span
-                  class="text-bold"
-                >
-                  Facilitated by:
-                </span>
-                 the main individual or role responsible for ensuring the work for this solution is completed. Users may also choose to list alternative individuals or roles who will assist with the work.
-              </li>
-              <li
-                class="margin-0"
-              >
-                <span
-                  class="text-bold"
-                >
-                  Need by:
-                </span>
-                 the date that the work for this milestone needs to be completed by. This date could help account for interdependencies between milestones, or it could be related to the go live date of the model if this milestone does not impact other milestones.
-              </li>
-              <li
-                class="margin-0"
-              >
-                <span
-                  class="text-bold"
-                >
-                  Status:
-                </span>
-                 the progress status of the solution. This will default to “Not started”, but can be manually set to “Onboarding”, “Backlog”, “In progress” or “Completed”.
-              </li>
-            </ul>
-            <p
-              class="margin-top-0"
-            >
-              The last column is the “Actions” column, which includes a button on every row that is labeled “Edit details”. This button will open a side panel that allows users to edit the details of a solution, including many of the fields above.
-            </p>
-            <h2
-              class="margin-top-5 margin-bottom-2"
-            >
-              Adding a solution
-            </h2>
-            <p
-              class="margin-y-0"
-            >
-              There are a few ways to add a new solution to your MTO. IT Leads could navigate to the solution library and add common solutions from there. Users may also choose to add a custom solution, which can be done from the table actions area or from the solution library. Users may also add a solution by adding it to a milestone from the milestone table view of the MTO.
-            </p>
-            <h2
-              class="margin-top-5 margin-bottom-2"
-            >
-              Editing a solution
-            </h2>
-            <p
-              class="margin-top-0"
-            >
-              As described above, users can use the “Actions” column in the solution table to edit the details of a solution, including things like updating the status and risk indicator. Custom solutions may have additional editable fields, such as solution title. Common solutions added from the solution library have some details preset that cannot be edited.
-            </p>
             <ol
               class="usa-process-list"
             >
@@ -173,13 +77,34 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Navigate to your model’s MTO
+                  Navigate to your model’s collaboration area
                 </h3>
                 <p>
-                  From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
+                  From the MINT homepage, navigate to the model whose MTO you wish to share. You can find a list of models you have been assigned to in the “My Model Plans” section of the homepage. Because MINT offers customizable homepages, it’s possible that this section may not appear on your homepage. If you don’t see it, locate the area titled “Did you know you can customize this page?” in the top right of the page and click the “Edit homepage settings” link to add the “My Model Plans” section to your home page.
                 </p>
                 <img
-                  alt="Collaboration area in progress"
+                  alt="A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/09_MINT_home.png"
+                />
+                <p>
+                  Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Locate the MTO card
+                </h3>
+                <p>
+                  On your model collaboration area page, find the card labeled “Model-to-operations matrix” on the second row of cards.
+                </p>
+                <img
+                  alt="A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”"
                   class="border-1px border-gray-10 radius-md shadow-2"
                   src="/src/assets/images/33_collaboration_area_in_progress.png"
                 />
@@ -194,18 +119,10 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Navigate to “Solutions and IT systems”
+                  Click “Share or export matrix”
                 </h3>
                 <p>
-                  From the tab bar above the table and below the page header, click the tab labeled “Solutions and IT systems”.
-                </p>
-                <img
-                  alt="MTO table tabs"
-                  class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/13_MTO_table_tabs.png"
-                />
-                <p>
-                  Image caption: A screenshot of the tab bar at the top of the model-to-operations matrix showing the tabs for the milestone view and the solutions and IT systems view.
+                  On the card’s actions footer, click the button labeled “Share or export matrix”. This will open a screen allowing you to select share and export options.
                 </p>
               </li>
               <li
@@ -215,46 +132,52 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Find the solution you want to edit
-                </h3>
-                <p>
-                  Using the solutions and IT systems table, locate the row for the solution you wish to edit.
-                </p>
-                <img
-                  alt="MTO solution table option"
-                  class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/19_MTO_solution_table_option_3.png"
-                />
-                <p>
-                  Image caption: A screenshot of the solutions and IT systems table view of the MTO, showing the header area and part of the table including three added solutions.
-                </p>
-              </li>
-              <li
-                class="usa-process-list__item maxw-none"
-              >
-                <h3
-                  class="usa-process-list__heading"
-                  data-testid="processListHeading"
-                >
-                  Click “Edit details”
-                </h3>
-                <p>
-                  In the far right column of the solution row, click the button labeled “Edit details”. This will open a panel on the right side of your screen which allows you to edit a variety of details about the solution.
-                </p>
-              </li>
-              <li
-                class="usa-process-list__item maxw-none"
-              >
-                <h3
-                  class="usa-process-list__heading"
-                  data-testid="processListHeading"
-                >
-                  Edit details in the solution panel
+                  Choose share or export and complete the content in the form
                 </h3>
                 <p
                   class="margin-bottom-0"
                 >
-                  The solution panel allows users to edit a variety of information about solutions in their MTO, including:
+                  On the top tab bar of the pop-up, choose “Share” or “Export” depending on your needs.
+To share, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-0"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Recipients:
+                    </span>
+                     Search the EUA database for the individuals you would like to share this information with. When you click the share button, these individuals will receive an email with a link to MINT to view the content you choose to share with them.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      (Optional) additional message:
+                    </span>
+                     Add an additional message for your recipients. This will be included in the email you send.
+                  </li>
+                </ul>
+                <p
+                  class="margin-y-0"
+                >
+                  To export, complete the following fields in the form:
                 </p>
                 <ul
                   class="margin-bottom-2"
@@ -265,9 +188,9 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                     <span
                       class="text-bold"
                     >
-                      Facilitated by:
+                      Selected content:
                     </span>
-                     the main individual or role responsible for ensuring the work for this solution is completed. Users may also choose to list alternative individuals or roles who will assist with the work. IT Leads can add or remove roles via the edit panel. They may select as many as apply.
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
                   </li>
                   <li
                     class="margin-0"
@@ -275,48 +198,18 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                     <span
                       class="text-bold"
                     >
-                      Need by:
+                      Format:
                     </span>
-                     the date that the work for this solution needs to be completed by. This date could help account for interdependencies between solutions, or it could be related to the go live date of the model if this solution does not impact other milestones or solutions.
-                  </li>
-                  <li
-                    class="margin-0"
-                  >
-                    <span
-                      class="text-bold"
-                    >
-                      Status:
-                    </span>
-                     the progress status of the solution. This will default to “Not started”, but can be manually set to “Onboarding”, “Backlog”, “In progress” or “Completed”. IT Leads can select one of the five options from the edit panel.
-                  </li>
-                  <li
-                    class="margin-0"
-                  >
-                    <span
-                      class="text-bold"
-                    >
-                      Risk indicator:
-                    </span>
-                     an icon that shows whether or not work for this solution is at risk. This is an important flag for the purposes of scanning for critical MTO items. This will default to “No risk (on track)” which shows no icon. The other available risk indicators are “Some risk (off track)”, which is shown as a yellow triangle icon, and “Significantly at risk”, shown my a red circle icon. IT Leads can select one of the three options from the edit panel.
-                  </li>
-                  <li
-                    class="margin-0"
-                  >
-                    <span
-                      class="text-bold"
-                    >
-                      Related milestones:
-                    </span>
-                     the milestones that rely on this IT system or solution. From the edit panel, an IT Lead can add or remove milestones that are related to this solution.
+                     Choose CSV and/or PDF to export your chosen content.
                   </li>
                 </ul>
                 <img
-                  alt="Solution edit panel"
+                  alt="A screenshot of the form to share MTO or other model content"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/16_solution_edit_panel.png"
+                  src="/src/assets/images/29_share_modal.png"
                 />
                 <p>
-                  Image caption: A screenshot of the side panel used to edit details about a solution or IT system.
+                  Image caption: A screenshot of the form to share MTO or other model content.
                 </p>
               </li>
               <li
@@ -326,25 +219,18 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Save your changes
+                  Click “Share” or “Export”
                 </h3>
                 <p>
-                  There are two options to save changes within the solution panel. Any changes will be reflected in a changes counter in the righthand side of the panel header bar. Next to the counter is a button labeled “Save”. Users may click this to save the changes made in the solution panel. Users may also save changes by clicking the button labeled “Save changes” at the bottom of the edit panel.
+                  If you have chosen to share your content, click the button labeled “Share”. From the Share screen, you may also choose to click the button labeled “Copy link to Read View”. This will copy a link to your MTO content to your clipboard, allowing you to paste that link in other situations such as email, Slack, or another chat tool. If you have chosen to export, click the button labeled “Export”. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without sharing or exporting.
                 </p>
               </li>
             </ol>
-            <h2
-              class="margin-top-2 margin-bottom-2"
-            >
-              Removing a solution
+            <h2>
+              From the read view
             </h2>
-            <p
-              class="margin-top-0"
-            >
-              As described above, users can use the “Actions” column in the solution table to open the solution edit panel. From the edit panel, users may also remove a solution.
-            </p>
             <ol
-              class="usa-process-list skipStepsList"
+              class="usa-process-list"
             >
               <li
                 class="usa-process-list__item maxw-none"
@@ -353,10 +239,18 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Follow steps 1-4 from the process above
+                  Navigate to MINT’s “Models” tab
                 </h3>
                 <p>
-                  Complete steps 1-4 (“Navigate to your model’s MTO”, “Navigate to “Solutions and IT systems”, “Find the solution you want to edit”, and “Click ‘Edit details’”) from the process described above in the “Editing a solution” section.
+                  Locate the tab bar in the main MINT header, and click on the tab labeled “Models”.
+                </p>
+                <img
+                  alt="A screenshot of the main MINT navigation tabs"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/14_MINT_top_tabs.png"
+                />
+                <p>
+                  Image caption: A screenshot of the main MINT navigation tabs.
                 </p>
               </li>
               <li
@@ -366,18 +260,18 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Click “Remove solution”
+                  Navigate to your model’s read view
                 </h3>
                 <p>
-                  At the bottom of the edit panel, click the button labeled “Remove solution”. This will open a confirmation screen.
+                  From the “Models” tab, scroll to the “All models” table or the “Models you’re following” area to find the model whose MTO you wish to share. Click on the model whose MTO you wish to share.
                 </p>
                 <img
-                  alt="Solution removal button"
+                  alt="A screenshot of the “Models” tab in MINT, showing a followed model and one row of the table showing all models."
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/18_solution_removal_button.png"
+                  src="/src/assets/images/31_models_tab_option_1.png"
                 />
                 <p>
-                  Image caption: A screenshot of the side panel used to edit details about a solution or IT system, including removing a solution.
+                  Image caption: A screenshot of the “Models” tab in MINT, showing a followed model and one row of the table showing all models.
                 </p>
               </li>
               <li
@@ -387,18 +281,118 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                   class="usa-process-list__heading"
                   data-testid="processListHeading"
                 >
-                  Confirm solution removal
+                  Click the “Share or export” button
                 </h3>
                 <p>
-                  In the confirmation screen, click the button labeled “Remove solution”. Doing so will remove this solution from your MTO completely, it you have added it to any milestones, it will no longer be associated with those milestones, and and all details about its status will be removed from your MTO. If you change your mind, you may click the X icon in the top right corner or click the button labeled “Go back” to close the pop-up without removing your milestone.
+                  From the Read View of your model, click the button labeled “Share or export”. You can find it below the header area on the right side of the filter bar, next to the button labeled “Filter”.
                 </p>
                 <img
-                  alt="Solution removal modal"
+                  alt="A screenshot of the Read View header area for a model, showing various actions including the ability to share or export"
                   class="border-1px border-gray-10 radius-md shadow-2"
-                  src="/src/assets/images/20_solution_removal_modal.png"
+                  src="/src/assets/images/32_read_view_model_header.png"
                 />
                 <p>
-                  Image caption: A screenshot of the solution removal confirmation screen.
+                  Image caption: A screenshot of the Read View header area for a model, showing various actions including the ability to share or export.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Choose share or export and complete the content in the form
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  On the top tab bar of the pop-up, choose “Share” or “Export” depending on your needs.
+To share, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-0"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Recipients:
+                    </span>
+                     Search the EUA database for the individuals you would like to share this information with. When you click the share button, these individuals will receive an email with a link to MINT to view the content you choose to share with them.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      (Optional) additional message:
+                    </span>
+                     Add an additional message for your recipients. This will be included in the email you send.
+                  </li>
+                </ul>
+                <p
+                  class="margin-y-0"
+                >
+                  To export, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Format:
+                    </span>
+                     Choose CSV and/or PDF to export your chosen content.
+                  </li>
+                </ul>
+                <img
+                  alt="A screenshot of the form to share MTO or other model content"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/30_export_modal.png"
+                />
+                <p>
+                  Image caption: A screenshot of the form to share MTO or other model content.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Share” or “Export”
+                </h3>
+                <p>
+                  If you have chosen to share your content, click the button labeled “Share”. From the Share screen, you may also choose to click the button labeled “Copy link to Read View”. This will copy a link to your MTO content to your clipboard, allowing you to paste that link in other situations such as email, Slack, or another chat tool. If you have chosen to export, click the button labeled “Export”. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without sharing or exporting.
                 </p>
               </li>
             </ol>
@@ -484,7 +478,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Using the milestone library
+                  Using the table actions area
                 </h3>
               </header>
               <a
@@ -504,7 +498,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                  The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
                 </p>
               </div>
               <div
@@ -512,7 +506,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read Using the milestone library article"
+                  aria-label="Read Using the table actions area article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -535,7 +529,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Using the solution library
+                  Updating your MTO status
                 </h3>
               </header>
               <a
@@ -555,7 +549,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                  The MINT Model-to-operations matrix (MTO) has 3 main overall statuses: Ready to start, In progress, and Ready for review. Ready to start is automatically set when a MTO is completely empty of all content. In progress is automatically set when any content (milestones, categories, solutions, and/or templates) are added to the MTO. Ready for review can be manually set when the contents of an MTO are fairly well set and the IT Lead is ready for comments and feedback from others. Follow the instructions below to set the status for your MTO to Ready for review.
                 </p>
               </div>
               <div
@@ -563,7 +557,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read Using the solution library article"
+                  aria-label="Read Updating your MTO status article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -586,7 +580,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  How to add a custom milestone
+                  Starting an MTO for a new model
                 </h3>
               </header>
               <a
@@ -606,7 +600,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
+                  New models all start with an empty Model-to-operations matrix (MTO). IT Leads newly assigned to a model can start creating a MTO by following the steps below.
                 </p>
               </div>
               <div
@@ -614,7 +608,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read How to add a custom milestone article"
+                  aria-label="Read Starting an MTO for a new model article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
