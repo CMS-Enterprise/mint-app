@@ -8,13 +8,55 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
 
+func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTableNames() {
+	plan1 := suite.createModelPlan("test plan for changes1")
+	plan2 := suite.createModelPlan("test plan for changes2")
+	plan3 := suite.createModelPlan("test plan for changes3")
+
+	suite.dangerousQueueAndTranslateAllAudits()
+	// TODO verify this and expand to be a more robust validation
+	expectedResults := []loaders.KeyAndExpected[storage.MostRecentByModelPlanIDAndTableFilters, models.TableName]{
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan1.ID,
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanOpsEvalAndLearning}, true),
+			ExcludedFields: "{}",
+			IsAdmin:        false,
+		}, Expected: models.TNPlanOpsEvalAndLearning},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan2.ID,
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanBasics}, true),
+			ExcludedFields: "{}",
+			IsAdmin:        false,
+		}, Expected: models.TNPlanBasics},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan3.ID,
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanGeneralCharacteristics}, true),
+			ExcludedFields: "{}",
+			IsAdmin:        false,
+		}, Expected: models.TNPlanGeneralCharacteristics},
+	}
+
+	//TODO update this to create more test data. We should verify that updates, deletes, excluded fields, etc are all accounted for.
+	// Perhaps we should also include a more expansive expected variable to show field count etc? (So we can validate if a field is excluded etc?)
+	// Can verify last suggested status is updated by including multiple tables to check, updating two, and making sure it isn't model plan if only status was updated
+	verifyFunc := func(data *models.TranslatedAudit, expected models.TableName) bool {
+		if data == nil {
+			return false
+		}
+		return data.TableName == expected
+	}
+
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters, expectedResults, verifyFunc)
+}
 func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("test plan for changes")
 

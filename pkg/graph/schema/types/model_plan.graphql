@@ -120,6 +120,11 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
+  """
+  Most recent edit to the model plan. 
+  This returns the most recent edit, that they are authorized to see.
+  """
+  mostRecentEdit: TranslatedAudit
 
   # MTO Fields (START)
   mtoMatrix: ModelsToOperationMatrix!

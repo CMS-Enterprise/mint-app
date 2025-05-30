@@ -9,9 +9,27 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+// TranslatedAuditGetMostRecentByModelPlanIDAndTableNames returns the most recent TranslatedAudit for a given model plan id and table names
+// if one doesn't exist, it will return nil.
+// Note we specifically exclude privelleged access here so it's consistent for all users
+func TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx context.Context, logger *zap.Logger, modelPlanID uuid.UUID, tablesToInclude []models.TableName, excludedFields []string) (*models.TranslatedAudit, error) {
+
+	// Note, if desired in the future, we can check if the user has privileged access here. The data loader has that concept, but leaving as is for consistency
+	hasPrivilegedAccess := false
+
+	return loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters.Load(ctx, storage.MostRecentByModelPlanIDAndTableFilters{
+		ModelPlanID:    modelPlanID,
+		TableNames:     helpers.JoinStringSlice(tablesToInclude, true),
+		ExcludedFields: helpers.JoinStringSlice(excludedFields, true),
+		IsAdmin:        hasPrivilegedAccess,
+	})
+}
 
 // TranslatedAuditCollectionGetByModelPlanID returns all TranslatedAudit for a given model plan id
 // if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted

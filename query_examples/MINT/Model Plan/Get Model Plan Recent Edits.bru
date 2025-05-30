@@ -1,0 +1,144 @@
+meta {
+  name: Get Model Plan Recent Edits
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query modelPlan{
+      modelPlan (id: "{{modelPlanID}}") {
+          id
+          modelName
+          mostRecentEdit {
+      id
+      # modelName
+      tableID
+      tableName
+      primaryKey
+      date
+      action
+  
+      actorID
+      actorName
+  
+      changeID
+      metaDataType
+      metaData {
+      ... on TranslatedAuditMetaBaseStruct{
+              version
+              tableName
+          }
+          ... on TranslatedAuditMetaGeneric {
+              version
+              tableName
+              relation
+              relationContent
+          }        
+          ... on TranslatedAuditMetaDiscussionReply {
+              version
+              tableName
+              discussionID
+              discussionContent
+              numberOfReplies
+          }    
+          ... on TranslatedAuditMetaOperationalNeed {
+              version
+              tableName
+              needName
+              isOther
+          }    
+          ... on TranslatedAuditMetaOperationalSolution {
+              version
+              tableName
+              needName
+              needIsOther
+              solutionName
+              solutionOtherHeader
+              solutionIsOther
+              numberOfSubtasks
+          }    
+          ... on TranslatedAuditMetaOperationalSolutionSubtask {
+              version
+              tableName
+              needName
+              needIsOther
+              solutionName
+              numberOfSubtasks
+              solutionOtherHeader
+              solutionIsOther
+              subtaskName
+          } 
+         ... on TranslatedAuditMetaDocumentSolutionLink {
+              version
+              tableName
+              needName
+              needIsOther
+              solutionName
+              solutionOtherHeader
+              solutionIsOther
+  
+              documentID
+              
+              documentName
+              documentType
+              documentOtherType
+              documentVisibility
+          }            
+          ... on TranslatedAuditMetaMTOCategory {
+              version
+              tableName
+              categoryName
+              isSubCategory
+              parentCategoryID
+              parentCategoryName
+          }         
+      }
+  
+      createdBy
+      # createdByUserAccount
+      createdDts
+      modifiedBy
+      # modifiedByUserAccount
+      modifiedDts
+  
+      translatedFields {
+          fieldName
+          fieldNameTranslated
+          id
+  
+          changeType
+          dataType
+          formType
+  
+          referenceLabel
+          questionType
+          notApplicableQuestions
+          old
+          oldTranslated
+          new
+          newTranslated
+  
+      }
+  
+    }
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}
