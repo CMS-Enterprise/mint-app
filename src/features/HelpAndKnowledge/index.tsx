@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
 import AddCustomMilestone from './Articles/AddCustomMilestone';
+import AddCustomSolution from './Articles/AddCustomSolution';
 import AllArticles from './Articles/AllArticles';
 import CreatingMTOMatrix from './Articles/CreatingMTOMatrix';
 import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
@@ -121,6 +122,10 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/add-custom-milestone" exact>
         <AddCustomMilestone />
+      </Route>
+
+      <Route path="/help-and-knowledge/add-custom-solution" exact>
+        <AddCustomSolution />
       </Route>
 
       <Route path="/help-and-knowledge/using-solution-library" exact>
