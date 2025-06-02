@@ -8,11 +8,14 @@ import Contact from './index';
 const contact: SolutionContactType = {
   __typename: 'MTOCommonSolutionContact',
   id: '123',
-  name: 'Aliza Kim',
-  email: 'aliza.kim@cms.hhs.gov',
   isTeam: false,
   role: 'Project Lead',
-  isPrimary: true
+  isPrimary: true,
+  userAccount: {
+    __typename: 'UserAccount',
+    givenName: 'Aliza Kim',
+    email: 'aliza.kim@cms.hhs.gov'
+  }
 };
 
 describe('Operation Solution Contact', () => {

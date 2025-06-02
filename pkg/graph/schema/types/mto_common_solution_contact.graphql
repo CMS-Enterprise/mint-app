@@ -2,10 +2,8 @@
 type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
-  account: UserAccount!
+  userAccount: UserAccount!
 
-  name: String!
-  email: String!
   isTeam: Boolean!
   role: String
   isPrimary: Boolean!
@@ -20,9 +18,8 @@ type MTOCommonSolutionContact {
 
 type MTOCommonSolutionContractor {
   id: UUID!
-  account: UserAccount!
 
-  contractorTitle: String!
+  contractorTitle: String
   contractorName: String!
 
   createdBy: UUID!

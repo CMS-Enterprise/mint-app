@@ -80,3 +80,87 @@ extend type Query {
   mtoCommonSolutions: [MTOCommonSolution!]!
   @hasRole(role: MINT_USER)
 }
+
+input CreateMTOCommonSolutionContactInput {
+  key: MTOCommonSolutionKey!
+  userAccountID: UUID!
+  isTeam: Boolean!
+  role: String
+  isPrimary: Boolean!
+  createdBy: UUID!
+}
+
+input UpdateMTOCommonSolutionContactInput {
+  id: UUID!
+  key: MTOCommonSolutionKey
+  userAccountID: UUID
+  isTeam: Boolean
+  role: String
+  isPrimary: Boolean
+  modifiedBy: UUID
+}
+
+input CreateMTOCommonSolutionPrimaryContactInput {
+  key: MTOCommonSolutionKey!
+  userAccountID: UUID!
+  isTeam: Boolean!
+  role: String
+  isPrimary: Boolean!
+  createdBy: UUID!
+}
+
+input UpdateMTOCommonSolutionPrimaryContactInput {
+  id: UUID!
+  key: MTOCommonSolutionKey
+  userAccountID: UUID
+  isTeam: Boolean
+  role: String
+  isPrimary: Boolean
+  modifiedBy: UUID
+}
+
+input RemoveMTOCommonSolutionContactInput {
+  id: UUID!
+}
+
+input CreateMTOCommonSolutionContractorInput {
+  key: MTOCommonSolutionKey!
+  contractorTitle: String
+  contractorName: String!
+  createdBy: UUID!
+}
+
+input UpdateMTOCommonSolutionContractorInput {
+  id: UUID!
+  contractorTitle: String
+  contractorName: String
+  modifiedBy: UUID
+}
+
+input RemoveMTOCommonSolutionContractorInput {
+  id: UUID!
+}
+
+extend type Mutation {
+  # Points of Contact
+  createMTOCommonSolutionContact(input: CreateMTOCommonSolutionContactInput!): MTOCommonSolutionContact!
+    @hasRole(role: MINT_ASSESSMENT)
+  updateMTOCommonSolutionContact(input: UpdateMTOCommonSolutionContactInput!): MTOCommonSolutionContact!
+    @hasRole(role: MINT_ASSESSMENT)
+  removeMTOCommonSolutionContact(input: RemoveMTOCommonSolutionContactInput!): Boolean!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  # Primary Contact
+  createMTOCommonSolutionPrimaryContact(input: CreateMTOCommonSolutionPrimaryContactInput!): MTOCommonSolutionContact!
+    @hasRole(role: MINT_ASSESSMENT)
+  updateMTOCommonSolutionPrimaryContact(input: UpdateMTOCommonSolutionPrimaryContactInput!): MTOCommonSolutionContact!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  # Contractors
+  createMTOCommonSolutionContractor(input: CreateMTOCommonSolutionContractorInput!): MTOCommonSolutionContractor!
+    @hasRole(role: MINT_ASSESSMENT)
+  updateMTOCommonSolutionContractor(input: UpdateMTOCommonSolutionContractorInput!): MTOCommonSolutionContractor!
+    @hasRole(role: MINT_ASSESSMENT)
+  removeMTOCommonSolutionContractor(input: RemoveMTOCommonSolutionContractorInput!): Boolean!
+    @hasRole(role: MINT_ASSESSMENT)
+}

@@ -14,6 +14,31 @@ import (
 	"github.com/google/uuid"
 )
 
+type CreateMTOCommonSolutionContactInput struct {
+	Key           models.MTOCommonSolutionKey `json:"key"`
+	UserAccountID uuid.UUID                   `json:"userAccountID"`
+	IsTeam        bool                        `json:"isTeam"`
+	Role          *string                     `json:"role,omitempty"`
+	IsPrimary     bool                        `json:"isPrimary"`
+	CreatedBy     uuid.UUID                   `json:"createdBy"`
+}
+
+type CreateMTOCommonSolutionContractorInput struct {
+	Key             models.MTOCommonSolutionKey `json:"key"`
+	ContractorTitle *string                     `json:"contractorTitle,omitempty"`
+	ContractorName  string                      `json:"contractorName"`
+	CreatedBy       uuid.UUID                   `json:"createdBy"`
+}
+
+type CreateMTOCommonSolutionPrimaryContactInput struct {
+	Key           models.MTOCommonSolutionKey `json:"key"`
+	UserAccountID uuid.UUID                   `json:"userAccountID"`
+	IsTeam        bool                        `json:"isTeam"`
+	Role          *string                     `json:"role,omitempty"`
+	IsPrimary     bool                        `json:"isPrimary"`
+	CreatedBy     uuid.UUID                   `json:"createdBy"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -75,8 +100,7 @@ type MTOCommonSolutionContactTranslation struct {
 
 type MTOCommonSolutionContractor struct {
 	ID                    uuid.UUID                   `json:"id"`
-	Account               authentication.UserAccount  `json:"account"`
-	ContractorTitle       string                      `json:"contractorTitle"`
+	ContractorTitle       *string                     `json:"contractorTitle,omitempty"`
 	ContractorName        string                      `json:"contractorName"`
 	CreatedBy             uuid.UUID                   `json:"createdBy"`
 	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
@@ -746,6 +770,14 @@ type PrepareForClearance struct {
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
 }
 
+type RemoveMTOCommonSolutionContactInput struct {
+	ID uuid.UUID `json:"id"`
+}
+
+type RemoveMTOCommonSolutionContractorInput struct {
+	ID uuid.UUID `json:"id"`
+}
+
 type ReportAProblemInput struct {
 	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
 	AllowContact          *bool                   `json:"allowContact,omitempty"`
@@ -768,6 +800,33 @@ type SendFeedbackEmailInput struct {
 	SystemEasyToUseOther  *string            `json:"systemEasyToUseOther,omitempty"`
 	HowSatisfied          *SatisfactionLevel `json:"howSatisfied,omitempty"`
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
+}
+
+type UpdateMTOCommonSolutionContactInput struct {
+	ID            uuid.UUID                    `json:"id"`
+	Key           *models.MTOCommonSolutionKey `json:"key,omitempty"`
+	UserAccountID *uuid.UUID                   `json:"userAccountID,omitempty"`
+	IsTeam        *bool                        `json:"isTeam,omitempty"`
+	Role          *string                      `json:"role,omitempty"`
+	IsPrimary     *bool                        `json:"isPrimary,omitempty"`
+	ModifiedBy    *uuid.UUID                   `json:"modifiedBy,omitempty"`
+}
+
+type UpdateMTOCommonSolutionContractorInput struct {
+	ID              uuid.UUID  `json:"id"`
+	ContractorTitle *string    `json:"contractorTitle,omitempty"`
+	ContractorName  *string    `json:"contractorName,omitempty"`
+	ModifiedBy      *uuid.UUID `json:"modifiedBy,omitempty"`
+}
+
+type UpdateMTOCommonSolutionPrimaryContactInput struct {
+	ID            uuid.UUID                    `json:"id"`
+	Key           *models.MTOCommonSolutionKey `json:"key,omitempty"`
+	UserAccountID *uuid.UUID                   `json:"userAccountID,omitempty"`
+	IsTeam        *bool                        `json:"isTeam,omitempty"`
+	Role          *string                      `json:"role,omitempty"`
+	IsPrimary     *bool                        `json:"isPrimary,omitempty"`
+	ModifiedBy    *uuid.UUID                   `json:"modifiedBy,omitempty"`
 }
 
 type ActionType string

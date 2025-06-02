@@ -29,16 +29,16 @@ const PointOfContactCard = ({
       }}
     >
       <CardHeader className="padding-0">
-        <h3 className="margin-0">{pointOfContact.name}</h3>
+        <h3 className="margin-0">{pointOfContact.userAccount.givenName}</h3>
       </CardHeader>
       <CardBody className="padding-0 margin-bottom-1 display-flex flex-align-center">
         <Link
-          aria-label={pointOfContact.email}
+          aria-label={pointOfContact.userAccount.email}
           className="margin-0 line-height-body-5"
-          href={`mailto:${pointOfContact.email}`}
+          href={`mailto:${pointOfContact.userAccount.email}`}
           target="_blank"
         >
-          {pointOfContact.email}
+          {pointOfContact.userAccount.email}
           <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
         </Link>
       </CardBody>
@@ -80,7 +80,7 @@ export const GenericPointsOfContact = ({
   const { t } = useTranslation('helpAndKnowledge');
 
   const pointsOfContactSorted = [...(solution?.pointsOfContact || [])].sort(
-    (a, b) => a.name.localeCompare(b.name)
+    (a, b) => a.userAccount.givenName.localeCompare(b.userAccount.givenName)
   );
 
   return (
@@ -90,7 +90,10 @@ export const GenericPointsOfContact = ({
         ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
         ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
       ].map(contact => (
-        <PointOfContactCard pointOfContact={contact} key={contact.name} />
+        <PointOfContactCard
+          pointOfContact={contact}
+          key={contact.userAccount.givenName}
+        />
       ))}
 
       {solution.systemOwner && (

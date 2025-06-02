@@ -14,9 +14,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// Account is the resolver for the account field.
-func (r *mTOCommonSolutionContactResolver) Account(ctx context.Context, obj *models.MTOCommonSolutionContact) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: Account - account"))
+// UserAccount is the resolver for the userAccount field.
+func (r *mTOCommonSolutionContactResolver) UserAccount(ctx context.Context, obj *models.MTOCommonSolutionContact) (*authentication.UserAccount, error) {
+	panic(fmt.Errorf("not implemented: UserAccount - userAccount"))
 }
 
 // Contractors is the resolver for the contractors field.
@@ -36,3 +36,13 @@ func (r *Resolver) MTOCommonSolutionContactInformation() generated.MTOCommonSolu
 
 type mTOCommonSolutionContactResolver struct{ *Resolver }
 type mTOCommonSolutionContactInformationResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mTOCommonSolutionContactResolver) Account(ctx context.Context, obj *models.MTOCommonSolutionContact) (*authentication.UserAccount, error) {
+	panic(fmt.Errorf("not implemented: Account - account"))
+}

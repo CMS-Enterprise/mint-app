@@ -348,8 +348,11 @@ export const possibleSolutionsMock: MockedResponse<
                 {
                   __typename: 'MTOCommonSolutionContact',
                   id: '123',
-                  name: 'test',
-                  email: 'email@email.com',
+                  userAccount: {
+                    __typename: 'UserAccount',
+                    givenName: 'test',
+                    email: 'email@email.com'
+                  },
                   isTeam: true,
                   isPrimary: true,
                   role: 'role'

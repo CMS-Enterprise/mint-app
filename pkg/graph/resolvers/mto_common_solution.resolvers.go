@@ -6,8 +6,12 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -21,6 +25,46 @@ func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj 
 	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)
 }
 
+// CreateMTOCommonSolutionContact is the resolver for the createMTOCommonSolutionContact field.
+func (r *mutationResolver) CreateMTOCommonSolutionContact(ctx context.Context, input model.CreateMTOCommonSolutionContactInput) (*models.MTOCommonSolutionContact, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionContact - createMTOCommonSolutionContact"))
+}
+
+// UpdateMTOCommonSolutionContact is the resolver for the updateMTOCommonSolutionContact field.
+func (r *mutationResolver) UpdateMTOCommonSolutionContact(ctx context.Context, input model.UpdateMTOCommonSolutionContactInput) (*models.MTOCommonSolutionContact, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolutionContact - updateMTOCommonSolutionContact"))
+}
+
+// RemoveMTOCommonSolutionContact is the resolver for the removeMTOCommonSolutionContact field.
+func (r *mutationResolver) RemoveMTOCommonSolutionContact(ctx context.Context, input model.RemoveMTOCommonSolutionContactInput) (bool, error) {
+	panic(fmt.Errorf("not implemented: RemoveMTOCommonSolutionContact - removeMTOCommonSolutionContact"))
+}
+
+// CreateMTOCommonSolutionPrimaryContact is the resolver for the createMTOCommonSolutionPrimaryContact field.
+func (r *mutationResolver) CreateMTOCommonSolutionPrimaryContact(ctx context.Context, input model.CreateMTOCommonSolutionPrimaryContactInput) (*models.MTOCommonSolutionContact, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionPrimaryContact - createMTOCommonSolutionPrimaryContact"))
+}
+
+// UpdateMTOCommonSolutionPrimaryContact is the resolver for the updateMTOCommonSolutionPrimaryContact field.
+func (r *mutationResolver) UpdateMTOCommonSolutionPrimaryContact(ctx context.Context, input model.UpdateMTOCommonSolutionPrimaryContactInput) (*models.MTOCommonSolutionContact, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolutionPrimaryContact - updateMTOCommonSolutionPrimaryContact"))
+}
+
+// CreateMTOCommonSolutionContractor is the resolver for the createMTOCommonSolutionContractor field.
+func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, input model.CreateMTOCommonSolutionContractorInput) (*model.MTOCommonSolutionContractor, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionContractor - createMTOCommonSolutionContractor"))
+}
+
+// UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.
+func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, input model.UpdateMTOCommonSolutionContractorInput) (*model.MTOCommonSolutionContractor, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolutionContractor - updateMTOCommonSolutionContractor"))
+}
+
+// RemoveMTOCommonSolutionContractor is the resolver for the removeMTOCommonSolutionContractor field.
+func (r *mutationResolver) RemoveMTOCommonSolutionContractor(ctx context.Context, input model.RemoveMTOCommonSolutionContractorInput) (bool, error) {
+	panic(fmt.Errorf("not implemented: RemoveMTOCommonSolutionContractor - removeMTOCommonSolutionContractor"))
+}
+
 // MtoCommonSolutions is the resolver for the mtoCommonSolutions field.
 func (r *queryResolver) MtoCommonSolutions(ctx context.Context) ([]*models.MTOCommonSolution, error) {
 	return MTOCommonSolutionGetByModelPlanIDLOADER(ctx, nil)
@@ -32,3 +76,19 @@ func (r *Resolver) MTOCommonSolution() generated.MTOCommonSolutionResolver {
 }
 
 type mTOCommonSolutionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) CreateMTOCommonSolution(ctx context.Context, name string, key models.MTOCommonSolutionKey, typeArg models.MTOSolutionType, subjects []models.MTOCommonSolutionSubject, filterView *models.ModelViewFilter) (*models.MTOCommonSolution, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonSolution - createMTOCommonSolution"))
+}
+func (r *mutationResolver) UpdateMTOCommonSolution(ctx context.Context, id uuid.UUID, name *string, key *models.MTOCommonSolutionKey, typeArg *models.MTOSolutionType, subjects []models.MTOCommonSolutionSubject, filterView *models.ModelViewFilter) (*models.MTOCommonSolution, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolution - updateMTOCommonSolution"))
+}
+func (r *mutationResolver) RemoveMTOCommonSolution(ctx context.Context, id uuid.UUID) (bool, error) {
+	panic(fmt.Errorf("not implemented: RemoveMTOCommonSolution - removeMTOCommonSolution"))
+}

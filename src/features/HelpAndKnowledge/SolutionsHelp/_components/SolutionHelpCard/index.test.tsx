@@ -13,7 +13,18 @@ const mocks = [...possibleSolutionsMock];
 describe('Operation Solution Help Card', () => {
   const solutionToTest = {
     ...helpSolutions[0],
-    pointsOfContact
+    pointsOfContact: pointsOfContact.map(contact => ({
+      __typename: 'MTOCommonSolutionContact',
+      id: contact.id,
+      isTeam: contact.isTeam,
+      isPrimary: contact.isPrimary,
+      role: contact.role,
+      userAccount: {
+        __typename: 'UserAccount',
+        givenName: contact.name,
+        email: contact.email
+      }
+    }))
   } as HelpSolutionType;
 
   it('rendered all correct information', () => {
