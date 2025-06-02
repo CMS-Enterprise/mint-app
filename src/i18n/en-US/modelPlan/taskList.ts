@@ -43,7 +43,7 @@ const modelPlanTaskList = {
   subheading: 'for {{modelName}}',
   status: 'Status:',
   update: 'Update',
-  edit: 'Edit Model Plan',
+  edit: 'Edit model information',
   taskListStatus,
   documentSummaryBox: {
     heading: 'Documents',
