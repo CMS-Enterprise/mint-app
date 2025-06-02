@@ -256,6 +256,10 @@ const MTOTable = ({
     );
   }, [formattedData]);
 
+  const totalPages = useMemo(() => {
+    return Math.ceil(itemLength / itemsPerPage);
+  }, [itemLength, itemsPerPage]);
+
   // Function to map data indexes to be conditionally rendered based on the current page and items per page
   const getVisibleIndexes = useMemo(() => {
     return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
@@ -263,12 +267,12 @@ const MTOTable = ({
         sliceItems,
         pageNum,
         itemsPerP,
-        Math.ceil(itemLength / itemsPerP)
+        totalPages
       );
 
       return sliceItems;
     };
-  }, [itemLength]);
+  }, [totalPages]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -727,7 +731,7 @@ const MTOTable = ({
             </div>
             <div className="mint-no-print">
               <div className="display-flex">
-                {Pagination}
+                {totalPages > 0 && Pagination}
 
                 <TablePageSize
                   className="margin-left-auto desktop:grid-col-auto"
@@ -1011,11 +1015,6 @@ export const getRenderedRowIndexes = (
 
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
-      // Show Category and SubCategory if they are empty, and only when viewing the last page
-      if (pageNum + 1 === totalPages && subCategory.milestones.length === 0) {
-        shownIndexes.category.push(catIndex);
-        shownIndexes.subCategory[catIndex].push(subIndex);
-      }
       subCategory.milestones.forEach((milestone, milIndex) => {
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
           shownIndexes.category.push(catIndex);
@@ -1024,6 +1023,29 @@ export const getRenderedRowIndexes = (
         }
         milestoneIndex += 1;
       });
+    });
+  });
+
+  // If there are no milestones, we still want to show the category and subcategory on their respective pages
+  sliceItemsCopy.forEach((category, catIndex) => {
+    category.subCategories.forEach((subCategory, subIndex) => {
+      if (subCategory.milestones.length === 0) {
+        if (totalPages === 0) {
+          shownIndexes.category.push(catIndex);
+          shownIndexes.subCategory[catIndex].push(subIndex);
+          return;
+        }
+        // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
+        if (
+          (catIndex <=
+            shownIndexes.category[shownIndexes.category.length - 1] &&
+            pageNum === 0) ||
+          (catIndex >= shownIndexes.category[0] && pageNum + 1 === totalPages)
+        ) {
+          shownIndexes.category.push(catIndex);
+          shownIndexes.subCategory[catIndex].push(subIndex);
+        }
+      }
     });
   });
 
