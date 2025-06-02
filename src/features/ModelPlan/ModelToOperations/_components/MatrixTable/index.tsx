@@ -563,7 +563,7 @@ const MTOTable = ({
         <div style={{ display: 'contents' }} key={category.id}>
           <DraggableRow
             index={[index]}
-            type="category"
+            type={category.isUncategorized ? 'uncategorized' : 'category'}
             moveRow={(dragIndex: number[], hoverIndex: number[]) =>
               setRearrangedData(
                 moveRow(
@@ -775,7 +775,7 @@ export const formatAndHomogenizeMilestoneData = (
     formattedCategory.status = undefined;
     formattedCategory.addedFromMilestoneLibrary = undefined;
     formattedCategory.isDraft = undefined;
-    formattedCategory.isUncategorized = undefined;
+    formattedCategory.isUncategorized = category.isUncategorized;
     formattedCategory.key = undefined;
     formattedCategory.solutions = [];
     formattedCategory.subCategories = [];
@@ -789,7 +789,7 @@ export const formatAndHomogenizeMilestoneData = (
       formattedSubCategory.status = undefined;
       formattedSubCategory.addedFromMilestoneLibrary = undefined;
       formattedSubCategory.isDraft = undefined;
-      formattedSubCategory.isUncategorized = undefined;
+      formattedSubCategory.isUncategorized = subCategory.isUncategorized;
       formattedSubCategory.key = undefined;
       formattedSubCategory.solutions = [];
       formattedSubCategory.milestones = [];
