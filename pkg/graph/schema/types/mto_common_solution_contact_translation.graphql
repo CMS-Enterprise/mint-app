@@ -12,3 +12,10 @@ type MTOCommonSolutionContactTranslation {
 
 }
 
+"""
+Represents a translation of a contractor for a common solution
+"""
+type MTOCommonSolutionContractorTranslation {
+  contractTitle: TranslationField! @goTag(key: "db", value:"contract_title")
+  contractName: TranslationField! @goTag(key: "db", value:"contract_name")
+}

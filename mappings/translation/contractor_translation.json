@@ -1,0 +1,20 @@
+{
+  "contractTitle": {
+    "gqlField": "contractTitle",
+    "goField": "ContractTitle",
+    "dbField": "contract_title",
+    "label": "Contract Title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1
+  },
+  "contractName": {
+    "gqlField": "contractName",
+    "goField": "ContractName",
+    "dbField": "contract_name",
+    "label": "Contract Name",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 2
+  }
+}

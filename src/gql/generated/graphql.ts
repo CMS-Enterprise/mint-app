@@ -810,6 +810,7 @@ export type MtoCommonSolution = {
 
 export type MtoCommonSolutionContact = {
   __typename: 'MTOCommonSolutionContact';
+  account: UserAccount;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -828,6 +829,8 @@ export type MtoCommonSolutionContact = {
 /** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
 export type MtoCommonSolutionContactInformation = {
   __typename: 'MTOCommonSolutionContactInformation';
+  /** The list of contractors for this common solution */
+  contractors: Array<MtoCommonSolutionContractor>;
   /** This is the list of all points of contact for this common solution */
   pointsOfContact: Array<MtoCommonSolutionContact>;
   /** The point of contact who is determined to be the primary contact */
@@ -843,6 +846,27 @@ export type MtoCommonSolutionContactTranslation = {
   key: TranslationField;
   name: TranslationField;
   role: TranslationField;
+};
+
+export type MtoCommonSolutionContractor = {
+  __typename: 'MTOCommonSolutionContractor';
+  account: UserAccount;
+  contractorName: Scalars['String']['output'];
+  contractorTitle: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+/** Represents a translation of a contractor for a common solution */
+export type MtoCommonSolutionContractorTranslation = {
+  __typename: 'MTOCommonSolutionContractorTranslation';
+  contractName: TranslationField;
+  contractTitle: TranslationField;
 };
 
 export enum MtoCommonSolutionKey {

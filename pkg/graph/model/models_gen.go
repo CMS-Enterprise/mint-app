@@ -73,6 +73,25 @@ type MTOCommonSolutionContactTranslation struct {
 	IsPrimary models.TranslationField `json:"isPrimary" db:"is_primary"`
 }
 
+type MTOCommonSolutionContractor struct {
+	ID                    uuid.UUID                   `json:"id"`
+	Account               authentication.UserAccount  `json:"account"`
+	ContractorTitle       string                      `json:"contractorTitle"`
+	ContractorName        string                      `json:"contractorName"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
+// Represents a translation of a contractor for a common solution
+type MTOCommonSolutionContractorTranslation struct {
+	ContractTitle models.TranslationField `json:"contractTitle" db:"contract_title"`
+	ContractName  models.TranslationField `json:"contractName" db:"contract_name"`
+}
+
 // Represents mto info translation data
 type MTOInfoTranslation struct {
 	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`

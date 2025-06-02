@@ -48,6 +48,7 @@ const (
 	TNMTOInfo                            TableName = "mto_info"
 	TNMTOCommonMilestone                 TableName = "mto_common_milestone"
 	TNMTOCommonSolutionContact           TableName = "mto_common_solution_contact"
+	TNContractor                         TableName = "mto_common_solution_contractor"
 	TNMTOCommonSolution                  TableName = "mto_common_solution"
 
 	TNMTOSuggestedMilestone TableName = "mto_suggested_milestone"

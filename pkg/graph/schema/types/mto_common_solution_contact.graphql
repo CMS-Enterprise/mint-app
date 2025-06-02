@@ -2,6 +2,7 @@
 type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
+  account: UserAccount!
 
   name: String!
   email: String!
@@ -9,6 +10,20 @@ type MTOCommonSolutionContact {
   role: String
   isPrimary: Boolean!
 
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+type MTOCommonSolutionContractor {
+  id: UUID!
+  account: UserAccount!
+
+  contractorTitle: String!
+  contractorName: String!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -30,5 +45,8 @@ type MTOCommonSolutionContactInformation {
   The point of contact who is determined to be the primary contact
   """
   primaryContact: MTOCommonSolutionContact!
-
+  """
+  The list of contractors for this common solution
+  """
+  contractors: [MTOCommonSolutionContractor!]!
 }

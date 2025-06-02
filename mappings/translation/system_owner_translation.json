@@ -1,0 +1,11 @@
+{
+  "value": {
+    "gqlField": "value",
+    "goField": "Value",
+    "dbField": "system_owner",
+    "label": "System Owner",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "order": 1
+  }
+}
