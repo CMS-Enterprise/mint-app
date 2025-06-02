@@ -30,6 +30,7 @@ const addCustomSolution = {
     list: [
       '<bold>Solution type:</bold> choose the solution type most applicable to the solution you are adding. The available options are: IT system; Contract vehicle, contractor, or other contract; Cross-cutting group; or Other.',
       '<bold>Solution title:</bold> a concise description of your solution. Try to keep these brief and understandable.',
+      '<bold>Point of contact name:</bold> The name of the person or team mailbox that is the primary point of contact for the solution you are adding.',
       '<bold>Point of contact email address:</bold> The email address (likely a cms.hhs.gov address) for the person or team mailbox that is the primary point of contact for the solution you are adding.'
     ],
     caption:
