@@ -621,7 +621,7 @@ describe('getRenderedRowIndexes', () => {
       milestone: [[[], [0]], []]
     };
 
-    const result = getRenderedRowIndexes(rows, rowsPerPage, currentPage);
+    const result = getRenderedRowIndexes(rows, rowsPerPage, currentPage, 1);
     expect(result).toEqual(expectedOutput);
   });
 });

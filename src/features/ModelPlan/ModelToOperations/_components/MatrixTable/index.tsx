@@ -240,19 +240,6 @@ const MTOTable = ({
     milestone: []
   });
 
-  // Function to map data indexes to be conditionally rendered based on the current page and items per page
-  const getVisibleIndexes = useMemo(() => {
-    return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
-      renderedRowIndexes.current = getRenderedRowIndexes(
-        sliceItems,
-        pageNum,
-        itemsPerP
-      );
-
-      return sliceItems;
-    };
-  }, []);
-
   // Calculate the total number of milestones in the data
   const itemLength = useMemo(() => {
     return structuredClone(formattedData).reduce(
@@ -265,6 +252,20 @@ const MTOTable = ({
       0
     );
   }, [formattedData]);
+
+  // Function to map data indexes to be conditionally rendered based on the current page and items per page
+  const getVisibleIndexes = useMemo(() => {
+    return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
+      renderedRowIndexes.current = getRenderedRowIndexes(
+        sliceItems,
+        pageNum,
+        itemsPerP,
+        Math.ceil(itemLength / itemsPerP)
+      );
+
+      return sliceItems;
+    };
+  }, [itemLength]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -698,7 +699,7 @@ const MTOTable = ({
                             type="button"
                           >
                             {column.Header}
-                            {getHeaderSortIcon(columnSort[index], false)}
+                            {getHeaderSortIcon(columnSort[index], true)}
                           </button>
                         ) : (
                           <span
@@ -971,7 +972,8 @@ export const moveRow = (
 export const getRenderedRowIndexes = (
   sliceItems: CategoryType[],
   pageNum: number,
-  itemsPerP: number
+  itemsPerP: number,
+  totalPages: number
 ) => {
   const startingIndex = pageNum * itemsPerP;
   const endingIndex = startingIndex + itemsPerP;
@@ -1001,7 +1003,8 @@ export const getRenderedRowIndexes = (
 
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
-      if (subCategory.milestones.length === 0) {
+      // Show Category and SubCategory if they are empty, and only when viewing the last page
+      if (pageNum + 1 === totalPages && subCategory.milestones.length === 0) {
         shownIndexes.category.push(catIndex);
         shownIndexes.subCategory[catIndex].push(subIndex);
       }

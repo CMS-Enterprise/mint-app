@@ -28,7 +28,7 @@ export const getHeaderSortIcon = <T extends {}>(
   icon: boolean
 ) => {
   const sharedClassName = classNames('margin-left-05', {
-    'margin-top-05': icon
+    'top-2px': icon
   });
   if (!column.isSorted) {
     return (
