@@ -158,7 +158,7 @@ describe('Model Plan Characteristics', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('plan-characteristics-participation-note')
+        screen.getByTestId('plan-characteristics-has-component-or-tracks-note')
       ).toHaveValue('Component note');
     });
     expect(asFragment()).toMatchSnapshot();
