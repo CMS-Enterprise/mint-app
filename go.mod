@@ -32,7 +32,7 @@ require github.com/xhit/go-simple-mail/v2 v2.16.0
 
 require (
 	github.com/contribsys/faktory v1.9.1
-	github.com/launchdarkly/go-sdk-common/v3 v3.2.0
+	github.com/launchdarkly/go-sdk-common/v3 v3.3.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
 	github.com/parquet-go/parquet-go v0.25.0
 	golang.org/x/net v0.40.0
