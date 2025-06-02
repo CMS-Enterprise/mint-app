@@ -43,7 +43,7 @@ describe('ReadViewStatusBanner', () => {
     );
 
     expect(
-      screen.queryByRole('link', { name: /Edit Model Plan/i })
+      screen.queryByRole('link', { name: /Edit model information/i })
     ).not.toBeInTheDocument();
   });
 });

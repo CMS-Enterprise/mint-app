@@ -2,7 +2,7 @@ const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
   back: 'Back to the model collaboration area',
-  backToReadView: 'Back to the Read view',
+  backToReadView: 'Back to model information',
   thisModelPlan: 'this Model Plan',
   change:
     'made {{count}} change {{inOrTo}} {{section}} <datetime>on {{date}} at {{time}}</datetime>',
