@@ -1030,13 +1030,21 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
-        if (totalPages === 0) {
+        if (totalPages === 1) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
           return;
         }
+
+        const min = Math.min(...shownIndexes.category);
+        const max = Math.max(...shownIndexes.category);
+
+        const isInRange = catIndex >= min && catIndex <= max;
+
         // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
+        // If the category is on the first page or last page, render it as it will fall outside the range, but we still want to render it
         if (
+          isInRange ||
           (catIndex <=
             shownIndexes.category[shownIndexes.category.length - 1] &&
             pageNum === 0) ||
