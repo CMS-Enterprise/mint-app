@@ -82,7 +82,7 @@ export const UpdatingMTOStatus = () => {
                   <ProcessListHeading type="h3">
                     {t('step4.title')}
                   </ProcessListHeading>
-                  <p className="margin-bottom-0">{t('step4.description')}</p>
+                  <p>{t('step4.description')}</p>
                   <img
                     alt={t('step4.altText')}
                     src={ReadyForReviewConfirmationImg}

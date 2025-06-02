@@ -131,9 +131,7 @@ exports[`Updating your MTO Status Article > matches the snapshot 1`] = `
                 >
                   Click “Mark as ready for review”
                 </h3>
-                <p
-                  class="margin-bottom-0"
-                >
+                <p>
                   Review the content in the pop-up, and click the button labeled “Mark as ready for review”. If at any time you change your mind, you may click the “Go back to MTO” button or the X icon in the top right corner to close the pop-up without changing your MTO status.
                 </p>
                 <img
