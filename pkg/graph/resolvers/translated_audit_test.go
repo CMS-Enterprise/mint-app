@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -21,6 +22,27 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 	plan1 := suite.createModelPlan("test plan for changes1")
 	plan2 := suite.createModelPlan("test plan for changes2")
 	plan3 := suite.createModelPlan("test plan for changes3")
+	plan4 := suite.createModelPlan("test plan for changes4")
+
+	plan3Basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan3.ID)
+	suite.NoError(err)
+	changes := map[string]interface{}{
+		"goal": "This is a test goal",
+	}
+	_, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan3Basics.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	//create a solution on plan4 so we can test the MTOSolution table is returned
+	suite.createMTOSolutionCommon(plan4.ID, models.MTOCSKCcw, nil)
 
 	suite.dangerousQueueAndTranslateAllAudits()
 	// TODO verify this and expand to be a more robust validation
@@ -39,10 +61,16 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 		}, Expected: models.TNPlanBasics},
 		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
 			ModelPlanID:    plan3.ID,
-			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanGeneralCharacteristics}, true),
-			ExcludedFields: "{}",
+			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
 			IsAdmin:        false,
-		}, Expected: models.TNPlanGeneralCharacteristics},
+		}, Expected: models.TNPlanBasics},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan4.ID,
+			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
+			IsAdmin:        false,
+		}, Expected: models.TNMTOSolution},
 	}
 
 	//TODO update this to create more test data. We should verify that updates, deletes, excluded fields, etc are all accounted for.
