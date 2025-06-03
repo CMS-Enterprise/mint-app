@@ -1,0 +1,428 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AddCustomMilestone > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              How to add a custom milestone
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=mto-tutorials"
+            >
+              <span
+                aria-label="Articles under the MINT tutorials category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                MINT tutorials
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
+            </p>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to your model’s MTO
+                </h3>
+                <p>
+                  From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
+                </p>
+                <img
+                  alt="A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/33_collaboration_area_in_progress.png"
+                />
+                <p>
+                  Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Locate the table actions area
+                </h3>
+                <p>
+                  If you have already started your MTO, you will find the “Table actions” area below the page header and above the main MTO table.
+                </p>
+                <img
+                  alt="A screenshot of the table actions area visible at the top of the main MTO table views"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/11_table_actions_area.png"
+                />
+                <p>
+                  Image caption: A screenshot of the table actions area visible at the top of the main MTO table views.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click create a custom milestone
+                </h3>
+                <p>
+                  In the “Milestones” section of the table actions area, click the button labeled “or, create a custom milestone”. This button will open a form, allowing you to input content for your custom milestone.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Complete the content in the form
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  The new milestone form will ask you to complete the following fields:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Primary category:
+                    </span>
+                     the main milestone category that this milestone fits within. You may later create a new category if your MTO does not currently have one that fits your new milestone. There is also an “Uncategorized” primary category.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Sub-category:
+                    </span>
+                     the category within the primary category that your milestone fits within. You may later create a new sub-category if this category in your MTO does not currently have a sub-category that fits your new milestone. For every primary category, there is also an “Uncategorized” sub-category.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Milestone title:
+                    </span>
+                     a concise description of your milestone. Try to keep these brief and understandable.
+                  </li>
+                </ul>
+                <img
+                  alt="A screenshot of the form that allows a user to add a custom milestone."
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/24_new_milestone_modal.png"
+                />
+                <p>
+                  Image caption: A screenshot of the form that allows a user to add a custom milestone.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Add milestone”
+                </h3>
+                <p>
+                  Once you have completed all fields in the form, click the “Add milestone” button. Once you do so, your milestone will be visible in the “Milestones” tab of your MTO. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without adding a new milestone.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help resources
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help resources that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the milestone library
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the milestone library article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the milestone table
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The milestone table is the main model-to-operations matrix (MTO) content view in MINT. It is closely related to the solutions and IT systems table, since each one offers a slightly different view of content you have added to your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the milestone table article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the table actions area
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the table actions area article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

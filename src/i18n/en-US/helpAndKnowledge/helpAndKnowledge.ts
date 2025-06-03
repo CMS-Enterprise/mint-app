@@ -636,7 +636,7 @@ Examples and impact:`,
         {
           header: 'Conduct support center / helpdesk training',
           description:
-            'The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training. '
+            'The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base resources, or other items. Each level of the support center will receive training. '
         },
         {
           header: 'ServiceNow (SNow) set up and training',
@@ -2119,12 +2119,12 @@ const helpCategories: Record<ArticleCategories, CardInfoType> = {
   [ArticleCategories.GETTING_STARTED]: {
     title: 'Getting started',
     description:
-      'Use these articles to help you get started with the creation of your Model Plan.'
+      'Use these resources to help you get started with the creation of your Model Plan.'
   },
   [ArticleCategories.IT_IMPLEMENTATION]: {
     title: 'IT implementation',
     description:
-      'Use these articles to better understand what’s involved in your model to IT implementation.'
+      'Use these resources to better understand what’s involved in your model to IT implementation.'
   },
   [ArticleCategories.MTO_TUTORIALS]: {
     title: 'MINT tutorials',
@@ -2134,7 +2134,7 @@ const helpCategories: Record<ArticleCategories, CardInfoType> = {
   [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: {
     title: 'Model concept and design',
     description:
-      'Use these articles to better understand what’s involved in the model concept and design phase.'
+      'Use these resources to better understand what’s involved in the model concept and design phase.'
   }
 };
 
@@ -2170,8 +2170,8 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Creating your Model-to-operations matrix (MTO) in MINT',
   [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
   [HelpArticle.USING_MILESTONE_TABLE]: 'Using the milestone table',
-  [HelpArticle.USING_IT_SYSTEMS_AND_SOLUTIONS_TABLE]:
-    'Using the IT system and solution table',
+  [HelpArticle.USING_SOLUTIONS_AND_IT_SYSTEMS_TABLE]:
+    'Using the solutions and IT systems table',
   [HelpArticle.USING_TABLE_ACTIONS]: 'Using the table actions area',
   [HelpArticle.USING_MILESTONE_LIBRARY]: 'Using the milestone library',
   [HelpArticle.USING_SOLUTION_LIBRARY]: 'Using the solution library',
@@ -2230,15 +2230,15 @@ const helpAndKnowledge = {
   helpArticleNames,
   externalResources,
   instructions:
-    'Use the articles below to help get started with your Model Plan and IT implementation.',
+    'Use the resources below to help get started with your Model Plan and IT implementation.',
   gettingStartedInstructions:
-    'Use these articles to help you get started with the creation of your Model Plan.',
+    'Use these resources to help you get started with the creation of your Model Plan.',
   itImplementationInstructions:
-    'Use these articles to better understand what’s involved in your model to IT implementation.',
+    'Use these resources to better understand what’s involved in your model to IT implementation.',
   close: 'Close tab',
-  relatedHelp: 'Related help articles',
+  relatedHelp: 'Related help resources',
   relatedDescription:
-    'Below are some additional help articles that you may find useful.',
+    'Below are some additional help resources that you may find useful.',
   addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help resources',
   operationalSolutions: 'Operational solutions',
@@ -2250,7 +2250,7 @@ const helpAndKnowledge = {
   contact: 'Point of contact',
   aboutSolution: 'About this solution',
   aboutSolutionAriaLabel: 'Click to learn more about this solution:',
-  pageInfo: '{{-pageStart}} of {{-totalPages}} articles',
+  pageInfo: '{{-pageStart}} of {{-totalPages}} resources',
   resultsInfo:
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
   queryResultsInfo:

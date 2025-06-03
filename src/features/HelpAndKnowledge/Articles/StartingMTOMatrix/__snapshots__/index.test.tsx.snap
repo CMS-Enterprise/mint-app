@@ -1,0 +1,426 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StartingMTOMatrix > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              Starting an MTO for a new model
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=mto-tutorials"
+            >
+              <span
+                aria-label="Articles under the MINT tutorials category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                MINT tutorials
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              New models all start with an empty Model-to-operations matrix (MTO). IT Leads newly assigned to a model can start creating a MTO by following the steps below.
+            </p>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Log in to MINT
+                </h3>
+                <p>
+                  Go to 
+                  <a
+                    class="usa-link usa-link--external"
+                    href="https://mint.cms.gov"
+                    target="_blank"
+                  >
+                    mint.cms.gov
+                  </a>
+                   and use your EUA ID and password to sign in. Some users may use an alternate IDM user ID and password to sign in. If you don’t have MINT access and want to get access to the content in MINT, please click on the “Get access” link in the top right corner of the page for help.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to your new model
+                </h3>
+                <p>
+                  From the MINT homepage, navigate to the new model that you have been assigned to. You can find a list of models you have been assigned to in the “My Model Plans” section of the homepage. Because MINT offers customizable homepages, it’s possible that this section may not appear on your homepage. If you don’t see it, locate the area titled “Did you know you can customize this page?” in the top right of the page and click the “Edit homepage settings” link to add the “My Model Plans” section to your home page.
+                </p>
+                <img
+                  alt="MINT homepage"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/09_MINT_home.png"
+                />
+                <p>
+                  Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to the MTO
+                </h3>
+                <p>
+                  From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
+                </p>
+                <img
+                  alt="Collaboration area not started"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/01_collaboration_area_not_started.png"
+                />
+                <p>
+                  Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Choose an option to start your MTO
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  After navigating to the MTO, you should see an empty state that will give you a variety of options to start. You may choose to begin by:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    adding a template such as the one for standard categories,
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    adding common milestones from the milestone library,
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    adding common solutions from the solution library,
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    or creating a custom milestone or solution.
+                  </li>
+                </ul>
+                <img
+                  alt="Empty MTO"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/02_empty_MTO.png"
+                />
+                <p>
+                  Image caption: A screenshot of the empty state for the model-to-operations matrix for the Rural Health Enablement model. The empty state shows a variety of options for starting an MTO.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Continue adding content
+                </h3>
+                <p>
+                  Once you choose an option from the above step to get started, you will be taken to the main MTO view where you can continue adding milestones, solutions, categories, and more.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help resources
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help resources that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the milestone library
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the milestone library article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the solution library
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the solution library article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to add a custom milestone
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to add a custom milestone article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

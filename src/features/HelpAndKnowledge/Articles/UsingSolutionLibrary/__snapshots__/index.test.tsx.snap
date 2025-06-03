@@ -1,0 +1,486 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              Using the solution library
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=mto-tutorials"
+            >
+              <span
+                aria-label="Articles under the MINT tutorials category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                MINT tutorials
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              The MINT solution library contains a variety of IT systems, contracts, CMS groups or teams, and other solutions often used to implement a model. While not comprehensive of all the possible solutions, the MINT solution library offers many that often appear in a model’s operational plan or model-to-operations matrix (MTO). The solution library gives IT Leads a faster way to get started drafting a MTO for a new model and helps us to understand which solutions are most frequently used by models.
+            </p>
+            <h2
+              class="margin-top-0 margin-bottom-2"
+            >
+              Browsing all available solutions
+            </h2>
+            <p>
+              The MINT solution library offers a variety of ways to browse the available solutions and IT systems. You can search, filter, and paginate through all the available solutions to find what you’re looking for.
+            </p>
+            <img
+              alt="A screenshot of the solution library showing all common solutions"
+              class="border-1px border-gray-10 radius-md shadow-2"
+              src="/src/assets/images/27_solution_library_all.png"
+            />
+            <p>
+              Image caption: A screenshot of the solution library showing all common solutions.
+            </p>
+            <h3
+              class="margin-bottom-1"
+            >
+              Searching
+            </h3>
+            <p
+              class="margin-y-0"
+            >
+              Use the search bar located below the page header area to narrow the list of solutions and IT systems to those with your search keywords in the title or category.
+            </p>
+            <h3
+              class="margin-bottom-1"
+            >
+              Filtering
+            </h3>
+            <p
+              class="margin-top-0"
+            >
+              Use the tabbed button group below the search bar to narrow the list of solutions and IT systems you are browsing. You can see the number of solutions of that type displayed next to the button label. The available filters are “All common solutions” (the default selection), “IT systems”, “Contracts and contractors”, and “Cross-cutting groups”. You may also choose to check the box labeled “Hide added solutions” to filter out solutions you have already added to your MTO.
+            </p>
+            <h3
+              class="margin-bottom-1"
+            >
+              Pagination
+            </h3>
+            <p
+              class="margin-top-0"
+            >
+              Use the pagination below the list of solution cards to page through the available common solutions. You may also change the number of solutions displayed per page using the dropdown to the right of the pagination buttons.
+            </p>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to the solution library
+                </h3>
+                <p>
+                  From the table actions area or the MTO empty state, click the button labeled “Add solutions from library”. Visit either of the tutorials below to learn more about navigating to the milestone library.
+                </p>
+                <a
+                  class="usa-link display-block margin-y-05"
+                  href="/help-and-knowledge/using-table-actions"
+                >
+                  Using the table actions area 
+                  <svg
+                    class="usa-icon top-3px"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+                <a
+                  class="usa-link display-block"
+                  href="/help-and-knowledge/starting-mto-matrix"
+                >
+                  Starting an MTO for a new model 
+                  <svg
+                    class="usa-icon top-3px"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  (Optional) Click “About this solution”
+                </h3>
+                <p>
+                  From the solution library, find the card for the solution you want to add to your MTO. At the bottom of the card, click on the button labeled “About this solution”.  When you click this button, it will open a side panel that contains additional information about the solution you are considering for your MTO, including: an overview of the solution, a high-level timeline of steps to get up and running with the solution and your model, and a list of points of contact for the IT system or solution. You may click the X in the top left corner of the panel to close the informational panel.
+                </p>
+                <img
+                  alt="A screenshot of the solution library showing all common solutions"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/25_solution_library_about_solution.png"
+                />
+                <p>
+                  Image caption: A screenshot of the solution library showing all common solutions.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Add to matrix”
+                </h3>
+                <p>
+                  From the solution library, find the card for the solution you want to add to your MTO. At the bottom of the card, click on the button labeled “Add to matrix”.  When you click this button, it will open a screen titled “Add to existing milestone?” which will allow you to optionally add this solution to a milestone you have already added to your MTO.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  (Optional) Add this solution to a milestone
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  Complete the optional fields in the form to add this solution to milestone(s) you have already added to your MTO:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Milestones:
+                    </span>
+                     select from a list of milestones you have already added to your MTO. You may select multiple, and are encouraged to select all that apply.
+                  </li>
+                </ul>
+                <img
+                  alt="A screenshot of the form to add a chosen solution to existing milestones"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/26_solution_library_add_to_milestone_modal.png"
+                />
+                <p>
+                  Image caption: A screenshot of the form to add a chosen solution to existing milestones.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Add without milestone” or “Add with x milestones”
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  If you have chosen to add the solution without adding additional milestones, click the button labeled “Add without milestones”. If you have chosen to add your solution with milestones, click the button labeled “Add with x milestones”, with x being the number of milestones you have selected from the list. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without adding the solution to your MTO.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help resources
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help resources that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to add a custom solution
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  When possible, MINT encourages users to add solutions to a Model-to-operations matrix (MTO) via the solution library. However, MINT’s solution library does not currently offer a comprehensive list of all IT systems, contracts, and other operational solutions used for models. because of this and the unique needs of individual models, IT Leads may need to create custom solutions for a given model. IT Leads are able to create custom solutions directly from the Model-to-operations matrix (MTO) for their model.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to add a custom solution article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the solutions and IT systems table
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The solutions and IT systems table is accessible from the tab bar below the model-to-operations matrix (MTO) header area and is one of the main MTO content views in MINT. It is closely related to the milestone table, since each one offers a slightly different view of content you have added to your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the solutions and IT systems table article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the table actions area
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the table actions area article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
