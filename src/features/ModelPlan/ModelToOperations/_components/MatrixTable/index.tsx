@@ -1039,18 +1039,18 @@ export const getRenderedRowIndexes = (
         const minShownCategoryIndex = Math.min(...shownIndexes.category);
         const maxShownCategoryIndex = Math.max(...shownIndexes.category);
 
+        // Used to render out empty categories on the first page that fall as the first shown index
+        const initPageIndex = pageNum === 1 ? 0 : 1;
+
         // -1 here to still render out any empty categories that are on the first page and are ordered first/fall before the first shown index
+        // +1 here to still render out any empty categories that ordered last/fall before the first shown index
+
         const isInRange =
-          catIndex >= minShownCategoryIndex - 1 &&
-          catIndex <= maxShownCategoryIndex;
+          catIndex >= minShownCategoryIndex - initPageIndex &&
+          catIndex <= maxShownCategoryIndex + 1;
 
         // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
-        // If the category is on the first page or last page, render it as it will fall outside the range, but we still want to render it
-        if (
-          isInRange ||
-          // +1 here to still render out any empty categories that are on the last page and are ordered last/fall after the last shown index/ Uncategorized category
-          (catIndex >= shownIndexes.category[0] && pageNum + 1 === totalPages)
-        ) {
+        if (isInRange) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
         }
