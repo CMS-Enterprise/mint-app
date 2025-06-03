@@ -187,7 +187,7 @@ var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 	ModelShareSectionModelPlan:     "model-basics",
 	ModelShareSectionMtoAll:        "milestones",
 	ModelShareSectionMtoMilestones: "milestones",
-	ModelShareSectionMtoSolutions:  "it-systems-and-solutions",
+	ModelShareSectionMtoSolutions:  "solutions-and-it-systems",
 }
 
 // ModelShareSectionHumanized controls what the email says after View _ details in MINT.
