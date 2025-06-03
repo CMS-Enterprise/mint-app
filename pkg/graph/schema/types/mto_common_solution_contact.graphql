@@ -3,13 +3,13 @@ type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
 
-  name: String!
-  email: String!
+  mailboxTitle: String!
+  mailboxAddress: String!
   userAccount: UserAccount!
   isTeam: Boolean!
   role: String
   isPrimary: Boolean!
-  recievesNotifications: Boolean!
+  receiveEmails: Boolean!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -34,29 +34,14 @@ type MTOCommonSolutionContactInformation {
 }
 
 """
-Input for creating a common solution contact
-"""
-input MTOCommonSolutionContactCreateInput @goModel(model: "map[string]interface{}") {
-  key: MTOCommonSolutionKey!
-  # For user contacts
-  userName: String
-  # For team mailbox contacts
-  teamEmail: String
-  isTeam: Boolean!
-  role: String
-  recievesNotifications: Boolean!
-  isPrimary: Boolean!
-}
-
-"""
 Input for updating a common solution contact.
-Only role, isPrimary, and recievesNotifications can be changed.
+Only role, isPrimary, and receiveEmails can be changed.
 """
-input MTOCommonSolutionContactUpdateInput @goModel(model: "map[string]interface{}") {
+input MTOCommonSolutionContactUpdateChanges @goModel(model: "map[string]interface{}") {
   id: UUID!
   role: String
   isPrimary: Boolean
-  recievesNotifications: Boolean
+  receiveEmails: Boolean
 }
 
 extend type Query {
@@ -65,10 +50,28 @@ extend type Query {
 }
 
 extend type Mutation {
-  createMTOCommonSolutionContact(input: MTOCommonSolutionContactCreateInput!): MTOCommonSolutionContact!
+  createMTOCommonSolutionMailboxContact(
+    key: MTOCommonSolutionKey!
+    mailboxTitle: String
+    mailboxAddress: String!
+    isTeam: Boolean!
+    role: String
+    receiveEmails: Boolean!
+    isPrimary: Boolean!
+  ): MTOCommonSolutionContact!
     @hasRole(role: MINT_ASSESSMENT)
 
-  updateMTOCommonSolutionContact(input: MTOCommonSolutionContactUpdateInput!): MTOCommonSolutionContact!
+  createMTOCommonSolutionUserContact(
+    key: MTOCommonSolutionKey!
+    userName: String!
+    isTeam: Boolean!
+    role: String
+    receiveEmails: Boolean!
+    isPrimary: Boolean!
+  ): MTOCommonSolutionContact!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  updateMTOCommonSolutionContact(input: MTOCommonSolutionContactUpdateChanges!): MTOCommonSolutionContact!
     @hasRole(role: MINT_ASSESSMENT)
 
   deleteMTOCommonSolutionContact(id: UUID!): MTOCommonSolutionContact!

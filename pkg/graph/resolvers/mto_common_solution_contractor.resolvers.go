@@ -11,15 +11,16 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // CreateMTOCommonSolutionContractor is the resolver for the createMTOCommonSolutionContractor field.
-func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, input model.MTOCommonSolutionContractorCreateInput) (*model.MTOCommonSolutionContractor, error) {
+func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, key models.MTOCommonSolutionKey, contractorTitle *string, contractorName string) (*model.MTOCommonSolutionContractor, error) {
 	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionContractor - createMTOCommonSolutionContractor"))
 }
 
 // UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.
-func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, input map[string]interface{}) (*model.MTOCommonSolutionContractor, error) {
+func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*model.MTOCommonSolutionContractor, error) {
 	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolutionContractor - updateMTOCommonSolutionContractor"))
 }
 

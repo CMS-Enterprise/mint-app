@@ -7,8 +7,8 @@ export default gql(/* GraphQL */ `
       contactInformation {
         pointsOfContact {
           id
-          name
-          email
+          # name
+          # email
           isTeam
           isPrimary
           role

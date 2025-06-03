@@ -77,49 +77,8 @@ type MTOCommonSolution {
 
 }
 
-input AddMTOCommonSolutionSubjectInput {
-  key: MTOCommonSolutionKey!
-  subject: MTOCommonSolutionContactCreateInput!
-}
-
-input AddMTOCommonSolutionContractorInput {
-  key: MTOCommonSolutionKey!
-  contractor: MTOCommonSolutionContractorCreateInput!
-}
-
-input CreateMTOCommonSolutionInput {
-  name: String!
-  key: MTOCommonSolutionKey!
-  type: MTOSolutionType!
-  subjects: [MTOCommonSolutionContactCreateInput!]!
-  contractors: [MTOCommonSolutionContractorCreateInput!]
-  filterView: ModelViewFilter
-}
-
 extend type Query {
   mtoCommonSolutions: [MTOCommonSolution!]!
   @hasRole(role: MINT_USER)
 }
 
-extend type Mutation {
-  """
-  Add a subject to an MTO common solution
-  """
-  addMTOCommonSolutionSubject(
-    input: AddMTOCommonSolutionSubjectInput!
-  ): MTOCommonSolution!
-
-  """
-  Add a contractor to an MTO common solution
-  """
-  addMTOCommonSolutionContractor(
-    input: AddMTOCommonSolutionContractorInput!
-  ): MTOCommonSolution!
-
-  """
-  Create a new MTO common solution
-  """
-  createMTOCommonSolution(
-    input: CreateMTOCommonSolutionInput!
-  ): MTOCommonSolution!
-}
