@@ -1036,15 +1036,19 @@ export const getRenderedRowIndexes = (
           return;
         }
 
-        const minShownCategoryIndex = Math.min(...shownIndexes.category);
-        const maxShownCategoryIndex = Math.max(...shownIndexes.category);
+        // If no milestones exist, set default index of 0 to the shownIndexes
+        const categoryIndexes = shownIndexes.category.length
+          ? shownIndexes.category
+          : [0];
+
+        const minShownCategoryIndex = Math.min(...categoryIndexes);
+        const maxShownCategoryIndex = Math.max(...categoryIndexes);
 
         // Used to render out empty categories on the first page that fall as the first shown index
         const initPageIndex = pageNum === 1 ? 0 : 1;
 
         // -1 here to still render out any empty categories that are on the first page and are ordered first/fall before the first shown index
         // +1 here to still render out any empty categories that ordered last/fall before the first shown index
-
         const isInRange =
           catIndex >= minShownCategoryIndex - initPageIndex &&
           catIndex <= maxShownCategoryIndex + 1;
