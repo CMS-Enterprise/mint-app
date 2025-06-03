@@ -14,6 +14,25 @@ import (
 	"github.com/google/uuid"
 )
 
+type AddMTOCommonSolutionContractorInput struct {
+	Key        models.MTOCommonSolutionKey            `json:"key"`
+	Contractor MTOCommonSolutionContractorCreateInput `json:"contractor"`
+}
+
+type AddMTOCommonSolutionSubjectInput struct {
+	Key     models.MTOCommonSolutionKey `json:"key"`
+	Subject map[string]interface{}      `json:"subject"`
+}
+
+type CreateMTOCommonSolutionInput struct {
+	Name        string                                    `json:"name"`
+	Key         models.MTOCommonSolutionKey               `json:"key"`
+	Type        models.MTOSolutionType                    `json:"type"`
+	Subjects    []map[string]interface{}                  `json:"subjects"`
+	Contractors []*MTOCommonSolutionContractorCreateInput `json:"contractors,omitempty"`
+	FilterView  *models.ModelViewFilter                   `json:"filterView,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -71,6 +90,24 @@ type MTOCommonSolutionContactTranslation struct {
 	IsTeam    models.TranslationField `json:"isTeam" db:"is_team"`
 	Role      models.TranslationField `json:"role" db:"role"`
 	IsPrimary models.TranslationField `json:"isPrimary" db:"is_primary"`
+}
+
+type MTOCommonSolutionContractor struct {
+	ID                    uuid.UUID                   `json:"id"`
+	ContractorTitle       *string                     `json:"contractorTitle,omitempty"`
+	ContractorName        string                      `json:"contractorName"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
+// Input for creating a common solution contractor
+type MTOCommonSolutionContractorCreateInput struct {
+	ContractorTitle *string `json:"contractorTitle,omitempty"`
+	ContractorName  string  `json:"contractorName"`
 }
 
 // Represents mto info translation data

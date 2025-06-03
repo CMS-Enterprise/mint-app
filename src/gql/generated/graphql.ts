@@ -76,6 +76,16 @@ export enum ActivityType {
   TAGGED_IN_DISCUSSION_REPLY = 'TAGGED_IN_DISCUSSION_REPLY'
 }
 
+export type AddMtoCommonSolutionContractorInput = {
+  contractor: MtoCommonSolutionContractorCreateInput;
+  key: MtoCommonSolutionKey;
+};
+
+export type AddMtoCommonSolutionSubjectInput = {
+  key: MtoCommonSolutionKey;
+  subject: MtoCommonSolutionContactCreateInput;
+};
+
 export type AddedAsCollaboratorMeta = {
   __typename: 'AddedAsCollaboratorMeta';
   collaborator: PlanCollaborator;
@@ -287,6 +297,15 @@ export enum ContractorSupportType {
   ONE = 'ONE',
   OTHER = 'OTHER'
 }
+
+export type CreateMtoCommonSolutionInput = {
+  contractors?: InputMaybe<Array<MtoCommonSolutionContractorCreateInput>>;
+  filterView?: InputMaybe<ModelViewFilter>;
+  key: MtoCommonSolutionKey;
+  name: Scalars['String']['input'];
+  subjects: Array<MtoCommonSolutionContactCreateInput>;
+  type: MtoSolutionType;
+};
 
 /** The current user of the application */
 export type CurrentUser = {
@@ -799,6 +818,7 @@ export enum MtoCommonMilestoneKey {
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
   contactInformation: MtoCommonSolutionContactInformation;
+  contractors: Array<MtoCommonSolutionContractor>;
   filterView?: Maybe<ModelViewFilter>;
   /** Has this common solution been added to the MTO for a model plan? It is only evaluated when evaluated at the parent level, in the context of a model plan */
   isAdded: Scalars['Boolean']['output'];
@@ -822,7 +842,20 @@ export type MtoCommonSolutionContact = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  recievesNotifications: Scalars['Boolean']['output'];
   role?: Maybe<Scalars['String']['output']>;
+  userAccount: UserAccount;
+};
+
+/** Input for creating a common solution contact */
+export type MtoCommonSolutionContactCreateInput = {
+  isPrimary: Scalars['Boolean']['input'];
+  isTeam: Scalars['Boolean']['input'];
+  key: MtoCommonSolutionKey;
+  recievesNotifications: Scalars['Boolean']['input'];
+  role?: InputMaybe<Scalars['String']['input']>;
+  teamEmail?: InputMaybe<Scalars['String']['input']>;
+  userName?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
@@ -843,6 +876,43 @@ export type MtoCommonSolutionContactTranslation = {
   key: TranslationField;
   name: TranslationField;
   role: TranslationField;
+};
+
+/**
+ * Input for updating a common solution contact.
+ * Only role, isPrimary, and recievesNotifications can be changed.
+ */
+export type MtoCommonSolutionContactUpdateInput = {
+  id: Scalars['UUID']['input'];
+  isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
+  recievesNotifications?: InputMaybe<Scalars['Boolean']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MtoCommonSolutionContractor = {
+  __typename: 'MTOCommonSolutionContractor';
+  contractorName: Scalars['String']['output'];
+  contractorTitle?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+/** Input for creating a common solution contractor */
+export type MtoCommonSolutionContractorCreateInput = {
+  contractorName: Scalars['String']['input'];
+  contractorTitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Input for updating a common solution contractor. */
+export type MtoCommonSolutionContractorUpdateInput = {
+  contractorName?: InputMaybe<Scalars['String']['input']>;
+  contractorTitle?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['UUID']['input'];
 };
 
 export enum MtoCommonSolutionKey {
@@ -1355,6 +1425,10 @@ export enum MultiSourceDataToCollect {
 /** Mutations definition for the schema */
 export type Mutation = {
   __typename: 'Mutation';
+  /** Add a contractor to an MTO common solution */
+  addMTOCommonSolutionContractor: MtoCommonSolution;
+  /** Add a subject to an MTO common solution */
+  addMTOCommonSolutionSubject: MtoCommonSolution;
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
@@ -1363,6 +1437,10 @@ export type Mutation = {
    * Note, the parent must belong to the same model plan, or this will return an error
    */
   createMTOCategory: MtoCategory;
+  /** Create a new MTO common solution */
+  createMTOCommonSolution: MtoCommonSolution;
+  createMTOCommonSolutionContact: MtoCommonSolutionContact;
+  createMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   createMTOMilestoneCommon: MtoMilestone;
   createMTOMilestoneCustom: MtoMilestone;
   createMTOSolutionCommon: MtoSolution;
@@ -1383,6 +1461,8 @@ export type Mutation = {
    * references to the parent category.
    */
   deleteMTOCategory: Scalars['Boolean']['output'];
+  deleteMTOCommonSolutionContact: MtoCommonSolutionContact;
+  deleteMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   deleteMTOMilestone: Scalars['Boolean']['output'];
   deleteMTOSolution: Scalars['Boolean']['output'];
   deletePlanCR: PlanCr;
@@ -1425,6 +1505,8 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  updateMTOCommonSolutionContact: MtoCommonSolutionContact;
+  updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   updateMTOMilestone: MtoMilestone;
   updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
@@ -1442,6 +1524,18 @@ export type Mutation = {
   updateUserNotificationPreferences: UserNotificationPreferences;
   updateUserViewCustomization: UserViewCustomization;
   uploadNewPlanDocument: PlanDocument;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationAddMtoCommonSolutionContractorArgs = {
+  input: AddMtoCommonSolutionContractorInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationAddMtoCommonSolutionSubjectArgs = {
+  input: AddMtoCommonSolutionSubjectInput;
 };
 
 
@@ -1468,6 +1562,24 @@ export type MutationCreateMtoCategoryArgs = {
   modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonSolutionArgs = {
+  input: CreateMtoCommonSolutionInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonSolutionContactArgs = {
+  input: MtoCommonSolutionContactCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonSolutionContractorArgs = {
+  input: MtoCommonSolutionContractorCreateInput;
 };
 
 
@@ -1543,6 +1655,18 @@ export type MutationCreateStandardCategoriesArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeleteMtoCategoryArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCommonSolutionContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCommonSolutionContractorArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -1678,6 +1802,18 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCommonSolutionContactArgs = {
+  input: MtoCommonSolutionContactUpdateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCommonSolutionContractorArgs = {
+  input: MtoCommonSolutionContractorUpdateInput;
 };
 
 
@@ -3785,6 +3921,8 @@ export type Query = {
   modelPlanCollection: Array<ModelPlan>;
   modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  mtoCommonSolutionContact: MtoCommonSolutionContact;
+  mtoCommonSolutionContractor: MtoCommonSolutionContractor;
   mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
@@ -3849,6 +3987,18 @@ export type QueryModelPlanCollectionArgs = {
 /** Query definition for the schema */
 export type QueryModelPlansByMtoSolutionKeyArgs = {
   solutionKey: MtoCommonSolutionKey;
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoCommonSolutionContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoCommonSolutionContractorArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 

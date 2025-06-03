@@ -6,8 +6,10 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -16,9 +18,29 @@ func (r *mTOCommonSolutionResolver) Subjects(ctx context.Context, obj *models.MT
 	return obj.Subjects, nil
 }
 
+// Contractors is the resolver for the contractors field.
+func (r *mTOCommonSolutionResolver) Contractors(ctx context.Context, obj *models.MTOCommonSolution) ([]*model.MTOCommonSolutionContractor, error) {
+	panic(fmt.Errorf("not implemented: Contractors - contractors"))
+}
+
 // ContactInformation is the resolver for the contactInformation field.
 func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionContactInformation, error) {
 	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)
+}
+
+// AddMTOCommonSolutionSubject is the resolver for the addMTOCommonSolutionSubject field.
+func (r *mutationResolver) AddMTOCommonSolutionSubject(ctx context.Context, input model.AddMTOCommonSolutionSubjectInput) (*models.MTOCommonSolution, error) {
+	panic(fmt.Errorf("not implemented: AddMTOCommonSolutionSubject - addMTOCommonSolutionSubject"))
+}
+
+// AddMTOCommonSolutionContractor is the resolver for the addMTOCommonSolutionContractor field.
+func (r *mutationResolver) AddMTOCommonSolutionContractor(ctx context.Context, input model.AddMTOCommonSolutionContractorInput) (*models.MTOCommonSolution, error) {
+	panic(fmt.Errorf("not implemented: AddMTOCommonSolutionContractor - addMTOCommonSolutionContractor"))
+}
+
+// CreateMTOCommonSolution is the resolver for the createMTOCommonSolution field.
+func (r *mutationResolver) CreateMTOCommonSolution(ctx context.Context, input model.CreateMTOCommonSolutionInput) (*models.MTOCommonSolution, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonSolution - createMTOCommonSolution"))
 }
 
 // MtoCommonSolutions is the resolver for the mtoCommonSolutions field.
@@ -26,9 +48,20 @@ func (r *queryResolver) MtoCommonSolutions(ctx context.Context) ([]*models.MTOCo
 	return MTOCommonSolutionGetByModelPlanIDLOADER(ctx, nil)
 }
 
+// Subjects is the resolver for the subjects field.
+func (r *createMTOCommonSolutionInputResolver) Subjects(ctx context.Context, obj *model.CreateMTOCommonSolutionInput, data map[string]interface{}) error {
+	panic(fmt.Errorf("not implemented: Subjects - subjects"))
+}
+
 // MTOCommonSolution returns generated.MTOCommonSolutionResolver implementation.
 func (r *Resolver) MTOCommonSolution() generated.MTOCommonSolutionResolver {
 	return &mTOCommonSolutionResolver{r}
 }
 
+// CreateMTOCommonSolutionInput returns generated.CreateMTOCommonSolutionInputResolver implementation.
+func (r *Resolver) CreateMTOCommonSolutionInput() generated.CreateMTOCommonSolutionInputResolver {
+	return &createMTOCommonSolutionInputResolver{r}
+}
+
 type mTOCommonSolutionResolver struct{ *Resolver }
+type createMTOCommonSolutionInputResolver struct{ *Resolver }
