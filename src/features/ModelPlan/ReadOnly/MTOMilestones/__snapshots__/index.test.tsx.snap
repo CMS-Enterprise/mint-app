@@ -87,7 +87,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               >
                 Model milestone
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-2px"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -111,7 +111,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               >
                 Facilitated by
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-2px"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -135,7 +135,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               >
                 Solutions
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-2px"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -159,7 +159,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               >
                 Need by
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-2px"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -183,7 +183,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
               >
                 Status
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-2px"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"

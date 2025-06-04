@@ -276,7 +276,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model name
                         <svg
-                          class="usa-icon margin-left-05 margin-top-05"
+                          class="usa-icon margin-left-05 top-2px"
                           data-testid="caret--up"
                           focusable="false"
                           height="1em"
@@ -674,7 +674,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model name
                         <svg
-                          class="usa-icon margin-left-05 margin-top-05"
+                          class="usa-icon margin-left-05 top-2px"
                           data-testid="caret--up"
                           focusable="false"
                           height="1em"
