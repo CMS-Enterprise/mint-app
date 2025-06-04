@@ -3,12 +3,13 @@ type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
 
-  name: String!
-  email: String!
+  mailboxTitle: String!
+  mailboxAddress: String!
+  userAccount: UserAccount!
   isTeam: Boolean!
   role: String
   isPrimary: Boolean!
-
+  receiveEmails: Boolean!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -30,5 +31,48 @@ type MTOCommonSolutionContactInformation {
   The point of contact who is determined to be the primary contact
   """
   primaryContact: MTOCommonSolutionContact!
+}
 
+"""
+Input for updating a common solution contact.
+Only role, isPrimary, and receiveEmails can be changed.
+"""
+input MTOCommonSolutionContactUpdateChanges @goModel(model: "map[string]interface{}") {
+  role: String
+  isPrimary: Boolean
+  receiveEmails: Boolean
+}
+
+extend type Query {
+  mtoCommonSolutionContact(id: UUID!): MTOCommonSolutionContact!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+
+extend type Mutation {
+  createMTOCommonSolutionMailboxContact(
+    key: MTOCommonSolutionKey!
+    mailboxTitle: String
+    mailboxAddress: String!
+    isTeam: Boolean!
+    role: String
+    receiveEmails: Boolean!
+    isPrimary: Boolean!
+  ): MTOCommonSolutionContact!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  createMTOCommonSolutionUserContact(
+    key: MTOCommonSolutionKey!
+    userName: String!
+    isTeam: Boolean!
+    role: String
+    receiveEmails: Boolean!
+    isPrimary: Boolean!
+  ): MTOCommonSolutionContact!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  updateMTOCommonSolutionContact(id: UUID!, input: MTOCommonSolutionContactUpdateChanges!): MTOCommonSolutionContact!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  deleteMTOCommonSolutionContact(id: UUID!): MTOCommonSolutionContact!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }

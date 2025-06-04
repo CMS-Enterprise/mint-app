@@ -64,6 +64,7 @@ type MTOCommonSolution {
   key: MTOCommonSolutionKey!
   type: MTOSolutionType! 
   subjects: [MTOCommonSolutionSubject!]!
+  contractors: [MTOCommonSolutionContractor!]!
   filterView: ModelViewFilter
 
 
@@ -80,3 +81,4 @@ extend type Query {
   mtoCommonSolutions: [MTOCommonSolution!]!
   @hasRole(role: MINT_USER)
 }
+
