@@ -126,7 +126,7 @@ const SelectSolutionSettings = () => {
         // Allow state to hydrate before redirecting
         setTimeout(() => {
           history.push(state?.fromHome ? '/' : '/homepage-settings');
-        }, 10);
+        }, 100);
       })
       .catch(() => setMutationError(true));
   };
