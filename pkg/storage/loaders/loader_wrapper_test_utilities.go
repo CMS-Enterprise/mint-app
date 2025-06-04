@@ -59,7 +59,7 @@ func VerifyLoaders[K comparable, V any, Expected any](ctx context.Context, suite
 			}()
 			passed := verifyLoader[K, V, Expected](ctx, suite, loaderWrapper, expected.Key, expected.Expected, validateResult)
 			if !passed {
-				err = fmt.Errorf("dataloader verification function failed")
+				err = fmt.Errorf("dataloader verification function failed. expected %v for key %v", expected.Expected, expected.Key)
 			}
 			return
 		})

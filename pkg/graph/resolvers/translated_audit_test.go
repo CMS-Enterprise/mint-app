@@ -21,8 +21,16 @@ import (
 func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTableNames() {
 	plan1 := suite.createModelPlan("test plan for changes1")
 	plan2 := suite.createModelPlan("test plan for changes2")
+	// Create and delete a discussion to test the translated audit for plan discussion
+
+	catForPlan2 := suite.createMTOCategory("test category for changes", plan2.ID, nil)
+	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catForPlan2.ID)
+	suite.NoError(err)
+
 	plan3 := suite.createModelPlan("test plan for changes3")
 	plan4 := suite.createModelPlan("test plan for changes4")
+	// update suggested phase and make sure it updates as expected
+	// TestSendEmailForPhaseSuggestion in model_plan_phase_test.go is the file to look at to recreate here
 
 	plan3Basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan3.ID)
 	suite.NoError(err)
@@ -44,6 +52,8 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 	//create a solution on plan4 so we can test the MTOSolution table is returned
 	suite.createMTOSolutionCommon(plan4.ID, models.MTOCSKCcw, nil)
 
+	planWithSuggestedPhase := suite.createModelPlan("test plan with suggested phase")
+
 	suite.dangerousQueueAndTranslateAllAudits()
 	// TODO verify this and expand to be a more robust validation
 	expectedResults := []loaders.KeyAndExpected[storage.MostRecentByModelPlanIDAndTableFilters, models.TableName]{
@@ -55,10 +65,10 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 		}, Expected: models.TNPlanOpsEvalAndLearning},
 		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
 			ModelPlanID:    plan2.ID,
-			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanBasics}, true),
-			ExcludedFields: "{}",
+			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
 			IsAdmin:        false,
-		}, Expected: models.TNPlanBasics},
+		}, Expected: models.TNMTOCategory},
 		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
 			ModelPlanID:    plan3.ID,
 			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
@@ -71,6 +81,14 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
 			IsAdmin:        false,
 		}, Expected: models.TNMTOSolution},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID: planWithSuggestedPhase.ID,
+			// Here we only select model plan and plan basics. We are asserting that we don't return the model plan as the most recent change
+			// because we are excluding the preferred solution field
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNModelPlan, models.TNPlanBasics}, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
+			IsAdmin:        false,
+		}, Expected: models.TNPlanBasics},
 	}
 
 	//TODO update this to create more test data. We should verify that updates, deletes, excluded fields, etc are all accounted for.
