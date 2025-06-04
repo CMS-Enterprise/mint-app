@@ -61,7 +61,7 @@ enum ModelShareSection {
   """
   Only share MTO Solutions
   """
-  MTO_SOLUTIONS,# readview/it-systems-and-solutions
+  MTO_SOLUTIONS,# readview/solutions-and-it-systems
   # DATA_EXCHANGE_APPROACH,
   # TEAM,
 
