@@ -92,7 +92,11 @@ const AddDocument = () => {
               onClick={() => history.goBack()}
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
-              <Icon.ArrowBack className="margin-right-1" aria-hidden />
+              <Icon.ArrowBack
+                className="margin-right-1"
+                aria-hidden
+                aria-label="back"
+              />
               {t('dontAdd')}
             </Button>
           </div>

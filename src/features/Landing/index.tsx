@@ -238,7 +238,10 @@ export const LandingFooter = () => {
               <span>
                 <Link href="mailto:MINTTeam@cms.hhs.gov">
                   {t('email')}
-                  <Icon.MailOutline className="margin-left-1 text-tbottom" />
+                  <Icon.MailOutline
+                    className="margin-left-1 text-tbottom"
+                    aria-label="mail"
+                  />
                 </Link>
               </span>
             </div>
@@ -414,7 +417,11 @@ const EmailCard = () => {
 
       <div className="display-flex flex-justify-end width-full">
         <div className="landing__email-icon-contain display-flex flex-align-center flex-justify-center position-absolute">
-          <Icon.Mail size={6} className="landing__email-icon" />
+          <Icon.Mail
+            size={6}
+            className="landing__email-icon"
+            aria-label="mail"
+          />
 
           <div className="bg-red radius-top-pill radius-bottom-pill text-white padding-1 width-3 height-3 display-flex flex-align-center flex-justify-center position-absolute margin-left-9 margin-bottom-9">
             1

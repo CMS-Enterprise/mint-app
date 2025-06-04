@@ -59,7 +59,10 @@ const ContactInfo = ({
                 target="_blank"
               >
                 {h('contactInfo.sendAnEmail')}
-                <Icon.Launch className="margin-left-05 margin-bottom-2px text-tbottom" />
+                <Icon.Launch
+                  className="margin-left-05 margin-bottom-2px text-tbottom"
+                  aria-label="launch"
+                />
               </Link>
             </div>
           );

@@ -145,6 +145,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                     href="/homepage-settings"
                   >
                     <svg
+                      aria-label="edit"
                       class="usa-icon margin-right-1 text-primary"
                       focusable="false"
                       height="1em"
@@ -279,6 +280,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model name
                         <svg
+                          aria-label="collapse"
                           class="usa-icon margin-left-05 top-2px"
                           data-testid="caret--up"
                           focusable="false"
@@ -310,6 +312,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Short name
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -341,6 +344,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         ID
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -372,6 +376,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Demo code
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -403,6 +408,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Category
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -434,6 +440,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Status
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -465,6 +472,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Anticipated clearance date
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -496,6 +504,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model start date
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -527,6 +536,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Recent activity
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -677,6 +687,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model name
                         <svg
+                          aria-label="collapse"
                           class="usa-icon margin-left-05 top-2px"
                           data-testid="caret--up"
                           focusable="false"
@@ -708,6 +719,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Short name
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -739,6 +751,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         ID
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -770,6 +783,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Demo code
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -801,6 +815,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Category
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -832,6 +847,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Status
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -863,6 +879,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Anticipated clearance date
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -894,6 +911,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model start date
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -925,6 +943,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Recent activity
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"

@@ -53,9 +53,17 @@ const MTOOptionsCard = ({
       >
         {t(`optionsCard.${mtoType}.label`).toLocaleUpperCase()}{' '}
         {mtoType === 'milestones' ? (
-          <Icon.Flag className="margin-right-05" style={{ top: '4px' }} />
+          <Icon.Flag
+            className="margin-right-05"
+            style={{ top: '4px' }}
+            aria-label="flag"
+          />
         ) : (
-          <Icon.Build className="margin-right-05" style={{ top: '4px' }} />
+          <Icon.Build
+            className="margin-right-05"
+            style={{ top: '4px' }}
+            aria-label="build"
+          />
         )}
       </div>
 
@@ -161,7 +169,11 @@ const MTOOptionsPanel = () => {
           )}
         >
           {t('optionsCard.template.label').toLocaleUpperCase()}{' '}
-          <Icon.GridView className="margin-right-05" style={{ top: '4px' }} />
+          <Icon.GridView
+            className="margin-right-05"
+            style={{ top: '4px' }}
+            aria-label="grid view"
+          />
         </div>
 
         <div className="padding-x-3 display-flex flex-column height-full">

@@ -226,7 +226,10 @@ const SolutionLibrary = () => {
             data-testid="return-to-mto"
           >
             <span>
-              <Icon.ArrowBack className="top-3px margin-right-1" />
+              <Icon.ArrowBack
+                className="top-3px margin-right-1"
+                aria-label="back"
+              />
               {t('returnToMTO')}
             </span>
           </UswdsReactLink>

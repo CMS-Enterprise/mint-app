@@ -12,6 +12,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
         class="bg-warning-lighter padding-y-05 padding-x-1"
       >
         <svg
+          aria-label="warning"
           class="usa-icon margin-right-1 top-2px text-warning"
           focusable="false"
           height="1em"
@@ -331,6 +332,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                   type="button"
                 >
                   <svg
+                    aria-label="collapse"
                     class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
@@ -414,6 +416,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                     </label>
                   </div>
                   <svg
+                    aria-label="warning"
                     class="usa-icon usa-icon--size-3 text-warning-dark"
                     focusable="false"
                     height="1em"
@@ -450,6 +453,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                     </label>
                   </div>
                   <svg
+                    aria-label="error"
                     class="usa-icon usa-icon--size-3 text-error-dark"
                     focusable="false"
                     height="1em"
@@ -523,6 +527,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                           >
                             Milestone
                             <svg
+                              aria-label="unfold"
                               class="usa-icon margin-left-05"
                               data-testid="caret--sort"
                               focusable="false"
@@ -553,6 +558,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                           >
                             Status
                             <svg
+                              aria-label="unfold"
                               class="usa-icon margin-left-05"
                               data-testid="caret--sort"
                               focusable="false"
@@ -580,6 +586,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                             type="button"
                           >
                             <svg
+                              aria-label="warning"
                               class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
                               focusable="false"
                               height="1em"

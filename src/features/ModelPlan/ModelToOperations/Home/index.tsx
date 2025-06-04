@@ -153,7 +153,10 @@ const MTOHome = () => {
                 data-testid="return-to-collaboration"
               >
                 <span>
-                  <Icon.ArrowBack className="top-3px margin-right-1" />
+                  <Icon.ArrowBack
+                    className="top-3px margin-right-1"
+                    aria-label="back"
+                  />
                   {t('returnToCollaboration')}
                 </span>
               </UswdsReactLink>

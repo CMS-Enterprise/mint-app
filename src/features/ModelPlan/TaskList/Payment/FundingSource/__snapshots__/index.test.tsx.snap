@@ -205,6 +205,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -268,6 +269,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -447,6 +449,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -510,6 +513,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -883,6 +887,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
             >
               <svg
                 aria-hidden="true"
+                aria-label="back"
                 class="usa-icon margin-right-1"
                 focusable="false"
                 height="1em"

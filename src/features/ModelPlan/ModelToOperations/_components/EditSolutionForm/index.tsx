@@ -543,7 +543,13 @@ const EditSolutionForm = ({
         }
       },
       {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        Header: (
+          <Icon.Warning
+            size={3}
+            className="left-05 text-base-lighter"
+            aria-label="warning"
+          />
+        ),
         accessor: 'riskIndicator',
         disableSortBy: true,
         width: 50,
@@ -670,7 +676,10 @@ const EditSolutionForm = ({
           })}
         >
           <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning className="margin-right-1 top-2px text-warning" />
+            <Icon.Warning
+              className="margin-right-1 top-2px text-warning"
+              aria-label="warning"
+            />
             <p className="margin-0 display-inline margin-right-1">
               {modelToOperationsMiscT('modal.editSolution.unsavedChanges', {
                 count: unsavedChanges + unsavedSolutionChanges
@@ -703,6 +712,7 @@ const EditSolutionForm = ({
                 <Icon.Construction
                   className="margin-left-1"
                   style={{ top: '2px' }}
+                  aria-label="construction"
                 />{' '}
                 {modelToOperationsMiscT('modal.editSolution.custom')}
               </span>
@@ -1142,6 +1152,7 @@ const EditSolutionForm = ({
                               if (value === MtoRiskIndicator.AT_RISK)
                                 return (
                                   <Icon.Error
+                                    aria-label="error"
                                     className="text-error-dark"
                                     style={{ top: '10px' }}
                                     size={3}
@@ -1154,6 +1165,7 @@ const EditSolutionForm = ({
                                     className="text-warning-dark"
                                     style={{ top: '10px' }}
                                     size={3}
+                                    aria-label="warning"
                                   />
                                 );
 

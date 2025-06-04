@@ -109,6 +109,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -189,6 +190,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -312,6 +314,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                 >
                   Milestone
                   <svg
+                    aria-label="unfold"
                     class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
@@ -342,6 +345,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                 >
                   Status
                   <svg
+                    aria-label="unfold"
                     class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
@@ -369,6 +373,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                   type="button"
                 >
                   <svg
+                    aria-label="warning"
                     class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
                     focusable="false"
                     height="1em"

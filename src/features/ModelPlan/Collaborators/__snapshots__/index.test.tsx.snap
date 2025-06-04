@@ -104,6 +104,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     >
                       Name
                       <svg
+                        aria-label="unfold"
                         class="usa-icon margin-left-05"
                         data-testid="caret--sort"
                         focusable="false"
@@ -135,6 +136,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     >
                       Role(s)
                       <svg
+                        aria-label="unfold"
                         class="usa-icon margin-left-05"
                         data-testid="caret--sort"
                         focusable="false"
@@ -166,6 +168,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     >
                       Date added
                       <svg
+                        aria-label="unfold"
                         class="usa-icon margin-left-05"
                         data-testid="caret--sort"
                         focusable="false"
@@ -195,6 +198,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     >
                       Actions
                       <svg
+                        aria-label="unfold"
                         class="usa-icon margin-left-05"
                         data-testid="caret--sort"
                         focusable="false"

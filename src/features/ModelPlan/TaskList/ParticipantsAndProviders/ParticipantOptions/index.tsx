@@ -397,6 +397,7 @@ export const ParticipantOptions = () => {
                       className="margin-right-1"
                       aria-hidden
                       role="img"
+                      aria-label="back"
                     />
                     {miscellaneousT('saveAndReturn')}
                   </Button>

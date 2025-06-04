@@ -133,7 +133,7 @@ const ModelPlansTable = ({
     const columnOptions: Record<string, Column> = {
       isFavorite: {
         id: 'isFavorite',
-        Header: <Icon.StarOutline size={3} />,
+        Header: <Icon.StarOutline size={3} aria-label="star" />,
         accessor: 'isFavorite',
         disableGlobalFilter: true,
         Cell: ({ row }: any) => {
@@ -150,7 +150,7 @@ const ModelPlansTable = ({
               aria-label={`Click to unfavorite ${row.original.modelName} model plan`}
               aria-checked="true"
             >
-              <Icon.Star data-cy="favorited" size={3} />
+              <Icon.Star data-cy="favorited" size={3} aria-label="star" />
             </button>
           ) : (
             <button
@@ -167,6 +167,7 @@ const ModelPlansTable = ({
             >
               <Icon.StarOutline
                 data-cy="unfavorited"
+                aria-label="star outline"
                 size={3}
                 className="text-gray-30"
               />
@@ -303,7 +304,10 @@ const ModelPlansTable = ({
                   className="display-flex flex-align-center text-bold"
                   style={{ whiteSpace: 'nowrap' }}
                 >
-                  <Icon.Comment className="text-primary margin-right-05" />{' '}
+                  <Icon.Comment
+                    className="text-primary margin-right-05"
+                    aria-label="comment"
+                  />{' '}
                   {discussions.length}{' '}
                   {i18next.t('discussionsMisc:discussionBanner.discussion', {
                     count: discussions.length

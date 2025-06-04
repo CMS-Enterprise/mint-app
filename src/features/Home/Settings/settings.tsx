@@ -282,7 +282,10 @@ const SettingsForm = () => {
                       to="/"
                       className="display-flex flex-align-center"
                     >
-                      <Icon.ArrowBack className="margin-right-2" />
+                      <Icon.ArrowBack
+                        className="margin-right-2"
+                        aria-label="back"
+                      />
                       {homepageSettingsT('back')}
                     </UswdsReactLink>
                   </div>

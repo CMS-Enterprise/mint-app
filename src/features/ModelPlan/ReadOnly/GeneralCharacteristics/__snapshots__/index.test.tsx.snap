@@ -558,6 +558,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -882,6 +883,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -1046,6 +1048,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -1639,6 +1642,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -1685,6 +1689,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"

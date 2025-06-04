@@ -82,6 +82,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="back"
             class="usa-icon margin-right-1"
             focusable="false"
             height="1em"
@@ -148,6 +149,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         File Name
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -179,6 +181,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Document Type
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -210,6 +213,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Notes
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -241,6 +245,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Upload date
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -272,6 +277,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Visibility
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -303,6 +309,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Actions
                         <svg
+                          aria-label="unfold"
                           class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
@@ -369,6 +376,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                         >
                           View
                           <svg
+                            aria-label="download"
                             class="usa-icon"
                             focusable="false"
                             height="1em"
@@ -438,6 +446,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                         >
                           View
                           <svg
+                            aria-label="download"
                             class="usa-icon"
                             focusable="false"
                             height="1em"

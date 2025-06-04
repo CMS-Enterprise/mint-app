@@ -297,6 +297,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -404,6 +405,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -560,6 +562,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -743,6 +746,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -837,6 +841,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -931,6 +936,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -1025,6 +1031,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       title=""
                     >
                       <svg
+                        aria-label="info"
                         class="usa-icon text-base-light"
                         focusable="false"
                         height="1em"
@@ -1860,6 +1867,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     title=""
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"

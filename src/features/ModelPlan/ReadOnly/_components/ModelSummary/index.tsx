@@ -131,7 +131,10 @@ const ModelSummary = ({
               }}
             >
               {h(descriptionExpanded ? 'description.less' : 'description.more')}
-              <Icon.ExpandMore className="expand-icon margin-left-05 margin-bottom-2px text-tbottom" />
+              <Icon.ExpandMore
+                className="expand-icon margin-left-05 margin-bottom-2px text-tbottom"
+                aria-label="expand"
+              />
             </Button>
           </div>
         )}

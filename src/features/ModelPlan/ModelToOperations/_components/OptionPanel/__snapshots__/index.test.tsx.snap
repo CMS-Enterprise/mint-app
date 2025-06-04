@@ -32,6 +32,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
           >
             MILESTONES 
             <svg
+              aria-label="flag"
               class="usa-icon margin-right-05"
               focusable="false"
               height="1em"
@@ -100,6 +101,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
           >
             OPERATIONAL SOLUTIONS 
             <svg
+              aria-label="build"
               class="usa-icon margin-right-05"
               focusable="false"
               height="1em"
@@ -209,6 +211,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         >
           TEMPLATE 
           <svg
+            aria-label="grid view"
             class="usa-icon margin-right-05"
             focusable="false"
             height="1em"

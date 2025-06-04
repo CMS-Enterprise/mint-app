@@ -693,7 +693,13 @@ const EditMilestoneForm = ({
         }
       },
       {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        Header: (
+          <Icon.Warning
+            size={3}
+            className="left-05 text-base-lighter"
+            aria-label="warning"
+          />
+        ),
         accessor: 'riskIndicator',
         disableSortBy: true,
         Cell: ({ row }: { row: Row<SolutionType> }) => {
@@ -824,7 +830,10 @@ const EditMilestoneForm = ({
           })}
         >
           <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning className="margin-right-1 top-2px text-warning" />
+            <Icon.Warning
+              className="margin-right-1 top-2px text-warning"
+              aria-label="warning"
+            />
             <p className="margin-0 display-inline margin-right-1">
               {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
                 count: unsavedChanges + unsavedSolutionChanges
@@ -857,6 +866,7 @@ const EditMilestoneForm = ({
                 <Icon.Science
                   className="margin-left-1"
                   style={{ top: '2px' }}
+                  aria-label="science"
                 />{' '}
                 {modelToOperationsMiscT('milestoneLibrary.isDraft')}
               </span>
@@ -867,6 +877,7 @@ const EditMilestoneForm = ({
                 <Icon.Construction
                   className="margin-left-1"
                   style={{ top: '2px' }}
+                  aria-label="construction"
                 />{' '}
                 {modelToOperationsMiscT('modal.editMilestone.custom')}
               </span>
@@ -1278,6 +1289,7 @@ const EditMilestoneForm = ({
                                     className="text-error-dark"
                                     style={{ top: '10px' }}
                                     size={3}
+                                    aria-label="error"
                                   />
                                 );
 
@@ -1287,6 +1299,7 @@ const EditMilestoneForm = ({
                                     className="text-warning-dark"
                                     style={{ top: '10px' }}
                                     size={3}
+                                    aria-label="warning"
                                   />
                                 );
 

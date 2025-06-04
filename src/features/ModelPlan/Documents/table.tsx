@@ -409,7 +409,7 @@ export const Table = ({
                   >
                     <span className="display-flex flex-align-center">
                       {t('documentTable.view')}
-                      <Icon.FileDownload />
+                      <Icon.FileDownload aria-label="download" />
                     </span>
                   </Button>
                 ) : (

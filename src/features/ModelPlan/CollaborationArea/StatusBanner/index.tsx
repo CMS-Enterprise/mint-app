@@ -65,7 +65,10 @@ const CollaborationStatusBanner = ({
             to={`/models/${modelID}/read-view`}
             className="display-flex flex-align-center"
           >
-            <Icon.Visibility className="margin-right-1 padding-top-2px" />
+            <Icon.Visibility
+              className="margin-right-1 padding-top-2px"
+              aria-label="visibility"
+            />
             {collaborationAreaT('switchToReadView')}
           </UswdsReactLink>
         )}
@@ -95,7 +98,7 @@ const CollaborationStatusBanner = ({
             }
           )}
         >
-          <Icon.History className="margin-right-1" />
+          <Icon.History className="margin-right-1" aria-label="history" />
 
           {changeHistoryT('viewChangeHistory')}
         </UswdsReactLink>
@@ -114,7 +117,10 @@ const CollaborationStatusBanner = ({
             to={`/models/${modelID}/read-view`}
             className="display-flex flex-align-center"
           >
-            <Icon.Visibility className="margin-right-1 padding-top-2px" />
+            <Icon.Visibility
+              className="margin-right-1 padding-top-2px"
+              aria-label="visibility"
+            />
             {collaborationAreaT('switchToReadView')}
           </UswdsReactLink>
         </Grid>

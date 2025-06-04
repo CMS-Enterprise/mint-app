@@ -151,7 +151,13 @@ const sortNested = (
 
 export const columns: ColumnType[] = [
   {
-    Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+    Header: (
+      <Icon.Warning
+        size={3}
+        className="left-05 text-base-lighter"
+        aria-label="warning"
+      />
+    ),
     accessor: 'riskIndicator',
     width: '60px',
     canSort: false,

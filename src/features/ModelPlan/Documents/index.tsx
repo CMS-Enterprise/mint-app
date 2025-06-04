@@ -78,7 +78,11 @@ export const DocumentsContent = () => {
             to={`/models/${modelID}/collaboration-area/`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
-            <Icon.ArrowBack className="margin-right-1" aria-hidden />
+            <Icon.ArrowBack
+              className="margin-right-1"
+              aria-hidden
+              aria-label="back"
+            />
             {modelPlanTaskListT('returnToCollaboration')}
           </UswdsReactLink>
 

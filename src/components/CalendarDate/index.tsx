@@ -38,7 +38,7 @@ const CalendarDate = ({
           </span>
         </time>
       </div>
-      <UswdsReactLink to={link}>
+      <UswdsReactLink to={link} aria-label={linkText}>
         <span>
           <h4 className="usa-collection__heading display-inline margin-right-1 font-body-md">
             {linkText}

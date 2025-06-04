@@ -206,7 +206,13 @@ const ITSystemsTable = ({
   const columns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        Header: (
+          <Icon.Warning
+            size={3}
+            className="left-05 text-base-lighter"
+            aria-label="warning"
+          />
+        ),
         accessor: 'riskIndicator',
         width: 40,
         Cell: ({ row }: any) => {

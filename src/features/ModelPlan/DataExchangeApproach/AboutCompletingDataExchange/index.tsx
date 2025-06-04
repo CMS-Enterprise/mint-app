@@ -70,7 +70,10 @@ const AboutCompletingDataExchange = () => {
         target="_blank"
       >
         {t('aboutCompletingDataExchange.email')}
-        <Icon.MailOutline className="margin-left-1 text-tbottom" />
+        <Icon.MailOutline
+          className="margin-left-1 text-tbottom"
+          aria-label="mail"
+        />
       </Link>
 
       <Grid row gap>
@@ -140,7 +143,11 @@ const AboutCompletingDataExchange = () => {
         className="usa-button usa-button--unstyled"
         onClick={() => history.push(`/models/${modelID}/collaboration-area`)}
       >
-        <Icon.ArrowBack className="margin-right-1" aria-hidden />
+        <Icon.ArrowBack
+          className="margin-right-1"
+          aria-hidden
+          aria-label="back"
+        />
 
         {miscellaneousT('saveAndReturnToCollaborationArea')}
       </Button>

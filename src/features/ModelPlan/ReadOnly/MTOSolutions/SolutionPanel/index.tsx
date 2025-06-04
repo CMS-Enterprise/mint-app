@@ -114,7 +114,13 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
         }
       },
       {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        Header: (
+          <Icon.Warning
+            size={3}
+            className="left-05 text-base-lighter"
+            aria-label="warning"
+          />
+        ),
         accessor: 'riskIndicator',
         disableSortBy: true,
         Cell: ({ row }: { row: Row<SolutionType> }) => {
@@ -268,7 +274,10 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                           label={stausConfig.questionTooltip}
                           position="right"
                         >
-                          <Icon.Info className="text-base-light" />
+                          <Icon.Info
+                            className="text-base-light"
+                            aria-label="info"
+                          />
                         </Tooltip>
                       </>
                     }
@@ -295,7 +304,10 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                           label={riskIndicatorConfig.questionTooltip}
                           position="right"
                         >
-                          <Icon.Info className="text-base-light" />
+                          <Icon.Info
+                            className="text-base-light"
+                            aria-label="info"
+                          />
                         </Tooltip>
                       </>
                     }

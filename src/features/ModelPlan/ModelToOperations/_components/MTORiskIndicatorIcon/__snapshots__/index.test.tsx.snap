@@ -58,6 +58,7 @@ exports[`MTORiskIndicatorTag Component > renders correctly and matches snapshot 
         title=""
       >
         <svg
+          aria-label="warning"
           class="usa-icon usa-icon--size-3 text-warning-dark top-05"
           focusable="false"
           height="1em"

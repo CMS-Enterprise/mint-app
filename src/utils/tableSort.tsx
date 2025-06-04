@@ -32,18 +32,30 @@ export const getHeaderSortIcon = <T extends {}>(
   });
   if (!column.isSorted) {
     return (
-      <Icon.UnfoldMore className={sharedClassName} data-testid="caret--sort" />
+      <Icon.UnfoldMore
+        className={sharedClassName}
+        data-testid="caret--sort"
+        aria-label="unfold"
+      />
     );
   }
 
   if (column.isSortedDesc) {
     return (
-      <Icon.ExpandMore className={sharedClassName} data-testid="caret--down" />
+      <Icon.ExpandMore
+        className={sharedClassName}
+        data-testid="caret--down"
+        aria-label="expand"
+      />
     );
   }
 
   return (
-    <Icon.ExpandLess className={sharedClassName} data-testid="caret--up" />
+    <Icon.ExpandLess
+      className={sharedClassName}
+      data-testid="caret--up"
+      aria-label="collapse"
+    />
   );
 };
 

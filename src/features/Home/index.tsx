@@ -148,7 +148,13 @@ const Home = () => {
                 i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
                 components={{
                   link1: <UswdsReactLink to="/models"> </UswdsReactLink>,
-                  star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
+                  star: (
+                    <Icon.StarOutline
+                      size={3}
+                      style={{ top: '6px' }}
+                      aria-label="star"
+                    />
+                  )
                 }}
               />
             </Alert>
@@ -241,7 +247,10 @@ const Home = () => {
                         to="/homepage-settings"
                         className="display-flex flex-align-center"
                       >
-                        <Icon.Edit className="margin-right-1 text-primary" />
+                        <Icon.Edit
+                          className="margin-right-1 text-primary"
+                          aria-label="edit"
+                        />
                         {t('editHomepage')}
                       </UswdsReactLink>
                     </div>

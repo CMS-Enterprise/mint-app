@@ -113,6 +113,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
                 type="button"
               >
                 <svg
+                  aria-label="warning"
                   class="usa-icon usa-icon--size-3 left-05 text-base-lighter"
                   focusable="false"
                   height="1em"
@@ -126,6 +127,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
                   />
                 </svg>
                 <svg
+                  aria-label="unfold"
                   class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
@@ -157,6 +159,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               >
                 Solution
                 <svg
+                  aria-label="unfold"
                   class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
@@ -188,6 +191,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               >
                 Related milestones
                 <svg
+                  aria-label="unfold"
                   class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
@@ -219,6 +223,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               >
                 Facilitated by
                 <svg
+                  aria-label="unfold"
                   class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
@@ -250,6 +255,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               >
                 Need by
                 <svg
+                  aria-label="unfold"
                   class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
@@ -281,6 +287,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               >
                 Status
                 <svg
+                  aria-label="unfold"
                   class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"

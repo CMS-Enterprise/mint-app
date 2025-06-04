@@ -189,12 +189,20 @@ export const ActivityCTA = ({
     return isExpanded ? (
       <>
         <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.hide" />
-        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+        <Icon.ExpandLess
+          className="margin-left-1"
+          aria-hidden
+          aria-label="collapse"
+        />
       </>
     ) : (
       <>
         <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.view" />
-        <Icon.ExpandMore className="margin-left-1" aria-hidden />
+        <Icon.ExpandMore
+          className="margin-left-1"
+          aria-hidden
+          aria-label="expand"
+        />
       </>
     );
   }
@@ -203,12 +211,20 @@ export const ActivityCTA = ({
     return isExpanded ? (
       <>
         <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.hide" />
-        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+        <Icon.ExpandLess
+          className="margin-left-1"
+          aria-hidden
+          aria-label="collapse"
+        />
       </>
     ) : (
       <>
         <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.view" />
-        <Icon.ExpandMore className="margin-left-1" aria-hidden />
+        <Icon.ExpandMore
+          className="margin-left-1"
+          aria-hidden
+          aria-label="expand"
+        />
       </>
     );
   }
