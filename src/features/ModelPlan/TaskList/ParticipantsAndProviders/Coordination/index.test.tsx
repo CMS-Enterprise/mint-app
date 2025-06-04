@@ -9,7 +9,6 @@ import {
   ParticipantRequireFinancialGuaranteeType,
   ParticipantsIdType
 } from 'gql/generated/graphql';
-import Sinon from 'sinon';
 
 import Coordination from './index';
 
@@ -64,9 +63,6 @@ const coordinationMock = [
 ];
 
 describe('Model Plan Coordination', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders without errors', async () => {
     render(
       <MemoryRouter

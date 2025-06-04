@@ -2,7 +2,6 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import Sinon from 'sinon';
 import {
   allMTOSolutionsMock,
   categoryMock,
@@ -15,9 +14,6 @@ import MessageProvider from 'contexts/MessageContext';
 import EditMilestoneForm from '.';
 
 describe('EditMilestoneForm', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter

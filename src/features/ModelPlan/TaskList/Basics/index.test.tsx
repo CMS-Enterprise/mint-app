@@ -9,7 +9,6 @@ import {
   GetBasicsQuery,
   ModelCategory
 } from 'gql/generated/graphql';
-import Sinon from 'sinon';
 
 import Basics from './index';
 
@@ -54,9 +53,6 @@ const mocks = [
 ];
 
 describe('Model Plan Basics page', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders without errors', async () => {
     render(
       <MemoryRouter
