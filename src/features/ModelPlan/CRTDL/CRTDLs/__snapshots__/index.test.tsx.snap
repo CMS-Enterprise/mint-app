@@ -270,7 +270,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
               <div
                 class="usa-card__container shadow-2"
               >
-                <header
+                <div
                   class="usa-card__header echimp-card__header"
                   data-testid="CardHeader"
                 >
@@ -284,7 +284,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                   >
                     Echimp CR
                   </h3>
-                </header>
+                </div>
                 <div
                   class="usa-card__body"
                   data-testid="CardBody"
@@ -386,7 +386,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
               <div
                 class="usa-card__container shadow-2"
               >
-                <header
+                <div
                   class="usa-card__header echimp-card__header"
                   data-testid="CardHeader"
                 >
@@ -400,7 +400,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                   >
                     Echimp TDL
                   </h3>
-                </header>
+                </div>
                 <div
                   class="usa-card__body"
                   data-testid="CardBody"

@@ -1012,6 +1012,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                 Next
               </span>
               <svg
+                aria-hidden="true"
                 class="usa-icon"
                 focusable="false"
                 height="1em"

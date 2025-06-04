@@ -36,7 +36,7 @@ const GlobalClientFilter = ({
       data-testid="table-client-filter"
       role="search"
       className={classnames('usa-search', className)}
-      onSubmit={e => {
+      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // TODO: CEDAR API filtering may go here if implemented
       }}

@@ -113,7 +113,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="cmmi-model-operational-planning"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -379,7 +379,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               </span>
             </button>
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -620,7 +620,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               </span>
             </button>
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -815,7 +815,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               These activities may not apply to all models.
             </p>
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -948,7 +948,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="participants"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -1320,7 +1320,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="model-operations"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -1684,7 +1684,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="payment"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -1879,7 +1879,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="learning-&-diffusion"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -2019,7 +2019,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="evaluation"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
               data-testid="table"
             >
               <thead>
@@ -2118,7 +2118,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -2127,7 +2127,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     About 2-page concept papers and review meetings
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -2169,7 +2169,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -2178,7 +2178,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     Overview for adding a model
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=getting-started"
@@ -2220,7 +2220,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -2229,7 +2229,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     Sample Model Plan
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=getting-started"

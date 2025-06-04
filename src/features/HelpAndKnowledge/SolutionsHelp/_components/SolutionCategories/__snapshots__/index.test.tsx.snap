@@ -34,12 +34,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Applications and participant interaction
-              </header>
+              </div>
               <span
                 class="padding-x-3"
               >
@@ -84,12 +84,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Applications and participant interaction
-              </header>
+              </div>
               <span
                 class="padding-x-3"
               >
@@ -134,12 +134,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Communication tools and help desk
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -179,12 +179,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Contract vehicles
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -224,12 +224,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Data
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -269,12 +269,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Learning
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -314,12 +314,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Legal
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -359,12 +359,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Medicare Advantage and Part D
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -404,12 +404,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Medicare Fee-for-Service
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -449,12 +449,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Payments and financials
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"
@@ -494,12 +494,12 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             <div
               class="usa-card__container"
             >
-              <header
+              <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
                 Quality
-              </header>
+              </div>
               <div
                 class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
                 data-testid="CardBody"

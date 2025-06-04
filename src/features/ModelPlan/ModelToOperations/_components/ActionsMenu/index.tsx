@@ -70,11 +70,11 @@ const ActionMenu = ({
           className="width-auto padding-right-1 text-primary text-decoration-none text-bold float-right"
           aria-label={i18next.t('modelToOperationsMisc:table.openActionMenu')}
           unstyled
-          onClick={e => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
             setIsMenuOpen(!isMenuOpen);
           }}
-          onKeyPress={e => {
+          onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
             e.stopPropagation();
           }}
         >
@@ -90,11 +90,11 @@ const ActionMenu = ({
           items={[
             <Button
               type="button"
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -107,7 +107,7 @@ const ActionMenu = ({
             // Add Model Milestone
             <Button
               type="button"
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
                 clearMessage();
@@ -119,7 +119,7 @@ const ActionMenu = ({
                   toggleRow
                 });
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -131,7 +131,7 @@ const ActionMenu = ({
             <Button
               type="button"
               disabled={isUncategorized}
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
                 clearMessage();
@@ -150,7 +150,7 @@ const ActionMenu = ({
                   });
                 }
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -164,7 +164,7 @@ const ActionMenu = ({
             <Button
               type="button"
               disabled={isUncategorized}
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
                 clearMessage();
@@ -177,7 +177,7 @@ const ActionMenu = ({
                   subCategoryID
                 });
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -191,7 +191,7 @@ const ActionMenu = ({
             <Button
               type="button"
               disabled={isUncategorized}
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setIsMenuOpen(false);
                 clearMessage();
@@ -206,7 +206,7 @@ const ActionMenu = ({
                   subCategoryID
                 });
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className={classNames(

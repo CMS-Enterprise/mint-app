@@ -540,7 +540,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
           <div
             class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -549,7 +549,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               >
                 Phases involved in creating IT and operational support for models
               </h3>
-            </header>
+            </div>
             <a
               class="usa-link width-fit-content display-block "
               href="/help-and-knowledge/articles?category=it-implementation"
@@ -591,7 +591,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
           <div
             class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -600,7 +600,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               >
                 Model implementation and solution implementation
               </h3>
-            </header>
+            </div>
             <a
               class="usa-link width-fit-content display-block "
               href="/help-and-knowledge/articles?category=it-implementation"
@@ -642,7 +642,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
           <div
             class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -651,7 +651,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               >
                 Utilizing available operational solutions
               </h3>
-            </header>
+            </div>
             <a
               class="usa-link width-fit-content display-block "
               href="/help-and-knowledge/articles?category=it-implementation"

@@ -348,7 +348,7 @@ const MTOTable = ({
               disabled={
                 currentIndex === 0 || currentIndex === (rowLength || 0) - 1
               }
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setRearrangedData(
                   moveRow(
@@ -362,7 +362,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -380,7 +380,7 @@ const MTOTable = ({
                 currentIndex === (rowLength || 0) - 1 ||
                 currentIndex === (rowLength || 0) - 2
               }
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setRearrangedData(
                   moveRow(
@@ -394,7 +394,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"

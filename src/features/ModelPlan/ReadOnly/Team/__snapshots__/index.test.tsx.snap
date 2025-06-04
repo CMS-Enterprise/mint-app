@@ -13,7 +13,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
       <div
         class="usa-card__container radius-md padding-2 margin-bottom-3 margin-x-0"
       >
-        <header
+        <div
           class="usa-card__header padding-top-0 padding-x-0 padding-bottom-2 margin-bottom-2 border-bottom-2px border-gray-10"
           data-testid="CardHeader"
         >
@@ -43,7 +43,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
               />
             </svg>
           </a>
-        </header>
+        </div>
         <div>
           <p
             class="margin-y-0"
@@ -60,7 +60,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
       <div
         class="usa-card__container radius-md padding-2 margin-bottom-3 margin-x-0"
       >
-        <header
+        <div
           class="usa-card__header padding-top-0 padding-x-0 padding-bottom-2 margin-bottom-2 border-bottom-2px border-gray-10"
           data-testid="CardHeader"
         >
@@ -90,7 +90,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
               />
             </svg>
           </a>
-        </header>
+        </div>
         <div>
           <p
             class="margin-y-0"

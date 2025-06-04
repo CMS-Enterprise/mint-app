@@ -278,7 +278,7 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -287,7 +287,7 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
                 >
                   Using the solution library
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -329,7 +329,7 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -338,7 +338,7 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
                 >
                   Using the solutions and IT systems table
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -380,7 +380,7 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -389,7 +389,7 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
                 >
                   Using the table actions area
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"

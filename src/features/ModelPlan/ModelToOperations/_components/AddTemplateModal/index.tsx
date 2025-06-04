@@ -72,7 +72,7 @@ const AddTemplateModal = () => {
 
   return (
     <Form
-      onSubmit={e => {
+      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         handleSubmit();
       }}

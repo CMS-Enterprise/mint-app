@@ -107,7 +107,7 @@ const ModelsBySolutions = ({
             id="solutionKey"
             name="solutionKey"
             value={isCurrentSolution}
-            onChange={e =>
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setIsCurrentSolution(
                 e.currentTarget.value as MtoCommonSolutionKey
               )

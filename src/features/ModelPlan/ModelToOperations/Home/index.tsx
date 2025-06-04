@@ -226,7 +226,7 @@ const MTOHome = () => {
                 id="mto-navigation-select"
                 name="currentView"
                 value={currentView}
-                onChange={e => {
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   params.set('view', e.target.value);
                   history.push({ search: params.toString() });
                 }}

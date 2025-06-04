@@ -137,9 +137,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                 How many people do you think will be impacted by this model?
               </label>
               <input
-                aria-valuemax="10000"
-                aria-valuemin="0"
-                aria-valuenow="5000"
+                aria-valuetext="0  of 10000"
                 class="usa-range maxw-none width-full"
                 data-testid="range"
                 id="expected-people-impacted"
@@ -148,7 +146,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                 name="numberPeopleImpacted"
                 step="1"
                 type="range"
-                value="100"
+                value="0"
               />
               <div
                 class="display-flex mint-header__basic flex-justify"

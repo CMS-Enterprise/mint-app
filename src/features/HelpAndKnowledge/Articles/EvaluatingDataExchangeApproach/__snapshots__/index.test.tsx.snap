@@ -105,7 +105,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             tabindex="0"
           >
             <table
-              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W fixed-table"
+              class="usa-table usa-table--borderless width-full _fixed_1khz6_1 fixed-table"
               data-testid="table"
             >
               <thead>
@@ -472,7 +472,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           <div
             class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -481,7 +481,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               >
                 About 2-page concept papers and review meetings
               </h3>
-            </header>
+            </div>
             <a
               class="usa-link width-fit-content display-block "
               href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -523,7 +523,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           <div
             class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -532,7 +532,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               >
                 About 6-page concept papers and review meetings
               </h3>
-            </header>
+            </div>
             <a
               class="usa-link width-fit-content display-block "
               href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -574,7 +574,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           <div
             class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -583,7 +583,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               >
                 High-level project plan
               </h3>
-            </header>
+            </div>
             <a
               class="usa-link width-fit-content display-block "
               href="/help-and-knowledge/articles?category=getting-started"

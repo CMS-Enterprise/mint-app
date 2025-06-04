@@ -573,7 +573,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -582,7 +582,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   Using the milestone library
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -624,7 +624,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -633,7 +633,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   Using the solution library
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -675,7 +675,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -684,7 +684,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   How to add a custom milestone
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"

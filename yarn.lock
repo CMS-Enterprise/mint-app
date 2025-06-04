@@ -4492,10 +4492,10 @@
   resolved "https://registry.yarnpkg.com/@tiptap/suggestion/-/suggestion-2.12.0.tgz#58f066b31cfed0b02fb312d467542fff10faab7b"
   integrity sha512-bsXLoZbjUo1oOF1Z+XSfoGzbcnrTcYtJdfylM/FerMLU9T12dhsM/Ri2SKLX4IR5D0HJ07FcsEHCrGEy8Y5y0A==
 
-"@trussworks/react-uswds@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-6.0.0.tgz#03a7cbb2445131e4db4ce35765790a5fe958cc99"
-  integrity sha512-kHF6u6uswlexw/1OKZcY6PBmuo3gcNltby2hERqpV9iGYnO2zxMtvfxuUFN4BsyLszTr1difJevvn/8//D2Faw==
+"@trussworks/react-uswds@^10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-10.0.1.tgz#1768c70fbfa86a51b1e57ee1bab081e0ad21fbc7"
+  integrity sha512-i7Je59Xl0UQ/npytlxSAdUCK9dlI+LB11SNUjrcWQ5DktO8JPM1UyTp+TqQ3+COWJk6dUnDTypZpmXNrFl7K7Q==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
@@ -8689,6 +8689,21 @@ flow-parser@0.*:
   version "0.219.5"
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.219.5.tgz#bff08036bd8f2aa7ebfd54a580dc418e37bc9c0e"
   integrity sha512-lHx/cl2XjopBx/ma9RYhG7FGj2JLKacoBwtI3leOp8AwRDPGwu6bzJoaCMfIl/sq14KdtY5MGzd5q6nKfGzcuQ==
+
+focus-trap-react@^11.0.4:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-11.0.4.tgz#889315c28b86ca7f3e9978710eb73819c0bb9b2c"
+  integrity sha512-tC7jC/yqeAqhe4irNIzdyDf9XCtGSeECHiBSYJBO/vIN0asizbKZCt8TarB6/XqIceu42ajQ/U4lQJ9pZlWjrg==
+  dependencies:
+    focus-trap "^7.6.5"
+    tabbable "^6.2.0"
+
+focus-trap@^7.6.5:
+  version "7.6.5"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.6.5.tgz#56f0814286d43c1a2688e9bc4f31f17ae047fb76"
+  integrity sha512-7Ke1jyybbbPZyZXFxEftUtxFGLMpE2n6A+z//m4CRDlj0hW+o3iYSmh8nFlYMurOiJVDmJRilUQtJr08KfIxlg==
+  dependencies:
+    tabbable "^6.2.0"
 
 follow-redirects@^1.10.0, follow-redirects@^1.15.6:
   version "1.15.6"
@@ -13898,6 +13913,11 @@ synckit@^0.11.7:
   integrity sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==
   dependencies:
     "@pkgr/core" "^0.2.4"
+
+tabbable@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.2.0.tgz#732fb62bc0175cfcec257330be187dcfba1f3b97"
+  integrity sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==
 
 tapable@^1.0.0:
   version "1.1.3"

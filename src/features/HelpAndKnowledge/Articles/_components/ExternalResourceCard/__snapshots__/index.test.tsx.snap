@@ -30,7 +30,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
       <div
         class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
       >
-        <header
+        <div
           class="usa-card__header padding-0"
           data-testid="CardHeader"
         >
@@ -39,7 +39,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           >
             Quality Vertical health equity resources on SharePoint 
           </h3>
-        </header>
+        </div>
         <a
           class="usa-link width-fit-content display-block "
           href="/help-and-knowledge/articles?category=getting-started"

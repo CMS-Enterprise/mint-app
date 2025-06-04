@@ -988,7 +988,9 @@ const EditMilestoneForm = ({
                           id={convertCamelCaseToKebabCase(field.name)}
                           value={field.value || 'default'}
                           defaultValue="default"
-                          onChange={e => {
+                          onChange={(
+                            e: React.ChangeEvent<HTMLSelectElement>
+                          ) => {
                             field.onChange(e);
                             // Reset subcategory when category changes
                             setValue('categories.subCategory.id', 'default');

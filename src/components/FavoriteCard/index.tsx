@@ -177,7 +177,7 @@ export const FavoriteIcon = ({
         }
       )}
       tabIndex={0}
-      onKeyDown={e => {
+      onKeyDown={(e: React.KeyboardEvent<HTMLSpanElement>) => {
         if (e.code !== 'Space') {
           return;
         }

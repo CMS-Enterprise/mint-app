@@ -720,11 +720,10 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                       type="button"
                     />
                     <div
-                      aria-modal="true"
                       class="usa-date-picker__calendar"
                       data-testid="date-picker-calendar"
                       hidden=""
-                      role="dialog"
+                      role="application"
                       style="top: 0px;"
                     />
                     <div

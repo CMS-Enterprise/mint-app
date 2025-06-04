@@ -49,7 +49,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
           <div
             class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -58,7 +58,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               >
                 Start with model milestones
               </h3>
-            </header>
+            </div>
             <div
               class="usa-card__body padding-x-0 padding-top-0"
               data-testid="CardBody"
@@ -117,7 +117,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
           <div
             class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
           >
-            <header
+            <div
               class="usa-card__header padding-0"
               data-testid="CardHeader"
             >
@@ -126,7 +126,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
               >
                 Start with solutions or IT systems
               </h3>
-            </header>
+            </div>
             <div
               class="usa-card__body padding-x-0 padding-top-0"
               data-testid="CardBody"

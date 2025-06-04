@@ -229,7 +229,7 @@ const ShareExportModal = ({
     <div data-testid={`${modalElementId}-share-form`}>
       <Form
         className={`${modalElementId}__form`}
-        onSubmit={e => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
 
           const viewFilter =
@@ -398,7 +398,7 @@ const ShareExportModal = ({
     <div data-testid={`${modalElementId}-export-form`}>
       <Form
         className={`${modalElementId}__form`}
-        onSubmit={e => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           if (exportPDF) {
             // Send a export pdf event to GA

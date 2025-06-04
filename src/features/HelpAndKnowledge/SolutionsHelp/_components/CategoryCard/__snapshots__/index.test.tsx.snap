@@ -9,12 +9,12 @@ exports[`Operational Solution Category Card > matches snapshot 1`] = `
     <div
       class="usa-card__container"
     >
-      <header
+      <div
         class="usa-card__header text-bold padding-y-0 flex-2"
         data-testid="CardHeader"
       >
         Data reporting
-      </header>
+      </div>
       <div
         class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
         data-testid="CardBody"
