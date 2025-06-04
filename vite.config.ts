@@ -33,6 +33,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern-compiler', // or "modern"
+        silenceDeprecations: ['legacy-js-api'],
         loadPaths: ['./src/stylesheets', './node_modules/@uswds/uswds/packages']
       }
     },
