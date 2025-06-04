@@ -38,7 +38,6 @@ Input for updating a common solution contact.
 Only role, isPrimary, and receiveEmails can be changed.
 """
 input MTOCommonSolutionContactUpdateChanges @goModel(model: "map[string]interface{}") {
-  id: UUID!
   role: String
   isPrimary: Boolean
   receiveEmails: Boolean
@@ -59,7 +58,7 @@ extend type Mutation {
     receiveEmails: Boolean!
     isPrimary: Boolean!
   ): MTOCommonSolutionContact!
-    @hasRole(role: MINT_ASSESSMENT)
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
   createMTOCommonSolutionUserContact(
     key: MTOCommonSolutionKey!
@@ -69,11 +68,11 @@ extend type Mutation {
     receiveEmails: Boolean!
     isPrimary: Boolean!
   ): MTOCommonSolutionContact!
-    @hasRole(role: MINT_ASSESSMENT)
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
-  updateMTOCommonSolutionContact(input: MTOCommonSolutionContactUpdateChanges!): MTOCommonSolutionContact!
-    @hasRole(role: MINT_ASSESSMENT)
+  updateMTOCommonSolutionContact(id: UUID!, input: MTOCommonSolutionContactUpdateChanges!): MTOCommonSolutionContact!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
   deleteMTOCommonSolutionContact(id: UUID!): MTOCommonSolutionContact!
-    @hasRole(role: MINT_ASSESSMENT)
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }

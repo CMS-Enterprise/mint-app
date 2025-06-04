@@ -32,11 +32,11 @@ extend type Mutation {
     contractorTitle: String 
     contractorName: String!
     ): MTOCommonSolutionContractor!
-    @hasRole(role: MINT_ASSESSMENT)
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
   updateMTOCommonSolutionContractor(id: UUID!, changes: MTOCommonSolutionContractorChanges!): MTOCommonSolutionContractor!
-    @hasRole(role: MINT_ASSESSMENT)
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
   deleteMTOCommonSolutionContractor(id: UUID!): MTOCommonSolutionContractor!
-    @hasRole(role: MINT_ASSESSMENT)
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }

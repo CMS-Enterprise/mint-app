@@ -853,7 +853,6 @@ export type MtoCommonSolutionContactTranslation = {
  * Only role, isPrimary, and receiveEmails can be changed.
  */
 export type MtoCommonSolutionContactUpdateChanges = {
-  id: Scalars['UUID']['input'];
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
   receiveEmails?: InputMaybe<Scalars['Boolean']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
@@ -1767,6 +1766,7 @@ export type MutationUpdateExistingModelLinksArgs = {
 
 /** Mutations definition for the schema */
 export type MutationUpdateMtoCommonSolutionContactArgs = {
+  id: Scalars['UUID']['input'];
   input: MtoCommonSolutionContactUpdateChanges;
 };
 
