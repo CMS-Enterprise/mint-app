@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -64,6 +64,9 @@ const MTOTable = ({
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
 
   const { showMessage: setError } = useMessage();
 
@@ -240,19 +243,6 @@ const MTOTable = ({
     milestone: []
   });
 
-  // Function to map data indexes to be conditionally rendered based on the current page and items per page
-  const getVisibleIndexes = useMemo(() => {
-    return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
-      renderedRowIndexes.current = getRenderedRowIndexes(
-        sliceItems,
-        pageNum,
-        itemsPerP
-      );
-
-      return sliceItems;
-    };
-  }, []);
-
   // Calculate the total number of milestones in the data
   const itemLength = useMemo(() => {
     return structuredClone(formattedData).reduce(
@@ -265,6 +255,24 @@ const MTOTable = ({
       0
     );
   }, [formattedData]);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(itemLength / itemsPerPage);
+  }, [itemLength, itemsPerPage]);
+
+  // Function to map data indexes to be conditionally rendered based on the current page and items per page
+  const getVisibleIndexes = useMemo(() => {
+    return (sliceItems: CategoryType[], pageNum: number, itemsPerP: number) => {
+      renderedRowIndexes.current = getRenderedRowIndexes(
+        sliceItems,
+        pageNum,
+        itemsPerP,
+        totalPages
+      );
+
+      return sliceItems;
+    };
+  }, [totalPages]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -555,7 +563,7 @@ const MTOTable = ({
         <div style={{ display: 'contents' }} key={category.id}>
           <DraggableRow
             index={[index]}
-            type="category"
+            type={category.isUncategorized ? 'uncategorized' : 'category'}
             moveRow={(dragIndex: number[], hoverIndex: number[]) =>
               setRearrangedData(
                 moveRow(
@@ -698,7 +706,7 @@ const MTOTable = ({
                             type="button"
                           >
                             {column.Header}
-                            {getHeaderSortIcon(columnSort[index], false)}
+                            {getHeaderSortIcon(columnSort[index], true)}
                           </button>
                         ) : (
                           <span
@@ -723,7 +731,7 @@ const MTOTable = ({
             </div>
             <div className="mint-no-print">
               <div className="display-flex">
-                {Pagination}
+                {totalPages > 0 && Pagination}
 
                 <TablePageSize
                   className="margin-left-auto desktop:grid-col-auto"
@@ -732,6 +740,11 @@ const MTOTable = ({
                   setInitPageSize={setItemsPerPageInit}
                   valueArray={[5, 10, 15, 20, 'all']}
                   suffix={t('modelToOperationsMisc:table.milestones')}
+                  onChange={() => {
+                    // Reset pagination to the first page when the page size changes
+                    params.set('page', '1');
+                    history.replace({ search: params.toString() });
+                  }}
                 />
               </div>
             </div>
@@ -762,7 +775,7 @@ export const formatAndHomogenizeMilestoneData = (
     formattedCategory.status = undefined;
     formattedCategory.addedFromMilestoneLibrary = undefined;
     formattedCategory.isDraft = undefined;
-    formattedCategory.isUncategorized = undefined;
+    formattedCategory.isUncategorized = category.isUncategorized;
     formattedCategory.key = undefined;
     formattedCategory.solutions = [];
     formattedCategory.subCategories = [];
@@ -776,7 +789,7 @@ export const formatAndHomogenizeMilestoneData = (
       formattedSubCategory.status = undefined;
       formattedSubCategory.addedFromMilestoneLibrary = undefined;
       formattedSubCategory.isDraft = undefined;
-      formattedSubCategory.isUncategorized = undefined;
+      formattedSubCategory.isUncategorized = subCategory.isUncategorized;
       formattedSubCategory.key = undefined;
       formattedSubCategory.solutions = [];
       formattedSubCategory.milestones = [];
@@ -971,7 +984,8 @@ export const moveRow = (
 export const getRenderedRowIndexes = (
   sliceItems: CategoryType[],
   pageNum: number,
-  itemsPerP: number
+  itemsPerP: number,
+  totalPages: number
 ) => {
   const startingIndex = pageNum * itemsPerP;
   const endingIndex = startingIndex + itemsPerP;
@@ -1001,10 +1015,6 @@ export const getRenderedRowIndexes = (
 
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
-      if (subCategory.milestones.length === 0) {
-        shownIndexes.category.push(catIndex);
-        shownIndexes.subCategory[catIndex].push(subIndex);
-      }
       subCategory.milestones.forEach((milestone, milIndex) => {
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
           shownIndexes.category.push(catIndex);
@@ -1013,6 +1023,42 @@ export const getRenderedRowIndexes = (
         }
         milestoneIndex += 1;
       });
+    });
+  });
+
+  // If there are no milestones, we still want to show the category and subcategory on their respective pages
+  sliceItemsCopy.forEach((category, catIndex) => {
+    category.subCategories.forEach((subCategory, subIndex) => {
+      if (subCategory.milestones.length === 0) {
+        if (totalPages === 1) {
+          shownIndexes.category.push(catIndex);
+          shownIndexes.subCategory[catIndex].push(subIndex);
+          return;
+        }
+
+        // If no milestones exist, set default index of 0 to the shownIndexes
+        const categoryIndexes = shownIndexes.category.length
+          ? shownIndexes.category
+          : [0];
+
+        const minShownCategoryIndex = Math.min(...categoryIndexes);
+        const maxShownCategoryIndex = Math.max(...categoryIndexes);
+
+        // Used to render out empty categories on the first page that fall as the first shown index
+        const initPageIndex = pageNum === 1 ? 0 : 1;
+
+        // -1 here to still render out any empty categories that are on the first page and are ordered first/fall before the first shown index
+        // +1 here to still render out any empty categories that ordered last/fall before the first shown index
+        const isInRange =
+          catIndex >= minShownCategoryIndex - initPageIndex &&
+          catIndex <= maxShownCategoryIndex + 1;
+
+        // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
+        if (isInRange) {
+          shownIndexes.category.push(catIndex);
+          shownIndexes.subCategory[catIndex].push(subIndex);
+        }
+      }
     });
   });
 
