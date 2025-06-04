@@ -11,6 +11,7 @@ type TooltipProps = {
   label: string | React.ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
   wrapperclasses?: string;
+  id?: string;
 };
 
 const Tooltip = ({
@@ -18,7 +19,8 @@ const Tooltip = ({
   className,
   wrapperclasses,
   label,
-  position = 'top'
+  position = 'top',
+  id
 }: TooltipProps): React.ReactElement => {
   const CustomDivForwardRef: React.ForwardRefRenderFunction<HTMLDivElement> = (
     { ...tooltipProps },
@@ -33,6 +35,7 @@ const Tooltip = ({
       position={position}
       wrapperclasses={wrapperclasses}
       className={classNames('mint-no-print', className)}
+      id={id}
     >
       {children}
     </TrussTooltip>

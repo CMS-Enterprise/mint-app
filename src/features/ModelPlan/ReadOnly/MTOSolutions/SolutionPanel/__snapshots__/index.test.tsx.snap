@@ -102,7 +102,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-:r0:"
+                    aria-describedby="tooltip-«r0»"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -126,7 +126,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-:r0:"
+                    id="tooltip-«r0»"
                     role="tooltip"
                   >
                     <div
@@ -182,7 +182,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-:r1:"
+                    aria-describedby="tooltip-«r1»"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -206,7 +206,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-:r1:"
+                    id="tooltip-«r1»"
                     role="tooltip"
                   >
                     <div
@@ -247,7 +247,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-:r2:"
+                        aria-describedby="tooltip-«r2»"
                         class="usa-tooltip__trigger"
                         data-testid="triggerElement"
                         tabindex="0"
@@ -271,7 +271,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-:r2:"
+                        id="tooltip-«r2»"
                         role="tooltip"
                         title="Significantly at risk"
                       >
@@ -420,7 +420,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-:r3:"
+                      aria-describedby="tooltip-«r3»"
                       class="usa-tooltip__trigger"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -444,7 +444,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-:r3:"
+                      id="tooltip-«r3»"
                       role="tooltip"
                       title="Significantly at risk"
                     >
