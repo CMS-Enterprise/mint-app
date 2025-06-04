@@ -1,0 +1,631 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SharingAndExportingMTO > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              Sharing and exporting your MTO
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=mto-tutorials"
+            >
+              <span
+                aria-label="Articles under the MINT tutorials category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                MINT tutorials
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              Sharing your Model-to-operations matrix (MTO) with colleagues or other interested parties is easy in MINT. You may share your MTO (or a section of it) via email, you may export it as a PDF or CSV, and may also copy a link to the read view of your MTO in MINT. When you share your MTO via email, MINT will automatically send an email to your desired recipients which includes a link to the read view of your MTO in MINT. CMS staff who do not already have MINT access will be able to find instructions to get access to MINT, and those who do already have MINT access will be able to sign in to see your MTO.
+            </p>
+            <h2>
+              From the model collaboration area
+            </h2>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to your model’s collaboration area
+                </h3>
+                <p>
+                  From the MINT homepage, navigate to the model whose MTO you wish to share. You can find a list of models you have been assigned to in the “My Model Plans” section of the homepage. Because MINT offers customizable homepages, it’s possible that this section may not appear on your homepage. If you don’t see it, locate the area titled “Did you know you can customize this page?” in the top right of the page and click the “Edit homepage settings” link to add the “My Model Plans” section to your home page.
+                </p>
+                <img
+                  alt="A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/09_MINT_home.png"
+                />
+                <p>
+                  Image caption: A screenshot of the MINT homepage showing the “My Model Plans” section as well as the ability to customize a user’s homepage.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Locate the MTO card
+                </h3>
+                <p>
+                  On your model collaboration area page, find the card labeled “Model-to-operations matrix” on the second row of cards.
+                </p>
+                <img
+                  alt="A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/33_collaboration_area_in_progress.png"
+                />
+                <p>
+                  Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Share or export matrix”
+                </h3>
+                <p>
+                  On the card’s actions footer, click the button labeled “Share or export matrix”. This will open a screen allowing you to select share and export options.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Choose share or export and complete the content in the form
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  On the top tab bar of the pop-up, choose “Share” or “Export” depending on your needs.
+To share, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-0"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Recipients:
+                    </span>
+                     Search the EUA database for the individuals you would like to share this information with. When you click the share button, these individuals will receive an email with a link to MINT to view the content you choose to share with them.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      (Optional) additional message:
+                    </span>
+                     Add an additional message for your recipients. This will be included in the email you send.
+                  </li>
+                </ul>
+                <p
+                  class="margin-y-0"
+                >
+                  To export, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Format:
+                    </span>
+                     Choose CSV and/or PDF to export your chosen content.
+                  </li>
+                </ul>
+                <img
+                  alt="A screenshot of the form to share MTO or other model content"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/29_share_modal.png"
+                />
+                <p>
+                  Image caption: A screenshot of the form to share MTO or other model content.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Share” or “Export”
+                </h3>
+                <p>
+                  If you have chosen to share your content, click the button labeled “Share”. From the Share screen, you may also choose to click the button labeled “Copy link to Read View”. This will copy a link to your MTO content to your clipboard, allowing you to paste that link in other situations such as email, Slack, or another chat tool. If you have chosen to export, click the button labeled “Export”. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without sharing or exporting.
+                </p>
+              </li>
+            </ol>
+            <h2>
+              From the read view
+            </h2>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to MINT’s “Models” tab
+                </h3>
+                <p>
+                  Locate the tab bar in the main MINT header, and click on the tab labeled “Models”.
+                </p>
+                <img
+                  alt="A screenshot of the main MINT navigation tabs"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/14_MINT_top_tabs.png"
+                />
+                <p>
+                  Image caption: A screenshot of the main MINT navigation tabs.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to your model’s read view
+                </h3>
+                <p>
+                  From the “Models” tab, scroll to the “All models” table or the “Models you’re following” area to find the model whose MTO you wish to share. Click on the model whose MTO you wish to share.
+                </p>
+                <img
+                  alt="A screenshot of the “Models” tab in MINT, showing a followed model and one row of the table showing all models."
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/31_models_tab_option_1.png"
+                />
+                <p>
+                  Image caption: A screenshot of the “Models” tab in MINT, showing a followed model and one row of the table showing all models.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click the “Share or export” button
+                </h3>
+                <p>
+                  From the Read View of your model, click the button labeled “Share or export”. You can find it below the header area on the right side of the filter bar, next to the button labeled “Filter”.
+                </p>
+                <img
+                  alt="A screenshot of the Read View header area for a model, showing various actions including the ability to share or export"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/32_read_view_model_header.png"
+                />
+                <p>
+                  Image caption: A screenshot of the Read View header area for a model, showing various actions including the ability to share or export.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Choose share or export and complete the content in the form
+                </h3>
+                <p
+                  class="margin-bottom-0"
+                >
+                  On the top tab bar of the pop-up, choose “Share” or “Export” depending on your needs.
+To share, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-0"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Recipients:
+                    </span>
+                     Search the EUA database for the individuals you would like to share this information with. When you click the share button, these individuals will receive an email with a link to MINT to view the content you choose to share with them.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      (Optional) additional message:
+                    </span>
+                     Add an additional message for your recipients. This will be included in the email you send.
+                  </li>
+                </ul>
+                <p
+                  class="margin-y-0"
+                >
+                  To export, complete the following fields in the form:
+                </p>
+                <ul
+                  class="margin-bottom-2"
+                >
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Selected content:
+                    </span>
+                     Choose the subset of content that you wish to share. For the MTO, you will have the option to choose the whole MTO, just the milestone view, or just the solutions and IT systems view.
+                  </li>
+                  <li
+                    class="margin-0"
+                  >
+                    <span
+                      class="text-bold"
+                    >
+                      Format:
+                    </span>
+                     Choose CSV and/or PDF to export your chosen content.
+                  </li>
+                </ul>
+                <img
+                  alt="A screenshot of the form to share MTO or other model content"
+                  class="border-1px border-gray-10 radius-md shadow-2"
+                  src="/src/assets/images/30_export_modal.png"
+                />
+                <p>
+                  Image caption: A screenshot of the form to share MTO or other model content.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Share” or “Export”
+                </h3>
+                <p>
+                  If you have chosen to share your content, click the button labeled “Share”. From the Share screen, you may also choose to click the button labeled “Copy link to Read View”. This will copy a link to your MTO content to your clipboard, allowing you to paste that link in other situations such as email, Slack, or another chat tool. If you have chosen to export, click the button labeled “Export”. If at any time you change your mind, you may click the “Cancel” button or the X icon in the top right corner to close the pop-up without sharing or exporting.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help resources
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help resources that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the table actions area
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the table actions area article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Updating your MTO status
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The MINT model-to-operations matrix (MTO) has 3 main overall statuses: “Ready to start”, “In progress”, and “Ready for review”. “Ready to start” is automatically set when a MTO is completely empty of all content. “In progress” is automatically set when any content (milestones, categories, solutions, and/or templates) are added to the MTO. “Ready for review” can be manually set when the contents of an MTO are fairly well set and the IT Lead is ready for comments and feedback from others. Follow the instructions below to set the status for your MTO to “Ready for review”. If an MTO is in the “Ready for review” status, it can be manually set back to “In progress” if needed.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Updating your MTO status article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Starting an MTO for a new model
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  New models all start with an empty Model-to-operations matrix (MTO). IT Leads newly assigned to a model can start creating a MTO by following the steps below.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Starting an MTO for a new model article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

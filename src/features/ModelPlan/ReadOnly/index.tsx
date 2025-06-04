@@ -142,11 +142,11 @@ export const ReadOnlyComponents = (
       helpRoute: '/help-and-knowledge/sample-model-plan/milestones',
       group: 'model-to-operations'
     },
-    'it-systems-and-solutions': {
-      route: `/models/${modelID}/read-only/it-systems-and-solutions`,
+    'solutions-and-it-systems': {
+      route: `/models/${modelID}/read-only/solutions-and-it-systems`,
       component: <ReadOnlyMTOSolutions modelID={modelID} />,
       helpRoute:
-        '/help-and-knowledge/sample-model-plan/it-systems-and-solutions',
+        '/help-and-knowledge/sample-model-plan/solutions-and-it-systems',
       group: 'model-to-operations'
     },
     team: {
@@ -514,7 +514,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                               subinfo === 'documents' ||
                               subinfo === 'crs-and-tdl' ||
                               subinfo === 'milestones' ||
-                              subinfo === 'it-systems-and-solutions'
+                              subinfo === 'solutions-and-it-systems'
                                 ? 12
                                 : 8
                           }}
@@ -525,7 +525,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         {subinfo !== 'documents' &&
                           subinfo !== 'crs-and-tdl' &&
                           subinfo !== 'milestones' &&
-                          subinfo !== 'it-systems-and-solutions' && (
+                          subinfo !== 'solutions-and-it-systems' && (
                             <Grid
                               desktop={{ col: 4 }}
                               className={classnames({

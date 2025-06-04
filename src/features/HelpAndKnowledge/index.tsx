@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
+import AddCustomMilestone from './Articles/AddCustomMilestone';
+import AddCustomSolution from './Articles/AddCustomSolution';
 import AllArticles from './Articles/AllArticles';
 import CreatingMTOMatrix from './Articles/CreatingMTOMatrix';
 import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
@@ -11,8 +13,16 @@ import ModelSolutionDesign from './Articles/ModelSolutionDesign';
 import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
 import PhasesInvolved from './Articles/PhasesInvolved';
 import SampleModelPlan from './Articles/SampleModelPlan';
+import SharingAndExportingMTO from './Articles/SharingAndExportingMTO';
 import SixPagerMeeting from './Articles/SixPagerMeeting';
+import StartingMTOMatrix from './Articles/StartingMTOMatrix';
 import TwoPagerMeeting from './Articles/TwoPagerMeeting';
+import UpdatingMTOStatus from './Articles/UpdatingMTOStatus';
+import UsingMilestoneLibrary from './Articles/UsingMilestoneLibrary';
+import UsingMilestoneTable from './Articles/UsingMilestoneTable';
+import UsingSolutionLibrary from './Articles/UsingSolutionLibrary';
+import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
+import UsingTableActions from './Articles/UsingTableActions';
 import UtilizingSolutions from './Articles/UtilizingSolutions';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
@@ -88,6 +98,50 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/creating-mto-matrix" exact>
         <CreatingMTOMatrix />
+      </Route>
+
+      {/* MTO Tutorial Arcticles */}
+      <Route path="/help-and-knowledge/starting-mto-matrix" exact>
+        <StartingMTOMatrix />
+      </Route>
+
+      <Route path="/help-and-knowledge/using-milestone-table" exact>
+        <UsingMilestoneTable />
+      </Route>
+
+      <Route path="/help-and-knowledge/using-table-actions" exact>
+        <UsingTableActions />
+      </Route>
+
+      <Route
+        path="/help-and-knowledge/using-solutions-and-it-systems-table"
+        exact
+      >
+        <UsingSolutionsAndITSystemsTable />
+      </Route>
+
+      <Route path="/help-and-knowledge/add-custom-milestone" exact>
+        <AddCustomMilestone />
+      </Route>
+
+      <Route path="/help-and-knowledge/add-custom-solution" exact>
+        <AddCustomSolution />
+      </Route>
+
+      <Route path="/help-and-knowledge/using-solution-library" exact>
+        <UsingSolutionLibrary />
+      </Route>
+
+      <Route path="/help-and-knowledge/using-milestone-library" exact>
+        <UsingMilestoneLibrary />
+      </Route>
+
+      <Route path="/help-and-knowledge/updating-mto-status" exact>
+        <UpdatingMTOStatus />
+      </Route>
+
+      <Route path="/help-and-knowledge/sharing-exporting-mto" exact>
+        <SharingAndExportingMTO />
       </Route>
 
       <Route path="*" render={() => <NotFound />} />

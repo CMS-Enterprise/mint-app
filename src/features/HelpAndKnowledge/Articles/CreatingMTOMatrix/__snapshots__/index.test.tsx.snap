@@ -510,6 +510,285 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 </p>
               </li>
             </ol>
+            <div
+              class="bg-base-lightest padding-2"
+            >
+              <h3
+                class="margin-top-1 margin-bottom-1"
+              >
+                MTO tutorials
+              </h3>
+              <p
+                class="margin-bottom-2 margin-top-1"
+              >
+                Use the links below to access more specific details about how to use the MTO capabilities in MINT.
+              </p>
+              <div
+                class="grid-row"
+                data-testid="grid"
+              >
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/starting-mto-matrix"
+                  >
+                    <span>
+                      Starting an MTO for a new model
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-milestone-table"
+                  >
+                    <span>
+                      Using the milestone table
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-solutions-and-it-systems-table"
+                  >
+                    <span>
+                      Using the solutions and IT systems table
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-table-actions"
+                  >
+                    <span>
+                      Using the table actions area
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-milestone-library"
+                  >
+                    <span>
+                      Using the milestone library
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/using-solution-library"
+                  >
+                    <span>
+                      Using the solution library
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/add-custom-milestone"
+                  >
+                    <span>
+                      How to add a custom milestone
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/add-custom-solution"
+                  >
+                    <span>
+                      How to add a custom solution
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/updating-mto-status"
+                  >
+                    <span>
+                      Updating your MTO status
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <a
+                    class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    href="/help-and-knowledge/sharing-exporting-mto"
+                  >
+                    <span>
+                      Sharing and exporting your MTO
+                      <svg
+                        class="usa-icon margin-left-1 top-2px"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
             <h2
               class="margin-top-5 margin-bottom-1 line-height-large"
             >
@@ -567,12 +846,12 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
         <h2
           class="margin-top-0 margin-bottom-1"
         >
-          Related help articles
+          Related help resources
         </h2>
         <dt
           class="margin-bottom-4"
         >
-          Below are some additional help articles that you may find useful.
+          Below are some additional help resources that you may find useful.
         </dt>
         <ul
           class="usa-card-group"

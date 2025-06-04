@@ -1,0 +1,379 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Updating your MTO Status Article > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <main
+      class="mint-main-content"
+      id="main-content"
+      role="main"
+      tabindex="-1"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="tablet:grid-col-12"
+          data-testid="grid"
+        >
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <div
+            class="mint-body-medium"
+          >
+            <h1
+              aria-live="polite"
+              class="mint-h1 line-height-large margin-bottom-2 margin-top-4"
+              tabindex="-1"
+            >
+              Updating your MTO status
+            </h1>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=mto-tutorials"
+            >
+              <span
+                aria-label="Articles under the MINT tutorials category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                MINT tutorials
+              </span>
+            </a>
+            <p
+              class="mint-body-large margin-top-1 margin-bottom-4"
+            >
+              The MINT model-to-operations matrix (MTO) has 3 main overall statuses: “Ready to start”, “In progress”, and “Ready for review”. “Ready to start” is automatically set when a MTO is completely empty of all content. “In progress” is automatically set when any content (milestones, categories, solutions, and/or templates) are added to the MTO. “Ready for review” can be manually set when the contents of an MTO are fairly well set and the IT Lead is ready for comments and feedback from others. Follow the instructions below to set the status for your MTO to “Ready for review”. If an MTO is in the “Ready for review” status, it can be manually set back to “In progress” if needed.
+            </p>
+            <ol
+              class="usa-process-list"
+            >
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Navigate to your model’s MTO
+                </h3>
+                <p>
+                  From the model collaboration area, locate the card for the “Model-to-operations matrix” and click on the “Go to matrix” button to navigate to the MTO for your model.
+                </p>
+                <img
+                  alt="A screenshot of the model collaboration area."
+                  class="border-1px border-gray-10 radius-md shadow-3"
+                  src="/src/assets/images/33_collaboration_area_in_progress.png"
+                />
+                <p>
+                  Image caption: A screenshot of the model collaboration area for a model called Rural Health Enablement Model which shows the collaboration area cards for “Model Plan”, “Data exchange approach”, and “Model-to-operations matrix”.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Locate the MTO status area in the header
+                </h3>
+                <p>
+                  Just below the page title and model name, you will see a status tag, a button labeled “Is this MTO ready for review?”, and a last updated date.
+                </p>
+                <img
+                  alt="A screenshot of the MTO header area."
+                  class="border-1px border-gray-10 radius-md shadow-3"
+                  src="/src/assets/images/12_MTO_header_area.png"
+                />
+                <p>
+                  Image caption: A screenshot of the MTO header area showing the status of the MTO and the ability to change the status to “Ready for review”.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Is this MTO ready for review?” next to the status indicator
+                </h3>
+                <p>
+                  Click the button labeled “Is this MTO ready for review?” to open a screen that will allow you to set your new status.
+                </p>
+              </li>
+              <li
+                class="usa-process-list__item maxw-none"
+              >
+                <h3
+                  class="usa-process-list__heading"
+                  data-testid="processListHeading"
+                >
+                  Click “Mark as ready for review”
+                </h3>
+                <p>
+                  Review the content in the pop-up, and click the button labeled “Mark as ready for review”. If at any time you change your mind, you may click the “Go back to MTO” button or the X icon in the top right corner to close the pop-up without changing your MTO status.
+                </p>
+                <img
+                  alt="A screenshot of the confirmation screen for changing the MTO status to “Ready for review”."
+                  class="border-1px border-gray-10 radius-md shadow-3"
+                  src="/src/assets/images/28_ready_for_review_confirmation.png"
+                />
+                <p>
+                  Image caption: A screenshot of the confirmation screen for changing the MTO status to “Ready for review”.
+                </p>
+              </li>
+            </ol>
+            <h2
+              class="margin-top-5 margin-bottom-1 line-height-large"
+            >
+              Still need help?
+            </h2>
+            <p
+              class="margin-bottom-6 margin-top-1"
+            >
+              If you’d like to know more about the Model-to-operations capabilities in MINT, please feel free to reach out to the MINT team at 
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+               or 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  chat with us on Slack
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help resources
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help resources that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the table actions area
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the table actions area article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Sharing and exporting your MTO
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  Sharing your Model-to-operations matrix (MTO) with colleagues or other interested parties is easy in MINT. You may share your MTO (or a section of it) via email, you may export it as a PDF or CSV, and may also copy a link to the read view of your MTO in MINT. When you share your MTO via email, MINT will automatically send an email to your desired recipients which includes a link to the read view of your MTO in MINT. CMS staff who do not already have MINT access will be able to find instructions to get access to MINT, and those who do already have MINT access will be able to sign in to see your MTO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Sharing and exporting your MTO article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Using the milestone library
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=mto-tutorials"
+              >
+                <span
+                  aria-label="Articles under the MINT tutorials category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  MINT tutorials
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  The milestone library houses all of the common milestones contained in MINT. Common milestones are the milestones, activities, or functions that often appear in a model’s operational plan or model-to-operations matrix (MTO). These common milestones are offered in MINT to give IT Leads a faster way to get started drafting a MTO for a new model and help us to understand which milestones are most frequently used by models.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Using the milestone library article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

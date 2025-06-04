@@ -25,7 +25,7 @@ export const modelSectionRouteKey: string[] = [
   'operations-evaluation-and-learning',
   'payment',
   'milestones',
-  'it-systems-and-solutions',
+  'solutions-and-it-systems',
   'team',
   'discussions',
   'documents',
@@ -47,7 +47,7 @@ export const modelPlanSectionMappings: Record<
     'operations-evaluation-and-learning',
     'payment',
     'milestones',
-    'it-systems-and-solutions',
+    'solutions-and-it-systems',
     'team',
     'discussions',
     'documents',
@@ -62,9 +62,9 @@ export const modelPlanSectionMappings: Record<
     'operations-evaluation-and-learning',
     'payment'
   ],
-  [ModelShareSection.MTO_ALL]: ['milestones', 'it-systems-and-solutions'],
+  [ModelShareSection.MTO_ALL]: ['milestones', 'solutions-and-it-systems'],
   [ModelShareSection.MTO_MILESTONES]: ['milestones'],
-  [ModelShareSection.MTO_SOLUTIONS]: ['it-systems-and-solutions']
+  [ModelShareSection.MTO_SOLUTIONS]: ['solutions-and-it-systems']
 };
 
 export default exportSectionOptions;
