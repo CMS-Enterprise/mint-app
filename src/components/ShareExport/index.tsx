@@ -366,7 +366,7 @@ const ShareExportModal = ({
               );
             }}
           >
-            <Icon.Link className="margin-right-1" />
+            <Icon.Link className="margin-right-1" aria-label="link" />
             {exportSection && filterGroupParams.includes(exportSection)
               ? generalReadOnlyT('modal.copyLinkFilteredReadView')
               : generalReadOnlyT('modal.copyLinkReadView')}
@@ -524,7 +524,7 @@ const ShareExportModal = ({
           aria-label="Close Modal"
           onClick={closeModal}
         >
-          <Icon.Close size={4} />
+          <Icon.Close size={4} aria-label="close" />
         </button>
       </nav>
 

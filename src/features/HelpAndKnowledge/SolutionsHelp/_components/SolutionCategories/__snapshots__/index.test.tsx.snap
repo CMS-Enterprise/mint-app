@@ -56,6 +56,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -106,6 +107,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -151,6 +153,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -196,6 +199,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -241,6 +245,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -286,6 +291,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -331,6 +337,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -376,6 +383,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -421,6 +429,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -466,6 +475,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -511,6 +521,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 >
                   Learn more
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"

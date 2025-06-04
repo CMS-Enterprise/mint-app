@@ -23,6 +23,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="close"
               class="usa-icon margin-right-05 text-tbottom"
               focusable="false"
               height="1em"
@@ -158,6 +159,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                   >
                     Using the table actions area 
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1 top-05 text-primary"
                       focusable="false"
                       height="1em"
@@ -178,6 +180,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                   >
                     Starting an MTO for a new model 
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1 top-05 text-primary"
                       focusable="false"
                       height="1em"
@@ -308,6 +311,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                 >
                   chat with us on Slack
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"

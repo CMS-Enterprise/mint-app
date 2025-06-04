@@ -65,7 +65,7 @@ export const AvatarCircle = ({
         className={`${sharedClassnames} bg-primary ${className ?? ''}`}
         data-testid="avatar--assessment"
       >
-        <Icon.Star className="text-white" size={3} />
+        <Icon.Star className="text-white" size={3} aria-label="star" />
       </div>
     );
   }
@@ -76,7 +76,7 @@ export const AvatarCircle = ({
         className={`${sharedClassnames} bg-mint-cool-50v ${className ?? ''}`}
         data-testid="avatar--mint-admin"
       >
-        <Icon.Eco className="text-white" size={3} />
+        <Icon.Eco className="text-white" size={3} aria-label="eco" />
       </div>
     );
   }

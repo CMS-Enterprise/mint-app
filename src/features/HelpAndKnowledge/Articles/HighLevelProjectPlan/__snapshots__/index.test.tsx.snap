@@ -22,6 +22,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -68,6 +69,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
           target="_blank"
         >
           <svg
+            aria-label="download"
             class="usa-icon margin-right-1"
             focusable="false"
             height="1em"
@@ -364,6 +366,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               >
                 Learn more about CMMI Internal Clearance on SharePoint
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -605,6 +608,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               >
                 Learn more about Clearance on SharePoint
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -767,6 +771,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                         >
                           Learn more about announcement materials on SharePoint
                           <svg
+                            aria-label="launch"
                             class="usa-icon"
                             focusable="false"
                             height="1em"
@@ -861,6 +866,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                         >
                           Learn more about Fraud, Waste, Abuse Waivers on SharePoint
                           <svg
+                            aria-label="launch"
                             class="usa-icon"
                             focusable="false"
                             height="1em"

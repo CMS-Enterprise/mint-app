@@ -485,6 +485,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 >
                   Edit related milestones
                   <svg
+                    aria-label="forward"
                     class="usa-icon top-2px"
                     focusable="false"
                     height="1em"

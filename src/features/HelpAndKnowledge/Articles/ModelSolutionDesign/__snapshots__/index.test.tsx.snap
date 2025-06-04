@@ -22,6 +22,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -90,6 +91,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                     >
                       Start a Model Plan
                       <svg
+                        aria-label="forward"
                         class="usa-icon margin-left-1"
                         focusable="false"
                         height="1em"
@@ -117,6 +119,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                     >
                       Assemble the IT and operational team
                       <svg
+                        aria-label="forward"
                         class="usa-icon margin-left-1"
                         focusable="false"
                         height="1em"
@@ -144,6 +147,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                     >
                       Identify the solutions for the model’s operational needs
                       <svg
+                        aria-label="forward"
                         class="usa-icon margin-left-1"
                         focusable="false"
                         height="1em"
@@ -218,6 +222,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               >
                 Start a new Model Plan
                 <svg
+                  aria-label="forward"
                   class="usa-icon margin-left-1 text-bold"
                   focusable="false"
                   height="1em"

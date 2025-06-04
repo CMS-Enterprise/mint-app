@@ -1192,7 +1192,10 @@ const EditSolutionForm = ({
                       {modelToOperationsMiscT(
                         'modal.editSolution.editMilestones'
                       )}
-                      <Icon.ArrowForward className="top-2px" />
+                      <Icon.ArrowForward
+                        className="top-2px"
+                        aria-label="forward"
+                      />
                     </Button>
 
                     {tableMilestones.length === 0 ? (

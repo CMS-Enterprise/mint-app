@@ -37,6 +37,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   class="display-flex"
                 >
                   <svg
+                    aria-label="info"
                     class="usa-icon usa-icon--size-4 minw-4"
                     focusable="false"
                     height="1em"
@@ -69,6 +70,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       >
                         Read more
                         <svg
+                          aria-label="expand"
                           class="usa-icon margin-right-05"
                           focusable="false"
                           height="1em"
@@ -133,6 +135,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 tabindex="0"
               >
                 <svg
+                  aria-label="star outline"
                   class="usa-icon margin-right-1 bookmark__tag__icon"
                   focusable="false"
                   height="1em"
@@ -266,6 +269,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
               >
                 Show model summary
                 <svg
+                  aria-label="expand"
                   class="usa-icon margin-right-05"
                   focusable="false"
                   height="1em"
@@ -1631,6 +1635,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       >
                         More team members
                         <svg
+                          aria-label="forward"
                           class="usa-icon margin-left-1"
                           focusable="false"
                           height="1em"

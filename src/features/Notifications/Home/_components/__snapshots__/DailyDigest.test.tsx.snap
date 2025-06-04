@@ -72,6 +72,7 @@ exports[`Daily Digest in Notifications > matches snapshot 1`] = `
           View all recent changes
           <svg
             aria-hidden="true"
+            aria-label="forward"
             class="usa-icon margin-left-1"
             focusable="false"
             height="1em"

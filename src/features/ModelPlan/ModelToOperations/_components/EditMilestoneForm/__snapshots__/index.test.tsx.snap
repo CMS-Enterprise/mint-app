@@ -371,6 +371,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                         title=""
                       >
                         <svg
+                          aria-label="warning"
                           class="usa-icon usa-icon--size-3 text-warning-dark"
                           focusable="false"
                           height="1em"
@@ -618,6 +619,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                 >
                   Edit solutions
                   <svg
+                    aria-label="forward"
                     class="usa-icon top-2px"
                     focusable="false"
                     height="1em"

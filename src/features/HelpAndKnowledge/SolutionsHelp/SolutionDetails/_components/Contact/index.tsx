@@ -80,7 +80,11 @@ export const Contact = ({
           )}
         >
           {t('moreContacts')}
-          <Icon.ArrowForward className="margin-left-1" style={{ top: '2px' }} />
+          <Icon.ArrowForward
+            className="margin-left-1"
+            style={{ top: '2px' }}
+            aria-label="forward"
+          />
         </UswdsReactLink>
       )}
     </div>

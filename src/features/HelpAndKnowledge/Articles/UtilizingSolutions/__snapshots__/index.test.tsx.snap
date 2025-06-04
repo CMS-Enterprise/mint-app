@@ -22,6 +22,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"

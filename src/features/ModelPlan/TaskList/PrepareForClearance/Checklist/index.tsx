@@ -358,6 +358,7 @@ const PrepareForClearanceCheckList = ({
                                   <Icon.ArrowForward
                                     className="margin-left-1"
                                     aria-hidden
+                                    aria-label="forward"
                                   />
                                 </UswdsReactLink>
                               </Grid>

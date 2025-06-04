@@ -98,7 +98,11 @@ const TruncatedText = ({
           className="display-flex flex-align-center margin-top-1"
         >
           {isOpen ? generalT('readMore') : generalT('readLess')}
-          {isOpen ? <Icon.ExpandMore /> : <Icon.ExpandLess />}
+          {isOpen ? (
+            <Icon.ExpandMore aria-label="expand" />
+          ) : (
+            <Icon.ExpandLess aria-label="collapse" />
+          )}
         </Button>
       )}
     </div>

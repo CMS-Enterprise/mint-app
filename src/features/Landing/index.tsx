@@ -219,7 +219,10 @@ export const LandingFooter = () => {
               <span>
                 <UswdsReactLink to="/how-to-get-access">
                   {t('learnHowtoGetAccess')}{' '}
-                  <Icon.ArrowForward className="margin-left-1 text-tbottom" />
+                  <Icon.ArrowForward
+                    className="margin-left-1 text-tbottom"
+                    aria-label="forward"
+                  />
                 </UswdsReactLink>
                 {!isTablet && <span className="margin-left-2 landing__vr" />}
               </span>

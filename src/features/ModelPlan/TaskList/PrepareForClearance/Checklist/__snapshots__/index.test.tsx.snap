@@ -131,6 +131,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                   Review model basics
                   <svg
                     aria-hidden="true"
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -178,6 +179,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                   Review general characteristics
                   <svg
                     aria-hidden="true"
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -225,6 +227,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                   Review participants and providers
                   <svg
                     aria-hidden="true"
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -272,6 +275,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                   Review beneficiaries
                   <svg
                     aria-hidden="true"
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -319,6 +323,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                   Review operations, evaluation, and learning
                   <svg
                     aria-hidden="true"
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -366,6 +371,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                   Review payment
                   <svg
                     aria-hidden="true"
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"

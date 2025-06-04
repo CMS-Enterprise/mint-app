@@ -208,7 +208,10 @@ const SettingsForm = () => {
                                 >
                                   {homepageSettingsT('selectSolutions')}
 
-                                  <Icon.ArrowForward className="margin-left-1" />
+                                  <Icon.ArrowForward
+                                    className="margin-left-1"
+                                    aria-label="forward"
+                                  />
                                 </UswdsReactLink>
                               )}
 
@@ -236,7 +239,10 @@ const SettingsForm = () => {
                                   >
                                     {homepageSettingsT('updateSolutions')}
 
-                                    <Icon.ArrowForward className="margin-left-1" />
+                                    <Icon.ArrowForward
+                                      className="margin-left-1"
+                                      aria-label="forward"
+                                    />
                                   </UswdsReactLink>
                                 </div>
                               )}

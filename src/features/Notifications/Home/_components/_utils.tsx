@@ -177,7 +177,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -213,7 +217,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -222,7 +230,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.NEW_MODEL_PLAN.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -230,7 +242,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -239,7 +255,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -247,7 +267,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -255,7 +279,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }

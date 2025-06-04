@@ -472,6 +472,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
               >
                 Select a solution
                 <svg
+                  aria-label="forward"
                   class="usa-icon top-05 margin-left-05"
                   focusable="false"
                   height="1em"

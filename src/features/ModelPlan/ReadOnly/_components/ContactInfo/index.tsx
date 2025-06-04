@@ -72,7 +72,7 @@ const ContactInfo = ({
           to={`/models/${modelID}/read-only/team`}
         >
           {h('contactInfo.moreTeamMembers')}
-          <Icon.ArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
         </UswdsReactLink>
       )}
     </div>

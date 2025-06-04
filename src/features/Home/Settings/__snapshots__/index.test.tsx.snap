@@ -413,6 +413,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                   >
                     Select solutions
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"

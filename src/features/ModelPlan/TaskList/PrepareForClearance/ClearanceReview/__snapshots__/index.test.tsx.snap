@@ -815,6 +815,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
           Make changes to beneficiaries
           <svg
             aria-hidden="true"
+            aria-label="forward"
             class="usa-icon margin-left-1"
             focusable="false"
             height="1em"

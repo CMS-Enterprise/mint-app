@@ -278,7 +278,7 @@ const Home = () => {
                       >
                         {t('editHomepage')}
                       </UswdsReactLink>
-                      <Icon.ArrowForward />
+                      <Icon.ArrowForward aria-label="forward" />
                     </div>
                   </Alert>
                 )}

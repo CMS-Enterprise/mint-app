@@ -136,6 +136,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 type="submit"
               >
                 <svg
+                  aria-label="search"
                   class="usa-icon usa-icon--size-3"
                   focusable="false"
                   height="1em"

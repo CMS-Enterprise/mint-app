@@ -83,6 +83,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         data-testid="ask-a-question"
       >
         <svg
+          aria-label="announcement"
           class="usa-icon text-primary margin-right-1"
           focusable="false"
           height="1em"
@@ -234,6 +235,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="add"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -373,6 +375,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="add"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -562,6 +565,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="add"
             class="usa-icon margin-right-1"
             focusable="false"
             height="1em"

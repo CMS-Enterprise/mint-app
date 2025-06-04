@@ -43,7 +43,7 @@ const CalendarDate = ({
           <h4 className="usa-collection__heading display-inline margin-right-1 font-body-md">
             {linkText}
           </h4>
-          <Icon.ArrowForward className="top-3px" />
+          <Icon.ArrowForward className="top-3px" aria-label="forward" />
         </span>
       </UswdsReactLink>
     </div>

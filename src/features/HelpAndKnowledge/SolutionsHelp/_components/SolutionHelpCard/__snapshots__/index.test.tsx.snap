@@ -82,6 +82,7 @@ exports[`Operation Solution Help Card > matches snapshot 1`] = `
             >
               About this solution
               <svg
+                aria-label="forward"
                 class="usa-icon margin-left-1"
                 focusable="false"
                 height="1em"

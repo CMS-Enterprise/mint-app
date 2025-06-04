@@ -23,6 +23,7 @@ exports[`SharingAndExportingMTO > matches the snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="close"
               class="usa-icon margin-right-05 text-tbottom"
               focusable="false"
               height="1em"
@@ -423,6 +424,7 @@ To share, complete the following fields in the form:
                 >
                   chat with us on Slack
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"

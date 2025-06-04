@@ -62,6 +62,7 @@ exports[`The CRAndTDLSidePanel component > renders TDL without crashing (flag di
             >
               View this in ECHIMP
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"

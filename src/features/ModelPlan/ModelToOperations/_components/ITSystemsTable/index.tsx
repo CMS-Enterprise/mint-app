@@ -245,7 +245,10 @@ const ITSystemsTable = ({
                 }}
               >
                 {t('table.selectASolution')}
-                <Icon.ArrowForward className="top-05 margin-left-05" />
+                <Icon.ArrowForward
+                  className="top-05 margin-left-05"
+                  aria-label="forward"
+                />
               </Button>
             );
           }

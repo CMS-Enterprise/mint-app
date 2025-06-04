@@ -70,7 +70,10 @@ export const EvaluatingDataExchangeApproach = () => {
                 unstyled
                 className="mint-no-print margin-bottom-2"
               >
-                <Icon.FileDownload className="margin-right-05" />
+                <Icon.FileDownload
+                  className="margin-right-05"
+                  aria-label="download"
+                />
                 {t('downloadPDF')}
               </Button>
 

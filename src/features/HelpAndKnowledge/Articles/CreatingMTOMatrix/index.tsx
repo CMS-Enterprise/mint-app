@@ -289,7 +289,10 @@ export const CreatingMTOMatrix = () => {
                         >
                           <span>
                             {i18next.t(`${article.translation}:title`)}
-                            <Icon.ArrowForward className="margin-left-1 top-2px" />
+                            <Icon.ArrowForward
+                              className="margin-left-1 top-2px"
+                              aria-label="forward"
+                            />
                           </span>
                         </UswdsReactLink>
                       </Grid>

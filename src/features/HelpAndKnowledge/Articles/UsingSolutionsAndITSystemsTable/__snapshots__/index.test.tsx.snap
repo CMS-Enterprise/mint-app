@@ -23,6 +23,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="close"
               class="usa-icon margin-right-05 text-tbottom"
               focusable="false"
               height="1em"
@@ -429,6 +430,7 @@ exports[`UsingSolutionsAndITSystemsTable > matches the snapshot 1`] = `
                 >
                   chat with us on Slack
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"

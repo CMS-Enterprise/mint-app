@@ -77,7 +77,7 @@ const ModelsBySolutions = ({
           <span className="margin-right-1">
             {customHomeT(`settings.MODELS_BY_SOLUTION.noResultsDescription`)}
           </span>
-          <Icon.ArrowForward />
+          <Icon.ArrowForward aria-label="forward" />
         </UswdsReactLink>
       </Alert>
     );

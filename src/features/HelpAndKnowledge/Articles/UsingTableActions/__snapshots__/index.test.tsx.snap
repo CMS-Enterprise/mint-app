@@ -23,6 +23,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="close"
               class="usa-icon margin-right-05 text-tbottom"
               focusable="false"
               height="1em"
@@ -111,6 +112,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   Using the milestone library 
                   <svg
+                    aria-label="forward"
                     class="usa-icon top-3px"
                     focusable="false"
                     height="1em"
@@ -143,6 +145,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   How to add a custom milestone 
                   <svg
+                    aria-label="forward"
                     class="usa-icon top-3px"
                     focusable="false"
                     height="1em"
@@ -366,6 +369,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   Using the solution library 
                   <svg
+                    aria-label="forward"
                     class="usa-icon top-3px"
                     focusable="false"
                     height="1em"
@@ -398,6 +402,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   How to add a custom solution 
                   <svg
+                    aria-label="forward"
                     class="usa-icon top-3px"
                     focusable="false"
                     height="1em"
@@ -535,6 +540,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                 >
                   chat with us on Slack
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"

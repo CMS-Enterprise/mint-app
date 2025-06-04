@@ -41,7 +41,10 @@ const SuggestedMilestoneBanner = ({
                       />
                     ),
                     arrow: (
-                      <Icon.ArrowForward className="margin-left-05 top-05" />
+                      <Icon.ArrowForward
+                        className="margin-left-05 top-05"
+                        aria-label="forward"
+                      />
                     )
                   }}
                 />

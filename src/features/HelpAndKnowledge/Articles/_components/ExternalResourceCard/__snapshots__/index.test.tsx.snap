@@ -13,6 +13,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
         class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
       >
         <svg
+          aria-label="launch"
           class="usa-icon margin-right-05"
           focusable="false"
           height="1em"
@@ -74,6 +75,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
             >
               Read more
               <svg
+                aria-label="expand"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -104,6 +106,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
             >
               View on SharePoint
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"

@@ -335,6 +335,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="expand"
               class="usa-icon margin-right-05"
               focusable="false"
               height="1em"
@@ -439,6 +440,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="expand"
               class="usa-icon margin-right-05"
               focusable="false"
               height="1em"

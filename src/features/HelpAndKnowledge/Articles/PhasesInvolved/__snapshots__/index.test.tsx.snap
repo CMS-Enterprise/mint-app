@@ -22,6 +22,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -105,6 +106,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
                   Learn more about this phase
                 </a>
                 <svg
+                  aria-label="forward"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -154,6 +156,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
                   Learn more about this phase
                 </a>
                 <svg
+                  aria-label="forward"
                   class="usa-icon"
                   focusable="false"
                   height="1em"

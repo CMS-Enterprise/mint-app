@@ -36,6 +36,7 @@ exports[`EChimpCard > renders without errors 1`] = `
             data-testid="emergency__cr-tag"
           >
             <svg
+              aria-label="fire department"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -101,6 +102,7 @@ exports[`EChimpCard > renders without errors 1`] = `
           >
             View this in ECHIMP
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"

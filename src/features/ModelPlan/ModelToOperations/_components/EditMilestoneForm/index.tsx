@@ -1325,7 +1325,10 @@ const EditMilestoneForm = ({
                       {modelToOperationsMiscT(
                         'modal.editMilestone.editSolutions'
                       )}
-                      <Icon.ArrowForward className="top-2px" />
+                      <Icon.ArrowForward
+                        className="top-2px"
+                        aria-label="forward"
+                      />
                     </Button>
 
                     {selectedSolutions.length === 0 ? (

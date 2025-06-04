@@ -2031,6 +2031,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           type="button"
         >
           <svg
+            aria-label="expand"
             class="usa-icon margin-right-05"
             focusable="false"
             height="1em"

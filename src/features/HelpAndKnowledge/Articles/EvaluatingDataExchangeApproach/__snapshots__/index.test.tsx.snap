@@ -22,6 +22,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -85,6 +86,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="download"
               class="usa-icon margin-right-05"
               focusable="false"
               height="1em"
@@ -376,6 +378,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             <span>
                               Privacy-preserving record linkage (PPRL) [cdcfoundation.org]
                               <svg
+                                aria-label="launch"
                                 class="usa-icon margin-left-05 top-05"
                                 focusable="false"
                                 height="1em"
@@ -405,6 +408,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             <span>
                               Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]
                               <svg
+                                aria-label="launch"
                                 class="usa-icon margin-left-05 top-05"
                                 focusable="false"
                                 height="1em"

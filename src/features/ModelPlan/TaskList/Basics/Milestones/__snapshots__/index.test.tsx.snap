@@ -84,6 +84,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           data-testid="ask-a-question"
         >
           <svg
+            aria-label="announcement"
             class="usa-icon text-primary margin-right-1"
             focusable="false"
             height="1em"
@@ -144,6 +145,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                     <span>
                       MINTTeam@cms.hhs.gov
                       <svg
+                        aria-label="launch"
                         class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"

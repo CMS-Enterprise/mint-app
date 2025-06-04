@@ -25,6 +25,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Applications and participant interaction (ACO and kidney models)
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -51,6 +52,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Applications and participant interaction (non-ACO models)
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -77,6 +79,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Communication tools and help desk 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -103,6 +106,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Contract vehicles 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -129,6 +133,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Data 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -155,6 +160,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Learning 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -181,6 +187,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Legal 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -207,6 +214,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Medicare Advantage and Part D 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -233,6 +241,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Medicare Fee-for-Service 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -259,6 +268,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Payments and financials 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
@@ -285,6 +295,7 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
           <span>
             Quality 
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-1 top-2px"
               focusable="false"
               height="1em"
