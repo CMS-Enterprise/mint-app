@@ -47,6 +47,19 @@ const PointOfContactCard = ({
   pointOfContact: SolutionContactType;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const {
+    userAccount,
+    isTeam,
+    mailboxTitle,
+    mailboxAddress,
+    role,
+    isPrimary,
+    receiveEmails
+  } = pointOfContact;
+  const nameOnCard = isTeam
+    ? mailboxTitle
+    : `${userAccount.givenName} ${userAccount.familyName}`;
+  const emailOnCard = isTeam ? mailboxAddress : userAccount.email;
 
   return (
     <div className="margin-bottom-3">
@@ -58,17 +71,17 @@ const PointOfContactCard = ({
       >
         <CardHeader className="padding-0">
           <h3 className="display-inline margin-bottom-0 margin-right-1">
-            {pointOfContact.userAccount.givenName}
+            {nameOnCard}
           </h3>
           <NotificationStatus
-            receiveEmails={pointOfContact.receiveEmails}
+            receiveEmails={receiveEmails}
             label={t(
-              pointOfContact.receiveEmails
+              receiveEmails
                 ? 'receivesNotifications'
                 : 'notReceivesNotifications'
             )}
             tooltipLabel={t(
-              pointOfContact.receiveEmails
+              receiveEmails
                 ? 'receivesNotificationsTooltip'
                 : 'notReceivesNotificationsTooltips'
             )}
@@ -76,24 +89,23 @@ const PointOfContactCard = ({
         </CardHeader>
         <CardBody className="padding-0 margin-bottom-1 display-flex flex-align-center">
           <Link
-            aria-label={pointOfContact.userAccount.email}
+            aria-label={emailOnCard}
             className="margin-0 line-height-body-5"
-            href={`mailto:${pointOfContact.userAccount.email}`}
+            href={`mailto:${emailOnCard}`}
             target="_blank"
           >
-            {pointOfContact.userAccount.email}
+            {emailOnCard}
+
             <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
           </Link>
         </CardBody>
-        {pointOfContact.isPrimary && (
+        {isPrimary && (
           <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal">
             {t('navigation.primaryPointOfContact')}
           </h5>
         )}
-        {pointOfContact.role && (
-          <CardFooter className="padding-0 font-body-xs">
-            {pointOfContact.role}
-          </CardFooter>
+        {role && (
+          <CardFooter className="padding-0 font-body-xs">{role}</CardFooter>
         )}
       </Card>
       <div>
@@ -140,47 +152,60 @@ export const GenericPointsOfContact = ({
 }: {
   solution: HelpSolutionType;
 }) => {
-  console.log('hello pointsOfContact list', solution.pointsOfContact);
+  console.log('hello pointsOfContact list', solution);
   const { t } = useTranslation('helpAndKnowledge');
   const { contractors } = solution;
   const test: SolutionContactType[] = [
     {
       __typename: 'MTOCommonSolutionContact',
       id: '123',
+      mailboxTitle: '',
+      mailboxAddress: '',
       userAccount: {
         __typename: 'UserAccount',
-        givenName: 'John May',
+        id: '456',
+        givenName: 'John',
+        familyName: 'May',
         email: 'email@email.com'
       },
-      isTeam: true,
+      isTeam: false,
       isPrimary: false,
-      role: 'role',
-      receiveEmails: true
-    },
-    {
-      __typename: 'MTOCommonSolutionContact',
-      id: '123',
-      userAccount: {
-        __typename: 'UserAccount',
-        givenName: 'June Month',
-        email: 'email@email.com'
-      },
-      isTeam: true,
-      isPrimary: true,
-      role: 'role',
-      receiveEmails: true
-    },
-    {
-      __typename: 'MTOCommonSolutionContact',
-      id: '123',
-      userAccount: {
-        __typename: 'UserAccount',
-        givenName: 'Hello world',
-        email: 'email@email.com'
-      },
-      isTeam: true,
-      isPrimary: false,
+      role: 'IC',
       receiveEmails: false
+    },
+    {
+      __typename: 'MTOCommonSolutionContact',
+      id: '123',
+      mailboxTitle: '',
+      mailboxAddress: '',
+      userAccount: {
+        __typename: 'UserAccount',
+        id: '456',
+        givenName: 'June',
+        familyName: 'Month',
+        email: 'email2@email.com'
+      },
+      isTeam: false,
+      isPrimary: true,
+      role: 'owner',
+      receiveEmails: true
+    },
+    {
+      __typename: 'MTOCommonSolutionContact',
+      id: '123',
+      mailboxTitle: 'Mint Team mailbox',
+      mailboxAddress: 'mint-team@email.com',
+      userAccount: {
+        __typename: 'UserAccount',
+        id: '',
+        givenName: '',
+        familyName: '',
+        email: ''
+      },
+      isTeam: true,
+      isPrimary: false,
+      role: 'team',
+      receiveEmails: true
     }
   ];
   const pointsOfContactSorted = [...(test || [])].sort((a, b) =>

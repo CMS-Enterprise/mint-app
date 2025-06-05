@@ -348,9 +348,13 @@ export const possibleSolutionsMock: MockedResponse<
                 {
                   __typename: 'MTOCommonSolutionContact',
                   id: '123',
+                  mailboxTitle: 'Mint Team',
+                  mailboxAddress: 'mint-team@email.com',
                   userAccount: {
                     __typename: 'UserAccount',
+                    id: '456',
                     givenName: 'test',
+                    familyName: 'last',
                     email: 'email@email.com'
                   },
                   isTeam: true,
