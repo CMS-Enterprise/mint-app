@@ -1,12 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Icon,
-  Link
+  Link,
+  Tooltip
 } from '@trussworks/react-uswds';
 import {
   HelpSolutionType,
@@ -14,40 +16,101 @@ import {
   SystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import Alert from 'components/Alert';
 import Divider from 'components/Divider';
+
+const NotificationStatus = ({
+  receiveEmails,
+  label,
+  tooltipLabel
+}: {
+  receiveEmails: boolean;
+  label: string;
+  tooltipLabel: string;
+}) => {
+  return (
+    <Tooltip
+      label={tooltipLabel}
+      position="right"
+      className="bg-white padding-0 text-base-dark"
+      style={{ gap: '0.25rem' }}
+    >
+      {receiveEmails ? <Icon.Notifications /> : <Icon.NotificationsOff />}
+      <p className="margin-0">{label}</p>
+    </Tooltip>
+  );
+};
 
 const PointOfContactCard = ({
   pointOfContact
 }: {
   pointOfContact: SolutionContactType;
 }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+
   return (
-    <Card
-      className="margin-bottom-0"
-      containerProps={{
-        className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
-      }}
-    >
-      <CardHeader className="padding-0">
-        <h3 className="margin-0">{pointOfContact.name}</h3>
-      </CardHeader>
-      <CardBody className="padding-0 margin-bottom-1 display-flex flex-align-center">
-        <Link
-          aria-label={pointOfContact.email}
-          className="margin-0 line-height-body-5"
-          href={`mailto:${pointOfContact.email}`}
-          target="_blank"
+    <div className="margin-bottom-3">
+      <Card
+        className="margin-bottom-0"
+        containerProps={{
+          className: 'radius-md padding-2 margin-bottom-1 margin-x-0'
+        }}
+      >
+        <CardHeader className="padding-0">
+          <h3 className="display-inline margin-bottom-0 margin-right-1">
+            {pointOfContact.userAccount.givenName}
+          </h3>
+          <NotificationStatus
+            receiveEmails={pointOfContact.receiveEmails}
+            label={t(
+              pointOfContact.receiveEmails
+                ? 'receivesNotifications'
+                : 'notReceivesNotifications'
+            )}
+            tooltipLabel={t(
+              pointOfContact.receiveEmails
+                ? 'receivesNotificationsTooltip'
+                : 'notReceivesNotificationsTooltips'
+            )}
+          />
+        </CardHeader>
+        <CardBody className="padding-0 margin-bottom-1 display-flex flex-align-center">
+          <Link
+            aria-label={pointOfContact.userAccount.email}
+            className="margin-0 line-height-body-5"
+            href={`mailto:${pointOfContact.userAccount.email}`}
+            target="_blank"
+          >
+            {pointOfContact.userAccount.email}
+            <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+          </Link>
+        </CardBody>
+        {pointOfContact.isPrimary && (
+          <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal">
+            {t('navigation.primaryPointOfContact')}
+          </h5>
+        )}
+        {pointOfContact.role && (
+          <CardFooter className="padding-0 font-body-xs">
+            {pointOfContact.role}
+          </CardFooter>
+        )}
+      </Card>
+      <div>
+        <Button
+          type="button"
+          className="usa-button usa-button--unstyled margin-right-2"
         >
-          {pointOfContact.email}
-          <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
-        </Link>
-      </CardBody>
-      {pointOfContact.role && (
-        <CardFooter className="padding-0 font-body-xs">
-          {pointOfContact.role}
-        </CardFooter>
-      )}
-    </Card>
+          {t('edit')}
+        </Button>
+        <Button
+          type="button"
+          className="text-error usa-button usa-button--unstyled"
+        >
+          {t('removePointOfContact')}
+        </Button>
+      </div>
+    </div>
   );
 };
 
@@ -77,11 +140,53 @@ export const GenericPointsOfContact = ({
 }: {
   solution: HelpSolutionType;
 }) => {
+  console.log('hello pointsOfContact list', solution.pointsOfContact);
   const { t } = useTranslation('helpAndKnowledge');
-
-  const pointsOfContactSorted = [...(solution?.pointsOfContact || [])].sort(
-    (a, b) => a.name.localeCompare(b.name)
+  const { contractors } = solution;
+  const test: SolutionContactType[] = [
+    {
+      __typename: 'MTOCommonSolutionContact',
+      id: '123',
+      userAccount: {
+        __typename: 'UserAccount',
+        givenName: 'John May',
+        email: 'email@email.com'
+      },
+      isTeam: true,
+      isPrimary: false,
+      role: 'role',
+      receiveEmails: true
+    },
+    {
+      __typename: 'MTOCommonSolutionContact',
+      id: '123',
+      userAccount: {
+        __typename: 'UserAccount',
+        givenName: 'June Month',
+        email: 'email@email.com'
+      },
+      isTeam: true,
+      isPrimary: true,
+      role: 'role',
+      receiveEmails: true
+    },
+    {
+      __typename: 'MTOCommonSolutionContact',
+      id: '123',
+      userAccount: {
+        __typename: 'UserAccount',
+        givenName: 'Hello world',
+        email: 'email@email.com'
+      },
+      isTeam: true,
+      isPrimary: false,
+      receiveEmails: false
+    }
+  ];
+  const pointsOfContactSorted = [...(test || [])].sort((a, b) =>
+    a.userAccount.givenName.localeCompare(b.userAccount.givenName)
   );
+  const hasContractors = contractors && contractors?.length > 0;
 
   return (
     <div>
@@ -90,7 +195,7 @@ export const GenericPointsOfContact = ({
         ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
         ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
       ].map(contact => (
-        <PointOfContactCard pointOfContact={contact} key={contact.name} />
+        <PointOfContactCard pointOfContact={contact} key={contact.id} />
       ))}
 
       {solution.systemOwner && (
@@ -103,17 +208,41 @@ export const GenericPointsOfContact = ({
         </>
       )}
 
-      {solution.contractors?.length && (
-        <>
-          <Divider className="margin-y-6" />
+      <>
+        <Divider className="margin-y-6" />
 
-          <h2>{t('contractors')}</h2>
+        <h2 className="margin-bottom-1">{t('contractors')}</h2>
+        <Button
+          type="button"
+          className="usa-button usa-button--unstyled margin-bottom-3"
+        >
+          <Icon.Add aria-hidden />
+          {t('addContractor')}
+        </Button>
 
-          {solution.contractors.map(contact => (
+        {hasContractors ? (
+          contractors.map(contact => (
             <GenericCard contact={contact} key={contact.name} />
-          ))}
-        </>
-      )}
+          ))
+        ) : (
+          <Alert type="info" slim>
+            {t('noContractors')}
+          </Alert>
+        )}
+
+        <Button
+          type="button"
+          className="usa-button usa-button--unstyled margin-right-2"
+        >
+          {t('edit')}
+        </Button>
+        <Button
+          type="button"
+          className="text-error usa-button usa-button--unstyled"
+        >
+          {t('removeContractor')}
+        </Button>
+      </>
     </div>
   );
 };

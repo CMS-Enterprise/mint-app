@@ -2264,12 +2264,22 @@ const helpAndKnowledge = {
   navigation: {
     about: 'About this solution',
     timeline: 'Timeline',
-    'points-of-contact': 'Points of contact'
+    'points-of-contact': 'Points of contact',
+    primaryPointOfContact: 'Primary point of contact'
   },
   backToSolutions: 'Back to solutions',
+  receivesNotifications: 'Receives notifications',
+  receivesNotificationsTooltip:
+    'This point of contact will receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
+  notReceivesNotifications: 'Does not receive notifications',
+  notReceivesNotificationsTooltips:
+    'This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
   moreContacts: 'More points of contact',
   systemOwner: 'System owner',
   contractors: 'Contractors',
+  addContractor: 'Add a contractor',
+  removeContractor: 'Remove contractor',
+  noContractors: 'No contractor is listed for this solution.',
   gatheringInfoAlert: {
     header: 'We’re still gathering information about ',
     description:
