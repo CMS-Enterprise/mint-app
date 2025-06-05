@@ -10,6 +10,7 @@ type TablePageSizeProps = {
   setInitPageSize?: (pageSize: number) => void; // Used to set a default page size to reset to when exporting table document to PDF
   valueArray?: (number | 'all')[];
   suffix?: string;
+  onChange?: () => void; // Optional callback for when the page size changes
 };
 
 const Option = ({
@@ -33,7 +34,8 @@ const TablePageSize = ({
   setPageSize,
   setInitPageSize,
   valueArray = [5, 10, 25, 50, 100],
-  suffix
+  suffix,
+  onChange
 }: TablePageSizeProps) => {
   const classNames = classnames('desktop:margin-top-2', className);
 
@@ -48,6 +50,9 @@ const TablePageSize = ({
           setPageSize(Number(e.target.value));
           if (setInitPageSize) {
             setInitPageSize(Number(e.target.value));
+          }
+          if (onChange) {
+            onChange();
           }
         }}
         value={pageSize}

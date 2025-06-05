@@ -241,6 +241,12 @@ const AppRoutes = () => {
             to="/models/:modelID/read-view/model-basics"
           />
 
+          <Redirect
+            exact
+            from="/models/:modelID/read-view/it-systems-and-solutions"
+            to="/models/:modelID/read-view/solutions-and-it-systems"
+          />
+
           <ProtectedRoute // Wrap redirect as child of route to pass on query parameters
             path="/models/:modelID/read-only/:subinfo?"
             render={match => (
