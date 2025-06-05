@@ -101,7 +101,7 @@ const PointOfContactCard = ({
         </CardBody>
         {isPrimary && (
           <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal">
-            {t('navigation.primaryPointOfContact')}
+            {t('primaryPointOfContact')}
           </h5>
         )}
         {role && (

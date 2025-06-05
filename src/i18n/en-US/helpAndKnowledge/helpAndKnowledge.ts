@@ -2247,7 +2247,7 @@ const helpAndKnowledge = {
   viewAllButton: 'View all operational solutions',
   learnMore: 'Learn more',
   browseCategories: 'Browse solutions by category',
-  contact: 'Primary point of contact',
+  contact: 'Point of contact',
   aboutSolution: 'About this solution',
   aboutSolutionAriaLabel: 'Click to learn more about this solution:',
   pageInfo: '{{-pageStart}} of {{-totalPages}} resources',
@@ -2264,9 +2264,9 @@ const helpAndKnowledge = {
   navigation: {
     about: 'About this solution',
     timeline: 'Timeline',
-    'points-of-contact': 'Points of contact',
-    primaryPointOfContact: 'Primary point of contact'
+    'points-of-contact': 'Points of contact'
   },
+  primaryPointOfContact: 'Primary point of contact',
   mailboxesAndTeamMembers: 'Mailboxes and team members',
   addTeamMailbox: 'Add team mailbox',
   addTeamMember: 'Add a team member',

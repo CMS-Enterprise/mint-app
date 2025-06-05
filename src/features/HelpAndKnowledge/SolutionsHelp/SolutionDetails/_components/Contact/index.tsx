@@ -52,7 +52,7 @@ export const Contact = ({
           contact?.role ? 'margin-bottom-05' : 'margin-bottom-1'
         }`}
       >
-        {contact?.name}
+        {contact?.userAccount.givenName} {contact?.userAccount.familyName}
       </h3>
 
       {contact?.role && (
@@ -64,7 +64,7 @@ export const Contact = ({
       <Link
         aria-label={h('contactInfo.sendAnEmail')}
         className="line-height-body-5 display-flex flex-align-center margin-bottom-3"
-        href={`mailto:${contact?.email}`}
+        href={`mailto:${contact?.userAccount.email}`}
         target="_blank"
       >
         <Icon.Mail className="margin-right-1 top-1px text-tbottom" />
