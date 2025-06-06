@@ -2117,6 +2117,71 @@ Model Space offers model teams and their contractors templates or Databricks not
         }
       ]
     }
+  },
+  reasearchAndRapidCycleEvaluationGroup: {
+    about: {
+      description: ''
+    }
+  },
+  federallyFundedResearchAndDevelopmentCenter: {
+    about: {
+      description: ''
+    }
+  },
+  actuarialResearchAndDesignServices: {
+    about: {
+      description: ''
+    }
+  },
+  transformedMedicaidStatisticalInformationSystem: {
+    about: {
+      description: ''
+    }
+  },
+  enterprisePrivacyPolicyEngine: {
+    about: {
+      description: ''
+    }
+  },
+  divisionOfStakeholderEngagementAndPolicy: {
+    about: {
+      description: ''
+    }
+  },
+  cmmiAnalysisAndManagementSystem: {
+    about: {
+      description: ''
+    }
+  },
+  innovationCenterLandingPage: {
+    about: {
+      description: ''
+    }
+  },
+  riskAdjustmentSuiteOfSystems: {
+    about: {
+      description: ''
+    }
+  },
+  drugDataProcessingSystem: {
+    about: {
+      description: ''
+    }
+  },
+  officeOfTheActuary: {
+    about: {
+      description: ''
+    }
+  },
+  qualityPaymentProgram: {
+    about: {
+      description: ''
+    }
+  },
+  patientActivationMeasure: {
+    about: {
+      description: ''
+    }
   }
 };
 
