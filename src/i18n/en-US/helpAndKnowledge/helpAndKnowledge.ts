@@ -2120,67 +2120,140 @@ Model Space offers model teams and their contractors templates or Databricks not
   },
   reasearchAndRapidCycleEvaluationGroup: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   },
   federallyFundedResearchAndDevelopmentCenter: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   },
   actuarialResearchAndDesignServices: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   },
   transformedMedicaidStatisticalInformationSystem: {
     about: {
-      description: ''
+      description:
+        'T-MSIS collects Medicaid and Children’s Health Insurance Program (CHIP) data from U.S. states, territories, and the District of Columbia into the largest national resource of beneficiary information. This data is crucial for research and policy on Medicaid and CHIP and helping the Centers for Medicare & Medicaid Services (CMS) conduct program oversight, administration, and integrity. To meet the reporting needs of states and CMS stakeholders, T-MSIS features an operations dashboard for state and territory use to validate a timely, accurate, and complete data set.',
+      gatheringInfo: true
     }
   },
   enterprisePrivacyPolicyEngine: {
     about: {
-      description: ''
+      description:
+        'Enforces the controlled access to, disclosures of, transference and disposition of personally identifiable information (PII) contained in CMS Systems of Record (SOR) in accordance with the statutory mandates of the Privacy Act, HIPAA and FISMA. Additionally, EPPE will standardize and automate the Data Use Agreements (DUA) process.',
+      gatheringInfo: true,
+      components: [
+        {
+          header: 'Core Function:',
+          level: 'h4',
+          items: [
+            'Receives and processes requests for data files from users that maintain Data Use Agreements (DUAs) with CMS regarding the nature and use of CMS',
+            'Maintains and administers the DUAs and tracks the requested data files as orders within its system from initial build status on out to ship status.',
+            'Supports the shipping of multiple data files in an order delivered outside of CMS on physical media including tape, cartridge, CDROM, DVD, etc.',
+            'Tracks the disclosures of personally identifiable data to external entities thru the manage DUAs functionality.',
+            'Allows for querying of data elements, reporting, creation of role based access.',
+            'Stores supporting documentation for Data Use Agreements (DUA).',
+            'EPPE also includes a mechanism to track data disclosures that do not require a DUA, via Non DUA Tracking functionality.'
+          ]
+        }
+      ]
     }
   },
   divisionOfStakeholderEngagementAndPolicy: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   },
   cmmiAnalysisAndManagementSystem: {
     about: {
-      description: ''
+      description:
+        'The CMMI Analytics & Management System (AMS), a.k.a Alternative Payment Model (APM) Management System, supports CMMI for the <link1>Quality Payment Program (QPP)</link1>; Portfolio Management and Cross Model Management; and Reporting, Analytics, and Audits. AMS serves as the central repository for CMMI model data including model design elements, model participation, quality measures, and a model’s participation in the QPP. Within <link2>Integrated Data Repository (IDR)</link2>, AMS also has a Business Data Mart storing model participation data enabling users to perform analysis on model participants and linking to other data sources. AMS supports QPP by storing relevant data and making it available to the Merit-Based Incentive Payment System (MIPS). The system also provides targeted data search capabilities for all data stored within AMS as well as user friendly dashboards to enable users to perform broader data searches. Lastly, AMS provides users with a BI platform (Looker) to perform more targeted and complex analysis.',
+      gatheringInfo: true,
+      links: [
+        {
+          link: 'quality-payment-program',
+          external: false
+        },
+        {
+          link: 'integrated-data-repository',
+          external: false
+        }
+      ]
     }
   },
   innovationCenterLandingPage: {
     about: {
-      description: ''
+      description:
+        'The Innovation Center web application will provide a single point of entry to access CMMI applications by CMMI users including the CMMI Program Team, CMMI Support Contractor for Application Administration, Helpdesk Administrator, Operational Contractor, CMMI Model Participants (Providers), and their delegates. Innovation Center will serve as a common Landing Page where CMMI applications can be hosted for easier access. Innovation Center will utilize the Enterprise Identity Management (IDM) and the Enterprise Portal Shared Services and implement the CMS approved Technical Reference Architecture. The Innovation Center will allow the addition of new health innovation models thereby reducing the time and effort to make a new model operational. This is simply the landing page for CMMI on the Enterprise Portal. ',
+      gatheringInfo: true,
+      components: [
+        {
+          header: 'Core Function:',
+          level: 'h4',
+          items: [
+            'Innovation Center will serve as a common Landing Page where CMMI applications can be hosted for easier access.',
+            'Innovation Center will utilize the Enterprise Identity Management and the Enterprise Portal Shared Services and implement the CMS approved Technical Reference Architecture.',
+            'The Innovation Center will allow the addition of new health innovation models thereby reducing the time and effort to make a new model operational.',
+            'This application also hosts the eSign service for CMS applications.'
+          ]
+        }
+      ]
     }
   },
   riskAdjustmentSuiteOfSystems: {
     about: {
-      description: ''
+      description:
+        'The Risk Adjustment Suite of System (RASS) supports CMS processes that apply risk adjustments to payments to Medicare Advantage and Part D plans. This system was implemented to receive, process, store risk adjustment data using the CMS HCC, ESRD, Part D models developed by CMS to calculate risk scores which would be used by <link1>Medicare Advantage Rx (MARx)</link1> to compute plan payments.',
+      gatheringInfo: true,
+      links: [
+        {
+          link: 'medicare-advantage-prescription-drug-system',
+          external: false
+        }
+      ]
     }
   },
   drugDataProcessingSystem: {
     about: {
-      description: ''
+      description:
+        'The Prescription Drug Event Front End System (PDFS) performs the initial file processing of the Prescription Drug Event data submitted by the Part D Plans. Upon completion of the initial file processing, the Prescription Drug Event data is then sent to the Drug Data Processing System (DDPS) for validation and authentication of the Medicare payment of covered drugs made by the Part D plans for their enrolled Medicare beneficiaries. The data is then loaded into the Integrated Data Repository (IDR), to support drug, beneficiary, and plan analysis of incurred payments and payment reconciliation. ',
+      gatheringInfo: true,
+      components: [
+        {
+          header: 'Core Function:',
+          level: 'h4',
+          items: [
+            'Medicare Part D Claim processing, Data warehousing and Reporting',
+            'Annual Part D Claim data (PDE) reconciliation',
+            'Generating quarterly manufacturers invoices and performing dispute and outlier analysis.'
+          ]
+        }
+      ]
     }
   },
   officeOfTheActuary: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   },
   qualityPaymentProgram: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   },
   patientActivationMeasure: {
     about: {
-      description: ''
+      description: '',
+      gatheringInfo: true
     }
   }
 };

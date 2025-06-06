@@ -877,8 +877,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -891,8 +890,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -905,8 +903,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -919,8 +916,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -933,8 +929,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -947,8 +942,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -961,8 +955,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -975,8 +968,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -989,8 +981,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -1003,8 +994,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -1017,8 +1007,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -1031,8 +1020,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   },
   {
@@ -1048,8 +1036,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
-      ),
-      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
+      )
     }
   }
 ];

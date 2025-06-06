@@ -1,12 +1,19 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 
-const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
+const GatheringInfoAlert = ({
+  solution,
+  className
+}: {
+  solution: HelpSolutionType;
+  className?: string;
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
 
   const timelineConfig = timelineTranslationUtil(solution.key);
@@ -25,7 +32,7 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
       heading={`${t('gatheringInfoAlert.header')} ${
         solution.acronym || solution.name
       }`}
-      className="line-height-body-5"
+      className={classNames('line-height-body-5', className)}
     >
       <Trans
         i18nKey={`helpAndKnowledge:gatheringInfoAlert.${
