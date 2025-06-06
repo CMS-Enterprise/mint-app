@@ -36,6 +36,19 @@ enum MTOCommonSolutionKey {
   MDM_NCBP
   MODEL_SPACE
   CDAC
+  RREG
+  FFRDC
+  ARDS
+  T_MISS
+  EPPE
+  DSEP
+  AMS
+  IC_LANDING
+  RASS
+  DDPS
+  OACT
+  QPP
+  PAM
 }
 
 enum MTOSolutionType {
@@ -56,6 +69,7 @@ enum MTOCommonSolutionSubject {
   PAYMENTS_AND_FINANCIALS
   DATA
   LEGAL
+  EVALUATION_AND_REVIEW
 }
 
 type MTOCommonSolution {
