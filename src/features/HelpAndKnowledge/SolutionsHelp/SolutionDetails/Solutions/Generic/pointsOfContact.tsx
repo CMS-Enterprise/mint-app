@@ -152,7 +152,7 @@ export const GenericPointsOfContact = ({
 }: {
   solution: HelpSolutionType;
 }) => {
-  console.log('hello pointsOfContact list', solution);
+  // console.log('hello pointsOfContact list', solution);
   const { t } = useTranslation('helpAndKnowledge');
   const { contractors } = solution;
   const test: SolutionContactType[] = [
