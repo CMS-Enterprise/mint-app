@@ -875,7 +875,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Research and Rapid Cycle Evaluation Group',
     type: 'Cross-cutting group',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -886,7 +889,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Federal Funded Research and Development Center',
     type: 'Contracts and contractors',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -897,7 +903,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Advanced Research and Development Services',
     type: 'Contracts and contractors',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -908,7 +917,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Transformed Medicaid Statistical Information System',
     type: 'IT system',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -919,7 +931,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Enterprise Privacy Policy Engine Cloud',
     type: 'IT system',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -930,7 +945,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Division of Stakeholder Engagement and Policy',
     type: 'Other',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -941,7 +959,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'CMMI Analysis and Management System',
     type: 'IT system',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -952,7 +973,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Innovation Center Landing Page',
     type: 'IT system',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -963,7 +987,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Risk Adjustment Suite of Systems',
     type: 'IT system',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -974,7 +1001,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Drug Data Processing System',
     type: 'IT system',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -985,7 +1015,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Office of the Actuary',
     type: 'Other',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -996,7 +1029,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Quality Payment Program',
     type: 'Other',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   },
   {
@@ -1010,7 +1046,10 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Patient Activation Measure',
     type: 'Contracts and contractors',
     components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      ),
+      about: (props: SolutionDetailProps) => <GatheringInfoAlert {...props} />
     }
   }
 ];
