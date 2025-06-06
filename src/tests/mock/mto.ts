@@ -47,11 +47,18 @@ export const pointsOfContact = [
   {
     __typename: 'PossibleOperationalSolutionContact',
     id: '1267967874323',
-    name: 'John Mint',
-    email: 'john.mint@oddball.io',
+    mailboxTitle: '',
+    mailboxAddress: '',
+    userAccount: {
+      id: '456',
+      givenName: 'John',
+      familyName: 'Mint',
+      email: 'john.mint@oddball.io'
+    },
     isTeam: false,
     role: 'Project lead',
-    isPrimary: true
+    isPrimary: true,
+    receiveEmails: true
   }
 ];
 

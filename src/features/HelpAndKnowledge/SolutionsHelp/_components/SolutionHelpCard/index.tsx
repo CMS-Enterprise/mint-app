@@ -38,6 +38,9 @@ const SolutionHelpCard = ({
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
   );
+  const primiryContactName = primaryContact
+    ? `${primaryContact.userAccount.givenName} ${primaryContact.userAccount.familyName}`
+    : '';
 
   const location = useLocation();
 
@@ -89,10 +92,7 @@ const SolutionHelpCard = ({
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-y-0">
-                {primaryContact?.userAccount.givenName}{' '}
-                {primaryContact?.userAccount.familyName}
-              </p>
+              <p className="margin-y-0">{primiryContactName}</p>
             </Grid>
           </div>
 
