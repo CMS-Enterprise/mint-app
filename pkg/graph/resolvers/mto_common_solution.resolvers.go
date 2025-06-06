@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -20,7 +19,7 @@ func (r *mTOCommonSolutionResolver) Subjects(ctx context.Context, obj *models.MT
 
 // Contractors is the resolver for the contractors field.
 func (r *mTOCommonSolutionResolver) Contractors(ctx context.Context, obj *models.MTOCommonSolution) ([]*model.MTOCommonSolutionContractor, error) {
-	panic(fmt.Errorf("not implemented: Contractors - contractors"))
+	return nil, nil
 }
 
 // ContactInformation is the resolver for the contactInformation field.
