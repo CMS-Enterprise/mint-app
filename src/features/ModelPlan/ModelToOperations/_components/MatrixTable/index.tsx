@@ -1040,8 +1040,8 @@ export const getRenderedRowIndexes = (
         // -1 here to still render out any empty categories that are on the first page and are ordered first/fall before the first shown index
         // +1 here to still render out any empty categories that ordered last/fall before the first shown index
         const isInRange =
-          catIndex >= minShownCategoryIndex - initPageIndex &&
-          catIndex <= maxShownCategoryIndex + 1;
+          catIndex > minShownCategoryIndex - initPageIndex &&
+          catIndex < maxShownCategoryIndex + 1;
 
         // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
         if (isInRange) {
