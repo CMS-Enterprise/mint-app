@@ -39,5 +39,8 @@
         "source.fixAll.eslint": "explicit"
     },
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": true
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "cSpell.words": [
+      "appcontext"
+    ]
 }

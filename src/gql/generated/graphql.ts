@@ -840,12 +840,14 @@ export type MtoCommonSolutionContactInformation = {
 /** Represents a translation of a contact for a common solution */
 export type MtoCommonSolutionContactTranslation = {
   __typename: 'MTOCommonSolutionContactTranslation';
-  email: TranslationField;
   isPrimary: TranslationField;
   isTeam: TranslationField;
   key: TranslationField;
-  name: TranslationField;
+  mailboxAddress: TranslationField;
+  mailboxTitle: TranslationField;
+  receiveEmails: TranslationField;
   role: TranslationField;
+  userAccount: TranslationField;
 };
 
 /**

@@ -6,10 +6,8 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -19,8 +17,8 @@ func (r *mTOCommonSolutionResolver) Subjects(ctx context.Context, obj *models.MT
 }
 
 // Contractors is the resolver for the contractors field.
-func (r *mTOCommonSolutionResolver) Contractors(ctx context.Context, obj *models.MTOCommonSolution) ([]*model.MTOCommonSolutionContractor, error) {
-	panic(fmt.Errorf("not implemented: Contractors - contractors"))
+func (r *mTOCommonSolutionResolver) Contractors(ctx context.Context, obj *models.MTOCommonSolution) ([]*models.MTOCommonSolutionContractor, error) {
+	return MTOCommonSolutionContractorsGetByKeyLOADER(ctx, obj.Key)
 }
 
 // ContactInformation is the resolver for the contactInformation field.

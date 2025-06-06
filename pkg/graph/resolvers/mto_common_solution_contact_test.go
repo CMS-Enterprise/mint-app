@@ -1,45 +1,177 @@
 package resolvers
 
 import (
+	"testing"
+
+	"github.com/stretchr/testify/suite"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// TestMTOCommonSolutionGetByModelPlanIDLOADER validated that data loader call to fetch the wrapped ContactInformation resolver works as anticipated
-func (suite *ResolverSuite) TestMTOCommonSolutionGetByModelPlanIDLOADER() {
-	commonSolutionKey := models.MTOCSKInnovation
-	contacts, err := MTOCommonSolutionContactInformationGetByKeyLOADER(suite.testConfigs.Context, commonSolutionKey)
+// Test creating a user contact
+func (suite *ResolverSuite) TestCreateMTOCommonSolutionUserContactUser() {
+	key := models.MTOCSKInnovation
+	userName := suite.testConfigs.UserInfo.Username // Use seeded user
+	isTeam := false
+	role := stringPointer("Lead")
+	receiveEmails := true
+	isPrimary := true
+
+	contact, err := CreateMTOCommonSolutionUserContactUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		key,
+		userName,
+		isTeam,
+		role,
+		receiveEmails,
+		isPrimary,
+	)
 
 	suite.NoError(err)
-	suite.NotNil(contacts)
-	suite.Len(contacts.PointsOfContact, 5) //currently there are five solutions for  4innovation (4i)
-
-	primary, err := contacts.PrimaryContact()
-	suite.NoError(err)
-	suite.NotNil(primary)
-
+	suite.NotNil(contact)
+	suite.Equal(userName, contact.UserAccount.Username)
+	suite.Equal(key, contact.Key)
 }
 
-// MTOMCommonSolutionContactLoaderTest validates the underlying behavior of the data loader. It validates the count of users that are returned for each solution
-func (suite *ResolverSuite) TestMTOMCommonSolutionContactLoader() {
+// Test creating a mailbox contact
+func (suite *ResolverSuite) TestCreateMTOCommonSolutionContactMailbox() {
+	key := models.MTOCSKInnovation
+	mailboxTitle := stringPointer("Support Team")
+	mailboxAddress := "support@example.com"
+	isTeam := true
+	role := stringPointer("Support")
+	receiveEmails := true
+	isPrimary := false
 
-	// we verify the expected returned count of contacts
-	expectedResults := []loaders.KeyAndExpected[models.MTOCommonSolutionKey, int]{
-		{Key: models.MTOCSKInnovation, Expected: 5},
-		{Key: models.MTOCSKAcoOs, Expected: 4},
-		{Key: models.MTOCSKApps, Expected: 2},
-		{Key: models.MTOCSKCdx, Expected: 1},
-		{Key: models.MTOCSKCcw, Expected: 1},
-		{Key: models.MTOCSKCmsBox, Expected: 1},
-		{Key: models.MTOCSKCmsQualtrics, Expected: 1},
-		{Key: models.MTOCSKCbosc, Expected: 3},
+	contact, err := CreateMTOCommonSolutionContactMailbox(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		key,
+		mailboxTitle,
+		mailboxAddress,
+		isTeam,
+		role,
+		receiveEmails,
+		isPrimary,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(contact)
+	suite.Equal(mailboxAddress, contact.MailboxAddress)
+	suite.Equal(key, contact.Key)
+}
+
+// Test updating a contact
+func (suite *ResolverSuite) TestUpdateMTOCommonSolutionUserContact() {
+	// First, create a contact to update
+	key := models.MTOCSKInnovation
+	userName := suite.testConfigs.UserInfo.Username
+	contact, _ := CreateMTOCommonSolutionUserContactUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		key,
+		userName,
+		false,
+		stringPointer("Lead"),
+		true,
+		true,
+	)
+
+	changes := map[string]interface{}{
+		"role":          "UpdatedRole",
+		"isPrimary":     false,
+		"receiveEmails": false,
 	}
 
-	verifyFunc := func(data []*models.MTOCommonSolutionContact, expected int) bool {
-		return suite.Len(data, expected)
-	}
-	// Call the helper method to validate all results
-	loaders.VerifyLoaders[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionContact, int](suite.testConfigs.Context, &suite.Suite, loaders.MTOCommonSolutionContact.ByCommonSolutionKey,
-		expectedResults, verifyFunc)
+	updated, err := UpdateMTOCommonSolutionUserContact(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		contact.ID,
+		changes,
+	)
 
+	suite.NoError(err)
+	suite.NotNil(updated)
+	suite.Equal("UpdatedRole", *updated.Role)
+	suite.False(updated.IsPrimary)
+	suite.False(updated.ReceiveEmails)
+}
+
+// Test deleting a contact
+func (suite *ResolverSuite) TestDeleteMTOCommonSolutionUserContact() {
+	// First, create a contact to delete
+	key := models.MTOCSKInnovation
+	userName := suite.testConfigs.UserInfo.Username
+	contact, _ := CreateMTOCommonSolutionUserContactUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		key,
+		userName,
+		false,
+		stringPointer("Lead"),
+		true,
+		true,
+	)
+
+	deleted, err := DeleteMTOCommonSolutionUserContact(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		contact.ID,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(deleted)
+	suite.Equal(contact.ID, deleted.ID)
+}
+
+// Test getting a contact by ID
+func (suite *ResolverSuite) TestGetMTOCommonSolutionUserContact() {
+	// First, create a contact to fetch
+	key := models.MTOCSKInnovation
+	userName := suite.testConfigs.UserInfo.Username
+	contact, _ := CreateMTOCommonSolutionUserContactUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		key,
+		userName,
+		false,
+		stringPointer("Lead"),
+		true,
+		true,
+	)
+
+	fetched, err := GetMTOCommonSolutionUserContact(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		contact.ID,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(fetched)
+	suite.Equal(contact.ID, fetched.ID)
+}
+
+// Helper for pointer to string
+func stringPointer(s string) *string { return &s }
+
+// Register the test suite
+func TestMTOCommonSolutionContactSuite(t *testing.T) {
+	suite.Run(t, new(ResolverSuite))
 }
