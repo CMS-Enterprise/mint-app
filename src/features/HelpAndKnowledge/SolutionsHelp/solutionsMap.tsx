@@ -898,7 +898,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     key: 'actuarialResearchAndDesignServices',
     route: 'actuarial-research-and-design-services',
     categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
-    name: 'Advanced Research and Development Services',
+    name: 'Actuarial Research and Development Services',
     type: 'Contracts and contractors',
     components: {
       timeline: (props: SolutionDetailProps) => (
