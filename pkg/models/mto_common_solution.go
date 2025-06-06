@@ -56,6 +56,19 @@ const (
 	MTOCSKMdmNcbp        MTOCommonSolutionKey = "MDM_NCBP"
 	MTOCSKModelSpace     MTOCommonSolutionKey = "MODEL_SPACE"
 	MTOCSKCdac           MTOCommonSolutionKey = "CDAC"
+	MTOCSKRreg           MTOCommonSolutionKey = "RREG"
+	MTOCSKFfrdc          MTOCommonSolutionKey = "FFRDC"
+	MTOCSKArds           MTOCommonSolutionKey = "ARDS"
+	MTOCSKTmiss          MTOCommonSolutionKey = "T_MISS"
+	MTOCSKEppe           MTOCommonSolutionKey = "EPPE"
+	MTOCSKDsep           MTOCommonSolutionKey = "DSEP"
+	MTOCSKAms            MTOCommonSolutionKey = "AMS"
+	MTOCSKIcLanding      MTOCommonSolutionKey = "IC_LANDING"
+	MTOCSKRass           MTOCommonSolutionKey = "RASS"
+	MTOCSKDdps           MTOCommonSolutionKey = "DDPS"
+	MTOCSKOact           MTOCommonSolutionKey = "OACT"
+	MTOCSKQpp            MTOCommonSolutionKey = "QPP"
+	MTOCSKPam            MTOCommonSolutionKey = "PAM"
 )
 
 type MTOCommonSolutionSubject string
@@ -72,6 +85,7 @@ const (
 	MTOCSSPaymentsAndFinancials                                   MTOCommonSolutionSubject = "PAYMENTS_AND_FINANCIALS"
 	MTOCSSData                                                    MTOCommonSolutionSubject = "DATA"
 	MTOCSSLegal                                                   MTOCommonSolutionSubject = "LEGAL"
+	MTOCSSEvaluationAndReview                                     MTOCommonSolutionSubject = "EVALUATION_AND_REVIEW"
 )
 
 type MTOSolutionType string

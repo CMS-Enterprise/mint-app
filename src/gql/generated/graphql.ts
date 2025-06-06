@@ -847,7 +847,9 @@ export type MtoCommonSolutionContactTranslation = {
 
 export enum MtoCommonSolutionKey {
   ACO_OS = 'ACO_OS',
+  AMS = 'AMS',
   APPS = 'APPS',
+  ARDS = 'ARDS',
   ARS = 'ARS',
   BCDA = 'BCDA',
   CBOSC = 'CBOSC',
@@ -858,13 +860,18 @@ export enum MtoCommonSolutionKey {
   CMS_QUALTRICS = 'CMS_QUALTRICS',
   CONNECT = 'CONNECT',
   CPI_VETTING = 'CPI_VETTING',
+  DDPS = 'DDPS',
+  DSEP = 'DSEP',
   EDFR = 'EDFR',
   EFT = 'EFT',
+  EPPE = 'EPPE',
+  FFRDC = 'FFRDC',
   GOVDELIVERY = 'GOVDELIVERY',
   GS = 'GS',
   HDR = 'HDR',
   HIGLAS = 'HIGLAS',
   HPMS = 'HPMS',
+  IC_LANDING = 'IC_LANDING',
   IDR = 'IDR',
   INNOVATION = 'INNOVATION',
   IPC = 'IPC',
@@ -877,12 +884,18 @@ export enum MtoCommonSolutionKey {
   MDM_POR = 'MDM_POR',
   MIDS = 'MIDS',
   MODEL_SPACE = 'MODEL_SPACE',
+  OACT = 'OACT',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
+  PAM = 'PAM',
   POST_PORTAL = 'POST_PORTAL',
+  QPP = 'QPP',
   QV = 'QV',
+  RASS = 'RASS',
   RFA = 'RFA',
   RMADA = 'RMADA',
-  SHARED_SYSTEMS = 'SHARED_SYSTEMS'
+  RREG = 'RREG',
+  SHARED_SYSTEMS = 'SHARED_SYSTEMS',
+  T_MISS = 'T_MISS'
 }
 
 export enum MtoCommonSolutionSubject {
@@ -891,6 +904,7 @@ export enum MtoCommonSolutionSubject {
   COMMUNICATION_TOOLS_AND_HELP_DESK = 'COMMUNICATION_TOOLS_AND_HELP_DESK',
   CONTRACT_VEHICLES = 'CONTRACT_VEHICLES',
   DATA = 'DATA',
+  EVALUATION_AND_REVIEW = 'EVALUATION_AND_REVIEW',
   LEARNING = 'LEARNING',
   LEGAL = 'LEGAL',
   MEDICARE_ADVANTAGE_AND_PART_D = 'MEDICARE_ADVANTAGE_AND_PART_D',

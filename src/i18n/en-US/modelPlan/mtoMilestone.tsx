@@ -204,7 +204,20 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       LOI: 'Salesforce Letter of Intent',
       POST_PORTAL: 'Salesforce Project Officer Support Tool / Portal',
       RFA: 'Salesforce Request for Application',
-      SHARED_SYSTEMS: 'Shared Systems'
+      SHARED_SYSTEMS: 'Shared Systems',
+      RREG: 'Research and Rapid Cycle Evaluation Group',
+      FFRDC: 'Federally Funded Research and Development Center',
+      ARDS: 'Actuarial Research and Development Solutions',
+      T_MISS: 'Transformed Medicaid Statistical Information System',
+      EPPE: 'Enterprise Privacy Policy Engine Cloud',
+      DSEP: 'Division of Stakeholder Engagement and Policy',
+      AMS: 'CMMI Analysis and Management System',
+      IC_LANDING: 'Innovation Center Landing Page',
+      RASS: 'Risk Adjustment Suite of Systems',
+      DDPS: 'Drug Data Processing System',
+      OACT: 'Office of the Actuary',
+      QPP: 'Quality Payment Program',
+      PAM: 'Patient Activation Measure'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -258,7 +271,20 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       LOI: 'Salesforce Letter of Intent',
       POST_PORTAL: 'Salesforce Project Officer Support Tool / Portal',
       RFA: 'Salesforce Request for Application',
-      SHARED_SYSTEMS: 'Shared Systems'
+      SHARED_SYSTEMS: 'Shared Systems',
+      RREG: 'Research and Rapid Cycle Evaluation Group',
+      FFRDC: 'Federally Funded Research and Development Center',
+      ARDS: 'Actuarial Research and Development Solutions',
+      T_MISS: 'Transformed Medicaid Statistical Information System',
+      EPPE: 'Enterprise Privacy Policy Engine Cloud',
+      DSEP: 'Division of Stakeholder Engagement and Policy',
+      AMS: 'CMMI Analysis and Management System',
+      IC_LANDING: 'Innovation Center Landing Page',
+      RASS: 'Risk Adjustment Suite of Systems',
+      DDPS: 'Drug Data Processing System',
+      OACT: 'Office of the Actuary',
+      QPP: 'Quality Payment Program',
+      PAM: 'Patient Activation Measure'
     },
     readonlyOptions: {
       INNOVATION: '4i'

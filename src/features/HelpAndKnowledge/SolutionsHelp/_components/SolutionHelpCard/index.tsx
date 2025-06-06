@@ -42,14 +42,17 @@ const SolutionHelpCard = ({
   const location = useLocation();
 
   return (
-    <CardGroup className="flex-no-wrap">
+    <CardGroup className="flex-no-wrap width-full">
       <Card
         className={classNames(
-          'solution-card margin-bottom-2 shadow',
+          'solution-card margin-bottom-2 shadow width-full',
           className
         )}
+        containerProps={{
+          className: 'margin-0'
+        }}
       >
-        <div className="padding-3 solution-card__container solution-card__fill-card-space">
+        <div className="padding-3 solution-card__container solution-card__fill-card-space width-full">
           <div className="solution-card__header solution-card__fill-card-space">
             <h3
               className="margin-bottom-0 margin-top-0 solutions-checkbox__header"
@@ -73,15 +76,19 @@ const SolutionHelpCard = ({
                 ))}
             </div>
 
-            <p className="solution-card__body">
-              <Trans
-                i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}
-                components={{
-                  ...getTransLinkComponents(aboutConfig.links),
-                  bold: <strong />
-                }}
-              />
-            </p>
+            {t(
+              `helpAndKnowledge:solutions.${solution.key}.about.description`
+            ) !== '' && (
+              <p className="solution-card__body">
+                <Trans
+                  i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}
+                  components={{
+                    ...getTransLinkComponents(aboutConfig.links),
+                    bold: <strong />
+                  }}
+                />
+              </p>
+            )}
 
             <Grid
               tablet={{ col: 6 }}
