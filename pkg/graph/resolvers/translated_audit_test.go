@@ -55,7 +55,6 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 	planWithSuggestedPhase := suite.createModelPlan("test plan with suggested phase")
 
 	suite.dangerousQueueAndTranslateAllAudits()
-	// TODO verify this and expand to be a more robust validation
 	expectedResults := []loaders.KeyAndExpected[storage.MostRecentByModelPlanIDAndTableFilters, models.TableName]{
 		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
 			ModelPlanID:    plan1.ID,
@@ -91,7 +90,8 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 		}, Expected: models.TNPlanBasics},
 	}
 
-	//TODO update this to create more test data. We should verify that updates, deletes, excluded fields, etc are all accounted for.
+	//Future Enhancement consider updating this to create more test data. We should verify that updates, deletes, excluded fields, etc are all accounted for.
+	// We can also do more verification around retrieving privileged data.
 	// Perhaps we should also include a more expansive expected variable to show field count etc? (So we can validate if a field is excluded etc?)
 	// Can verify last suggested status is updated by including multiple tables to check, updating two, and making sure it isn't model plan if only status was updated
 	verifyFunc := func(data *models.TranslatedAudit, expected models.TableName) bool {
