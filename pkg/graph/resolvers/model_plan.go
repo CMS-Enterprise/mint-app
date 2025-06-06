@@ -45,7 +45,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	models.TNPlanOpsEvalAndLearning,
 	models.TNPlanParticipantsAndProviders,
 	models.TNPlanPayments,
-	// we don't include a tag
+	// we purposely exclude the tag table.
 
 	models.TNPlanDataExchangeApproach,
 

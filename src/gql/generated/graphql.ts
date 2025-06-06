@@ -1192,7 +1192,8 @@ export type ModelPlan = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   /**
    * Most recent edit to the model plan.
-   * This returns the most recent edit, that they are authorized to see.
+   * This returns the most recent edit, that doesn't require privileges to view.
+   * We do this so that the view is consistent for all users, regardless of their role.
    */
   mostRecentEdit?: Maybe<TranslatedAudit>;
   mtoMatrix: ModelsToOperationMatrix;

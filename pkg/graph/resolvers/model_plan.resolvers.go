@@ -141,7 +141,7 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 // MostRecentEdit is the resolver for the mostRecentEdit field.
 func (r *modelPlanResolver) MostRecentEdit(ctx context.Context, obj *models.ModelPlan) (*models.TranslatedAudit, error) {
 	logger := appcontext.ZLogger(ctx)
-	// TODO, do we need to pass principal here as well?
+	// Note for simplicity it was decided not to return privileged records for this search. As such, we ignore the principal here.
 	return ModelPlanMostRecentTranslatedAudit(ctx, logger, obj.ID)
 }
 
