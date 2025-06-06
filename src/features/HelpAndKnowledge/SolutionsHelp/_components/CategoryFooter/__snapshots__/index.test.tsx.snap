@@ -155,6 +155,33 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
+          href="/help-and-knowledge/operational-solutions?category=evaluation-and-review"
+        >
+          <span>
+            Evaluation and review 
+            <svg
+              aria-label="forward"
+              class="usa-icon margin-left-1 top-2px"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
+        </a>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <a
+          class="usa-link fit-content display-flex flex-align-center margin-y-1"
           href="/help-and-knowledge/operational-solutions?category=learning"
         >
           <span>

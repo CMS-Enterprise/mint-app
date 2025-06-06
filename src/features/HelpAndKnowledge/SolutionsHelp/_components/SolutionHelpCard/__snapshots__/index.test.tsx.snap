@@ -3,18 +3,18 @@
 exports[`Operation Solution Help Card > matches snapshot 1`] = `
 <DocumentFragment>
   <ul
-    class="usa-card-group flex-no-wrap"
+    class="usa-card-group flex-no-wrap width-full"
     data-testid="CardGroup"
   >
     <li
-      class="usa-card solution-card margin-bottom-2 shadow"
+      class="usa-card solution-card margin-bottom-2 shadow width-full"
       data-testid="Card"
     >
       <div
-        class="usa-card__container"
+        class="usa-card__container margin-0"
       >
         <div
-          class="padding-3 solution-card__container solution-card__fill-card-space"
+          class="padding-3 solution-card__container solution-card__fill-card-space width-full"
         >
           <div
             class="solution-card__header solution-card__fill-card-space"
