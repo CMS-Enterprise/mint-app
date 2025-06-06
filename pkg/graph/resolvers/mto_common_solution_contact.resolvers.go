@@ -6,76 +6,49 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
-	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// MailboxTitle is the resolver for the mailboxTitle field.
-func (r *mTOCommonSolutionContactResolver) MailboxTitle(ctx context.Context, obj *models.MTOCommonSolutionContact) (string, error) {
-	panic(fmt.Errorf("not implemented: MailboxTitle - mailboxTitle"))
-}
-
-// MailboxAddress is the resolver for the mailboxAddress field.
-func (r *mTOCommonSolutionContactResolver) MailboxAddress(ctx context.Context, obj *models.MTOCommonSolutionContact) (string, error) {
-	panic(fmt.Errorf("not implemented: MailboxAddress - mailboxAddress"))
-}
-
-// UserAccount is the resolver for the userAccount field.
-func (r *mTOCommonSolutionContactResolver) UserAccount(ctx context.Context, obj *models.MTOCommonSolutionContact) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: UserAccount - userAccount"))
-}
-
-// ReceiveEmails is the resolver for the receiveEmails field.
-func (r *mTOCommonSolutionContactResolver) ReceiveEmails(ctx context.Context, obj *models.MTOCommonSolutionContact) (bool, error) {
-	panic(fmt.Errorf("not implemented: ReceiveEmails - receiveEmails"))
-}
-
 // CreateMTOCommonSolutionMailboxContact is the resolver for the createMTOCommonSolutionMailboxContact field.
 func (r *mutationResolver) CreateMTOCommonSolutionMailboxContact(ctx context.Context, key models.MTOCommonSolutionKey, mailboxTitle *string, mailboxAddress string, isTeam bool, role *string, receiveEmails bool, isPrimary bool) (*models.MTOCommonSolutionContact, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionMailboxContact - createMTOCommonSolutionMailboxContact"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CreateMTOCommonSolutionContactMailbox(ctx, logger, principal, r.store, key, mailboxTitle, mailboxAddress, isTeam, role, receiveEmails, isPrimary)
 }
 
 // CreateMTOCommonSolutionUserContact is the resolver for the createMTOCommonSolutionUserContact field.
 func (r *mutationResolver) CreateMTOCommonSolutionUserContact(ctx context.Context, key models.MTOCommonSolutionKey, userName string, isTeam bool, role *string, receiveEmails bool, isPrimary bool) (*models.MTOCommonSolutionContact, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionUserContact - createMTOCommonSolutionUserContact"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CreateMTOCommonSolutionUserContactUser(ctx, logger, principal, r.store, key, userName, isTeam, role, receiveEmails, isPrimary)
 }
 
 // UpdateMTOCommonSolutionContact is the resolver for the updateMTOCommonSolutionContact field.
 func (r *mutationResolver) UpdateMTOCommonSolutionContact(ctx context.Context, id uuid.UUID, input map[string]interface{}) (*models.MTOCommonSolutionContact, error) {
-	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolutionContact - updateMTOCommonSolutionContact"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return UpdateMTOCommonSolutionUserContact(ctx, logger, principal, r.store, id, input)
 }
 
 // DeleteMTOCommonSolutionContact is the resolver for the deleteMTOCommonSolutionContact field.
 func (r *mutationResolver) DeleteMTOCommonSolutionContact(ctx context.Context, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
-	panic(fmt.Errorf("not implemented: DeleteMTOCommonSolutionContact - deleteMTOCommonSolutionContact"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return DeleteMTOCommonSolutionUserContact(ctx, logger, principal, r.store, id)
 }
 
 // MtoCommonSolutionContact is the resolver for the mtoCommonSolutionContact field.
 func (r *queryResolver) MtoCommonSolutionContact(ctx context.Context, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
-	panic(fmt.Errorf("not implemented: MtoCommonSolutionContact - mtoCommonSolutionContact"))
-}
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
 
-// MTOCommonSolutionContact returns generated.MTOCommonSolutionContactResolver implementation.
-func (r *Resolver) MTOCommonSolutionContact() generated.MTOCommonSolutionContactResolver {
-	return &mTOCommonSolutionContactResolver{r}
-}
-
-type mTOCommonSolutionContactResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *mTOCommonSolutionContactResolver) RecievesNotifications(ctx context.Context, obj *models.MTOCommonSolutionContact) (bool, error) {
-	panic(fmt.Errorf("not implemented: RecievesNotifications - recievesNotifications"))
-}
-func (r *mutationResolver) CreateMTOCommonSolutionContact(ctx context.Context, input map[string]interface{}) (*models.MTOCommonSolutionContact, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionContact - createMTOCommonSolutionContact"))
+	return GetMTOCommonSolutionUserContact(ctx, logger, principal, r.store, id)
 }
