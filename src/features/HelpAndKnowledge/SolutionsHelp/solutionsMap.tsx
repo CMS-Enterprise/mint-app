@@ -44,6 +44,7 @@ export const operationalSolutionCategoryMap: Record<
     OperationalSolutionCategories.COMMUNICATION_TOOLS,
   'contract-vehicles': OperationalSolutionCategories.CONTRACT_VEHICLES,
   data: OperationalSolutionCategories.DATA,
+  'evaluation-and-review': OperationalSolutionCategories.EVALUATION_AND_REVIEW,
   learning: OperationalSolutionCategories.LEARNING,
   legal: OperationalSolutionCategories.LEGAL,
   'medicare-advantage-and-part-d':
@@ -72,6 +73,7 @@ export const operationalSolutionSubCategoryMap: Record<
   ],
   'contract-vehicles': null,
   data: null,
+  'evaluation-and-review': null,
   learning: null,
   legal: null,
   'medicare-advantage-and-part-d': null,

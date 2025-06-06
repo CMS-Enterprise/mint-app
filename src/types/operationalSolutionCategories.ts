@@ -4,6 +4,7 @@ export enum OperationalSolutionCategories {
   COMMUNICATION_TOOLS = 'communication-tools-and-help-desk',
   CONTRACT_VEHICLES = 'contract-vehicles',
   DATA = 'data',
+  EVALUATION_AND_REVIEW = 'evaluation-and-review',
   LEARNING = 'learning',
   LEGAL = 'legal',
   MEDICARE_ADVANTAGE_D = 'medicare-advantage-and-part-d',
@@ -27,6 +28,7 @@ export type OperationalSolutionCategoryRoute =
   | 'communication-tools-and-help-desk'
   | 'contract-vehicles'
   | 'data'
+  | 'evaluation-and-review'
   | 'learning'
   | 'legal'
   | 'medicare-advantage-and-part-d'

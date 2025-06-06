@@ -59,6 +59,11 @@ export const solutionCategories: Record<
     header: 'Data',
     description: 'Learn about the solutions available for data.'
   },
+  'evaluation-and-review': {
+    header: 'Evaluation and review',
+    description:
+      'Learn about the solutions available for evaluation and review.'
+  },
   learning: {
     header: 'Learning',
     description: 'Learn about the solutions available for learning.'
