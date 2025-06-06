@@ -94,7 +94,10 @@ const Login = () => {
         </div>
         <UswdsReactLink to="/how-to-get-access">
           {getAccessT('learnHow')}
-          <Icon.ArrowForward className="margin-left-1 text-tbottom" />
+          <Icon.ArrowForward
+            className="margin-left-1 text-tbottom"
+            aria-label="forward"
+          />
         </UswdsReactLink>
       </Alert>
     </MainContent>

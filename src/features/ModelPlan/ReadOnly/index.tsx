@@ -335,7 +335,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 to="/models"
                 className="display-flex flex-align-center"
               >
-                <Icon.ArrowBack className="text-primary margin-right-1" />
+                <Icon.ArrowBack
+                  className="text-primary margin-right-1"
+                  aria-label="back"
+                />
                 {h('back')}
               </UswdsReactLink>
 

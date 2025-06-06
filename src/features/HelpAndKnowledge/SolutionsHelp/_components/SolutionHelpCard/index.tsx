@@ -104,7 +104,10 @@ const SolutionHelpCard = ({
               }solution=${solution.route}&section=about`}
             >
               {t('aboutSolution')}
-              <Icon.ArrowForward className="margin-left-1" />
+              <Icon.ArrowForward
+                className="margin-left-1"
+                aria-label="forward"
+              />
             </UswdsReactLink>
           </div>
         </div>

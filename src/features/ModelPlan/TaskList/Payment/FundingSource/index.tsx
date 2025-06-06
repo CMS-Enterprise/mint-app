@@ -192,7 +192,7 @@ const FundingSource = () => {
                   position="right"
                   className="margin-left-05"
                 >
-                  <Icon.Info className="text-base-light" />
+                  <Icon.Info className="text-base-light" aria-label="info" />
                 </Tooltip>
               )}
             </div>
@@ -470,6 +470,7 @@ const FundingSource = () => {
                           <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
+                            aria-label="back"
                           />
 
                           {miscellaneousT('saveAndReturn')}

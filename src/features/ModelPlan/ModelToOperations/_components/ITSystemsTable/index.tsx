@@ -206,7 +206,13 @@ const ITSystemsTable = ({
   const columns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        Header: (
+          <Icon.Warning
+            size={3}
+            className="left-05 text-base-lighter"
+            aria-label="warning"
+          />
+        ),
         accessor: 'riskIndicator',
         width: 40,
         Cell: ({ row }: any) => {
@@ -245,7 +251,10 @@ const ITSystemsTable = ({
                 }}
               >
                 {t('table.selectASolution')}
-                <Icon.ArrowForward className="top-05 margin-left-05" />
+                <Icon.ArrowForward
+                  className="top-05 margin-left-05"
+                  aria-label="forward"
+                />
               </Button>
             );
           }

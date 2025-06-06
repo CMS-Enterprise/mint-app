@@ -24,7 +24,9 @@ export const CsvExportLink = ({
           modelPlanID ? fetchSingleData(modelPlanID) : fetchAllData()
         }
       >
-        {!modelPlanID && <Icon.FileDownload className="margin-right-1" />}
+        {!modelPlanID && (
+          <Icon.FileDownload className="margin-right-1" aria-label="download" />
+        )}
         <span>
           {modelPlanID ? t('downloadSingleCSV') : t('downloadAllCSV')}
         </span>

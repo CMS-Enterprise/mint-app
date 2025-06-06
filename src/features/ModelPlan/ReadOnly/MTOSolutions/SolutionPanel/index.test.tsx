@@ -3,15 +3,11 @@ import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import i18next from 'i18next';
-import Sinon from 'sinon';
 import { modelID, solutionMock } from 'tests/mock/mto';
 
 import SolutionPanel from './index';
 
 describe('SolutionPanel Component', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders correctly with solution data', async () => {
     const { asFragment } = render(
       <MemoryRouter

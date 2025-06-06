@@ -41,7 +41,7 @@ const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
           aria-label={`${t('learnMore')} about ${category}`}
         >
           {t('learnMore')}
-          <Icon.ArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
         </UswdsReactLink>
       </CardBody>
     </Card>

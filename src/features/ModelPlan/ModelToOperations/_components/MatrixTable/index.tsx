@@ -68,7 +68,7 @@ const MTOTable = ({
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
-  const { showMessage: setError } = useMessage();
+  const { showMessage: setError, clearMessage } = useMessage();
 
   const [updateOrder] = useReorderMtoCategoryMutation({
     refetchQueries: [
@@ -283,6 +283,21 @@ const MTOTable = ({
     withQueryParams: 'page'
   });
 
+  useEffect(() => {
+    if (columns[currentColumn].sort && columnSort[currentColumn].isSorted) {
+      setSortedData(
+        columns[currentColumn].sort(
+          sortedData,
+          columnSort[currentColumn].isSortedDesc ? 'DESC' : 'ASC',
+          columnSort[currentColumn].sortColumn as keyof MilestoneType
+        )
+      );
+    } else {
+      setSortedData(structuredClone(formattedData));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentColumn, columnSort, formattedData]);
+
   const RenderCells = ({
     row,
     rowType,
@@ -304,8 +319,6 @@ const MTOTable = ({
     categoryIndex?: number;
     numberOfMilestones?: number;
   }) => {
-    const { clearMessage } = useMessage();
-
     const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
     const renderActionMenu = () => {
@@ -335,7 +348,7 @@ const MTOTable = ({
               disabled={
                 currentIndex === 0 || currentIndex === (rowLength || 0) - 1
               }
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setRearrangedData(
                   moveRow(
@@ -349,7 +362,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -367,7 +380,7 @@ const MTOTable = ({
                 currentIndex === (rowLength || 0) - 1 ||
                 currentIndex === (rowLength || 0) - 2
               }
-              onClick={e => {
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
                 setRearrangedData(
                   moveRow(
@@ -381,7 +394,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={e => {
+              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -470,8 +483,7 @@ const MTOTable = ({
   const renderSubCategories = (
     subCategories: SubCategoryType[],
     categoryID: string,
-    categoryIndex: number,
-    clearMessage?: () => void
+    categoryIndex: number
   ) =>
     subCategories.map((subCategory, index) => {
       const isExpanded = !expandedRows.includes(
@@ -539,9 +551,7 @@ const MTOTable = ({
       );
     });
 
-  const RenderCategories = () => {
-    const { clearMessage } = useMessage();
-
+  const renderCategories = () => {
     return sortedData.map((category, index) => {
       // Don't render if the category is not in the rendered indexes
       if (!renderedRowIndexes.current.category.includes(index)) {
@@ -604,31 +614,11 @@ const MTOTable = ({
           {isExpanded &&
             category.subCategories &&
             category.id &&
-            renderSubCategories(
-              category.subCategories,
-              category.id,
-              index,
-              clearMessage
-            )}
+            renderSubCategories(category.subCategories, category.id, index)}
         </div>
       );
     });
   };
-
-  useEffect(() => {
-    if (columns[currentColumn].sort && columnSort[currentColumn].isSorted) {
-      setSortedData(
-        columns[currentColumn].sort(
-          sortedData,
-          columnSort[currentColumn].isSortedDesc ? 'DESC' : 'ASC',
-          columnSort[currentColumn].sortColumn as keyof MilestoneType
-        )
-      );
-    } else {
-      setSortedData(structuredClone(formattedData));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentColumn, columnSort, formattedData]);
 
   if (loading && !queryData) {
     return <PageLoading />;
@@ -726,7 +716,7 @@ const MTOTable = ({
                     ))}
                   </tr>
                 </thead>
-                <tbody>{RenderCategories()}</tbody>
+                <tbody>{renderCategories()}</tbody>
               </table>
             </div>
             <div className="mint-no-print">

@@ -282,7 +282,10 @@ const ReadOnlyModelBasics = ({
                         position="right"
                         className="margin-left-05"
                       >
-                        <Icon.Info className="text-base-light" />
+                        <Icon.Info
+                          className="text-base-light"
+                          aria-label="info"
+                        />
                       </Tooltip>
                     </span>
                   </div>
@@ -350,7 +353,10 @@ const ReadOnlyModelBasics = ({
                         position="right"
                         className="margin-left-05"
                       >
-                        <Icon.Info className="text-base-light" />
+                        <Icon.Info
+                          className="text-base-light"
+                          aria-label="info"
+                        />
                       </Tooltip>
                     </span>
                   </div>

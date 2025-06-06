@@ -67,7 +67,10 @@ export const Contact = ({
         href={`mailto:${contact?.email}`}
         target="_blank"
       >
-        <Icon.Mail className="margin-right-1 top-1px text-tbottom" />
+        <Icon.Mail
+          className="margin-right-1 top-1px text-tbottom"
+          aria-label="mail"
+        />
         {h('contactInfo.sendAnEmail')}
       </Link>
 
@@ -80,7 +83,11 @@ export const Contact = ({
           )}
         >
           {t('moreContacts')}
-          <Icon.ArrowForward className="margin-left-1" style={{ top: '2px' }} />
+          <Icon.ArrowForward
+            className="margin-left-1"
+            style={{ top: '2px' }}
+            aria-label="forward"
+          />
         </UswdsReactLink>
       )}
     </div>

@@ -105,7 +105,10 @@ const UsingMilestoneLibrary = () => {
                       className="display-block margin-y-05"
                     >
                       {t('addingMilestoneToMto.step1.link1')}{' '}
-                      <Icon.ArrowForward className="margin-left-1 top-05 text-primary" />
+                      <Icon.ArrowForward
+                        className="margin-left-1 top-05 text-primary"
+                        aria-label="forward"
+                      />
                     </UswdsReactLink>
                     <UswdsReactLink
                       aria-label="Redirect to starting mto for a new model article"
@@ -113,7 +116,10 @@ const UsingMilestoneLibrary = () => {
                       className="display-block margin-y-05"
                     >
                       {t('addingMilestoneToMto.step1.link2')}{' '}
-                      <Icon.ArrowForward className="margin-left-1 top-05 text-primary" />
+                      <Icon.ArrowForward
+                        className="margin-left-1 top-05 text-primary"
+                        aria-label="forward"
+                      />
                     </UswdsReactLink>
                   </ProcessListItem>
 

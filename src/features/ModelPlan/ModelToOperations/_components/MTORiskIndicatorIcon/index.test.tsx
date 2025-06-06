@@ -1,14 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MtoRiskIndicator } from 'gql/generated/graphql';
-import Sinon from 'sinon';
 
 import MTORiskIndicatorTag from './index';
 
 describe('MTORiskIndicatorTag Component', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders correctly and matches snapshot for AT_RISK indicator', () => {
     const { asFragment } = render(
       <MTORiskIndicatorTag riskIndicator={MtoRiskIndicator.AT_RISK} />

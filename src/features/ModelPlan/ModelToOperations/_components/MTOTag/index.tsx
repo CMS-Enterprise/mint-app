@@ -23,7 +23,11 @@ export const MTOTag = ({
   if (type === 'draft')
     TagIcon = (
       <span className="padding-right-1 bg-accent-warm-lighter text-accent-warm-darker padding-y-05 margin-right-2">
-        <Icon.Science className="margin-left-1" style={{ top: '2px' }} />{' '}
+        <Icon.Science
+          className="margin-left-1"
+          style={{ top: '2px' }}
+          aria-label="science"
+        />{' '}
         {label}
       </span>
     );
@@ -31,7 +35,11 @@ export const MTOTag = ({
   if (type === 'custom')
     TagIcon = (
       <span className="padding-right-1 bg-warning-lighter text-warning-darker padding-y-05">
-        <Icon.Construction className="margin-left-1" style={{ top: '2px' }} />{' '}
+        <Icon.Construction
+          className="margin-left-1"
+          style={{ top: '2px' }}
+          aria-label="construction"
+        />{' '}
         {label}
       </span>
     );

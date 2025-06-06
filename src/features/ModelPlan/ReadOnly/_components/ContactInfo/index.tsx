@@ -59,7 +59,10 @@ const ContactInfo = ({
                 target="_blank"
               >
                 {h('contactInfo.sendAnEmail')}
-                <Icon.Launch className="margin-left-05 margin-bottom-2px text-tbottom" />
+                <Icon.Launch
+                  className="margin-left-05 margin-bottom-2px text-tbottom"
+                  aria-label="launch"
+                />
               </Link>
             </div>
           );
@@ -72,7 +75,7 @@ const ContactInfo = ({
           to={`/models/${modelID}/read-only/team`}
         >
           {h('contactInfo.moreTeamMembers')}
-          <Icon.ArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
         </UswdsReactLink>
       )}
     </div>

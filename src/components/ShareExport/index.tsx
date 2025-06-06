@@ -229,7 +229,7 @@ const ShareExportModal = ({
     <div data-testid={`${modalElementId}-share-form`}>
       <Form
         className={`${modalElementId}__form`}
-        onSubmit={e => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
 
           const viewFilter =
@@ -366,7 +366,7 @@ const ShareExportModal = ({
               );
             }}
           >
-            <Icon.Link className="margin-right-1" />
+            <Icon.Link className="margin-right-1" aria-label="link" />
             {exportSection && filterGroupParams.includes(exportSection)
               ? generalReadOnlyT('modal.copyLinkFilteredReadView')
               : generalReadOnlyT('modal.copyLinkReadView')}
@@ -398,7 +398,7 @@ const ShareExportModal = ({
     <div data-testid={`${modalElementId}-export-form`}>
       <Form
         className={`${modalElementId}__form`}
-        onSubmit={e => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           if (exportPDF) {
             // Send a export pdf event to GA
@@ -524,7 +524,7 @@ const ShareExportModal = ({
           aria-label="Close Modal"
           onClick={closeModal}
         >
-          <Icon.Close size={4} />
+          <Icon.Close size={4} aria-label="close" />
         </button>
       </nav>
 

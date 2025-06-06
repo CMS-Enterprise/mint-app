@@ -438,7 +438,10 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <Icon.Info className="text-base-light" />
+                                          <Icon.Info
+                                            className="text-base-light"
+                                            aria-label="info"
+                                          />
                                         </Tooltip>
                                       )}
                                     </span>
@@ -512,7 +515,10 @@ const BasicsContent = () => {
                                           }
                                           position="right"
                                         >
-                                          <Icon.Info className="text-base-light" />
+                                          <Icon.Info
+                                            className="text-base-light"
+                                            aria-label="info"
+                                          />
                                         </Tooltip>
                                       </span>
                                     }
@@ -621,6 +627,7 @@ const BasicsContent = () => {
                           <Icon.ArrowBack
                             className="margin-right-1"
                             aria-hidden
+                            aria-label="back"
                           />
                           {miscellaneousT('saveAndReturn')}
                         </Button>

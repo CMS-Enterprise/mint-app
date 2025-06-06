@@ -77,6 +77,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
         >
           <svg
             aria-hidden="true"
+            aria-label="back"
             class="usa-icon margin-right-1"
             focusable="false"
             height="1em"
@@ -103,6 +104,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
             <span>
               Enterprise Electronic Change Information Management Portal (ECHIMP)
               <svg
+                aria-label="launch"
                 class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
@@ -176,6 +178,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     type="submit"
                   >
                     <svg
+                      aria-label="search"
                       class="usa-icon usa-icon--size-3"
                       focusable="false"
                       height="1em"
@@ -270,7 +273,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
               <div
                 class="usa-card__container shadow-2"
               >
-                <header
+                <div
                   class="usa-card__header echimp-card__header"
                   data-testid="CardHeader"
                 >
@@ -284,7 +287,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                   >
                     Echimp CR
                   </h3>
-                </header>
+                </div>
                 <div
                   class="usa-card__body"
                   data-testid="CardBody"
@@ -297,6 +300,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                       data-testid="emergency__cr-tag"
                     >
                       <svg
+                        aria-label="fire department"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -362,6 +366,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     >
                       View this in ECHIMP
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -386,7 +391,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
               <div
                 class="usa-card__container shadow-2"
               >
-                <header
+                <div
                   class="usa-card__header echimp-card__header"
                   data-testid="CardHeader"
                 >
@@ -400,7 +405,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                   >
                     Echimp TDL
                   </h3>
-                </header>
+                </div>
                 <div
                   class="usa-card__body"
                   data-testid="CardBody"
@@ -452,6 +457,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
                     >
                       View this in ECHIMP
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"

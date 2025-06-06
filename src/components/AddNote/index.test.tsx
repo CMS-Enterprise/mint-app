@@ -15,12 +15,13 @@ describe('The AddNote component', () => {
       </Formik>
     );
 
-    screen.getByRole('button', { name: /Add an additional note/i }).click();
+    await user.click(
+      screen.getByRole('button', { name: /Add an additional note/i })
+    );
 
-    await waitFor(async () => {
-      await user.type(getByTestId('test-note'), 'Test Note');
-      expect(getByTestId('test-note')).toHaveValue('Test Note');
-    });
+    await user.type(getByTestId('test-note'), 'Test Note');
+
+    expect(getByTestId('test-note')).toHaveValue('Test Note');
   });
 
   it('checks if init value expands note on load', async () => {

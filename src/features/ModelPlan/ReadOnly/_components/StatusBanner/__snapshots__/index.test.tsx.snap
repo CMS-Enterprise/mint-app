@@ -36,6 +36,7 @@ exports[`ReadViewStatusBanner > renders correctly and matches snapshot 1`] = `
             href="/models/123/change-history"
           >
             <svg
+              aria-label="history"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -71,6 +72,7 @@ exports[`ReadViewStatusBanner > renders correctly and matches snapshot 1`] = `
             href="/models/123/collaboration-area"
           >
             <svg
+              aria-label="edit"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"

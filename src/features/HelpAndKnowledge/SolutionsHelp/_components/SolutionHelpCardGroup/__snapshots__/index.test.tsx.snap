@@ -92,6 +92,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -193,6 +194,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -291,6 +293,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -392,6 +395,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -502,6 +506,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -604,6 +609,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -717,6 +723,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -810,6 +817,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -906,6 +914,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     About this solution
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -1012,6 +1021,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                 Next
               </span>
               <svg
+                aria-hidden="true"
                 class="usa-icon"
                 focusable="false"
                 height="1em"

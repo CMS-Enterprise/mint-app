@@ -68,7 +68,7 @@ const FavoriteCard = ({
                 className="margin-right-2 width-auto"
                 unstyled
               >
-                <Icon.Star size={5} />
+                <Icon.Star size={5} aria-label="star" />
               </Button>
               <h3 className="bookmark__title margin-0">
                 <UswdsReactLink
@@ -177,7 +177,7 @@ export const FavoriteIcon = ({
         }
       )}
       tabIndex={0}
-      onKeyDown={e => {
+      onKeyDown={(e: React.KeyboardEvent<HTMLSpanElement>) => {
         if (e.code !== 'Space') {
           return;
         }
@@ -197,9 +197,15 @@ export const FavoriteIcon = ({
       }}
     >
       {isFavorite ? (
-        <Icon.Star className="margin-right-1 bookmark__tag__icon" />
+        <Icon.Star
+          className="margin-right-1 bookmark__tag__icon"
+          aria-label="star"
+        />
       ) : (
-        <Icon.StarOutline className="margin-right-1 bookmark__tag__icon" />
+        <Icon.StarOutline
+          className="margin-right-1 bookmark__tag__icon"
+          aria-label="star outline"
+        />
       )}
 
       <span className="bookmark__text">

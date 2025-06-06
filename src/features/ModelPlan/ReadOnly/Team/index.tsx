@@ -33,7 +33,10 @@ const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
           target="_blank"
         >
           {collaborator.userAccount.email}
-          <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+          <Icon.MailOutline
+            className="margin-left-05 margin-bottom-2px text-tbottom"
+            aria-label="mail"
+          />
         </Link>
       </CardHeader>
       <div>
@@ -86,7 +89,10 @@ const FilteredViewGroupings = ({
                     target="_blank"
                   >
                     {collaborator.userAccount.email}
-                    <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+                    <Icon.MailOutline
+                      className="margin-left-05 margin-bottom-2px text-tbottom"
+                      aria-label="mail"
+                    />
                   </Link>
                 </Grid>
               </React.Fragment>

@@ -17,6 +17,7 @@ exports[`SuggestedMilestoneBanner component > renders 1 suggested milestone and 
           class="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center"
         >
           <svg
+            aria-label="lightbulb"
             class="usa-icon text-white"
             focusable="false"
             height="1em"
@@ -44,6 +45,7 @@ exports[`SuggestedMilestoneBanner component > renders 1 suggested milestone and 
           >
             View suggested milestones
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
@@ -81,6 +83,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has no sugge
           class="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center"
         >
           <svg
+            aria-label="lightbulb"
             class="usa-icon text-white"
             focusable="false"
             height="1em"
@@ -133,6 +136,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has one sugg
           class="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center"
         >
           <svg
+            aria-label="lightbulb"
             class="usa-icon text-white"
             focusable="false"
             height="1em"
@@ -160,6 +164,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has one sugg
           >
             View suggested milestones
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
@@ -197,6 +202,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has two sugg
           class="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center"
         >
           <svg
+            aria-label="lightbulb"
             class="usa-icon text-white"
             focusable="false"
             height="1em"
@@ -224,6 +230,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has two sugg
           >
             View suggested milestones
             <svg
+              aria-label="forward"
               class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
