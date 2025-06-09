@@ -39,7 +39,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 	pocs := mtoCSC.PointsOfContact
 	if sendToTaggedPOCs { //send to the pocs
 		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
-			return poc.UserAccount.Email
+			return poc.MailboxAddress
 		})
 	} else {
 		devEmailusername, devEmailDomain, emailValid := strings.Cut(devTeamEmail, "@")
@@ -48,7 +48,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 		}
 		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
 			// this takes advantage of the fact that you can append extra information after the + sign to send to an email address with extra info.
-			noSpaceName := strings.ReplaceAll(poc.UserAccount.GivenName, " ", "")
+			noSpaceName := strings.ReplaceAll(*poc.MailboxTitle, " ", "")
 			return devEmailusername + "+" + noSpaceName + "@" + devEmailDomain
 		})
 
@@ -58,15 +58,15 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 
 type MTOCommonSolutionContact struct {
 	baseStruct
-	Key            MTOCommonSolutionKey        `json:"key" db:"mto_common_solution_key"`
-	MailboxTitle   *string                     `db:"mailbox_title" json:"mailboxTitle"`
-	MailboxAddress string                      `db:"mailbox_address" json:"mailboxAddress"`
-	UserAccount    *authentication.UserAccount `db:"-" json:"userAccount"`
-	UserAccountID  *uuid.UUID                  `db:"user_account_id" json:"userAccountId"`
-	IsTeam         bool                        `db:"is_team" json:"isTeam"`
-	Role           *string                     `db:"role" json:"role"`
-	IsPrimary      bool                        `db:"is_primary" json:"isPrimary"`
-	ReceiveEmails  bool                        `db:"receive_emails" json:"receiveEmails"`
+	Key            MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
+	MailboxTitle   *string              `db:"mailbox_title" json:"mailboxTitle"`
+	MailboxAddress string               `db:"mailbox_address" json:"mailboxAddress"`
+	// UserAccount    *authentication.UserAccount `db:"-" json:"userAccount"`
+	UserAccountID *uuid.UUID `db:"user_account_id" json:"userAccountId"`
+	IsTeam        bool       `db:"is_team" json:"isTeam"`
+	Role          *string    `db:"role" json:"role"`
+	IsPrimary     bool       `db:"is_primary" json:"isPrimary"`
+	ReceiveEmails bool       `db:"receive_emails" json:"receiveEmails"`
 }
 
 // NewMTOCommonSolutionContact returns a new MTOCommonSolutionContact object
@@ -92,7 +92,6 @@ func NewMTOCommonSolutionContact(
 		Key:            key,
 		MailboxTitle:   mailboxTitle,
 		MailboxAddress: mailboxAddress,
-		UserAccount:    userAccount,
 		UserAccountID:  UID,
 		IsTeam:         isTeam,
 		Role:           role,

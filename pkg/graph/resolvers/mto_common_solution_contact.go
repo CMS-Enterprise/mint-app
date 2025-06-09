@@ -52,12 +52,11 @@ func CreateMTOCommonSolutionUserContactUser(ctx context.Context, logger *zap.Log
 		return nil, fmt.Errorf("failed to get user account by username %s: %w", userName, err)
 	}
 
-	empty := ""
 	userContact := models.NewMTOCommonSolutionContact(
 		principalAccount.ID,
 		key,
-		&empty,
-		"",
+		userAccount.Username, // Using the user's name and email as mailboxTitle and mailboxAddress to support email sending logic
+		userAccount.Email,
 		userAccount,
 		isTeam,
 		role,
@@ -75,7 +74,7 @@ func CreateMTOCommonSolutionUserContactUser(ctx context.Context, logger *zap.Log
 		return nil, fmt.Errorf("failed to create contact for user %s: %w", userName, err)
 	}
 
-	newContact.UserAccount = userAccount
+	// newContact.UserAccount = userAccount
 	return newContact, nil
 }
 
@@ -207,10 +206,6 @@ func GetMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger, pr
 
 	if contact == nil {
 		return nil, fmt.Errorf("contact with id %s not found", id)
-	}
-
-	if contact.UserAccount == nil {
-		contact.UserAccount = &authentication.UserAccount{}
 	}
 
 	return contact, nil
