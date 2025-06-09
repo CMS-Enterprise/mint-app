@@ -124,7 +124,7 @@ func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	existing_contact, err := storage.MTOCommonSolutionGetContactByID(store, logger, id)
+	existing_contact, err := loaders.MTOCommonSolutionContact.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
 	}
@@ -155,38 +155,30 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	existing := &models.MTOCommonSolutionContact{}
-
 	// Use a transaction for delete (for audit triggers, etc.)
-	err := sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContact, error) {
 		// Fetch the existing contact to check permissions and return after delete
-		var err error
-		existing, err = storage.MTOCommonSolutionGetContactByID(store, logger, id)
+		existing, err := loaders.MTOCommonSolutionContact.ByID.Load(ctx, id)
 		if err != nil {
-			return fmt.Errorf("failed to get contact with id %s: %w", id, err)
+			return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
 		}
 
 		if existing == nil {
-			return fmt.Errorf("contact with id %s not found", id)
+			return nil, fmt.Errorf("contact with id %s not found", id)
 		}
 
 		// Check permissions
 		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
-			return fmt.Errorf("error deleting contact. user doesn't have permissions. %s", err)
+			return nil, fmt.Errorf("error deleting contact. user doesn't have permissions. %s", err)
 		}
 
 		// Finally, delete the contact
 		if err := storage.MTOCommonSolutionDeleteContactByID(tx, principalAccount.ID, logger, id); err != nil {
-			return fmt.Errorf("unable to delete contact. Err %w", err)
+			return nil, fmt.Errorf("unable to delete contact. Err %w", err)
 		}
-		return nil
+		return existing, nil
 	})
-
-	if err != nil {
-		return nil, err
-	}
-	return existing, nil
 }
 
 // GetMTOCommonSolutionUserContact retrieves a contact for a common solution by its ID.
@@ -199,7 +191,7 @@ func GetMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger, pr
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	contact, err := storage.MTOCommonSolutionGetContactByID(store, logger, id)
+	contact, err := loaders.MTOCommonSolutionContact.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
 	}

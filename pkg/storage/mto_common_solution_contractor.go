@@ -30,9 +30,6 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 	if contractor == nil {
 		return nil, fmt.Errorf("contractor cannot be nil")
 	}
-	if contractor.Key == "" {
-		return nil, fmt.Errorf("contractor key cannot be nil")
-	}
 	if contractor.ID == uuid.Nil {
 		contractor.ID = uuid.New()
 	}

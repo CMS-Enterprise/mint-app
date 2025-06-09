@@ -8,6 +8,9 @@ var MTOCommonSolutionContactGetByCommonSolutionKey string
 //go:embed SQL/mto/common_solution_contact/get_by_id.sql
 var MTOCommonSolutionContactGetByID string
 
+//go:embed SQL/mto/common_solution_contact/get_by_ids.sql
+var MTOCommonSolutionContactGetByIDs string
+
 //go:embed SQL/mto/common_solution_contact/create.sql
 var MTOCommonSolutionContactCreate string
 
@@ -20,6 +23,7 @@ var MTOCommonSolutionContactDeleteByID string
 type MTOCommonSolutionContactScripts struct {
 	GetByCommonSolutionKey string
 	GetByID                string
+	GetByIDs               string
 	Create                 string
 	Update                 string
 	DeleteByID             string
@@ -29,6 +33,7 @@ type MTOCommonSolutionContactScripts struct {
 var MTOCommonSolutionContact = MTOCommonSolutionContactScripts{
 	GetByCommonSolutionKey: MTOCommonSolutionContactGetByCommonSolutionKey,
 	GetByID:                MTOCommonSolutionContactGetByID,
+	GetByIDs:               MTOCommonSolutionContactGetByIDs,
 	Create:                 MTOCommonSolutionContactCreate,
 	Update:                 MTOCommonSolutionContactUpdate,
 	DeleteByID:             MTOCommonSolutionContactDeleteByID,

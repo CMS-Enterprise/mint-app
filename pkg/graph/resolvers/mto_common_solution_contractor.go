@@ -38,15 +38,10 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	title := ""
-	if contractorTitle != nil {
-		title = *contractorTitle
-	}
-
 	userContractor := models.NewMTOCommonSolutionContractor(
 		principalAccount.ID,
 		key,
-		title,
+		contractorTitle,
 		contractorName,
 	)
 
@@ -98,7 +93,6 @@ func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-
 	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContractor, error) {
 		// First, fetch the existing solution so we can check permissions

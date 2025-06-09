@@ -2,6 +2,7 @@ WITH QUERIED_IDS AS (
     /* Translate the input to a table */
     SELECT UNNEST(CAST(:ids AS UUID[])) AS id
 )
+
 SELECT
     contractor.id,
     contractor.mto_common_solution_key,

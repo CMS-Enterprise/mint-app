@@ -25,6 +25,20 @@ func MTOCommonSolutionContactGetByCommonSolutionKeyLoader(np sqlutils.NamedPrepa
 	return returned, nil
 }
 
+func MTOCommonSolutionContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolutionContact, error) {
+	args := map[string]interface{}{
+		"ids": pq.Array(ids),
+	}
+	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByIDs, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue getting MTOCommonSolutionContact by IDs %v: %w", ids, err)
+	}
+	if len(returned) == 0 {
+		return nil, fmt.Errorf("no MTOCommonSolutionContacts found for IDs %v", ids)
+	}
+	return returned, nil
+}
+
 // MTOCommonSolutionCreateContact creates a new MTOCommonSolutionContact in the database.
 func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCommonSolutionContact *models.MTOCommonSolutionContact) (*models.MTOCommonSolutionContact, error) {
 	if MTOCommonSolutionContact == nil {
