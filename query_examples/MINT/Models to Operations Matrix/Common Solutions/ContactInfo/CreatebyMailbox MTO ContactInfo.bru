@@ -1,0 +1,45 @@
+meta {
+  name: CreatebyMailbox MTO ContactInfo
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation createMTOCommonSolutionMailboxContact {
+    createMTOCommonSolutionMailboxContact(
+      key: {{key}}         
+      mailboxTitle: "{{mailboxTitle}}"
+      mailboxAddress: "{{mailboxAddress}}"
+      isTeam: {{isTeam}}
+      role: null             
+      isPrimary: {{isPrimary}}        
+      receiveEmails: {{receiveEmails}}
+    ) {
+      id
+      key
+      mailboxTitle
+      mailboxAddress
+      isTeam
+      role
+      isPrimary
+      receiveEmails
+      createdBy
+    }
+  }
+  
+}
+
+vars:pre-request {
+  key: IPC
+  mailboxTitle: Support Team
+  mailboxAddress: support@example.com
+  isTeam: true
+  isPrimary: false
+  receiveEmails: true
+}

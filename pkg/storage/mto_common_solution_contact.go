@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
@@ -27,10 +28,10 @@ func MTOCommonSolutionContactGetByCommonSolutionKeyLoader(np sqlutils.NamedPrepa
 // MTOCommonSolutionCreateContact creates a new MTOCommonSolutionContact in the database.
 func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCommonSolutionContact *models.MTOCommonSolutionContact) (*models.MTOCommonSolutionContact, error) {
 	if MTOCommonSolutionContact == nil {
-		return nil, fmt.Errorf("contractor cannot be nil")
+		return nil, fmt.Errorf("MTOCommonSolutionContact cannot be nil")
 	}
 	if MTOCommonSolutionContact.Key == "" {
-		return nil, fmt.Errorf("contractor key cannot be nil")
+		return nil, fmt.Errorf("MTOCommonSolutionContact key cannot be nil")
 	}
 	if MTOCommonSolutionContact.ID == uuid.Nil {
 		MTOCommonSolutionContact.ID = uuid.New()
@@ -44,7 +45,9 @@ func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 }
 
 func MTOCommonSolutionGetContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByID, id)
+	arg := map[string]interface{}{"id": id}
+
+	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting MTOCommonSolutionContact by ID %s: %w", id, procErr)
 	}
@@ -60,10 +63,17 @@ func MTOCommonSolutionUpdateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 	return returned, nil
 }
 
-func MTOCommonSolutionDeleteContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.DeleteByID, id)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue deleting MTOCommonSolutionContact by ID %s: %w", id, procErr)
+func MTOCommonSolutionDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) error {
+	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	err := setCurrentSessionUserVariable(tx, actorUserID)
+	if err != nil {
+		return err
 	}
-	return returned, nil
+
+	arg := map[string]interface{}{"id": id}
+	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
+	if procErr != nil {
+		return fmt.Errorf("issue deleting MTOCommonSolutionContact by ID %s: %w", id, procErr)
+	}
+	return nil
 }

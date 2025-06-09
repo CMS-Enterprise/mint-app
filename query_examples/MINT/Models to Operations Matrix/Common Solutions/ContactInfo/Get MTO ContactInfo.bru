@@ -1,0 +1,31 @@
+meta {
+  name: Get MTO ContactInfo
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetMTOCommonSolutionContact {
+    mtoCommonSolutionContact(id: "{{contactId}}") {
+      id
+      key
+      mailboxTitle
+      mailboxAddress
+      isTeam
+      role
+      isPrimary
+      receiveEmails
+      createdBy
+    }
+  }
+}
+
+vars:pre-request {
+  contactId: 0647589f-2f80-46f0-a041-1bf5d289dfde
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Delete MTO ContactInfo
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation DeleteMTOCommonSolutionContact {
+    deleteMTOCommonSolutionContact(id: "{{contactId}}") {
+      id
+      key
+      mailboxTitle
+      mailboxAddress
+      isTeam
+      role
+      isPrimary
+      receiveEmails
+      createdBy
+    }
+  }
+}
+
+vars:pre-request {
+  contactId: ff488bcf-5ebb-4a2e-bdd4-2b0ff35d70bf
+}

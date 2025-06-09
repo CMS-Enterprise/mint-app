@@ -81,13 +81,19 @@ func NewMTOCommonSolutionContact(
 	isPrimary bool,
 	receiveEmails bool,
 ) *MTOCommonSolutionContact {
+	var UID *uuid.UUID
+	if userAccount == nil {
+		UID = &uuid.Nil
+	} else {
+		UID = &userAccount.ID
+	}
 	return &MTOCommonSolutionContact{
 		baseStruct:     NewBaseStruct(createdBy),
 		Key:            key,
 		MailboxTitle:   mailboxTitle,
 		MailboxAddress: mailboxAddress,
 		UserAccount:    userAccount,
-		UserAccountID:  &userAccount.ID,
+		UserAccountID:  UID,
 		IsTeam:         isTeam,
 		Role:           role,
 		IsPrimary:      isPrimary,
