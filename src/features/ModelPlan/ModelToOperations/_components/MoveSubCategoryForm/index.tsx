@@ -165,7 +165,7 @@ const MoveSubCategoryForm = () => {
                     id={convertCamelCaseToKebabCase(field.name)}
                     value={field.value || 'default'}
                     defaultValue="default"
-                    onChange={e => {
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                       field.onChange(e);
                     }}
                   >

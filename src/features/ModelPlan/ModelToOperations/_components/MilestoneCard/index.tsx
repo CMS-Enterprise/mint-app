@@ -96,6 +96,7 @@ const MilestoneCard = ({
             {milestone.isSuggested && (
               <span className="padding-right-1 model-to-operations__milestone-tag">
                 <Icon.LightbulbOutline
+                  aria-label="lightbulb"
                   className="margin-left-1"
                   style={{ top: '2px' }}
                 />{' '}
@@ -143,7 +144,7 @@ const MilestoneCard = ({
               disabled
               className="margin-right-2 model-to-operations__milestone-added text-normal"
             >
-              <Icon.Check />
+              <Icon.Check aria-label="check" />
               {t('milestoneLibrary.added')}
             </Button>
           )}

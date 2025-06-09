@@ -40,7 +40,8 @@ const ExternalResourceCard = ({
       className={classnames('desktop:grid-col-4', 'article', className)}
     >
       <div className="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark">
-        <Icon.Launch className="margin-right-05" /> {t('externalResource')}
+        <Icon.Launch className="margin-right-05" aria-label="launch" />{' '}
+        {t('externalResource')}
       </div>
 
       <div className="padding-x-3 padding-bottom-3 display-flex flex-column height-full">

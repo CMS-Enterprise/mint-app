@@ -9,7 +9,7 @@ exports[`TeamCard component > displays role count correctly 1`] = `
     <div
       class="usa-card__container"
     >
-      <header
+      <div
         class="usa-card__header"
         data-testid="CardHeader"
       >
@@ -21,7 +21,7 @@ exports[`TeamCard component > displays role count correctly 1`] = `
         <p>
           Team members can edit all sections of a model collaboration area, including uploading documents and adding team members.
         </p>
-      </header>
+      </div>
       <div
         class="usa-card__body"
         data-testid="CardBody"
@@ -128,7 +128,7 @@ exports[`TeamCard component > matches snapshot 1`] = `
     <div
       class="usa-card__container"
     >
-      <header
+      <div
         class="usa-card__header"
         data-testid="CardHeader"
       >
@@ -140,7 +140,7 @@ exports[`TeamCard component > matches snapshot 1`] = `
         <p>
           Team members can edit all sections of a model collaboration area, including uploading documents and adding team members.
         </p>
-      </header>
+      </div>
       <div
         class="usa-card__body"
         data-testid="CardBody"

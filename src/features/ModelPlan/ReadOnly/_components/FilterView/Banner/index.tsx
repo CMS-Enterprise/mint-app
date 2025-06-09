@@ -36,7 +36,7 @@ const FilterViewBanner = ({
             className="display-flex flex-align-center"
             style={{ gap: '1rem' }}
           >
-            <Icon.Visibility size={3} />
+            <Icon.Visibility size={3} aria-label="visibility" />
             <div>
               {t('youAreViewing')} <strong>{filteredView ?? t('all')}</strong>{' '}
               {filteredView !== null ? t('information') : t('allInformation')}
@@ -44,7 +44,7 @@ const FilterViewBanner = ({
             {filteredView === null && (
               <div className="mint-no-print">
                 <Tooltip label={t('tooltip')} position="right">
-                  <Icon.Info />
+                  <Icon.Info aria-label="info" />
                 </Tooltip>
               </div>
             )}

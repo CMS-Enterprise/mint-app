@@ -12,6 +12,7 @@ exports[`The AddNote component > matches snapshot 1`] = `
     >
       <svg
         aria-hidden="true"
+        aria-label="add"
         class="usa-icon margin-right-1"
         focusable="false"
         height="1em"

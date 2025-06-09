@@ -22,6 +22,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -87,6 +88,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   >
                     Key resources for model teams writing 2-page concept papers
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -110,6 +112,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   >
                     About 2-page concept papers
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -133,6 +136,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   >
                     Additional resources available to model teams
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -156,6 +160,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   >
                     How 2-page concept papers are reviewed
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -199,7 +204,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -208,7 +213,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   >
                     Strategy Refresh SharePoint site
                   </h4>
-                </header>
+                </div>
                 <div
                   class="usa-card__body padding-0"
                   data-testid="CardBody"
@@ -224,6 +229,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     >
                       Go to the Strategy Refresh landing page
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -249,6 +255,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     >
                       Go to the Resources page
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -273,7 +280,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -287,7 +294,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   >
                     Download the template from the Strategy Refresh SharePoint site.
                   </p>
-                </header>
+                </div>
                 <div
                   class="usa-card__body padding-0"
                   data-testid="CardBody"
@@ -303,6 +310,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     >
                       Go to the template on SharePoint
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -360,6 +368,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   <span>
                     Download it from the Strategy Refresh SharePoint site
                     <svg
+                      aria-label="launch"
                       class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
@@ -665,6 +674,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     <span>
                       Strategy Refresh SharePoint site
                       <svg
+                        aria-label="launch"
                         class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
@@ -721,6 +731,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       >
                         AHEAD 2-page concept paper
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -750,6 +761,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       >
                         Enhancing Oncology Model 2-page concept paper
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -779,6 +791,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       >
                         Innovation in Behavioral Health 2-pager concept paper
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -808,6 +821,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       >
                         Making Care Primary 2-pager concept paper
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -836,6 +850,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     <span>
                       Model Resources area of SharePoint.
                       <svg
+                        aria-label="launch"
                         class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
@@ -1069,7 +1084,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.
           </p>
           <table
-            class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+            class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
             data-testid="table"
           >
             <thead>
@@ -1302,6 +1317,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               >
                 MINTTeam@cms.hhs.gov 
                 <svg
+                  aria-label="mail"
                   class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
@@ -1352,7 +1368,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -1361,7 +1377,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   About 6-page concept papers and review meetings
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -1403,7 +1419,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -1412,7 +1428,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   High-level project plan
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=getting-started"
@@ -1454,7 +1470,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -1463,7 +1479,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 >
                   Sample Model Plan
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=getting-started"

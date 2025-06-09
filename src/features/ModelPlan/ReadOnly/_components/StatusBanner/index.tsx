@@ -78,7 +78,7 @@ const ReadViewStatusBanner = ({
                   }
                 )}
               >
-                <Icon.History className="margin-right-1" />
+                <Icon.History className="margin-right-1" aria-label="history" />
 
                 {changeHistoryT('viewChangeHistory')}
               </UswdsReactLink>
@@ -102,7 +102,7 @@ const ReadViewStatusBanner = ({
                 to={`/models/${modelID}/collaboration-area`}
                 className={classNames('display-flex flex-align-center')}
               >
-                <Icon.Edit className="margin-right-1" />
+                <Icon.Edit className="margin-right-1" aria-label="edit" />
                 {t('edit')}
               </UswdsReactLink>
             </div>

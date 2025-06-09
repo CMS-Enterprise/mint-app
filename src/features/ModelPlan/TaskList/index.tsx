@@ -288,7 +288,10 @@ const TaskList = () => {
                   data-testid="return-to-collaboration"
                 >
                   <span>
-                    <Icon.ArrowBack className="top-3px margin-right-1" />
+                    <Icon.ArrowBack
+                      className="top-3px margin-right-1"
+                      aria-label="back"
+                    />
                     {t('returnToCollaboration')}
                   </span>
                 </UswdsReactLink>
@@ -408,7 +411,10 @@ const DicussionBanner = ({
             </>
           ) : (
             <div className="display-flex flex-align-center">
-              <Icon.Announcement className="margin-right-1" />
+              <Icon.Announcement
+                className="margin-right-1"
+                aria-label="announcement"
+              />
               <div>
                 <strong>{discussions.length}</strong>
                 {d('discussionBanner.discussion', {

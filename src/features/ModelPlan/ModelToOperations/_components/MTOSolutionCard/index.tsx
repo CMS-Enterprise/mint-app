@@ -129,7 +129,7 @@ const MTOSolutionCard = ({
               disabled
               className="margin-right-2 model-to-operations__milestone-added text-normal"
             >
-              <Icon.Check />
+              <Icon.Check aria-label="check" />
               {t('milestoneLibrary.added')}
             </Button>
           )}

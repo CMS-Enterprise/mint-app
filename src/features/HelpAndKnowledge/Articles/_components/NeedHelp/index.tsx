@@ -21,7 +21,12 @@ const NeedHelp = () => {
           i18nKey="sixPageMeeting:footerSummaryBox.body"
           components={{
             link1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>,
-            mailIcon: <Icon.MailOutline className="margin-left-05 top-05" />
+            mailIcon: (
+              <Icon.MailOutline
+                className="margin-left-05 top-05"
+                aria-label="mail"
+              />
+            )
           }}
         />
       </SummaryBoxContent>

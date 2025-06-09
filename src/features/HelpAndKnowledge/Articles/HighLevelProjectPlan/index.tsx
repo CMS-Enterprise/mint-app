@@ -115,7 +115,10 @@ const HighLevelProjectPlan = () => {
               rel="noopener noreferrer"
               className="display-flex flex-align-center width-fit-content margin-bottom-3"
             >
-              <Icon.FileDownload className="margin-right-1" />
+              <Icon.FileDownload
+                className="margin-right-1"
+                aria-label="download"
+              />
               <span>{highLevelT('downloadExcel')}</span>
             </Link>
 

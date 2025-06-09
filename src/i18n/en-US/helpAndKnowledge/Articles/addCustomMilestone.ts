@@ -1,5 +1,6 @@
 const addCustomMilestone = {
   title: 'How to add a custom milestone',
+  breadcrumb: 'How to add a custom milestone',
   description:
     'MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.',
   step1: {

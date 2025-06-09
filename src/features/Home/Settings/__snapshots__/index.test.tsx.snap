@@ -118,6 +118,7 @@ exports[`settings snapshots > matches order snapshot 1`] = `
             href="/"
           >
             <svg
+              aria-label="back"
               class="usa-icon margin-right-2"
               focusable="false"
               height="1em"
@@ -413,6 +414,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                   >
                     Select solutions
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -461,6 +463,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
               href="/"
             >
               <svg
+                aria-label="back"
                 class="usa-icon margin-right-2"
                 focusable="false"
                 height="1em"
@@ -581,6 +584,7 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
             href="/homepage-settings"
           >
             <svg
+              aria-label="back"
               class="usa-icon margin-right-2"
               focusable="false"
               height="1em"

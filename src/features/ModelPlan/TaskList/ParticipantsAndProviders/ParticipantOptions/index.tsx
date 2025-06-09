@@ -7,7 +7,6 @@ import {
   Icon,
   Label,
   Radio,
-  RangeInput,
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
@@ -184,7 +183,7 @@ export const ParticipantOptions = () => {
                     </p>
 
                     <Field
-                      as={RangeInput}
+                      type="range"
                       className="maxw-none width-full"
                       id="participants-and-providers-expected-participants"
                       data-testid="participants-and-providers-expected-participants"
@@ -394,7 +393,12 @@ export const ParticipantOptions = () => {
                       )
                     }
                   >
-                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack
+                      className="margin-right-1"
+                      aria-hidden
+                      role="img"
+                      aria-label="back"
+                    />
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>

@@ -162,7 +162,11 @@ const DailyDigest = ({
               >
                 <div className="display-flex flex-align-center">
                   {notificationsT('index.dailyDigest.cta')}
-                  <Icon.ArrowForward className="margin-left-1" aria-hidden />
+                  <Icon.ArrowForward
+                    className="margin-left-1"
+                    aria-hidden
+                    aria-label="forward"
+                  />
                 </div>
               </UswdsReactLink>
             </div>

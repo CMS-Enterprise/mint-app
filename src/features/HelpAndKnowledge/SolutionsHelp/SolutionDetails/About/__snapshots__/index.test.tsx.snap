@@ -185,6 +185,7 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -391,6 +392,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -571,6 +573,7 @@ exports[`Operational Solutions About Components > matches the snapshot > CMMI Da
           >
             Process diagram depicting the flow of data through CDAC (view on Confluence)
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1850,6 +1853,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           >
             View on SharePoint what is needed to onboard Models to the IPC Portal
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -2043,6 +2047,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
               >
                 data standard for emergency services.
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -2128,6 +2133,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
             >
               See a video sample.
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -2174,6 +2180,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
                 >
                   see a video sample
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"
@@ -2888,6 +2895,7 @@ Model Space offers model teams and their contractors templates or Databricks not
             >
               View more information about Model Space on Confluence
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -3002,6 +3010,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
               >
                 Quality Vertical Model Resources on SharePoint
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3031,6 +3040,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
               >
                 Measure Management System (MMS) Tools
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3060,6 +3070,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
               >
                 Quality Payment Program
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3245,6 +3256,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View an ARS screenshot
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3345,6 +3357,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 1
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3374,6 +3387,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 2
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3503,6 +3517,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View an LOI sample
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3682,6 +3697,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 1
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3711,6 +3727,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 2
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3867,6 +3884,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View an RFA screenshot
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3912,6 +3930,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -3981,6 +4000,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
               >
                 Go to Fee For Service Change Request Resource Center
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"

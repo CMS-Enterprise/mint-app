@@ -83,6 +83,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
         data-testid="ask-a-question"
       >
         <svg
+          aria-label="announcement"
           class="usa-icon text-primary margin-right-1"
           focusable="false"
           height="1em"
@@ -130,10 +131,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
           Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.
         </p>
         <input
-          aria-valuemax="10000"
-          aria-valuemin="0"
-          aria-valuenow="5000"
-          class="usa-range maxw-none width-full"
+          class="maxw-none width-full"
           data-testid="participants-and-providers-expected-participants"
           id="participants-and-providers-expected-participants"
           max="10000"
@@ -262,6 +260,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="add"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -423,6 +422,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="add"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -571,6 +571,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="add"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -612,6 +613,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
       >
         <svg
           aria-hidden="true"
+          aria-label="back"
           class="usa-icon margin-right-1"
           focusable="false"
           height="1em"

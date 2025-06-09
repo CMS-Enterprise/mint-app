@@ -22,6 +22,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -87,6 +88,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     Key resources for model teams writing 6-page concept papers
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -110,6 +112,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     Model Plans in MINT
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -133,6 +136,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     About 6-page concept papers
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -156,6 +160,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     Additional resources available to model teams
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -179,6 +184,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     How 6-page concept papers are reviewed
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1"
                       focusable="false"
                       height="1em"
@@ -220,7 +226,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -229,7 +235,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     Strategy Refresh SharePoint site
                   </h4>
-                </header>
+                </div>
                 <div
                   class="usa-card__body padding-0"
                   data-testid="CardBody"
@@ -245,6 +251,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       Go to the Strategy Refresh landing page
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -270,6 +277,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       Go to the Resources page
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -294,7 +302,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 padding-2"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -308,7 +316,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     Download the template from the Strategy Refresh SharePoint site.
                   </p>
-                </header>
+                </div>
                 <div
                   class="usa-card__body padding-0"
                   data-testid="CardBody"
@@ -324,6 +332,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       Go to the template on SharePoint
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -376,6 +385,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   Create a Model Plan now
                   <svg
+                    aria-label="forward"
                     class="usa-icon margin-left-1"
                     focusable="false"
                     height="1em"
@@ -454,6 +464,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   <span>
                     Download it from the Strategy Refresh SharePoint site
                     <svg
+                      aria-label="launch"
                       class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
@@ -568,6 +579,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   <span>
                     metrics
                     <svg
+                      aria-label="launch"
                       class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
@@ -701,6 +713,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       >
                         Health Equity Resources on the Quality Vertical SharePoint
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -731,6 +744,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       >
                         CMS Framework for Health Equity
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -869,6 +883,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     >
                       Strategy Refresh Model Development Library
                       <svg
+                        aria-label="launch"
                         class="usa-icon"
                         focusable="false"
                         height="1em"
@@ -905,6 +920,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             2-pager repository
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -932,6 +948,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             6-pager repository
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -959,6 +976,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             ICIP repository
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -986,6 +1004,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Waiver database
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1013,6 +1032,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Model Interactions framework resource PPT
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1040,6 +1060,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Guidance on Model Expansion and Other Opportunities for Scaling
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1074,6 +1095,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Quality Design Process
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1101,6 +1123,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Patient Reported Outcome Measure(PROM) strategy
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1135,6 +1158,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Quality Vertical Health Equity Resource Guide
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1162,6 +1186,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Implicit Bias Guide
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1189,6 +1214,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1216,6 +1242,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             HRSN Screening and Referral Implementation Guide
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1243,6 +1270,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1277,6 +1305,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           >
                             BSG Checklist
                             <svg
+                              aria-label="launch"
                               class="usa-icon"
                               focusable="false"
                               height="1em"
@@ -1358,7 +1387,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 padding-3 margin-0"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -1372,7 +1401,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   >
                     While all models are different, and therefore the content within a 6-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.
                   </p>
-                </header>
+                </div>
                 <div
                   class="usa-card__body padding-0 line-height-sans-6"
                   data-testid="CardBody"
@@ -1394,6 +1423,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         >
                           AHEAD 6-page concept paper
                           <svg
+                            aria-label="launch"
                             class="usa-icon"
                             focusable="false"
                             height="1em"
@@ -1423,6 +1453,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         >
                           Enhancing Oncology Model 6-page concept paper
                           <svg
+                            aria-label="launch"
                             class="usa-icon"
                             focusable="false"
                             height="1em"
@@ -1452,6 +1483,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         >
                           Making Care Primary 6-page concept paper
                           <svg
+                            aria-label="launch"
                             class="usa-icon"
                             focusable="false"
                             height="1em"
@@ -1482,6 +1514,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <span>
                       Model Resources area of SharePoint
                       <svg
+                        aria-label="launch"
                         class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
@@ -1668,7 +1701,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.
           </p>
           <table
-            class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+            class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
             data-testid="table"
           >
             <thead>
@@ -1895,6 +1928,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               >
                 MINTTeam@cms.hhs.gov 
                 <svg
+                  aria-label="mail"
                   class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
@@ -1945,7 +1979,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -1954,7 +1988,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   About 2-page concept papers and review meetings
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -1996,7 +2030,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -2005,7 +2039,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   High-level project plan
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=getting-started"
@@ -2047,7 +2081,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -2056,7 +2090,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 >
                   Sample Model Plan
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=getting-started"

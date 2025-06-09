@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
-import Sinon from 'sinon';
 import { echimpCRsAndTDLsMock } from 'tests/mock/general';
 import {
   mtoMatrixMock,
@@ -26,9 +25,6 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
 describe('ShareExportModal', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders modal with prepopulated filter', async () => {
     const { user, getByText, getByTestId } = setup(
       <Provider store={store}>

@@ -151,7 +151,13 @@ const sortNested = (
 
 export const columns: ColumnType[] = [
   {
-    Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+    Header: (
+      <Icon.Warning
+        size={3}
+        className="left-05 text-base-lighter"
+        aria-label="warning"
+      />
+    ),
     accessor: 'riskIndicator',
     width: '60px',
     canSort: false,
@@ -351,7 +357,10 @@ export const columns: ColumnType[] = [
                   }}
                 >
                   {i18next.t('modelToOperationsMisc:table.selectASolution')}
-                  <Icon.ArrowForward className="top-05 margin-left-05" />
+                  <Icon.ArrowForward
+                    className="top-05 margin-left-05"
+                    aria-label="forward"
+                  />
                 </Button>
               )}
             </>

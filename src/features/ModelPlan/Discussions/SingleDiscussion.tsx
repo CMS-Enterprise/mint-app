@@ -67,7 +67,10 @@ const SingleDiscussion = ({
           className="display-flex flex-align-center"
           style={{ gap: '0.5rem' }}
         >
-          <Icon.Announcement className="text-primary" />
+          <Icon.Announcement
+            className="text-primary"
+            aria-label="announcement"
+          />
           <Button
             type="button"
             unstyled

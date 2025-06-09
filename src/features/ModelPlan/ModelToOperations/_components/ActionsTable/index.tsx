@@ -68,12 +68,12 @@ const MTOTableActions = () => {
             {actionsMenuOpen ? (
               <>
                 {t('table.tableActions.hideActions')}
-                <Icon.ExpandLess />
+                <Icon.ExpandLess aria-label="collapse" />
               </>
             ) : (
               <>
                 {t('table.tableActions.showActions')}
-                <Icon.ExpandMore />
+                <Icon.ExpandMore aria-label="expand" />
               </>
             )}
           </Button>
@@ -92,6 +92,7 @@ const MTOTableActions = () => {
                       style={{
                         fill: '#607F35'
                       }}
+                      aria-label="flag"
                     />
                   </div>
                   <p className="margin-y-0 text-bold">
@@ -150,6 +151,7 @@ const MTOTableActions = () => {
                       style={{
                         fill: '#3F57A6'
                       }}
+                      aria-label="build"
                     />
                   </div>
                   <p className="margin-y-0 text-bold">
@@ -206,6 +208,7 @@ const MTOTableActions = () => {
                     style={{
                       fill: '#565C65'
                     }}
+                    aria-label="grid view"
                   />
                 </div>
                 <p className="margin-y-0 text-bold">

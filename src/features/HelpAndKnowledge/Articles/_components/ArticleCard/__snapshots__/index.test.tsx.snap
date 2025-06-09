@@ -9,7 +9,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
     <div
       class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
     >
-      <header
+      <div
         class="usa-card__header padding-0"
         data-testid="CardHeader"
       >
@@ -18,7 +18,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
         >
           Evaluate your data exchange approach
         </h3>
-      </header>
+      </div>
       <a
         class="usa-link width-fit-content display-block "
         href="/help-and-knowledge/articles?category=getting-started"

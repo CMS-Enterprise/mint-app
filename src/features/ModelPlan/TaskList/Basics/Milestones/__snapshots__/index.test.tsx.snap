@@ -84,6 +84,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           data-testid="ask-a-question"
         >
           <svg
+            aria-label="announcement"
             class="usa-icon text-primary margin-right-1"
             focusable="false"
             height="1em"
@@ -144,6 +145,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                     <span>
                       MINTTeam@cms.hhs.gov
                       <svg
+                        aria-label="launch"
                         class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
@@ -236,11 +238,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                             type="button"
                           />
                           <div
-                            aria-modal="true"
                             class="usa-date-picker__calendar"
                             data-testid="date-picker-calendar"
                             hidden=""
-                            role="dialog"
+                            role="application"
                             style="top: 0px;"
                           />
                           <div
@@ -337,11 +338,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                             type="button"
                           />
                           <div
-                            aria-modal="true"
                             class="usa-date-picker__calendar"
                             data-testid="date-picker-calendar"
                             hidden=""
-                            role="dialog"
+                            role="application"
                             style="top: 0px;"
                           />
                           <div
@@ -414,11 +414,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                             type="button"
                           />
                           <div
-                            aria-modal="true"
                             class="usa-date-picker__calendar"
                             data-testid="date-picker-calendar"
                             hidden=""
-                            role="dialog"
+                            role="application"
                             style="top: 0px;"
                           />
                           <div
@@ -504,11 +503,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           type="button"
                         />
                         <div
-                          aria-modal="true"
                           class="usa-date-picker__calendar"
                           data-testid="date-picker-calendar"
                           hidden=""
-                          role="dialog"
+                          role="application"
                           style="top: 0px;"
                         />
                         <div
@@ -599,11 +597,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           type="button"
                         />
                         <div
-                          aria-modal="true"
                           class="usa-date-picker__calendar"
                           data-testid="date-picker-calendar"
                           hidden=""
-                          role="dialog"
+                          role="application"
                           style="top: 0px;"
                         />
                         <div
@@ -676,11 +673,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           type="button"
                         />
                         <div
-                          aria-modal="true"
                           class="usa-date-picker__calendar"
                           data-testid="date-picker-calendar"
                           hidden=""
-                          role="dialog"
+                          role="application"
                           style="top: 0px;"
                         />
                         <div
@@ -777,11 +773,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           type="button"
                         />
                         <div
-                          aria-modal="true"
                           class="usa-date-picker__calendar"
                           data-testid="date-picker-calendar"
                           hidden=""
-                          role="dialog"
+                          role="application"
                           style="top: 0px;"
                         />
                         <div
@@ -854,11 +849,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           type="button"
                         />
                         <div
-                          aria-modal="true"
                           class="usa-date-picker__calendar"
                           data-testid="date-picker-calendar"
                           hidden=""
-                          role="dialog"
+                          role="application"
                           style="top: 0px;"
                         />
                         <div
@@ -943,11 +937,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           type="button"
                         />
                         <div
-                          aria-modal="true"
                           class="usa-date-picker__calendar"
                           data-testid="date-picker-calendar"
                           hidden=""
-                          role="dialog"
+                          role="application"
                           style="top: 0px;"
                         />
                         <div
@@ -1135,6 +1128,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           >
             <svg
               aria-hidden="true"
+              aria-label="back"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"

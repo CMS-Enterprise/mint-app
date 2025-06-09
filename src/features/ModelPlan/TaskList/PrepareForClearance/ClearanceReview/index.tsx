@@ -305,7 +305,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                     routeMap[section] as any
                   ]?.heading?.toLowerCase()
               })}
-              <Icon.ArrowForward className="margin-left-1" aria-hidden />
+              <Icon.ArrowForward
+                className="margin-left-1"
+                aria-hidden
+                aria-label="forward"
+              />
             </Button>
           )}
         </Grid>

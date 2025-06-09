@@ -129,7 +129,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
         data-testid="view-change-history"
         className="display-flex flex-align-center"
       >
-        <Icon.History className="margin-right-1" />
+        <Icon.History className="margin-right-1" aria-label="history" />
 
         {t('viewChangeHistory')}
       </UswdsReactLink>

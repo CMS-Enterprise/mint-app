@@ -49,7 +49,7 @@ const SolutionViewSelector = ({
             id="select-view"
             name="select-view"
             className="maxw-none"
-            onChange={e => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               params.set(viewParamName, e.target.value);
               if (usePages) params.set('page', '1');
               history.replace({ search: params.toString() });

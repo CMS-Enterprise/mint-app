@@ -65,7 +65,6 @@
     "questionTooltip": {
       "type": "div",
       "key": null,
-      "ref": null,
       "props": {
         "style": {
           "fontSize": "0.875rem",
@@ -77,14 +76,12 @@
           {
             "type": "ul",
             "key": null,
-            "ref": null,
             "props": {
               "className": "margin-0 padding-left-3",
               "children": [
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "No risk (on track)"
                   },
@@ -94,7 +91,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Some risk (off track)"
                   },
@@ -104,7 +100,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Significantly at risk"
                   },
@@ -139,7 +134,6 @@
     "questionTooltip": {
       "type": "div",
       "key": null,
-      "ref": null,
       "props": {
         "style": {
           "fontSize": "0.875rem",
@@ -151,14 +145,12 @@
           {
             "type": "ul",
             "key": null,
-            "ref": null,
             "props": {
               "className": "margin-0 padding-left-3",
               "children": [
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Not started: No work has started on this IT system or solution"
                   },
@@ -168,7 +160,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Onboarding: Work is being planned related to this model (e.g., contract modification, change request, onboarding request, etc.)"
                   },
@@ -178,7 +169,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Backlog: Model work is in the project team’s backlog"
                   },
@@ -188,7 +178,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "In progress: Work for this model is in progress (e.g., development, configuration, testing, etc.)"
                   },
@@ -198,7 +187,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Completed: Work related to this model is finished"
                   },

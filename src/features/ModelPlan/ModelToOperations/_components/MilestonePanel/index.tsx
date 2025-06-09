@@ -45,6 +45,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                   <Icon.LightbulbOutline
                     className="margin-left-1"
                     style={{ top: '2px' }}
+                    aria-label="lightbulb"
                   />{' '}
                   {t('milestoneLibrary.suggested')}
                 </span>
@@ -89,7 +90,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                   disabled
                   className="margin-right-2 model-to-operations__milestone-added text-normal"
                 >
-                  <Icon.Check />
+                  <Icon.Check aria-label="check" />
                   {t('milestoneLibrary.added')}
                 </Button>
               )}

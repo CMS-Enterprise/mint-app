@@ -89,7 +89,7 @@ const ProviderAndSupplierSidepanel = ({
                   id="provider-supplier-modal--select"
                   name="provider-supplier-modal--select"
                   value={activeType}
-                  onChange={e =>
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                     setActiveType(
                       e.currentTarget.value as ExistingProviderSupplierTypes
                     )

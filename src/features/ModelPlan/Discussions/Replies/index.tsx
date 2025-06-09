@@ -57,12 +57,18 @@ const Replies = ({
             {areRepliesShowing ? (
               <div className="display-flex flex-align-center">
                 {discussionsMiscT('hideReplies')}
-                <Icon.ExpandLess className="margin-left-1" />
+                <Icon.ExpandLess
+                  className="margin-left-1"
+                  aria-label="collapse"
+                />
               </div>
             ) : (
               <div className="display-flex flex-align-center">
                 {discussionsMiscT('showReplies')}
-                <Icon.ExpandMore className="margin-left-1" />
+                <Icon.ExpandMore
+                  className="margin-left-1"
+                  aria-label="expand"
+                />
               </div>
             )}
           </Button>

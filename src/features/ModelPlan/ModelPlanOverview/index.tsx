@@ -82,7 +82,7 @@ const ModelPlan = () => {
       <span className="display-flex flex-align-center flex-wrap margin-0 ">
         {t('following.alert.subheadingPartA')}
         <span className="display-flex flex-align-center margin-x-05">
-          (<Icon.StarOutline size={3} />)
+          (<Icon.StarOutline size={3} aria-label="star" />)
         </span>
 
         {t('following.alert.subheadingPartB')}

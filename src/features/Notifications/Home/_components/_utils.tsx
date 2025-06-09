@@ -177,7 +177,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -185,12 +189,20 @@ export const ActivityCTA = ({
     return isExpanded ? (
       <>
         <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.hide" />
-        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+        <Icon.ExpandLess
+          className="margin-left-1"
+          aria-hidden
+          aria-label="collapse"
+        />
       </>
     ) : (
       <>
         <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.view" />
-        <Icon.ExpandMore className="margin-left-1" aria-hidden />
+        <Icon.ExpandMore
+          className="margin-left-1"
+          aria-hidden
+          aria-label="expand"
+        />
       </>
     );
   }
@@ -199,12 +211,20 @@ export const ActivityCTA = ({
     return isExpanded ? (
       <>
         <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.hide" />
-        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+        <Icon.ExpandLess
+          className="margin-left-1"
+          aria-hidden
+          aria-label="collapse"
+        />
       </>
     ) : (
       <>
         <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.view" />
-        <Icon.ExpandMore className="margin-left-1" aria-hidden />
+        <Icon.ExpandMore
+          className="margin-left-1"
+          aria-hidden
+          aria-label="expand"
+        />
       </>
     );
   }
@@ -213,7 +233,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -222,7 +246,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.NEW_MODEL_PLAN.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -230,7 +258,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -239,7 +271,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -247,7 +283,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }
@@ -255,7 +295,11 @@ export const ActivityCTA = ({
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
       </>
     );
   }

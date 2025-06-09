@@ -37,6 +37,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   class="display-flex"
                 >
                   <svg
+                    aria-label="info"
                     class="usa-icon usa-icon--size-4 minw-4"
                     focusable="false"
                     height="1em"
@@ -69,6 +70,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       >
                         Read more
                         <svg
+                          aria-label="expand"
                           class="usa-icon margin-right-05"
                           focusable="false"
                           height="1em"
@@ -113,6 +115,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 href="/models"
               >
                 <svg
+                  aria-label="back"
                   class="usa-icon text-primary margin-right-1"
                   focusable="false"
                   height="1em"
@@ -133,6 +136,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 tabindex="0"
               >
                 <svg
+                  aria-label="star outline"
                   class="usa-icon margin-right-1 bookmark__tag__icon"
                   focusable="false"
                   height="1em"
@@ -198,6 +202,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
                   >
                     <svg
+                      aria-label="history"
                       class="usa-icon margin-right-1"
                       focusable="false"
                       height="1em"
@@ -233,6 +238,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
                   >
                     <svg
+                      aria-label="edit"
                       class="usa-icon margin-right-1"
                       focusable="false"
                       height="1em"
@@ -266,6 +272,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
               >
                 Show model summary
                 <svg
+                  aria-label="expand"
                   class="usa-icon margin-right-05"
                   focusable="false"
                   height="1em"
@@ -300,6 +307,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
             style="gap: 1rem;"
           >
             <svg
+              aria-label="visibility"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"
@@ -327,14 +335,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 data-testid="tooltipWrapper"
               >
                 <div
-                  aria-describedby="tooltip-550000"
+                  aria-describedby="tooltip-«r7»"
                   class="usa-tooltip__trigger mint-no-print"
                   data-testid="triggerElement"
-                  position="right"
                   tabindex="0"
                   title=""
                 >
                   <svg
+                    aria-label="info"
                     class="usa-icon"
                     focusable="false"
                     height="1em"
@@ -352,7 +360,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   aria-hidden="true"
                   class="usa-tooltip__body"
                   data-testid="tooltipBody"
-                  id="tooltip-550000"
+                  id="tooltip-«r7»"
                   role="tooltip"
                   title="Filter to view the content specific groups at CMS care about."
                 >
@@ -402,6 +410,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
           Model basics
         </h3>
         <svg
+          aria-label="expand"
           class="usa-icon usa-icon--size-3"
           focusable="false"
           height="1em"
@@ -828,14 +837,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                       data-testid="tooltipWrapper"
                                     >
                                       <div
-                                        aria-describedby="tooltip-550000"
+                                        aria-describedby="tooltip-«r8»"
                                         class="usa-tooltip__trigger mint-no-print margin-left-05"
                                         data-testid="triggerElement"
-                                        position="right"
                                         tabindex="0"
                                         title=""
                                       >
                                         <svg
+                                          aria-label="info"
                                           class="usa-icon text-base-light"
                                           focusable="false"
                                           height="1em"
@@ -853,7 +862,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                         aria-hidden="true"
                                         class="usa-tooltip__body"
                                         data-testid="tooltipBody"
-                                        id="tooltip-550000"
+                                        id="tooltip-«r8»"
                                         role="tooltip"
                                         title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                                       >
@@ -900,14 +909,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                         data-testid="tooltipWrapper"
                                       >
                                         <div
-                                          aria-describedby="tooltip-550000"
+                                          aria-describedby="tooltip-«r9»"
                                           class="usa-tooltip__trigger mint-no-print margin-left-05"
                                           data-testid="triggerElement"
-                                          position="right"
                                           tabindex="0"
                                           title=""
                                         >
                                           <svg
+                                            aria-label="info"
                                             class="usa-icon text-base-light"
                                             focusable="false"
                                             height="1em"
@@ -925,7 +934,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                           aria-hidden="true"
                                           class="usa-tooltip__body"
                                           data-testid="tooltipBody"
-                                          id="tooltip-550000"
+                                          id="tooltip-«r9»"
                                           role="tooltip"
                                           title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
                                         >
@@ -1121,15 +1130,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                     data-testid="tooltipWrapper"
                                   >
                                     <div
-                                      aria-describedby="tooltip-550000"
+                                      aria-describedby="tooltip-«ra»"
                                       class="usa-tooltip__trigger mint-no-print"
                                       data-testid="triggerElement"
-                                      position="right"
                                       tabindex="0"
                                       title=""
-                                      wrapperclasses="top-2px"
                                     >
                                       <svg
+                                        aria-label="info"
                                         class="usa-icon text-base-light"
                                         focusable="false"
                                         height="1em"
@@ -1147,7 +1155,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                       aria-hidden="true"
                                       class="usa-tooltip__body"
                                       data-testid="tooltipBody"
-                                      id="tooltip-550000"
+                                      id="tooltip-«ra»"
                                       role="tooltip"
                                       title="The high level goal of the program and a description of the project."
                                     >
@@ -1266,14 +1274,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   data-testid="tooltipWrapper"
                                 >
                                   <div
-                                    aria-describedby="tooltip-550000"
+                                    aria-describedby="tooltip-«rb»"
                                     class="usa-tooltip__trigger mint-no-print margin-left-05"
                                     data-testid="triggerElement"
-                                    position="right"
                                     tabindex="0"
                                     title=""
                                   >
                                     <svg
+                                      aria-label="info"
                                       class="usa-icon text-base-light"
                                       focusable="false"
                                       height="1em"
@@ -1291,7 +1299,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                     aria-hidden="true"
                                     class="usa-tooltip__body"
                                     data-testid="tooltipBody"
-                                    id="tooltip-550000"
+                                    id="tooltip-«rb»"
                                     role="tooltip"
                                     title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
                                   >
@@ -1414,14 +1422,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   data-testid="tooltipWrapper"
                                 >
                                   <div
-                                    aria-describedby="tooltip-550000"
+                                    aria-describedby="tooltip-«rc»"
                                     class="usa-tooltip__trigger mint-no-print margin-left-05"
                                     data-testid="triggerElement"
-                                    position="right"
                                     tabindex="0"
                                     title=""
                                   >
                                     <svg
+                                      aria-label="info"
                                       class="usa-icon text-base-light"
                                       focusable="false"
                                       height="1em"
@@ -1439,7 +1447,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                     aria-hidden="true"
                                     class="usa-tooltip__body"
                                     data-testid="tooltipBody"
-                                    id="tooltip-550000"
+                                    id="tooltip-«rc»"
                                     role="tooltip"
                                     title="When the model will be active beginning with the go-live date"
                                   >
@@ -1522,15 +1530,14 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   data-testid="tooltipWrapper"
                                 >
                                   <div
-                                    aria-describedby="tooltip-550000"
+                                    aria-describedby="tooltip-«rd»"
                                     class="usa-tooltip__trigger mint-no-print"
                                     data-testid="triggerElement"
-                                    position="right"
                                     tabindex="0"
                                     title=""
-                                    wrapperclasses="top-2px"
                                   >
                                     <svg
+                                      aria-label="info"
                                       class="usa-icon text-base-light"
                                       focusable="false"
                                       height="1em"
@@ -1548,7 +1555,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                     aria-hidden="true"
                                     class="usa-tooltip__body"
                                     data-testid="tooltipBody"
-                                    id="tooltip-550000"
+                                    id="tooltip-«rd»"
                                     role="tooltip"
                                     title="That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter."
                                   >
@@ -1619,6 +1626,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                         >
                           Send an email
                           <svg
+                            aria-label="launch"
                             class="usa-icon margin-left-05 margin-bottom-2px text-tbottom"
                             focusable="false"
                             height="1em"
@@ -1640,6 +1648,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       >
                         More team members
                         <svg
+                          aria-label="forward"
                           class="usa-icon margin-left-1"
                           focusable="false"
                           height="1em"

@@ -9,7 +9,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
     <div
       class="usa-card__container radius-md minh-mobile padding-0 margin-0"
     >
-      <header
+      <div
         class="usa-card__header padding-3 padding-bottom-0"
         data-testid="CardHeader"
       >
@@ -25,6 +25,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
             class="padding-right-1 model-to-operations__milestone-tag"
           >
             <svg
+              aria-label="lightbulb"
               class="usa-icon margin-left-1"
               focusable="false"
               height="1em"
@@ -50,7 +51,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
         >
           Test Milestone
         </h3>
-      </header>
+      </div>
       <div
         class="usa-card__body padding-x-3 "
         data-testid="CardBody"
@@ -69,6 +70,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
             type="button"
           >
             <svg
+              aria-label="collapse"
               class="usa-icon margin-right-05 needs-question__rotate"
               focusable="false"
               height="1em"

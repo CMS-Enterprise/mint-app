@@ -149,7 +149,10 @@ export const ModelSolutionDesign = () => {
                           />
                         ),
                         iconForward: (
-                          <Icon.ArrowForward className="margin-left-1 text-bold" />
+                          <Icon.ArrowForward
+                            className="margin-left-1 text-bold"
+                            aria-label="forward"
+                          />
                         )
                       }}
                     />

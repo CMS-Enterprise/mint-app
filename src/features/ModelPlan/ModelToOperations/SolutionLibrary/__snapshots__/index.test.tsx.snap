@@ -79,6 +79,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
       >
         <span>
           <svg
+            aria-label="back"
             class="usa-icon top-3px margin-right-1"
             focusable="false"
             height="1em"
@@ -136,6 +137,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 type="submit"
               >
                 <svg
+                  aria-label="search"
                   class="usa-icon usa-icon--size-3"
                   focusable="false"
                   height="1em"
@@ -258,7 +260,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
           <div
             class="usa-card__container radius-md minh-mobile padding-0 margin-0"
           >
-            <header
+            <div
               class="usa-card__header padding-3 padding-bottom-0"
               data-testid="CardHeader"
             >
@@ -281,7 +283,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               >
                 ACO-OS
               </p>
-            </header>
+            </div>
             <div
               class="usa-card__body padding-x-3"
               data-testid="CardBody"
@@ -331,7 +333,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
           <div
             class="usa-card__container radius-md minh-mobile padding-0 margin-0"
           >
-            <header
+            <div
               class="usa-card__header padding-3 padding-bottom-0"
               data-testid="CardHeader"
             >
@@ -354,7 +356,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               >
                 APPS
               </p>
-            </header>
+            </div>
             <div
               class="usa-card__body padding-x-3"
               data-testid="CardBody"
