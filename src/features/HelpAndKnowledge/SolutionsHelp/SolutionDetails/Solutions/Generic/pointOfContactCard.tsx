@@ -29,7 +29,7 @@ const NotificationStatus = ({
       style={{ gap: '0.25rem' }}
     >
       {receiveEmails ? <Icon.Notifications /> : <Icon.NotificationsOff />}
-      <p className="margin-0">{label}</p>
+      <p className="margin-0 text-normal">{label}</p>
     </Tooltip>
   );
 };
@@ -89,28 +89,29 @@ const PointOfContactCard = ({
           >
             {emailOnCard}
 
-            <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
+            <Icon.MailOutline className="margin-left-05 margin-bottom-1px text-tbottom" />
           </Link>
         </CardBody>
         {isPrimary && (
-          <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal">
+          <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal line-height-body-2">
             {t('primaryPointOfContact')}
           </h5>
         )}
         {role && (
-          <CardFooter className="padding-0 font-body-xs">{role}</CardFooter>
+          <CardFooter className="padding-0 font-body-xs line-height-body-2">
+            {role}
+          </CardFooter>
         )}
       </Card>
       <div>
-        <Button
-          type="button"
-          className="usa-button usa-button--unstyled margin-right-2"
-        >
+        <Button type="button" className="margin-right-2" unstyled>
           {t('edit')}
         </Button>
         <Button
           type="button"
-          className="text-error usa-button usa-button--unstyled"
+          className={isPrimary ? 'text-gray' : 'text-error'}
+          disabled={isPrimary}
+          unstyled
         >
           {t('removePointOfContact')}
         </Button>

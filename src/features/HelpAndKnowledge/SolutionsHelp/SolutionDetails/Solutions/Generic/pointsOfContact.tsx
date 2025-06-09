@@ -80,7 +80,7 @@ export const GenericPointsOfContact = ({
       },
       isTeam: false,
       isPrimary: true,
-      role: 'owner',
+      role: 'Owner',
       receiveEmails: true
     },
     {
@@ -97,7 +97,7 @@ export const GenericPointsOfContact = ({
       },
       isTeam: true,
       isPrimary: false,
-      role: 'team',
+      role: null,
       receiveEmails: true
     }
   ];
@@ -130,36 +130,28 @@ export const GenericPointsOfContact = ({
         <Divider className="margin-y-6" />
 
         <h2 className="margin-bottom-1">{t('contractors')}</h2>
-        <Button
-          type="button"
-          className="usa-button usa-button--unstyled margin-bottom-3"
-        >
+        <Button type="button" className="margin-bottom-3" unstyled>
           <Icon.Add aria-hidden />
           {t('addContractor')}
         </Button>
 
         {hasContractors ? (
           contractors.map(contact => (
-            <GenericCard contact={contact} key={contact.name} />
+            <>
+              <GenericCard contact={contact} key={contact.name} />
+              <Button type="button" className="margin-right-2" unstyled>
+                {t('edit')}
+              </Button>
+              <Button type="button" className="text-error" unstyled>
+                {t('removeContractor')}
+              </Button>
+            </>
           ))
         ) : (
           <Alert type="info" slim>
             {t('noContractors')}
           </Alert>
         )}
-
-        <Button
-          type="button"
-          className="usa-button usa-button--unstyled margin-right-2"
-        >
-          {t('edit')}
-        </Button>
-        <Button
-          type="button"
-          className="text-error usa-button usa-button--unstyled"
-        >
-          {t('removeContractor')}
-        </Button>
       </>
     </div>
   );
