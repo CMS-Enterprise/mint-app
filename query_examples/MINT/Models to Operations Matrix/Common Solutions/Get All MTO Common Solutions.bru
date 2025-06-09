@@ -19,15 +19,23 @@ auth:apikey {
 body:graphql {
   query mtoCommonSolutions {
   mtoCommonSolutions{
-  
           name
           key
           type
           subjects
+    			contractors {
+            id
+            key
+            contractorTitle
+            contractorName
+          }
           filterView
-          isAdded
-  
+  				isAdded
+    			contactInformation{
+    			primaryContact{ 
+    			id
+    			}
+    			}
       }
-  
   }
 }

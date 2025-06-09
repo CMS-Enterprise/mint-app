@@ -1,0 +1,35 @@
+meta {
+  name: UpdateMTO Contractor
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation UpdateMTOCommonSolutionContractor {
+    updateMTOCommonSolutionContractor(
+      id: "{{contractorId}}"
+      changes: {
+        contractorTitle: "{{contractorTitle}}"
+        contractorName: "{{contractorName}}"
+      }
+    ) {
+      id
+      key
+      contractorTitle
+      contractorName
+      createdBy
+    }
+  }
+}
+
+vars:pre-request {
+  contractorId: 1984b75b-7412-4dd8-9981-8cccffcc9135
+  contractorTitle: new title
+  contractorName: new name
+}

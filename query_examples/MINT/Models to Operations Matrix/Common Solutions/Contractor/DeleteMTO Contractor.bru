@@ -1,0 +1,26 @@
+meta {
+  name: DeleteMTO Contractor
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation DeleteMTOCommonSolutionContractor {
+    deleteMTOCommonSolutionContractor(id: "{{contractorId}}") {
+      id
+      key
+      contractorTitle
+      contractorName
+    }
+  }
+}
+
+vars:pre-request {
+  contractorId: 49876ab7-8cfd-4c7d-82eb-0c9d4c5abcf0
+}

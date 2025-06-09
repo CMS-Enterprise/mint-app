@@ -9,7 +9,7 @@ import (
 	"github.com/samber/lo"
 )
 
-// MTOCommonSolutionContactInformation is a wrapper method that enables efficient fetching and sortinf of MTOCommonSolutionContact information
+// MTOCommonSolutionContactInformation is a wrapper method that enables efficient fetching and sorting of MTOCommonSolutionContact information
 type MTOCommonSolutionContactInformation struct {
 	PointsOfContact []*MTOCommonSolutionContact `json:"pointsOfContact"`
 }
@@ -19,7 +19,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) PrimaryContact() (*MTOCommonS
 		return nil, fmt.Errorf("contact information is not populated as expected")
 	}
 	if len(mtoCSC.PointsOfContact) < 1 {
-		return nil, fmt.Errorf("points of contact are not listed for this solution")
+		return &MTOCommonSolutionContact{}, fmt.Errorf("points of contact are not listed for this solution")
 	}
 	contact, found := lo.Find(mtoCSC.PointsOfContact, func(contact *MTOCommonSolutionContact) bool {
 		return contact.IsPrimary
@@ -61,7 +61,8 @@ type MTOCommonSolutionContact struct {
 	Key            MTOCommonSolutionKey        `json:"key" db:"mto_common_solution_key"`
 	MailboxTitle   *string                     `db:"mailbox_title" json:"mailboxTitle"`
 	MailboxAddress string                      `db:"mailbox_address" json:"mailboxAddress"`
-	UserAccount    *authentication.UserAccount `db:"user_account" json:"userAccount"`
+	UserAccount    *authentication.UserAccount `json:"userAccount"`
+	UserAccountID  *uuid.UUID                  `db:"user_account_id" json:"userAccountId"`
 	IsTeam         bool                        `db:"is_team" json:"isTeam"`
 	Role           *string                     `db:"role" json:"role"`
 	IsPrimary      bool                        `db:"is_primary" json:"isPrimary"`
@@ -86,6 +87,7 @@ func NewMTOCommonSolutionContact(
 		MailboxTitle:   mailboxTitle,
 		MailboxAddress: mailboxAddress,
 		UserAccount:    userAccount,
+		UserAccountID:  &userAccount.ID,
 		IsTeam:         isTeam,
 		Role:           role,
 		IsPrimary:      isPrimary,

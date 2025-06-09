@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -17,14 +18,16 @@ import (
 // This function loads all points of contact for a given common solution key. It does not provide contextual data.
 func MTOCommonSolutionContactInformationGetByKeyLOADER(ctx context.Context, key models.MTOCommonSolutionKey) (*models.MTOCommonSolutionContactInformation, error) {
 	pocs, err := loaders.MTOCommonSolutionContact.ByCommonSolutionKey.Load(ctx, key)
+	logger := appcontext.ZLogger(ctx)
+
 	if err != nil {
-		return nil, nil
+		logger.Error("failed to load MTOCommonSolutionContact by key", zap.Error(err), zap.String("key", string(key)))
+		return &models.MTOCommonSolutionContactInformation{}, nil //don't want to break the call when no contact is set for something
 	}
 
 	return &models.MTOCommonSolutionContactInformation{
 		PointsOfContact: pocs,
 	}, nil
-
 }
 
 // CreateMTOCommonSolutionUserContact creates a new user contact for a common solution.
@@ -182,6 +185,10 @@ func GetMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger, pr
 
 	if contact == nil {
 		return nil, fmt.Errorf("contact with id %s not found", id)
+	}
+
+	if contact.UserAccount == nil {
+		contact.UserAccount = &authentication.UserAccount{}
 	}
 
 	return contact, nil

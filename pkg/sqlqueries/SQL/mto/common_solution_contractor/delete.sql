@@ -1,6 +1,1 @@
-WITH retVal AS (
-    DELETE FROM mto_common_solution_contractor
-    WHERE id = :id
-    RETURNING *
-)
-SELECT * FROM retVal;
+DELETE FROM mto_common_solution_contractor WHERE mto_common_solution_contractor.id = :id;

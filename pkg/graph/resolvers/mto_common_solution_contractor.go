@@ -5,10 +5,12 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -18,7 +20,7 @@ import (
 func MTOCommonSolutionContractorsGetByKeyLOADER(ctx context.Context, key models.MTOCommonSolutionKey) ([]*models.MTOCommonSolutionContractor, error) {
 	contractors, err := loaders.MTOCommonSolutionContractor.ByCommonSolutionKey.Load(ctx, key)
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 
 	return contractors, nil
@@ -97,26 +99,38 @@ func DeleteMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logg
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	Contractor, err := storage.MTOCommonSolutionGetContractorByID(store, logger, id)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get contractor with id %s: %w", id, err)
-	}
+	existing := &models.MTOCommonSolutionContractor{}
 
-	if Contractor == nil {
-		return nil, fmt.Errorf("contractor with id %s not found", id)
-	}
+	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
+	err := sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		// First, fetch the existing solution so we can check permissions
+		var err error
+		existing, err = storage.MTOCommonSolutionGetContractorByID(store, logger, id)
+		if err != nil {
+			return fmt.Errorf("failed to get contractor with id %s: %w", id, err)
+		}
 
-	err = BaseStructPreDelete(logger, Contractor, principal, store, true)
+		if existing == nil {
+			return fmt.Errorf("contractor with id %s not found", id)
+		}
+
+		// Check permissions
+		err = BaseStructPreDelete(logger, existing, principal, store, true)
+		if err != nil {
+			return fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
+		}
+
+		// Finally, delete the contractor
+		if err := storage.MTOCommonSolutionDeleteContractorByID(tx, principalAccount.ID, logger, id); err != nil {
+			return fmt.Errorf("unable to delete mto contractor. Err %w", err)
+		}
+		return nil
+	})
+
 	if err != nil {
 		return nil, err
 	}
-
-	deletedContractor, err := storage.MTOCommonSolutionDeleteContractorByID(store, logger, id)
-	if err != nil {
-		return nil, fmt.Errorf("failed to delete contractor with id %s: %w", id, err)
-	}
-
-	return deletedContractor, nil
+	return existing, nil
 }
 
 // GetMTOCommonSolutionUserContractor retrieves a contractor for a common solution by its ID.
@@ -135,7 +149,7 @@ func GetMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logger,
 	}
 
 	if Contractor == nil {
-		return nil, fmt.Errorf("contractor with id %s not found", id)
+		return nil, fmt.Errorf("contractor with id %s is nil", id)
 	}
 
 	return Contractor, nil

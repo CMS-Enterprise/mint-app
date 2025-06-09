@@ -8,6 +8,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -42,5 +43,9 @@ func (r *queryResolver) MtoCommonSolutionContractor(ctx context.Context, id uuid
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return GetMTOCommonSolutionUserContractor(ctx, logger, principal, r.store, id)
+	contractor, err := GetMTOCommonSolutionUserContractor(ctx, logger, principal, r.store, id)
+	if err != nil {
+		logger.Error("Failed to get contractor", zap.Error(err), zap.String("contractor_id", id.String()))
+	}
+	return contractor, err
 }

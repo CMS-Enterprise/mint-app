@@ -26,6 +26,16 @@ func MTOCommonSolutionContactGetByCommonSolutionKeyLoader(np sqlutils.NamedPrepa
 
 // MTOCommonSolutionCreateContact creates a new MTOCommonSolutionContact in the database.
 func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCommonSolutionContact *models.MTOCommonSolutionContact) (*models.MTOCommonSolutionContact, error) {
+	if MTOCommonSolutionContact == nil {
+		return nil, fmt.Errorf("contractor cannot be nil")
+	}
+	if MTOCommonSolutionContact.Key == "" {
+		return nil, fmt.Errorf("contractor key cannot be nil")
+	}
+	if MTOCommonSolutionContact.ID == uuid.Nil {
+		MTOCommonSolutionContact.ID = uuid.New()
+	}
+
 	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.Create, MTOCommonSolutionContact)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new MTOCommonSolutionContact object: %w", procErr)
@@ -38,6 +48,7 @@ func MTOCommonSolutionGetContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, i
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting MTOCommonSolutionContact by ID %s: %w", id, procErr)
 	}
+
 	return returned, nil
 }
 

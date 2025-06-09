@@ -1,3 +1,8 @@
+WITH QUERIED_IDS AS (
+    /*Translate the input to a table */
+    SELECT UNNEST(CAST(:keys AS MTO_COMMON_SOLUTION_KEY[]))  AS "key"
+)
+
 SELECT
     id,
     mto_common_solution_key,
@@ -7,5 +12,6 @@ SELECT
     created_dts,
     modified_by,
     modified_dts
-FROM mto_common_solution_contractor
-WHERE mto_common_solution_key = :mto_common_solution_key;
+FROM QUERIED_IDS AS qIDs
+INNER JOIN mto_common_solution_contractor AS contractor
+    ON contractor.mto_common_solution_key = qIDs.key;

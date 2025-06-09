@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
@@ -26,6 +27,16 @@ func MTOCommonSolutionContractorGetByCommonSolutionKeyLoader(np sqlutils.NamedPr
 
 // MTOCommonSolutionCreateContractor creates a new MTOCommonSolutionContractor in the database.
 func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger, contractor *models.MTOCommonSolutionContractor) (*models.MTOCommonSolutionContractor, error) {
+	if contractor == nil {
+		return nil, fmt.Errorf("contractor cannot be nil")
+	}
+	if contractor.Key == "" {
+		return nil, fmt.Errorf("contractor key cannot be nil")
+	}
+	if contractor.ID == uuid.Nil {
+		contractor.ID = uuid.New()
+	}
+
 	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Create, contractor)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new MTOCommonSolutionContractor object: %w", procErr)
@@ -35,7 +46,9 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 
 // MTOCommonSolutionGetContractorByID fetches a contractor by its ID.
 func MTOCommonSolutionGetContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByID, id)
+	arg := map[string]interface{}{"id": id}
+
+	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
 	}
@@ -52,10 +65,17 @@ func MTOCommonSolutionUpdateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 }
 
 // MTOCommonSolutionDeleteContractorByID deletes a contractor by its ID.
-func MTOCommonSolutionDeleteContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, id)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue deleting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
+func MTOCommonSolutionDeleteContractorByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) error {
+	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	err := setCurrentSessionUserVariable(tx, actorUserID)
+	if err != nil {
+		return err
 	}
-	return returned, nil
+
+	arg := map[string]interface{}{"id": id}
+	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, arg)
+	if procErr != nil {
+		return fmt.Errorf("issue deleting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
+	}
+	return nil
 }

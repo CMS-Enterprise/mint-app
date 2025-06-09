@@ -4,8 +4,10 @@ import (
 	"context"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/google/uuid"
 
 	"github.com/graph-gophers/dataloader/v7"
 )
@@ -34,6 +36,23 @@ func batchMTOCommonSolutionContactGetByCommonSolutionKey(ctx context.Context, co
 	data, err := storage.MTOCommonSolutionContactGetByCommonSolutionKeyLoader(loaders.DataReader.Store, logger, commonSolutionKeys)
 	if err != nil {
 		return errorPerEachKey[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionContact](commonSolutionKeys, err)
+	}
+
+	// Patch: Ensure UserAccount is never nil
+	for _, contact := range data {
+		if contact.UserAccount == nil {
+			empty := ""
+			contact.UserAccount = &authentication.UserAccount{
+				Username:   &empty,
+				ID:         uuid.Nil,
+				CommonName: empty,
+				Locale:     empty,
+				Email:      empty,
+				GivenName:  empty,
+				FamilyName: empty,
+				ZoneInfo:   empty,
+			}
+		}
 	}
 
 	getKeyFunc := func(data *models.MTOCommonSolutionContact) models.MTOCommonSolutionKey {
