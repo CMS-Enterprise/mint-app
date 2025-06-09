@@ -8,6 +8,10 @@ export default gql(/* GraphQL */ `
       abbreviation
       createdDts
       modifiedDts
+      mostRecentEdit {
+        id
+        date
+      }
       status
       isFavorite
       echimpCRsAndTDLs {
