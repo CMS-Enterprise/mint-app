@@ -74,17 +74,17 @@ func MTOCommonSolutionUpdateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 	return returned, nil
 }
 
-func MTOCommonSolutionDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) error {
+func MTOCommonSolutionDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
 	// We need to set the session user variable so that the audit trigger knows who made the delete operation
 	err := setCurrentSessionUserVariable(tx, actorUserID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	arg := map[string]interface{}{"id": id}
-	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
+	returnedContact, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
 	if procErr != nil {
-		return fmt.Errorf("issue deleting MTOCommonSolutionContact by ID %s: %w", id, procErr)
+		return nil, fmt.Errorf("issue deleting MTOCommonSolutionContact by ID %s: %w", id, procErr)
 	}
-	return nil
+	return returnedContact, nil
 }

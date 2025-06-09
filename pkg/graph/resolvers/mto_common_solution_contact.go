@@ -175,10 +175,12 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		}
 
 		// Finally, delete the contact
-		if err := storage.MTOCommonSolutionDeleteContactByID(tx, principalAccount.ID, logger, id); err != nil {
+		returnedContact, err := storage.MTOCommonSolutionDeleteContactByID(tx, principalAccount.ID, logger, id)
+
+		if err != nil {
 			return nil, fmt.Errorf("unable to delete contact. Err %w", err)
 		}
-		return existing, nil
+		return returnedContact, nil
 	})
 }
 

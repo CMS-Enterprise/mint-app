@@ -74,17 +74,17 @@ func MTOCommonSolutionUpdateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 }
 
 // MTOCommonSolutionDeleteContractorByID deletes a contractor by its ID.
-func MTOCommonSolutionDeleteContractorByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) error {
+func MTOCommonSolutionDeleteContractorByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
 	// We need to set the session user variable so that the audit trigger knows who made the delete operation
 	err := setCurrentSessionUserVariable(tx, actorUserID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	arg := map[string]interface{}{"id": id}
-	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, arg)
+	returnedContractor, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](tx, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, arg)
 	if procErr != nil {
-		return fmt.Errorf("issue deleting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
+		return nil, fmt.Errorf("issue deleting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
 	}
-	return nil
+	return returnedContractor, nil
 }

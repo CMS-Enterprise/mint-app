@@ -96,27 +96,28 @@ func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContractor, error) {
 		// First, fetch the existing solution so we can check permissions
-		retContractor, err := loaders.MTOCommonSolutionContractor.ByID.Load(ctx, id)
+		existing, err := loaders.MTOCommonSolutionContractor.ByID.Load(ctx, id)
 		if err != nil {
 			logger.Warn("Failed to get contractor with id", zap.Any("contractorId", id), zap.Error(err))
 			return nil, nil
 		}
 
-		if retContractor == nil {
+		if existing == nil {
 			return nil, fmt.Errorf("contractor with id %s not found", id)
 		}
 
 		// Check permissions
-		err = BaseStructPreDelete(logger, retContractor, principal, store, false)
+		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
 			return nil, fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
 		}
 
 		// Finally, delete the contractor
-		if err := storage.MTOCommonSolutionDeleteContractorByID(tx, principalAccount.ID, logger, id); err != nil {
+		returnedContractor, err := storage.MTOCommonSolutionDeleteContractorByID(tx, principalAccount.ID, logger, id)
+		if err != nil {
 			return nil, fmt.Errorf("unable to delete mto contractor. Err %w", err)
 		}
-		return retContractor, nil
+		return returnedContractor, nil
 	})
 }
 
