@@ -814,18 +814,20 @@ export type MtoCommonSolutionContact = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   isPrimary: Scalars['Boolean']['output'];
   isTeam: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
-  mailboxAddress: Scalars['String']['output'];
-  mailboxTitle: Scalars['String']['output'];
+  mailboxAddress?: Maybe<Scalars['String']['output']>;
+  mailboxTitle?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
   receiveEmails: Scalars['Boolean']['output'];
   role?: Maybe<Scalars['String']['output']>;
-  userAccount: UserAccount;
+  userAccount?: Maybe<UserAccount>;
 };
 
 /** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 )
@@ -39,7 +38,10 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 	pocs := mtoCSC.PointsOfContact
 	if sendToTaggedPOCs { //send to the pocs
 		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
-			return poc.MailboxAddress
+			if poc.MailboxAddress != nil {
+				return *poc.MailboxAddress
+			}
+			return ""
 		})
 	} else {
 		devEmailusername, devEmailDomain, emailValid := strings.Cut(devTeamEmail, "@")
@@ -60,9 +62,12 @@ type MTOCommonSolutionContact struct {
 	baseStruct
 	Key            MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
 	MailboxTitle   *string              `db:"mailbox_title" json:"mailboxTitle"`
-	MailboxAddress string               `db:"mailbox_address" json:"mailboxAddress"`
-	// UserAccount    *authentication.UserAccount `db:"-" json:"userAccount"`
-	UserAccountID *uuid.UUID `db:"user_account_id" json:"userAccountId"`
+	MailboxAddress *string              `db:"mailbox_address" json:"mailboxAddress"`
+	// These are convenience fields, they are not stored in the database, they are sourced from user account
+	Name  string `db:"name" json:"name"`
+	Email string `db:"email" json:"email"`
+	// -----------------------------------------------------------------------------------------------------
+	UserAccountID *uuid.UUID `db:"user_id" json:"userAccountId"`
 	IsTeam        bool       `db:"is_team" json:"isTeam"`
 	Role          *string    `db:"role" json:"role"`
 	IsPrimary     bool       `db:"is_primary" json:"isPrimary"`
@@ -74,25 +79,19 @@ func NewMTOCommonSolutionContact(
 	createdBy uuid.UUID,
 	key MTOCommonSolutionKey,
 	mailboxTitle *string,
-	mailboxAddress string,
-	userAccount *authentication.UserAccount,
+	mailboxAddress *string,
+	userAccountID *uuid.UUID,
 	isTeam bool,
 	role *string,
 	isPrimary bool,
 	receiveEmails bool,
 ) *MTOCommonSolutionContact {
-	var UID *uuid.UUID
-	if userAccount == nil {
-		UID = &uuid.Nil
-	} else {
-		UID = &userAccount.ID
-	}
 	return &MTOCommonSolutionContact{
 		baseStruct:     NewBaseStruct(createdBy),
 		Key:            key,
 		MailboxTitle:   mailboxTitle,
 		MailboxAddress: mailboxAddress,
-		UserAccountID:  UID,
+		UserAccountID:  userAccountID,
 		IsTeam:         isTeam,
 		Role:           role,
 		IsPrimary:      isPrimary,

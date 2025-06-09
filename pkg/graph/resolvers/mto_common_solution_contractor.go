@@ -98,7 +98,8 @@ func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		// First, fetch the existing solution so we can check permissions
 		retContractor, err := loaders.MTOCommonSolutionContractor.ByID.Load(ctx, id)
 		if err != nil {
-			return nil, fmt.Errorf("failed to get contractor with id %s: %w", id, err)
+			logger.Warn("Failed to get contractor with id", zap.Any("contractorId", id), zap.Error(err))
+			return nil, nil
 		}
 
 		if retContractor == nil {

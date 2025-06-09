@@ -55,10 +55,10 @@ func CreateMTOCommonSolutionUserContactUser(ctx context.Context, logger *zap.Log
 	userContact := models.NewMTOCommonSolutionContact(
 		principalAccount.ID,
 		key,
-		userAccount.Username, // Using the user's name and email as mailboxTitle and mailboxAddress to support email sending logic
-		userAccount.Email,
-		userAccount,
-		isTeam,
+		nil,
+		nil,
+		&userAccount.ID,
+		false,
 		role,
 		isPrimary,
 		receiveEmails,
@@ -98,9 +98,9 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 		principalAccount.ID,
 		key,
 		mailboxTitle,
-		mailboxAddress,
+		&mailboxAddress,
 		nil,
-		isTeam,
+		true,
 		role,
 		isPrimary,
 		receiveEmails,
@@ -160,7 +160,8 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		// Fetch the existing contact to check permissions and return after delete
 		existing, err := loaders.MTOCommonSolutionContact.ByID.Load(ctx, id)
 		if err != nil {
-			return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
+			logger.Warn("Failed to get contact with id", zap.Any("contactId", id), zap.Error(err))
+			return nil, nil
 		}
 
 		if existing == nil {

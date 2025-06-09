@@ -57,7 +57,7 @@ func MTOCommonSolutionContractorGetByCommonSolutionIdLoader(np sqlutils.NamedPre
 	args := map[string]interface{}{
 		"ids": pq.Array(ids),
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByCommonSolutionKey, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByIDs, args)
 	if err != nil {
 		return nil, err
 	}
