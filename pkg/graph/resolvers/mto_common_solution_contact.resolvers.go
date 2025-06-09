@@ -50,7 +50,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionUserContact(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionUserContactUser(ctx, logger, principal, r.store, key, userName, isTeam, role, receiveEmails, isPrimary)
+	return CreateMTOCommonSolutionContactUser(ctx, logger, principal, r.store, key, userName, isTeam, role, receiveEmails, isPrimary)
 }
 
 // UpdateMTOCommonSolutionContact is the resolver for the updateMTOCommonSolutionContact field.
@@ -74,7 +74,7 @@ func (r *queryResolver) MtoCommonSolutionContact(ctx context.Context, id uuid.UU
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return GetMTOCommonSolutionUserContact(ctx, logger, principal, r.store, id)
+	return GetMTOCommonSolutionContact(ctx, logger, principal, r.store, id)
 }
 
 // MTOCommonSolutionContact returns generated.MTOCommonSolutionContactResolver implementation.

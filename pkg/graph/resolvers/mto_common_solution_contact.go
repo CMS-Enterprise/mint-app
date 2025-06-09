@@ -32,9 +32,9 @@ func MTOCommonSolutionContactInformationGetByKeyLOADER(ctx context.Context, key 
 	}, nil
 }
 
-// CreateMTOCommonSolutionUserContact creates a new user contact for a common solution.
+// CreateMTOCommonSolutionContact creates a new user contact for a common solution.
 // It looks up the user account by username and inserts a new contact record associated with that user.
-func CreateMTOCommonSolutionUserContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	key models.MTOCommonSolutionKey,
 	userName string,
 	isTeam bool,
@@ -182,9 +182,9 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 	})
 }
 
-// GetMTOCommonSolutionUserContact retrieves a contact for a common solution by its ID.
+// GetMTOCommonSolutionContact retrieves a contact for a common solution by its ID.
 // Returns the contact if found, or an error if not found or on failure.
-func GetMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func GetMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionContact, error) {
 	principalAccount := principal.Account()
