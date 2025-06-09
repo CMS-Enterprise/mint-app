@@ -873,6 +873,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'research-and-rapid-cycle-evaluation-group',
     categories: [OperationalSolutionCategories.EVALUATION_AND_REVIEW],
     name: 'Research and Rapid Cycle Evaluation Group',
+    acronym: 'RREG',
     type: 'Cross-cutting group',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -886,6 +887,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'federally-funded-research-and-development-center',
     categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
     name: 'Federal Funded Research and Development Center',
+    acronym: 'FFRDC',
     type: 'Contracts and contractors',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -899,6 +901,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'actuarial-research-and-design-services',
     categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
     name: 'Actuarial Research and Development Services',
+    acronym: 'ARDS',
     type: 'Contracts and contractors',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -912,6 +915,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'transformed-medicaid-statistical-information-system',
     categories: [OperationalSolutionCategories.DATA],
     name: 'Transformed Medicaid Statistical Information System',
+    acronym: 'T-MSIS',
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -925,6 +929,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'enterprise-privacy-policy-engine',
     categories: [OperationalSolutionCategories.DATA],
     name: 'Enterprise Privacy Policy Engine Cloud',
+    acronym: 'EPPE',
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -938,6 +943,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'division-of-stakeholder-engagement-and-policy',
     categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
     name: 'Division of Stakeholder Engagement and Policy',
+    acronym: 'DSEP',
     type: 'Other',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -951,6 +957,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'cmmi-analysis-and-management-system',
     categories: [OperationalSolutionCategories.DATA],
     name: 'CMMI Analysis and Management System',
+    acronym: 'AMS',
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -964,6 +971,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'innovation-center-landing-page',
     categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
     name: 'Innovation Center Landing Page',
+    acronym: 'IC Landing',
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -977,6 +985,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'risk-adjustment-suite-of-systems',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     name: 'Risk Adjustment Suite of Systems',
+    acronym: 'RASS',
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -990,6 +999,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'drug-data-processing-system',
     categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
     name: 'Drug Data Processing System',
+    acronym: 'DDPS',
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -1003,6 +1013,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'office-of-the-actuary',
     categories: [OperationalSolutionCategories.EVALUATION_AND_REVIEW],
     name: 'Office of the Actuary',
+    acronym: 'OACT',
     type: 'Other',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -1016,6 +1027,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     route: 'quality-payment-program',
     categories: [OperationalSolutionCategories.QUALITY],
     name: 'Quality Payment Program',
+    acronym: 'QPP',
     type: 'Other',
     components: {
       timeline: (props: SolutionDetailProps) => (
@@ -1032,6 +1044,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionCategories.CONTRACT_VEHICLES
     ],
     name: 'Patient Activation Measure',
+    acronym: 'PAM',
     type: 'Contracts and contractors',
     components: {
       timeline: (props: SolutionDetailProps) => (

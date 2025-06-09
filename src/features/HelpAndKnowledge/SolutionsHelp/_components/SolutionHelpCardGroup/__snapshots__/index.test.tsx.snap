@@ -241,6 +241,11 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     Actuarial Research and Development Services
                   </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    ARDS
+                  </p>
                   <div
                     class="display-flex flex-wrap padding-top-05"
                   >
@@ -745,6 +750,11 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   >
                     CMMI Analysis and Management System
                   </h3>
+                  <p
+                    class="margin-y-0"
+                  >
+                    AMS
+                  </p>
                   <div
                     class="display-flex flex-wrap padding-top-05"
                   >
