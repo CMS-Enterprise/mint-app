@@ -750,6 +750,11 @@ const summaryData: GetModelSummaryTypes = {
   isFavorite: false,
   modelName: 'Testing Model Summary',
   abbreviation: 'TMS',
+  mostRecentEdit: {
+    __typename: 'TranslatedAudit',
+    id: '64252',
+    date: '2022-08-23T04:00:00Z'
+  },
   createdDts: '2022-08-23T04:00:00Z',
   modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,

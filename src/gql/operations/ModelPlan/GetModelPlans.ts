@@ -13,6 +13,10 @@ export default gql(/* GraphQL */ `
       modifiedDts
       isFavorite
       isCollaborator
+      mostRecentEdit {
+        id
+        date
+      }
       basics {
         id
         demoCode

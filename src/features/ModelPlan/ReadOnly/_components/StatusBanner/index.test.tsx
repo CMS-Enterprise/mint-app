@@ -14,8 +14,7 @@ describe('ReadViewStatusBanner', () => {
             modelID="123"
             status={ModelStatus.PLAN_DRAFT}
             hasEditAccess
-            modifiedDts="2024-05-01T12:00:00Z"
-            createdDts="2024-04-01T12:00:00Z"
+            mostRecentEdit="2024-05-01T12:00:00Z"
             changeHistoryLink
             className="test-class"
           />
@@ -34,8 +33,7 @@ describe('ReadViewStatusBanner', () => {
             modelID="123"
             status={ModelStatus.PLAN_DRAFT}
             hasEditAccess={false}
-            modifiedDts={null}
-            createdDts="2024-04-01T12:00:00Z"
+            mostRecentEdit="2024-05-01T12:00:00Z"
             changeHistoryLink={false}
           />
         </Route>
