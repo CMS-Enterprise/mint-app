@@ -61,7 +61,7 @@ type MTOCommonSolutionContact struct {
 	Key            MTOCommonSolutionKey        `json:"key" db:"mto_common_solution_key"`
 	MailboxTitle   *string                     `db:"mailbox_title" json:"mailboxTitle"`
 	MailboxAddress string                      `db:"mailbox_address" json:"mailboxAddress"`
-	UserAccount    *authentication.UserAccount `json:"userAccount"`
+	UserAccount    *authentication.UserAccount `db:"-" json:"userAccount"`
 	UserAccountID  *uuid.UUID                  `db:"user_account_id" json:"userAccountId"`
 	IsTeam         bool                        `db:"is_team" json:"isTeam"`
 	Role           *string                     `db:"role" json:"role"`
