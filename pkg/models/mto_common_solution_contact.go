@@ -39,7 +39,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 	if sendToTaggedPOCs { //send to the pocs
 		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
 			if poc.MailboxAddress != nil {
-				return *poc.MailboxAddress
+				return poc.Email
 			}
 			return ""
 		})
@@ -50,7 +50,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 		}
 		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
 			// this takes advantage of the fact that you can append extra information after the + sign to send to an email address with extra info.
-			noSpaceName := strings.ReplaceAll(*poc.MailboxTitle, " ", "")
+			noSpaceName := strings.ReplaceAll(poc.Name, " ", "")
 			return devEmailusername + "+" + noSpaceName + "@" + devEmailDomain
 		})
 
