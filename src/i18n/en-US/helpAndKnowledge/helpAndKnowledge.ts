@@ -2270,6 +2270,8 @@ const helpAndKnowledge = {
   mailboxesAndTeamMembers: 'Mailboxes and team members',
   addTeamMailbox: 'Add team mailbox',
   addTeamMember: 'Add a team member',
+  edit: 'Edit',
+  removePointOfContact: 'Remove point of contact',
   backToSolutions: 'Back to solutions',
   receivesNotifications: 'Receives notifications',
   receivesNotificationsTooltip:
