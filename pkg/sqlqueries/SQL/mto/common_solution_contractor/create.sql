@@ -20,4 +20,5 @@ WITH retVal AS (
     )
     RETURNING *
 )
+
 SELECT * FROM retVal;

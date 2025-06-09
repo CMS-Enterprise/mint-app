@@ -66,7 +66,6 @@ type MTOCategoryTranslation struct {
 // Represents a translation of a contact for a common solution
 type MTOCommonSolutionContactTranslation struct {
 	Key            models.TranslationField `json:"key" db:"mto_common_solution_key"`
-	UserAccount    models.TranslationField `json:"userAccount" db:"user_account"`
 	MailboxTitle   models.TranslationField `json:"mailboxTitle" db:"mailbox_title"`
 	MailboxAddress models.TranslationField `json:"mailboxAddress" db:"mailbox_address"`
 	IsTeam         models.TranslationField `json:"isTeam" db:"is_team"`

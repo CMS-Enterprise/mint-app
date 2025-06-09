@@ -30,9 +30,6 @@ func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 	if MTOCommonSolutionContact == nil {
 		return nil, fmt.Errorf("MTOCommonSolutionContact cannot be nil")
 	}
-	if MTOCommonSolutionContact.Key == "" {
-		return nil, fmt.Errorf("MTOCommonSolutionContact key cannot be nil")
-	}
 	if MTOCommonSolutionContact.ID == uuid.Nil {
 		MTOCommonSolutionContact.ID = uuid.New()
 	}

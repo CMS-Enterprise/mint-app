@@ -14,6 +14,7 @@ WITH retVal AS (
     WHERE id = :id
     RETURNING *
 )
+
 SELECT
     retVal.id,
     retVal.mto_common_solution_key,

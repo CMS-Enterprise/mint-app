@@ -9,4 +9,5 @@ WITH retVal AS (
     WHERE id = :id
     RETURNING *
 )
+
 SELECT * FROM retVal;

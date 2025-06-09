@@ -847,7 +847,6 @@ export type MtoCommonSolutionContactTranslation = {
   mailboxTitle: TranslationField;
   receiveEmails: TranslationField;
   role: TranslationField;
-  userAccount: TranslationField;
 };
 
 /**

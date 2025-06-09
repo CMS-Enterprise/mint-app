@@ -6,6 +6,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/google/uuid"
 
 	"github.com/graph-gophers/dataloader/v7"
 )
@@ -13,11 +14,14 @@ import (
 // mtoCommonSolutionContractorLoaders holds LoaderWrappers related to MTOCommonSolutionContractor
 type mtoCommonSolutionContractorLoaders struct {
 	// ByID returns a single MTOCommonSolutionContractor by its UUID
+	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolutionContractor]
+	// ByID returns a single MTOCommonSolutionContractor by its UUID
 	ByCommonSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionContractor]
 }
 
 // MTOCommonSolutionContractor is the singleton instance of all LoaderWrappers related to MTOCommonSolutionContractor
 var MTOCommonSolutionContractor = &mtoCommonSolutionContractorLoaders{
+	ByID:                NewLoaderWrapper(batchMTOCommonSolutionContractorGetByID),
 	ByCommonSolutionKey: NewLoaderWrapper(batchMTOCommonSolutionContractorGetBySolutionKey),
 }
 
@@ -40,4 +44,24 @@ func batchMTOCommonSolutionContractorGetBySolutionKey(ctx context.Context, commo
 
 	// implement one to many
 	return oneToManyDataLoader(commonSolutionKeys, data, getKeyFunc)
+}
+
+// batchMTOCommonSolutionContractorGetByID loads contractors by a list of IDs
+func batchMTOCommonSolutionContractorGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolutionContractor] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
+	}
+
+	data, err := storage.MTOCommonSolutionContractorGetByCommonSolutionIdLoader(loaders.DataReader.Store, logger, ids)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
+	}
+
+	getKeyFunc := func(data *models.MTOCommonSolutionContractor) uuid.UUID {
+		return data.ID
+	}
+
+	return oneToOneDataLoader(ids, data, getKeyFunc)
 }

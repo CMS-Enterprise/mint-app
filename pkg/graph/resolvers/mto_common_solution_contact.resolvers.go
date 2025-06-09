@@ -58,7 +58,7 @@ func (r *mutationResolver) UpdateMTOCommonSolutionContact(ctx context.Context, i
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdateMTOCommonSolutionUserContact(ctx, logger, principal, r.store, id, input)
+	return UpdateMTOCommonSolutionContact(ctx, logger, principal, r.store, id, input)
 }
 
 // DeleteMTOCommonSolutionContact is the resolver for the deleteMTOCommonSolutionContact field.
@@ -66,7 +66,7 @@ func (r *mutationResolver) DeleteMTOCommonSolutionContact(ctx context.Context, i
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeleteMTOCommonSolutionUserContact(ctx, logger, principal, r.store, id)
+	return DeleteMTOCommonSolutionContact(ctx, logger, principal, r.store, id)
 }
 
 // MtoCommonSolutionContact is the resolver for the mtoCommonSolutionContact field.

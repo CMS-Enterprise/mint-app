@@ -26,9 +26,9 @@ func MTOCommonSolutionContractorsGetByKeyLOADER(ctx context.Context, key models.
 	return contractors, nil
 }
 
-// CreateMTOCommonSolutionUserContractor creates a new contractor for a common solution.
+// CreateMTOCommonSolutionContractor creates a new contractor for a common solution.
 // Accepts the solution key, optional contractor title, and contractor name. Returns the created contractor or an error.
-func CreateMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	key models.MTOCommonSolutionKey,
 	contractorTitle *string,
 	contractorName string,
@@ -57,9 +57,9 @@ func CreateMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logg
 	)
 }
 
-// UpdateMTOCommonSolutionUserContractor updates an existing contractor for a common solution.
+// UpdateMTOCommonSolutionContractor updates an existing contractor for a common solution.
 // Accepts the contractor ID and a map of changes. Returns the updated contractor or an error.
-func UpdateMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func UpdateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.MTOCommonSolutionContractor, error) {
@@ -68,20 +68,20 @@ func UpdateMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logg
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	existing_Contractor, err := storage.MTOCommonSolutionGetContractorByID(store, logger, id)
+	existingContractor, err := loaders.MTOCommonSolutionContractor.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contractor with id %s: %w", id, err)
 	}
-	if existing_Contractor == nil {
+	if existingContractor == nil {
 		return nil, fmt.Errorf("contractor with id %s not found", id)
 	}
 
-	err = BaseStructPreUpdate(logger, existing_Contractor, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingContractor, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
 
-	updatedContractor, err := storage.MTOCommonSolutionUpdateContractor(store, logger, existing_Contractor)
+	updatedContractor, err := storage.MTOCommonSolutionUpdateContractor(store, logger, existingContractor)
 	if err != nil {
 		return nil, fmt.Errorf("failed to update contractor with id %s: %w", id, err)
 	}
@@ -89,9 +89,9 @@ func UpdateMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logg
 	return updatedContractor, nil
 }
 
-// DeleteMTOCommonSolutionUserContractor deletes a contractor for a common solution by its ID.
+// DeleteMTOCommonSolutionContractor deletes a contractor for a common solution by its ID.
 // Returns the deleted contractor or an error.
-func DeleteMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionContractor, error) {
 	principalAccount := principal.Account()
@@ -99,43 +99,35 @@ func DeleteMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logg
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	existing := &models.MTOCommonSolutionContractor{}
-
 	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
-	err := sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContractor, error) {
 		// First, fetch the existing solution so we can check permissions
-		var err error
-		existing, err = storage.MTOCommonSolutionGetContractorByID(store, logger, id)
+		retContractor, err := loaders.MTOCommonSolutionContractor.ByID.Load(ctx, id)
 		if err != nil {
-			return fmt.Errorf("failed to get contractor with id %s: %w", id, err)
+			return nil, fmt.Errorf("failed to get contractor with id %s: %w", id, err)
 		}
 
-		if existing == nil {
-			return fmt.Errorf("contractor with id %s not found", id)
+		if retContractor == nil {
+			return nil, fmt.Errorf("contractor with id %s not found", id)
 		}
 
 		// Check permissions
-		err = BaseStructPreDelete(logger, existing, principal, store, true)
+		err = BaseStructPreDelete(logger, retContractor, principal, store, false)
 		if err != nil {
-			return fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
+			return nil, fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
 		}
 
 		// Finally, delete the contractor
 		if err := storage.MTOCommonSolutionDeleteContractorByID(tx, principalAccount.ID, logger, id); err != nil {
-			return fmt.Errorf("unable to delete mto contractor. Err %w", err)
+			return nil, fmt.Errorf("unable to delete mto contractor. Err %w", err)
 		}
-		return nil
+		return retContractor, nil
 	})
-
-	if err != nil {
-		return nil, err
-	}
-	return existing, nil
 }
 
-// GetMTOCommonSolutionUserContractor retrieves a contractor for a common solution by its ID.
+// GetMTOCommonSolutionContractor retrieves a contractor for a common solution by its ID.
 // Returns the contractor if found, or an error if not found or on failure.
-func GetMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func GetMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionContractor, error) {
 	principalAccount := principal.Account()
@@ -143,14 +135,10 @@ func GetMTOCommonSolutionUserContractor(ctx context.Context, logger *zap.Logger,
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	Contractor, err := storage.MTOCommonSolutionGetContractorByID(store, logger, id)
+	contractor, err := loaders.MTOCommonSolutionContractor.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contractor with id %s: %w", id, err)
 	}
 
-	if Contractor == nil {
-		return nil, fmt.Errorf("contractor with id %s is nil", id)
-	}
-
-	return Contractor, nil
+	return contractor, nil
 }

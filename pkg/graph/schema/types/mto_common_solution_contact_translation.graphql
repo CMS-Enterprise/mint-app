@@ -4,7 +4,6 @@ Represents a translation of a contact for a common solution
 type MTOCommonSolutionContactTranslation {
   key: TranslationField! @goTag(key: "db", value:"mto_common_solution_key")
 
-  userAccount: TranslationField! @goTag(key: "db", value: "user_account")
   mailboxTitle: TranslationField! @goTag(key: "db", value:"mailbox_title")
   mailboxAddress: TranslationField! @goTag(key: "db", value:"mailbox_address")
   isTeam: TranslationField! @goTag(key: "db", value:"is_team")

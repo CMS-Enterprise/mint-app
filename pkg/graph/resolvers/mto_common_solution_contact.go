@@ -113,9 +113,9 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 	)
 }
 
-// UpdateMTOCommonSolutionUserContact updates an existing user or mailbox contact for a common solution.
+// UpdateMTOCommonSolutionContact updates an existing user or mailbox contact for a common solution.
 // Only role, isPrimary, and receiveEmails fields can be changed. Returns the updated contact.
-func UpdateMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.MTOCommonSolutionContact, error) {
@@ -132,7 +132,7 @@ func UpdateMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger,
 		return nil, fmt.Errorf("contact with id %s not found", id)
 	}
 
-	err = BaseStructPreUpdate(logger, existing_contact, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existing_contact, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -145,9 +145,9 @@ func UpdateMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger,
 	return updatedContact, nil
 }
 
-// DeleteMTOCommonSolutionUserContact deletes a contact for a common solution by its ID.
+// DeleteMTOCommonSolutionContact deletes a contact for a common solution by its ID.
 // Returns the deleted contact or an error.
-func DeleteMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionContact, error) {
 	principalAccount := principal.Account()
@@ -171,7 +171,7 @@ func DeleteMTOCommonSolutionUserContact(ctx context.Context, logger *zap.Logger,
 		}
 
 		// Check permissions
-		err = BaseStructPreDelete(logger, existing, principal, store, true)
+		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
 			return fmt.Errorf("error deleting contact. user doesn't have permissions. %s", err)
 		}

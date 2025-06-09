@@ -19,7 +19,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionUserContractor(ctx, logger, principal, r.store, key, contractorTitle, contractorName)
+	return CreateMTOCommonSolutionContractor(ctx, logger, principal, r.store, key, contractorTitle, contractorName)
 }
 
 // UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.
@@ -27,7 +27,7 @@ func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdateMTOCommonSolutionUserContractor(ctx, logger, principal, r.store, id, changes)
+	return UpdateMTOCommonSolutionContractor(ctx, logger, principal, r.store, id, changes)
 }
 
 // DeleteMTOCommonSolutionContractor is the resolver for the deleteMTOCommonSolutionContractor field.
@@ -35,7 +35,7 @@ func (r *mutationResolver) DeleteMTOCommonSolutionContractor(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeleteMTOCommonSolutionUserContractor(ctx, logger, principal, r.store, id)
+	return DeleteMTOCommonSolutionContractor(ctx, logger, principal, r.store, id)
 }
 
 // MtoCommonSolutionContractor is the resolver for the mtoCommonSolutionContractor field.
@@ -43,7 +43,7 @@ func (r *queryResolver) MtoCommonSolutionContractor(ctx context.Context, id uuid
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	contractor, err := GetMTOCommonSolutionUserContractor(ctx, logger, principal, r.store, id)
+	contractor, err := GetMTOCommonSolutionContractor(ctx, logger, principal, r.store, id)
 	if err != nil {
 		logger.Error("Failed to get contractor", zap.Error(err), zap.String("contractor_id", id.String()))
 	}
