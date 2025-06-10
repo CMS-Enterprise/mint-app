@@ -8,13 +8,101 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
 
+func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTableNames() {
+	plan1 := suite.createModelPlan("test plan for changes1")
+	plan2 := suite.createModelPlan("test plan for changes2")
+	// Create and delete a discussion to test the translated audit for plan discussion
+
+	catForPlan2 := suite.createMTOCategory("test category for changes", plan2.ID, nil)
+	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catForPlan2.ID)
+	suite.NoError(err)
+
+	plan3 := suite.createModelPlan("test plan for changes3")
+	plan4 := suite.createModelPlan("test plan for changes4")
+	// update suggested phase and make sure it updates as expected
+	// TestSendEmailForPhaseSuggestion in model_plan_phase_test.go is the file to look at to recreate here
+
+	plan3Basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan3.ID)
+	suite.NoError(err)
+	changes := map[string]interface{}{
+		"goal": "This is a test goal",
+	}
+	_, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan3Basics.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	//create a solution on plan4 so we can test the MTOSolution table is returned
+	suite.createMTOSolutionCommon(plan4.ID, models.MTOCSKCcw, nil)
+
+	planWithSuggestedPhase := suite.createModelPlan("test plan with suggested phase")
+
+	suite.dangerousQueueAndTranslateAllAudits()
+	expectedResults := []loaders.KeyAndExpected[storage.MostRecentByModelPlanIDAndTableFilters, models.TableName]{
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan1.ID,
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNPlanOpsEvalAndLearning}, true),
+			ExcludedFields: "{}",
+			IsAdmin:        false,
+		}, Expected: models.TNPlanOpsEvalAndLearning},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan2.ID,
+			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
+			IsAdmin:        false,
+		}, Expected: models.TNMTOCategory},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan3.ID,
+			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
+			IsAdmin:        false,
+		}, Expected: models.TNPlanBasics},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID:    plan4.ID,
+			TableNames:     helpers.JoinStringSlice(ModelPlanRecentEditTables, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
+			IsAdmin:        false,
+		}, Expected: models.TNMTOSolution},
+		{Key: storage.MostRecentByModelPlanIDAndTableFilters{
+			ModelPlanID: planWithSuggestedPhase.ID,
+			// Here we only select model plan and plan basics. We are asserting that we don't return the model plan as the most recent change
+			// because we are excluding the preferred solution field
+			TableNames:     helpers.JoinStringSlice([]models.TableName{models.TNModelPlan, models.TNPlanBasics}, true),
+			ExcludedFields: helpers.JoinStringSlice(ModelPlanRecentEditsExcludedFields, true),
+			IsAdmin:        false,
+		}, Expected: models.TNPlanBasics},
+	}
+
+	//Future Enhancement consider updating this to create more test data. We should verify that updates, deletes, excluded fields, etc are all accounted for.
+	// We can also do more verification around retrieving privileged data.
+	// Perhaps we should also include a more expansive expected variable to show field count etc? (So we can validate if a field is excluded etc?)
+	// Can verify last suggested status is updated by including multiple tables to check, updating two, and making sure it isn't model plan if only status was updated
+	verifyFunc := func(data *models.TranslatedAudit, expected models.TableName) bool {
+		if data == nil {
+			return false
+		}
+		return data.TableName == expected
+	}
+
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.TranslatedAudit.MostRecentByModelPlanIDAndTableFilters, expectedResults, verifyFunc)
+}
 func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 	plan := suite.createModelPlan("test plan for changes")
 

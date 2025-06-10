@@ -16,11 +16,16 @@ import (
 )
 
 func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
+	suite.testSendEmailForPhaseSuggestion("Plan For Milestones")
+}
+
+// testSendEmailForPhaseSuggestion extracts the logic to get a suggested phase for a model plan
+func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *models.ModelPlan {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
-	planName := "Plan For Milestones"
+	planName := modelName
 	plan := suite.createModelPlan(planName)
 	plan.PreviousSuggestedPhase = nil
 	timeNow := time.Now().UTC()
@@ -90,6 +95,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 	suite.NoError(err)
 	suite.NotNil(plan.PreviousSuggestedPhase)
 	suite.EqualValues(models.ModelPhaseIcipComplete, *plan.PreviousSuggestedPhase)
+	return plan
 }
 
 func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {

@@ -108,7 +108,7 @@ const ModelPlansTable = ({
       'status',
       'clearanceDate',
       'startDate',
-      'recentActivity'
+      'mostRecentEdit'
     ];
 
     const tableColumns: Record<HomeTableTypes, string[]> = {
@@ -281,21 +281,18 @@ const ModelPlansTable = ({
           return value;
         }
       },
-      recentActivity: {
-        id: 'recentActivity',
+      mostRecentEdit: {
+        id: 'mostRecentEdit',
         Header: homeT('requestsTable.headers.recentActivity'),
         // @ts-ignore
         accessor: (value: AllModelPlansType) => {
-          return value.modifiedDts || value.createdDts;
+          return value.mostRecentEdit?.date || value.createdDts;
         },
         Cell: ({ row, value }: any) => {
           const { discussions } = row.original;
           const formattedUpdatedDate = `${homeT(
             'requestsTable.updated'
-          )} ${formatDateLocal(
-            value || row.original.createdDts,
-            'MM/dd/yyyy'
-          )}`;
+          )} ${formatDateLocal(value, 'MM/dd/yyyy')}`;
           return (
             <>
               {formattedUpdatedDate}

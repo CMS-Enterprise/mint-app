@@ -66,7 +66,12 @@ const modelPlanData: GetModelPlansType = [
         id: '456',
         __typename: 'EChimpTDL'
       }
-    ]
+    ],
+    mostRecentEdit: {
+      __typename: 'TranslatedAudit',
+      id: '64252',
+      date: '2022-08-23T04:00:00Z'
+    }
   }
 ];
 

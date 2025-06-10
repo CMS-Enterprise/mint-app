@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/lib/pq"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -50,4 +51,23 @@ func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelP
 		return nil, fmt.Errorf("issue getting translated audit collection by model_plan_id (%s)  : %w", modelPlanID, procErr)
 	}
 	return translatedAuditCollection, nil
+}
+
+// TranslatedAuditMostRecentGetByModelPlanIDAndTableNamesLoader returns the most recent TranslatedAudit for a given model plan id and table names
+// it serializes the params into a json array and passes it to the sql query
+// it will return only the most recent for each combination
+func TranslatedAuditMostRecentGetByModelPlanIDAndTableNamesLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []MostRecentByModelPlanIDAndTableFilters) ([]*models.TranslatedAuditWithFilteredView, error) {
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAuditWithFilteredView](np, sqlqueries.TranslatedAudit.MostRecentByModelPlanIDAndTableFiltersLOADER, arg)
+	if procErr != nil {
+		return nil, procErr
+	}
+	return translatedAuditCollection, nil
+
 }
