@@ -14,10 +14,14 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // UserAccount is the resolver for the userAccount field.
 func (r *mTOCommonSolutionContactResolver) UserAccount(ctx context.Context, obj *models.MTOCommonSolutionContact) (*authentication.UserAccount, error) {
+	if obj.UserAccountID == nil {
+		return nil, nil // No user account for this contact
+	}
 	account, err := UserAccountGetByIDLOADER(ctx, *obj.UserAccountID)
 	if err != nil {
 		logger := appcontext.ZLogger(ctx)
@@ -50,7 +54,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionUserContact(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionContactUser(ctx, logger, principal, r.store, key, userName, isTeam, role, receiveEmails, isPrimary)
+	return CreateMTOCommonSolutionContactUser(ctx, logger, principal, r.store, key, userName, isTeam, role, receiveEmails, isPrimary, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // UpdateMTOCommonSolutionContact is the resolver for the updateMTOCommonSolutionContact field.

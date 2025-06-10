@@ -14,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // MTOCommonSolutionContactInformationGetByKeyLOADER returns an MTOCommonSolutionContactInformation by its key.
@@ -41,13 +42,17 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 	role *string,
 	receiveEmails bool,
 	isPrimary bool,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.MTOCommonSolutionContact, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	userAccount, err := UserAccountGetByUsername(logger, store, userName)
+	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, userName, false, false, getAccountInformation)
+	if err != nil {
+		return nil, err
+	}
 	if err != nil {
 		return nil, fmt.Errorf("failed to get user account by username %s: %w", userName, err)
 	}
