@@ -34,9 +34,9 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 		contractor.ID = uuid.New()
 	}
 
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Create, contractor)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue creating new MTOCommonSolutionContractor object: %w", procErr)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Create, contractor)
+	if err != nil {
+		return nil, err
 	}
 	return returned, nil
 }
@@ -45,9 +45,9 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 func MTOCommonSolutionGetContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
 	arg := map[string]interface{}{"id": id}
 
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByID, arg)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue getting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByID, arg)
+	if err != nil {
+		return nil, err
 	}
 	return returned, nil
 }
@@ -66,9 +66,9 @@ func MTOCommonSolutionContractorGetByCommonSolutionIdLoader(np sqlutils.NamedPre
 
 // MTOCommonSolutionUpdateContractor updates an existing contractor.
 func MTOCommonSolutionUpdateContractor(np sqlutils.NamedPreparer, _ *zap.Logger, contractor *models.MTOCommonSolutionContractor) (*models.MTOCommonSolutionContractor, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Update, contractor)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue updating MTOCommonSolutionContractor object: %w", procErr)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Update, contractor)
+	if err != nil {
+		return nil, err
 	}
 	return returned, nil
 }
@@ -82,9 +82,9 @@ func MTOCommonSolutionDeleteContractorByID(tx *sqlx.Tx, actorUserID uuid.UUID, _
 	}
 
 	arg := map[string]interface{}{"id": id}
-	returnedContractor, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](tx, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, arg)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue deleting MTOCommonSolutionContractor by ID %s: %w", id, procErr)
+	returnedContractor, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](tx, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, arg)
+	if err != nil {
+		return nil, err
 	}
 	return returnedContractor, nil
 }

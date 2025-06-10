@@ -31,7 +31,7 @@ func MTOCommonSolutionContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Lo
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByIDs, args)
 	if err != nil {
-		return nil, fmt.Errorf("issue getting MTOCommonSolutionContact by IDs %v: %w", ids, err)
+		return nil, err
 	}
 	if len(returned) == 0 {
 		return nil, fmt.Errorf("no MTOCommonSolutionContacts found for IDs %v", ids)
@@ -48,9 +48,9 @@ func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 		MTOCommonSolutionContact.ID = uuid.New()
 	}
 
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.Create, MTOCommonSolutionContact)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue creating new MTOCommonSolutionContact object: %w", procErr)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.Create, MTOCommonSolutionContact)
+	if err != nil {
+		return nil, err
 	}
 	return returned, nil
 }
@@ -58,18 +58,18 @@ func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 func MTOCommonSolutionGetContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
 	arg := map[string]interface{}{"id": id}
 
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByID, arg)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue getting MTOCommonSolutionContact by ID %s: %w", id, procErr)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByID, arg)
+	if err != nil {
+		return nil, err
 	}
 
 	return returned, nil
 }
 
 func MTOCommonSolutionUpdateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCommonSolutionContact *models.MTOCommonSolutionContact) (*models.MTOCommonSolutionContact, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.Update, MTOCommonSolutionContact)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue updating MTOCommonSolutionContact object: %w", procErr)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.Update, MTOCommonSolutionContact)
+	if err != nil {
+		return nil, err
 	}
 	return returned, nil
 }
@@ -82,9 +82,9 @@ func MTOCommonSolutionDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *z
 	}
 
 	arg := map[string]interface{}{"id": id}
-	returnedContact, procErr := sqlutils.GetProcedure[models.MTOCommonSolutionContact](tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
-	if procErr != nil {
-		return nil, fmt.Errorf("issue deleting MTOCommonSolutionContact by ID %s: %w", id, procErr)
+	returnedContact, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
+	if err != nil {
+		return nil, err
 	}
 	return returnedContact, nil
 }
