@@ -8,7 +8,7 @@ type MTOCommonSolutionContact {
   mailboxTitle: String
   mailboxAddress: String
   userAccount: UserAccount
-  userID: UUID!
+  userID: UUID
   isTeam: Boolean!
   role: String
   isPrimary: Boolean!

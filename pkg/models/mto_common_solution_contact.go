@@ -64,7 +64,7 @@ type MTOCommonSolutionContact struct {
 	Name  string `db:"name" json:"name"`
 	Email string `db:"email" json:"email"`
 	// -----------------------------------------------------------------------------------------------------
-	userIDRelation
+	userIDRelationPtr
 	IsTeam        bool    `db:"is_team" json:"isTeam"`
 	Role          *string `db:"role" json:"role"`
 	IsPrimary     bool    `db:"is_primary" json:"isPrimary"`
@@ -83,21 +83,15 @@ func NewMTOCommonSolutionContact(
 	isPrimary bool,
 	receiveEmails bool,
 ) *MTOCommonSolutionContact {
-	var userIDRelation userIDRelation
-	if userID != nil {
-		userIDRelation = NewUserIDRelation(*userID)
-	} else {
-		userIDRelation = NewUserIDRelation(uuid.Nil)
-	}
 	return &MTOCommonSolutionContact{
-		baseStruct:     NewBaseStruct(createdBy),
-		Key:            key,
-		MailboxTitle:   mailboxTitle,
-		MailboxAddress: mailboxAddress,
-		userIDRelation: userIDRelation,
-		IsTeam:         isTeam,
-		Role:           role,
-		IsPrimary:      isPrimary,
-		ReceiveEmails:  receiveEmails,
+		baseStruct:        NewBaseStruct(createdBy),
+		Key:               key,
+		MailboxTitle:      mailboxTitle,
+		MailboxAddress:    mailboxAddress,
+		userIDRelationPtr: NewUserIDRelationPtr(userID),
+		IsTeam:            isTeam,
+		Role:              role,
+		IsPrimary:         isPrimary,
+		ReceiveEmails:     receiveEmails,
 	}
 }

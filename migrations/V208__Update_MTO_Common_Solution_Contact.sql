@@ -51,7 +51,7 @@ WHERE is_team = FALSE;
 ALTER TABLE mto_common_solution_contact
 ADD CONSTRAINT contact_mailbox_or_user_account
 CHECK (
-    (mailbox_address IS NOT NULL AND mailbox_title IS NOT NULL AND (user_id IS NULL OR user_id = '00000000-0000-0000-0000-000000000000') AND is_team = TRUE)
+    (mailbox_address IS NOT NULL AND mailbox_title IS NOT NULL AND user_id IS NULL AND is_team = TRUE)
     OR
     (mailbox_address IS NULL AND mailbox_title IS NULL AND user_id IS NOT NULL AND is_team = FALSE)
 );
