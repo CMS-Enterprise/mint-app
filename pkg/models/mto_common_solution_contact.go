@@ -18,7 +18,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) PrimaryContact() (*MTOCommonS
 		return nil, fmt.Errorf("contact information is not populated as expected")
 	}
 	if len(mtoCSC.PointsOfContact) < 1 {
-		return &MTOCommonSolutionContact{}, fmt.Errorf("points of contact are not listed for this solution")
+		return nil, fmt.Errorf("points of contact are not listed for this solution")
 	}
 	contact, found := lo.Find(mtoCSC.PointsOfContact, func(contact *MTOCommonSolutionContact) bool {
 		return contact.IsPrimary
@@ -38,10 +38,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 	pocs := mtoCSC.PointsOfContact
 	if sendToTaggedPOCs { //send to the pocs
 		pocEmailAddress = lo.Map(pocs, func(poc *MTOCommonSolutionContact, _ int) string {
-			if poc.MailboxAddress != nil {
-				return poc.Email
-			}
-			return ""
+			return poc.Email
 		})
 	} else {
 		devEmailusername, devEmailDomain, emailValid := strings.Cut(devTeamEmail, "@")
@@ -67,11 +64,11 @@ type MTOCommonSolutionContact struct {
 	Name  string `db:"name" json:"name"`
 	Email string `db:"email" json:"email"`
 	// -----------------------------------------------------------------------------------------------------
-	UserAccountID *uuid.UUID `db:"user_id" json:"userAccountId"`
-	IsTeam        bool       `db:"is_team" json:"isTeam"`
-	Role          *string    `db:"role" json:"role"`
-	IsPrimary     bool       `db:"is_primary" json:"isPrimary"`
-	ReceiveEmails bool       `db:"receive_emails" json:"receiveEmails"`
+	userIDRelation
+	IsTeam        bool    `db:"is_team" json:"isTeam"`
+	Role          *string `db:"role" json:"role"`
+	IsPrimary     bool    `db:"is_primary" json:"isPrimary"`
+	ReceiveEmails bool    `db:"receive_emails" json:"receiveEmails"`
 }
 
 // NewMTOCommonSolutionContact returns a new MTOCommonSolutionContact object
@@ -80,18 +77,24 @@ func NewMTOCommonSolutionContact(
 	key MTOCommonSolutionKey,
 	mailboxTitle *string,
 	mailboxAddress *string,
-	userAccountID *uuid.UUID,
+	userID *uuid.UUID,
 	isTeam bool,
 	role *string,
 	isPrimary bool,
 	receiveEmails bool,
 ) *MTOCommonSolutionContact {
+	var userIDRelation userIDRelation
+	if userID != nil {
+		userIDRelation = NewUserIDRelation(*userID)
+	} else {
+		userIDRelation = NewUserIDRelation(uuid.Nil)
+	}
 	return &MTOCommonSolutionContact{
 		baseStruct:     NewBaseStruct(createdBy),
 		Key:            key,
 		MailboxTitle:   mailboxTitle,
 		MailboxAddress: mailboxAddress,
-		UserAccountID:  userAccountID,
+		userIDRelation: userIDRelation,
 		IsTeam:         isTeam,
 		Role:           role,
 		IsPrimary:      isPrimary,

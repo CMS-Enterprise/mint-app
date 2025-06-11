@@ -33,9 +33,6 @@ func MTOCommonSolutionContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Lo
 	if err != nil {
 		return nil, err
 	}
-	if len(returned) == 0 {
-		return nil, fmt.Errorf("no MTOCommonSolutionContacts found for IDs %v", ids)
-	}
 	return returned, nil
 }
 

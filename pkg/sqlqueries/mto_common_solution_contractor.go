@@ -30,7 +30,7 @@ type MTOCommonSolutionContractorScripts struct {
 }
 
 // MTOCommonSolutionContractor houses all the sql for getting data for common solution contractor from the database
-var MTOCommonSolutioncontractor = MTOCommonSolutionContractorScripts{
+var MTOCommonSolutionContractor = MTOCommonSolutionContractorScripts{
 	GetByCommonSolutionKey: MTOCommonSolutionContractorGetByCommonSolutionKey,
 	GetByID:                MTOCommonSolutionContractorGetByID,
 	GetByIDs:               MTOCommonSolutionContractorGetByIDs,

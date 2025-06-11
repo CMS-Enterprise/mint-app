@@ -38,7 +38,7 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	userContractor := models.NewMTOCommonSolutionContractor(
+	contractor := models.NewMTOCommonSolutionContractor(
 		principalAccount.ID,
 		key,
 		contractorTitle,
@@ -48,7 +48,7 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 	return storage.MTOCommonSolutionCreateContractor(
 		store,
 		logger,
-		userContractor,
+		contractor,
 	)
 }
 

@@ -25,7 +25,7 @@ func MTOCommonSolutionContactInformationGetByKeyLOADER(ctx context.Context, key 
 
 	if err != nil {
 		logger.Error("failed to load MTOCommonSolutionContact by key", zap.Error(err), zap.String("key", string(key)))
-		return &models.MTOCommonSolutionContactInformation{}, nil //don't want to break the call when no contact is set for something
+		return nil, nil //don't want to break the call when no contact is set for something
 	}
 
 	return &models.MTOCommonSolutionContactInformation{
@@ -99,7 +99,7 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	userContact := models.NewMTOCommonSolutionContact(
+	mailboxContact := models.NewMTOCommonSolutionContact(
 		principalAccount.ID,
 		key,
 		mailboxTitle,
@@ -114,7 +114,7 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 	return storage.MTOCommonSolutionCreateContact(
 		store,
 		logger,
-		userContact,
+		mailboxContact,
 	)
 }
 
@@ -129,20 +129,20 @@ func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	existing_contact, err := loaders.MTOCommonSolutionContact.ByID.Load(ctx, id)
+	existingContact, err := loaders.MTOCommonSolutionContact.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
 	}
-	if existing_contact == nil {
+	if existingContact == nil {
 		return nil, fmt.Errorf("contact with id %s not found", id)
 	}
 
-	err = BaseStructPreUpdate(logger, existing_contact, changes, principal, store, true, false)
+	err = BaseStructPreUpdate(logger, existingContact, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
 
-	updatedContact, err := storage.MTOCommonSolutionUpdateContact(store, logger, existing_contact)
+	updatedContact, err := storage.MTOCommonSolutionUpdateContact(store, logger, existingContact)
 	if err != nil {
 		return nil, fmt.Errorf("failed to update contact with id %s: %w", id, err)
 	}

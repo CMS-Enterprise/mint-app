@@ -18,7 +18,7 @@ func MTOCommonSolutionContractorGetByCommonSolutionKeyLoader(np sqlutils.NamedPr
 	args := map[string]interface{}{
 		"keys": pq.Array(keys),
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByCommonSolutionKey, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.GetByCommonSolutionKey, args)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 		contractor.ID = uuid.New()
 	}
 
-	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Create, contractor)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.Create, contractor)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 func MTOCommonSolutionGetContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
 	arg := map[string]interface{}{"id": id}
 
-	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByID, arg)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.GetByID, arg)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func MTOCommonSolutionContractorGetByCommonSolutionIdLoader(np sqlutils.NamedPre
 	args := map[string]interface{}{
 		"ids": pq.Array(ids),
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.GetByIDs, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.GetByIDs, args)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func MTOCommonSolutionContractorGetByCommonSolutionIdLoader(np sqlutils.NamedPre
 
 // MTOCommonSolutionUpdateContractor updates an existing contractor.
 func MTOCommonSolutionUpdateContractor(np sqlutils.NamedPreparer, _ *zap.Logger, contractor *models.MTOCommonSolutionContractor) (*models.MTOCommonSolutionContractor, error) {
-	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutioncontractor.Update, contractor)
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.Update, contractor)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func MTOCommonSolutionDeleteContractorByID(tx *sqlx.Tx, actorUserID uuid.UUID, _
 	}
 
 	arg := map[string]interface{}{"id": id}
-	returnedContractor, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](tx, sqlqueries.MTOCommonSolutioncontractor.DeleteByID, arg)
+	returnedContractor, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](tx, sqlqueries.MTOCommonSolutionContractor.DeleteByID, arg)
 	if err != nil {
 		return nil, err
 	}

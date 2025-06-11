@@ -8,38 +8,11 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
-	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
-
-// UserAccount is the resolver for the userAccount field.
-func (r *mTOCommonSolutionContactResolver) UserAccount(ctx context.Context, obj *models.MTOCommonSolutionContact) (*authentication.UserAccount, error) {
-	if obj.UserAccountID == nil {
-		return nil, nil // No user account for this contact
-	}
-	account, err := UserAccountGetByIDLOADER(ctx, *obj.UserAccountID)
-	if err != nil {
-		logger := appcontext.ZLogger(ctx)
-		logger.Error("failed to load user account by ID", zap.Error(err), zap.String("userAccountID", obj.UserAccountID.String()))
-		empty := ""
-		account = &authentication.UserAccount{
-			Username:   &empty,
-			ID:         uuid.Nil,
-			CommonName: empty,
-			Locale:     empty,
-			Email:      empty,
-			GivenName:  empty,
-			FamilyName: empty,
-			ZoneInfo:   empty,
-		}
-	}
-	return account, nil
-}
 
 // CreateMTOCommonSolutionMailboxContact is the resolver for the createMTOCommonSolutionMailboxContact field.
 func (r *mutationResolver) CreateMTOCommonSolutionMailboxContact(ctx context.Context, key models.MTOCommonSolutionKey, mailboxTitle *string, mailboxAddress string, isTeam bool, role *string, receiveEmails bool, isPrimary bool) (*models.MTOCommonSolutionContact, error) {
@@ -80,10 +53,3 @@ func (r *queryResolver) MtoCommonSolutionContact(ctx context.Context, id uuid.UU
 
 	return GetMTOCommonSolutionContact(ctx, logger, principal, r.store, id)
 }
-
-// MTOCommonSolutionContact returns generated.MTOCommonSolutionContactResolver implementation.
-func (r *Resolver) MTOCommonSolutionContact() generated.MTOCommonSolutionContactResolver {
-	return &mTOCommonSolutionContactResolver{r}
-}
-
-type mTOCommonSolutionContactResolver struct{ *Resolver }

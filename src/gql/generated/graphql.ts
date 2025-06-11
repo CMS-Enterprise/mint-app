@@ -828,6 +828,7 @@ export type MtoCommonSolutionContact = {
   receiveEmails: Scalars['Boolean']['output'];
   role?: Maybe<Scalars['String']['output']>;
   userAccount?: Maybe<UserAccount>;
+  userID: Scalars['UUID']['output'];
 };
 
 /** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
