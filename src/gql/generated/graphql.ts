@@ -814,18 +814,21 @@ export type MtoCommonSolutionContact = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   isPrimary: Scalars['Boolean']['output'];
   isTeam: Scalars['Boolean']['output'];
   key: MtoCommonSolutionKey;
-  mailboxAddress: Scalars['String']['output'];
-  mailboxTitle: Scalars['String']['output'];
+  mailboxAddress?: Maybe<Scalars['String']['output']>;
+  mailboxTitle?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
   receiveEmails: Scalars['Boolean']['output'];
   role?: Maybe<Scalars['String']['output']>;
-  userAccount: UserAccount;
+  userAccount?: Maybe<UserAccount>;
+  userID?: Maybe<Scalars['UUID']['output']>;
 };
 
 /** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
@@ -840,11 +843,12 @@ export type MtoCommonSolutionContactInformation = {
 /** Represents a translation of a contact for a common solution */
 export type MtoCommonSolutionContactTranslation = {
   __typename: 'MTOCommonSolutionContactTranslation';
-  email: TranslationField;
   isPrimary: TranslationField;
   isTeam: TranslationField;
   key: TranslationField;
-  name: TranslationField;
+  mailboxAddress: TranslationField;
+  mailboxTitle: TranslationField;
+  receiveEmails: TranslationField;
   role: TranslationField;
 };
 
@@ -5486,7 +5490,7 @@ export type GetMtoSolutionQuery = { __typename: 'Query', mtoSolution: { __typena
 export type GetMtoSolutionContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMtoSolutionContactsQuery = { __typename: 'Query', mtoCommonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey, contactInformation: { __typename: 'MTOCommonSolutionContactInformation', pointsOfContact: Array<{ __typename: 'MTOCommonSolutionContact', id: UUID, mailboxTitle: string, mailboxAddress: string, isTeam: boolean, isPrimary: boolean, role?: string | null, receiveEmails: boolean, userAccount: { __typename: 'UserAccount', id: UUID, givenName: string, familyName: string, email: string } }> } }> };
+export type GetMtoSolutionContactsQuery = { __typename: 'Query', mtoCommonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey, contactInformation: { __typename: 'MTOCommonSolutionContactInformation', pointsOfContact: Array<{ __typename: 'MTOCommonSolutionContact', id: UUID, mailboxTitle?: string | null, mailboxAddress?: string | null, isTeam: boolean, isPrimary: boolean, role?: string | null, receiveEmails: boolean, userAccount?: { __typename: 'UserAccount', id: UUID, givenName: string, familyName: string, email: string } | null }> } }> };
 
 export type GetMtoSolutionsAndMilestonesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];

@@ -1,0 +1,34 @@
+meta {
+  name: Update MTO ContactInfo
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation UpdateMTOCommonSolutionContact {
+    updateMTOCommonSolutionContact(
+      id: "2a1f8bbe-7017-43d9-9f8e-ed7c6561c807"
+      input: {
+        role: null           # or a string if isTeam is false
+        isPrimary: false
+        receiveEmails: false
+      }
+    ) {
+      id
+      key
+      mailboxTitle
+      mailboxAddress
+      isTeam
+      role
+      isPrimary
+      receiveEmails
+      createdBy
+    }
+  }
+}

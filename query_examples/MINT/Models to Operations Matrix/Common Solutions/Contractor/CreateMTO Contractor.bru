@@ -1,0 +1,32 @@
+meta {
+  name: CreateMTO Contractor
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation CreateMTOCommonSolutionContractor {
+    createMTOCommonSolutionContractor(
+      key: {{key}}
+      contractorTitle: "{{contractorTitle}}"
+      contractorName: "{{contractorName}}"
+    ) {
+      id
+      key
+      contractorTitle
+      contractorName
+    }
+  }
+}
+
+vars:pre-request {
+  key: INNOVATION
+  contractorTitle: Best Contractor
+  contractorName: John Doe
+}
