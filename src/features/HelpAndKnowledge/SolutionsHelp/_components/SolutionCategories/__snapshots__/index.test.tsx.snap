@@ -278,6 +278,52 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 class="usa-card__header text-bold padding-y-0 flex-2"
                 data-testid="CardHeader"
               >
+                Evaluation and review
+              </div>
+              <div
+                class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
+                data-testid="CardBody"
+              >
+                <a
+                  aria-label="Learn more about Evaluation and review"
+                  class="usa-link display-flex flex-align-center"
+                  href="/help-and-knowledge/operational-solutions?category=evaluation-and-review"
+                >
+                  Learn more
+                  <svg
+                    aria-label="forward"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div
+          class="tablet:grid-col-6 desktop:grid-col-3 display-flex flex-align-stretch"
+          data-testid="grid"
+        >
+          <li
+            class="usa-card radius-sm width-full operational-solution-help__category"
+            data-testid="Card"
+          >
+            <div
+              class="usa-card__container"
+            >
+              <div
+                class="usa-card__header text-bold padding-y-0 flex-2"
+                data-testid="CardHeader"
+              >
                 Learning
               </div>
               <div

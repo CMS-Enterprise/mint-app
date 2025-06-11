@@ -384,6 +384,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Acco
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > Actuarial Research and Development Services 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  ARDS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > Automated Plan Payment System 1`] = `
 <DocumentFragment>
   <div>
@@ -512,6 +572,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Bene
           />
         </li>
       </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > CMMI Analysis and Management System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  AMS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1272,6 +1392,126 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cons
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > Division of Stakeholder Engagement and Policy 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  DSEP
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Drug Data Processing System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  DDPS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > Electronic File Transfer 1`] = `
 <DocumentFragment>
   <div>
@@ -1291,6 +1531,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
           class="usa-alert__heading"
         >
           We’re still gathering information about  EFT
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Enterprise Privacy Policy Engine Cloud 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  EPPE
         </h4>
         <p
           class="usa-alert__text"
@@ -1392,6 +1692,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Expa
           Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. 
         </li>
       </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Federal Funded Research and Development Center 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  FFRDC
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1690,6 +2050,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
         </span>
       </button>
        if you have questions.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Innovation Center Landing Page 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  IC Landing
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -2608,6 +3028,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mode
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > Office of the Actuary 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  OACT
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > Outlook Mailbox 1`] = `
 <DocumentFragment>
   <div>
@@ -2760,6 +3240,126 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > Patient Activation Measure 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  PAM
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Quality Payment Program 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  QPP
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > Quality Vertical 1`] = `
 <DocumentFragment>
   <div>
@@ -2816,6 +3416,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Qual
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > Research and Rapid Cycle Evaluation Group 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  RREG
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > Research, Measurement, Assessment, Design, and Analysis 1`] = `
 <DocumentFragment>
   <div>
@@ -2855,6 +3515,66 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Rese
         </span>
       </button>
        standards to determine when to being working with RMADA.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Risk Adjustment Suite of Systems 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  RASS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -3728,6 +4448,66 @@ There are two types of CRs:
           </p>
         </li>
       </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Transformed Medicaid Statistical Information System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  T-MSIS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
