@@ -1,0 +1,26 @@
+meta {
+  name: GetAllMTO Contractor
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetAllContractors {
+    mtoCommonSolutions {
+      key
+      name
+      contractors {
+        id
+        contractorTitle
+        contractorName
+        createdBy
+      }
+    }
+  }
+}

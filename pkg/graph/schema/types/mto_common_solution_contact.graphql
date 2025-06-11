@@ -3,9 +3,12 @@ type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
 
-  mailboxTitle: String!
-  mailboxAddress: String!
-  userAccount: UserAccount!
+  name: String!
+  email: String!
+  mailboxTitle: String
+  mailboxAddress: String
+  userAccount: UserAccount
+  userID: UUID
   isTeam: Boolean!
   role: String
   isPrimary: Boolean!

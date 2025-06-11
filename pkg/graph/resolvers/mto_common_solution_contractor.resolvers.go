@@ -6,30 +6,41 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // CreateMTOCommonSolutionContractor is the resolver for the createMTOCommonSolutionContractor field.
-func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, key models.MTOCommonSolutionKey, contractorTitle *string, contractorName string) (*model.MTOCommonSolutionContractor, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOCommonSolutionContractor - createMTOCommonSolutionContractor"))
+func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, key models.MTOCommonSolutionKey, contractorTitle *string, contractorName string) (*models.MTOCommonSolutionContractor, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CreateMTOCommonSolutionContractor(ctx, logger, principal, r.store, key, contractorTitle, contractorName)
 }
 
 // UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.
-func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*model.MTOCommonSolutionContractor, error) {
-	panic(fmt.Errorf("not implemented: UpdateMTOCommonSolutionContractor - updateMTOCommonSolutionContractor"))
+func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOCommonSolutionContractor, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return UpdateMTOCommonSolutionContractor(ctx, logger, principal, r.store, id, changes)
 }
 
 // DeleteMTOCommonSolutionContractor is the resolver for the deleteMTOCommonSolutionContractor field.
-func (r *mutationResolver) DeleteMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID) (*model.MTOCommonSolutionContractor, error) {
-	panic(fmt.Errorf("not implemented: DeleteMTOCommonSolutionContractor - deleteMTOCommonSolutionContractor"))
+func (r *mutationResolver) DeleteMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return DeleteMTOCommonSolutionContractor(ctx, logger, principal, r.store, id)
 }
 
 // MtoCommonSolutionContractor is the resolver for the mtoCommonSolutionContractor field.
-func (r *queryResolver) MtoCommonSolutionContractor(ctx context.Context, id uuid.UUID) (*model.MTOCommonSolutionContractor, error) {
-	panic(fmt.Errorf("not implemented: MtoCommonSolutionContractor - mtoCommonSolutionContractor"))
+func (r *queryResolver) MtoCommonSolutionContractor(ctx context.Context, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return GetMTOCommonSolutionContractor(ctx, logger, principal, r.store, id)
 }
