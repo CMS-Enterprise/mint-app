@@ -6,12 +6,12 @@ exports[`Operation Solution Contact > matches snapshot 1`] = `
     class="point-of-contact"
   >
     <p
-      class="font-body-xs margin-top-0 margin-bottom-1"
+      class="font-body-xs margin-y-0"
     >
       Primary point of contact
     </p>
     <h3
-      class="system-profile__subheader margin-y-0"
+      class="system-profile__subheader margin-top-1 margin-bottom-05"
     >
       Aliza Kim
     </h3>

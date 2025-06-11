@@ -49,12 +49,8 @@ export const pointsOfContact = [
     id: '1267967874323',
     mailboxTitle: '',
     mailboxAddress: '',
-    userAccount: {
-      id: '456',
-      givenName: 'John',
-      familyName: 'Mint',
-      email: 'john.mint@oddball.io'
-    },
+    name: 'John Mint',
+    email: 'john.mint@oddball.io',
     isTeam: false,
     role: 'Project lead',
     isPrimary: true,
@@ -355,18 +351,13 @@ export const possibleSolutionsMock: MockedResponse<
                 {
                   __typename: 'MTOCommonSolutionContact',
                   id: '123',
+                  name: 'Test Last',
+                  email: 'email@email.com',
                   mailboxTitle: 'Mint Team',
                   mailboxAddress: 'mint-team@email.com',
-                  userAccount: {
-                    __typename: 'UserAccount',
-                    id: '456',
-                    givenName: 'test',
-                    familyName: 'last',
-                    email: 'email@email.com'
-                  },
                   isTeam: true,
                   isPrimary: true,
-                  role: 'role',
+                  role: null,
                   receiveEmails: true
                 }
               ]

@@ -10,13 +10,8 @@ const contact: SolutionContactType = {
   id: '123',
   mailboxTitle: '',
   mailboxAddress: '',
-  userAccount: {
-    __typename: 'UserAccount',
-    id: '456',
-    givenName: 'Aliza',
-    familyName: 'Kim',
-    email: 'aliza.kim@cms.hhs.gov'
-  },
+  name: 'Aliza Kim',
+  email: 'aliza.kim@cms.hhs.gov',
   isTeam: false,
   role: 'Project Lead',
   isPrimary: true,

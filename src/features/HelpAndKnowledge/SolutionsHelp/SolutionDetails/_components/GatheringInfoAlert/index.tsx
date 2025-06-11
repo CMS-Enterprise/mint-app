@@ -15,13 +15,9 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
     ? solution.pointsOfContact?.find(contact => contact.isPrimary)
     : undefined;
 
-  const primaryUserName = primaryContact
-    ? `${primaryContact.userAccount.givenName} ${primaryContact.userAccount.familyName}`
-    : '';
-  const contactName = primaryUserName || 'the MINT Team';
+  const contactName = primaryContact?.name || 'the MINT Team';
 
-  const contactEmail =
-    primaryContact?.userAccount.email || 'MINTTeam@cms.hhs.gov';
+  const contactEmail = primaryContact?.email || 'MINTTeam@cms.hhs.gov';
 
   return (
     <Alert

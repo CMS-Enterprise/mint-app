@@ -40,19 +40,6 @@ const PointOfContactCard = ({
   pointOfContact: SolutionContactType;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
-  const {
-    userAccount,
-    isTeam,
-    mailboxTitle,
-    mailboxAddress,
-    role,
-    isPrimary,
-    receiveEmails
-  } = pointOfContact;
-  const nameOnCard = isTeam
-    ? mailboxTitle
-    : `${userAccount.givenName} ${userAccount.familyName}`;
-  const emailOnCard = isTeam ? mailboxAddress : userAccount.email;
 
   return (
     <div className="margin-bottom-3">
@@ -64,17 +51,17 @@ const PointOfContactCard = ({
       >
         <CardHeader className="padding-0">
           <h3 className="display-inline margin-bottom-0 margin-right-1">
-            {nameOnCard}
+            {pointOfContact.name}
           </h3>
           <NotificationStatus
-            receiveEmails={receiveEmails}
+            receiveEmails={pointOfContact.receiveEmails}
             label={t(
-              receiveEmails
+              pointOfContact.receiveEmails
                 ? 'receivesNotifications'
                 : 'notReceivesNotifications'
             )}
             tooltipLabel={t(
-              receiveEmails
+              pointOfContact.receiveEmails
                 ? 'receivesNotificationsTooltip'
                 : 'notReceivesNotificationsTooltips'
             )}
@@ -82,24 +69,24 @@ const PointOfContactCard = ({
         </CardHeader>
         <CardBody className="padding-0 margin-bottom-1 display-flex flex-align-center">
           <Link
-            aria-label={emailOnCard}
+            aria-label={pointOfContact.email}
             className="margin-0 line-height-body-5"
-            href={`mailto:${emailOnCard}`}
+            href={`mailto:${pointOfContact.email}`}
             target="_blank"
           >
-            {emailOnCard}
+            {pointOfContact.email}
 
             <Icon.MailOutline className="margin-left-05 margin-bottom-1px text-tbottom" />
           </Link>
         </CardBody>
-        {isPrimary && (
+        {pointOfContact.isPrimary && (
           <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal line-height-body-2">
             {t('primaryPointOfContact')}
           </h5>
         )}
-        {role && (
+        {pointOfContact.role && (
           <CardFooter className="padding-0 font-body-xs line-height-body-2">
-            {role}
+            {pointOfContact.role}
           </CardFooter>
         )}
       </Card>
@@ -109,8 +96,8 @@ const PointOfContactCard = ({
         </Button>
         <Button
           type="button"
-          className={isPrimary ? 'text-gray' : 'text-error'}
-          disabled={isPrimary}
+          className={pointOfContact.isPrimary ? 'text-gray' : 'text-error'}
+          disabled={pointOfContact.isPrimary}
           unstyled
         >
           {t('removePointOfContact')}

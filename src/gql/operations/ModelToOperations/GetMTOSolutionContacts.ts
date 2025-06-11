@@ -7,14 +7,10 @@ export default gql(/* GraphQL */ `
       contactInformation {
         pointsOfContact {
           id
+          name
+          email
           mailboxTitle
           mailboxAddress
-          userAccount {
-            id
-            givenName
-            familyName
-            email
-          }
           isTeam
           isPrimary
           role

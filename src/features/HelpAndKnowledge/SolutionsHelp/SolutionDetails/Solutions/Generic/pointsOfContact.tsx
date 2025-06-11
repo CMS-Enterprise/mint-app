@@ -9,7 +9,6 @@ import {
 } from '@trussworks/react-uswds';
 import {
   HelpSolutionType,
-  SolutionContactType,
   SystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -44,65 +43,11 @@ export const GenericPointsOfContact = ({
 }: {
   solution: HelpSolutionType;
 }) => {
-  // console.log('hello pointsOfContact list', solution);
   const { t } = useTranslation('helpAndKnowledge');
   const { contractors } = solution;
-  // TODO:(Elle) Remove below test data once gql is hooked to db
-  const test: SolutionContactType[] = [
-    {
-      __typename: 'MTOCommonSolutionContact',
-      id: '123',
-      mailboxTitle: '',
-      mailboxAddress: '',
-      userAccount: {
-        __typename: 'UserAccount',
-        id: '456',
-        givenName: 'John',
-        familyName: 'May',
-        email: 'email@email.com'
-      },
-      isTeam: false,
-      isPrimary: false,
-      role: 'IC',
-      receiveEmails: false
-    },
-    {
-      __typename: 'MTOCommonSolutionContact',
-      id: '123',
-      mailboxTitle: '',
-      mailboxAddress: '',
-      userAccount: {
-        __typename: 'UserAccount',
-        id: '456',
-        givenName: 'June',
-        familyName: 'Month',
-        email: 'email2@email.com'
-      },
-      isTeam: false,
-      isPrimary: true,
-      role: 'Owner',
-      receiveEmails: true
-    },
-    {
-      __typename: 'MTOCommonSolutionContact',
-      id: '123',
-      mailboxTitle: 'Mint Team mailbox',
-      mailboxAddress: 'mint-team@email.com',
-      userAccount: {
-        __typename: 'UserAccount',
-        id: '',
-        givenName: '',
-        familyName: '',
-        email: ''
-      },
-      isTeam: true,
-      isPrimary: false,
-      role: null,
-      receiveEmails: true
-    }
-  ];
-  const pointsOfContactSorted = [...(test || [])].sort((a, b) =>
-    a.userAccount.givenName.localeCompare(b.userAccount.givenName)
+
+  const pointsOfContactSorted = [...(solution?.pointsOfContact || [])].sort(
+    (a, b) => a.name.localeCompare(b.name)
   );
   const hasContractors = contractors && contractors?.length > 0;
 
@@ -113,7 +58,7 @@ export const GenericPointsOfContact = ({
         ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
         ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
       ].map(contact => (
-        <PointOfContactCard pointOfContact={contact} key={contact.id} />
+        <PointOfContactCard pointOfContact={contact} key={contact.name} />
       ))}
 
       {solution.systemOwner && (

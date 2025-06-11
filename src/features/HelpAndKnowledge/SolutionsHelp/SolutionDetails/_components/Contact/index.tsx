@@ -27,24 +27,19 @@ export const Contact = ({
 
   const paramValues = location.search.substring(1).split('&');
   const isOnPointsOfContact = paramValues.includes('section=points-of-contact');
-  const primiryPointOfContact = contact
-    ? `${contact.userAccount.givenName} ${contact.userAccount.familyName}`
-    : '';
 
   return (
     <div className="point-of-contact">
-      <p className="font-body-xs margin-top-0 margin-bottom-1">
-        {t('primaryPointOfContact')}
-      </p>
+      <p className="font-body-xs margin-y-0">{t('primaryPointOfContact')}</p>
 
-      <h3 className="system-profile__subheader margin-y-0">
-        {primiryPointOfContact}
+      <h3 className="system-profile__subheader margin-top-1 margin-bottom-05">
+        {contact?.name}
       </h3>
 
       <Link
         aria-label={h('contactInfo.sendAnEmail')}
         className="line-height-body-5 display-flex flex-align-center margin-bottom-3"
-        href={`mailto:${contact?.userAccount.email}`}
+        href={`mailto:${contact?.email}`}
         target="_blank"
       >
         <Icon.Mail className="margin-right-1 top-1px text-tbottom" />
