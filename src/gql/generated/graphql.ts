@@ -843,13 +843,16 @@ export type MtoCommonSolutionContactInformation = {
 /** Represents a translation of a contact for a common solution */
 export type MtoCommonSolutionContactTranslation = {
   __typename: 'MTOCommonSolutionContactTranslation';
-  isPrimary: TranslationField;
-  isTeam: TranslationField;
+  email: TranslationField;
+  isPrimary: TranslationFieldWithOptions;
+  isTeam: TranslationFieldWithOptions;
   key: TranslationField;
   mailboxAddress: TranslationField;
   mailboxTitle: TranslationField;
-  receiveEmails: TranslationField;
+  name: TranslationField;
+  receiveEmails: TranslationFieldWithOptions;
   role: TranslationField;
+  userId: TranslationField;
 };
 
 /**

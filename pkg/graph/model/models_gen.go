@@ -65,13 +65,16 @@ type MTOCategoryTranslation struct {
 
 // Represents a translation of a contact for a common solution
 type MTOCommonSolutionContactTranslation struct {
-	Key            models.TranslationField `json:"key" db:"mto_common_solution_key"`
-	MailboxTitle   models.TranslationField `json:"mailboxTitle" db:"mailbox_title"`
-	MailboxAddress models.TranslationField `json:"mailboxAddress" db:"mailbox_address"`
-	IsTeam         models.TranslationField `json:"isTeam" db:"is_team"`
-	Role           models.TranslationField `json:"role" db:"role"`
-	IsPrimary      models.TranslationField `json:"isPrimary" db:"is_primary"`
-	ReceiveEmails  models.TranslationField `json:"receiveEmails" db:"receive_emails"`
+	Key            models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	Name           models.TranslationField            `json:"name" db:"name"`
+	Email          models.TranslationField            `json:"email" db:"email"`
+	MailboxTitle   models.TranslationField            `json:"mailboxTitle" db:"mailbox_title"`
+	MailboxAddress models.TranslationField            `json:"mailboxAddress" db:"mailbox_address"`
+	UserID         models.TranslationField            `json:"userId" db:"user_id"`
+	IsTeam         models.TranslationFieldWithOptions `json:"isTeam" db:"is_team"`
+	Role           models.TranslationField            `json:"role" db:"role"`
+	IsPrimary      models.TranslationFieldWithOptions `json:"isPrimary" db:"is_primary"`
+	ReceiveEmails  models.TranslationFieldWithOptions `json:"receiveEmails" db:"receive_emails"`
 }
 
 // Represents mto info translation data
