@@ -203,6 +203,11 @@ func (s *Server) routes(
 		echimpS3config.IsLocal = true
 	}
 
+	// Disable echimp s3 in dev environment
+	if s.environment.Dev() {
+		echimpS3config.IsLocal = true
+	}
+
 	s3Client := s3.NewS3Client(s3Config)
 	echimpS3Client := s3.NewS3Client(echimpS3config)
 
