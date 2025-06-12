@@ -71,12 +71,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Information Technology
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -93,7 +93,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -125,12 +125,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Innovative Design, Development, and Operations Contract (IDDOC)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -233,12 +233,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Information Technology
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -255,7 +255,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -287,12 +287,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Innovative Design, Development, and Operations Contract (IDDOC)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -395,12 +395,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -417,7 +417,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -534,12 +534,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Enterprise Data and Analytics
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -556,7 +556,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -664,7 +664,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -772,7 +772,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -880,7 +880,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -988,7 +988,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1105,12 +1105,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1127,7 +1127,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1159,12 +1159,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Innovation Support Platform (ISP)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1267,12 +1267,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Enterprise Data and Analytics
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1289,7 +1289,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1321,12 +1321,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1429,12 +1429,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1451,7 +1451,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1483,12 +1483,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1582,7 +1582,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1699,12 +1699,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1721,7 +1721,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1753,12 +1753,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Innovation Support Platform (ISP)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -1852,7 +1852,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -1960,7 +1960,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -2077,12 +2077,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2099,7 +2099,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -2131,12 +2131,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Innovation Support Platform (ISP)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2239,12 +2239,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2261,7 +2261,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -2378,12 +2378,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Financial Management
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2400,7 +2400,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -2517,12 +2517,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2539,7 +2539,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -2571,9 +2571,9 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           />
           <div
             class="usa-card__footer padding-0"
@@ -2668,7 +2668,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -2700,12 +2700,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Prime
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2739,12 +2739,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Subcontractor
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2778,12 +2778,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Subcontractor
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2817,12 +2817,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Subcontractor
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2925,12 +2925,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Information Technology
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -2947,7 +2947,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3055,7 +3055,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3163,7 +3163,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3280,12 +3280,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Information Technology
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -3302,7 +3302,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3419,12 +3419,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Information Technology
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -3441,7 +3441,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3549,7 +3549,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3666,12 +3666,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -3688,7 +3688,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3805,12 +3805,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -3827,7 +3827,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -3859,12 +3859,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Innovation Support Platform (ISP)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -3958,7 +3958,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4066,7 +4066,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4174,7 +4174,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4291,12 +4291,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4313,7 +4313,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4345,12 +4345,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4453,12 +4453,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4475,7 +4475,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4507,12 +4507,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4615,12 +4615,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4637,7 +4637,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4669,12 +4669,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4777,12 +4777,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4799,7 +4799,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4831,12 +4831,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4939,12 +4939,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Center for Medicare and Medicaid Innovation
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -4961,7 +4961,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>
@@ -4993,12 +4993,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             CMMI Technology Solution (CTS)
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -5101,12 +5101,12 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         <div
           class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <div
+            class="usa-card__body padding-0 margin-bottom-1"
+            data-testid="CardBody"
           >
             Office of Information Technology
-          </header>
+          </div>
           <div
             class="usa-card__footer padding-0"
             data-testid="CardFooter"
@@ -5123,7 +5123,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         class="mint-divider margin-y-6"
       />
       <h2
-        class="margin-bottom-1"
+        class="margin-bottom-2"
       >
         Contractors
       </h2>

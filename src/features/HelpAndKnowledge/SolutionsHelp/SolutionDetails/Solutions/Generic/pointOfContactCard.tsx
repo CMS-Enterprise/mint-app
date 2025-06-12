@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Icon,
   Link,
@@ -80,14 +79,12 @@ const PointOfContactCard = ({
           </Link>
         </CardBody>
         {pointOfContact.isPrimary && (
-          <h5 className="padding-0 margin-0 font-body-xs text-base-dark text-normal line-height-body-2">
+          <CardBody className="padding-0 margin-bottom-1 text-base-dark">
             {t('primaryPointOfContact')}
-          </h5>
+          </CardBody>
         )}
         {pointOfContact.role && (
-          <CardFooter className="padding-0 font-body-xs line-height-body-2">
-            {pointOfContact.role}
-          </CardFooter>
+          <CardBody className="padding-0">{pointOfContact.role}</CardBody>
         )}
       </Card>
       <div>

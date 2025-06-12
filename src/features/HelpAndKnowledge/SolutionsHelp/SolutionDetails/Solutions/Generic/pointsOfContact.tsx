@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import {
   Button,
   Card,
+  CardBody,
   CardFooter,
-  CardHeader,
   Icon
 } from '@trussworks/react-uswds';
 import {
@@ -26,9 +26,9 @@ const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
         className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
       }}
     >
-      <CardHeader className="font-body-xs padding-0">
+      <CardBody className="padding-0 margin-bottom-1">
         {contact.system}
-      </CardHeader>
+      </CardBody>
       {contact.name && (
         <CardFooter className="padding-0">
           <h3 className="margin-0 line-height-sans-2">{contact.name}</h3>
@@ -74,7 +74,7 @@ export const GenericPointsOfContact = ({
       <>
         <Divider className="margin-y-6" />
 
-        <h2 className="margin-bottom-1">{t('contractors')}</h2>
+        <h2 className="margin-bottom-2">{t('contractors')}</h2>
         <Button type="button" className="margin-bottom-3" unstyled>
           <Icon.Add aria-hidden />
           {t('addContractor')}
