@@ -1353,6 +1353,7 @@ export type TransltionMTOCommonSolutionContactCustomForm = {
   mailboxAddress: TranslationFieldProperties;
   mailboxTitle: TranslationFieldProperties;
   receiveEmails: TranslationFieldPropertiesWithOptions<Bool>;
+  userId: TranslationFieldProperties;
 };
 type TranslationMTOCommonSolutionContactCustomGQL = Omit<
   MtoCommonSolutionContactTranslation, // graphql gen type

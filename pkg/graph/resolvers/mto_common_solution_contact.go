@@ -33,7 +33,7 @@ func MTOCommonSolutionContactInformationGetByKeyLOADER(ctx context.Context, key 
 	}, nil
 }
 
-// CreateMTOCommonSolutionContact creates a new user contact for a common solution.
+// CreateMTOCommonSolutionContactUser creates a new user contact for a common solution.
 // It looks up the user account by username and inserts a new contact record associated with that user.
 func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	key models.MTOCommonSolutionKey,

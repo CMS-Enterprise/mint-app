@@ -55,7 +55,7 @@ func batchMTOCommonSolutionContractorGetByID(ctx context.Context, ids []uuid.UUI
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
 	}
 
-	data, err := storage.MTOCommonSolutionContractorGetByCommonSolutionIdLoader(loaders.DataReader.Store, logger, ids)
+	data, err := storage.MTOCommonSolutionContractorGetByCommonSolutionIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
 	}

@@ -852,6 +852,7 @@ export type MtoCommonSolutionContactTranslation = {
   name: TranslationField;
   receiveEmails: TranslationFieldWithOptions;
   role: TranslationField;
+  userId: TranslationField;
 };
 
 /**

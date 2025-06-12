@@ -70,6 +70,7 @@ type MTOCommonSolutionContactTranslation struct {
 	Email          models.TranslationField            `json:"email" db:"email"`
 	MailboxTitle   models.TranslationField            `json:"mailboxTitle" db:"mailbox_title"`
 	MailboxAddress models.TranslationField            `json:"mailboxAddress" db:"mailbox_address"`
+	UserID         models.TranslationField            `json:"userId" db:"user_id"`
 	IsTeam         models.TranslationFieldWithOptions `json:"isTeam" db:"is_team"`
 	Role           models.TranslationField            `json:"role" db:"role"`
 	IsPrimary      models.TranslationFieldWithOptions `json:"isPrimary" db:"is_primary"`
