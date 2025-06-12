@@ -1,12 +1,21 @@
 {
-  "id": {
-    "gqlField": "id",
-    "goField": "ID",
-    "dbField": "id",
-    "label": "ID",
-    "dataType": "UUID",
+  "email": {
+    "gqlField": "email",
+    "goField": "Email",
+    "dbField": "email",
+    "label": "Email",
+    "dataType": "STRING",
     "formType": "TEXT",
-    "order": 0.1
+    "order": 1
+  },
+  "isPrimary": {
+    "gqlField": "isPrimary",
+    "goField": "IsPrimary",
+    "dbField": "is_primary",
+    "label": "Is Primary",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
+    "order": 1.1
   },
   "key": {
     "gqlField": "key",
@@ -18,84 +27,6 @@
     "tableReference": "mto_common_solution",
     "order": 1.2
   },
-  "mailboxTitle": {
-    "gqlField": "mailboxTitle",
-    "goField": "MailboxTitle",
-    "dbField": "mailbox_title",
-    "label": "Mailbox Title",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1.6
-  },
-  "mailboxAddress": {
-    "gqlField": "mailboxAddress",
-    "goField": "MailboxAddress",
-    "dbField": "mailbox_address",
-    "label": "Mailbox Address",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1.7
-  },
-  "userId": {
-    "gqlField": "userId",
-    "goField": "UserID",
-    "dbField": "user_id",
-    "label": "User ID",
-    "dataType": "UUID",
-    "formType": "TEXT",
-    "order": 1.8
-  },
-  "isTeam": {
-  "gqlField": "isTeam",
-  "goField": "IsTeam",
-  "dbField": "is_team",
-  "label": "Is this contact a team mailbox?",
-  "sublabel": "Select 'Yes' if this contact represents a team mailbox rather than an individual.",
-  "dataType": "BOOLEAN",
-  "formType": "RADIO",
-  "order": 1.5,
-  "options": {
-    "true": "Yes",
-    "false": "No"
-  }
-},
-  "role": {
-    "gqlField": "role",
-    "goField": "Role",
-    "dbField": "role",
-    "label": "Role",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1.4
-  },
-  "isPrimary": {
-  "gqlField": "isPrimary",
-  "goField": "IsPrimary",
-  "dbField": "is_primary",
-  "label": "Is this the primary contact?",
-  "sublabel": "Select 'Yes' if this is the main contact for this solution.",
-  "dataType": "BOOLEAN",
-  "formType": "RADIO",
-  "order": 1.1,
-  "options": {
-    "true": "Yes",
-    "false": "No"
-  }
-},
-  "receiveEmails": {
-  "gqlField": "receiveEmails",
-  "goField": "ReceiveEmails",
-  "dbField": "receive_emails",
-  "label": "Should this contact receive emails?",
-  "sublabel": "Select 'Yes' if this contact should receive notifications or emails.",
-  "dataType": "BOOLEAN",
-  "formType": "RADIO",
-  "order": 1.9,
-  "options": {
-    "true": "Yes",
-    "false": "No"
-  }
-},
   "name": {
     "gqlField": "name",
     "goField": "Name",
@@ -105,49 +36,22 @@
     "formType": "TEXT",
     "order": 1.3
   },
-  "email": {
-    "gqlField": "email",
-    "goField": "Email",
-    "dbField": "email",
-    "label": "Email",
+  "role": {
+    "gqlField": "role",
+    "goField": "Role",
+    "dbField": "role",
+    "label": "Role",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1
+    "order": 1.4
   },
-  "createdBy": {
-    "gqlField": "createdBy",
-    "goField": "CreatedBy",
-    "dbField": "created_by",
-    "label": "Created By",
-    "dataType": "UUID",
-    "formType": "TEXT",
-    "order": 2.0
-  },
-  "createdDts": {
-    "gqlField": "createdDts",
-    "goField": "CreatedDts",
-    "dbField": "created_dts",
-    "label": "Created Date",
-    "dataType": "TIMESTAMP",
-    "formType": "TEXT",
-    "order": 2.1
-  },
-  "modifiedBy": {
-    "gqlField": "modifiedBy",
-    "goField": "ModifiedBy",
-    "dbField": "modified_by",
-    "label": "Modified By",
-    "dataType": "UUID",
-    "formType": "TEXT",
-    "order": 2.2
-  },
-  "modifiedDts": {
-    "gqlField": "modifiedDts",
-    "goField": "ModifiedDts",
-    "dbField": "modified_dts",
-    "label": "Modified Date",
-    "dataType": "TIMESTAMP",
-    "formType": "TEXT",
-    "order": 2.3
+  "isTeam": {
+    "gqlField": "isTeam",
+    "goField": "IsTeam",
+    "dbField": "is_team",
+    "label": "Is Team",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
+    "order": 1.5
   }
 }
