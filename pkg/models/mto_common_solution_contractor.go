@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// MTOCommonSolutionContractorInformation is a wrapper method that enables efficient fetching and sortinf of MTOCommonSolutionContact information
+// MTOCommonSolutionContractorInformation is a wrapper method that enables efficient fetching and sorting of MTOCommonSolutionContact information
 type MTOCommonSolutionContractorInformation struct {
 	Contractors []*MTOCommonSolutionContractor `json:"contractors"`
 }
