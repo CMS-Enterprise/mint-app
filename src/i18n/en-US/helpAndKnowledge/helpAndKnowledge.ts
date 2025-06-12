@@ -2282,6 +2282,8 @@ const helpAndKnowledge = {
   moreContacts: 'More points of contact',
   systemOwner: 'System owner',
   contractors: 'Contractors',
+  contractor: 'Contractor',
+  contractTitle: 'Contract title',
   addContractor: 'Add a contractor',
   removeContractor: 'Remove contractor',
   noContractors: 'No contractor is listed for this solution.',

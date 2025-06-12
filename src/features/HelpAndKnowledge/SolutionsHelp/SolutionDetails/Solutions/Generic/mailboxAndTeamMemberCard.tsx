@@ -33,7 +33,7 @@ const NotificationStatus = ({
   );
 };
 
-const PointOfContactCard = ({
+const MailboxAndTeamMemberCard = ({
   pointOfContact
 }: {
   pointOfContact: SolutionContactType;
@@ -104,4 +104,4 @@ const PointOfContactCard = ({
   );
 };
 
-export default PointOfContactCard;
+export default MailboxAndTeamMemberCard;

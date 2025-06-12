@@ -15,7 +15,8 @@ import {
 import Alert from 'components/Alert';
 import Divider from 'components/Divider';
 
-import PointOfContactCard from './pointOfContactCard';
+import ContractorCard from './contractorCard';
+import MailboxAndTeamMemberCard from './mailboxAndTeamMemberCard';
 
 const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
   return (
@@ -58,7 +59,7 @@ export const GenericPointsOfContact = ({
         ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
         ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
       ].map(contact => (
-        <PointOfContactCard pointOfContact={contact} key={contact.name} />
+        <MailboxAndTeamMemberCard pointOfContact={contact} key={contact.name} />
       ))}
 
       {solution.systemOwner && (
@@ -81,17 +82,7 @@ export const GenericPointsOfContact = ({
         </Button>
 
         {hasContractors ? (
-          contractors.map(contact => (
-            <>
-              <GenericCard contact={contact} key={contact.name} />
-              <Button type="button" className="margin-right-2" unstyled>
-                {t('edit')}
-              </Button>
-              <Button type="button" className="text-error" unstyled>
-                {t('removeContractor')}
-              </Button>
-            </>
-          ))
+          contractors.map(contact => <ContractorCard contact={contact} />)
         ) : (
           <Alert type="info" slim>
             {t('noContractors')}

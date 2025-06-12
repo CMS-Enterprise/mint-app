@@ -345,6 +345,14 @@ export const possibleSolutionsMock: MockedResponse<
           {
             __typename: 'MTOCommonSolution',
             key: MtoCommonSolutionKey.ACO_OS,
+            contractors: [
+              {
+                __typename: 'MTOCommonSolutionContractor',
+                id: 'UUID',
+                contractorName: '',
+                contractorTitle: ''
+              }
+            ],
             contactInformation: {
               __typename: 'MTOCommonSolutionContactInformation',
               pointsOfContact: [

@@ -118,45 +118,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Innovative Design, Development, and Operations Contract (IDDOC)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -280,45 +257,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Innovative Design, Development, and Operations Contract (IDDOC)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1152,45 +1106,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Innovation Support Platform (ISP)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1314,45 +1245,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1476,45 +1384,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1746,45 +1631,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Innovation Support Platform (ISP)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -2124,45 +1986,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Innovation Support Platform (ISP)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -2564,43 +2403,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
-          />
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
+          <p
+            class="usa-alert__text"
           >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              National Government Services (NGS)
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -2693,162 +2511,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Prime
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
-          >
-            Subcontractor
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Acument
-            </h3>
-          </div>
-        </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
-          >
-            Subcontractor
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              ICF International
-            </h3>
-          </div>
-        </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
-          >
-            Subcontractor
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Tier 1 Consulting
-            </h3>
-          </div>
-        </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -3852,45 +3530,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            Innovation Support Platform (ISP)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -4338,45 +3993,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -4500,45 +4132,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -4662,45 +4271,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -4824,45 +4410,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -4986,45 +4549,22 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
         </svg>
         Add a contractor
       </button>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-alert__body"
         >
-          <div
-            class="usa-card__body padding-0 margin-bottom-1"
-            data-testid="CardBody"
+          <p
+            class="usa-alert__text"
           >
-            CMMI Technology Solution (CTS)
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
         </div>
-      </li>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
