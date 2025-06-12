@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -204,9 +203,7 @@ func (s *Server) routes(
 		echimpS3config.IsLocal = true
 	}
 
-	fmt.Println(echimpS3config)
-
-	// Disable echimp s3 in dev environment
+	// Disable echimp s3 in dev environments
 	if s.environment.Dev() {
 		echimpS3config.IsLocal = true
 	}
