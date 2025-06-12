@@ -14,16 +14,14 @@ import './index.scss';
 type CollaborationStatusBannerProps = {
   modelID: string;
   status: ModelStatus;
-  modifiedDts?: string | null;
-  createdDts?: string | null;
+  mostRecentEdit?: string;
   className?: string;
 };
 
 const CollaborationStatusBanner = ({
   modelID,
   status,
-  modifiedDts,
-  createdDts,
+  mostRecentEdit,
   className
 }: CollaborationStatusBannerProps) => {
   const { t } = useTranslation('modelPlanTaskList');
@@ -84,8 +82,8 @@ const CollaborationStatusBanner = ({
       >
         <div className="display-flex flex-align-center flex-wrap margin-right-1">
           <p className={classNames('margin-y-0 text-normal margin-right-1')}>
-            {modifiedDts ? h('lastUpdate') : h('createdOn')}
-            {formatDateLocal(modifiedDts || createdDts || '', 'MM/dd/yyyy')}
+            {h('lastUpdate')}
+            {formatDateLocal(mostRecentEdit || '', 'MM/dd/yyyy')}
           </p>
         </div>
 

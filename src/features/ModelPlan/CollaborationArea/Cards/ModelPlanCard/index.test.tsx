@@ -33,6 +33,11 @@ const modelPlan: GetModelPlanTypes = {
     __typename: 'UserAccount',
     commonName: 'John Doe'
   },
+  mostRecentEdit: {
+    __typename: 'TranslatedAudit',
+    id: '123',
+    date: '2022-05-12T15:01:39.190679Z'
+  },
   archived: false,
   suggestedPhase: {
     __typename: 'PhaseSuggestion',
