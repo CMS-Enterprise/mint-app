@@ -58,7 +58,11 @@ func (s Server) NewS3Config() s3.Config {
 // NewEChimpS3Config returns a new s3.Config and checks required fields
 func (s Server) NewEChimpS3Config() s3.Config {
 	s.checkRequiredConfig(appconfig.AWSRegion)
-	s.checkRequiredConfig(appconfig.AWSS3ECHIMPBucket)
+
+	// Only check this config if NOT in dev environment
+	if !s.environment.Dev() {
+		s.checkRequiredConfig(appconfig.AWSS3ECHIMPBucket)
+	}
 
 	return s3.Config{
 		Bucket:  s.Config.GetString(appconfig.AWSS3ECHIMPBucket),
