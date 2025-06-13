@@ -72,7 +72,7 @@ export const GenericPointsOfContact = ({
         </Button>
 
         {hasContractors ? (
-          contractors.map(contact => <ContractorCard contact={contact} />)
+          contractors.map(contact => <ContractorCard contractor={contact} />)
         ) : (
           <Alert type="info" slim>
             {t('noContractors')}

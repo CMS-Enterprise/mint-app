@@ -121,8 +121,23 @@ export const mtoCommonSolutionContactMisc = {
   addTeamMember: 'Add team member',
   addTeamMailbox: 'Add team mailbox',
   addContractor: 'Add contractor',
-  removePointOfContact: 'Remove point of contact',
-  removeContractor: 'Remove contractor',
+  removePointOfContact: {
+    title: 'Are you sure you want to remove this point of contact?',
+    text: '<bold>Point of contact to be removed:</bold> {{-contact}}',
+    cta: 'Remove point of contact',
+    success: 'You removed <bold>{{-contact}}</bold> as a point of contact.',
+    error:
+      'There was an issue removing this point of contact. Please try again, and if the problem persists, try again later.'
+  },
+  removeContractor: {
+    title: 'Are you sure you want to remove this contractor?',
+    text: '<bold>Contractor to be removed::</bold> {{-contact}}',
+    cta: 'Remove contractor',
+    success: 'You removed <bold>{{-contact}}</bold> as a contractor.',
+    error:
+      'There was an issue removing this contractor. Please try again, and if the problem persists, try again later.'
+  },
+  actionWarning: 'This action cannot be undone.',
   cancel: 'Cancel',
   saveChanges: 'Save Changes',
   alert:
