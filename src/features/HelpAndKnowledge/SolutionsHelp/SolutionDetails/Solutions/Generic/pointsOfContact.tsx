@@ -16,7 +16,7 @@ import Alert from 'components/Alert';
 import Divider from 'components/Divider';
 
 import ContractorCard from './contractorCard';
-import MailboxAndTeamMemberCard from './mailboxAndTeamMemberCard';
+import MailboxesAndTeamMembers from './mailboxesAndTeamMembers';
 
 const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
   return (
@@ -45,22 +45,12 @@ export const GenericPointsOfContact = ({
   solution: HelpSolutionType;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
-  const { contractors } = solution;
-
-  const pointsOfContactSorted = [...(solution?.pointsOfContact || [])].sort(
-    (a, b) => a.name.localeCompare(b.name)
-  );
+  const { pointsOfContact, contractors } = solution;
   const hasContractors = contractors && contractors?.length > 0;
 
   return (
     <div>
-      {/* Sort to have primary first in array */}
-      {[
-        ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
-        ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
-      ].map(contact => (
-        <MailboxAndTeamMemberCard pointOfContact={contact} key={contact.name} />
-      ))}
+      <MailboxesAndTeamMembers pointsOfContact={pointsOfContact || []} />
 
       {solution.systemOwner && (
         <>
