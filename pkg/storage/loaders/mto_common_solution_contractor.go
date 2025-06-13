@@ -22,11 +22,11 @@ type mtoCommonSolutionContractorLoaders struct {
 
 // MTOCommonSolutionContractor is the singleton instance of all LoaderWrappers related to MTOCommonSolutionContractor
 var MTOCommonSolutionContractor = &mtoCommonSolutionContractorLoaders{
-	ByID:                NewLoaderWrapper(MTOCommonSolutionContractorGetByCommonSolutionIDLoader),
+	ByID:                NewLoaderWrapper(batchMTOCommonSolutionContractorGetByID),
 	ByCommonSolutionKey: NewLoaderWrapper(batchMTOCommonSolutionContractorGetBySolutionKey),
 }
 
-// MTOCommonSolutionContractorGetByCommonSolutionIDLoader loads Contractors by a list of Keys
+// batchMTOCommonSolutionContractorGetBySolutionKey loads Contractors by a list of Keys
 func batchMTOCommonSolutionContractorGetBySolutionKey(ctx context.Context, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[[]*models.MTOCommonSolutionContractor] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
@@ -47,8 +47,8 @@ func batchMTOCommonSolutionContractorGetBySolutionKey(ctx context.Context, commo
 	return oneToManyDataLoader(commonSolutionKeys, data, getKeyFunc)
 }
 
-// MTOCommonSolutionContractorGetByCommonSolutionIDLoader loads contractors by a list of IDs
-func MTOCommonSolutionContractorGetByCommonSolutionIDLoader(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolutionContractor] {
+// batchMTOCommonSolutionContractorGetByID loads contractors by a list of IDs
+func batchMTOCommonSolutionContractorGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolutionContractor] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
