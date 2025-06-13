@@ -8,11 +8,14 @@ import Contact from '.';
 const contact: SolutionContactType = {
   __typename: 'MTOCommonSolutionContact',
   id: '123',
+  mailboxTitle: '',
+  mailboxAddress: '',
   name: 'Aliza Kim',
   email: 'aliza.kim@cms.hhs.gov',
   isTeam: false,
   role: 'Project Lead',
-  isPrimary: true
+  isPrimary: true,
+  receiveEmails: false
 };
 
 export default {

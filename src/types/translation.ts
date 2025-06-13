@@ -1347,9 +1347,13 @@ export type TransltionMTOCommonSolutionContactCustomForm = {
   key: TranslationFieldProperties;
   name: TranslationFieldProperties;
   email: TranslationFieldProperties;
-  isTeam: TranslationFieldProperties;
+  isTeam: TranslationFieldPropertiesWithOptions<Bool>;
   role: TranslationFieldProperties;
-  isPrimary: TranslationFieldProperties;
+  isPrimary: TranslationFieldPropertiesWithOptions<Bool>;
+  mailboxAddress: TranslationFieldProperties;
+  mailboxTitle: TranslationFieldProperties;
+  receiveEmails: TranslationFieldPropertiesWithOptions<Bool>;
+  userId: TranslationFieldProperties;
 };
 type TranslationMTOCommonSolutionContactCustomGQL = Omit<
   MtoCommonSolutionContactTranslation, // graphql gen type

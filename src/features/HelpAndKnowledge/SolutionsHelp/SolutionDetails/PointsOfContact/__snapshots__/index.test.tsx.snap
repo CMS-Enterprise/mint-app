@@ -3,74 +3,137 @@
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > 4innovation 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Information Technology
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Enterprise Systems Solutions Group, Division of Applications Development and Support
-            </h3>
-          </div>
+          Office of Information Technology
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            Innovative Design, Development, and Operations Contract (IDDOC)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Enterprise Systems Solutions Group, Division of Applications Development and Support
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -79,74 +142,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Accountable Care Organization - Operational System 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Information Technology
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Enterprise Systems Solutions Group, Division of Applications Development and Support
-            </h3>
-          </div>
+          Office of Information Technology
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            Innovative Design, Development, and Operations Contract (IDDOC)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Enterprise Systems Solutions Group, Division of Applications Development and Support
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -155,43 +281,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Automated Plan Payment System 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Medicare Plan Payment Group, Division of Payment Operations
-            </h3>
-          </div>
+          Center for Medicare
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Medicare Plan Payment Group, Division of Payment Operations
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -200,43 +420,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Beneficiary Claims Data API 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Enterprise Data and Analytics
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Data Analytics and Strategy Group
-            </h3>
-          </div>
+          Office of Enterprise Data and Analytics
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Data Analytics and Strategy Group
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -245,12 +559,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > CMMI Data Aggregation Contract 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -258,12 +667,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > CMS Box 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -271,12 +775,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > CMS Qualtrics 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -284,12 +883,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > CPI Vetting 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -297,74 +991,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Centralized Data Exchange 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            Innovation Support Platform (ISP)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -373,74 +1130,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Chronic Conditions Warehouse 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Enterprise Data and Analytics
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Research Data Development Group
-            </h3>
-          </div>
+          Office of Enterprise Data and Analytics
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Research Data Development Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -449,74 +1269,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Consolidated Business Operations Support Center 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group, Division of System Support, Operations, and Security
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Business Services Group, Division of System Support, Operations, and Security
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -525,12 +1408,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Electronic File Transfer 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -538,74 +1516,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Expanded Data Feedback Reporting 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            Innovation Support Platform (ISP)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -614,12 +1655,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > GovDelivery 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -627,12 +1763,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > GrantSolutions 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -640,74 +1871,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Health Data Reporting 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            Innovation Support Platform (ISP)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -716,43 +2010,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Health Plan Management System 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Division of Plan Data
-            </h3>
-          </div>
+          Center for Medicare
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Division of Plan Data
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -761,43 +2149,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Healthcare Integrated General Ledger Accounting System 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Financial Management
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Accounting Management Group
-            </h3>
-          </div>
+          Office of Financial Management
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Accounting Management Group
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -806,72 +2288,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Innovation Payment Contractor 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group, Division of Budget Operations & Management
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          />
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              National Government Services (NGS)
-            </h3>
-          </div>
+            Business Services Group, Division of Budget Operations & Management
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -880,118 +2427,106 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Innovation Support Platform 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
       >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Prime
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
-        </div>
-      </li>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Subcontractor
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Acument
-            </h3>
-          </div>
-        </div>
-      </li>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
       >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        <p
+          class="usa-alert__text"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Subcontractor
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              ICF International
-            </h3>
-          </div>
-        </div>
-      </li>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Subcontractor
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Tier 1 Consulting
-            </h3>
-          </div>
-        </div>
-      </li>
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1000,43 +2535,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Integrated Data Repository 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Information Technology
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Enterprise Architecture and Data Group, Division of Enterprise Information Management Services
-            </h3>
-          </div>
+          Office of Information Technology
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Enterprise Architecture and Data Group, Division of Enterprise Information Management Services
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1045,12 +2674,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Learning and Diffusion Group 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -1058,12 +2782,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Legal Vertical 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -1071,43 +2890,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Master Data Management Program-Organization Relationship 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Information Technology
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Enterprise Architecture and Data Group
-            </h3>
-          </div>
+          Office of Information Technology
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Enterprise Architecture and Data Group
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1116,43 +3029,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Master Data Management for Non-Claims Based Payments 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Information Technology
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Enterprise Architecture and Data Group
-            </h3>
-          </div>
+          Office of Information Technology
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Enterprise Architecture and Data Group
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1161,12 +3168,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Measure and Instrument Development and Support 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -1174,43 +3276,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Medicare Advantage Prescription Drug System 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Medicare Plan Payment Group, Division of Payment Operations
-            </h3>
-          </div>
+          Center for Medicare
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Medicare Plan Payment Group, Division of Payment Operations
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1219,74 +3415,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Model Space 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            Innovation Support Platform (ISP)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Global Alliant
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1295,12 +3554,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Outlook Mailbox 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -1308,12 +3662,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Quality Vertical 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -1321,12 +3770,107 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Research, Measurement, Assessment, Design, and Analysis 1`] = `
 <DocumentFragment>
   <div>
+    <div>
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
+      </h2>
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
     <h2
-      class="margin-top-0"
+      class="margin-bottom-2"
     >
-      Points of contact
+      Contractors
     </h2>
-    <div />
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -1334,74 +3878,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Salesforce Application Review and Scoring 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1410,74 +4017,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Salesforce CONNECT 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1486,74 +4156,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Salesforce Letter of Intent 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1562,74 +4295,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Salesforce Project Officer Support Tool / Portal 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1638,74 +4434,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Salesforce Request for Application 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Center for Medicare and Medicaid Innovation
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Business Services Group
-            </h3>
-          </div>
+          Center for Medicare and Medicaid Innovation
         </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
+          <h3
+            class="margin-0 line-height-sans-2"
           >
-            CMMI Technology Solution (CTS)
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Softrams
-            </h3>
-          </div>
+            Business Services Group
+          </h3>
         </div>
-      </li>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1714,43 +4573,137 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > Shared Systems 1`] = `
 <DocumentFragment>
   <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
     <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
+      <h2
+        class="margin-top-0 margin-bottom-2"
+      >
+        Mailboxes and team members
       </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
+      <div
+        class="height-3 margin-bottom-2"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add team mailbox
+        </button>
+        <div
+          class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
+        />
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add a team member
+        </button>
+      </div>
+    </div>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2>
+      System owner
+    </h2>
+    <li
+      class="usa-card margin-bottom-0"
+      data-testid="Card"
+    >
+      <div
+        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
       >
         <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+          class="usa-card__body padding-0 margin-bottom-1"
+          data-testid="CardBody"
         >
-          <header
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Office of Information Technology
-          </header>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Applications Management Group, Division of Shared Systems Management
-            </h3>
-          </div>
+          Office of Information Technology
         </div>
-      </li>
+        <div
+          class="usa-card__footer padding-0"
+          data-testid="CardFooter"
+        >
+          <h3
+            class="margin-0 line-height-sans-2"
+          >
+            Applications Management Group, Division of Shared Systems Management
+          </h3>
+        </div>
+      </div>
+    </li>
+    <div
+      class="mint-divider margin-y-6"
+    />
+    <h2
+      class="margin-bottom-2"
+    >
+      Contractors
+    </h2>
+    <button
+      class="usa-button usa-button--unstyled margin-bottom-3"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      Add a contractor
+    </button>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            No contractor is listed for this solution.
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>
