@@ -889,7 +889,7 @@ export type MtoCommonSolutionContractorChanges = {
 export type MtoCommonSolutionContractorTranslation = {
   __typename: 'MTOCommonSolutionContractorTranslation';
   contractorName: TranslationField;
-  contractorTitle?: Maybe<TranslationField>;
+  contractorTitle: TranslationField;
   key: TranslationField;
 };
 

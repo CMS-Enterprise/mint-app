@@ -26,7 +26,7 @@ var MTOCommonSolutionContractor = &mtoCommonSolutionContractorLoaders{
 	ByCommonSolutionKey: NewLoaderWrapper(batchMTOCommonSolutionContractorGetBySolutionKey),
 }
 
-// batchMTOCommonSolutionContractorGetByID loads Contractors by a list of Keys
+// MTOCommonSolutionContractorGetByCommonSolutionIDLoader loads Contractors by a list of Keys
 func batchMTOCommonSolutionContractorGetBySolutionKey(ctx context.Context, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[[]*models.MTOCommonSolutionContractor] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)

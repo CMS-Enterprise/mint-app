@@ -3,106 +3,28 @@
     "gqlField": "key",
     "goField": "Key",
     "dbField": "mto_common_solution_key",
-    "label": "MTO Common Solution Contact",
+    "label": "MTO Common Solution",
     "dataType": "ENUM",
     "formType": "TEXT",
     "tableReference": "mto_common_solution",
+    "order": 1.1
+  },
+  "contractorTitle": {
+    "gqlField": "contractorTitle",
+    "goField": "ContractorTitle",
+    "dbField": "contractor_title",
+    "label": "Contractor Title",
+    "dataType": "STRING",
+    "formType": "TEXT",
     "order": 1.2
   },
-  "mailboxTitle": {
-    "gqlField": "mailboxTitle",
-    "goField": "MailboxTitle",
-    "dbField": "mailbox_title",
-    "label": "Mailbox Title",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1.6
-  },
-  "mailboxAddress": {
-    "gqlField": "mailboxAddress",
-    "goField": "MailboxAddress",
-    "dbField": "mailbox_address",
-    "label": "Mailbox Address",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1.7
-  },
-  "userId": {
-    "gqlField": "userId",
-    "goField": "UserId",
-    "dbField": "user_id",
-    "label": "User ID",
-    "dataType": "UUID",
-    "formType": "TEXT",
-    "order": 1.8
-  },
-  "isTeam": {
-    "gqlField": "isTeam",
-    "goField": "IsTeam",
-    "dbField": "is_team",
-    "label": "Is this contact a team mailbox?",
-    "sublabel": "Select 'Yes' if this contact represents a team mailbox rather than an individual.",
-    "dataType": "BOOLEAN",
-    "formType": "RADIO",
-    "order": 1.5,
-    "options": {
-      "true": "Yes",
-      "false": "No"
-    }
-  },
-  "role": {
-    "gqlField": "role",
-    "goField": "Role",
-    "dbField": "role",
-    "label": "Role",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1.4
-  },
-  "isPrimary": {
-    "gqlField": "isPrimary",
-    "goField": "IsPrimary",
-    "dbField": "is_primary",
-    "label": "Is this the primary contact?",
-    "sublabel": "Select 'Yes' if this is the main contact for this solution.",
-    "dataType": "BOOLEAN",
-    "formType": "RADIO",
-    "order": 1.1,
-    "options": {
-      "true": "Yes",
-      "false": "No"
-    }
-  },
-  "receiveEmails": {
-    "gqlField": "receiveEmails",
-    "goField": "ReceiveEmails",
-    "dbField": "receive_emails",
-    "label": "Should this contact receive emails?",
-    "sublabel": "Select 'Yes' if this contact should receive notifications or emails.",
-    "dataType": "BOOLEAN",
-    "formType": "RADIO",
-    "order": 1.9,
-    "options": {
-      "true": "Yes",
-      "false": "No"
-    }
-  },
-  "name": {
-    "gqlField": "name",
-    "goField": "Name",
-    "dbField": "name",
-    "label": "Name",
+  "contractorName": {
+    "gqlField": "contractorName",
+    "goField": "ContractorName",
+    "dbField": "contractor_name",
+    "label": "Contractor Name",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.3
-  },
-  "email": {
-    "gqlField": "email",
-    "goField": "Email",
-    "dbField": "email",
-    "label": "Email",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1
   }
 }
