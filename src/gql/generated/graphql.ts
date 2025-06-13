@@ -843,13 +843,16 @@ export type MtoCommonSolutionContactInformation = {
 /** Represents a translation of a contact for a common solution */
 export type MtoCommonSolutionContactTranslation = {
   __typename: 'MTOCommonSolutionContactTranslation';
-  isPrimary: TranslationField;
-  isTeam: TranslationField;
+  email: TranslationField;
+  isPrimary: TranslationFieldWithOptions;
+  isTeam: TranslationFieldWithOptions;
   key: TranslationField;
   mailboxAddress: TranslationField;
   mailboxTitle: TranslationField;
-  receiveEmails: TranslationField;
+  name: TranslationField;
+  receiveEmails: TranslationFieldWithOptions;
   role: TranslationField;
+  userId: TranslationField;
 };
 
 /**
@@ -880,6 +883,14 @@ export type MtoCommonSolutionContractor = {
 export type MtoCommonSolutionContractorChanges = {
   contractorName?: InputMaybe<Scalars['String']['input']>;
   contractorTitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents a translation of a contractor for a common solution */
+export type MtoCommonSolutionContractorTranslation = {
+  __typename: 'MTOCommonSolutionContractorTranslation';
+  contractorName: TranslationField;
+  contractorTitle?: Maybe<TranslationField>;
+  key: TranslationField;
 };
 
 export enum MtoCommonSolutionKey {

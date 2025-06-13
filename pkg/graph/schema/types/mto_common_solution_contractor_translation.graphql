@@ -1,0 +1,8 @@
+"""
+Represents a translation of a contractor for a common solution
+"""
+type MTOCommonSolutionContractorTranslation {
+  key: TranslationField! @goTag(key: "db", value:"mto_common_solution_key")
+  contractorTitle: TranslationField @goTag(key: "db", value:"contractor_title")
+  contractorName: TranslationField! @goTag(key: "db", value:"contractor_name")
+}

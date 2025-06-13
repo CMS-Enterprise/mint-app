@@ -3,10 +3,11 @@ package loaders
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/google/uuid"
 
 	"github.com/graph-gophers/dataloader/v7"
 )
@@ -21,7 +22,7 @@ type mtoCommonSolutionContractorLoaders struct {
 
 // MTOCommonSolutionContractor is the singleton instance of all LoaderWrappers related to MTOCommonSolutionContractor
 var MTOCommonSolutionContractor = &mtoCommonSolutionContractorLoaders{
-	ByID:                NewLoaderWrapper(batchMTOCommonSolutionContractorGetByID),
+	ByID:                NewLoaderWrapper(MTOCommonSolutionContractorGetByCommonSolutionIDLoader),
 	ByCommonSolutionKey: NewLoaderWrapper(batchMTOCommonSolutionContractorGetBySolutionKey),
 }
 
@@ -46,15 +47,15 @@ func batchMTOCommonSolutionContractorGetBySolutionKey(ctx context.Context, commo
 	return oneToManyDataLoader(commonSolutionKeys, data, getKeyFunc)
 }
 
-// batchMTOCommonSolutionContractorGetByID loads contractors by a list of IDs
-func batchMTOCommonSolutionContractorGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolutionContractor] {
+// MTOCommonSolutionContractorGetByCommonSolutionIDLoader loads contractors by a list of IDs
+func MTOCommonSolutionContractorGetByCommonSolutionIDLoader(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolutionContractor] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
 	}
 
-	data, err := storage.MTOCommonSolutionContractorGetByCommonSolutionIdLoader(loaders.DataReader.Store, logger, ids)
+	data, err := storage.MTOCommonSolutionContractorGetByIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
 	}
