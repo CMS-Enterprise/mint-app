@@ -15,7 +15,7 @@ type ReadViewStatusBannerStatusBannerProps = {
   modelID: string;
   status: ModelStatus;
   hasEditAccess?: boolean;
-  mostRecentEdit?: string;
+  mostRecentEdit: string;
   changeHistoryLink?: boolean;
   className?: string;
 };

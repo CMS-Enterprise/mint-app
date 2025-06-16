@@ -69,7 +69,8 @@ const CollaborationArea = () => {
     isFavorite,
     suggestedPhase,
     mtoMatrix,
-    mostRecentEdit
+    mostRecentEdit,
+    createdDts
   } = modelPlan;
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -193,7 +194,7 @@ const CollaborationArea = () => {
               <CollaborationStatusBanner
                 modelID={modelID}
                 status={status}
-                mostRecentEdit={mostRecentEdit?.date}
+                mostRecentEdit={mostRecentEdit?.date || createdDts}
                 className="margin-top-2"
               />
             </Grid>
