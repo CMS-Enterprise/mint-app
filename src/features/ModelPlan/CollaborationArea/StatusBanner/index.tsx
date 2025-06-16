@@ -14,7 +14,7 @@ import './index.scss';
 type CollaborationStatusBannerProps = {
   modelID: string;
   status: ModelStatus;
-  mostRecentEdit?: string;
+  mostRecentEdit: string;
   className?: string;
 };
 

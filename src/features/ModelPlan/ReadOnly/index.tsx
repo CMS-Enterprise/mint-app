@@ -274,6 +274,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     modelName,
     isFavorite,
     mostRecentEdit,
+    createdDts,
     status,
     basics,
     generalCharacteristics,
@@ -377,7 +378,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         <ReadViewStatusBanner
           modelID={modelID}
           status={status}
-          mostRecentEdit={mostRecentEdit?.date}
+          mostRecentEdit={mostRecentEdit?.date || createdDts}
           hasEditAccess={hasEditAccess}
         />
 
