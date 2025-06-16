@@ -13,4 +13,3 @@ type MTOCommonSolutionContactTranslation {
   isPrimary: TranslationFieldWithOptions! @goTag(key: "db", value:"is_primary")
   receiveEmails: TranslationFieldWithOptions! @goTag(key: "db", value:"receive_emails")
 }
-

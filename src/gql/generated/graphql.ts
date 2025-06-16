@@ -885,6 +885,14 @@ export type MtoCommonSolutionContractorChanges = {
   contractorTitle?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents a translation of a contractor for a common solution */
+export type MtoCommonSolutionContractorTranslation = {
+  __typename: 'MTOCommonSolutionContractorTranslation';
+  contractorName: TranslationField;
+  contractorTitle: TranslationField;
+  key: TranslationField;
+};
+
 export enum MtoCommonSolutionKey {
   ACO_OS = 'ACO_OS',
   APPS = 'APPS',

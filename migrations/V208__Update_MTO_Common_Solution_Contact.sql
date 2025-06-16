@@ -55,3 +55,6 @@ CHECK (
     OR
     (mailbox_address IS NULL AND mailbox_title IS NULL AND user_id IS NOT NULL AND is_team = FALSE)
 );
+
+-- This needs to be part of a seperate migration than the definition of contractor table to avoid issues with existing data 
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_common_solution_contractor';
