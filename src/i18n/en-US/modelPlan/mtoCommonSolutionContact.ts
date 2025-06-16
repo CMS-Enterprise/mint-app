@@ -117,4 +117,16 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
   }
 };
 
+export const mtoCommonSolutionContactMisc = {
+  addTeamMember: 'Add team member',
+  addTeamMailbox: 'Add team mailbox',
+  addContractor: 'Add contractor',
+  removePointOfContact: 'Remove point of contact',
+  removeContractor: 'Remove contractor',
+  cancel: 'Cancel',
+  saveChanges: 'Save Changes',
+  alert:
+    'This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.'
+};
+
 export default mtoCommonSolutionContact;
