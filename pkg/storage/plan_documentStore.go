@@ -228,13 +228,14 @@ func planDocumentUpdateVirusScanStatus(s3Client *s3.S3Client, document *models.P
 		return err
 	}
 
-	if status == "CLEAN" {
+	switch status {
+	case "CLEAN":
 		document.VirusScanned = true
 		document.VirusClean = true
-	} else if status == "INFECTED" {
+	case "INFECTED":
 		document.VirusScanned = true
 		document.VirusClean = false
-	} else {
+	default:
 		document.VirusScanned = false
 		document.VirusClean = false
 	}
