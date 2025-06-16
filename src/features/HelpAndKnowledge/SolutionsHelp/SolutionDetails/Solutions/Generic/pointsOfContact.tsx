@@ -1,55 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Icon,
-  Link
+  Icon
 } from '@trussworks/react-uswds';
 import {
   HelpSolutionType,
-  SolutionContactType,
   SystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import Alert from 'components/Alert';
 import Divider from 'components/Divider';
 
-const PointOfContactCard = ({
-  pointOfContact
-}: {
-  pointOfContact: SolutionContactType;
-}) => {
-  return (
-    <Card
-      className="margin-bottom-0"
-      containerProps={{
-        className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
-      }}
-    >
-      <CardHeader className="padding-0">
-        <h3 className="margin-0">{pointOfContact.name}</h3>
-      </CardHeader>
-      <CardBody className="padding-0 margin-bottom-1 display-flex flex-align-center">
-        <Link
-          aria-label={pointOfContact.email}
-          className="margin-0 line-height-body-5"
-          href={`mailto:${pointOfContact.email}`}
-          target="_blank"
-        >
-          {pointOfContact.email}
-          <Icon.MailOutline className="margin-left-05 margin-bottom-2px text-tbottom" />
-        </Link>
-      </CardBody>
-      {pointOfContact.role && (
-        <CardFooter className="padding-0 font-body-xs">
-          {pointOfContact.role}
-        </CardFooter>
-      )}
-    </Card>
-  );
-};
+import ContractorCard from './contractorCard';
+import MailboxesAndTeamMembers from './mailboxesAndTeamMembers';
 
 const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
   return (
@@ -60,9 +27,9 @@ const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
         className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
       }}
     >
-      <CardHeader className="font-body-xs padding-0">
+      <CardBody className="padding-0 margin-bottom-1">
         {contact.system}
-      </CardHeader>
+      </CardBody>
       {contact.name && (
         <CardFooter className="padding-0">
           <h3 className="margin-0 line-height-sans-2">{contact.name}</h3>
@@ -78,20 +45,12 @@ export const GenericPointsOfContact = ({
   solution: HelpSolutionType;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
-
-  const pointsOfContactSorted = [...(solution?.pointsOfContact || [])].sort(
-    (a, b) => a.name.localeCompare(b.name)
-  );
+  const { pointsOfContact, contractors } = solution;
+  const hasContractors = contractors && contractors?.length > 0;
 
   return (
     <div>
-      {/* Sort to have primary first in array */}
-      {[
-        ...(pointsOfContactSorted.filter(x => x.isPrimary) || []),
-        ...(pointsOfContactSorted.filter(x => !x.isPrimary) || [])
-      ].map(contact => (
-        <PointOfContactCard pointOfContact={contact} key={contact.name} />
-      ))}
+      <MailboxesAndTeamMembers pointsOfContact={pointsOfContact || []} />
 
       {solution.systemOwner && (
         <>
@@ -103,17 +62,23 @@ export const GenericPointsOfContact = ({
         </>
       )}
 
-      {solution.contractors?.length && (
-        <>
-          <Divider className="margin-y-6" />
+      <>
+        <Divider className="margin-y-6" />
 
-          <h2>{t('contractors')}</h2>
+        <h2 className="margin-bottom-2">{t('contractors')}</h2>
+        <Button type="button" className="margin-bottom-3" unstyled>
+          <Icon.Add aria-hidden />
+          {t('addContractor')}
+        </Button>
 
-          {solution.contractors.map(contact => (
-            <GenericCard contact={contact} key={contact.name} />
-          ))}
-        </>
-      )}
+        {hasContractors ? (
+          contractors.map(contact => <ContractorCard contact={contact} />)
+        ) : (
+          <Alert type="info" slim>
+            {t('noContractors')}
+          </Alert>
+        )}
+      </>
     </div>
   );
 };
