@@ -16,7 +16,7 @@ import (
 type mtoCommonSolutionContractorLoaders struct {
 	// ByID returns a single MTOCommonSolutionContractor by its UUID
 	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolutionContractor]
-	// ByID returns a single MTOCommonSolutionContractor by its UUID
+	// ByID returns a single MTOCommonSolutionContractor by its common solution key
 	ByCommonSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionContractor]
 }
 
