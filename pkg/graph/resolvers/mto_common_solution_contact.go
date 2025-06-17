@@ -143,14 +143,14 @@ func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 	}
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContact, error) {
-		updatedContact, err := storage.MTOCommonSolutionUpdateContact(store, logger, existingContact)
+		updatedContact, err := storage.MTOCommonSolutionUpdateContact(tx, logger, existingContact)
 		if err != nil {
 			return nil, fmt.Errorf("failed to update contact with id %s: %w", id, err)
 		}
 
 		// Update isPrimary on other rows if needed
 		if existingContact.IsPrimary {
-			err = storage.MTOCommonSolutionContactUnsetPrimaryContactByKey(store, logger, existingContact)
+			err = storage.MTOCommonSolutionContactUnsetPrimaryContactByKey(tx, logger, existingContact)
 
 			if err != nil {
 				return nil, err
