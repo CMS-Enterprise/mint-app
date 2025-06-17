@@ -23,6 +23,8 @@ CREATE TABLE timeline (
     ready_for_clearance_by EUA_ID,
     ready_for_clearance_dts TIMESTAMP WITH TIME ZONE,
 
+    status TASK_STATUS NOT NULL DEFAULT 'READY',
+
     CONSTRAINT fk_timeline_model_plan FOREIGN KEY (model_plan_id)
     REFERENCES public.model_plan (id) MATCH SIMPLE
     ON UPDATE NO ACTION
@@ -50,7 +52,8 @@ INSERT INTO timeline (
     ready_for_review_by,
     ready_for_review_dts,
     ready_for_clearance_by,
-    ready_for_clearance_dts
+    ready_for_clearance_dts,
+    status
 )
 SELECT
     GEN_RANDOM_UUID() AS id,  -- Generate a new UUID for each row
@@ -72,7 +75,8 @@ SELECT
     ready_for_review_by,
     ready_for_review_dts,
     ready_for_clearance_by,
-    ready_for_clearance_dts
+    ready_for_clearance_dts,
+    status
 FROM plan_basics;
 
 -- Add audit configuration for the new timeline table
