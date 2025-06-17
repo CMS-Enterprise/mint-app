@@ -131,7 +131,7 @@ export const mtoCommonSolutionContactMisc = {
   },
   removeContractor: {
     title: 'Are you sure you want to remove this contractor?',
-    text: '<bold>Contractor to be removed::</bold> {{-contact}}',
+    text: '<bold>Contractor to be removed: </bold>{{-contact}}',
     cta: 'Remove contractor',
     success: 'You removed <bold>{{-contact}}</bold> as a contractor.',
     error:

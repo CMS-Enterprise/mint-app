@@ -17,7 +17,7 @@ import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/Centrali
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
 import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
-import GenericTimeline from './SolutionDetails/Solutions/Generic/timeline';
+import GenericTimeline from './SolutionDetails/Solutions/Generic/Timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
 import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
 import RMADATimeline from './SolutionDetails/Solutions/RMADA';

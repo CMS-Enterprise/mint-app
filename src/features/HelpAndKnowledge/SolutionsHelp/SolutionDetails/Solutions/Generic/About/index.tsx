@@ -8,7 +8,7 @@ import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/ut
 
 import ExternalLink from 'components/ExternalLink';
 
-import '../index.scss';
+import '../../index.scss';
 
 type ListItemType = {
   header: string;

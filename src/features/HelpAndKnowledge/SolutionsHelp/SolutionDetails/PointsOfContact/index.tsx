@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HelpSolutionType } from '../../solutionsMap';
-import GenericPointsOfContact from '../Solutions/Generic/pointsOfContact';
+import GenericPointsOfContact from '../Solutions/Generic/PointsOfContact';
 
 export const PointsOfContact = ({
   solution

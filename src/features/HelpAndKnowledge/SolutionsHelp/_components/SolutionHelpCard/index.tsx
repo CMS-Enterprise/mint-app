@@ -12,7 +12,7 @@ import { tObject } from 'utils/translation';
 import {
   AboutConfigType,
   getTransLinkComponents
-} from '../../SolutionDetails/Solutions/Generic/about';
+} from '../../SolutionDetails/Solutions/Generic/About';
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
 

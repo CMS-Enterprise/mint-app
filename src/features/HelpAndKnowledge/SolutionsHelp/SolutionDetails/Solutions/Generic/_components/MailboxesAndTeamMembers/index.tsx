@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import MailboxAndTeamMemberCard from './mailboxAndTeamMemberCard';
+import MailboxAndTeamMemberCard from '../MailboxAndTeamMemberCard';
 
 const MailboxesAndTeamMembers = ({
   pointsOfContact
