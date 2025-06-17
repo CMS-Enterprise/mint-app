@@ -16,7 +16,7 @@ import (
 type mtoCommonSolutionContractorLoaders struct {
 	// ByID returns a single MTOCommonSolutionContractor by its UUID
 	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolutionContractor]
-	// ByID returns a single MTOCommonSolutionContractor by its UUID
+	// ByCommonSolutionKey returns a single MTOCommonSolutionContractor by its common solution key
 	ByCommonSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionContractor]
 }
 
@@ -26,7 +26,7 @@ var MTOCommonSolutionContractor = &mtoCommonSolutionContractorLoaders{
 	ByCommonSolutionKey: NewLoaderWrapper(batchMTOCommonSolutionContractorGetBySolutionKey),
 }
 
-// batchMTOCommonSolutionContractorGetByID loads Contractors by a list of Keys
+// batchMTOCommonSolutionContractorGetBySolutionKey loads Contractors by a list of Keys
 func batchMTOCommonSolutionContractorGetBySolutionKey(ctx context.Context, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[[]*models.MTOCommonSolutionContractor] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
@@ -55,7 +55,7 @@ func batchMTOCommonSolutionContractorGetByID(ctx context.Context, ids []uuid.UUI
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
 	}
 
-	data, err := storage.MTOCommonSolutionContractorGetByCommonSolutionIDLoader(loaders.DataReader.Store, logger, ids)
+	data, err := storage.MTOCommonSolutionContractorGetByIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolutionContractor](ids, err)
 	}

@@ -83,3 +83,5 @@ DROP INDEX idx_unique_primary_contact_per_mto_common_solution;
 --     DEFERRABLE INITIALLY IMMEDIATE
 --     FOR EACH ROW
 --     EXECUTE FUNCTION enforce_single_primary_contact();
+-- This needs to be part of a seperate migration than the definition of contractor table to avoid issues with existing data 
+ALTER TYPE TABLE_NAME ADD VALUE 'mto_common_solution_contractor';

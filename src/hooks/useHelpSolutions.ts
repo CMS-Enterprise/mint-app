@@ -29,6 +29,7 @@ export const mapContactsToSolutions = (
     // Add fetch pointsOfContact field to existing FE solution map
     return {
       ...solution,
+      contractors: foundSolution?.contractors,
       pointsOfContact: foundSolution?.contactInformation.pointsOfContact
     };
   });

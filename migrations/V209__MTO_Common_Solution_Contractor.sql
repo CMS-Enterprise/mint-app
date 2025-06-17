@@ -13,3 +13,5 @@ CREATE TABLE mto_common_solution_contractor (
 );
 
 COMMENT ON TABLE mto_common_solution_contractor IS 'Table for storing contractor information related to MTO common solutions.';
+
+SELECT audit.AUDIT_TABLE('public', 'mto_common_solution_contractor', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]);
