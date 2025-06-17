@@ -12,7 +12,7 @@ exports[`MailboxAndTeamMemberCard Component > should matches snapshot 1`] = `
       <div
         class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
       >
-        <header
+        <div
           class="usa-card__header padding-0"
           data-testid="CardHeader"
         >
@@ -27,10 +27,9 @@ exports[`MailboxAndTeamMemberCard Component > should matches snapshot 1`] = `
             data-testid="tooltipWrapper"
           >
             <button
-              aria-describedby="tooltip-525155"
+              aria-describedby="tooltip-«r0»"
               class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
               data-testid="triggerElement"
-              position="right"
               style="gap: 0.25rem;"
               tabindex="0"
               title=""
@@ -59,14 +58,14 @@ exports[`MailboxAndTeamMemberCard Component > should matches snapshot 1`] = `
               aria-hidden="true"
               class="usa-tooltip__body"
               data-testid="tooltipBody"
-              id="tooltip-525155"
+              id="tooltip-«r0»"
               role="tooltip"
               title="This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO)."
             >
               This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).
             </span>
           </span>
-        </header>
+        </div>
         <div
           class="usa-card__body padding-0 margin-bottom-1 display-flex flex-align-center"
           data-testid="CardBody"
