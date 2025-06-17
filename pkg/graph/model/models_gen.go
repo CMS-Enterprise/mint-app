@@ -751,6 +751,35 @@ type SendFeedbackEmailInput struct {
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
 }
 
+// Represents timeline
+type Timeline struct {
+	ID                             uuid.UUID                   `json:"id"`
+	ModelPlanID                    uuid.UUID                   `json:"modelPlanID"`
+	CompleteIcip                   *time.Time                  `json:"completeICIP,omitempty"`
+	ClearanceStarts                *time.Time                  `json:"clearanceStarts,omitempty"`
+	ClearanceEnds                  *time.Time                  `json:"clearanceEnds,omitempty"`
+	Announced                      *time.Time                  `json:"announced,omitempty"`
+	ApplicationsStart              *time.Time                  `json:"applicationsStart,omitempty"`
+	ApplicationsEnd                *time.Time                  `json:"applicationsEnd,omitempty"`
+	PerformancePeriodStarts        *time.Time                  `json:"performancePeriodStarts,omitempty"`
+	PerformancePeriodEnds          *time.Time                  `json:"performancePeriodEnds,omitempty"`
+	WrapUpEnds                     *time.Time                  `json:"wrapUpEnds,omitempty"`
+	HighLevelNote                  *string                     `json:"highLevelNote,omitempty"`
+	CreatedBy                      uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount           authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts                     time.Time                   `json:"createdDts"`
+	ModifiedBy                     *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount          *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts                    *time.Time                  `json:"modifiedDts,omitempty"`
+	ReadyForReviewBy               *uuid.UUID                  `json:"readyForReviewBy,omitempty"`
+	ReadyForReviewByUserAccount    *authentication.UserAccount `json:"readyForReviewByUserAccount,omitempty"`
+	ReadyForReviewDts              *time.Time                  `json:"readyForReviewDts,omitempty"`
+	ReadyForClearanceBy            *uuid.UUID                  `json:"readyForClearanceBy,omitempty"`
+	ReadyForClearanceByUserAccount *authentication.UserAccount `json:"readyForClearanceByUserAccount,omitempty"`
+	ReadyForClearanceDts           *time.Time                  `json:"readyForClearanceDts,omitempty"`
+	Status                         models.TaskStatus           `json:"status"`
+}
+
 type ActionType string
 
 const (

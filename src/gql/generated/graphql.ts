@@ -1222,6 +1222,7 @@ export type ModelPlan = {
   suggestedPhase?: Maybe<PhaseSuggestion>;
   taskListStatus: TaskStatus;
   tdls: Array<PlanTdl>;
+  timeline?: Maybe<Timeline>;
 };
 
 
@@ -1458,6 +1459,7 @@ export type Mutation = {
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
+  updateTimeline: Timeline;
   /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
   updateUserViewCustomization: UserViewCustomization;
@@ -1790,6 +1792,13 @@ export type MutationUpdatePlanPaymentsArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdatePlanTdlArgs = {
   changes: PlanTdlChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateTimelineArgs = {
+  changes: TimelineChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -4138,6 +4147,7 @@ export enum TableName {
   POSSIBLE_OPERATIONAL_SOLUTION = 'possible_operational_solution',
   POSSIBLE_OPERATIONAL_SOLUTION_CONTACT = 'possible_operational_solution_contact',
   TAG = 'tag',
+  TIMELINE = 'timeline',
   TRANSLATED_AUDIT = 'translated_audit',
   TRANSLATED_AUDIT_FIELD = 'translated_audit_field',
   TRANSLATED_AUDIT_QUEUE = 'translated_audit_queue',
@@ -4243,6 +4253,55 @@ export enum TeamRole {
   QUALITY = 'QUALITY',
   SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
 }
+
+/** Represents timeline */
+export type Timeline = {
+  __typename: 'Timeline';
+  announced?: Maybe<Scalars['Time']['output']>;
+  applicationsEnd?: Maybe<Scalars['Time']['output']>;
+  applicationsStart?: Maybe<Scalars['Time']['output']>;
+  clearanceEnds?: Maybe<Scalars['Time']['output']>;
+  clearanceStarts?: Maybe<Scalars['Time']['output']>;
+  completeICIP?: Maybe<Scalars['Time']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  highLevelNote?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  performancePeriodEnds?: Maybe<Scalars['Time']['output']>;
+  performancePeriodStarts?: Maybe<Scalars['Time']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
+  readyForClearanceByUserAccount?: Maybe<UserAccount>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
+  status: TaskStatus;
+  wrapUpEnds?: Maybe<Scalars['Time']['output']>;
+};
+
+/**
+ * TimelineChanges represents the possible changes you can make to a Timeline object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https://gqlgen.com/reference/changesets/
+ */
+export type TimelineChanges = {
+  announced?: InputMaybe<Scalars['Time']['input']>;
+  applicationsEnd?: InputMaybe<Scalars['Time']['input']>;
+  applicationsStart?: InputMaybe<Scalars['Time']['input']>;
+  clearanceEnds?: InputMaybe<Scalars['Time']['input']>;
+  clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
+  completeICIP?: InputMaybe<Scalars['Time']['input']>;
+  highLevelNote?: InputMaybe<Scalars['String']['input']>;
+  performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
+  performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
+  status?: InputMaybe<TaskStatusInput>;
+  wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
+};
 
 /** TranslatedAudit represent a point in time change made to part of application. */
 export type TranslatedAudit = {

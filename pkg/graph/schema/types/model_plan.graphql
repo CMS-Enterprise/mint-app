@@ -120,6 +120,7 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
+  timeline: Timeline
   """
   Most recent edit to the model plan. 
   This returns the most recent edit, that doesn't require privileges to view.
