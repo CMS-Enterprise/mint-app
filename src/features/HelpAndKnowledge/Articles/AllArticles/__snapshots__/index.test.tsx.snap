@@ -99,6 +99,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     type="submit"
                   >
                     <svg
+                      aria-label="search"
                       class="usa-icon usa-icon--size-3"
                       focusable="false"
                       height="1em"
@@ -180,7 +181,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -189,7 +190,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   >
                     About 2-page concept papers and review meetings
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -231,7 +232,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -240,7 +241,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   >
                     About 6-page concept papers and review meetings
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -286,6 +287,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
                 >
                   <svg
+                    aria-label="launch"
                     class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
@@ -303,7 +305,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <div
                   class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
                 >
-                  <header
+                  <div
                     class="usa-card__header padding-0"
                     data-testid="CardHeader"
                   >
@@ -312,7 +314,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     >
                       Announcement materials on SharePoint
                     </h3>
-                  </header>
+                  </div>
                   <a
                     class="usa-link width-fit-content display-block "
                     href="/help-and-knowledge/articles?category=getting-started"
@@ -347,6 +349,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       >
                         Read more
                         <svg
+                          aria-label="expand"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -377,6 +380,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       >
                         View on SharePoint
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -406,6 +410,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
                 >
                   <svg
+                    aria-label="launch"
                     class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
@@ -423,7 +428,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <div
                   class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
                 >
-                  <header
+                  <div
                     class="usa-card__header padding-0"
                     data-testid="CardHeader"
                   >
@@ -432,7 +437,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     >
                       CMMI Clearance site on SharePoint
                     </h3>
-                  </header>
+                  </div>
                   <a
                     class="usa-link width-fit-content display-block "
                     href="/help-and-knowledge/articles?category=getting-started"
@@ -467,6 +472,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       >
                         Read more
                         <svg
+                          aria-label="expand"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -497,6 +503,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       >
                         View on SharePoint
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -522,7 +529,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -531,7 +538,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   >
                     Creating your Model-to-operations matrix (MTO) in MINT
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=it-implementation"
@@ -573,7 +580,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -582,7 +589,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   >
                     Evaluate your data exchange approach
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=getting-started"
@@ -628,6 +635,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
                 >
                   <svg
+                    aria-label="launch"
                     class="usa-icon margin-right-05"
                     focusable="false"
                     height="1em"
@@ -645,7 +653,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <div
                   class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
                 >
-                  <header
+                  <div
                     class="usa-card__header padding-0"
                     data-testid="CardHeader"
                   >
@@ -654,7 +662,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                     >
                       Fraud and abuse waiver templates on SharePoint
                     </h3>
-                  </header>
+                  </div>
                   <a
                     class="usa-link width-fit-content display-block "
                     href="/help-and-knowledge/articles?category=model-concept-and-design"
@@ -689,6 +697,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       >
                         Read more
                         <svg
+                          aria-label="expand"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -719,6 +728,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       >
                         View on SharePoint
                         <svg
+                          aria-label="launch"
                           class="usa-icon"
                           focusable="false"
                           height="1em"
@@ -744,7 +754,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -753,7 +763,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   >
                     High-level project plan
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=getting-started"
@@ -795,7 +805,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <div
                 class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
               >
-                <header
+                <div
                   class="usa-card__header padding-0"
                   data-testid="CardHeader"
                 >
@@ -804,7 +814,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   >
                     How to add a custom milestone
                   </h3>
-                </header>
+                </div>
                 <a
                   class="usa-link width-fit-content display-block "
                   href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -914,6 +924,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       Next
                     </span>
                     <svg
+                      aria-hidden="true"
                       class="usa-icon"
                       focusable="false"
                       height="1em"

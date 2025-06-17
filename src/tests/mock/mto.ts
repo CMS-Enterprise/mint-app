@@ -150,6 +150,7 @@ export const mtoMatrixMockFull: MockedResponse<
                           MtoFacilitator.CONTRACTING_OFFICERS_REPRESENTATIVE,
                           MtoFacilitator.LEARNING_AND_DIFFUSION_GROUP
                         ],
+                        facilitatedByOther: '',
                         // Removed needBy to match the expected type
                         status: MtoMilestoneStatus.NOT_STARTED,
                         riskIndicator: MtoRiskIndicator.ON_TRACK,
@@ -448,6 +449,7 @@ export const milestoneMock = (
           name: 'Milestone 1',
           key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
           facilitatedBy: [],
+          facilitatedByOther: '',
           needBy: '2021-08-01',
           status: MtoMilestoneStatus.COMPLETED,
           riskIndicator: MtoRiskIndicator.AT_RISK,
@@ -561,6 +563,7 @@ export const solutionMock = (
           riskIndicator: MtoRiskIndicator.AT_RISK,
           addedFromSolutionLibrary,
           facilitatedBy: null,
+          facilitatedByOther: '',
           type: MtoSolutionType.IT_SYSTEM,
           neededBy: '2121-08-01',
           pocName: 'Test Name',
@@ -733,6 +736,7 @@ export const solutionAndMilestoneMock: MockedResponse<
                 status: MtoSolutionStatus.IN_PROGRESS,
                 addedFromSolutionLibrary: true,
                 facilitatedBy: [],
+                facilitatedByOther: '',
                 neededBy: '',
                 milestones: [
                   {

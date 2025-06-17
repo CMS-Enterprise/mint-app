@@ -18,6 +18,7 @@ exports[`Filter View Modal > matches snapshot 1`] = `
           style="gap: 1rem;"
         >
           <svg
+            aria-label="visibility"
             class="usa-icon usa-icon--size-3"
             focusable="false"
             height="1em"

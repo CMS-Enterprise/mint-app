@@ -54,7 +54,11 @@ const ExternalDocumentLink = ({ url, buttonText }: ExternalLinkModalTypes) => {
                 showFullUrl ? 'text-bold' : ''
               }`}
             >
-              {showFullUrl ? <Icon.ExpandMore /> : <Icon.NavigateNext />}
+              {showFullUrl ? (
+                <Icon.ExpandMore aria-label="expand" />
+              ) : (
+                <Icon.NavigateNext aria-label="next" />
+              )}
               {externalT('document.viewFullURL')}
             </span>
           </Button>
@@ -102,7 +106,7 @@ const ExternalDocumentLink = ({ url, buttonText }: ExternalLinkModalTypes) => {
       >
         <span className="display-flex flex-align-center">
           {buttonText}
-          <Icon.Launch />
+          <Icon.Launch aria-label="launch" />
         </span>
       </Button>
     </>

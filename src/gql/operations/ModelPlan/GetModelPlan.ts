@@ -10,6 +10,10 @@ export default gql(/* GraphQL */ `
       modifiedByUserAccount {
         commonName
       }
+      mostRecentEdit {
+        id
+        date
+      }
       opSolutionLastModifiedDts
       archived
       status

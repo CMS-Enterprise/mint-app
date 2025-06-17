@@ -9,7 +9,7 @@ exports[`Model Collaboration Area -- Documents Card > matches snapshot 1`] = `
     <div
       class="usa-card__container"
     >
-      <header
+      <div
         class="usa-card__header"
         data-testid="CardHeader"
       >
@@ -18,7 +18,7 @@ exports[`Model Collaboration Area -- Documents Card > matches snapshot 1`] = `
         >
           Documents
         </h3>
-      </header>
+      </div>
       <div
         class="usa-card__body"
         data-testid="CardBody"
@@ -27,6 +27,7 @@ exports[`Model Collaboration Area -- Documents Card > matches snapshot 1`] = `
           class="display-flex flex-align-center"
         >
           <svg
+            aria-label="forwuploadard"
             class="usa-icon usa-icon--size-3 margin-right-1"
             focusable="false"
             height="1em"
@@ -45,6 +46,7 @@ exports[`Model Collaboration Area -- Documents Card > matches snapshot 1`] = `
           class="display-flex flex-align-center"
         >
           <svg
+            aria-label="link"
             class="usa-icon usa-icon--size-3 margin-right-1"
             focusable="false"
             height="1em"

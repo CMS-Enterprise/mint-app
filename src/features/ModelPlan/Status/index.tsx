@@ -174,7 +174,11 @@ const Status = () => {
                         history.push(`/models/${modelID}/collaboration-area`)
                       }
                     >
-                      <Icon.ArrowBack className="margin-right-1" aria-hidden />
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
 
                       {modelPlanMiscT('return')}
                     </Button>

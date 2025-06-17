@@ -39,7 +39,7 @@ const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
           <GridContainer className={classNames({ 'padding-0': landing })}>
             <Grid desktop={{ col: 12 }}>
               <div className="display-flex">
-                <Icon.Info size={4} className="minw-4" />
+                <Icon.Info size={4} className="minw-4" aria-label="info" />
                 <div className="margin-left-105">
                   {HeadingLevel}
 

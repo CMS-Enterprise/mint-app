@@ -147,6 +147,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                         View discussion
                         <svg
                           aria-hidden="true"
+                          aria-label="forward"
                           class="usa-icon margin-left-1"
                           focusable="false"
                           height="1em"
@@ -239,6 +240,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                         View discussion
                         <svg
                           aria-hidden="true"
+                          aria-label="forward"
                           class="usa-icon margin-left-1"
                           focusable="false"
                           height="1em"

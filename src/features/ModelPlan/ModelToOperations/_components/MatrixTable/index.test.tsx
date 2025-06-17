@@ -62,6 +62,7 @@ describe('formatAndHomogenizeMilestoneData', () => {
         status: undefined,
         actions: undefined,
         isDraft: undefined,
+        isUncategorized: false,
         addedFromMilestoneLibrary: undefined,
         key: undefined,
         subCategories: [
@@ -76,6 +77,7 @@ describe('formatAndHomogenizeMilestoneData', () => {
             status: undefined,
             actions: undefined,
             isDraft: undefined,
+            isUncategorized: false,
             addedFromMilestoneLibrary: undefined,
             key: undefined,
             milestones: [
@@ -621,7 +623,7 @@ describe('getRenderedRowIndexes', () => {
       milestone: [[[], [0]], []]
     };
 
-    const result = getRenderedRowIndexes(rows, rowsPerPage, currentPage);
+    const result = getRenderedRowIndexes(rows, rowsPerPage, currentPage, 1);
     expect(result).toEqual(expectedOutput);
   });
 });

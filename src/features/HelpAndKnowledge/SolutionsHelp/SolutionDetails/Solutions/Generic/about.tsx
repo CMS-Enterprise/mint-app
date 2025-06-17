@@ -8,6 +8,8 @@ import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/ut
 
 import ExternalLink from 'components/ExternalLink';
 
+import GatheringInfoAlert from '../../_components/GatheringInfoAlert';
+
 import '../index.scss';
 
 type ListItemType = {
@@ -41,6 +43,7 @@ export interface AboutConfigType {
   noList?: boolean;
   ordered?: boolean;
   components?: AboutComponentType[];
+  gatheringInfo?: boolean;
   ipcPortal?: {
     header: string;
     externalLink: string;
@@ -138,6 +141,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md">
+      {aboutConfig.gatheringInfo && (
+        <GatheringInfoAlert solution={solution} className="margin-bottom-4" />
+      )}
+
       <p className="margin-top-0 text-pre-wrap margin-bottom-0">
         <Trans
           i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.description`}

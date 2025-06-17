@@ -78,7 +78,7 @@ export const PhasesInvolved = () => {
                       <UswdsReactLink to={step.link} className="margin-right-1">
                         {step.linkText}
                       </UswdsReactLink>
-                      <Icon.ArrowForward />
+                      <Icon.ArrowForward aria-label="forward" />
                     </div>
                   </ProcessListItem>
                 ))}

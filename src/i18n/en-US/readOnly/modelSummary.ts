@@ -24,7 +24,7 @@ const modelSummary = {
       'Operations, evaluation, and learning',
     payment: 'Payment',
     milestones: 'Milestones',
-    'it-systems-and-solutions': 'Solutions and IT systems',
+    'solutions-and-it-systems': 'Solutions and IT systems',
     team: 'Team',
     discussions: 'Discussions',
     documents: 'Documents',

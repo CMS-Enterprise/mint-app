@@ -148,7 +148,7 @@ export const ModelSolutionImplementation = () => {
                   >
                     {t('initiateWork.activities.learnMore')}
                   </UswdsReactLink>
-                  <Icon.ArrowForward />
+                  <Icon.ArrowForward aria-label="forward" />
                 </div>
               </ProcessListItem>
             </ProcessList>

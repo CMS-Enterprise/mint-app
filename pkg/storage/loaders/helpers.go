@@ -25,6 +25,16 @@ func oneToOneDataLoader[K comparable, V any](keys []K, values []V, getKey func(V
 
 	return helpers.OneToOne(keys, values, getKey, transformToDataLoaderResult)
 }
+
+// // oneToOneDataLoaderAllowNil is a version of oneToOneDataLoader that allows nil values to be returned without erroring.
+// func oneToOneDataLoaderAllowNil[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[V] {
+// 	return helpers.OneToOne(keys, values, getKey, transformToDataLoaderResultAllowNils)
+// }
+
+// oneToOneWithCustomKeyDataLoaderAllowNil is a version of oneToOneDataLoader that allows nil values to be returned without erroring.
+func oneToOneWithCustomKeyDataLoaderAllowNil[K comparable, V any, mapKey comparable, mapType any](keys []K, values []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey]mapType) (V, bool)) []*dataloader.Result[V] {
+	return helpers.OneToOneWithCustomKey(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
+}
 func oneToManyWithCustomKeyDataLoader[K comparable, V any, mapKey comparable, mapType any](keys []K, values []mapType, getKey func(mapType) mapKey, getRes func(K, map[mapKey][]mapType) ([]V, bool)) []*dataloader.Result[[]V] {
 	return helpers.OneToManyWithCustomKey(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
 }

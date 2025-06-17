@@ -1,10 +1,15 @@
 import React from 'react';
+import Modal from 'react-modal';
 import { fireEvent, render, screen } from '@testing-library/react';
 import i18next from 'i18next';
 
 import ExternalLink from './index';
 
 describe('ExternalLink', () => {
+  beforeAll(() => {
+    Modal.setAppElement(document.body);
+  });
+
   const defaultProps = {
     href: 'https://example.com',
     children: 'Click me'

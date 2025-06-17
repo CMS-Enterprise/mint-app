@@ -202,7 +202,10 @@ const SixPagerMeeting = () => {
                       'modelPlansInMINT.summaryBox.linkOne.text'
                     )}
 
-                    <Icon.ArrowForward className="margin-left-1" />
+                    <Icon.ArrowForward
+                      className="margin-left-1"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
                 </SummaryBoxContent>
               </SummaryBox>

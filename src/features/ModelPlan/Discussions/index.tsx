@@ -306,7 +306,10 @@ const Discussions = ({
         </PageHeading>
 
         <div className="display-flex margin-bottom-4">
-          <Icon.Announcement className="text-primary margin-right-1" />
+          <Icon.Announcement
+            className="text-primary margin-right-1"
+            aria-label="announcement"
+          />
           <Button
             type="button"
             unstyled

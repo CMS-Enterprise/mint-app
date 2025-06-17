@@ -10,7 +10,7 @@ const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
       className="display-flex flex-align-center"
     >
       {scrollTo}
-      <Icon.ArrowForward className="margin-left-1" />
+      <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
     </a>
   );
 };

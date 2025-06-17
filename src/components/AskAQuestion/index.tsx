@@ -70,7 +70,10 @@ const AskAQuestion = ({
         )}
 
         <div className="display-flex" data-testid="ask-a-question">
-          <Icon.Announcement className="text-primary margin-right-1" />
+          <Icon.Announcement
+            className="text-primary margin-right-1"
+            aria-label="announcement"
+          />
 
           <Button
             type="button"

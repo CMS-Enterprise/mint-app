@@ -6,7 +6,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { ModelCategory } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
-import Sinon from 'sinon';
 import { modelBasicsMocks as mocks, modelID } from 'tests/mock/readonly';
 
 import ReadOnlyModelBasics from './index';
@@ -15,9 +14,6 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
 describe('Read Only Model Plan Summary -- Model Basics', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders without errors', async () => {
     render(
       <MemoryRouter

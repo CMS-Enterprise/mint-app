@@ -32,11 +32,9 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        sourceMap: true,
-        includePaths: [
-          './src/stylesheets',
-          './node_modules/@uswds/uswds/packages'
-        ]
+        api: 'modern-compiler', // or "modern"
+        silenceDeprecations: ['legacy-js-api'],
+        loadPaths: ['./src/stylesheets', './node_modules/@uswds/uswds/packages']
       }
     },
     postcss: {

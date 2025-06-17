@@ -67,7 +67,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 	suite.True(strings.Contains(emailBody, mp.ModelName))
 	// Check if email contains humanized sentences
 	lo.ForEach(humanized, func(h string, _ int) {
-		h = strings.Replace(h, "+", "&#43;", -1)
+		h = strings.ReplaceAll(h, "+", "&#43;")
 		suite.True(strings.Contains(emailBody, h))
 	})
 

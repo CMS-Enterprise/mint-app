@@ -65,22 +65,28 @@ const CollapsableLink = ({
 
   const renderEyeIcon = () => {
     return isOpen ? (
-      <Icon.VisibilityOff className="mint-collapsable-link__eye-icon margin-right-05" />
+      <Icon.VisibilityOff
+        className="mint-collapsable-link__eye-icon margin-right-05"
+        aria-label="visibility off"
+      />
     ) : (
-      <Icon.Visibility className="mint-collapsable-link__eye-icon margin-right-05" />
+      <Icon.Visibility
+        className="mint-collapsable-link__eye-icon margin-right-05"
+        aria-label="visibility on"
+      />
     );
   };
 
   const OpenCaret = horizontalCaret ? (
-    <Icon.NavigateNext className="margin-right-05" />
+    <Icon.NavigateNext className="margin-right-05" aria-label="next" />
   ) : (
-    <Icon.ExpandMore className="margin-right-05" />
+    <Icon.ExpandMore className="margin-right-05" aria-label="expand" />
   );
 
   const DownCaret = horizontalCaret ? (
-    <Icon.ExpandMore className="margin-right-05" />
+    <Icon.ExpandMore className="margin-right-05" aria-label="expand" />
   ) : (
-    <Icon.ExpandLess className="margin-right-05" />
+    <Icon.ExpandLess className="margin-right-05" aria-label="collapse" />
   );
 
   const renderCaret = () => {

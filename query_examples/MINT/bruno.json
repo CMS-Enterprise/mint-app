@@ -5,5 +5,11 @@
   "ignore": [
     "node_modules",
     ".git"
-  ]
+  ],
+  "size": 0.19289112091064453,
+  "filesCount": 166,
+  "presets": {
+    "requestType": "graphql",
+    "requestUrl": "{{url}}"
+  }
 }

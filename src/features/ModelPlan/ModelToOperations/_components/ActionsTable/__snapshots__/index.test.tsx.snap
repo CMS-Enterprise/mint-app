@@ -27,6 +27,7 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
       >
         Hide actions
         <svg
+          aria-label="collapse"
           class="usa-icon"
           focusable="false"
           height="1em"
@@ -58,6 +59,7 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
               style="height: 20px; width: 20px;"
             >
               <svg
+                aria-label="flag"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -113,6 +115,7 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
               style="height: 20px; width: 20px; background-color: rgb(225, 230, 249);"
             >
               <svg
+                aria-label="build"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -165,6 +168,7 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
             style="height: 20px; width: 20px; background-color: rgb(223, 225, 226);"
           >
             <svg
+              aria-label="grid view"
               class="usa-icon"
               focusable="false"
               height="1em"

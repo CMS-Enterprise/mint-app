@@ -19,7 +19,11 @@ const PlainInfo = ({ className, children, small }: PlainInfoProps) => {
 
   return (
     <div className={classes}>
-      <Icon.Info size={small ? 3 : 5} className="mint-plain-info__icon" />
+      <Icon.Info
+        size={small ? 3 : 5}
+        className="mint-plain-info__icon"
+        aria-label="info"
+      />
       <p className="line-height-body-5">{children}</p>
     </div>
   );

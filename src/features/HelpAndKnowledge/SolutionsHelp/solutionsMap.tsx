@@ -44,6 +44,7 @@ export const operationalSolutionCategoryMap: Record<
     OperationalSolutionCategories.COMMUNICATION_TOOLS,
   'contract-vehicles': OperationalSolutionCategories.CONTRACT_VEHICLES,
   data: OperationalSolutionCategories.DATA,
+  'evaluation-and-review': OperationalSolutionCategories.EVALUATION_AND_REVIEW,
   learning: OperationalSolutionCategories.LEARNING,
   legal: OperationalSolutionCategories.LEGAL,
   'medicare-advantage-and-part-d':
@@ -72,6 +73,7 @@ export const operationalSolutionSubCategoryMap: Record<
   ],
   'contract-vehicles': null,
   data: null,
+  'evaluation-and-review': null,
   learning: null,
   legal: null,
   'medicare-advantage-and-part-d': null,
@@ -762,6 +764,191 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     components: {
       timeline: (props: SolutionDetailProps) => (
         <SharedSystemsTimeLine {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.RREG,
+    key: 'reasearchAndRapidCycleEvaluationGroup',
+    route: 'research-and-rapid-cycle-evaluation-group',
+    categories: [OperationalSolutionCategories.EVALUATION_AND_REVIEW],
+    name: 'Research and Rapid Cycle Evaluation Group',
+    acronym: 'RREG',
+    type: 'Cross-cutting group',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.FFRDC,
+    key: 'federallyFundedResearchAndDevelopmentCenter',
+    route: 'federally-funded-research-and-development-center',
+    categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
+    name: 'Federal Funded Research and Development Center',
+    acronym: 'FFRDC',
+    type: 'Contracts and contractors',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.ARDS,
+    key: 'actuarialResearchAndDesignServices',
+    route: 'actuarial-research-and-design-services',
+    categories: [OperationalSolutionCategories.CONTRACT_VEHICLES],
+    name: 'Actuarial Research and Development Services',
+    acronym: 'ARDS',
+    type: 'Contracts and contractors',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.T_MISS,
+    key: 'transformedMedicaidStatisticalInformationSystem',
+    route: 'transformed-medicaid-statistical-information-system',
+    categories: [OperationalSolutionCategories.DATA],
+    name: 'Transformed Medicaid Statistical Information System',
+    acronym: 'T-MSIS',
+    type: 'IT system',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.EPPE,
+    key: 'enterprisePrivacyPolicyEngine',
+    route: 'enterprise-privacy-policy-engine',
+    categories: [OperationalSolutionCategories.DATA],
+    name: 'Enterprise Privacy Policy Engine Cloud',
+    acronym: 'EPPE',
+    type: 'IT system',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.DSEP,
+    key: 'divisionOfStakeholderEngagementAndPolicy',
+    route: 'division-of-stakeholder-engagement-and-policy',
+    categories: [OperationalSolutionCategories.COMMUNICATION_TOOLS],
+    name: 'Division of Stakeholder Engagement and Policy',
+    acronym: 'DSEP',
+    type: 'Other',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.AMS,
+    key: 'cmmiAnalysisAndManagementSystem',
+    route: 'cmmi-analysis-and-management-system',
+    categories: [OperationalSolutionCategories.DATA],
+    name: 'CMMI Analysis and Management System',
+    acronym: 'AMS',
+    type: 'IT system',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.IC_LANDING,
+    key: 'innovationCenterLandingPage',
+    route: 'innovation-center-landing-page',
+    categories: [OperationalSolutionCategories.APPLICATIONS_NON_ACO],
+    name: 'Innovation Center Landing Page',
+    acronym: 'IC Landing',
+    type: 'IT system',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.RASS,
+    key: 'riskAdjustmentSuiteOfSystems',
+    route: 'risk-adjustment-suite-of-systems',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    name: 'Risk Adjustment Suite of Systems',
+    acronym: 'RASS',
+    type: 'IT system',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.DDPS,
+    key: 'drugDataProcessingSystem',
+    route: 'drug-data-processing-system',
+    categories: [OperationalSolutionCategories.MEDICARE_ADVANTAGE_D],
+    name: 'Drug Data Processing System',
+    acronym: 'DDPS',
+    type: 'IT system',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.OACT,
+    key: 'officeOfTheActuary',
+    route: 'office-of-the-actuary',
+    categories: [OperationalSolutionCategories.EVALUATION_AND_REVIEW],
+    name: 'Office of the Actuary',
+    acronym: 'OACT',
+    type: 'Other',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.QPP,
+    key: 'qualityPaymentProgram',
+    route: 'quality-payment-program',
+    categories: [OperationalSolutionCategories.QUALITY],
+    name: 'Quality Payment Program',
+    acronym: 'QPP',
+    type: 'Other',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  {
+    enum: MtoCommonSolutionKey.PAM,
+    key: 'patientActivationMeasure',
+    route: 'patient-activation-measure',
+    categories: [
+      OperationalSolutionCategories.QUALITY,
+      OperationalSolutionCategories.CONTRACT_VEHICLES
+    ],
+    name: 'Patient Activation Measure',
+    acronym: 'PAM',
+    type: 'Contracts and contractors',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
       )
     }
   }

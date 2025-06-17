@@ -42,7 +42,10 @@ const CategoryFooter = ({
                     {t(`categories.${key}.header`)}&nbsp;
                     {solutionCategories[key as OperationalSolutionCategoryRoute]
                       ?.subHeader && t(`categories.${key}.subHeader`)}
-                    <Icon.ArrowForward className="margin-left-1 top-2px" />
+                    <Icon.ArrowForward
+                      className="margin-left-1 top-2px"
+                      aria-label="forward"
+                    />
                   </span>
                 </UswdsReactLink>
               </Grid>

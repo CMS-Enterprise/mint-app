@@ -330,7 +330,11 @@ const IDDOCTesting = () => {
                       )
                     }
                   >
-                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
+                    <Icon.ArrowBack
+                      className="margin-right-1"
+                      aria-hidden
+                      aria-label="back"
+                    />
 
                     {miscellaneousT('saveAndReturn')}
                   </Button>

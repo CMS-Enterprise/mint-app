@@ -27,7 +27,11 @@ export const DatePickerWarning = ({
   return (
     <div className={classes}>
       <Tooltip label={label} asCustom={CustomDiv}>
-        <Icon.Warning size={3} className="text-warning-dark" />
+        <Icon.Warning
+          size={3}
+          className="text-warning-dark"
+          aria-label="warning"
+        />
       </Tooltip>
     </div>
   );

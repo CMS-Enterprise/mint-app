@@ -1,4 +1,4 @@
-FROM golang:1.23.4 AS base
+FROM golang:1.24.4 AS base
 
 WORKDIR /mint/
 

@@ -89,9 +89,13 @@ const Sidepanel = ({
             onClick={closeModal}
           >
             {backButton ? (
-              <Icon.ArrowBack size={4} className="text-base" />
+              <Icon.ArrowBack
+                size={4}
+                className="text-base"
+                aria-label="back"
+              />
             ) : (
-              <Icon.Close size={4} className="text-base" />
+              <Icon.Close size={4} className="text-base" aria-label="close" />
             )}
           </button>
           <h4 className="margin-0">{modalHeading}</h4>

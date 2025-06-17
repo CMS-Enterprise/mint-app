@@ -185,6 +185,7 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -391,6 +392,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -407,6 +409,73 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
           </button>
         </span>
       </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Actuarial Research and Development Services 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  ARDS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -515,6 +584,91 @@ exports[`Operational Solutions About Components > matches the snapshot > Benefic
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions About Components > matches the snapshot > CMMI Analysis and Management System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  AMS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The CMMI Analytics & Management System (AMS), a.k.a Alternative Payment Model (APM) Management System, supports CMMI for the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Quality Payment Program (QPP)
+        </button>
+        ; Portfolio Management and Cross Model Management; and Reporting, Analytics, and Audits. AMS serves as the central repository for CMMI model data including model design elements, model participation, quality measures, and a model’s participation in the QPP. Within 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Integrated Data Repository (IDR)
+        </button>
+        , AMS also has a Business Data Mart storing model participation data enabling users to perform analysis on model participants and linking to other data sources. AMS supports QPP by storing relevant data and making it available to the Merit-Based Incentive Payment System (MIPS). The system also provides targeted data search capabilities for all data stored within AMS as well as user friendly dashboards to enable users to perform broader data searches. Lastly, AMS provides users with a BI platform (Looker) to perform more targeted and complex analysis.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions About Components > matches the snapshot > CMMI Data Aggregation Contract 1`] = `
 <DocumentFragment>
   <div>
@@ -571,6 +725,7 @@ exports[`Operational Solutions About Components > matches the snapshot > CMMI Da
           >
             Process diagram depicting the flow of data through CDAC (view on Confluence)
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1065,6 +1220,170 @@ exports[`Operational Solutions About Components > matches the snapshot > Consoli
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions About Components > matches the snapshot > Division of Stakeholder Engagement and Policy 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  DSEP
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Drug Data Processing System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  DDPS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Prescription Drug Event Front End System (PDFS) performs the initial file processing of the Prescription Drug Event data submitted by the Part D Plans. Upon completion of the initial file processing, the Prescription Drug Event data is then sent to the Drug Data Processing System (DDPS) for validation and authentication of the Medicare payment of covered drugs made by the Part D plans for their enrolled Medicare beneficiaries. The data is then loaded into the Integrated Data Repository (IDR), to support drug, beneficiary, and plan analysis of incurred payments and payment reconciliation. 
+      </p>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Core Function:
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class=""
+          >
+            Medicare Part D Claim processing, Data warehousing and Reporting
+          </li>
+          <li
+            class=""
+          >
+            Annual Part D Claim data (PDE) reconciliation
+          </li>
+          <li
+            class=""
+          >
+            Generating quarterly manufacturers invoices and performing dispute and outlier analysis.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions About Components > matches the snapshot > Electronic File Transfer 1`] = `
 <DocumentFragment>
   <div>
@@ -1081,6 +1400,123 @@ exports[`Operational Solutions About Components > matches the snapshot > Electro
       >
         Electronic File Transfer (EFT) is a secure file transfer protocol used to move files from one destination to another internally or externally.
       </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Enterprise Privacy Policy Engine Cloud 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  EPPE
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        Enforces the controlled access to, disclosures of, transference and disposition of personally identifiable information (PII) contained in CMS Systems of Record (SOR) in accordance with the statutory mandates of the Privacy Act, HIPAA and FISMA. Additionally, EPPE will standardize and automate the Data Use Agreements (DUA) process.
+      </p>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Core Function:
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class=""
+          >
+            Receives and processes requests for data files from users that maintain Data Use Agreements (DUAs) with CMS regarding the nature and use of CMS
+          </li>
+          <li
+            class=""
+          >
+            Maintains and administers the DUAs and tracks the requested data files as orders within its system from initial build status on out to ship status.
+          </li>
+          <li
+            class=""
+          >
+            Supports the shipping of multiple data files in an order delivered outside of CMS on physical media including tape, cartridge, CDROM, DVD, etc.
+          </li>
+          <li
+            class=""
+          >
+            Tracks the disclosures of personally identifiable data to external entities thru the manage DUAs functionality.
+          </li>
+          <li
+            class=""
+          >
+            Allows for querying of data elements, reporting, creation of role based access.
+          </li>
+          <li
+            class=""
+          >
+            Stores supporting documentation for Data Use Agreements (DUA).
+          </li>
+          <li
+            class=""
+          >
+            EPPE also includes a mechanism to track data disclosures that do not require a DUA, via Non DUA Tracking functionality.
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -1217,6 +1653,73 @@ exports[`Operational Solutions About Components > matches the snapshot > Expande
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Federal Funded Research and Development Center 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  FFRDC
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -1757,6 +2260,108 @@ Specific to CMMI, HIGLAS has two integrated points:
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions About Components > matches the snapshot > Innovation Center Landing Page 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  IC Landing
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Innovation Center web application will provide a single point of entry to access CMMI applications by CMMI users including the CMMI Program Team, CMMI Support Contractor for Application Administration, Helpdesk Administrator, Operational Contractor, CMMI Model Participants (Providers), and their delegates. Innovation Center will serve as a common Landing Page where CMMI applications can be hosted for easier access. Innovation Center will utilize the Enterprise Identity Management (IDM) and the Enterprise Portal Shared Services and implement the CMS approved Technical Reference Architecture. The Innovation Center will allow the addition of new health innovation models thereby reducing the time and effort to make a new model operational. This is simply the landing page for CMMI on the Enterprise Portal. 
+      </p>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Core Function:
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class=""
+          >
+            Innovation Center will serve as a common Landing Page where CMMI applications can be hosted for easier access.
+          </li>
+          <li
+            class=""
+          >
+            Innovation Center will utilize the Enterprise Identity Management and the Enterprise Portal Shared Services and implement the CMS approved Technical Reference Architecture.
+          </li>
+          <li
+            class=""
+          >
+            The Innovation Center will allow the addition of new health innovation models thereby reducing the time and effort to make a new model operational.
+          </li>
+          <li
+            class=""
+          >
+            This application also hosts the eSign service for CMS applications.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions About Components > matches the snapshot > Innovation Payment Contractor 1`] = `
 <DocumentFragment>
   <div>
@@ -1850,6 +2455,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           >
             View on SharePoint what is needed to onboard Models to the IPC Portal
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -2043,6 +2649,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
               >
                 data standard for emergency services.
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -2128,6 +2735,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
             >
               See a video sample.
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -2174,6 +2782,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
                 >
                   see a video sample
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"
@@ -2888,6 +3497,7 @@ Model Space offers model teams and their contractors templates or Databricks not
             >
               View more information about Model Space on Confluence
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -2912,6 +3522,73 @@ Model Space offers model teams and their contractors templates or Databricks not
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions About Components > matches the snapshot > Office of the Actuary 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  OACT
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions About Components > matches the snapshot > Outlook Mailbox 1`] = `
 <DocumentFragment>
   <div>
@@ -2928,6 +3605,140 @@ exports[`Operational Solutions About Components > matches the snapshot > Outlook
       >
         Set up an email address through Outlook Mailbox, so all your model communications will funnel into a single place.
       </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Patient Activation Measure 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  PAM
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Quality Payment Program 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  QPP
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -3002,6 +3813,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
               >
                 Quality Vertical Model Resources on SharePoint
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3031,6 +3843,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
               >
                 Measure Management System (MMS) Tools
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3060,6 +3873,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
               >
                 Quality Payment Program
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3077,6 +3891,73 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Research and Rapid Cycle Evaluation Group 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  RREG
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -3177,6 +4058,83 @@ exports[`Operational Solutions About Components > matches the snapshot > Researc
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions About Components > matches the snapshot > Risk Adjustment Suite of Systems 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  RASS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Risk Adjustment Suite of System (RASS) supports CMS processes that apply risk adjustments to payments to Medicare Advantage and Part D plans. This system was implemented to receive, process, store risk adjustment data using the CMS HCC, ESRD, Part D models developed by CMS to calculate risk scores which would be used by 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Medicare Advantage Rx (MARx)
+        </button>
+         to compute plan payments.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions About Components > matches the snapshot > Salesforce Application Review and Scoring 1`] = `
 <DocumentFragment>
   <div>
@@ -3245,6 +4203,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View an ARS screenshot
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3345,6 +4304,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 1
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3374,6 +4334,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 2
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3503,6 +4464,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View an LOI sample
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3682,6 +4644,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 1
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3711,6 +4674,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View sample 2
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3867,6 +4831,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
               >
                 View an RFA screenshot
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -3912,6 +4877,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             >
               View on SharePoint what is needed to onboard Models to the IPC Portal
               <svg
+                aria-label="launch"
                 class="usa-icon"
                 focusable="false"
                 height="1em"
@@ -3981,6 +4947,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
               >
                 Go to Fee For Service Change Request Resource Center
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -4188,6 +5155,75 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Transformed Medicaid Statistical Information System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  T-MSIS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        T-MSIS collects Medicaid and Children’s Health Insurance Program (CHIP) data from U.S. states, territories, and the District of Columbia into the largest national resource of beneficiary information. This data is crucial for research and policy on Medicaid and CHIP and helping the Centers for Medicare & Medicaid Services (CMS) conduct program oversight, administration, and integrity. To meet the reporting needs of states and CMS stakeholders, T-MSIS features an operations dashboard for state and territory use to validate a timely, accurate, and complete data set.
+      </p>
     </div>
   </div>
 </DocumentFragment>

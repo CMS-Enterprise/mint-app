@@ -55,6 +55,8 @@ const SettingsForm = () => {
 
   const { state } = useLocation<HomepageLocationStateType>();
 
+  // console.log(state);
+
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
@@ -208,7 +210,10 @@ const SettingsForm = () => {
                                 >
                                   {homepageSettingsT('selectSolutions')}
 
-                                  <Icon.ArrowForward className="margin-left-1" />
+                                  <Icon.ArrowForward
+                                    className="margin-left-1"
+                                    aria-label="forward"
+                                  />
                                 </UswdsReactLink>
                               )}
 
@@ -236,7 +241,10 @@ const SettingsForm = () => {
                                   >
                                     {homepageSettingsT('updateSolutions')}
 
-                                    <Icon.ArrowForward className="margin-left-1" />
+                                    <Icon.ArrowForward
+                                      className="margin-left-1"
+                                      aria-label="forward"
+                                    />
                                   </UswdsReactLink>
                                 </div>
                               )}
@@ -276,7 +284,10 @@ const SettingsForm = () => {
                       to="/"
                       className="display-flex flex-align-center"
                     >
-                      <Icon.ArrowBack className="margin-right-2" />
+                      <Icon.ArrowBack
+                        className="margin-right-2"
+                        aria-label="back"
+                      />
                       {homepageSettingsT('back')}
                     </UswdsReactLink>
                   </div>

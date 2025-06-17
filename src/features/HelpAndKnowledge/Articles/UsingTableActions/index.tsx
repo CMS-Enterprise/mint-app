@@ -107,7 +107,10 @@ const UsingTableActions = () => {
                     className="display-block margin-y-05"
                   >
                     {t('milestones.addingMilestonesFromLibrary.link1')}{' '}
-                    <Icon.ArrowForward className="top-3px" />
+                    <Icon.ArrowForward
+                      className="top-3px"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
                 </div>
 
@@ -124,7 +127,10 @@ const UsingTableActions = () => {
                     className="display-block margin-y-05"
                   >
                     {t('milestones.addingCustomMilestone.link1')}{' '}
-                    <Icon.ArrowForward className="top-3px" />
+                    <Icon.ArrowForward
+                      className="top-3px"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
                 </div>
               </div>
@@ -270,7 +276,10 @@ const UsingTableActions = () => {
                     className="display-block margin-y-05"
                   >
                     {t('solutionsAndItSystems.browsingSolutionLibrary.link1')}{' '}
-                    <Icon.ArrowForward className="top-3px" />
+                    <Icon.ArrowForward
+                      className="top-3px"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
                 </div>
 
@@ -289,7 +298,10 @@ const UsingTableActions = () => {
                     className="display-block margin-y-05"
                   >
                     {t('solutionsAndItSystems.addingCustomSolution.link1')}{' '}
-                    <Icon.ArrowForward className="top-3px" />
+                    <Icon.ArrowForward
+                      className="top-3px"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
                 </div>
               </div>

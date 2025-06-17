@@ -93,7 +93,10 @@ const ExternalLink = ({
         >
           <span>
             {children}
-            <Icon.Launch className="margin-left-05 top-05" />
+            <Icon.Launch
+              className="margin-left-05 top-05"
+              aria-label="launch"
+            />
           </span>
         </span>
       ) : (
@@ -110,7 +113,7 @@ const ExternalLink = ({
             style={{ columnGap: '0.25rem' }}
           >
             {children}
-            <Icon.Launch />
+            <Icon.Launch aria-label="launch" />
           </span>
         </Button>
       )}

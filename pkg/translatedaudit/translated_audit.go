@@ -25,7 +25,7 @@ var unTranslatedTables = []models.TableName{
 	models.TNUserNotificationPreferences,
 	models.TNUserViewCustomization,
 	models.TNMTOCommonSolutionContractor,
-}
+	models.TNMTOCommonSolutionContact}
 
 // Returns true in the table name is in the list of provided Table Names
 func tableListContains(tableName models.TableName, tableNameList []models.TableName) bool {

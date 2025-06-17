@@ -153,7 +153,10 @@ const MTOHome = () => {
                 data-testid="return-to-collaboration"
               >
                 <span>
-                  <Icon.ArrowBack className="top-3px margin-right-1" />
+                  <Icon.ArrowBack
+                    className="top-3px margin-right-1"
+                    aria-label="back"
+                  />
                   {t('returnToCollaboration')}
                 </span>
               </UswdsReactLink>
@@ -226,7 +229,7 @@ const MTOHome = () => {
                 id="mto-navigation-select"
                 name="currentView"
                 value={currentView}
-                onChange={e => {
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   params.set('view', e.target.value);
                   history.push({ search: params.toString() });
                 }}

@@ -84,14 +84,22 @@ export const UsingSolutionLibrary = () => {
                     to="/help-and-knowledge/using-table-actions"
                     className="display-block margin-y-05"
                   >
-                    {t('step1.link1')} <Icon.ArrowForward className="top-3px" />
+                    {t('step1.link1')}{' '}
+                    <Icon.ArrowForward
+                      className="top-3px"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
 
                   <UswdsReactLink
                     to="/help-and-knowledge/starting-mto-matrix"
                     className="display-block"
                   >
-                    {t('step1.link2')} <Icon.ArrowForward className="top-3px" />
+                    {t('step1.link2')}{' '}
+                    <Icon.ArrowForward
+                      className="top-3px"
+                      aria-label="forward"
+                    />
                   </UswdsReactLink>
                 </ProcessListItem>
 

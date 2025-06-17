@@ -1,7 +1,20 @@
 package models
 
+import (
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
+)
+
 // TableName represents the name of tables in the database
 type TableName string
+
+type TableNames []TableName
+
+// String implements the stringer interface for TableNames
+//
+//	It will sort the TableNames and return a comma separated string
+func (t TableNames) String() string {
+	return helpers.JoinStringSlice(t, true)
+}
 
 // These are the options for TableNameEnum
 const (

@@ -13,7 +13,6 @@ import {
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
-import Sinon from 'sinon';
 import { benficiaryMocks } from 'tests/mock/readonly';
 import setup from 'tests/util';
 
@@ -100,9 +99,6 @@ const clearanceMocks = [
 ];
 
 describe('ClearanceReview component', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders readonly component', async () => {
     const { getByTestId } = render(
       <MemoryRouter

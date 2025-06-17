@@ -1,32 +1,16 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
-import PrivacyPolicy from './index';
+import PrivacyPolicy from '.';
 
-vi.mock('@okta/okta-react', () => ({
-  useOktaAuth: () => {
-    return {
-      authState: {
-        isAuthenticated: true
-      },
-      oktaAuth: {
-        getUser: async () => {},
-        logout: async () => {}
-      }
-    };
-  }
-}));
-
-describe('The Privacy Policy static page', () => {
+describe('PrivacyPolicy', () => {
   it('matches the snapshot', () => {
-    const tree = renderer
-      .create(
-        <MemoryRouter>
-          <PrivacyPolicy />
-        </MemoryRouter>
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(
+      <MemoryRouter>
+        <PrivacyPolicy />
+      </MemoryRouter>
+    );
+    expect(asFragment()).toMatchSnapshot();
   });
 });

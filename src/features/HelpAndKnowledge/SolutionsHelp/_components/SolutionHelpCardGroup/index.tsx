@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -110,8 +110,13 @@ const SolutionHelpCardGroup = ({
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
+  const sortedSolutions = useMemo(
+    () => solutions.sort((a, b) => a.name.localeCompare(b.name)),
+    [solutions]
+  );
+
   const { currentItems, Pagination } = usePagination<HelpSolutionType[]>({
-    items: solutions,
+    items: sortedSolutions,
     itemsPerPage: 9,
     withQueryParams: 'page'
   });

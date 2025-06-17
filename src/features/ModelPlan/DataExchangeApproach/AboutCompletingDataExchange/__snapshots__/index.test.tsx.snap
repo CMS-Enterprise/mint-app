@@ -21,6 +21,7 @@ exports[`AboutCompletingDataExchange > renders correctly and matches snapshot 1`
       type="button"
     >
       <svg
+        aria-label="next"
         class="usa-icon margin-right-05"
         focusable="false"
         height="1em"
@@ -52,6 +53,7 @@ exports[`AboutCompletingDataExchange > renders correctly and matches snapshot 1`
   >
     Email the MINT Team
     <svg
+      aria-label="mail"
       class="usa-icon margin-left-1 text-tbottom"
       focusable="false"
       height="1em"
@@ -138,6 +140,7 @@ exports[`AboutCompletingDataExchange > renders correctly and matches snapshot 1`
   >
     <svg
       aria-hidden="true"
+      aria-label="back"
       class="usa-icon margin-right-1"
       focusable="false"
       height="1em"

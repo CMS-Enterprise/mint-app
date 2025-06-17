@@ -59,7 +59,7 @@ const CRAndTDLSidePanel = ({
                     className="echimp-card__cr-tag echimp-card__cr-tag--emergency"
                     data-testid="emergency__cr-tag"
                   >
-                    <Icon.LocalFireDepartment />
+                    <Icon.LocalFireDepartment aria-label="fire department" />
                     {crtdlsT('echimpCard.crTag.emergency')}
                   </div>
                 )}
@@ -68,7 +68,7 @@ const CRAndTDLSidePanel = ({
                     className="echimp-card__cr-tag echimp-card__cr-tag--sensitive"
                     data-testid="sensitive__cr-tag"
                   >
-                    <Icon.Flag />
+                    <Icon.Flag aria-label="flag" />
                     {crtdlsT('echimpCard.crTag.sensitive')}
                   </div>
                 )}

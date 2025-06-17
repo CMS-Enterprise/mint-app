@@ -85,7 +85,7 @@ const Modal = ({
               aria-label="Close Modal"
               onClick={closeModal}
             >
-              <Icon.Close size={4} />
+              <Icon.Close size={4} aria-label="close" />
             </button>
           </div>
 

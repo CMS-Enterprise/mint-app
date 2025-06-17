@@ -4,15 +4,11 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { DataToSendParticipantsType } from 'gql/generated/graphql';
 import i18next from 'i18next';
-import Sinon from 'sinon';
 import { modelID, opsEvalAndLearningMocks as mocks } from 'tests/mock/readonly';
 
 import ReadOnlyOpsEvalAndLearning from './index';
 
 describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders without errors', async () => {
     render(
       <MemoryRouter
