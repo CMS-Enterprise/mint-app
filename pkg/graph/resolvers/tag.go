@@ -153,7 +153,7 @@ func updateMentionAndRawContent(mention *models.HTMLMention, tHTML *models.Tagge
 	}
 
 	// Update the Tagged HTML Raw content by replacing the tags old value, with the new representation
-	newTotalRaw := strings.Replace(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML), -1)
+	newTotalRaw := strings.ReplaceAll(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML))
 	tHTML.RawContent = models.HTML(newTotalRaw)
 
 	mention.RawHTML = newHTML
