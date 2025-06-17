@@ -63,6 +63,16 @@ func MTOCommonSolutionGetContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, i
 	return returned, nil
 }
 
+// MTOCommonSolutionContactUnsetPrimaryContactByKey unsets the primary contact for a given common solution key.
+func MTOCommonSolutionContactUnsetPrimaryContactByKey(np sqlutils.NamedPreparer, _ *zap.Logger, existingContact *models.MTOCommonSolutionContact) error {
+	arg := map[string]interface{}{
+		"key": existingContact.Key,
+		"id":  existingContact.ID,
+	}
+
+	return sqlutils.ExecProcedure(np, sqlqueries.MTOCommonSolutionContact.UnsetPrimaryKey, arg)
+}
+
 func MTOCommonSolutionUpdateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCommonSolutionContact *models.MTOCommonSolutionContact) (*models.MTOCommonSolutionContact, error) {
 	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.Update, MTOCommonSolutionContact)
 	if err != nil {
