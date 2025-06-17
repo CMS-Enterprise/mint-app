@@ -55,3 +55,31 @@ CHECK (
     OR
     (mailbox_address IS NULL AND mailbox_title IS NULL AND user_id IS NOT NULL AND is_team = FALSE)
 );
+
+DROP INDEX idx_unique_primary_contact_per_mto_common_solution;
+
+-- Couldn't get this to work, so leaving it commented out for now for future reference
+-- CREATE OR REPLACE FUNCTION enforce_single_primary_contact()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--   IF NEW.is_primary THEN
+--     -- Raise error if another primary already exists
+--     IF EXISTS (
+--       SELECT 1 FROM mto_common_solution_contact
+--       WHERE mto_common_solution_key = NEW.mto_common_solution_key
+--         AND is_primary = TRUE
+--         AND id != NEW.id
+--     ) THEN
+--       RAISE EXCEPTION 'Only one primary contact is allowed per mto_common_solution_key';
+--     END IF;
+--   END IF;
+
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE CONSTRAINT TRIGGER trg_enforce_single_primary_contact
+--     AFTER INSERT OR UPDATE ON mto_common_solution_contact
+--     DEFERRABLE INITIALLY IMMEDIATE
+--     FOR EACH ROW
+--     EXECUTE FUNCTION enforce_single_primary_contact();

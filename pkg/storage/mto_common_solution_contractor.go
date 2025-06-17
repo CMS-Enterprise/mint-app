@@ -52,8 +52,8 @@ func MTOCommonSolutionGetContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger
 	return returned, nil
 }
 
-// MTOCommonSolutionContractorGetByCommonSolutionKeyLoader returns a list of contractors associated with the given keys.
-func MTOCommonSolutionContractorGetByCommonSolutionIdLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolutionContractor, error) {
+// MTOCommonSolutionContractorGetByCommonSolutionIDLoader returns a list of contractors associated with the given keys.
+func MTOCommonSolutionContractorGetByCommonSolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolutionContractor, error) {
 	args := map[string]interface{}{
 		"ids": pq.Array(ids),
 	}
