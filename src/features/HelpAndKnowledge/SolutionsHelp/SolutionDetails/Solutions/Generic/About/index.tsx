@@ -8,9 +8,7 @@ import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/ut
 
 import ExternalLink from 'components/ExternalLink';
 
-import GatheringInfoAlert from '../../_components/GatheringInfoAlert';
-
-import '../index.scss';
+import GatheringInfoAlert from '../../../_components/GatheringInfoAlert';
 
 type ListItemType = {
   header: string;

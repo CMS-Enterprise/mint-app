@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Card, CardBody } from '@trussworks/react-uswds';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import RemoveContactModal from './removeContactModal';
+import RemoveContactModal from '../RemoveContactModal';
 
 const ContractorCard = ({
   contractor

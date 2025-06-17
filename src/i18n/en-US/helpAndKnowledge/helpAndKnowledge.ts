@@ -2,8 +2,8 @@ import {
   ArticleCategories,
   HelpArticle
 } from 'features/HelpAndKnowledge/Articles';
-import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
-import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/About';
+import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/Timeline';
 
 import {
   OperationalSolutionCategoryRoute,

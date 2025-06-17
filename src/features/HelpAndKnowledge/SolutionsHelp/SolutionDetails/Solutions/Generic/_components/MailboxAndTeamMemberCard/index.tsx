@@ -11,7 +11,7 @@ import {
 } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import RemoveContactModal from './removeContactModal';
+import RemoveContactModal from '../RemoveContactModal';
 
 const NotificationStatus = ({
   receiveEmails,
@@ -58,7 +58,10 @@ const MailboxAndTeamMemberCard = ({
         }}
       >
         <CardHeader className="padding-0">
-          <h3 className="display-inline margin-bottom-0 margin-right-1">
+          <h3
+            className="display-inline margin-bottom-0 margin-right-1"
+            data-testid="point-of-contact-name"
+          >
             {pointOfContact.name}
           </h3>
           <NotificationStatus
