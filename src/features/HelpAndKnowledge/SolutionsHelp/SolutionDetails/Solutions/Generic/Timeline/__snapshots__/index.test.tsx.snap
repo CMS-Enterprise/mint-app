@@ -149,6 +149,18 @@ exports[`Generic Timeline Components > matches the snapshot > Accountable Care O
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > Actuarial Research and Development Services 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > Automated Plan Payment System 1`] = `
 <DocumentFragment>
   <div
@@ -237,6 +249,18 @@ exports[`Generic Timeline Components > matches the snapshot > Beneficiary Claims
         Once your model is approved to use BCDA by CMMI leadership, the BCDA Team can help guide you through the onboarding process.
       </li>
     </ol>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > CMMI Analysis and Management System 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -585,7 +609,43 @@ exports[`Generic Timeline Components > matches the snapshot > Consolidated Busin
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > Division of Stakeholder Engagement and Policy 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Drug Data Processing System 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > Electronic File Transfer 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Enterprise Privacy Policy Engine Cloud 1`] = `
 <DocumentFragment>
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
@@ -651,6 +711,18 @@ exports[`Generic Timeline Components > matches the snapshot > Expanded Data Feed
         Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. 
       </li>
     </ol>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Federal Funded Research and Development Center 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -851,6 +923,18 @@ exports[`Generic Timeline Components > matches the snapshot > Healthcare Integra
     <p>
       Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at &lt;email&gt;donna.schmidt@cms.hhs.gov&lt;/email&gt; if you have questions.
     </p>
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Innovation Center Landing Page 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1239,6 +1323,7 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
           >
             Go to Onboarding Request Form for MDM-POR
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1288,6 +1373,7 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
           >
             Go to ICD and Onboarding Mapping for MDM-POR
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1364,6 +1450,7 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
           >
             Go to Onboarding Request Form for MDM-NCBP
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1413,6 +1500,7 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
           >
             Go to ICD and Onboarding Mapping for MDM-NCBP
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1596,6 +1684,7 @@ exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = 
           >
             Go to Databricks
             <svg
+              aria-label="launch"
               class="usa-icon"
               focusable="false"
               height="1em"
@@ -1613,6 +1702,42 @@ exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = 
          
       </li>
     </ol>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Office of the Actuary 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Patient Activation Measure 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Quality Payment Program 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -1666,6 +1791,18 @@ exports[`Generic Timeline Components > matches the snapshot > Quality Vertical 1
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > Research and Rapid Cycle Evaluation Group 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > Research, Measurement, Assessment, Design, and Analysis 1`] = `
 <DocumentFragment>
   <div
@@ -1674,6 +1811,18 @@ exports[`Generic Timeline Components > matches the snapshot > Research, Measurem
     <p>
       Model teams should follow the &lt;link1&gt;Procurement Administrative Lead Time (PALT)&lt;/link1&gt; standards to determine when to being working with RMADA.
     </p>
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Risk Adjustment Suite of Systems 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1919,6 +2068,18 @@ There are two types of CRs:
         Releases happen quarterly.
       </li>
     </ol>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Transformed Medicaid Statistical Information System 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
   </div>
 </DocumentFragment>
 `;
