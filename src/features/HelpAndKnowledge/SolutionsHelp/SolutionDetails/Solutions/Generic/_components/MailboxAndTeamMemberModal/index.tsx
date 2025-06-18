@@ -1,5 +1,6 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
+import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -7,18 +8,25 @@ import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolu
 
 import AddMailboxForm from '../AddMailboxForm';
 import AddTeamMemberForm from '../AddTeamMemberForm';
+import EditTeamMemberForm from '../EditTeamMemberForm';
 
 // Matching keys in helpAndKnowledge
-export type ModeType = 'addTeamMailbox' | 'addTeamMember';
+export type ModeType =
+  | 'addTeamMailbox'
+  | 'addTeamMember'
+  | 'editTeamMailbox'
+  | 'editTeamMember';
 
 const MailboxAndTeamMemberModal = ({
   isOpen,
   closeModal,
-  mode
+  mode,
+  contact
 }: {
   isOpen: boolean;
   closeModal: () => void;
   mode: ModeType;
+  contact?: SolutionContactType;
 }) => {
   return (
     <Modal
@@ -44,6 +52,12 @@ const MailboxAndTeamMemberModal = ({
       {mode === 'addTeamMailbox' && <AddMailboxForm closeModal={closeModal} />}
       {mode === 'addTeamMember' && (
         <AddTeamMemberForm closeModal={closeModal} />
+      )}
+      {/* {mode === 'editTeamMailbox'  && contact && (
+        <EditMailboxForm closeModal={closeModal} teamMailbox={contact}/>
+      )} */}
+      {mode === 'editTeamMember' && contact && (
+        <EditTeamMemberForm closeModal={closeModal} teamMember={contact} />
       )}
     </Modal>
   );

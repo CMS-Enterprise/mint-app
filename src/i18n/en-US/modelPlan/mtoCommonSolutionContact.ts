@@ -131,12 +131,24 @@ export const mtoCommonSolutionContactMisc = {
     error:
       'There was an issue adding this point of contact. Please try again, and if the problem persists, try again later.'
   },
+  editTeamMember: {
+    title: 'Edit a team member',
+    success: 'You updated point of contact information for {{-contact}}.',
+    error:
+      'There was an issue editing this point of contact. Please try again, and if the problem persists, try again later.'
+  },
   addTeamMailbox: {
     title: 'Add a team mailbox',
     cta: 'Add team mailbox',
     success: 'You added {{-contact}} as a point of contact.',
     error:
       'There was an issue adding this team mailbox. Please try again, and if the problem persists, try again later.'
+  },
+  editTeamMailbox: {
+    title: 'Edit a team mailbox',
+    success: 'You updated point of contact information for {{-contact}}.',
+    error:
+      'There was an issue edditing this team mailbox. Please try again, and if the problem persists, try again later.'
   },
   addContractor: 'Add contractor',
   removePointOfContact: {
