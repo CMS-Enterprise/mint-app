@@ -82,6 +82,9 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    tooltips: {
+      true: 'The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution.'
     }
   },
   receiveEmails: {
@@ -127,7 +130,10 @@ export const mtoCommonSolutionContactMisc = {
   },
   addTeamMailbox: {
     title: 'Add a team mailbox',
-    cta: 'Add team mailbox'
+    cta: 'Add team mailbox',
+    success: 'You added {{-contact}} as a point of contact.',
+    error:
+      'There was an issue adding this team mailbox. Please try again, and if the problem persists, try again later.'
   },
   addContractor: 'Add contractor',
   removePointOfContact: {
