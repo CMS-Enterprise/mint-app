@@ -198,7 +198,10 @@ const EditTeamMemberForm = ({
                   {...field}
                   id="isPrimary"
                   label={mtoCommonSolutionContact.isPrimary.label}
-                  subLabel={mtoCommonSolutionContact.isPrimary.sublabel || ''}
+                  subLabel={
+                    mtoCommonSolutionContactMisc.editTeamMember
+                      .PrimaryPocSubLabel
+                  }
                   checked={Boolean(field.value)}
                   value="true"
                   onBlur={field.onBlur}

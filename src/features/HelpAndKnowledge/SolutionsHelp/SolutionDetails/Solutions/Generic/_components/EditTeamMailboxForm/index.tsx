@@ -199,7 +199,10 @@ const EditTeamMailboxForm = ({
                   {...field}
                   id="isPrimary"
                   label={mtoCommonSolutionContact.isPrimary.label}
-                  subLabel={mtoCommonSolutionContact.isPrimary.sublabel || ''}
+                  subLabel={
+                    mtoCommonSolutionContactMisc.editTeamMailbox
+                      .PrimaryPocSubLabel
+                  }
                   checked={Boolean(field.value)}
                   value="true"
                   onBlur={field.onBlur}
