@@ -4281,6 +4281,7 @@ export type Timeline = {
   readyForReviewByUserAccount?: Maybe<UserAccount>;
   readyForReviewDts?: Maybe<Scalars['Time']['output']>;
   status: TaskStatus;
+  upcomingTimelineDate?: Maybe<Scalars['Time']['output']>;
   wrapUpEnds?: Maybe<Scalars['Time']['output']>;
 };
 

@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -98,6 +99,41 @@ func UpdateTimeline(
 
 	retTimeline, err := store.TimelineUpdate(logger, existing)
 	return retTimeline, err
+}
+
+func ModelPlanUpcomingTimelineDate(ctx context.Context, modelPlanID uuid.UUID) (*time.Time, error) {
+	timeline, err := loaders.Timeline.ByModelPlanID.Load(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	if timeline == nil {
+		return nil, nil // No timeline found for the given model plan ID
+	}
+
+	now := time.Now()
+	var nearest *time.Time
+
+	dateFields := []*time.Time{
+		timeline.CompleteICIP,
+		timeline.ClearanceStarts,
+		timeline.ClearanceEnds,
+		timeline.Announced,
+		timeline.ApplicationsStart,
+		timeline.ApplicationsEnd,
+		timeline.PerformancePeriodStarts,
+		timeline.PerformancePeriodEnds,
+		timeline.WrapUpEnds,
+	}
+
+	for _, dt := range dateFields {
+		if dt != nil && dt.After(now) {
+			if nearest == nil || dt.Before(*nearest) {
+				nearest = dt
+			}
+		}
+	}
+
+	return nearest, nil
 }
 
 func TimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.Timeline, error) {

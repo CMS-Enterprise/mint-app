@@ -16,6 +16,8 @@ type Timeline {
   wrapUpEnds: Time
   highLevelNote: String
 
+  upcomingTimelineDate: Time
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
