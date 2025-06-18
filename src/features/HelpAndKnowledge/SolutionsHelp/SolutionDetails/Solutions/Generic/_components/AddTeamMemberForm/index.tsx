@@ -13,12 +13,13 @@ import {
 } from '@trussworks/react-uswds';
 import {
   MtoCommonSolutionKey,
-  useCreateMtoCommonSolutionMailboxContactMutation
+  useCreateMtoCommonSolutionUserContactMutation
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import OktaUserSelect from 'components/OktaUserSelect';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import mtoCommonSolutionContact, {
@@ -26,17 +27,17 @@ import mtoCommonSolutionContact, {
 } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
 type FormValues = {
-  mailboxAddress: string;
-  mailboxTitle: string;
+  userName: string;
+  role: string;
   isPrimary: boolean;
   receiveEmails: boolean;
 };
 
-const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
+const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
   const methods = useForm<FormValues>({
     defaultValues: {
-      mailboxAddress: '',
-      mailboxTitle: '',
+      userName: '',
+      role: '',
       isPrimary: false,
       receiveEmails: false
     },
@@ -53,7 +54,7 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const { selectedSolution } = useModalSolutionState();
   const { showMessage } = useMessage();
-  const [create] = useCreateMtoCommonSolutionMailboxContactMutation({
+  const [create] = useCreateMtoCommonSolutionUserContactMutation({
     refetchQueries: [
       {
         query: GetMTOSolutionContacts
@@ -70,8 +71,8 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
     create({
       variables: {
         key: selectedSolution.key.toUpperCase() as MtoCommonSolutionKey,
-        mailboxTitle: formData.mailboxTitle,
-        mailboxAddress: formData.mailboxAddress,
+        userName: formData.userName,
+        role: formData.role,
         isPrimary: formData.isPrimary,
         receiveEmails: formData.receiveEmails
       }
@@ -80,9 +81,9 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContactMisc.addTeamMailbox.success}
+              i18nKey={mtoCommonSolutionContactMisc.addTeamMember.success}
               values={{
-                contact: formData.mailboxTitle
+                contact: formData.userName
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -101,8 +102,8 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
     <FormProvider {...methods}>
       <Form
         className="maxw-none"
-        data-testid="mailbox-form"
-        id="mailbox-form"
+        data-testid="team-member-form"
+        id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
       >
         {hasMutationError && (
@@ -112,12 +113,12 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContactMisc.addTeamMailbox.error}
+            {mtoCommonSolutionContactMisc.addTeamMember.error}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>
           <Controller
-            name="mailboxAddress"
+            name="userName"
             control={control}
             rules={{
               required: true,
@@ -126,28 +127,35 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
-                  htmlFor="team-mailbox-address"
+                  htmlFor="team-member-name"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.mailboxAddress.label}
+                  {mtoCommonSolutionContact.name.label}
                 </Label>
                 <span className="text-base-dark">
-                  {mtoCommonSolutionContact.mailboxAddress.sublabel}
+                  {mtoCommonSolutionContact.name.sublabel}
                 </span>
 
-                <TextInput
-                  type="text"
-                  {...field}
-                  id="team-mailbox-address"
-                  value={field.value || ''}
+                <OktaUserSelect
+                  id="team-member-name"
+                  name="team-member-name"
+                  ariaLabelledBy="label-team-member-name"
+                  ariaDescribedBy="hint-team-member-name"
+                  onChange={oktaUser =>
+                    oktaUser &&
+                    methods.setValue(
+                      'userName',
+                      oktaUser.username ? oktaUser?.username : ''
+                    )
+                  }
                 />
               </FormGroup>
             )}
           />
 
           <Controller
-            name="mailboxTitle"
+            name="role"
             control={control}
             rules={{
               required: true,
@@ -156,17 +164,17 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
-                  htmlFor="team-mailbox-title"
+                  htmlFor="team-member-role"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.mailboxTitle.label}
+                  {mtoCommonSolutionContact.role.label}
                 </Label>
 
                 <TextInput
                   type="text"
                   {...field}
-                  id="team-mailbox-title"
+                  id="team-member-role"
                   value={field.value || ''}
                 />
               </FormGroup>
@@ -257,7 +265,7 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             disabled={!isValid}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContactMisc.addTeamMailbox.cta}
+            {mtoCommonSolutionContactMisc.addTeamMember.cta}
           </Button>
           <Button
             type="button"
@@ -276,4 +284,4 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-export default AddMailboxForm;
+export default AddTeamMemberForm;

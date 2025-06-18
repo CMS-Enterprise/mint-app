@@ -6,6 +6,7 @@ import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
 import AddMailboxForm from '../AddMailboxForm';
+import AddTeamMemberForm from '../AddTeamMemberForm';
 
 // Matching keys in helpAndKnowledge
 export type ModeType = 'addTeamMailbox' | 'addTeamMember';
@@ -41,6 +42,9 @@ const MailboxAndTeamMemberModal = ({
       </div>
 
       {mode === 'addTeamMailbox' && <AddMailboxForm closeModal={closeModal} />}
+      {mode === 'addTeamMember' && (
+        <AddTeamMemberForm closeModal={closeModal} />
+      )}
     </Modal>
   );
 };

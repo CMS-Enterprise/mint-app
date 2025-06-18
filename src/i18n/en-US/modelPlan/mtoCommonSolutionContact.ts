@@ -126,7 +126,10 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
 export const mtoCommonSolutionContactMisc = {
   addTeamMember: {
     title: 'Add a team member',
-    cta: 'Add team member'
+    cta: 'Add team member',
+    success: 'You added {{-contact}} as a point of contact.',
+    error:
+      'There was an issue adding this point of contact. Please try again, and if the problem persists, try again later.'
   },
   addTeamMailbox: {
     title: 'Add a team mailbox',
