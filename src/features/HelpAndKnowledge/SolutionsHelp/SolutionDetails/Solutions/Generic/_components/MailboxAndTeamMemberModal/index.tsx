@@ -6,8 +6,9 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
-import AddMailboxForm from '../AddMailboxForm';
+import AddTeamMailboxForm from '../AddTeamMailboxForm';
 import AddTeamMemberForm from '../AddTeamMemberForm';
+import EditTeamMailboxForm from '../EditTeamMailboxForm';
 import EditTeamMemberForm from '../EditTeamMemberForm';
 
 // Matching keys in helpAndKnowledge
@@ -49,13 +50,15 @@ const MailboxAndTeamMemberModal = ({
         </p>
       </div>
 
-      {mode === 'addTeamMailbox' && <AddMailboxForm closeModal={closeModal} />}
+      {mode === 'addTeamMailbox' && (
+        <AddTeamMailboxForm closeModal={closeModal} />
+      )}
       {mode === 'addTeamMember' && (
         <AddTeamMemberForm closeModal={closeModal} />
       )}
-      {/* {mode === 'editTeamMailbox'  && contact && (
-        <EditMailboxForm closeModal={closeModal} teamMailbox={contact}/>
-      )} */}
+      {mode === 'editTeamMailbox' && contact && (
+        <EditTeamMailboxForm closeModal={closeModal} teamMailbox={contact} />
+      )}
       {mode === 'editTeamMember' && contact && (
         <EditTeamMemberForm closeModal={closeModal} teamMember={contact} />
       )}

@@ -17,7 +17,6 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
-import OktaUserSelect from 'components/OktaUserSelect';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import mtoCommonSolutionContact, {
@@ -26,24 +25,25 @@ import mtoCommonSolutionContact, {
 import dirtyInput from 'utils/formUtil';
 
 type FormValues = {
-  userName: string;
-  role: string;
+  mailboxAddress: string;
+  mailboxTitle: string;
   isPrimary: boolean;
   receiveEmails: boolean;
 };
 
-const EditTeamMemberForm = ({
+const EditTeamMailboxForm = ({
   closeModal,
-  teamMember
+  teamMailbox
 }: {
   closeModal: () => void;
-  teamMember: SolutionContactType;
+  teamMailbox: SolutionContactType;
 }) => {
   const methods = useForm<FormValues>({
     defaultValues: {
-      role: teamMember.role || '',
-      isPrimary: teamMember.isPrimary,
-      receiveEmails: teamMember.receiveEmails
+      mailboxAddress: teamMailbox.mailboxAddress || '',
+      mailboxTitle: teamMailbox.mailboxTitle || '',
+      isPrimary: teamMailbox.isPrimary,
+      receiveEmails: teamMailbox.receiveEmails
     },
     mode: 'onChange'
   });
@@ -66,7 +66,7 @@ const EditTeamMemberForm = ({
     ]
   });
   const [unsavedReceiveEmails, setUnsavedReceiveEmails] = useState(
-    teamMember.receiveEmails
+    teamMailbox.receiveEmails
   );
   const [hasMutationError, setHasMutationError] = useState(false);
   const disabledSubmitBtn =
@@ -80,12 +80,17 @@ const EditTeamMemberForm = ({
   }
 
   const onSubmit = (formData: FormValues) => {
-    const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
+    const {
+      // todo:wait for BE to add it
+      // mailboxTitle,
+      isPrimary,
+      receiveEmails
+    } = dirtyInput(teamMailbox, formData);
     update({
       variables: {
-        id: teamMember.id,
+        id: teamMailbox.id,
         input: {
-          role,
+          // mailboxTitle,
           isPrimary,
           receiveEmails
         }
@@ -95,9 +100,9 @@ const EditTeamMemberForm = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContactMisc.editTeamMember.success}
+              i18nKey={mtoCommonSolutionContactMisc.editTeamMailbox.success}
               values={{
-                contact: teamMember.name
+                contact: teamMailbox.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -127,46 +132,12 @@ const EditTeamMemberForm = ({
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContactMisc.editTeamMember.error}
+            {mtoCommonSolutionContactMisc.editTeamMailbox.error}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
           <Controller
-            name="userName"
-            control={control}
-            render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
-                <Label
-                  htmlFor="team-member-name"
-                  className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
-                >
-                  {mtoCommonSolutionContact.name.label}
-                </Label>
-                <span className="text-base-dark">
-                  {mtoCommonSolutionContact.name.sublabel}
-                </span>
-
-                <OktaUserSelect
-                  id="team-member-name"
-                  name="team-member-name"
-                  ariaLabelledBy="label-team-member-name"
-                  ariaDescribedBy="hint-team-member-name"
-                  value={{
-                    username: teamMember.name,
-                    displayName: teamMember.name,
-                    email: teamMember.email
-                  }}
-                  onChange={() => {}}
-                  className="disabled-input"
-                  disabled
-                />
-              </FormGroup>
-            )}
-          />
-
-          <Controller
-            name="role"
+            name="mailboxAddress"
             control={control}
             rules={{
               required: true,
@@ -175,17 +146,48 @@ const EditTeamMemberForm = ({
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
-                  htmlFor="team-member-role"
+                  htmlFor="team-mailbox-address"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.role.label}
+                  {mtoCommonSolutionContact.mailboxAddress.label}
+                </Label>
+                <span className="text-base-dark">
+                  {mtoCommonSolutionContact.mailboxAddress.sublabel}
+                </span>
+
+                <TextInput
+                  type="text"
+                  {...field}
+                  id="team-mailbox-address"
+                  value={field.value || ''}
+                  disabled
+                />
+              </FormGroup>
+            )}
+          />
+
+          <Controller
+            name="mailboxTitle"
+            control={control}
+            rules={{
+              required: true,
+              validate: value => value !== 'default'
+            }}
+            render={({ field: { ref, ...field } }) => (
+              <FormGroup className="margin-top-0 margin-bottom-2">
+                <Label
+                  htmlFor="team-mailbox-title"
+                  className="mint-body-normal maxw-none margin-bottom-1"
+                  requiredMarker
+                >
+                  {mtoCommonSolutionContact.mailboxTitle.label}
                 </Label>
 
                 <TextInput
                   type="text"
                   {...field}
-                  id="team-member-role"
+                  id="team-mailbox-title"
                   value={field.value || ''}
                 />
               </FormGroup>
@@ -209,7 +211,7 @@ const EditTeamMemberForm = ({
                     field.onChange(e.target.checked);
                     setValue('receiveEmails', unsavedReceiveEmails);
                   }}
-                  disabled={teamMember.isPrimary}
+                  disabled={teamMailbox.isPrimary}
                   icon={
                     <Tooltip
                       label={mtoCommonSolutionContact.isPrimary.tooltips?.true}
@@ -294,4 +296,4 @@ const EditTeamMemberForm = ({
   );
 };
 
-export default EditTeamMemberForm;
+export default EditTeamMailboxForm;

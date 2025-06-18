@@ -32,7 +32,7 @@ type FormValues = {
   receiveEmails: boolean;
 };
 
-const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
+const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
   const methods = useForm<FormValues>({
     defaultValues: {
       mailboxAddress: '',
@@ -276,4 +276,4 @@ const AddMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-export default AddMailboxForm;
+export default AddTeamMailboxForm;
