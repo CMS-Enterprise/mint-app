@@ -1,3 +1,6 @@
+ALTER TYPE table_name ADD VALUE 'timeline';
+COMMIT;
+
 -- Create the new timeline table
 CREATE TABLE timeline (
     id UUID PRIMARY KEY NOT NULL,
