@@ -25,7 +25,7 @@ type timelineScripts struct {
 	GetByModelPlanID       string
 }
 
-// PlanBasics houses all the sql for getting data for plan basics from the database
+// Timeline houses all the sql for getting data for timeline from the database
 var Timeline = timelineScripts{
 	Create:                 timelineCreateSQL,
 	Update:                 timelineUpdateSQL,
