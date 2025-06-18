@@ -538,3 +538,30 @@ func sendTimelineDateChangedEmails(
 
 	return nil
 }
+
+func getUpcomingTimelineDate(timeline *models.Timeline) (*time.Time, error) {
+	now := time.Now()
+	var nearest *time.Time
+
+	dateFields := []*time.Time{
+		timeline.CompleteICIP,
+		timeline.ClearanceStarts,
+		timeline.ClearanceEnds,
+		timeline.Announced,
+		timeline.ApplicationsStart,
+		timeline.ApplicationsEnd,
+		timeline.PerformancePeriodStarts,
+		timeline.PerformancePeriodEnds,
+		timeline.WrapUpEnds,
+	}
+
+	for _, dt := range dateFields {
+		if dt != nil && dt.After(now) {
+			if nearest == nil || dt.Before(*nearest) {
+				nearest = dt
+			}
+		}
+	}
+
+	return nearest, nil
+}

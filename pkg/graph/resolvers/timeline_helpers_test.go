@@ -519,3 +519,56 @@ func (suite *ResolverSuite) TestTimelineDateProcessorExtractChangedDates() {
 		})
 	}
 }
+
+func (suite *ResolverSuite) TestGetUpcomingTimelineDate() {
+	// Set up times: tPast < tNow < tFuture1 < tFuture2
+	tNow := time.Now()
+	tPast := tNow.Add(-24 * time.Hour)
+	tFuture1 := tNow.Add(24 * time.Hour)
+	tFuture2 := tNow.Add(48 * time.Hour)
+
+	// Test: All fields nil
+	timeline := &models.Timeline{}
+	nearest, err := getUpcomingTimelineDate(timeline)
+	suite.NoError(err)
+	suite.Nil(nearest)
+
+	// Test: Only past dates
+	timeline = &models.Timeline{
+		CompleteICIP: &tPast,
+	}
+	nearest, err = getUpcomingTimelineDate(timeline)
+	suite.NoError(err)
+	suite.Nil(nearest)
+
+	// Test: One future date
+	timeline = &models.Timeline{
+		CompleteICIP: &tFuture1,
+	}
+	nearest, err = getUpcomingTimelineDate(timeline)
+	suite.NoError(err)
+	suite.NotNil(nearest)
+	suite.WithinDuration(tFuture1, *nearest, time.Second)
+
+	// Test: Multiple future dates, pick nearest
+	timeline = &models.Timeline{
+		CompleteICIP:    &tFuture2,
+		ClearanceStarts: &tFuture1,
+		WrapUpEnds:      &tFuture2,
+	}
+	nearest, err = getUpcomingTimelineDate(timeline)
+	suite.NoError(err)
+	suite.NotNil(nearest)
+	suite.WithinDuration(tFuture1, *nearest, time.Second)
+
+	// Test: Mix of past and future, pick nearest future
+	timeline = &models.Timeline{
+		CompleteICIP:    &tPast,
+		ClearanceStarts: &tFuture2,
+		Announced:       &tFuture1,
+	}
+	nearest, err = getUpcomingTimelineDate(timeline)
+	suite.NoError(err)
+	suite.NotNil(nearest)
+	suite.WithinDuration(tFuture1, *nearest, time.Second)
+}

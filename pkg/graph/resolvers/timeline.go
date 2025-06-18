@@ -110,27 +110,10 @@ func ModelPlanUpcomingTimelineDate(ctx context.Context, modelPlanID uuid.UUID) (
 		return nil, nil // No timeline found for the given model plan ID
 	}
 
-	now := time.Now()
-	var nearest *time.Time
+	nearest, err := getUpcomingTimelineDate(timeline)
 
-	dateFields := []*time.Time{
-		timeline.CompleteICIP,
-		timeline.ClearanceStarts,
-		timeline.ClearanceEnds,
-		timeline.Announced,
-		timeline.ApplicationsStart,
-		timeline.ApplicationsEnd,
-		timeline.PerformancePeriodStarts,
-		timeline.PerformancePeriodEnds,
-		timeline.WrapUpEnds,
-	}
-
-	for _, dt := range dateFields {
-		if dt != nil && dt.After(now) {
-			if nearest == nil || dt.Before(*nearest) {
-				nearest = dt
-			}
-		}
+	if err != nil {
+		return nil, err
 	}
 
 	return nearest, nil
