@@ -12,13 +12,13 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-// timelineLoaders is a struct that holds LoaderWrappers related to Plan Basics
+// timelineLoaders is a struct that holds LoaderWrappers related to Timeline
 type timelineLoaders struct {
-	// ByModelPlanID Gets a plan basics record associated with a model plan by the supplied model plan id
+	// ByModelPlanID Gets a timeline record associated with a model plan by the supplied model plan id
 	ByModelPlanID LoaderWrapper[uuid.UUID, *models.Timeline]
 }
 
-// Timeline is the singleton instance of all LoaderWrappers related to Plan Basics
+// Timeline is the singleton instance of all LoaderWrappers related to Timeline
 var Timeline = &timelineLoaders{
 	ByModelPlanID: NewLoaderWrapper(batchTimelineGetByModelPlanID),
 }

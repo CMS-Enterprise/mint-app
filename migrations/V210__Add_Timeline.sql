@@ -13,14 +13,14 @@ CREATE TABLE timeline (
     wrap_up_ends TIMESTAMP WITH TIME ZONE NULL,
     high_level_note ZERO_STRING,
 
-    created_by EUA_ID NOT NULL,
+    created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID,
+    modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
     modified_dts TIMESTAMP WITH TIME ZONE,
 
-    ready_for_review_by EUA_ID,
+    ready_for_review_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
     ready_for_review_dts TIMESTAMP WITH TIME ZONE,
-    ready_for_clearance_by EUA_ID,
+    ready_for_clearance_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
     ready_for_clearance_dts TIMESTAMP WITH TIME ZONE,
 
     status TASK_STATUS NOT NULL DEFAULT 'READY',

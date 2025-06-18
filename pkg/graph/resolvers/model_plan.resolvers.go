@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -140,8 +139,8 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 }
 
 // Timeline is the resolver for the timeline field.
-func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*model.Timeline, error) {
-	panic(fmt.Errorf("not implemented: Timeline - timeline"))
+func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.Timeline, error) {
+	return TimelineGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.

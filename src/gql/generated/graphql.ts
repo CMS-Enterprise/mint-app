@@ -1222,7 +1222,7 @@ export type ModelPlan = {
   suggestedPhase?: Maybe<PhaseSuggestion>;
   taskListStatus: TaskStatus;
   tdls: Array<PlanTdl>;
-  timeline?: Maybe<Timeline>;
+  timeline: Timeline;
 };
 
 
