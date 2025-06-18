@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -10,6 +10,8 @@ import {
   Tooltip
 } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import RemoveContactModal from '../RemoveContactModal';
 
 const NotificationStatus = ({
   receiveEmails,
@@ -39,9 +41,16 @@ const MailboxAndTeamMemberCard = ({
   pointOfContact: SolutionContactType;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const [isRemovePocModalOpen, setIsRemovePocModalOpen] = useState(false);
 
   return (
     <div className="margin-bottom-3">
+      <RemoveContactModal
+        isModalOpen={isRemovePocModalOpen}
+        closeModal={() => setIsRemovePocModalOpen(false)}
+        pointOfContact={pointOfContact}
+        contactType="teamOrMember"
+      />
       <Card
         className="margin-bottom-0"
         containerProps={{
@@ -49,7 +58,10 @@ const MailboxAndTeamMemberCard = ({
         }}
       >
         <CardHeader className="padding-0">
-          <h3 className="display-inline margin-bottom-0 margin-right-1">
+          <h3
+            className="display-inline margin-bottom-0 margin-right-1"
+            data-testid="point-of-contact-name"
+          >
             {pointOfContact.name}
           </h3>
           <NotificationStatus
@@ -96,6 +108,7 @@ const MailboxAndTeamMemberCard = ({
           className={pointOfContact.isPrimary ? 'text-gray' : 'text-error'}
           disabled={pointOfContact.isPrimary}
           unstyled
+          onClick={() => setIsRemovePocModalOpen(true)}
         >
           {t('removePointOfContact')}
         </Button>

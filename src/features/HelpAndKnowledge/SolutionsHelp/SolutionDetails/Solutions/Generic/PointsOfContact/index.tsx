@@ -15,8 +15,8 @@ import {
 import Alert from 'components/Alert';
 import Divider from 'components/Divider';
 
-import ContractorCard from './contractorCard';
-import MailboxesAndTeamMembers from './mailboxesAndTeamMembers';
+import ContractorCard from '../_components/ContractorCard';
+import MailboxesAndTeamMembers from '../_components/MailboxesAndTeamMembers';
 
 const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
   return (
@@ -72,7 +72,7 @@ export const GenericPointsOfContact = ({
         </Button>
 
         {hasContractors ? (
-          contractors.map(contact => <ContractorCard contact={contact} />)
+          contractors.map(contact => <ContractorCard contractor={contact} />)
         ) : (
           <Alert type="info" slim>
             {t('noContractors')}

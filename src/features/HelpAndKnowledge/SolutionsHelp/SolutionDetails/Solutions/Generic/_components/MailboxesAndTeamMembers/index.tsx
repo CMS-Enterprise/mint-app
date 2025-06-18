@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import MailboxAndTeamMemberCard from './mailboxAndTeamMemberCard';
+import MailboxAndTeamMemberCard from '../MailboxAndTeamMemberCard';
 
 const MailboxesAndTeamMembers = ({
   pointsOfContact
@@ -26,14 +26,14 @@ const MailboxesAndTeamMembers = ({
         {t('mailboxesAndTeamMembers')}
       </h2>
       <div className="height-3 margin-bottom-2">
-        <Button type="button" className="usa-button usa-button--unstyled">
+        <Button type="button" unstyled>
           <Icon.Add aria-hidden />
           {t('addTeamMailbox')}
         </Button>
 
         <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1" />
 
-        <Button type="button" className="usa-button usa-button--unstyled">
+        <Button type="button" unstyled>
           <Icon.Add aria-hidden />
           {t('addTeamMember')}
         </Button>

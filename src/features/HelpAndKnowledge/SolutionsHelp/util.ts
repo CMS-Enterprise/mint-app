@@ -1,7 +1,7 @@
 import { tObject } from 'utils/translation';
 
-import { AboutConfigType } from './SolutionDetails/Solutions/Generic/about';
-import { TimelineConfigType } from './SolutionDetails/Solutions/Generic/timeline';
+import { AboutConfigType } from './SolutionDetails/Solutions/Generic/About';
+import { TimelineConfigType } from './SolutionDetails/Solutions/Generic/Timeline';
 
 export const timelineTranslationUtil = (solutionKey: string) =>
   tObject<keyof TimelineConfigType, any>(
