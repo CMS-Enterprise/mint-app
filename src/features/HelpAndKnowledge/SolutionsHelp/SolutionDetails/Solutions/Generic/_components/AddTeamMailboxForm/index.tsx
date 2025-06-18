@@ -212,16 +212,17 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
                 <CheckboxField
                   {...field}
                   id="receiveEmails"
-                  checked={Boolean(field.value)}
+                  label={mtoCommonSolutionContact.receiveEmails.label}
+                  subLabel={
+                    mtoCommonSolutionContact.receiveEmails.sublabel || ''
+                  }
+                  checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
                   onChange={e => {
                     field.onChange(e.target.checked);
                   }}
-                  label={mtoCommonSolutionContact.receiveEmails.label}
-                  subLabel={
-                    mtoCommonSolutionContact.receiveEmails.sublabel || ''
-                  }
+                  disabled={watch('isPrimary')}
                 />
               </FormGroup>
             )}
@@ -231,7 +232,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
           type="info"
           slim
           className="margin-top-0 margin-bottom-2"
-          hidden={!watch('receiveEmails')}
+          hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
             i18nKey={mtoCommonSolutionContactMisc.alert}

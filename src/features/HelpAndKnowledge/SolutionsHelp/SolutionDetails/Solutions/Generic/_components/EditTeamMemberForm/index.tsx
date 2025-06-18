@@ -52,8 +52,7 @@ const EditTeamMemberForm = ({
     control,
     handleSubmit,
     formState: { isSubmitting, isDirty, dirtyFields, isValid },
-    watch,
-    setValue
+    watch
   } = methods;
 
   const { selectedSolution } = useModalSolutionState();
@@ -65,9 +64,7 @@ const EditTeamMemberForm = ({
       }
     ]
   });
-  const [unsavedReceiveEmails, setUnsavedReceiveEmails] = useState(
-    teamMember.receiveEmails
-  );
+
   const [hasMutationError, setHasMutationError] = useState(false);
   const disabledSubmitBtn =
     isSubmitting ||
@@ -207,7 +204,6 @@ const EditTeamMemberForm = ({
                   onBlur={field.onBlur}
                   onChange={e => {
                     field.onChange(e.target.checked);
-                    setValue('receiveEmails', unsavedReceiveEmails);
                   }}
                   disabled={teamMember.isPrimary}
                   icon={
@@ -242,7 +238,6 @@ const EditTeamMemberForm = ({
                   onBlur={field.onBlur}
                   onChange={e => {
                     field.onChange(e.target.checked);
-                    setUnsavedReceiveEmails(e.target.checked);
                   }}
                   disabled={watch('isPrimary')}
                 />
@@ -254,7 +249,7 @@ const EditTeamMemberForm = ({
           type="info"
           slim
           className="margin-top-0 margin-bottom-2"
-          hidden={!watch('receiveEmails')}
+          hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
             i18nKey={mtoCommonSolutionContactMisc.alert}
