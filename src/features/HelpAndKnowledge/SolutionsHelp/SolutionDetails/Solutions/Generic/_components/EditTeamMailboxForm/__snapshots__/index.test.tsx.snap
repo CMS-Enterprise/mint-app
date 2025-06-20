@@ -4,12 +4,13 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
 <DocumentFragment>
   <form
     class="usa-form maxw-none"
-    data-testid="mailbox-form"
-    id="mailbox-form"
+    data-testid="team-member-form"
+    id="team-member-form"
   >
     <fieldset
       class="usa-fieldset"
       data-testid="fieldset"
+      style="min-width: 100%;"
     >
       <div
         class="usa-form-group margin-top-0 margin-bottom-2"
@@ -35,11 +36,12 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
         </span>
         <input
           class="usa-input"
-          data-testid="textInput"
+          data-testid="team-mailbox-address"
+          disabled=""
           id="team-mailbox-address"
           name="mailboxAddress"
           type="text"
-          value=""
+          value="mint-team@email.com"
         />
       </div>
       <div
@@ -61,11 +63,11 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
         </label>
         <input
           class="usa-input"
-          data-testid="textInput"
+          data-testid="team-mailbox-title"
           id="team-mailbox-title"
           name="mailboxTitle"
           type="text"
-          value=""
+          value="Mint Team"
         />
       </div>
       <div
@@ -77,6 +79,7 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
         >
           <input
             class="usa-checkbox__input"
+            data-testid="isPrimary"
             id="isPrimary"
             name="isPrimary"
             type="checkbox"
@@ -93,7 +96,7 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
             data-testid="tooltipWrapper"
           >
             <button
-              aria-describedby="tooltip-575014"
+              aria-describedby="tooltip-453502"
               class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
               data-testid="triggerElement"
               position="top"
@@ -120,7 +123,7 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
               aria-hidden="true"
               class="usa-tooltip__body"
               data-testid="tooltipBody"
-              id="tooltip-575014"
+              id="tooltip-453502"
               role="tooltip"
               title="The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
             >
@@ -130,7 +133,7 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           >
-            If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list.
+            If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.
           </p>
         </div>
       </div>
@@ -143,6 +146,7 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
         >
           <input
             class="usa-checkbox__input"
+            data-testid="receiveEmails"
             id="receiveEmails"
             name="receiveEmails"
             type="checkbox"
@@ -188,7 +192,7 @@ exports[`Add a team mailbox point of contact form > should matches snapshot 1`] 
         disabled=""
         type="submit"
       >
-        Add team mailbox
+        Save Changes
       </button>
       <button
         class="usa-button usa-button--unstyled margin-top-0"

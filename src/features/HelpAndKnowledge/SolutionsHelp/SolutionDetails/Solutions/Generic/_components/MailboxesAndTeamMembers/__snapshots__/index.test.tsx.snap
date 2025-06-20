@@ -30,7 +30,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
             d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
           />
         </svg>
-        Add team mailbox
+        Add a team mailbox
       </button>
       <div
         class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -82,7 +82,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
               data-testid="tooltipWrapper"
             >
               <button
-                aria-describedby="tooltip-745564"
+                aria-describedby="tooltip-142675"
                 class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
                 data-testid="triggerElement"
                 position="right"
@@ -92,6 +92,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
                 type="button"
               >
                 <svg
+                  aria-label="notification on"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -114,7 +115,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-745564"
+                id="tooltip-142675"
                 role="tooltip"
                 title="This point of contact will receive an email notification when a model adds this solution to their model-to-operations matrix (MTO)."
               >
@@ -205,7 +206,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
               data-testid="tooltipWrapper"
             >
               <button
-                aria-describedby="tooltip-171015"
+                aria-describedby="tooltip-933048"
                 class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
                 data-testid="triggerElement"
                 position="right"
@@ -215,6 +216,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
                 type="button"
               >
                 <svg
+                  aria-label="notification off"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -237,7 +239,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-171015"
+                id="tooltip-933048"
                 role="tooltip"
                 title="This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO)."
               >

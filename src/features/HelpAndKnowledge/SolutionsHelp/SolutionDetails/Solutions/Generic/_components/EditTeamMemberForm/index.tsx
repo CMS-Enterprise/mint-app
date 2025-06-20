@@ -183,6 +183,7 @@ const EditTeamMemberForm = ({
                   type="text"
                   {...field}
                   id="team-member-role"
+                  data-testid="team-member-role"
                   value={field.value || ''}
                 />
               </FormGroup>
@@ -197,6 +198,7 @@ const EditTeamMemberForm = ({
                 <CheckboxField
                   {...field}
                   id="isPrimary"
+                  testid="isPrimary"
                   label={mtoCommonSolutionContact.isPrimary.label}
                   subLabel={
                     mtoCommonSolutionContactMisc.editTeamMember
@@ -232,6 +234,7 @@ const EditTeamMemberForm = ({
                 <CheckboxField
                   {...field}
                   id="receiveEmails"
+                  testid="receiveEmails"
                   label={mtoCommonSolutionContact.receiveEmails.label}
                   subLabel={
                     mtoCommonSolutionContact.receiveEmails.sublabel || ''

@@ -156,6 +156,7 @@ const EditTeamMailboxForm = ({
                   type="text"
                   {...field}
                   id="team-mailbox-address"
+                  data-testid="team-mailbox-address"
                   value={field.value || ''}
                   disabled
                 />
@@ -184,6 +185,7 @@ const EditTeamMailboxForm = ({
                   type="text"
                   {...field}
                   id="team-mailbox-title"
+                  data-testid="team-mailbox-title"
                   value={field.value || ''}
                 />
               </FormGroup>
@@ -198,6 +200,7 @@ const EditTeamMailboxForm = ({
                 <CheckboxField
                   {...field}
                   id="isPrimary"
+                  testid="isPrimary"
                   label={mtoCommonSolutionContact.isPrimary.label}
                   subLabel={
                     mtoCommonSolutionContactMisc.editTeamMailbox
@@ -233,6 +236,7 @@ const EditTeamMailboxForm = ({
                 <CheckboxField
                   {...field}
                   id="receiveEmails"
+                  testid="receiveEmails"
                   label={mtoCommonSolutionContact.receiveEmails.label}
                   subLabel={
                     mtoCommonSolutionContact.receiveEmails.sublabel || ''
