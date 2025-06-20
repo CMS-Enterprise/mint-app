@@ -82,12 +82,12 @@ func (s *Store) TimelineGetByModelPlanID(modelPlanID uuid.UUID) (*models.Timelin
 
 	timeline, err := sqlutils.GetProcedure[models.Timeline](s, sqlqueries.Timeline.GetByModelPlanID, arg)
 	if err != nil {
-		return nil, fmt.Errorf("error getting plan timeline by model plan id: %w", err)
+		return nil, fmt.Errorf("error getting timeline by model plan id: %w", err)
 	}
 	return timeline, nil
 }
 
-// TimelineGetByModelPlanIDLoader returns the plan timeline for a slice of model plan ids
+// TimelineGetByModelPlanIDLoader returns the timeline for a slice of model plan ids
 func TimelineGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.Timeline, error) {
 
 	args := map[string]interface{}{

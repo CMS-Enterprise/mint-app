@@ -28,12 +28,12 @@ func ModelPlanAnticipatedPhase(
 		return nil, nil
 	}
 
-	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	timeline, err := TimelineGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 
-	suggestion, err := EvaluateSuggestedStatus(modelStatus, planBasics)
+	suggestion, err := EvaluateSuggestedStatus(modelStatus, timeline)
 	if err != nil {
 		return nil, err
 	}
@@ -43,12 +43,12 @@ func ModelPlanAnticipatedPhase(
 
 // EvaluateSuggestedStatus evaluates the suggested status for a model plan based on its current status and timeline
 // A nil result indicates that no phase is suggested
-func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planBasics *models.PlanBasics) (*model.PhaseSuggestion, error) {
+func EvaluateSuggestedStatus(modelStatus models.ModelStatus, timeline *models.Timeline) (*model.PhaseSuggestion, error) {
 
 	// Iterate over all status evaluation strategies and append valid statuses to the results slice
 	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
 	for _, strategy := range statusEvaluationStrategies {
-		phaseSuggestion := strategy.Evaluate(modelStatus, planBasics)
+		phaseSuggestion := strategy.Evaluate(modelStatus, timeline)
 		if nil != phaseSuggestion {
 			return phaseSuggestion, nil
 		}
@@ -247,13 +247,13 @@ func TrySendEmailForPhaseSuggestionByModelPlanID(
 		return err
 	}
 
-	planBasics, err := store.PlanBasicsGetByModelPlanID(modelPlanID)
+	timeline, err := store.TimelineGetByModelPlanID(modelPlanID)
 	if err != nil {
 		return err
 	}
 
 	// Check if the model status should be updated
-	phaseSuggestion, err := EvaluateSuggestedStatus(modelPlan.Status, planBasics)
+	phaseSuggestion, err := EvaluateSuggestedStatus(modelPlan.Status, timeline)
 	if err != nil {
 		err = fmt.Errorf("unable to get anticipated phase for model plan id %s. Err %w", modelPlanID, err)
 		logger.Error(err.Error(), zap.Error(err))

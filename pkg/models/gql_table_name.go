@@ -28,4 +28,5 @@ const (
 	GQTNPossibleoperationalneed      GQLTableName = "possibleOperationalNeed"
 	GQTNPossibleoperationalsolution  GQLTableName = "possibleOperationalSolution"
 	GQTNUseraccount                  GQLTableName = "userAccount"
+	GQTNTimeline                     GQLTableName = "timeline"
 )
