@@ -12,7 +12,7 @@ import (
 )
 
 // ChildRelation is the resolver for the childRelation field.
-func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]interface{}, error) {
+func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]any, error) {
 	// Note, This type isn't exposed in GQL, but it is left here for safety
 	resultMap := make(map[string]interface{})
 	for key, value := range obj.ChildRelation {
@@ -22,7 +22,7 @@ func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx conte
 }
 
 // ChildRelation is the resolver for the childRelation field.
-func (r *translationFieldWithParentAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (map[string]interface{}, error) {
+func (r *translationFieldWithParentAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (map[string]any, error) {
 	// Note, This type isn't exposed in GQL, but it is left here for safety
 	resultMap := make(map[string]interface{})
 	for key, value := range obj.ChildRelation {
