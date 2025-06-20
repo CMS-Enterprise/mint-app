@@ -36,8 +36,6 @@ updates:
         update-types:
           - "minor"
           - "patch"
-    ignore:
-      - dependency-name: "github.com/contribsys/faktory" # Ignoring until go version upgrade. Updating go tools currently breaks the build. MINT-3317 will address this https://jiraent.cms.gov/browse/MINT-3317
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
