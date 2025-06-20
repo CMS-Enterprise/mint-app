@@ -176,24 +176,24 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 	// Create a plan
 	planName := "Test Plan"
 	plan := suite.createModelPlan(planName)
-	planBasics, err := suite.testConfigs.Store.PlanBasicsGetByModelPlanID(plan.ID)
+	timeline, err := suite.testConfigs.Store.TimelineGetByModelPlanID(plan.ID)
 	suite.NoError(err)
 
 	yesterday := time.Now().Add(time.Hour * -24)
 	tomorrow := time.Now().Add(time.Hour * 24)
 
-	// Set Plan Basics dates
-	planBasics.CompleteICIP = &tomorrow
-	planBasics.ClearanceStarts = &yesterday // This is the important date for this test! (Clearance Start has passed)
-	planBasics.ClearanceEnds = &tomorrow
-	planBasics.Announced = &tomorrow
-	planBasics.ApplicationsStart = &tomorrow
-	planBasics.ApplicationsEnd = &tomorrow
-	planBasics.PerformancePeriodStarts = &tomorrow
-	planBasics.PerformancePeriodEnds = &tomorrow
-	planBasics.WrapUpEnds = &tomorrow
+	// Set Timeline dates
+	timeline.CompleteICIP = &tomorrow
+	timeline.ClearanceStarts = &yesterday // This is the important date for this test! (Clearance Start has passed)
+	timeline.ClearanceEnds = &tomorrow
+	timeline.Announced = &tomorrow
+	timeline.ApplicationsStart = &tomorrow
+	timeline.ApplicationsEnd = &tomorrow
+	timeline.PerformancePeriodStarts = &tomorrow
+	timeline.PerformancePeriodEnds = &tomorrow
+	timeline.WrapUpEnds = &tomorrow
 
-	phaseSuggestion, err := EvaluateSuggestedStatus(plan.Status, planBasics)
+	phaseSuggestion, err := EvaluateSuggestedStatus(plan.Status, timeline)
 	suite.NoError(err)
 	suite.NotNil(phaseSuggestion)
 	suite.EqualValues(models.ModelPhaseInClearance, phaseSuggestion.Phase)

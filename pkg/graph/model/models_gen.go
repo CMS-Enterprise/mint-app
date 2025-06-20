@@ -706,6 +706,25 @@ type PlanPaymentsTranslation struct {
 	Status                                            models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
+// Represents timeline translation data
+type TimelineTranslation struct {
+	CompleteIcip              models.TranslationField            `json:"completeICIP" db:"complete_icip"`
+	ClearanceStarts           models.TranslationField            `json:"clearanceStarts" db:"clearance_starts"`
+	ClearanceEnds             models.TranslationField            `json:"clearanceEnds" db:"clearance_ends"`
+	Announced                 models.TranslationField            `json:"announced" db:"announced"`
+	ApplicationsStart         models.TranslationField            `json:"applicationsStart" db:"applications_starts"`
+	ApplicationsEnd           models.TranslationField            `json:"applicationsEnd" db:"applications_ends"`
+	PerformancePeriodStarts   models.TranslationField            `json:"performancePeriodStarts" db:"performance_period_starts"`
+	PerformancePeriodEnds     models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
+	WrapUpEnds                models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
+	HighLevelNote             models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
+	ReadyForReviewBy          models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts         models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy       models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts      models.TranslationField            `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
+	Status                    models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
 type PlanTDLCreateInput struct {
 	ModelPlanID   uuid.UUID `json:"modelPlanID"`
 	IDNumber      string    `json:"idNumber"`
