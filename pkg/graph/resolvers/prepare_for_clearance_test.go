@@ -39,13 +39,13 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, planClearance.Status)
 	suite.Nil(planClearance.LatestClearanceDts)
 
-	// Update the basics to have a clearance date set that's too far out (more than 20 days)
-	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	// Update the timeline to have a clearance date set that's too far out (more than 20 days)
+	timeline, err := TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanBasics(
+	_, err = UpdateTimeline(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		basics.ID,
+		timeline.ID,
 		map[string]interface{}{
 			"clearanceStarts": time.Now().Add(time.Hour * 24 * 21).Format(time.RFC3339), // 21 days from now
 		},
@@ -62,13 +62,13 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, planClearance.Status)
 	suite.Nil(planClearance.LatestClearanceDts)
 
-	// Update the basics to have a clearance date set that's within the date range (15 days)
-	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	// Update the timeline to have a clearance date set that's within the date range (15 days)
+	timeline, err = TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanBasics(
+	_, err = UpdateTimeline(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		basics.ID,
+		timeline.ID,
 		map[string]interface{}{
 			"clearanceStarts": time.Now().Add(time.Hour * 24 * 15).Format(time.RFC3339), // 15 days from now
 		},
@@ -85,13 +85,13 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	suite.EqualValues(model.PrepareForClearanceStatusReady, planClearance.Status)
 	suite.Nil(planClearance.LatestClearanceDts)
 
-	// Update the basics to be marked ready for clearance
-	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	// Update the timeline to be marked ready for clearance
+	timeline, err = TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanBasics(
+	_, err = UpdateTimeline(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		basics.ID,
+		timeline.ID,
 		map[string]interface{}{
 			"status": model.TaskStatusInputReadyForClearance,
 		},
@@ -102,7 +102,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		email.AddressBook{},
 	)
 	suite.NoError(err)
-	// Clearance start date is 15 days out & we've started by marking Basics as ready for clearance - should be "In Progress"
+	// Clearance start date is 15 days out & we've started by marking Timeline as ready for clearance - should be "In Progress"
 	planClearance, err = ReadyForClearanceRead(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(model.PrepareForClearanceStatusInProgress, planClearance.Status)
@@ -194,23 +194,23 @@ func (suite *ResolverSuite) TestCalculateStatusNoClearanceDate() {
 	td := getTestDates()
 
 	status := calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  nil, // No clearance date
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: nil, // No clearance date
+		AllReadyForClearance:    true,
 	}, td.jan01)
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  nil, // No clearance date
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: nil, // No clearance date
+		AllReadyForClearance:    true,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  nil, // No clearance date
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: nil, // No clearance date
+		AllReadyForClearance:    false,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, status)
 }
@@ -221,23 +221,23 @@ func (suite *ResolverSuite) TestCalculateStatusTooEarly() {
 	td := getTestDates()
 
 	status := calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    true,
 	}, td.jan01)
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    true,
 	}, td.jan01)
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan01)
 	suite.EqualValues(model.PrepareForClearanceStatusCannotStart, status)
 }
@@ -249,30 +249,30 @@ func (suite *ResolverSuite) TestCalculateStatusAllReady() {
 	td := getTestDates()
 
 	status := calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    true,
 	}, td.jan05)
 	suite.EqualValues(model.PrepareForClearanceStatusReadyForClearance, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    true,
 	}, td.jan15)
 	suite.EqualValues(model.PrepareForClearanceStatusReadyForClearance, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    true,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusReadyForClearance, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan15,
-		AllReadyForClearance:   true,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan15,
+		AllReadyForClearance:    true,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusReadyForClearance, status)
 }
@@ -284,30 +284,30 @@ func (suite *ResolverSuite) TestCalculateStatusInProgress() {
 	td := getTestDates()
 
 	status := calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan01,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  &td.jan01,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan05)
 	suite.EqualValues(model.PrepareForClearanceStatusInProgress, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan15)
 	suite.EqualValues(model.PrepareForClearanceStatusInProgress, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusInProgress, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: &td.jan15,
-		BasicsClearanceStarts:  &td.jan15,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  &td.jan15,
+		TimelineClearanceStarts: &td.jan15,
+		AllReadyForClearance:    false,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusInProgress, status)
 }
@@ -319,30 +319,30 @@ func (suite *ResolverSuite) TestCalculateStatusReady() {
 	td := getTestDates()
 
 	status := calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan05)
 	suite.EqualValues(model.PrepareForClearanceStatusReady, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan15)
 	suite.EqualValues(model.PrepareForClearanceStatusReady, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  &td.jan25,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: &td.jan25,
+		AllReadyForClearance:    false,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusReady, status)
 
 	status = calculateStatus(&models.PrepareForClearanceResponse{
-		MostRecentClearanceDts: nil,
-		BasicsClearanceStarts:  &td.jan15,
-		AllReadyForClearance:   false,
+		MostRecentClearanceDts:  nil,
+		TimelineClearanceStarts: &td.jan15,
+		AllReadyForClearance:    false,
 	}, td.jan25)
 	suite.EqualValues(model.PrepareForClearanceStatusReady, status)
 }

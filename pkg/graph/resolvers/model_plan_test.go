@@ -128,16 +128,16 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.Run("Models Approaching Clearance grabs models approaching clearance within 6 months", func() {
 		// Will show up, in date range
 		planApproachingClearanceTomorrow := suite.createModelPlan("Approaching Clearance tomorrow")
-		basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceTomorrow.ID)
+		timeline, err := TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceTomorrow.ID)
 		suite.NoError(err)
 
 		changes := map[string]interface{}{
 			"clearanceStarts": time.Now().AddDate(0, 0, 1),
 		}
-		_, err = UpdatePlanBasics(
+		_, err = UpdateTimeline(
 			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
-			basics.ID,
+			timeline.ID,
 			changes,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
@@ -149,16 +149,16 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 
 		// Won't show up, out of date range
 		planApproachingClearanceSixMonthsPlusDay := suite.createModelPlan("Approaching Clearance in six months and a day")
-		basicsSeven, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonthsPlusDay.ID)
+		timelineSeven, err := TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonthsPlusDay.ID)
 		suite.NoError(err)
 
 		changes = map[string]interface{}{
 			"clearanceStarts": time.Now().AddDate(0, 6, 1),
 		}
-		_, err = UpdatePlanBasics(
+		_, err = UpdateTimeline(
 			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
-			basicsSeven.ID,
+			timelineSeven.ID,
 			changes,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
@@ -170,16 +170,16 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 
 		// Won't show up, out of date range
 		planApproachingClearanceYesterday := suite.createModelPlan("Approaching Clearance yesterday")
-		basicsYesterday, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceYesterday.ID)
+		timelineYesterday, err := TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceYesterday.ID)
 		suite.NoError(err)
 
 		changes = map[string]interface{}{
 			"clearanceStarts": time.Now().AddDate(0, 0, -1),
 		}
-		_, err = UpdatePlanBasics(
+		_, err = UpdateTimeline(
 			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
-			basicsYesterday.ID,
+			timelineYesterday.ID,
 			changes,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
@@ -199,16 +199,16 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 
 		// Will show up
 		planApproachingClearanceSixMonths := suite.createModelPlan("Approaching Clearance six months")
-		basicsSix, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonths.ID)
+		timelineSix, err := TimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonths.ID)
 		suite.NoError(err)
 
 		changes = map[string]interface{}{
 			"clearanceStarts": time.Now().AddDate(0, 0, 1),
 		}
-		_, err = UpdatePlanBasics(
+		_, err = UpdateTimeline(
 			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
-			basicsSix.ID,
+			timelineSix.ID,
 			changes,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
