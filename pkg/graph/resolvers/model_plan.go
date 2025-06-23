@@ -56,7 +56,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	models.TNMTOInfo,
 	//exclude suggestedMilestone
 
-	models.TNTimeline,
+	models.TNPlanTimeline,
 }
 
 // ModelPlanRecentEditsExcludedFields is a list of fields that are excluded from the recent edits query for model plans.
@@ -167,10 +167,10 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// Create a default timeline object
-		timeline := models.NewTimeline(baseTaskListUser)
+		// Create a default planTimeline object
+		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 
-		_, err = store.TimelineCreate(tx, logger, timeline)
+		_, err = store.PlanTimelineCreate(tx, logger, planTimeline)
 		if err != nil {
 			return nil, err
 		}

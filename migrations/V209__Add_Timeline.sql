@@ -1,8 +1,8 @@
-ALTER TYPE table_name ADD VALUE 'timeline';
+ALTER TYPE table_name ADD VALUE 'plan_timeline';
 COMMIT;
 
--- Create the new timeline table
-CREATE TABLE timeline (
+-- Create the new plan_timeline table
+CREATE TABLE plan_timeline (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL,
     complete_icip TIMESTAMP WITH TIME ZONE NULL,
@@ -34,8 +34,8 @@ CREATE TABLE timeline (
     ON DELETE NO ACTION
 );
 
--- Copy data from plan_basics to timeline
-INSERT INTO timeline (
+-- Copy data from plan_basics to plan_timeline
+INSERT INTO plan_timeline (
     id,
     model_plan_id,
     complete_icip,
@@ -82,10 +82,10 @@ SELECT
     status
 FROM plan_basics;
 
--- Add audit configuration for the new timeline table
+-- Add audit configuration for the new plan_timeline table
 SELECT audit.AUDIT_TABLE(
     'public',
-    'timeline',
+    'plan_timeline',
     'id',
     'model_plan_id',
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],

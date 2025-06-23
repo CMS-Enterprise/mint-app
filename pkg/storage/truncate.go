@@ -48,7 +48,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNTranslatedAuditField),
 		string(models.TNTranslatedAuditQueue),
 		string(models.TNTranslatedAudit),
-		string(models.TNTimeline),
+		string(models.TNPlanTimeline),
 		"audit.change",
 	}
 

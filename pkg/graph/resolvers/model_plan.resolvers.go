@@ -139,8 +139,8 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 }
 
 // Timeline is the resolver for the timeline field.
-func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.Timeline, error) {
-	return TimelineGetByModelPlanIDLOADER(ctx, obj.ID)
+func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.PlanTimeline, error) {
+	return PlanTimelineGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.

@@ -10,7 +10,7 @@ SELECT
     mp.modified_by,
     mp.modified_dts
 FROM model_plan AS mp
-LEFT JOIN timeline AS tl ON mp.id = tl.model_plan_id
+LEFT JOIN plan_timeline AS tl ON mp.id = tl.model_plan_id
 WHERE -- get models that have a clearance start date within 6 months of the current time
     tl.clearance_starts > CURRENT_TIMESTAMP
     AND tl.clearance_starts <= CURRENT_TIMESTAMP + INTERVAL '6 months'

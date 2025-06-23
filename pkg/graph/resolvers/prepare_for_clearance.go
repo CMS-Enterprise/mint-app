@@ -32,13 +32,13 @@ func ReadyForClearanceRead(
 
 func calculateStatus(clearanceData *models.PrepareForClearanceResponse, now time.Time) model.PrepareForClearanceStatus {
 	// If we don't yet have a clearance date, we cannot start this section yet!
-	if clearanceData.TimelineClearanceStarts == nil {
+	if clearanceData.PlanTimelineClearanceStarts == nil {
 		return model.PrepareForClearanceStatusCannotStart
 	}
 
 	// We have a clearance date, so we can calculate 20 days prior to that date
 	// If we're before that calculated date, we can't start the section.
-	twentyDaysBeforeClearance := clearanceData.TimelineClearanceStarts.Add(-time.Hour * 24 * 20)
+	twentyDaysBeforeClearance := clearanceData.PlanTimelineClearanceStarts.Add(-time.Hour * 24 * 20)
 	if now.Before(twentyDaysBeforeClearance) {
 		return model.PrepareForClearanceStatusCannotStart
 	}
