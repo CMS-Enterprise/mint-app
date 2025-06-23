@@ -3,10 +3,12 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -63,47 +65,32 @@ func verifyPlanTimelineLoader(ctx context.Context, modelPlanID uuid.UUID) error 
 	return nil
 }
 
-// func (suite *ResolverSuite) TestUpdatePlanTimeline() {
-// 	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the milestones as part of the resolver
+func (suite *ResolverSuite) TestUpdatePlanTimeline() {
+	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the milestones as part of the resolver
 
-// 	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
-// 	suite.NoError(err)
+	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
 
-// 	changes := map[string]interface{}{
-// 		"modelType":      []models.ModelType{models.MTVoluntary},
-// 		"modelTypeOther": "Some model type other note",
-// 		"goal":           "Some goal",
-// 		"cmsCenters":     []string{"CMMI"},
-// 		"cmmiGroups":     []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-// 		"completeICIP":   "2020-05-13T20:47:50.12Z",
-// 		"phasedIn":       true,
-// 		"highLevelNote":  "Some high level note",
-// 	}
+	changes := map[string]interface{}{
+		"completeICIP":  "2020-05-13T20:47:50.12Z",
+		"highLevelNote": "Some high level note",
+	}
 
-// 	updatedPlanTimeline, err := UpdatePlanTimeline(
-// 		suite.testConfigs.Context,
-// 		suite.testConfigs.Logger,
-// 		planPlanTimeline.ID,
-// 		changes,
-// 		suite.testConfigs.Principal,
-// 		suite.testConfigs.Store,
-// 		nil,
-// 		nil,
-// 		email.AddressBook{},
-// 	)
+	updatedPlanTimeline, err := UpdatePlanTimeline(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		planPlanTimeline.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
 
-// 	suite.NoError(err)
-// 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedPlanTimeline.ModifiedBy)
-// 	suite.EqualValues(models.TaskInProgress, updatedPlanTimeline.Status)
-// 	suite.EqualValues([]models.ModelType{models.MTVoluntary}, models.ConvertEnums[models.ModelType](updatedPlanTimeline.ModelType))
-// 	suite.EqualValues(changes["modelTypeOther"], *updatedPlanTimeline.ModelTypeOther)
-// 	suite.Nil(updatedPlanTimeline.Problem)
-// 	suite.EqualValues("Some goal", *updatedPlanTimeline.Goal)
-// 	suite.EqualValues(changes["cmsCenters"], updatedPlanTimeline.CMSCenters)
-// 	suite.EqualValues(changes["cmmiGroups"], updatedPlanTimeline.CMMIGroups)
-// 	suite.WithinDuration(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC), *updatedPlanTimeline.CompleteICIP, 0)
-// 	suite.EqualValues(changes["highLevelNote"], *updatedPlanTimeline.HighLevelNote)
-// 	suite.EqualValues(changes["phasedIn"], *updatedPlanTimeline.PhasedIn)
-// 	suite.Nil(updatedPlanTimeline.TestInterventions)
-// 	suite.Nil(updatedPlanTimeline.Note)
-// }
+	suite.NoError(err)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updatedPlanTimeline.ModifiedBy)
+	suite.EqualValues(models.TaskInProgress, updatedPlanTimeline.Status)
+	suite.WithinDuration(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC), *updatedPlanTimeline.CompleteICIP, 0)
+	suite.EqualValues(changes["highLevelNote"], *updatedPlanTimeline.HighLevelNote)
+}

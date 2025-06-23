@@ -8,7 +8,7 @@ SELECT
         pay.ready_for_clearance_dts,
         timeline.ready_for_clearance_dts
     ) AS most_recent_clearance_dts,
-    basics.clearance_starts,
+    timeline.clearance_starts,
     (
         GREATEST(
             basics.status,
@@ -28,7 +28,7 @@ SELECT
             timeline.status
         )
     )
-    AND basics.status = 'READY_FOR_CLEARANCE' AS all_ready_for_clearance
+    AND timeline.status = 'READY_FOR_CLEARANCE' AS all_ready_for_clearance
 FROM model_plan AS mp
 LEFT JOIN plan_basics AS basics ON basics.model_plan_id = mp.id
 LEFT JOIN plan_general_characteristics AS charact ON charact.model_plan_id = mp.id
