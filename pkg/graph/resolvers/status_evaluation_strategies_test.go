@@ -11,11 +11,11 @@ func (suite *ResolverSuite) TestICIPCompleteStrategy_Update() {
 	completeICIPTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusPlanDraft
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		CompleteICIP: &completeICIPTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.NotNil(suggestedPhase)
 	suite.Len(suggestedPhase.SuggestedStatuses, 1)
 	suite.Equal(models.ModelStatusIcipComplete, suggestedPhase.SuggestedStatuses[0])
@@ -26,11 +26,11 @@ func (suite *ResolverSuite) TestICIPCompleteStrategy_NoUpdate() {
 	completeICIPTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusIcipComplete
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		CompleteICIP: &completeICIPTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.Nil(suggestedPhase)
 }
 
@@ -39,11 +39,11 @@ func (suite *ResolverSuite) TestClearanceStartStrategy_Update() {
 	clearanceStartTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusPlanDraft
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		ClearanceStarts: &clearanceStartTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.NotNil(suggestedPhase)
 	suite.Len(suggestedPhase.SuggestedStatuses, 4)
 	suite.Equal(models.ModelStatusInternalCmmiClearance, suggestedPhase.SuggestedStatuses[0])
@@ -57,11 +57,11 @@ func (suite *ResolverSuite) TestClearanceStartStrategy_NoUpdate() {
 	clearanceStartTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusInternalCmmiClearance
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		ClearanceStarts: &clearanceStartTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.Nil(suggestedPhase)
 }
 
@@ -70,11 +70,11 @@ func (suite *ResolverSuite) TestClearanceEndStrategy_Update() {
 	clearanceEndTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusInternalCmmiClearance
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		ClearanceEnds: &clearanceEndTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.NotNil(suggestedPhase)
 	suite.Len(suggestedPhase.SuggestedStatuses, 1)
 	suite.Equal(models.ModelStatusCleared, suggestedPhase.SuggestedStatuses[0])
@@ -85,11 +85,11 @@ func (suite *ResolverSuite) TestClearanceEndStrategy_NoUpdate() {
 	clearanceEndTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusCleared
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		ClearanceEnds: &clearanceEndTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.Nil(suggestedPhase)
 }
 
@@ -98,10 +98,10 @@ func (suite *ResolverSuite) TestAnnounceStrategy_Update() {
 	announceTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusCleared
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		Announced: &announceTime,
 	}
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.NotNil(suggestedPhase)
 	suite.Len(suggestedPhase.SuggestedStatuses, 1)
 	suite.Equal(models.ModelStatusAnnounced, suggestedPhase.SuggestedStatuses[0])
@@ -112,11 +112,11 @@ func (suite *ResolverSuite) TestAnnounceStrategy_NoUpdate() {
 	announceTime := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusAnnounced
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		Announced: &announceTime,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.Nil(suggestedPhase)
 }
 
@@ -125,11 +125,11 @@ func (suite *ResolverSuite) TestActiveStrategy_Update() {
 	performancePeriodStarts := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusAnnounced
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		PerformancePeriodStarts: &performancePeriodStarts,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.NotNil(suggestedPhase)
 	suite.Len(suggestedPhase.SuggestedStatuses, 1)
 	suite.Equal(models.ModelStatusActive, suggestedPhase.SuggestedStatuses[0])
@@ -140,11 +140,11 @@ func (suite *ResolverSuite) TestActiveStrategy_NoUpdate() {
 	performancePeriodStarts := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusActive
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		PerformancePeriodStarts: &performancePeriodStarts,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.Nil(suggestedPhase)
 }
 
@@ -153,11 +153,11 @@ func (suite *ResolverSuite) TestEndedStrategy_Update() {
 	performancePeriodEnds := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusActive
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		PerformancePeriodEnds: &performancePeriodEnds,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.NotNil(suggestedPhase)
 	suite.Len(suggestedPhase.SuggestedStatuses, 1)
 	suite.Equal(models.ModelStatusEnded, suggestedPhase.SuggestedStatuses[0])
@@ -168,10 +168,10 @@ func (suite *ResolverSuite) TestEndedStrategy_NoUpdate() {
 	performancePeriodEnds := time.Now().Add(-time.Hour)
 
 	modelPlanStatus := models.ModelStatusEnded
-	timeline := &models.Timeline{
+	planBasics := &models.PlanBasics{
 		PerformancePeriodEnds: &performancePeriodEnds,
 	}
 
-	suggestedPhase := strategy.Evaluate(modelPlanStatus, timeline)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.Nil(suggestedPhase)
 }

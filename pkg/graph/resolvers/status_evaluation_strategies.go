@@ -29,7 +29,7 @@ func GetAllStatusEvaluationStrategies() []StatusEvaluationStrategy {
 type StatusEvaluationStrategy interface {
 	Evaluate(
 		modelPlanStatus models.ModelStatus,
-		timeline *models.Timeline,
+		planBasics *models.PlanBasics,
 	) *model.PhaseSuggestion
 }
 
@@ -40,12 +40,12 @@ type ICIPCompleteStrategy struct{}
 // status is not "ICIP complete" and the ICIP complete date has passed
 func (s *ICIPCompleteStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
-	timeline *models.Timeline,
+	planBasics *models.PlanBasics,
 ) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusIcipComplete) &&
-		!utilitytime.IsTimeNilOrZero(timeline.CompleteICIP) &&
-		timeline.CompleteICIP.Before(time.Now()) {
+		!utilitytime.IsTimeNilOrZero(planBasics.CompleteICIP) &&
+		planBasics.CompleteICIP.Before(time.Now()) {
 		return &model.PhaseSuggestion{
 			Phase:             models.ModelPhaseIcipComplete,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
@@ -62,12 +62,12 @@ type ClearanceStartStrategy struct{}
 // "Plan Complete" and the clearance start date has passed
 func (s *ClearanceStartStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
-	timeline *models.Timeline,
+	planBasics *models.PlanBasics,
 ) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusInternalCmmiClearance) &&
-		!utilitytime.IsTimeNilOrZero(timeline.ClearanceStarts) &&
-		timeline.ClearanceStarts.Before(time.Now()) {
+		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceStarts) &&
+		planBasics.ClearanceStarts.Before(time.Now()) {
 		return &model.PhaseSuggestion{
 			Phase: models.ModelPhaseInClearance,
 			SuggestedStatuses: []models.ModelStatus{
@@ -88,12 +88,12 @@ type ClearanceEndStrategy struct{}
 // is not Cleared and the clearance end date has passed
 func (s *ClearanceEndStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
-	timeline *models.Timeline,
+	planBasics *models.PlanBasics,
 ) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) &&
-		!utilitytime.IsTimeNilOrZero(timeline.ClearanceEnds) &&
-		timeline.ClearanceEnds.Before(time.Now()) {
+		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceEnds) &&
+		planBasics.ClearanceEnds.Before(time.Now()) {
 		return &model.PhaseSuggestion{
 			Phase:             models.ModelPhaseCleared,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusCleared},
@@ -109,12 +109,12 @@ type AnnounceStrategy struct{}
 // status is not Announced and the announcement date has passed
 func (s *AnnounceStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
-	timeline *models.Timeline,
+	planBasics *models.PlanBasics,
 ) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusAnnounced) &&
-		!utilitytime.IsTimeNilOrZero(timeline.Announced) &&
-		timeline.Announced.Before(time.Now()) {
+		!utilitytime.IsTimeNilOrZero(planBasics.Announced) &&
+		planBasics.Announced.Before(time.Now()) {
 		return &model.PhaseSuggestion{
 			Phase:             models.ModelPhaseAnnounced,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusAnnounced},
@@ -130,12 +130,12 @@ type ActiveStrategy struct{}
 // is not Active and the performance period start date has passed
 func (s *ActiveStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
-	timeline *models.Timeline,
+	planBasics *models.PlanBasics,
 ) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusActive) &&
-		!utilitytime.IsTimeNilOrZero(timeline.PerformancePeriodStarts) &&
-		timeline.PerformancePeriodStarts.Before(time.Now()) {
+		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodStarts) &&
+		planBasics.PerformancePeriodStarts.Before(time.Now()) {
 		return &model.PhaseSuggestion{
 			Phase:             models.ModelPhaseActive,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusActive},
@@ -151,12 +151,12 @@ type EndedStrategy struct{}
 // is not already "Ended" and the performance period end date has passed
 func (s *EndedStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
-	timeline *models.Timeline,
+	planBasics *models.PlanBasics,
 ) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusEnded) &&
-		!utilitytime.IsTimeNilOrZero(timeline.PerformancePeriodEnds) &&
-		timeline.PerformancePeriodEnds.Before(time.Now()) {
+		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodEnds) &&
+		planBasics.PerformancePeriodEnds.Before(time.Now()) {
 		return &model.PhaseSuggestion{
 			Phase:             models.ModelPhaseEnded,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusEnded},
