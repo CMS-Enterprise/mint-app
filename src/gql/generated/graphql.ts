@@ -861,6 +861,7 @@ export type MtoCommonSolutionContactTranslation = {
  */
 export type MtoCommonSolutionContactUpdateChanges = {
   isPrimary?: InputMaybe<Scalars['Boolean']['input']>;
+  mailboxTitle?: InputMaybe<Scalars['String']['input']>;
   receiveEmails?: InputMaybe<Scalars['Boolean']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
 };

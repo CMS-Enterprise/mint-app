@@ -76,17 +76,15 @@ const EditTeamMailboxForm = ({
   }
 
   const onSubmit = (formData: FormValues) => {
-    const {
-      // todo:wait for BE to add it
-      // mailboxTitle,
-      isPrimary,
-      receiveEmails
-    } = dirtyInput(teamMailbox, formData);
+    const { mailboxTitle, isPrimary, receiveEmails } = dirtyInput(
+      teamMailbox,
+      formData
+    );
     update({
       variables: {
         id: teamMailbox.id,
         input: {
-          // mailboxTitle,
+          mailboxTitle,
           isPrimary,
           receiveEmails
         }
