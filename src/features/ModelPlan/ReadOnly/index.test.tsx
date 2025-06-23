@@ -12,7 +12,6 @@ import {
 import { ModelStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
-import Sinon from 'sinon';
 import {
   collaboratorsMocks,
   modelBasicsMocks,
@@ -36,9 +35,6 @@ const store = mockStore({ auth: mockAuthReducer });
 const mocks: any = [...summaryMock, ...collaboratorsMocks, ...modelBasicsMocks];
 
 describe('Read Only Model Plan Summary', () => {
-  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
-  Sinon.stub(Math, 'random').returns(0.5);
-
   it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter

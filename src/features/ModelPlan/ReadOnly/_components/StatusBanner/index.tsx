@@ -15,8 +15,7 @@ type ReadViewStatusBannerStatusBannerProps = {
   modelID: string;
   status: ModelStatus;
   hasEditAccess?: boolean;
-  modifiedDts?: string | null;
-  createdDts?: string | null;
+  mostRecentEdit: string;
   changeHistoryLink?: boolean;
   className?: string;
 };
@@ -34,8 +33,7 @@ const ReadViewStatusBanner = ({
   modelID,
   status,
   hasEditAccess = false,
-  modifiedDts,
-  createdDts,
+  mostRecentEdit,
   changeHistoryLink = true,
   className
 }: ReadViewStatusBannerStatusBannerProps) => {
@@ -78,7 +76,7 @@ const ReadViewStatusBanner = ({
                   }
                 )}
               >
-                <Icon.History className="margin-right-1" />
+                <Icon.History className="margin-right-1" aria-label="history" />
 
                 {changeHistoryT('viewChangeHistory')}
               </UswdsReactLink>
@@ -88,8 +86,8 @@ const ReadViewStatusBanner = ({
               <p
                 className={classNames('margin-y-0 text-normal margin-right-1')}
               >
-                {modifiedDts ? h('lastUpdate') : h('createdOn')}
-                {formatDateLocal(modifiedDts || createdDts || '', 'MM/dd/yyyy')}
+                {h('lastUpdate')}
+                {formatDateLocal(mostRecentEdit || '', 'MM/dd/yyyy')}
               </p>
             </div>
           </div>
@@ -102,7 +100,7 @@ const ReadViewStatusBanner = ({
                 to={`/models/${modelID}/collaboration-area`}
                 className={classNames('display-flex flex-align-center')}
               >
-                <Icon.Edit className="margin-right-1" />
+                <Icon.Edit className="margin-right-1" aria-label="edit" />
                 {t('edit')}
               </UswdsReactLink>
             </div>

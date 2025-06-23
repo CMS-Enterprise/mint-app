@@ -36,19 +36,6 @@ const contacts: SolutionContactType[] = [
   }
 ];
 
-//   {
-//     request: {
-//       query: GetNotificationSettingsDocument
-//     },
-//     result: {
-//       data: {
-//         currentUser: {
-//           notificationPreferences
-//         }
-//       }
-//     }
-//   }
-// ];
 const mocks = [...possibleSolutionsMock];
 
 describe('MailboxAndTeamMembers Component', () => {

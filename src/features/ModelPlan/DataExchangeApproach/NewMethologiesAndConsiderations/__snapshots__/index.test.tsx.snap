@@ -203,6 +203,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
           >
             <svg
               aria-hidden="true"
+              aria-label="back"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -249,6 +250,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                   <span>
                     Privacy-preserving record linkage (PPRL) [cdcfoundation.org]
                     <svg
+                      aria-label="launch"
                       class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
@@ -276,6 +278,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                   <span>
                     Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]
                     <svg
+                      aria-label="launch"
                       class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"

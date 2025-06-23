@@ -21,7 +21,10 @@ const SuggestedMilestoneBanner = ({
       <GridContainer className="padding-y-2">
         <Grid row className="flex-no-wrap">
           <div className="bg-accent-cool-darker circle-3 margin-right-2 display-flex flex-align-center flex-justify-center">
-            <Icon.LightbulbOutline className="text-white" />
+            <Icon.LightbulbOutline
+              className="text-white"
+              aria-label="lightbulb"
+            />
           </div>
           <span className="margin-y-0">
             {suggestedMilestones?.length > 0 ? (
@@ -41,7 +44,10 @@ const SuggestedMilestoneBanner = ({
                       />
                     ),
                     arrow: (
-                      <Icon.ArrowForward className="margin-left-05 top-05" />
+                      <Icon.ArrowForward
+                        className="margin-left-05 top-05"
+                        aria-label="forward"
+                      />
                     )
                   }}
                 />

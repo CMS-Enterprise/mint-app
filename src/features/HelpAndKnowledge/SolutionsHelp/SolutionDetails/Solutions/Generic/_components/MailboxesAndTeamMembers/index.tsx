@@ -45,7 +45,7 @@ const MailboxesAndTeamMembers = ({
       <div className="height-3 margin-bottom-2">
         <Button
           type="button"
-          className="usa-button usa-button--unstyled"
+          unstyled
           onClick={() => handleAddContactClick('team')}
         >
           <Icon.Add aria-hidden />
@@ -56,7 +56,7 @@ const MailboxesAndTeamMembers = ({
 
         <Button
           type="button"
-          className="usa-button usa-button--unstyled"
+          unstyled
           onClick={() => handleAddContactClick('member')}
         >
           <Icon.Add aria-hidden />

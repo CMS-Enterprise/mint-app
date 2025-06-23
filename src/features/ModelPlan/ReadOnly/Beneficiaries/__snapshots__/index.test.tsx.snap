@@ -617,15 +617,14 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-550000"
+                    aria-describedby="tooltip-«r1»"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
-                    position="right"
                     tabindex="0"
                     title=""
-                    wrapperclasses="top-2px"
                   >
                     <svg
+                      aria-label="info"
                       class="usa-icon text-base-light"
                       focusable="false"
                       height="1em"
@@ -643,7 +642,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-550000"
+                    id="tooltip-«r1»"
                     role="tooltip"
                     title="i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)"
                   >

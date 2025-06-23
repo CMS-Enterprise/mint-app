@@ -25,7 +25,7 @@ describe('Operation Solution Help Card Group', () => {
     // Solution visible on page one
     expect(getByText('4innovation')).toBeInTheDocument();
     expect(getByText('Chronic Conditions Warehouse')).toBeInTheDocument();
-    expect(getByText('CMS Box')).toBeInTheDocument();
+    expect(getByText('Centralized Data Exchange')).toBeInTheDocument();
 
     // solution not visible on page 2
     expect(

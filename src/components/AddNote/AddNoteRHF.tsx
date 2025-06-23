@@ -45,7 +45,7 @@ const AddNoteRHF = ({
           className="usa-button usa-button--unstyled"
           onClick={() => setOpen(true)}
         >
-          <Icon.Add className="margin-right-1" aria-hidden />
+          <Icon.Add className="margin-right-1" aria-hidden aria-label="add" />
           {t('additionalNote')}
         </Button>
       )}

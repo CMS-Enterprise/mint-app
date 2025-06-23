@@ -43,7 +43,7 @@ const PDFSummary = ({
     }
   });
 
-  const { abbreviation, modelName, createdDts, modifiedDts, status } =
+  const { abbreviation, modelName, mostRecentEdit, createdDts, status } =
     data?.modelPlan || ({} as GetModelSummaryTypes);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -71,8 +71,7 @@ const PDFSummary = ({
           <ReadViewStatusBanner
             modelID={modelID}
             status={status}
-            createdDts={createdDts}
-            modifiedDts={modifiedDts}
+            mostRecentEdit={mostRecentEdit?.date || createdDts}
             changeHistoryLink={false}
           />
         </GridContainer>

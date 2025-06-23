@@ -50,7 +50,11 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
           <>
             {uploadedDocArray?.length !== 0 && (
               <div className="display-flex flex-align-center">
-                <Icon.UploadFile size={3} className="margin-right-1" />
+                <Icon.UploadFile
+                  size={3}
+                  className="margin-right-1"
+                  aria-label="forwuploadard"
+                />
                 {collaborationAreaT('documentsCard.uploaded', {
                   count: uploadedDocArray?.length
                 })}
@@ -58,7 +62,11 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
             )}
             {linksArray?.length !== 0 && (
               <div className="display-flex flex-align-center">
-                <Icon.Link size={3} className="margin-right-1" />
+                <Icon.Link
+                  size={3}
+                  className="margin-right-1"
+                  aria-label="link"
+                />
                 {collaborationAreaT('documentsCard.linkAdded', {
                   count: linksArray?.length
                 })}

@@ -53,11 +53,12 @@ const MTOStatusInfoToggle = ({
         )}
       >
         {infoToggle ? (
-          <Icon.ExpandMore className="margin-right-05" />
+          <Icon.ExpandMore className="margin-right-05" aria-label="expand" />
         ) : (
           <Icon.ExpandLess
             className="margin-right-05"
             style={{ transform: 'rotate(90deg)' }}
+            aria-label="collapse"
           />
         )}
         {type === 'solution'

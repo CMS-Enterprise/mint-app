@@ -41,7 +41,10 @@ export default function HelpBreadcrumb({
     >
       {newTab || newTabOnly ? (
         <>
-          <Icon.Close className="margin-right-05 text-tbottom" />
+          <Icon.Close
+            className="margin-right-05 text-tbottom"
+            aria-label="close"
+          />
           {t('close')}
         </>
       ) : (

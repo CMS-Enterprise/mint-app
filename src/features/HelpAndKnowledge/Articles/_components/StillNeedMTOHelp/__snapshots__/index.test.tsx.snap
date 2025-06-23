@@ -29,6 +29,7 @@ exports[`StillNeedMTOHelp > matches the snapshot 1`] = `
       >
         chat with us on Slack
         <svg
+          aria-label="launch"
           class="usa-icon"
           focusable="false"
           height="1em"

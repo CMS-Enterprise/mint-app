@@ -22,6 +22,7 @@ exports[`Operation Solution Contact > matches snapshot 1`] = `
       target="_blank"
     >
       <svg
+        aria-label="mail"
         class="usa-icon margin-right-1 top-1px text-tbottom"
         focusable="false"
         height="1em"
@@ -42,6 +43,7 @@ exports[`Operation Solution Contact > matches snapshot 1`] = `
     >
       More points of contact
       <svg
+        aria-label="forward"
         class="usa-icon margin-left-1"
         focusable="false"
         height="1em"

@@ -20,6 +20,7 @@ exports[`The TruncatedText component > matches charLimit snapshot 1`] = `
     >
       Read more
       <svg
+        aria-label="expand"
         class="usa-icon"
         focusable="false"
         height="1em"

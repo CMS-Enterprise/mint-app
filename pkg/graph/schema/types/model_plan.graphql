@@ -61,7 +61,7 @@ enum ModelShareSection {
   """
   Only share MTO Solutions
   """
-  MTO_SOLUTIONS,# readview/it-systems-and-solutions
+  MTO_SOLUTIONS,# readview/solutions-and-it-systems
   # DATA_EXCHANGE_APPROACH,
   # TEAM,
 
@@ -120,6 +120,12 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
+  """
+  Most recent edit to the model plan. 
+  This returns the most recent edit, that doesn't require privileges to view.
+  We do this so that the view is consistent for all users, regardless of their role.
+  """
+  mostRecentEdit: TranslatedAudit
 
   # MTO Fields (START)
   mtoMatrix: ModelsToOperationMatrix!

@@ -22,6 +22,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
           type="button"
         >
           <svg
+            aria-label="close"
             class="usa-icon margin-right-05 text-tbottom"
             focusable="false"
             height="1em"
@@ -132,7 +133,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
                 Use this chart to determine what job code to request by selecting the role that aligns most closely with what you do.
               </p>
               <table
-                class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+                class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
                 data-testid="table"
               >
                 <thead>

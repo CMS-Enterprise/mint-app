@@ -26,7 +26,13 @@ export const MTORiskIndicatorTag = ({
     RiskIcon = <Icon.Error className="text-error-dark top-05" size={3} />;
 
   if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
-    RiskIcon = <Icon.Warning className="text-warning-dark top-05" size={3} />;
+    RiskIcon = (
+      <Icon.Warning
+        className="text-warning-dark top-05"
+        size={3}
+        aria-label="warning"
+      />
+    );
 
   if (!showTooltip) return <>{RiskIcon}</>;
 

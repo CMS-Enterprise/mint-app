@@ -47,6 +47,7 @@ import {
   MtoCategoryTranslation,
   MtoCommonMilestoneKey,
   MtoCommonSolutionContactTranslation,
+  MtoCommonSolutionContractorTranslation,
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoInfoTranslation,
@@ -1362,6 +1363,22 @@ type TranslationMTOCommonSolutionContactCustomGQL = Omit<
 
 export type TranslationMTOCommonSolutionContactCustom = {
   [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution Contractor - Change History purposes only
+export type TranslationMTOCommonSolutionContractorCustomForm = {
+  key: TranslationFieldProperties;
+  contractorTitle: TranslationFieldProperties;
+  contractorName: TranslationFieldProperties;
+};
+
+type TranslationMTOCommonSolutionContractorCustomGQL = Omit<
+  MtoCommonSolutionContractorTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionContractorCustom = {
+  [K in keyof TranslationMTOCommonSolutionContractorCustomGQL]: TranslationMTOCommonSolutionContractorCustomForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

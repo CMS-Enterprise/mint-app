@@ -60,9 +60,9 @@ const MobileNav = ({
             : translationKey(`navigation.${subinfo}`)}
         </h3>
         {!isAccordionOpen ? (
-          <Icon.ExpandMore size={3} />
+          <Icon.ExpandMore size={3} aria-label="expand" />
         ) : (
-          <Icon.ExpandLess size={3} />
+          <Icon.ExpandLess size={3} aria-label="collapse" />
         )}
       </button>
       {isAccordionOpen && (
@@ -81,7 +81,7 @@ const MobileNav = ({
                 to={solutionDetailRoute || '/models'}
                 className="display-flex flex-align-center"
               >
-                <Icon.ArrowBack className="margin-right-1" />
+                <Icon.ArrowBack className="margin-right-1" aria-label="back" />
                 {solutionDetailRoute ? hk('backToSolutions') : h('back')}
               </NavLink>
             </li>

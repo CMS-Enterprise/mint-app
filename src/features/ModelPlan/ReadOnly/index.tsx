@@ -142,11 +142,11 @@ export const ReadOnlyComponents = (
       helpRoute: '/help-and-knowledge/sample-model-plan/milestones',
       group: 'model-to-operations'
     },
-    'it-systems-and-solutions': {
-      route: `/models/${modelID}/read-only/it-systems-and-solutions`,
+    'solutions-and-it-systems': {
+      route: `/models/${modelID}/read-only/solutions-and-it-systems`,
       component: <ReadOnlyMTOSolutions modelID={modelID} />,
       helpRoute:
-        '/help-and-knowledge/sample-model-plan/it-systems-and-solutions',
+        '/help-and-knowledge/sample-model-plan/solutions-and-it-systems',
       group: 'model-to-operations'
     },
     team: {
@@ -273,8 +273,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     abbreviation,
     modelName,
     isFavorite,
+    mostRecentEdit,
     createdDts,
-    modifiedDts,
     status,
     basics,
     generalCharacteristics,
@@ -335,7 +335,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 to="/models"
                 className="display-flex flex-align-center"
               >
-                <Icon.ArrowBack className="text-primary margin-right-1" />
+                <Icon.ArrowBack
+                  className="text-primary margin-right-1"
+                  aria-label="back"
+                />
                 {h('back')}
               </UswdsReactLink>
 
@@ -375,8 +378,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         <ReadViewStatusBanner
           modelID={modelID}
           status={status}
-          createdDts={createdDts}
-          modifiedDts={modifiedDts ?? createdDts}
+          mostRecentEdit={mostRecentEdit?.date || createdDts}
           hasEditAccess={hasEditAccess}
         />
 
@@ -514,7 +516,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                               subinfo === 'documents' ||
                               subinfo === 'crs-and-tdl' ||
                               subinfo === 'milestones' ||
-                              subinfo === 'it-systems-and-solutions'
+                              subinfo === 'solutions-and-it-systems'
                                 ? 12
                                 : 8
                           }}
@@ -525,7 +527,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                         {subinfo !== 'documents' &&
                           subinfo !== 'crs-and-tdl' &&
                           subinfo !== 'milestones' &&
-                          subinfo !== 'it-systems-and-solutions' && (
+                          subinfo !== 'solutions-and-it-systems' && (
                             <Grid
                               desktop={{ col: 4 }}
                               className={classnames({

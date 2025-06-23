@@ -1,5 +1,10 @@
 package helpers
 
+func getResultSimplifiedOneToOne[K comparable, V any](key K, resultMap map[K]V) (V, bool) {
+	res, ok := resultMap[key]
+	return res, ok
+}
+
 // OneToOne takes a list of keys and a list of values which map one-to-one (key-to-value).
 // it relies on the transformOutput func to return the result in expected format
 // Example:
@@ -28,20 +33,35 @@ package helpers
 //
 //	result := OneToOne(keys, users, getKeyFunc, transformOutputFunc)
 //	// result: []string{"Alice", "Bob"}
-func OneToOne[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func(V, bool) Output) []Output {
-	store := map[K]V{}
+func OneToOne[K comparable, mapType any, Output any](keys []K, vals []mapType, getKey func(mapType) K, transformOutput func(mapType, bool) Output) []Output {
+	return OneToOneWithCustomKey(keys, vals, getKey, getResultSimplifiedOneToOne[K, mapType], transformOutput)
+}
 
+// OneToOneWithCustomKey provides a flexible one-to-one mapping function.
+// - keys: list of lookup keys (K)
+// - vals: list of input values (mapType)
+// - getKey: maps each value to a mapKey for internal lookup
+// - getRes: maps a key to a value from the built store (one-to-one match)
+// - transformOutput: transforms the value and presence flag into Output
+func OneToOneWithCustomKey[K comparable, V any, mapType any, mapKey comparable, Output any](
+	keys []K,
+	vals []mapType,
+	getKey func(mapType) mapKey,
+	getRes func(K, map[mapKey]mapType) (V, bool),
+	transformOutput func(V, bool) Output,
+) []Output {
+	// Create map: mapKey -> mapType (only keep one per key; if multiple, last wins)
+	store := make(map[mapKey]mapType)
 	for _, val := range vals {
 		id := getKey(val)
 		store[id] = val
 	}
+
 	output := make([]Output, len(keys))
-
 	for index, key := range keys {
-		data, ok := store[key]
-		output[index] = transformOutput(data, ok)
+		val, ok := getRes(key, store)
+		output[index] = transformOutput(val, ok)
 	}
-
 	return output
 }
 

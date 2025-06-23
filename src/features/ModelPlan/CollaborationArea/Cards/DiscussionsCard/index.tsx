@@ -78,7 +78,11 @@ const DiscussionsCard = ({ discussions, modelID }: DiscussionsCardType) => {
               className="display-flex flex-align-center"
               data-testid="discussion-card-count"
             >
-              <Icon.Forum size={3} className="margin-right-1" />
+              <Icon.Forum
+                size={3}
+                className="margin-right-1"
+                aria-label="forum"
+              />
 
               {collaborationAreaT('discussionsCard.discussion', {
                 count: discussions?.length

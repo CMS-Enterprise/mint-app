@@ -35,6 +35,7 @@ exports[`CollaborationStatusBanner > renders all main elements 1`] = `
         href="/models/abc123/read-view"
       >
         <svg
+          aria-label="visibility"
           class="usa-icon margin-right-1 padding-top-2px"
           focusable="false"
           height="1em"
@@ -60,7 +61,7 @@ exports[`CollaborationStatusBanner > renders all main elements 1`] = `
         <p
           class="margin-y-0 text-normal margin-right-1"
         >
-          Model last updated 05/01/2024
+          Model last updated 10/01/2023
         </p>
       </div>
       <a
@@ -68,6 +69,7 @@ exports[`CollaborationStatusBanner > renders all main elements 1`] = `
         href="/models/abc123/change-history"
       >
         <svg
+          aria-label="history"
           class="usa-icon margin-right-1"
           focusable="false"
           height="1em"

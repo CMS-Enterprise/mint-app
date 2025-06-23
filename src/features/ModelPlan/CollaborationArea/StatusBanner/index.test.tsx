@@ -13,8 +13,7 @@ describe('CollaborationStatusBanner', () => {
           <CollaborationStatusBanner
             modelID="abc123"
             status={ModelStatus.PLAN_DRAFT}
-            modifiedDts="2024-05-01T12:00:00Z"
-            createdDts="2024-04-01T12:00:00Z"
+            mostRecentEdit="2023-10-01T12:00:00Z"
             className="test-class"
           />
         </Route>

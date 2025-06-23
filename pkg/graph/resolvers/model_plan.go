@@ -33,6 +33,34 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
+// ModelPlanRecentEditTables is a list of tables that are used to determine the most recent edits to a model plan.
+var ModelPlanRecentEditTables = []models.TableName{
+	models.TNModelPlan,
+
+	models.TNPlanBasics,
+	models.TNPlanBeneficiaries,
+	models.TNPlanCollaborator,
+	models.TNPlanDocument,
+	models.TNPlanGeneralCharacteristics,
+	models.TNPlanOpsEvalAndLearning,
+	models.TNPlanParticipantsAndProviders,
+	models.TNPlanPayments,
+	// we purposely exclude the tag table.
+
+	models.TNPlanDataExchangeApproach,
+
+	models.TNMTOCategory,
+	models.TNMTOMilestone,
+	models.TNMTOSolution,
+	models.TNMTOMilestoneSolutionLink,
+	models.TNMTOInfo,
+	//exclude suggestedMilestone
+
+}
+
+// ModelPlanRecentEditsExcludedFields is a list of fields that are excluded from the recent edits query for model plans.
+var ModelPlanRecentEditsExcludedFields = []string{"previous_suggested_phase"}
+
 // ModelPlanCreate implements resolver logic to create a model plan, and send relevant notifications about it's creation
 // It also creates a record for all the task list items at the same time.
 // It utilizes transactions to ensure that the data can be rolled back if there is an error at any point along the way.
@@ -592,4 +620,14 @@ func ModelPlanGetTaskListStatus(
 	}
 
 	return taskListStatus, nil
+}
+
+// ModelPlanMostRecentTranslatedAudit returns the most recent translated audit for a given model plan id.
+// It looks at specific tables to include in the query.
+func ModelPlanMostRecentTranslatedAudit(
+	ctx context.Context,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+) (*models.TranslatedAudit, error) {
+	return TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx, logger, modelPlanID, ModelPlanRecentEditTables, ModelPlanRecentEditsExcludedFields)
 }

@@ -10,20 +10,26 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import {
+  AuditFieldChangeType,
+  DatabaseOperation,
   DataExchangeApproachStatus,
+  GetChangeHistoryDocument,
   GetModelPlanDocument,
   GetModelPlanQuery,
   ModelPhase,
   ModelStatus,
   MtoStatus,
   PrepareForClearanceStatus,
-  TaskStatus
+  TaskStatus,
+  TranslationDataType
 } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import MessageProvider from 'contexts/MessageContext';
 
 import TaskList from './index';
+
+const modelPlanId = '6e224030-09d5-46f7-ad04-4bb851b36eab';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
@@ -64,7 +70,7 @@ describe('The Model Plan Task List', () => {
   const modelPlan = {
     __typename: 'ModelPlan',
     isFavorite: true,
-    id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+    id: modelPlanId,
     status: ModelStatus.PLAN_DRAFT,
     taskListStatus: TaskStatus.IN_PROGRESS,
     modelName: 'Test',
@@ -213,7 +219,7 @@ describe('The Model Plan Task List', () => {
       request: {
         query: GetModelPlanDocument,
         variables: {
-          id: modelPlan.id
+          id: modelPlanId
         }
       },
       result: {
@@ -224,6 +230,52 @@ describe('The Model Plan Task List', () => {
     };
   };
 
+  const changeHistoryMock = [
+    {
+      request: {
+        query: GetChangeHistoryDocument,
+        variables: {
+          modelPlanID: modelPlanId
+        }
+      },
+      result: {
+        data: {
+          translatedAuditCollection: [
+            {
+              id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+              tableName: 'plan_basics',
+              date: '2024-04-22T13:55:13.725192Z',
+              action: DatabaseOperation.INSERT,
+              metaData: {
+                version: 1,
+                tableName: 'plan_basics'
+              },
+              translatedFields: [
+                {
+                  id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+                  changeType: AuditFieldChangeType.ANSWERED,
+                  dataType: TranslationDataType.BOOLEAN,
+                  fieldName: 'model_type',
+                  fieldNameTranslated: 'Model type',
+                  referenceLabel: null,
+                  questionType: null,
+                  notApplicableQuestions: null,
+                  old: null,
+                  oldTranslated: null,
+                  new: 'READY',
+                  newTranslated: 'Ready',
+                  __typename: 'TranslatedAuditField'
+                }
+              ],
+              actorName: 'MINT Doe',
+              __typename: 'TranslatedAudit'
+            }
+          ]
+        }
+      }
+    }
+  ];
+
   it('renders without crashing', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
@@ -233,7 +285,7 @@ describe('The Model Plan Task List', () => {
           ]}
         >
           <MockedProvider
-            mocks={[modelPlanQuery(modelPlan)]}
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
             addTypename={false}
           >
             <MessageProvider>
@@ -263,7 +315,7 @@ describe('The Model Plan Task List', () => {
           ]}
         >
           <MockedProvider
-            mocks={[modelPlanQuery(modelPlan)]}
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
             addTypename={false}
           >
             <MessageProvider>
@@ -300,7 +352,7 @@ describe('The Model Plan Task List', () => {
           ]}
         >
           <MockedProvider
-            mocks={[modelPlanQuery(modelPlan)]}
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
             addTypename={false}
           >
             <MessageProvider>
@@ -329,7 +381,7 @@ describe('The Model Plan Task List', () => {
           ]}
         >
           <MockedProvider
-            mocks={[modelPlanQuery(modelPlan)]}
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
             addTypename={false}
           >
             <MessageProvider>
@@ -362,7 +414,7 @@ describe('The Model Plan Task List', () => {
             ]}
           >
             <MockedProvider
-              mocks={[modelPlanQuery(modelPlan)]}
+              mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
               addTypename={false}
             >
               <MessageProvider>

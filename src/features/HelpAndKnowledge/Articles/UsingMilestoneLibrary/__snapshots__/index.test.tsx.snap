@@ -23,6 +23,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
             type="button"
           >
             <svg
+              aria-label="close"
               class="usa-icon margin-right-05 text-tbottom"
               focusable="false"
               height="1em"
@@ -158,6 +159,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                   >
                     Using the table actions area 
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1 top-05 text-primary"
                       focusable="false"
                       height="1em"
@@ -178,6 +180,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                   >
                     Starting an MTO for a new model 
                     <svg
+                      aria-label="forward"
                       class="usa-icon margin-left-1 top-05 text-primary"
                       focusable="false"
                       height="1em"
@@ -308,6 +311,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                 >
                   chat with us on Slack
                   <svg
+                    aria-label="launch"
                     class="usa-icon"
                     focusable="false"
                     height="1em"
@@ -356,7 +360,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -365,7 +369,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                 >
                   How to add a custom milestone
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -407,7 +411,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -416,7 +420,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                 >
                   Using the milestone table
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"
@@ -458,7 +462,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
             <div
               class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <header
+              <div
                 class="usa-card__header padding-0"
                 data-testid="CardHeader"
               >
@@ -467,7 +471,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                 >
                   Using the table actions area
                 </h3>
-              </header>
+              </div>
               <a
                 class="usa-link width-fit-content display-block "
                 href="/help-and-knowledge/articles?category=mto-tutorials"

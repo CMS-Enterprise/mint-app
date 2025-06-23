@@ -108,7 +108,7 @@ const ReadOnlySection = <
                   label={config.questionTooltip}
                   position="right"
                 >
-                  <Icon.Info className="text-base-light" />
+                  <Icon.Info className="text-base-light" aria-label="info" />
                 </Tooltip>
               </span>
             )}
@@ -309,7 +309,7 @@ export const RadioValue = <
             position="right"
             className="margin-left-05"
           >
-            <Icon.Info className="text-base-light" />
+            <Icon.Info className="text-base-light" aria-label="info" />
           </Tooltip>
         </span>
       )}
@@ -366,7 +366,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
                   position="right"
                   className="margin-left-05"
                 >
-                  <Icon.Info className="text-base-light" />
+                  <Icon.Info className="text-base-light" aria-label="info" />
                 </Tooltip>
               </span>
             )}

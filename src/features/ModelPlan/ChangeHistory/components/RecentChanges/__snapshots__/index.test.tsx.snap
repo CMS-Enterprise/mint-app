@@ -26,6 +26,7 @@ exports[`RecentChanges > matches snapshot 1`] = `
       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
     >
       <svg
+        aria-label="history"
         class="usa-icon margin-right-1"
         focusable="false"
         height="1em"

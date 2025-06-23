@@ -254,6 +254,7 @@ const SettingsOrder = () => {
                                   )}
                                   data-testid={`move-${index}-up`}
                                   size={5}
+                                  aria-label="up arrow"
                                 />
                               </Button>
 
@@ -284,6 +285,7 @@ const SettingsOrder = () => {
                                   )}
                                   data-testid={`move-${index}-down`}
                                   size={5}
+                                  aria-label="down arrow"
                                 />
                               </Button>
                             </div>
@@ -319,7 +321,7 @@ const SettingsOrder = () => {
 
           <div style={{ width: 'fit-content' }}>
             <UswdsReactLink to="/" className="display-flex flex-align-center">
-              <Icon.ArrowBack className="margin-right-2" />
+              <Icon.ArrowBack className="margin-right-2" aria-label="back" />
               {homepageSettingsT('back')}
             </UswdsReactLink>
           </div>

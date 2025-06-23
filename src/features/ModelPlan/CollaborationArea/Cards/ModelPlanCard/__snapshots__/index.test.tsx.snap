@@ -9,7 +9,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
     <div
       class="usa-card__container"
     >
-      <header
+      <div
         class="usa-card__header"
         data-testid="CardHeader"
       >
@@ -18,7 +18,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         >
           Model Plan
         </h3>
-      </header>
+      </div>
       <div
         class="collaboration-area__status flex-align-center"
       >

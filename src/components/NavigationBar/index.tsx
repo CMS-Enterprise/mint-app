@@ -130,10 +130,15 @@ const NavigationBar = ({
                 <Icon.Notifications
                   className="margin-right-0 text-base-darkest"
                   size={3}
+                  aria-label="notifications"
                 />
               </div>
             ) : (
-              <Icon.NotificationsNone className="margin-right-0" size={3} />
+              <Icon.NotificationsNone
+                className="margin-right-0"
+                size={3}
+                aria-label="no notifications"
+              />
             )}
           </div>
         </div>

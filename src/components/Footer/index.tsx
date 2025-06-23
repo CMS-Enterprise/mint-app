@@ -85,7 +85,10 @@ const Footer = () => {
                     mobile={{ col: 2 }}
                     className="mint-footer__lightbulb"
                   >
-                    <Icon.LightbulbOutline className="lightbulb right-0" />
+                    <Icon.LightbulbOutline
+                      className="lightbulb right-0"
+                      aria-label="lightbulb icon"
+                    />
                   </Grid>
                 )}
               </Grid>
@@ -142,7 +145,10 @@ const Footer = () => {
                 className="mint-footer__lightbulb"
               >
                 {!isTablet && (
-                  <Icon.LightbulbOutline className="margin-top-05 lightbulb" />
+                  <Icon.LightbulbOutline
+                    className="margin-top-05 lightbulb"
+                    aria-label="lightbulb icon"
+                  />
                 )}
               </Grid>
             </GridContainer>

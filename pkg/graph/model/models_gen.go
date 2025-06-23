@@ -77,6 +77,13 @@ type MTOCommonSolutionContactTranslation struct {
 	ReceiveEmails  models.TranslationFieldWithOptions `json:"receiveEmails" db:"receive_emails"`
 }
 
+// Represents a translation of a contractor for a common solution
+type MTOCommonSolutionContractorTranslation struct {
+	Key             models.TranslationField `json:"key" db:"mto_common_solution_key"`
+	ContractorTitle models.TranslationField `json:"contractorTitle" db:"contractor_title"`
+	ContractorName  models.TranslationField `json:"contractorName" db:"contractor_name"`
+}
+
 // Represents mto info translation data
 type MTOInfoTranslation struct {
 	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`

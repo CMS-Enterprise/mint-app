@@ -43,6 +43,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               type="submit"
             >
               <svg
+                aria-label="search"
                 class="usa-icon usa-icon--size-3"
                 focusable="false"
                 height="1em"
@@ -137,7 +138,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
         <div
           class="usa-card__container shadow-2"
         >
-          <header
+          <div
             class="usa-card__header echimp-card__header"
             data-testid="CardHeader"
           >
@@ -151,7 +152,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
             >
               Echimp CR
             </h3>
-          </header>
+          </div>
           <div
             class="usa-card__body"
             data-testid="CardBody"
@@ -164,6 +165,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
                 data-testid="emergency__cr-tag"
               >
                 <svg
+                  aria-label="fire department"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -229,6 +231,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               >
                 View this in ECHIMP
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"
@@ -253,7 +256,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
         <div
           class="usa-card__container shadow-2"
         >
-          <header
+          <div
             class="usa-card__header echimp-card__header"
             data-testid="CardHeader"
           >
@@ -267,7 +270,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
             >
               Echimp TDL
             </h3>
-          </header>
+          </div>
           <div
             class="usa-card__body"
             data-testid="CardBody"
@@ -319,6 +322,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               >
                 View this in ECHIMP
                 <svg
+                  aria-label="launch"
                   class="usa-icon"
                   focusable="false"
                   height="1em"

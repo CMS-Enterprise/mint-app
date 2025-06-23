@@ -83,6 +83,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
         data-testid="ask-a-question"
       >
         <svg
+          aria-label="announcement"
           class="usa-icon text-primary margin-right-1"
           focusable="false"
           height="1em"
@@ -197,14 +198,14 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-550000"
+                        aria-describedby="tooltip-«rc»"
                         class="usa-tooltip__trigger mint-no-print margin-left-05"
                         data-testid="triggerElement"
-                        position="right"
                         tabindex="0"
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -222,7 +223,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-550000"
+                        id="tooltip-«rc»"
                         role="tooltip"
                         title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                       >
@@ -261,14 +262,14 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-550000"
+                        aria-describedby="tooltip-«rd»"
                         class="usa-tooltip__trigger mint-no-print margin-left-05"
                         data-testid="triggerElement"
-                        position="right"
                         tabindex="0"
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -286,7 +287,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-550000"
+                        id="tooltip-«rd»"
                         role="tooltip"
                         title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                       >
@@ -352,6 +353,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
+                    aria-label="add"
                     class="usa-icon margin-right-1"
                     focusable="false"
                     height="1em"
@@ -440,14 +442,14 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-550000"
+                        aria-describedby="tooltip-«re»"
                         class="usa-tooltip__trigger mint-no-print margin-left-05"
                         data-testid="triggerElement"
-                        position="right"
                         tabindex="0"
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -465,7 +467,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-550000"
+                        id="tooltip-«re»"
                         role="tooltip"
                         title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                       >
@@ -504,14 +506,14 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-550000"
+                        aria-describedby="tooltip-«rf»"
                         class="usa-tooltip__trigger mint-no-print margin-left-05"
                         data-testid="triggerElement"
-                        position="right"
                         tabindex="0"
                         title=""
                       >
                         <svg
+                          aria-label="info"
                           class="usa-icon text-base-light"
                           focusable="false"
                           height="1em"
@@ -529,7 +531,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-550000"
+                        id="tooltip-«rf»"
                         role="tooltip"
                         title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                       >
@@ -576,6 +578,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
+                    aria-label="add"
                     class="usa-icon margin-right-1"
                     focusable="false"
                     height="1em"
@@ -717,6 +720,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
+                    aria-label="add"
                     class="usa-icon margin-right-1"
                     focusable="false"
                     height="1em"
@@ -848,6 +852,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                 >
                   <svg
                     aria-hidden="true"
+                    aria-label="add"
                     class="usa-icon margin-right-1"
                     focusable="false"
                     height="1em"
@@ -882,6 +887,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
             >
               <svg
                 aria-hidden="true"
+                aria-label="back"
                 class="usa-icon margin-right-1"
                 focusable="false"
                 height="1em"

@@ -508,6 +508,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
           >
             <svg
               aria-hidden="true"
+              aria-label="back"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"

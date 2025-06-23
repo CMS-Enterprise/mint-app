@@ -109,7 +109,13 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         }
       },
       {
-        Header: <Icon.Warning size={3} className="left-05 text-base-lighter" />,
+        Header: (
+          <Icon.Warning
+            size={3}
+            className="left-05 text-base-lighter"
+            aria-label="warning"
+          />
+        ),
         accessor: 'riskIndicator',
         disableSortBy: true,
         Cell: ({ row }: { row: Row<SolutionType> }) => {
@@ -291,7 +297,10 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                           label={stausConfig.questionTooltip}
                           position="right"
                         >
-                          <Icon.Info className="text-base-light" />
+                          <Icon.Info
+                            className="text-base-light"
+                            aria-label="info"
+                          />
                         </Tooltip>
                       </>
                     }
@@ -318,7 +327,10 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                           label={riskIndicatorConfig.questionTooltip}
                           position="right"
                         >
-                          <Icon.Info className="text-base-light" />
+                          <Icon.Info
+                            className="text-base-light"
+                            aria-label="info"
+                          />
                         </Tooltip>
                       </>
                     }

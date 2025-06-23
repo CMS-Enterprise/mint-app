@@ -140,7 +140,7 @@ const Header = () => {
               )}
               <NavMenuButton
                 onClick={() => setIsMobileSideNavExpanded(true)}
-                label={<Icon.Menu size={3} />}
+                label={<Icon.Menu size={3} aria-label="open side nav" />}
               />
             </>
           ) : (
