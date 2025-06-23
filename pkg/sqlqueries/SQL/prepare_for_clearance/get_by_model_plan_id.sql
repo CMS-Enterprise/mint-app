@@ -36,5 +36,5 @@ LEFT JOIN plan_participants_and_providers AS part ON part.model_plan_id = mp.id
 LEFT JOIN plan_beneficiaries AS bene ON bene.model_plan_id = mp.id
 LEFT JOIN plan_ops_eval_and_learning AS ops ON ops.model_plan_id = mp.id
 LEFT JOIN plan_payments AS pay ON pay.model_plan_id = mp.id
-LEFT JOIN plan_timeline AS timeline ON timeline.model_plan_id = mp.id,
+LEFT JOIN plan_timeline AS timeline ON timeline.model_plan_id = mp.id
 WHERE mp.id = :model_plan_id
