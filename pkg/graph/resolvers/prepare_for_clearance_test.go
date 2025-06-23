@@ -112,6 +112,31 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// happen within the same millisecond. I just assume that's not going to happen :)
 	previousLatestClearanceDts := *planClearance.LatestClearanceDts
 
+	// Update the basics to be marked ready for clearance
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	_, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		basics.ID,
+		map[string]interface{}{
+			"status": model.TaskStatusInputReadyForClearance,
+		},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	// Clearance start date is 15 days out & we've started by marking Basics as ready for clearance - should be "In Progress"
+	planClearance, err = ReadyForClearanceRead(suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+	suite.EqualValues(model.PrepareForClearanceStatusInProgress, planClearance.Status)
+	suite.NotNil(planClearance.LatestClearanceDts)
+	suite.True(planClearance.LatestClearanceDts.After(previousLatestClearanceDts)) // this new clearanceDts should be after the last one we saw
+	previousLatestClearanceDts = *planClearance.LatestClearanceDts
+
 	// Update the general characteristics to be marked ready for clearance
 	genChar, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
