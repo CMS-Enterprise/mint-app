@@ -10,7 +10,7 @@ import {
 } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import Modal from 'components/Modal';
@@ -23,7 +23,7 @@ import '../cards.scss';
 
 type TimelineCardType = {
   modelID: string;
-  timeline: GetModelPlanQuery['modelPlan']['timeline'];
+  timeline: GetCollaborationAreaQuery['modelPlan']['timeline'];
   setStatusMessage: (message: StatusMessageType) => void;
 };
 

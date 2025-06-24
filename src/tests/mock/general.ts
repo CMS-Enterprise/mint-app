@@ -1,5 +1,9 @@
 import { MockedResponse } from '@apollo/client/testing';
 import {
+  DataExchangeApproachStatus,
+  GetCollaborationAreaDocument,
+  GetCollaborationAreaQuery,
+  GetCollaborationAreaQueryVariables,
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
   GetEchimpCrandTdlQueryVariables,
@@ -10,8 +14,11 @@ import {
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
   ModelCategory,
+  ModelPhase,
   ModelPlanFilter,
-  ModelStatus
+  ModelStatus,
+  MtoStatus,
+  TaskStatus
 } from 'gql/generated/graphql';
 
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
@@ -94,6 +101,189 @@ export const modelPlanCollectionMock = (
     }
   ];
 };
+
+export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
+  __typename: 'ModelPlan',
+  isFavorite: true,
+  id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+  status: ModelStatus.PLAN_DRAFT,
+  taskListStatus: TaskStatus.IN_PROGRESS,
+  modelName: 'Test',
+  opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
+  createdDts: '2022-05-12T15:01:39.190679Z',
+  mostRecentEdit: {
+    __typename: 'TranslatedAudit',
+    id: '123',
+    date: '2022-05-12T15:01:39.190679Z'
+  },
+  suggestedPhase: {
+    __typename: 'PhaseSuggestion',
+    phase: ModelPhase.ICIP_COMPLETE,
+    suggestedStatuses: [ModelStatus.ICIP_COMPLETE]
+  },
+  basics: {
+    __typename: 'PlanBasics',
+    id: '123',
+    modifiedDts: null,
+    status: TaskStatus.READY,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
+  },
+  opsEvalAndLearning: {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: '7865676',
+    modifiedDts: '',
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
+  },
+  generalCharacteristics: {
+    __typename: 'PlanGeneralCharacteristics',
+    id: '54234',
+    modifiedDts: '',
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
+  },
+  participantsAndProviders: {
+    __typename: 'PlanParticipantsAndProviders',
+    id: '46246356',
+    modifiedDts: '',
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
+  },
+  beneficiaries: {
+    __typename: 'PlanBeneficiaries',
+    id: '09865643',
+    modifiedDts: '',
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
+  },
+  payments: {
+    __typename: 'PlanPayments',
+    id: '8756435235',
+    modifiedDts: '',
+    status: TaskStatus.IN_PROGRESS,
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      commonName: 'John Doe'
+    }
+  },
+  echimpCRsAndTDLs: [],
+  mtoMatrix: {
+    __typename: 'ModelsToOperationMatrix',
+    status: MtoStatus.IN_PROGRESS,
+    recentEdit: null,
+    info: {
+      __typename: 'MTOInfo',
+      id: '123'
+    },
+    milestones: []
+  },
+  dataExchangeApproach: {
+    __typename: 'PlanDataExchangeApproach',
+    id: '123',
+    status: DataExchangeApproachStatus.IN_PROGRESS,
+    modifiedDts: '2022-05-12T15:01:39.190679Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'John Doe'
+    }
+  },
+  documents: [
+    {
+      __typename: 'PlanDocument',
+      id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+      fileName: 'test.pdf',
+      fileType: 'application/pdf'
+    }
+  ],
+  collaborators: [],
+  discussions: [
+    {
+      __typename: 'PlanDiscussion',
+      id: '123',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a question.'
+      },
+      createdBy: 'John Doe',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      replies: []
+    },
+    {
+      __typename: 'PlanDiscussion',
+      id: '456',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a second question.'
+      },
+      createdBy: 'Jane Doe',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      replies: [
+        {
+          __typename: 'DiscussionReply',
+          discussionID: '456',
+          id: 'abc',
+          content: {
+            __typename: 'TaggedContent',
+            rawContent: 'This is an answer.'
+          },
+          createdBy: 'Jack Doe',
+          createdDts: '2022-05-12T15:01:39.190679Z'
+        }
+      ]
+    }
+  ],
+  timeline: {
+    __typename: 'PlanTimeline',
+    id: 'timeline-1',
+    modifiedDts: '2025-06-24T12:00:00Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'Jane Doe'
+    },
+    status: TaskStatus.IN_PROGRESS,
+    datesAddedCount: 3,
+    upcomingTimelineDate: {
+      __typename: 'UpcomingTimelineDate',
+      date: '2025-07-01T00:00:00Z',
+      dateField: 'announced'
+    }
+  }
+};
+
+export const collaborationAreaMock: MockedResponse<
+  GetCollaborationAreaQuery,
+  GetCollaborationAreaQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetCollaborationAreaDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: collaborationAreaData
+      }
+    }
+  }
+];
 
 const favoritesModelPlanData: GetFavoritesType = [
   {

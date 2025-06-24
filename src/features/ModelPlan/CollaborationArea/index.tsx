@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import { HelpArticle } from 'features/HelpAndKnowledge/Articles';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
-import Timeline from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Timeline';
 import CollaborationStatusBanner from 'features/ModelPlan/CollaborationArea/StatusBanner';
-import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
+import {
+  GetCollaborationAreaQuery,
+  useGetCollaborationAreaQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -34,7 +36,7 @@ import TimelineCard from './Cards/TimelineCard';
 
 import './index.scss';
 
-type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+type GetModelPlanTypes = GetCollaborationAreaQuery['modelPlan'];
 
 export type StatusMessageType = {
   message: string;
@@ -52,7 +54,7 @@ const CollaborationArea = () => {
     null
   );
 
-  const { data, loading, error, refetch } = useGetModelPlanQuery({
+  const { data, loading, error, refetch } = useGetCollaborationAreaQuery({
     variables: {
       id: modelID
     }
@@ -210,6 +212,7 @@ const CollaborationArea = () => {
                 <CardGroup>
                   <ModelPlanCard
                     modelID={modelID}
+                    modelPlan={modelPlan}
                     setStatusMessage={setStatusMessage}
                   />
 

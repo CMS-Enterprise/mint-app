@@ -1,21 +1,16 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetModelPlan($id: UUID!) {
+  query GetCollaborationArea($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName
-      modifiedDts
       createdDts
-      modifiedByUserAccount {
-        commonName
-      }
       mostRecentEdit {
         id
         date
       }
       opSolutionLastModifiedDts
-      archived
       status
       taskListStatus
       isFavorite
@@ -25,12 +20,10 @@ export default gql(/* GraphQL */ `
       }
       basics {
         id
-        clearanceStarts
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
-        readyForClearanceDts
         status
       }
       collaborators {
@@ -87,67 +80,43 @@ export default gql(/* GraphQL */ `
       }
       generalCharacteristics {
         id
-        createdBy
-        createdDts
-        modifiedBy
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
-        readyForClearanceDts
         status
       }
       participantsAndProviders {
         id
-        createdBy
-        createdDts
-        modifiedBy
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
-        readyForClearanceDts
         status
       }
       beneficiaries {
         id
-        createdBy
-        createdDts
-        modifiedBy
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
-        readyForClearanceDts
         status
       }
       opsEvalAndLearning {
         id
-        createdBy
-        createdDts
-        modifiedBy
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
-        readyForClearanceDts
         status
       }
       payments {
         id
-        createdBy
-        createdDts
-        modifiedBy
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
-        readyForClearanceDts
         status
-      }
-      prepareForClearance {
-        status
-        modifiedDts: latestClearanceDts
       }
       mtoMatrix {
         # Used to cache the mto matrix - always include
@@ -164,6 +133,20 @@ export default gql(/* GraphQL */ `
           id
           name
         }
+      }
+      timeline {
+        id
+        modifiedDts
+        modifiedByUserAccount {
+          id
+          commonName
+        }
+        datesAddedCount
+        upcomingTimelineDate {
+          date
+          dateField
+        }
+        status
       }
     }
   }
