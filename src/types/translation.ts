@@ -88,6 +88,7 @@ import {
   PlanParticipantsAndProvidersTranslation,
   PlanPaymentsTranslation,
   PlanTdlTranslation,
+  PlanTimelineTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -1360,6 +1361,38 @@ export type TranslationMTOCommonSolutionContactCustom = {
   [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
 };
 
+// Timeline
+export type TranslationTimelineForm = {
+  completeICIP: TranslationFieldProperties;
+  clearanceStarts: TranslationFieldProperties;
+  clearanceEnds: TranslationFieldProperties;
+  announced: TranslationFieldProperties;
+  applicationsStart: TranslationFieldProperties;
+  applicationsEnd: TranslationFieldProperties;
+  performancePeriodStarts: TranslationFieldProperties;
+  performancePeriodEnds: TranslationFieldProperties;
+  highLevelNote: TranslationFieldProperties;
+  wrapUpEnds: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+type TranslationTimelineGQL = Omit<
+  PlanTimelineTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationTimeline = {
+  [K in keyof TranslationTimelineGQL]: TranslationTimelineForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
@@ -1381,6 +1414,7 @@ export type TranslationPlan = {
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
   mtoSolution: TranslationMTOSolutionCustom;
+  timeline: TranslationTimeline;
 };
 
 export type TranslationPlanSection =
@@ -1391,7 +1425,8 @@ export type TranslationPlanSection =
   | TranslationPlan['beneficiaries']
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments']
-  | TranslationPlan['dataExchangeApproach'];
+  | TranslationPlan['dataExchangeApproach']
+  | TranslationPlan['timeline'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
@@ -1413,5 +1448,6 @@ export enum PlanSection {
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',
-  MTO_SOLUTION = 'mtoSolution'
+  MTO_SOLUTION = 'mtoSolution',
+  TIMELINE = 'timeline'
 }

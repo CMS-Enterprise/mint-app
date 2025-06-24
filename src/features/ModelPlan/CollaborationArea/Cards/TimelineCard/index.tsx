@@ -26,6 +26,7 @@ import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
 import TaskListSectionKeys from 'constants/enums';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import useSectionLock from 'hooks/useSectionLock';
 import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
@@ -44,6 +45,7 @@ const TimelineCard = ({
   setStatusMessage
 }: TimelineCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
+  const timelineT = usePlanTranslation('timeline');
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -98,13 +100,16 @@ const TimelineCard = ({
           <p>{collaborationAreaT('timelineCard.body')}</p>
         </CardBody>
 
-        {upcomingTimelineDate?.date && (
+        {upcomingTimelineDate?.date && upcomingTimelineDate.dateField && (
           <div className="display-inline tablet:display-flex margin-top-2 flex-align-center padding-x-3">
             <Trans
               i18nKey="collaborationArea:timelineCard.upcomingDate"
               values={{
                 date: formatDateLocal(upcomingTimelineDate.date, 'MM/dd/yyyy'),
-                dateField: upcomingTimelineDate.dateField
+                dateField:
+                  timelineT[
+                    upcomingTimelineDate.dateField as keyof typeof timelineT
+                  ].label
               }}
               components={{ bold: <strong className="margin-right-1" /> }}
             />
