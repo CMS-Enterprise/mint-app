@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -541,7 +542,7 @@ func sendPlanTimelineDateChangedEmails(
 
 // getUpcomingPlanTimelineDate returns the nearest upcoming date from the PlanTimeline and its field name.
 // It returns nil if no upcoming dates are found.
-func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, string, error) {
+func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.UpcomingTimelineDate, error) {
 	now := time.Now()
 	var nearest *time.Time
 	var nearestField string
@@ -570,11 +571,18 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time,
 		}
 	}
 
-	return nearest, nearestField, nil
+	if nearest == nil || nearestField == "" {
+		return nil, nil
+	}
+
+	return &model.UpcomingTimelineDate{
+		Date:      nearest,
+		DateField: &nearestField,
+	}, nil
 }
 
 // countPopulatedPlanTimelineDates counts the number of populated date fields in a PlanTimeline.
-func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
+func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) (int, error) {
 	count := 0
 	dateFields := []*time.Time{
 		planTimeline.CompleteICIP,
@@ -592,5 +600,5 @@ func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
 			count++
 		}
 	}
-	return count
+	return count, nil
 }

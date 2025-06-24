@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -15,11 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
-
-type UpcomingTimelineDate struct {
-	Date      *time.Time
-	DateField string
-}
 
 func UpdatePlanTimeline(
 	ctx context.Context,
@@ -104,31 +98,6 @@ func UpdatePlanTimeline(
 
 	retPlanTimeline, err := store.PlanTimelineUpdate(logger, existing)
 	return retPlanTimeline, err
-}
-
-func ModelPlanUpcomingPlanTimelineDate(ctx context.Context, modelPlanID uuid.UUID) (*UpcomingTimelineDate, error) {
-	planTimeline, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-	if planTimeline == nil {
-		return nil, nil // No planTimeline found for the given model plan ID
-	}
-
-	nearest, nearestField, err := getUpcomingPlanTimelineDate(planTimeline)
-
-	if err != nil {
-		return nil, err
-	}
-
-	if nearest == nil || nearestField == "" {
-		return nil, nil
-	}
-
-	return &UpcomingTimelineDate{
-		Date:      nearest,
-		DateField: nearestField,
-	}, nil
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
