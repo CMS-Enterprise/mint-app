@@ -71,10 +71,6 @@ func MTOCommonSolutionContactUnsetPrimaryContactByKey(np sqlutils.NamedPreparer,
 		"modified_by": existingContact.ModifiedBy,
 	}
 
-	if existingContact.Key == "" {
-		return fmt.Errorf("key cannot be empty")
-	}
-
 	return sqlutils.ExecProcedure(np, sqlqueries.MTOCommonSolutionContact.UnsetPrimaryKey, args)
 }
 
