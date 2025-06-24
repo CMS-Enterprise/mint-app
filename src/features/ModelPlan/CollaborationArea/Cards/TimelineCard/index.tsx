@@ -10,13 +10,16 @@ import {
 } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
+import {
+  GetCollaborationAreaQuery,
+  LockableSection
+} from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-// import useSectionLock from 'hooks/useSectionLock';
+import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
 import '../cards.scss';
@@ -47,9 +50,9 @@ const TimelineCard = ({
     upcomingTimelineDate
   } = timeline;
 
-  // const { SectionLock, isLocked } = useSectionLock({
-  //   section: LockableSection.TIMELINE
-  // });
+  const { SectionLock, isLocked } = useSectionLock({
+    section: LockableSection.TIMELINE
+  });
 
   return (
     <>
@@ -84,45 +87,48 @@ const TimelineCard = ({
           </span>
         </div>
 
-        <CardBody>
+        <CardBody className="padding-bottom-2">
           <p>{collaborationAreaT('timelineCard.body')}</p>
+          {upcomingTimelineDate?.date && upcomingTimelineDate.dateField && (
+            <div className="display-inline tablet:display-flex margin-top-2 flex-align-center">
+              <Trans
+                i18nKey="collaborationArea:timelineCard.upcomingDate"
+                values={{
+                  date: formatDateLocal(
+                    upcomingTimelineDate.date,
+                    'MM/dd/yyyy'
+                  ),
+                  dateField:
+                    timelineT[
+                      upcomingTimelineDate.dateField as keyof typeof timelineT
+                    ].label
+                }}
+                components={{ bold: <strong className="margin-right-1" /> }}
+              />
+            </div>
+          )}
+          {modifiedDts && modifiedByUserAccount && (
+            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-2 flex-align-center">
+              <span className="text-base margin-right-1">
+                {collaborationAreaT('timelineCard.mostRecentEdit', {
+                  date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                })}
+              </span>
+              <Avatar
+                className="text-base-darkest"
+                user={modifiedByUserAccount.commonName}
+              />
+            </div>
+          )}
+
+          <SectionLock />
         </CardBody>
-
-        {upcomingTimelineDate?.date && upcomingTimelineDate.dateField && (
-          <div className="display-inline tablet:display-flex margin-top-2 flex-align-center padding-x-3">
-            <Trans
-              i18nKey="collaborationArea:timelineCard.upcomingDate"
-              values={{
-                date: formatDateLocal(upcomingTimelineDate.date, 'MM/dd/yyyy'),
-                dateField:
-                  timelineT[
-                    upcomingTimelineDate.dateField as keyof typeof timelineT
-                  ].label
-              }}
-              components={{ bold: <strong className="margin-right-1" /> }}
-            />
-          </div>
-        )}
-
-        {modifiedDts && modifiedByUserAccount && (
-          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
-            <span className="text-base margin-right-1">
-              {collaborationAreaT('timelineCard.mostRecentEdit', {
-                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-              })}
-            </span>
-            <Avatar
-              className="text-base-darkest"
-              user={modifiedByUserAccount.commonName}
-            />
-          </div>
-        )}
 
         <CardFooter>
           <Button
             type="button"
             className="margin-right-2"
-            // disabled={isLocked}
+            disabled={isLocked}
             onClick={() =>
               history.push(`/models/${modelID}/collaboration-area/timeline`)
             }
