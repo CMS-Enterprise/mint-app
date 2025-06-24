@@ -165,6 +165,25 @@ export default gql(/* GraphQL */ `
           name
         }
       }
+      timeline {
+        id
+        modifiedDts
+        modifiedByUserAccount {
+          id
+          commonName
+        }
+        clearanceStarts
+        clearanceEnds
+        completeICIP
+        announced
+        applicationsStart
+        applicationsEnd
+        performancePeriodStarts
+        performancePeriodEnds
+        wrapUpEnds
+        upcomingTimelineDate
+        status
+      }
     }
   }
 `);

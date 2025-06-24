@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import { HelpArticle } from 'features/HelpAndKnowledge/Articles';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import Timeline from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Timeline';
 import CollaborationStatusBanner from 'features/ModelPlan/CollaborationArea/StatusBanner';
 import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
 
@@ -29,6 +30,7 @@ import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
+import TimelineCard from './Cards/TimelineCard';
 
 import './index.scss';
 
@@ -64,6 +66,7 @@ const CollaborationArea = () => {
     documents,
     dataExchangeApproach,
     echimpCRsAndTDLs,
+    timeline,
     status,
     collaborators,
     isFavorite,
@@ -207,6 +210,12 @@ const CollaborationArea = () => {
                 <CardGroup>
                   <ModelPlanCard
                     modelID={modelID}
+                    setStatusMessage={setStatusMessage}
+                  />
+
+                  <TimelineCard
+                    modelID={modelID}
+                    timeline={timeline}
                     setStatusMessage={setStatusMessage}
                   />
 
