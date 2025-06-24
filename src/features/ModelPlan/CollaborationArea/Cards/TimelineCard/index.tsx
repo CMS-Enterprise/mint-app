@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
   Button,
@@ -18,6 +18,7 @@ import {
   useGetModelPlanQuery,
   UserAccount
 } from 'gql/generated/graphql';
+import { date } from 'yup';
 
 import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -48,7 +49,13 @@ const TimelineCard = ({
 
   const history = useHistory();
 
-  const { modifiedDts, modifiedByUserAccount, status } = timeline;
+  const {
+    modifiedDts,
+    modifiedByUserAccount,
+    status,
+    datesAddedCount,
+    upcomingTimelineDate
+  } = timeline;
 
   const { SectionLock, isLocked } = useSectionLock({
     section: LockableSection.TIMELINE
@@ -80,16 +87,29 @@ const TimelineCard = ({
         </CardHeader>
         <div className="collaboration-area__status flex-align-center">
           <TaskListStatusTag status={status} classname="width-fit-content" />
-          {/* <span className="text-base">
-            {collaborationAreaT('timelineCard.sectionsStarted', {
-              sectionsStarted: sectionStartedCounter
+          <span className="text-base">
+            {collaborationAreaT('timelineCard.datesAddedCount', {
+              datesAddedCount
             })}
-          </span> */}
+          </span>
         </div>
 
         <CardBody>
           <p>{collaborationAreaT('timelineCard.body')}</p>
         </CardBody>
+
+        {upcomingTimelineDate?.date && (
+          <div className="display-inline tablet:display-flex margin-top-2 flex-align-center padding-x-3">
+            <Trans
+              i18nKey="collaborationArea:timelineCard.upcomingDate"
+              values={{
+                date: formatDateLocal(upcomingTimelineDate.date, 'MM/dd/yyyy'),
+                dateField: upcomingTimelineDate.dateField
+              }}
+              components={{ bold: <strong className="margin-right-1" /> }}
+            />
+          </div>
+        )}
 
         {modifiedDts && modifiedByUserAccount && (
           <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
@@ -111,20 +131,18 @@ const TimelineCard = ({
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              history.push(
-                `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
-              )
+              history.push(`/models/${modelID}/collaboration-area/timeline`)
             }
-            data-testid="to-data-exchange-approach"
+            data-testid="to-timeline"
           >
             {modifiedDts
-              ? collaborationAreaT('dataExchangeApproachCard.editApproach')
-              : collaborationAreaT('dataExchangeApproachCard.startApproach')}
+              ? collaborationAreaT('timelineCard.startTimeline')
+              : collaborationAreaT('timelineCard.editTimeline')}
           </Button>
 
           <Button
             type="button"
-            className="usa-button usa-button--outline"
+            className="usa-button--outline"
             onClick={() => setIsExportModalOpen(true)}
           >
             {collaborationAreaT('timelineCard.shareButton')}

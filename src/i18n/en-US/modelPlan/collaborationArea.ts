@@ -66,12 +66,12 @@ const collaborationArea = {
   timelineCard: {
     heading: 'Model timeline',
     body: 'Add all your essential model dates, such as when you anticipate completing your ICIP, going through clearance, announcing the model, and when it will be active. As you iterate on the plans for your model, please be sure to keep this space up-to-date.',
-    datesAdded: '{{datesAdded}}/{{-totalDates}} dates added',
-    upcomingDate: '<bold>Upcoming date:</bold> {{}} {{({{date}})',
-    lastModified: 'Most recent edit on {{-date}} by ',
-    startApproach: 'Start approach',
-    editApproach: 'Edit approach',
-    viewHelpArticle: 'View help article'
+    datesAddedCount: '{{datesAddedCount}}/9 dates added',
+    upcomingDate: '<bold>Upcoming date:</bold> {{dateField}} ({{date}})',
+    mostRecentEdit: 'Most recent edit on {{-date}} by ',
+    startTimeline: 'Start timeline',
+    editTimeline: 'Edit timeline',
+    shareButton: 'Share or export Model Plan'
   }
 };
 

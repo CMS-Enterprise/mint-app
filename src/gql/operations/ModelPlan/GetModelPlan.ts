@@ -172,16 +172,11 @@ export default gql(/* GraphQL */ `
           id
           commonName
         }
-        clearanceStarts
-        clearanceEnds
-        completeICIP
-        announced
-        applicationsStart
-        applicationsEnd
-        performancePeriodStarts
-        performancePeriodEnds
-        wrapUpEnds
-        upcomingTimelineDate
+        datesAddedCount
+        upcomingTimelineDate {
+          date
+          dateField
+        }
         status
       }
     }
