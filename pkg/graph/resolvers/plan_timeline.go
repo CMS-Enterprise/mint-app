@@ -121,6 +121,10 @@ func ModelPlanUpcomingPlanTimelineDate(ctx context.Context, modelPlanID uuid.UUI
 		return nil, err
 	}
 
+	if nearest == nil || nearestField == "" {
+		return nil, nil
+	}
+
 	return &UpcomingTimelineDate{
 		Date:      nearest,
 		DateField: nearestField,
