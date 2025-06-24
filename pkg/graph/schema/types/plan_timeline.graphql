@@ -22,7 +22,7 @@ type PlanTimeline {
   highLevelNote: String
 
   upcomingTimelineDate: UpcomingTimelineDate
-  datesAdded: Int!
+  datesAddedCount: Int!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!

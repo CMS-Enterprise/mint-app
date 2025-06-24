@@ -49,8 +49,8 @@ func (r *planTimelineResolver) UpcomingTimelineDate(ctx context.Context, obj *mo
 	}, nil
 }
 
-// DatesAdded is the resolver for the datesAdded field.
-func (r *planTimelineResolver) DatesAdded(ctx context.Context, obj *models.PlanTimeline) (int, error) {
+// DatesAddedCount is the resolver for the datesAddedCount field.
+func (r *planTimelineResolver) DatesAddedCount(ctx context.Context, obj *models.PlanTimeline) (int, error) {
 	count := countPopulatedPlanTimelineDates(obj)
 	return count, nil
 }
