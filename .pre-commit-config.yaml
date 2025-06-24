@@ -44,14 +44,11 @@ repos:
             .*models_gen.go|
           )$
 
-  - repo: local
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v2.1.6
     hooks:
       - id: golangci-lint-full
         name: Lint go files
-        entry: golangci-lint run ./...
-        language: system
-        types: [go]
-        pass_filenames: false
 
   - repo: local
     hooks:
