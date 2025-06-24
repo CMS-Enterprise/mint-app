@@ -539,29 +539,34 @@ func sendPlanTimelineDateChangedEmails(
 	return nil
 }
 
-func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, error) {
+func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, string, error) {
 	now := time.Now()
 	var nearest *time.Time
+	var nearestField string
 
-	dateFields := []*time.Time{
-		planTimeline.CompleteICIP,
-		planTimeline.ClearanceStarts,
-		planTimeline.ClearanceEnds,
-		planTimeline.Announced,
-		planTimeline.ApplicationsStart,
-		planTimeline.ApplicationsEnd,
-		planTimeline.PerformancePeriodStarts,
-		planTimeline.PerformancePeriodEnds,
-		planTimeline.WrapUpEnds,
+	dateFields := []struct {
+		Field *time.Time
+		Name  string
+	}{
+		{planTimeline.CompleteICIP, "completeICIP"},
+		{planTimeline.ClearanceStarts, "clearanceStarts"},
+		{planTimeline.ClearanceEnds, "clearanceEnds"},
+		{planTimeline.Announced, "announced"},
+		{planTimeline.ApplicationsStart, "applicationsStart"},
+		{planTimeline.ApplicationsEnd, "applicationsEnd"},
+		{planTimeline.PerformancePeriodStarts, "performancePeriodStarts"},
+		{planTimeline.PerformancePeriodEnds, "performancePeriodEnds"},
+		{planTimeline.WrapUpEnds, "wrapUpEnds"},
 	}
 
 	for _, dt := range dateFields {
-		if dt != nil && dt.After(now) {
-			if nearest == nil || dt.Before(*nearest) {
-				nearest = dt
+		if dt.Field != nil && dt.Field.After(now) {
+			if nearest == nil || dt.Field.Before(*nearest) {
+				nearest = dt.Field
+				nearestField = dt.Name
 			}
 		}
 	}
 
-	return nearest, nil
+	return nearest, nearestField, nil
 }

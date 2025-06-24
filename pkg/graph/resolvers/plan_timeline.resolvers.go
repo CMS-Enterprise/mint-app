@@ -6,12 +6,12 @@ package resolvers
 
 import (
 	"context"
-	"time"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -34,8 +34,19 @@ func (r *mutationResolver) UpdatePlanTimeline(ctx context.Context, id uuid.UUID,
 }
 
 // UpcomingTimelineDate is the resolver for the upcomingTimelineDate field.
-func (r *planTimelineResolver) UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*time.Time, error) {
-	return ModelPlanUpcomingPlanTimelineDate(ctx, obj.ModelPlanID)
+func (r *planTimelineResolver) UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*model.UpcomingTimelineDate, error) {
+	upcoming, err := ModelPlanUpcomingPlanTimelineDate(ctx, obj.ModelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	if upcoming == nil {
+		return nil, nil
+	}
+	// Map fields from *UpcomingTimelineDate to *model.UpcomingTimelineDate as needed
+	return &model.UpcomingTimelineDate{
+		Date:      upcoming.Date,
+		DateField: &upcoming.DateField,
+	}, nil
 }
 
 // PlanTimeline returns generated.PlanTimelineResolver implementation.

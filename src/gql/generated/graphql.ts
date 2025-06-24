@@ -3761,7 +3761,7 @@ export type PlanTimeline = {
   readyForReviewByUserAccount?: Maybe<UserAccount>;
   readyForReviewDts?: Maybe<Scalars['Time']['output']>;
   status: TaskStatus;
-  upcomingTimelineDate?: Maybe<Scalars['Time']['output']>;
+  upcomingTimelineDate?: Maybe<UpcomingTimelineDate>;
   wrapUpEnds?: Maybe<Scalars['Time']['output']>;
 };
 
@@ -4717,6 +4717,12 @@ export enum TriStateAnswer {
   TBD = 'TBD',
   YES = 'YES'
 }
+
+export type UpcomingTimelineDate = {
+  __typename: 'UpcomingTimelineDate';
+  date?: Maybe<Scalars['Time']['output']>;
+  dateField?: Maybe<Scalars['String']['output']>;
+};
 
 export type UserAccount = {
   __typename: 'UserAccount';

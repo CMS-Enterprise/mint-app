@@ -529,26 +529,37 @@ func (suite *ResolverSuite) TestGetUpcomingPlanTimelineDate() {
 
 	// Test: All fields nil
 	planPlanTimeline := &models.PlanTimeline{}
-	nearest, err := getUpcomingPlanTimelineDate(planPlanTimeline)
+	nearest, field, err := getUpcomingPlanTimelineDate(planPlanTimeline)
 	suite.NoError(err)
 	suite.Nil(nearest)
+	suite.Equal("", field)
 
 	// Test: Only past dates
 	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP: &tPast,
+		CompleteICIP:            &tPast,
+		ClearanceStarts:         &tPast,
+		ClearanceEnds:           &tPast,
+		Announced:               &tPast,
+		ApplicationsStart:       &tPast,
+		ApplicationsEnd:         &tPast,
+		PerformancePeriodStarts: &tPast,
+		PerformancePeriodEnds:   &tPast,
+		WrapUpEnds:              &tPast,
 	}
-	nearest, err = getUpcomingPlanTimelineDate(planPlanTimeline)
+	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
 	suite.NoError(err)
 	suite.Nil(nearest)
+	suite.Equal("", field)
 
-	// Test: One future date
+	// Test: Only one future date, rest nil
 	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP: &tFuture1,
+		Announced: &tFuture1,
 	}
-	nearest, err = getUpcomingPlanTimelineDate(planPlanTimeline)
+	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
 	suite.NoError(err)
 	suite.NotNil(nearest)
 	suite.WithinDuration(tFuture1, *nearest, time.Second)
+	suite.Equal("announced", field)
 
 	// Test: Multiple future dates, pick nearest
 	planPlanTimeline = &models.PlanTimeline{
@@ -556,10 +567,11 @@ func (suite *ResolverSuite) TestGetUpcomingPlanTimelineDate() {
 		ClearanceStarts: &tFuture1,
 		WrapUpEnds:      &tFuture2,
 	}
-	nearest, err = getUpcomingPlanTimelineDate(planPlanTimeline)
+	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
 	suite.NoError(err)
 	suite.NotNil(nearest)
 	suite.WithinDuration(tFuture1, *nearest, time.Second)
+	suite.Equal("clearanceStarts", field)
 
 	// Test: Mix of past and future, pick nearest future
 	planPlanTimeline = &models.PlanTimeline{
@@ -567,8 +579,36 @@ func (suite *ResolverSuite) TestGetUpcomingPlanTimelineDate() {
 		ClearanceStarts: &tFuture2,
 		Announced:       &tFuture1,
 	}
-	nearest, err = getUpcomingPlanTimelineDate(planPlanTimeline)
+	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
 	suite.NoError(err)
 	suite.NotNil(nearest)
 	suite.WithinDuration(tFuture1, *nearest, time.Second)
+	suite.Equal("announced", field)
+
+	// Test: All dates in the future, pick the earliest
+	planPlanTimeline = &models.PlanTimeline{
+		CompleteICIP:            &tFuture2,
+		ClearanceStarts:         &tFuture2,
+		ClearanceEnds:           &tFuture1,
+		Announced:               &tFuture2,
+		ApplicationsStart:       &tFuture2,
+		ApplicationsEnd:         &tFuture2,
+		PerformancePeriodStarts: &tFuture2,
+		PerformancePeriodEnds:   &tFuture2,
+		WrapUpEnds:              &tFuture2,
+	}
+	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
+	suite.NoError(err)
+	suite.NotNil(nearest)
+	suite.WithinDuration(tFuture1, *nearest, time.Second)
+	suite.Equal("clearanceEnds", field)
+
+	// Test: Only one date is exactly now (should not count as future)
+	planPlanTimeline = &models.PlanTimeline{
+		CompleteICIP: &tNow,
+	}
+	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
+	suite.NoError(err)
+	suite.Nil(nearest)
+	suite.Equal("", field)
 }
