@@ -98,7 +98,7 @@ exports[`TimelineCard > renders all main elements 1`] = `
           data-testid="button"
           type="button"
         >
-          Share or export Model Plan
+          Share or export timeline
         </button>
       </div>
     </div>

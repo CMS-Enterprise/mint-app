@@ -71,7 +71,7 @@ const collaborationArea = {
     mostRecentEdit: 'Most recent edit on {{-date}} by ',
     startTimeline: 'Start timeline',
     editTimeline: 'Edit timeline',
-    shareButton: 'Share or export Model Plan'
+    shareButton: 'Share or export timeline'
   }
 };
 
