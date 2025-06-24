@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -6,29 +6,17 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Grid
+  CardHeader
 } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import {
-  GetModelPlanQuery,
-  LockableSection,
-  TaskStatus,
-  useGetModelPlanQuery,
-  UserAccount
-} from 'gql/generated/graphql';
-import { date } from 'yup';
+import { GetModelPlanQuery } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
-import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
-import Spinner from 'components/Spinner';
-import TaskListSectionKeys from 'constants/enums';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import useSectionLock from 'hooks/useSectionLock';
-import { getKeys } from 'types/translation';
+// import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
 import '../cards.scss';
@@ -59,9 +47,9 @@ const TimelineCard = ({
     upcomingTimelineDate
   } = timeline;
 
-  const { SectionLock, isLocked } = useSectionLock({
-    section: LockableSection.TIMELINE
-  });
+  // const { SectionLock, isLocked } = useSectionLock({
+  //   section: LockableSection.TIMELINE
+  // });
 
   return (
     <>
@@ -134,7 +122,7 @@ const TimelineCard = ({
           <Button
             type="button"
             className="margin-right-2"
-            disabled={isLocked}
+            // disabled={isLocked}
             onClick={() =>
               history.push(`/models/${modelID}/collaboration-area/timeline`)
             }

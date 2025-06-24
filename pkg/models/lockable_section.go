@@ -16,5 +16,4 @@ const (
 	LockableSectionPrepareForClearance             LockableSection = "PREPARE_FOR_CLEARANCE"
 	LockableSectionDataExchangeApproach            LockableSection = "DATA_EXCHANGE_APPROACH"
 	LockableSectionDataModelsToOperationMatrix     LockableSection = "MODELS_TO_OPERATION_MATRIX"
-	LockableSectionTimeline                        LockableSection = "TIMELINE"
 )
