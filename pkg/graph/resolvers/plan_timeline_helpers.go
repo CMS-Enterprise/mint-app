@@ -570,3 +570,24 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time,
 
 	return nearest, nearestField, nil
 }
+
+func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
+	count := 0
+	dateFields := []*time.Time{
+		planTimeline.CompleteICIP,
+		planTimeline.ClearanceStarts,
+		planTimeline.ClearanceEnds,
+		planTimeline.Announced,
+		planTimeline.ApplicationsStart,
+		planTimeline.ApplicationsEnd,
+		planTimeline.PerformancePeriodStarts,
+		planTimeline.PerformancePeriodEnds,
+		planTimeline.WrapUpEnds,
+	}
+	for _, field := range dateFields {
+		if field != nil {
+			count++
+		}
+	}
+	return count
+}

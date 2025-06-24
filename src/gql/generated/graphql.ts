@@ -3746,6 +3746,7 @@ export type PlanTimeline = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  datesAdded: Scalars['Int']['output'];
   highLevelNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   modelPlanID: Scalars['UUID']['output'];

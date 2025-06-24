@@ -1,7 +1,10 @@
 package resolvers
 
 import (
+	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 
@@ -611,4 +614,40 @@ func (suite *ResolverSuite) TestGetUpcomingPlanTimelineDate() {
 	suite.NoError(err)
 	suite.Nil(nearest)
 	suite.Equal("", field)
+}
+
+func TestCountPopulatedPlanTimelineDates(t *testing.T) {
+	now := time.Now()
+
+	// All fields nil
+	planTimeline := &models.PlanTimeline{}
+	assert.Equal(t, 0, countPopulatedPlanTimelineDates(planTimeline))
+
+	// One field populated
+	planTimeline = &models.PlanTimeline{
+		Announced: &now,
+	}
+	assert.Equal(t, 1, countPopulatedPlanTimelineDates(planTimeline))
+
+	// Multiple fields populated
+	planTimeline = &models.PlanTimeline{
+		Announced:       &now,
+		ClearanceStarts: &now,
+		WrapUpEnds:      &now,
+	}
+	assert.Equal(t, 3, countPopulatedPlanTimelineDates(planTimeline))
+
+	// All fields populated
+	planTimeline = &models.PlanTimeline{
+		CompleteICIP:            &now,
+		ClearanceStarts:         &now,
+		ClearanceEnds:           &now,
+		Announced:               &now,
+		ApplicationsStart:       &now,
+		ApplicationsEnd:         &now,
+		PerformancePeriodStarts: &now,
+		PerformancePeriodEnds:   &now,
+		WrapUpEnds:              &now,
+	}
+	assert.Equal(t, 9, countPopulatedPlanTimelineDates(planTimeline))
 }
