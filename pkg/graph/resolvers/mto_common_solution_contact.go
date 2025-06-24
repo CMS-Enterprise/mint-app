@@ -51,9 +51,6 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 
 	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, userName, false, false, getAccountInformation)
 	if err != nil {
-		return nil, err
-	}
-	if err != nil {
 		return nil, fmt.Errorf("failed to get user account by username %s: %w", userName, err)
 	}
 
@@ -69,18 +66,37 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 		receiveEmails,
 	)
 
-	newContact, err := storage.MTOCommonSolutionCreateContact(
-		store,
-		logger,
-		userContact,
-	)
-
+	err = BaseStructPreCreate(logger, userContact, principal, store, false)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create contact for user %s: %w", userName, err)
+		return nil, err
 	}
 
-	// newContact.UserAccount = userAccount
-	return newContact, nil
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContact, error) {
+		newContact, err := storage.MTOCommonSolutionCreateContact(
+			tx,
+			logger,
+			userContact,
+		)
+
+		if err != nil {
+			return nil, fmt.Errorf("failed to create contact for user %s: %w", userName, err)
+		}
+
+		// Update isPrimary on other rows if needed
+		if newContact.IsPrimary {
+			// Need modifiedBy for unset primary update
+			userID := principal.Account().ID
+			newContact.ModifiedBy = &userID
+
+			err = storage.MTOCommonSolutionContactUnsetPrimaryContactByKey(tx, logger, newContact)
+
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		return newContact, nil
+	})
 }
 
 // CreateMTOCommonSolutionContactMailbox creates a new team mailbox contact for a common solution.
@@ -111,11 +127,36 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 		receiveEmails,
 	)
 
-	return storage.MTOCommonSolutionCreateContact(
-		store,
-		logger,
-		mailboxContact,
-	)
+	err := BaseStructPreCreate(logger, mailboxContact, principal, store, false)
+	if err != nil {
+		return nil, err
+	}
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCommonSolutionContact, error) {
+		newContact, err := storage.MTOCommonSolutionCreateContact(
+			tx,
+			logger,
+			mailboxContact,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+
+		// Update isPrimary on other rows if needed
+		if newContact.IsPrimary {
+			// Need modifiedBy for unset primary update
+			userID := principal.Account().ID
+			newContact.ModifiedBy = &userID
+			err = storage.MTOCommonSolutionContactUnsetPrimaryContactByKey(tx, logger, newContact)
+
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		return newContact, nil
+	})
 }
 
 // UpdateMTOCommonSolutionContact updates an existing user or mailbox contact for a common solution.
