@@ -539,10 +539,43 @@ func sendPlanTimelineDateChangedEmails(
 	return nil
 }
 
-func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, error) {
+// getUpcomingPlanTimelineDate returns the nearest upcoming date from the PlanTimeline and its field name.
+// It returns nil if no upcoming dates are found.
+func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, string, error) {
 	now := time.Now()
 	var nearest *time.Time
+	var nearestField string
 
+	dateFields := []struct {
+		Field *time.Time
+		Name  string
+	}{
+		{planTimeline.CompleteICIP, "completeICIP"},
+		{planTimeline.ClearanceStarts, "clearanceStarts"},
+		{planTimeline.ClearanceEnds, "clearanceEnds"},
+		{planTimeline.Announced, "announced"},
+		{planTimeline.ApplicationsStart, "applicationsStart"},
+		{planTimeline.ApplicationsEnd, "applicationsEnd"},
+		{planTimeline.PerformancePeriodStarts, "performancePeriodStarts"},
+		{planTimeline.PerformancePeriodEnds, "performancePeriodEnds"},
+		{planTimeline.WrapUpEnds, "wrapUpEnds"},
+	}
+
+	for _, dt := range dateFields {
+		if dt.Field != nil && dt.Field.After(now) {
+			if nearest == nil || dt.Field.Before(*nearest) {
+				nearest = dt.Field
+				nearestField = dt.Name
+			}
+		}
+	}
+
+	return nearest, nearestField, nil
+}
+
+// countPopulatedPlanTimelineDates counts the number of populated date fields in a PlanTimeline.
+func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
+	count := 0
 	dateFields := []*time.Time{
 		planTimeline.CompleteICIP,
 		planTimeline.ClearanceStarts,
@@ -554,14 +587,10 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time,
 		planTimeline.PerformancePeriodEnds,
 		planTimeline.WrapUpEnds,
 	}
-
-	for _, dt := range dateFields {
-		if dt != nil && dt.After(now) {
-			if nearest == nil || dt.Before(*nearest) {
-				nearest = dt
-			}
+	for _, field := range dateFields {
+		if field != nil {
+			count++
 		}
 	}
-
-	return nearest, nil
+	return count
 }

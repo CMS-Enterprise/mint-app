@@ -1,3 +1,8 @@
+type UpcomingTimelineDate {
+  date: Time
+  dateField: String
+}
+
 """
 Represents PlanTimeline
 """
@@ -16,7 +21,8 @@ type PlanTimeline {
   wrapUpEnds: Time
   highLevelNote: String
 
-  upcomingTimelineDate: Time
+  upcomingTimelineDate: UpcomingTimelineDate
+  datesAdded: Int!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!

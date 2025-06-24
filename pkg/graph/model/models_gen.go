@@ -770,6 +770,11 @@ type SendFeedbackEmailInput struct {
 	HowCanWeImprove       *string            `json:"howCanWeImprove,omitempty"`
 }
 
+type UpcomingTimelineDate struct {
+	Date      *time.Time `json:"date,omitempty"`
+	DateField *string    `json:"dateField,omitempty"`
+}
+
 type ActionType string
 
 const (

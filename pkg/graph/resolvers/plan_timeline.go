@@ -16,6 +16,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
+type UpcomingTimelineDate struct {
+	Date      *time.Time
+	DateField string
+}
+
 func UpdatePlanTimeline(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -101,7 +106,7 @@ func UpdatePlanTimeline(
 	return retPlanTimeline, err
 }
 
-func ModelPlanUpcomingPlanTimelineDate(ctx context.Context, modelPlanID uuid.UUID) (*time.Time, error) {
+func ModelPlanUpcomingPlanTimelineDate(ctx context.Context, modelPlanID uuid.UUID) (*UpcomingTimelineDate, error) {
 	planTimeline, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
@@ -110,13 +115,20 @@ func ModelPlanUpcomingPlanTimelineDate(ctx context.Context, modelPlanID uuid.UUI
 		return nil, nil // No planTimeline found for the given model plan ID
 	}
 
-	nearest, err := getUpcomingPlanTimelineDate(planTimeline)
+	nearest, nearestField, err := getUpcomingPlanTimelineDate(planTimeline)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return nearest, nil
+	if nearest == nil || nearestField == "" {
+		return nil, nil
+	}
+
+	return &UpcomingTimelineDate{
+		Date:      nearest,
+		DateField: nearestField,
+	}, nil
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
