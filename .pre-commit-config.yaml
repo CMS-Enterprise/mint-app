@@ -46,7 +46,7 @@ repos:
 
   - repo: local
     hooks:
-      - id: golangci-lint
+      - id: golangci-lint-full
         name: Lint go files
         entry: golangci-lint run ./...
         language: system
