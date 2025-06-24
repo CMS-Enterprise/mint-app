@@ -539,6 +539,8 @@ func sendPlanTimelineDateChangedEmails(
 	return nil
 }
 
+// getUpcomingPlanTimelineDate returns the nearest upcoming date from the PlanTimeline and its field name.
+// It returns nil if no upcoming dates are found.
 func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, string, error) {
 	now := time.Now()
 	var nearest *time.Time
@@ -571,6 +573,7 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time,
 	return nearest, nearestField, nil
 }
 
+// countPopulatedPlanTimelineDates counts the number of populated date fields in a PlanTimeline.
 func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
 	count := 0
 	dateFields := []*time.Time{
