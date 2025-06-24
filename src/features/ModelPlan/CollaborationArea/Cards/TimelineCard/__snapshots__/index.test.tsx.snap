@@ -37,48 +37,48 @@ exports[`TimelineCard > renders all main elements 1`] = `
         </span>
       </div>
       <div
-        class="usa-card__body"
+        class="usa-card__body padding-bottom-2"
         data-testid="CardBody"
       >
         <p>
           Add all your essential model dates, such as when you anticipate completing your ICIP, going through clearance, announcing the model, and when it will be active. As you iterate on the plans for your model, please be sure to keep this space up-to-date.
         </p>
-      </div>
-      <div
-        class="display-inline tablet:display-flex margin-top-2 flex-align-center padding-x-3"
-      >
-        <strong
-          class="margin-right-1"
-        >
-          Upcoming date:
-        </strong>
-         Announce model (07/01/2025)
-      </div>
-      <div
-        class="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3"
-      >
-        <span
-          class="text-base margin-right-1"
-        >
-          Most recent edit on 06/24/2025 by 
-        </span>
         <div
-          class="display-flex text-base-darkest flex-align-center"
+          class="display-inline tablet:display-flex margin-top-2 flex-align-center"
         >
-          <div
-            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-orange-warm-10 margin-right-1"
-            data-testid="avatar--basic"
+          <strong
+            class="margin-right-1"
           >
-            JD
-          </div>
-          <div
-            class="margin-y-0"
+            Upcoming date:
+          </strong>
+           Announce model (07/01/2025)
+        </div>
+        <div
+          class="display-inline tablet:display-flex margin-top-2 margin-bottom-2 flex-align-center"
+        >
+          <span
+            class="text-base margin-right-1"
           >
-            <span
-              class=""
+            Most recent edit on 06/24/2025 by 
+          </span>
+          <div
+            class="display-flex text-base-darkest flex-align-center"
+          >
+            <div
+              class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-orange-warm-10 margin-right-1"
+              data-testid="avatar--basic"
             >
-              Jane Doe
-            </span>
+              JD
+            </div>
+            <div
+              class="margin-y-0"
+            >
+              <span
+                class=""
+              >
+                Jane Doe
+              </span>
+            </div>
           </div>
         </div>
       </div>
