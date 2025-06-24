@@ -129,8 +129,8 @@ const TimelineCard = ({
             data-testid="to-timeline"
           >
             {modifiedDts
-              ? collaborationAreaT('timelineCard.startTimeline')
-              : collaborationAreaT('timelineCard.editTimeline')}
+              ? collaborationAreaT('timelineCard.editTimeline')
+              : collaborationAreaT('timelineCard.startTimeline')}
           </Button>
 
           <Button

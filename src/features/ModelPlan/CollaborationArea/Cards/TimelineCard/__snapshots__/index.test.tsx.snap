@@ -91,7 +91,7 @@ exports[`TimelineCard > renders all main elements 1`] = `
           data-testid="to-timeline"
           type="button"
         >
-          Start timeline
+          Edit timeline
         </button>
         <button
           class="usa-button usa-button--outline"
