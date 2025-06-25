@@ -2,10 +2,13 @@ package resolvers
 
 import (
 	"context"
-	"time"
+	"fmt"
+
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -15,11 +18,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
-
-type UpcomingTimelineDate struct {
-	Date      *time.Time
-	DateField string
-}
 
 func UpdatePlanTimeline(
 	ctx context.Context,
@@ -33,12 +31,12 @@ func UpdatePlanTimeline(
 	addressBook email.AddressBook,
 ) (*models.PlanTimeline, error) {
 	// Get existing planTimeline
-	existing, err := store.PlanTimelineGetByID(logger, id)
+	existing, err := store.PlanTimelineGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(store, logger, existing.ModelPlanID)
+	modelPlan, err := loaders.ModelPlan.GetByID.Load(ctx, existing.ModelPlanID)
 	if err != nil {
 		return nil, err
 	}
@@ -102,33 +100,14 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
-	retPlanTimeline, err := store.PlanTimelineUpdate(logger, existing)
-	return retPlanTimeline, err
-}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
+		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update timeline: %w", err)
+		}
 
-func ModelPlanUpcomingPlanTimelineDate(ctx context.Context, modelPlanID uuid.UUID) (*UpcomingTimelineDate, error) {
-	planTimeline, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-	if planTimeline == nil {
-		return nil, nil // No planTimeline found for the given model plan ID
-	}
-
-	nearest, nearestField, err := getUpcomingPlanTimelineDate(planTimeline)
-
-	if err != nil {
-		return nil, err
-	}
-
-	if nearest == nil || nearestField == "" {
-		return nil, nil
-	}
-
-	return &UpcomingTimelineDate{
-		Date:      nearest,
-		DateField: nearestField,
-	}, nil
+		return updatedTimeline, nil
+	})
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {

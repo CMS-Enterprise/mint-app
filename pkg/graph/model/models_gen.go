@@ -771,8 +771,8 @@ type SendFeedbackEmailInput struct {
 }
 
 type UpcomingTimelineDate struct {
-	Date      *time.Time `json:"date,omitempty"`
-	DateField *string    `json:"dateField,omitempty"`
+	Date      time.Time `json:"date"`
+	DateField string    `json:"dateField"`
 }
 
 type ActionType string

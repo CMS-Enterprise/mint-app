@@ -523,97 +523,93 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 	}
 }
 
-func (suite *ResolverSuite) TestGetUpcomingPlanTimelineDate() {
-	// Set up times: tPast < tNow < tFuture1 < tFuture2
-	tNow := time.Now()
-	tPast := tNow.Add(-24 * time.Hour)
-	tFuture1 := tNow.Add(24 * time.Hour)
-	tFuture2 := tNow.Add(48 * time.Hour)
+func TestGetUpcomingPlanTimelineDate(t *testing.T) {
+	now := time.Now()
+	past := now.Add(-24 * time.Hour)
+	future1 := now.Add(24 * time.Hour)
+	future2 := now.Add(48 * time.Hour)
 
-	// Test: All fields nil
-	planPlanTimeline := &models.PlanTimeline{}
-	nearest, field, err := getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.Nil(nearest)
-	suite.Equal("", field)
+	// All fields nil
+	planTimeline := &models.PlanTimeline{}
+	result, err := getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.Nil(t, result)
 
-	// Test: Only past dates
-	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP:            &tPast,
-		ClearanceStarts:         &tPast,
-		ClearanceEnds:           &tPast,
-		Announced:               &tPast,
-		ApplicationsStart:       &tPast,
-		ApplicationsEnd:         &tPast,
-		PerformancePeriodStarts: &tPast,
-		PerformancePeriodEnds:   &tPast,
-		WrapUpEnds:              &tPast,
+	// All fields in the past
+	planTimeline = &models.PlanTimeline{
+		CompleteICIP:            &past,
+		ClearanceStarts:         &past,
+		ClearanceEnds:           &past,
+		Announced:               &past,
+		ApplicationsStart:       &past,
+		ApplicationsEnd:         &past,
+		PerformancePeriodStarts: &past,
+		PerformancePeriodEnds:   &past,
+		WrapUpEnds:              &past,
 	}
-	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.Nil(nearest)
-	suite.Equal("", field)
+	result, err = getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.Nil(t, result)
 
-	// Test: Only one future date, rest nil
-	planPlanTimeline = &models.PlanTimeline{
-		Announced: &tFuture1,
+	// Only one future date
+	planTimeline = &models.PlanTimeline{
+		Announced: &future1,
 	}
-	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.NotNil(nearest)
-	suite.WithinDuration(tFuture1, *nearest, time.Second)
-	suite.Equal("announced", field)
+	result, err = getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "announced", result.DateField)
 
-	// Test: Multiple future dates, pick nearest
-	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP:    &tFuture2,
-		ClearanceStarts: &tFuture1,
-		WrapUpEnds:      &tFuture2,
+	// Multiple future dates, pick nearest
+	planTimeline = &models.PlanTimeline{
+		CompleteICIP:    &future2,
+		ClearanceStarts: &future1,
+		WrapUpEnds:      &future2,
 	}
-	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.NotNil(nearest)
-	suite.WithinDuration(tFuture1, *nearest, time.Second)
-	suite.Equal("clearanceStarts", field)
+	result, err = getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "clearanceStarts", result.DateField)
 
-	// Test: Mix of past and future, pick nearest future
-	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP:    &tPast,
-		ClearanceStarts: &tFuture2,
-		Announced:       &tFuture1,
+	// Mix of past and future, pick nearest future
+	planTimeline = &models.PlanTimeline{
+		CompleteICIP:    &past,
+		ClearanceStarts: &future2,
+		Announced:       &future1,
 	}
-	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.NotNil(nearest)
-	suite.WithinDuration(tFuture1, *nearest, time.Second)
-	suite.Equal("announced", field)
+	result, err = getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "announced", result.DateField)
 
-	// Test: All dates in the future, pick the earliest
-	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP:            &tFuture2,
-		ClearanceStarts:         &tFuture2,
-		ClearanceEnds:           &tFuture1,
-		Announced:               &tFuture2,
-		ApplicationsStart:       &tFuture2,
-		ApplicationsEnd:         &tFuture2,
-		PerformancePeriodStarts: &tFuture2,
-		PerformancePeriodEnds:   &tFuture2,
-		WrapUpEnds:              &tFuture2,
+	// All dates in the future, pick the earliest
+	planTimeline = &models.PlanTimeline{
+		CompleteICIP:            &future2,
+		ClearanceStarts:         &future2,
+		ClearanceEnds:           &future1,
+		Announced:               &future2,
+		ApplicationsStart:       &future2,
+		ApplicationsEnd:         &future2,
+		PerformancePeriodStarts: &future2,
+		PerformancePeriodEnds:   &future2,
+		WrapUpEnds:              &future2,
 	}
-	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.NotNil(nearest)
-	suite.WithinDuration(tFuture1, *nearest, time.Second)
-	suite.Equal("clearanceEnds", field)
+	result, err = getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.NotNil(t, result)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "clearanceEnds", result.DateField)
 
-	// Test: Only one date is exactly now (should not count as future)
-	planPlanTimeline = &models.PlanTimeline{
-		CompleteICIP: &tNow,
+	// Only one date is exactly now (should not count as future)
+	planTimeline = &models.PlanTimeline{
+		CompleteICIP: &now,
 	}
-	nearest, field, err = getUpcomingPlanTimelineDate(planPlanTimeline)
-	suite.NoError(err)
-	suite.Nil(nearest)
-	suite.Equal("", field)
+	result, err = getUpcomingPlanTimelineDate(planTimeline)
+	assert.NoError(t, err)
+	assert.Nil(t, result)
 }
 
 func TestCountPopulatedPlanTimelineDates(t *testing.T) {
@@ -621,13 +617,17 @@ func TestCountPopulatedPlanTimelineDates(t *testing.T) {
 
 	// All fields nil
 	planTimeline := &models.PlanTimeline{}
-	assert.Equal(t, 0, countPopulatedPlanTimelineDates(planTimeline))
+	count, err := countPopulatedPlanTimelineDates(planTimeline)
+	assert.NoError(t, err)
+	assert.Equal(t, 0, count)
 
 	// One field populated
 	planTimeline = &models.PlanTimeline{
 		Announced: &now,
 	}
-	assert.Equal(t, 1, countPopulatedPlanTimelineDates(planTimeline))
+	count, err = countPopulatedPlanTimelineDates(planTimeline)
+	assert.NoError(t, err)
+	assert.Equal(t, 1, count)
 
 	// Multiple fields populated
 	planTimeline = &models.PlanTimeline{
@@ -635,7 +635,9 @@ func TestCountPopulatedPlanTimelineDates(t *testing.T) {
 		ClearanceStarts: &now,
 		WrapUpEnds:      &now,
 	}
-	assert.Equal(t, 3, countPopulatedPlanTimelineDates(planTimeline))
+	count, err = countPopulatedPlanTimelineDates(planTimeline)
+	assert.NoError(t, err)
+	assert.Equal(t, 3, count)
 
 	// All fields populated
 	planTimeline = &models.PlanTimeline{
@@ -649,5 +651,7 @@ func TestCountPopulatedPlanTimelineDates(t *testing.T) {
 		PerformancePeriodEnds:   &now,
 		WrapUpEnds:              &now,
 	}
-	assert.Equal(t, 9, countPopulatedPlanTimelineDates(planTimeline))
+	count, err = countPopulatedPlanTimelineDates(planTimeline)
+	assert.NoError(t, err)
+	assert.Equal(t, 9, count)
 }

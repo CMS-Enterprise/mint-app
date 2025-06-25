@@ -4722,8 +4722,8 @@ export enum TriStateAnswer {
 
 export type UpcomingTimelineDate = {
   __typename: 'UpcomingTimelineDate';
-  date?: Maybe<Scalars['Time']['output']>;
-  dateField?: Maybe<Scalars['String']['output']>;
+  date: Scalars['Time']['output'];
+  dateField: Scalars['String']['output'];
 };
 
 export type UserAccount = {
