@@ -1,7 +1,6 @@
 package resolvers
 
 import (
-	"context"
 	"time"
 
 	"github.com/google/uuid"
@@ -12,39 +11,28 @@ import (
 )
 
 func (suite *ResolverSuite) TestPlanTimelineGetByModelPlanID() {
-	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the planPlanTimeline as part of the resolver
+	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the planTimeline as part of the resolver
 
-	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	suite.NoError(err)
-	suite.EqualValues(plan.ID, planPlanTimeline.ModelPlanID)
-	suite.EqualValues(models.TaskReady, planPlanTimeline.Status)
-	suite.EqualValues(suite.testConfigs.Principal.Account().ID, planPlanTimeline.CreatedBy)
+	suite.EqualValues(plan.ID, planTimeline.ModelPlanID)
+	suite.EqualValues(models.TaskReady, planTimeline.Status)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, planTimeline.CreatedBy)
 
-	suite.Nil(planPlanTimeline.CompleteICIP)
-	suite.Nil(planPlanTimeline.ClearanceStarts)
-	suite.Nil(planPlanTimeline.ClearanceEnds)
-	suite.Nil(planPlanTimeline.Announced)
-	suite.Nil(planPlanTimeline.ApplicationsStart)
-	suite.Nil(planPlanTimeline.ApplicationsEnd)
-	suite.Nil(planPlanTimeline.PerformancePeriodStarts)
-	suite.Nil(planPlanTimeline.PerformancePeriodEnds)
-	suite.Nil(planPlanTimeline.WrapUpEnds)
-	suite.Nil(planPlanTimeline.HighLevelNote)
-}
-
-func (suite *ResolverSuite) TestPlanTimelineDataLoader(ctx context.Context, modelPlanID uuid.UUID) {
-	plan1 := suite.createModelPlan("Plan For PlanTimeline 1")
-	plan2 := suite.createModelPlan("Plan For PlanTimeline 2")
-
-	planTimeline1, err := PlanTimelineGetByModelPlanIDLOADER(ctx, plan1.ID)
-	suite.NoError(err)
-	planTimeline2, err2 := PlanTimelineGetByModelPlanIDLOADER(ctx, plan2.ID)
-	suite.NoError(err2)
+	suite.Nil(planTimeline.CompleteICIP)
+	suite.Nil(planTimeline.ClearanceStarts)
+	suite.Nil(planTimeline.ClearanceEnds)
+	suite.Nil(planTimeline.Announced)
+	suite.Nil(planTimeline.ApplicationsStart)
+	suite.Nil(planTimeline.ApplicationsEnd)
+	suite.Nil(planTimeline.PerformancePeriodStarts)
+	suite.Nil(planTimeline.PerformancePeriodEnds)
+	suite.Nil(planTimeline.WrapUpEnds)
+	suite.Nil(planTimeline.HighLevelNote)
 
 	expectedResults := []loaders.KeyAndExpected[uuid.UUID, uuid.UUID]{
-		{Key: plan1.ID, Expected: planTimeline1.ID},
-		{Key: plan2.ID, Expected: planTimeline2.ID},
+		{Key: plan.ID, Expected: planTimeline.ID},
 	}
 
 	verifyFunc := func(data *models.PlanTimeline, expected uuid.UUID) bool {
@@ -56,13 +44,12 @@ func (suite *ResolverSuite) TestPlanTimelineDataLoader(ctx context.Context, mode
 
 	loaders.VerifyLoaders[uuid.UUID, *models.PlanTimeline, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.PlanTimeline.ByModelPlanID,
 		expectedResults, verifyFunc)
-
 }
 
 func (suite *ResolverSuite) TestUpdatePlanTimeline() {
 	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the milestones as part of the resolver
 
-	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -73,7 +60,7 @@ func (suite *ResolverSuite) TestUpdatePlanTimeline() {
 	updatedPlanTimeline, err := UpdatePlanTimeline(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		planPlanTimeline.ID,
+		planTimeline.ID,
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
