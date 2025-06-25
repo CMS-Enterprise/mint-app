@@ -558,9 +558,8 @@ func TestGetUpcomingPlanTimelineDate(t *testing.T) {
 	result, err = getUpcomingPlanTimelineDate(planTimeline)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.WithinDuration(t, future1, *result.Date, time.Second)
-	assert.NotNil(t, result.DateField)
-	assert.Equal(t, "announced", *result.DateField)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "announced", result.DateField)
 
 	// Multiple future dates, pick nearest
 	planTimeline = &models.PlanTimeline{
@@ -571,9 +570,8 @@ func TestGetUpcomingPlanTimelineDate(t *testing.T) {
 	result, err = getUpcomingPlanTimelineDate(planTimeline)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.WithinDuration(t, future1, *result.Date, time.Second)
-	assert.NotNil(t, result.DateField)
-	assert.Equal(t, "clearanceStarts", *result.DateField)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "clearanceStarts", result.DateField)
 
 	// Mix of past and future, pick nearest future
 	planTimeline = &models.PlanTimeline{
@@ -584,9 +582,8 @@ func TestGetUpcomingPlanTimelineDate(t *testing.T) {
 	result, err = getUpcomingPlanTimelineDate(planTimeline)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.WithinDuration(t, future1, *result.Date, time.Second)
-	assert.NotNil(t, result.DateField)
-	assert.Equal(t, "announced", *result.DateField)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "announced", result.DateField)
 
 	// All dates in the future, pick the earliest
 	planTimeline = &models.PlanTimeline{
@@ -603,9 +600,8 @@ func TestGetUpcomingPlanTimelineDate(t *testing.T) {
 	result, err = getUpcomingPlanTimelineDate(planTimeline)
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
-	assert.WithinDuration(t, future1, *result.Date, time.Second)
-	assert.NotNil(t, result.DateField)
-	assert.Equal(t, "clearanceEnds", *result.DateField)
+	assert.WithinDuration(t, future1, result.Date, time.Second)
+	assert.Equal(t, "clearanceEnds", result.DateField)
 
 	// Only one date is exactly now (should not count as future)
 	planTimeline = &models.PlanTimeline{

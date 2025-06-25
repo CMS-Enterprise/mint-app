@@ -2,9 +2,13 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
+
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -27,12 +31,12 @@ func UpdatePlanTimeline(
 	addressBook email.AddressBook,
 ) (*models.PlanTimeline, error) {
 	// Get existing planTimeline
-	existing, err := store.PlanTimelineGetByID(logger, id)
+	existing, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, id)
 	if err != nil {
 		return nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(store, logger, existing.ModelPlanID)
+	modelPlan, err := loaders.ModelPlan.GetByID.Load(ctx, existing.ModelPlanID)
 	if err != nil {
 		return nil, err
 	}
@@ -96,8 +100,14 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
-	retPlanTimeline, err := store.PlanTimelineUpdate(logger, existing)
-	return retPlanTimeline, err
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
+		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update timeline: %w", err)
+		}
+
+		return updatedTimeline, nil
+	})
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {

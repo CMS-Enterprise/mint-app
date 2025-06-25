@@ -2,14 +2,13 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
-	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) TestPlanTimelineGetByModelPlanID() {
@@ -34,35 +33,30 @@ func (suite *ResolverSuite) TestPlanTimelineGetByModelPlanID() {
 	suite.Nil(planPlanTimeline.HighLevelNote)
 }
 
-func (suite *ResolverSuite) TestPlanTimelineDataLoader() {
+func (suite *ResolverSuite) TestPlanTimelineDataLoader(ctx context.Context, modelPlanID uuid.UUID) {
 	plan1 := suite.createModelPlan("Plan For PlanTimeline 1")
 	plan2 := suite.createModelPlan("Plan For PlanTimeline 2")
 
-	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-	g.Go(func() error {
-		return verifyPlanTimelineLoader(ctx, plan1.ID)
-	})
-	g.Go(func() error {
-		return verifyPlanTimelineLoader(ctx, plan2.ID)
-	})
-	err := g.Wait()
+	planTimeline1, err := PlanTimelineGetByModelPlanIDLOADER(ctx, plan1.ID)
 	suite.NoError(err)
+	planTimeline2, err2 := PlanTimelineGetByModelPlanIDLOADER(ctx, plan2.ID)
+	suite.NoError(err2)
 
-	// go verifyPlanTimelineLoader(ctx, plan1.ID)
-	// go verifyPlanTimelineLoader(ctx, plan2.ID)
-
-}
-func verifyPlanTimelineLoader(ctx context.Context, modelPlanID uuid.UUID) error {
-
-	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(ctx, modelPlanID)
-	if err != nil {
-		return err
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, uuid.UUID]{
+		{Key: plan1.ID, Expected: planTimeline1.ID},
+		{Key: plan2.ID, Expected: planTimeline2.ID},
 	}
 
-	if modelPlanID != planPlanTimeline.ModelPlanID {
-		return fmt.Errorf("planPlanTimeline returned model plan ID %s, expected %s", planPlanTimeline.ModelPlanID, modelPlanID)
+	verifyFunc := func(data *models.PlanTimeline, expected uuid.UUID) bool {
+		if suite.NotNil(data) {
+			return suite.EqualValues(expected, data.ID)
+		}
+		return false
 	}
-	return nil
+
+	loaders.VerifyLoaders[uuid.UUID, *models.PlanTimeline, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.PlanTimeline.ByModelPlanID,
+		expectedResults, verifyFunc)
+
 }
 
 func (suite *ResolverSuite) TestUpdatePlanTimeline() {

@@ -13,67 +13,35 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
-	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanTimelineCreate creates a new planTimeline
 func (s *Store) PlanTimelineCreate(np sqlutils.NamedPreparer, logger *zap.Logger, planTimeline *models.PlanTimeline) (*models.PlanTimeline, error) {
 
-	planTimeline.ID = utilityuuid.ValueOrNewUUID(planTimeline.ID)
-
-	stmt, err := np.PrepareNamed(sqlqueries.PlanTimeline.Create)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, planTimeline)
-	}
-	defer stmt.Close()
-
-	planTimeline.ModifiedBy = nil
-	planTimeline.ModifiedDts = nil
-
-	err = stmt.Get(planTimeline, planTimeline)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, planTimeline)
+	if planTimeline.ID == uuid.Nil {
+		planTimeline.ID = uuid.New()
 	}
 
-	return planTimeline, nil
+	returned, procErr := sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanTimeline.Create, planTimeline)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue creating new PlanTimeline object: %w", procErr)
+	}
+	return returned, nil
 }
 
 // PlanTimelineUpdate updates the planTimeline for a given id
-func (s *Store) PlanTimelineUpdate(logger *zap.Logger, planTimeline *models.PlanTimeline) (*models.PlanTimeline, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTimeline.Update)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, planTimeline)
+func (s *Store) PlanTimelineUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, planTimeline *models.PlanTimeline) (*models.PlanTimeline, error) {
+	returned, procErr := sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.MTOSolution.Update, planTimeline)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue updating PlanTimeline object: %w", procErr)
 	}
-	defer stmt.Close()
-
-	err = stmt.Get(planTimeline, planTimeline)
-	if err != nil {
-		return nil, genericmodel.HandleModelQueryError(logger, err, planTimeline)
-	}
-
-	return planTimeline, nil
+	return returned, nil
 }
 
 // PlanTimelineGetByID returns the planTimeline for a given id
-func (s *Store) PlanTimelineGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTimeline, error) {
-
-	planTimeline := models.PlanTimeline{}
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTimeline.GetByID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(&planTimeline, utilitysql.CreateIDQueryMap(id))
-
-	if err != nil {
-		return nil, err
-	}
-	return &planTimeline, nil
+func (s *Store) PlanTimelineGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanTimeline, error) {
+	return sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanDataExchangeApproach.GetByID, utilitysql.CreateIDQueryMap(id))
 }
 
 // PlanTimelineGetByModelPlanID returns the planTimeline for a given model plan id

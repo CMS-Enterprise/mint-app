@@ -1,6 +1,6 @@
 type UpcomingTimelineDate {
-  date: Time
-  dateField: String
+  date: Time!
+  dateField: String!
 }
 
 """

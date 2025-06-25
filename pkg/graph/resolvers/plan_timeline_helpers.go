@@ -547,26 +547,23 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.Upco
 	var nearest *time.Time
 	var nearestField string
 
-	dateFields := []struct {
-		Field *time.Time
-		Name  string
-	}{
-		{planTimeline.CompleteICIP, "completeICIP"},
-		{planTimeline.ClearanceStarts, "clearanceStarts"},
-		{planTimeline.ClearanceEnds, "clearanceEnds"},
-		{planTimeline.Announced, "announced"},
-		{planTimeline.ApplicationsStart, "applicationsStart"},
-		{planTimeline.ApplicationsEnd, "applicationsEnd"},
-		{planTimeline.PerformancePeriodStarts, "performancePeriodStarts"},
-		{planTimeline.PerformancePeriodEnds, "performancePeriodEnds"},
-		{planTimeline.WrapUpEnds, "wrapUpEnds"},
+	dateFields := map[string]*time.Time{
+		"completeICIP":            planTimeline.CompleteICIP,
+		"clearanceStarts":         planTimeline.ClearanceStarts,
+		"clearanceEnds":           planTimeline.ClearanceEnds,
+		"announced":               planTimeline.Announced,
+		"applicationsStart":       planTimeline.ApplicationsStart,
+		"applicationsEnd":         planTimeline.ApplicationsEnd,
+		"performancePeriodStarts": planTimeline.PerformancePeriodStarts,
+		"performancePeriodEnds":   planTimeline.PerformancePeriodEnds,
+		"wrapUpEnds":              planTimeline.WrapUpEnds,
 	}
 
-	for _, dt := range dateFields {
-		if dt.Field != nil && dt.Field.After(now) {
-			if nearest == nil || dt.Field.Before(*nearest) {
-				nearest = dt.Field
-				nearestField = dt.Name
+	for name, field := range dateFields {
+		if field != nil && field.After(now) {
+			if nearest == nil || field.Before(*nearest) {
+				nearest = field
+				nearestField = name
 			}
 		}
 	}
@@ -576,8 +573,8 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.Upco
 	}
 
 	return &model.UpcomingTimelineDate{
-		Date:      nearest,
-		DateField: &nearestField,
+		Date:      *nearest,
+		DateField: nearestField,
 	}, nil
 }
 
