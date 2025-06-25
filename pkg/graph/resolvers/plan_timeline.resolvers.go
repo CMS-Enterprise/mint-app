@@ -35,24 +35,12 @@ func (r *mutationResolver) UpdatePlanTimeline(ctx context.Context, id uuid.UUID,
 
 // UpcomingTimelineDate is the resolver for the upcomingTimelineDate field.
 func (r *planTimelineResolver) UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*model.UpcomingTimelineDate, error) {
-	upcoming, err := ModelPlanUpcomingPlanTimelineDate(ctx, obj.ModelPlanID)
-	if err != nil {
-		return nil, err
-	}
-	if upcoming == nil {
-		return nil, nil
-	}
-	// Map fields from *UpcomingTimelineDate to *model.UpcomingTimelineDate as needed
-	return &model.UpcomingTimelineDate{
-		Date:      upcoming.Date,
-		DateField: &upcoming.DateField,
-	}, nil
+	return getUpcomingPlanTimelineDate(obj)
 }
 
 // DatesAddedCount is the resolver for the datesAddedCount field.
 func (r *planTimelineResolver) DatesAddedCount(ctx context.Context, obj *models.PlanTimeline) (int, error) {
-	count := countPopulatedPlanTimelineDates(obj)
-	return count, nil
+	return countPopulatedPlanTimelineDates(obj)
 }
 
 // PlanTimeline returns generated.PlanTimelineResolver implementation.

@@ -51,6 +51,9 @@ body:graphql {
       dataExchangeApproach{
           id
       }
+      timeline {
+        id
+      }
     }
   }
     
@@ -68,6 +71,7 @@ tests {
   modelLeadID = responseData.collaborators[0].id
   paymentsID = responseData.payments.id
   dataExchangeApproachID = responseData.dataExchangeApproach.id
+  timelineID = responseData.timeline.id
   userID = responseData.createdByUserAccount.id
   
   bru.setVar("modelPlanID", modelPlanID);
@@ -80,5 +84,6 @@ tests {
   bru.setVar("modelLeadID", modelLeadID);
   bru.setVar("paymentsID", paymentsID);
   bru.setVar("dataExchangeApproachID", dataExchangeApproachID)
+  bru.setVar("timelineID", timelineID);
   bru.setVar("userID", userID);
 }

@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -541,40 +542,44 @@ func sendPlanTimelineDateChangedEmails(
 
 // getUpcomingPlanTimelineDate returns the nearest upcoming date from the PlanTimeline and its field name.
 // It returns nil if no upcoming dates are found.
-func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*time.Time, string, error) {
+func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.UpcomingTimelineDate, error) {
 	now := time.Now()
 	var nearest *time.Time
 	var nearestField string
 
-	dateFields := []struct {
-		Field *time.Time
-		Name  string
-	}{
-		{planTimeline.CompleteICIP, "completeICIP"},
-		{planTimeline.ClearanceStarts, "clearanceStarts"},
-		{planTimeline.ClearanceEnds, "clearanceEnds"},
-		{planTimeline.Announced, "announced"},
-		{planTimeline.ApplicationsStart, "applicationsStart"},
-		{planTimeline.ApplicationsEnd, "applicationsEnd"},
-		{planTimeline.PerformancePeriodStarts, "performancePeriodStarts"},
-		{planTimeline.PerformancePeriodEnds, "performancePeriodEnds"},
-		{planTimeline.WrapUpEnds, "wrapUpEnds"},
+	dateFields := map[string]*time.Time{
+		"completeICIP":            planTimeline.CompleteICIP,
+		"clearanceStarts":         planTimeline.ClearanceStarts,
+		"clearanceEnds":           planTimeline.ClearanceEnds,
+		"announced":               planTimeline.Announced,
+		"applicationsStart":       planTimeline.ApplicationsStart,
+		"applicationsEnd":         planTimeline.ApplicationsEnd,
+		"performancePeriodStarts": planTimeline.PerformancePeriodStarts,
+		"performancePeriodEnds":   planTimeline.PerformancePeriodEnds,
+		"wrapUpEnds":              planTimeline.WrapUpEnds,
 	}
 
-	for _, dt := range dateFields {
-		if dt.Field != nil && dt.Field.After(now) {
-			if nearest == nil || dt.Field.Before(*nearest) {
-				nearest = dt.Field
-				nearestField = dt.Name
+	for name, field := range dateFields {
+		if field != nil && field.After(now) {
+			if nearest == nil || field.Before(*nearest) {
+				nearest = field
+				nearestField = name
 			}
 		}
 	}
 
-	return nearest, nearestField, nil
+	if nearest == nil || nearestField == "" {
+		return nil, nil
+	}
+
+	return &model.UpcomingTimelineDate{
+		Date:      *nearest,
+		DateField: nearestField,
+	}, nil
 }
 
 // countPopulatedPlanTimelineDates counts the number of populated date fields in a PlanTimeline.
-func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
+func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) (int, error) {
 	count := 0
 	dateFields := []*time.Time{
 		planTimeline.CompleteICIP,
@@ -592,5 +597,5 @@ func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) int {
 			count++
 		}
 	}
-	return count
+	return count, nil
 }

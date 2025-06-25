@@ -1,74 +1,55 @@
 package resolvers
 
 import (
-	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
-	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) TestPlanTimelineGetByModelPlanID() {
-	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the planPlanTimeline as part of the resolver
+	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the planTimeline as part of the resolver
 
-	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 
 	suite.NoError(err)
-	suite.EqualValues(plan.ID, planPlanTimeline.ModelPlanID)
-	suite.EqualValues(models.TaskReady, planPlanTimeline.Status)
-	suite.EqualValues(suite.testConfigs.Principal.Account().ID, planPlanTimeline.CreatedBy)
+	suite.EqualValues(plan.ID, planTimeline.ModelPlanID)
+	suite.EqualValues(models.TaskReady, planTimeline.Status)
+	suite.EqualValues(suite.testConfigs.Principal.Account().ID, planTimeline.CreatedBy)
 
-	suite.Nil(planPlanTimeline.CompleteICIP)
-	suite.Nil(planPlanTimeline.ClearanceStarts)
-	suite.Nil(planPlanTimeline.ClearanceEnds)
-	suite.Nil(planPlanTimeline.Announced)
-	suite.Nil(planPlanTimeline.ApplicationsStart)
-	suite.Nil(planPlanTimeline.ApplicationsEnd)
-	suite.Nil(planPlanTimeline.PerformancePeriodStarts)
-	suite.Nil(planPlanTimeline.PerformancePeriodEnds)
-	suite.Nil(planPlanTimeline.WrapUpEnds)
-	suite.Nil(planPlanTimeline.HighLevelNote)
-}
+	suite.Nil(planTimeline.CompleteICIP)
+	suite.Nil(planTimeline.ClearanceStarts)
+	suite.Nil(planTimeline.ClearanceEnds)
+	suite.Nil(planTimeline.Announced)
+	suite.Nil(planTimeline.ApplicationsStart)
+	suite.Nil(planTimeline.ApplicationsEnd)
+	suite.Nil(planTimeline.PerformancePeriodStarts)
+	suite.Nil(planTimeline.PerformancePeriodEnds)
+	suite.Nil(planTimeline.WrapUpEnds)
+	suite.Nil(planTimeline.HighLevelNote)
 
-func (suite *ResolverSuite) TestPlanTimelineDataLoader() {
-	plan1 := suite.createModelPlan("Plan For PlanTimeline 1")
-	plan2 := suite.createModelPlan("Plan For PlanTimeline 2")
-
-	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-	g.Go(func() error {
-		return verifyPlanTimelineLoader(ctx, plan1.ID)
-	})
-	g.Go(func() error {
-		return verifyPlanTimelineLoader(ctx, plan2.ID)
-	})
-	err := g.Wait()
-	suite.NoError(err)
-
-	// go verifyPlanTimelineLoader(ctx, plan1.ID)
-	// go verifyPlanTimelineLoader(ctx, plan2.ID)
-
-}
-func verifyPlanTimelineLoader(ctx context.Context, modelPlanID uuid.UUID) error {
-
-	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(ctx, modelPlanID)
-	if err != nil {
-		return err
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, uuid.UUID]{
+		{Key: plan.ID, Expected: planTimeline.ID},
 	}
 
-	if modelPlanID != planPlanTimeline.ModelPlanID {
-		return fmt.Errorf("planPlanTimeline returned model plan ID %s, expected %s", planPlanTimeline.ModelPlanID, modelPlanID)
+	verifyFunc := func(data *models.PlanTimeline, expected uuid.UUID) bool {
+		if suite.NotNil(data) {
+			return suite.EqualValues(expected, data.ID)
+		}
+		return false
 	}
-	return nil
+
+	loaders.VerifyLoaders[uuid.UUID, *models.PlanTimeline, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.PlanTimeline.ByModelPlanID,
+		expectedResults, verifyFunc)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanTimeline() {
 	plan := suite.createModelPlan("Plan For PlanTimeline") // should create the milestones as part of the resolver
 
-	planPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -79,7 +60,7 @@ func (suite *ResolverSuite) TestUpdatePlanTimeline() {
 	updatedPlanTimeline, err := UpdatePlanTimeline(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		planPlanTimeline.ID,
+		planTimeline.ID,
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

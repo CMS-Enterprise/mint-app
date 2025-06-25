@@ -1,6 +1,5 @@
 UPDATE plan_timeline
 SET
-    model_plan_id = :model_plan_id,
     complete_icip = :complete_icip,
     clearance_starts = :clearance_starts,
     clearance_ends = :clearance_ends,
