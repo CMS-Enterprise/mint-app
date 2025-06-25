@@ -24,7 +24,7 @@ const team: SolutionContactType = {
   receiveEmails: false
 };
 
-describe('Add a team member point of contact form', () => {
+describe('Edit a team member point of contact form', () => {
   it('should render team member info accordingly', async () => {
     const { getByTestId, getByText } = render(
       <MemoryRouter

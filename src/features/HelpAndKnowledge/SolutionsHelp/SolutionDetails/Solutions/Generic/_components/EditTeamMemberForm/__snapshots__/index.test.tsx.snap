@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Add a team member point of contact form > should matches snapshot 1`] = `
+exports[`Edit a team member point of contact form > should matches snapshot 1`] = `
 <DocumentFragment>
   <form
     class="usa-form maxw-none"

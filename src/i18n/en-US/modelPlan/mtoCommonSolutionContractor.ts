@@ -22,7 +22,7 @@ const mtoCommonSolutionContractor: TranslationMTOCommonSolutionContractorCustom 
       gqlField: 'contractorTitle',
       goField: 'ContractorTitle',
       dbField: 'contractor_title',
-      label: 'Contractor Title',
+      label: 'Contract Title',
       dataType: TranslationDataType.STRING,
       formType: TranslationFormType.TEXT,
       order: 1.2
@@ -38,4 +38,34 @@ const mtoCommonSolutionContractor: TranslationMTOCommonSolutionContractorCustom 
     }
   };
 
+export const mtoCommonSolutionContractorMisc = {
+  addContractor: {
+    title: 'Add a contractor',
+    cta: 'Add contractor',
+    success: 'You added {{-contractor}} as a contractor.',
+    error:
+      'There was an issue adding this contractor. Please try again, and if the problem persists, try again later.'
+  },
+  editContractor: {
+    title: 'Edit contractor',
+    success: 'You updated contractor information for {{-contractor}}.',
+    error:
+      'There was an issue editing this contractor. Please try again, and if the problem persists, try again later.'
+  },
+  removeContractor: {
+    title: 'Are you sure you want to remove this contractor?',
+    text: '<bold>Contractor to be removed: </bold>{{-contact}}',
+    cta: 'Remove contractor',
+    success: 'You removed <bold>{{-contact}}</bold> as a contractor.',
+    error:
+      'There was an issue removing this contractor. Please try again, and if the problem persists, try again later.'
+  },
+  allFieldsRequired:
+    'Fields marked with an asterisk ( <s>*</s> ) are required.',
+  actionWarning: 'This action cannot be undone.',
+  cancel: 'Cancel',
+  saveChanges: 'Save Changes',
+  alert:
+    'This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.'
+};
 export default mtoCommonSolutionContractor;
