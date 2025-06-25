@@ -15,6 +15,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
+import { mtoCommonSolutionContractorMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 
 type ContactType = 'teamOrMember' | 'owner' | 'contractor';
 
@@ -23,7 +24,7 @@ const getModalStrings = (contactType: ContactType) => {
     case 'teamOrMember':
       return mtoCommonSolutionContactMisc.removePointOfContact;
     case 'contractor':
-      return mtoCommonSolutionContactMisc.removeContractor;
+      return mtoCommonSolutionContractorMisc.removeContractor;
     default:
       throw new Error(`contact type ${contactType} is incorrect`);
   }
