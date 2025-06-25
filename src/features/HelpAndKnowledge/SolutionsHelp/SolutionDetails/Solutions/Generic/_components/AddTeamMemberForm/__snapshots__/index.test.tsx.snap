@@ -167,10 +167,9 @@ exports[`Add a team member point of contact form > should matches snapshot 1`] =
             data-testid="tooltipWrapper"
           >
             <button
-              aria-describedby="tooltip-880850"
+              aria-describedby="tooltip-«r0»"
               class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
               data-testid="triggerElement"
-              position="top"
               style="gap: 0.25rem;"
               tabindex="0"
               title=""
@@ -194,7 +193,7 @@ exports[`Add a team member point of contact form > should matches snapshot 1`] =
               aria-hidden="true"
               class="usa-tooltip__body"
               data-testid="tooltipBody"
-              id="tooltip-880850"
+              id="tooltip-«r0»"
               role="tooltip"
               title="The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
             >
