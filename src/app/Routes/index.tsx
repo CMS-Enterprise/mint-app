@@ -35,6 +35,7 @@ import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'features/ModelPlan/TaskList/Payment';
 import PrepareForClearance from 'features/ModelPlan/TaskList/PrepareForClearance';
 import SubmitRequest from 'features/ModelPlan/TaskList/SubmitRequest';
+import Timeline from 'features/ModelPlan/Timeline';
 import Unfollow from 'features/ModelPlan/Unfollow';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
@@ -141,6 +142,12 @@ const AppRoutes = () => {
             exact
             title="Model Status"
             component={Status}
+          />
+
+          {/* Timeline Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/timeline"
+            component={Timeline}
           />
 
           {/* Data Echange Approach Routes */}

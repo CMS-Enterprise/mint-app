@@ -208,6 +208,25 @@ export const timeline: TranslationTimeline = {
 };
 
 // Miscellaneous translations outside scope of individual questions
-export const timelineMisc: Record<string, string> = {};
+export const timelineMisc: Record<string, string> = {
+  heading: 'Model timeline',
+  description:
+    'Add all your essential model dates, such as when you anticipate completing your ICIP, going through clearance, announcing the model, and when it will be active. As you iterate on the plans for your model, please be sure to keep this space up-to-date.',
+  needHelpDiscussion: 'Need help figuring out dates?',
+  clearanceHeading: 'Review model timeline',
+  previousNames: 'Previous model names',
+  validDate: 'Please use a valid date format',
+  highLevelTimeline: 'Anticipated high level timeline',
+  clearance: 'Clearance',
+  clearanceInfo:
+    'When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance',
+  applicationPeriod: 'Application period',
+  demonstrationPerformance: 'Performance period',
+  demonstrationPerformanceInfo:
+    'When the model will be active beginning with the go-live date',
+  milestonesInfo:
+    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
+  dontUpdate: 'Don’t update and return to model collaboration area'
+};
 
 export default timeline;
