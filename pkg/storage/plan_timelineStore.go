@@ -32,7 +32,7 @@ func (s *Store) PlanTimelineCreate(np sqlutils.NamedPreparer, logger *zap.Logger
 
 // PlanTimelineUpdate updates the planTimeline for a given id
 func (s *Store) PlanTimelineUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, planTimeline *models.PlanTimeline) (*models.PlanTimeline, error) {
-	returned, procErr := sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.MTOSolution.Update, planTimeline)
+	returned, procErr := sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanTimeline.Update, planTimeline)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating PlanTimeline object: %w", procErr)
 	}
@@ -41,7 +41,7 @@ func (s *Store) PlanTimelineUpdate(np sqlutils.NamedPreparer, logger *zap.Logger
 
 // PlanTimelineGetByID returns the planTimeline for a given id
 func (s *Store) PlanTimelineGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanTimeline, error) {
-	return sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanDataExchangeApproach.GetByID, utilitysql.CreateIDQueryMap(id))
+	return sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanTimeline.GetByID, utilitysql.CreateIDQueryMap(id))
 }
 
 // PlanTimelineGetByModelPlanID returns the planTimeline for a given model plan id

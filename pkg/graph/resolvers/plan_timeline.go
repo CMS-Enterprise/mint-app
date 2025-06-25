@@ -31,7 +31,7 @@ func UpdatePlanTimeline(
 	addressBook email.AddressBook,
 ) (*models.PlanTimeline, error) {
 	// Get existing planTimeline
-	existing, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, id)
+	existing, err := store.PlanTimelineGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
