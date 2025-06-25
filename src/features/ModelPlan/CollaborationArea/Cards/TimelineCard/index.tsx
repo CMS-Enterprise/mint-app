@@ -133,13 +133,15 @@ const TimelineCard = ({
               : collaborationAreaT('timelineCard.startTimeline')}
           </Button>
 
-          <Button
-            type="button"
-            className="usa-button--outline"
-            onClick={() => setIsExportModalOpen(true)}
-          >
-            {collaborationAreaT('timelineCard.shareButton')}
-          </Button>
+          {modifiedDts && (
+            <Button
+              type="button"
+              className="usa-button--outline"
+              onClick={() => setIsExportModalOpen(true)}
+            >
+              {collaborationAreaT('timelineCard.shareButton')}
+            </Button>
+          )}
         </CardFooter>
       </Card>
     </>
