@@ -36,6 +36,7 @@ exports[`MailboxAndTeamMemberCard Component > should matches snapshot 1`] = `
               type="button"
             >
               <svg
+                aria-label="notification off"
                 class="usa-icon"
                 focusable="false"
                 height="1em"

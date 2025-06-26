@@ -91,7 +91,7 @@ const SolutionDetailsModal = ({
   );
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
-  const { message } = useMessage();
+  const { message, clearMessage } = useMessage();
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
@@ -106,6 +106,7 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
+    clearMessage();
     let closeModalRoute = prevRoute || setCloseRoute;
 
     // Return to read view if opened from there

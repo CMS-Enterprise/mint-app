@@ -2411,7 +2411,7 @@ const helpAndKnowledge = {
   },
   primaryPointOfContact: 'Primary point of contact',
   mailboxesAndTeamMembers: 'Mailboxes and team members',
-  addTeamMailbox: 'Add team mailbox',
+  addTeamMailbox: 'Add a team mailbox',
   addTeamMember: 'Add a team member',
   edit: 'Edit',
   removePointOfContact: 'Remove point of contact',
