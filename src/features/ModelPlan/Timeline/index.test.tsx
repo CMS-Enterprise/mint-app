@@ -7,17 +7,17 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import {
-  GetMilestonesDocument,
-  GetMilestonesQuery,
+  GetTimelineDocument,
+  GetTimelineQuery,
   TaskStatus
 } from 'gql/generated/graphql';
 
 import Milestones from './index';
 
-type GetMilestonesType = GetMilestonesQuery['modelPlan']['basics'];
+type GetMilestonesType = GetTimelineQuery['modelPlan']['timeline'];
 
 const milestonesMockData: GetMilestonesType = {
-  __typename: 'PlanBasics',
+  __typename: 'PlanTimeline',
   id: '123',
   completeICIP: '2029-05-12T15:01:39.190679Z',
   clearanceStarts: '2030-06-12T15:01:39.190679Z',
@@ -29,8 +29,6 @@ const milestonesMockData: GetMilestonesType = {
   performancePeriodEnds: '2029-012-28T15:01:39.190679Z',
   wrapUpEnds: '2030-05-08T15:01:39.190679Z',
   highLevelNote: 'High level note',
-  phasedIn: true,
-  phasedInNote: 'Phased in note',
   readyForReviewByUserAccount: {
     __typename: 'UserAccount',
     commonName: 'ASDF',
@@ -43,7 +41,7 @@ const milestonesMockData: GetMilestonesType = {
 const mocks = [
   {
     request: {
-      query: GetMilestonesDocument,
+      query: GetTimelineDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {

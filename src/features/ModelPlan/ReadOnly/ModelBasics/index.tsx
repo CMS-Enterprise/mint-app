@@ -3,25 +3,25 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Grid,
-  Icon,
-  Link as TrussLink,
-  ProcessList,
-  ProcessListHeading,
-  ProcessListItem
+  // Icon,
+  Link as TrussLink
+  // ProcessList,
+  // ProcessListHeading
+  // ProcessListItem
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/generated/graphql';
-import i18next from 'i18next';
+// import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/SectionContainer';
-import Tooltip from 'components/Tooltip';
+// import Tooltip from 'components/Tooltip';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { formatDateUtc } from 'utils/date';
+// import { formatDateUtc } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
 import ReadOnlyBody from '../_components/Body';
@@ -77,15 +77,15 @@ const ReadOnlyModelBasics = ({
   const {
     demoCode,
     amsModelID,
-    completeICIP,
-    clearanceStarts,
-    clearanceEnds,
-    announced,
-    applicationsStart,
-    applicationsEnd,
-    performancePeriodStarts,
-    performancePeriodEnds,
-    wrapUpEnds,
+    // completeICIP,
+    // clearanceStarts,
+    // clearanceEnds,
+    // announced,
+    // applicationsStart,
+    // applicationsEnd,
+    // performancePeriodStarts,
+    // performancePeriodEnds,
+    // wrapUpEnds,
     phasedIn,
     phasedInNote,
     status
@@ -260,7 +260,7 @@ const ReadOnlyModelBasics = ({
             >
               <h3 className="margin-y-0">{basicsMiscT('highLevelTimeline')}</h3>
 
-              <ProcessList className="read-only-model-plan__timeline">
+              {/* <ProcessList className="read-only-model-plan__timeline">
                 <ProcessListItem className="read-only-model-plan__timeline__list-item">
                   <BasicsTimelineItem
                     label={basicsT('completeICIP.label')}
@@ -384,7 +384,7 @@ const ReadOnlyModelBasics = ({
                     value={wrapUpEnds}
                   />
                 </ProcessListItem>
-              </ProcessList>
+              </ProcessList> */}
 
               <ReadOnlySection
                 field="highLevelNote"
@@ -414,37 +414,37 @@ const ReadOnlyModelBasics = ({
   );
 };
 
-const dateOrNoAnswer = (value: string | null | undefined) => {
-  if (value) {
-    return formatDateUtc(value, 'MM/dd/yyyy');
-  }
+// const dateOrNoAnswer = (value: string | null | undefined) => {
+//   if (value) {
+//     return formatDateUtc(value, 'MM/dd/yyyy');
+//   }
 
-  return (
-    <em className="text-base">
-      {i18next.t<string, {}, string>('miscellaneous:dateFormat')}
-    </em>
-  );
-};
+//   return (
+//     <em className="text-base">
+//       {i18next.t<string, {}, string>('miscellaneous:dateFormat')}
+//     </em>
+//   );
+// };
 
-const BasicsTimelineItem = ({
-  label,
-  value
-}: {
-  label: string;
-  value: string | null | undefined;
-}) => (
-  <>
-    <ProcessListHeading
-      type="p"
-      className="mint-text-normal line-height-sans-4"
-    >
-      {label}
-    </ProcessListHeading>
+// const BasicsTimelineItem = ({
+//   label,
+//   value
+// }: {
+//   label: string;
+//   value: string | null | undefined;
+// }) => (
+//   <>
+//     <ProcessListHeading
+//       type="p"
+//       className="mint-text-normal line-height-sans-4"
+//     >
+//       {label}
+//     </ProcessListHeading>
 
-    <p className="margin-y-0 font-body-md line-height-sans-4">
-      {dateOrNoAnswer(value)}
-    </p>
-  </>
-);
+//     <p className="margin-y-0 font-body-md line-height-sans-4">
+//       {dateOrNoAnswer(value)}
+//     </p>
+//   </>
+// );
 
 export default ReadOnlyModelBasics;

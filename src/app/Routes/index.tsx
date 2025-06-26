@@ -145,6 +145,12 @@ const AppRoutes = () => {
           />
 
           {/* Timeline Routes */}
+          <Redirect
+            exact
+            from="/models/:modelID/collaboration-area/task-list/basics/milestones"
+            to="/models/:modelID/collaboration-area/timeline"
+          />
+
           <ProtectedRoute
             path="/models/:modelID/collaboration-area/timeline"
             component={Timeline}
