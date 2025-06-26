@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -11,19 +11,13 @@ import {
   TextInput,
   Tooltip
 } from '@trussworks/react-uswds';
-import {
-  MtoCommonSolutionKey,
-  useCreateMtoCommonSolutionMailboxContactMutation
-} from 'gql/generated/graphql';
+import { useCreateMtoCommonSolutionMailboxContactMutation } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import mtoCommonSolutionContact, {
-  mtoCommonSolutionContactMisc
-} from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
 type FormValues = {
   mailboxAddress: string;
@@ -33,6 +27,8 @@ type FormValues = {
 };
 
 const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
+  const { t: contactT } = useTranslation('mtoCommonSolutionContact');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
       mailboxAddress: '',
@@ -69,7 +65,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
   const onSubmit = (formData: FormValues) => {
     create({
       variables: {
-        key: selectedSolution.key.toUpperCase() as MtoCommonSolutionKey,
+        key: selectedSolution.enum,
         mailboxTitle: formData.mailboxTitle,
         mailboxAddress: formData.mailboxAddress,
         isPrimary: formData.isPrimary,
@@ -80,7 +76,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContactMisc.addTeamMailbox.success}
+              i18nKey={miscT('addTeamMailbox.success')}
               values={{
                 contact: formData.mailboxTitle
               }}
@@ -112,7 +108,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContactMisc.addTeamMailbox.error}
+            {miscT('addTeamMailbox.error')}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>
@@ -130,10 +126,10 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.mailboxAddress.label}
+                  {contactT('mailboxAddress.label')}
                 </Label>
                 <span className="text-base-dark">
-                  {mtoCommonSolutionContact.mailboxAddress.sublabel}
+                  {contactT('mailboxAddress.sublabel')}
                 </span>
 
                 <TextInput
@@ -154,13 +150,13 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
               validate: value => value !== 'default'
             }}
             render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
+              <FormGroup className="margin-top-0">
                 <Label
                   htmlFor="team-mailbox-title"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.mailboxTitle.label}
+                  {contactT('mailboxTitle.label')}
                 </Label>
 
                 <TextInput
@@ -187,11 +183,11 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
                   onChange={e => {
                     field.onChange(e.target.checked);
                   }}
-                  label={mtoCommonSolutionContact.isPrimary.label}
-                  subLabel={mtoCommonSolutionContact.isPrimary.sublabel || ''}
+                  label={contactT('isPrimary.label')}
+                  subLabel={contactT('isPrimary.sublabel') || ''}
                   icon={
                     <Tooltip
-                      label={mtoCommonSolutionContact.isPrimary.tooltips?.true}
+                      label={contactT('isPrimary.questionTooltip')}
                       position="top"
                       className="bg-white padding-0 text-base-dark"
                       style={{ gap: '0.25rem' }}
@@ -212,10 +208,8 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
                 <CheckboxField
                   {...field}
                   id="receiveEmails"
-                  label={mtoCommonSolutionContact.receiveEmails.label}
-                  subLabel={
-                    mtoCommonSolutionContact.receiveEmails.sublabel || ''
-                  }
+                  label={contactT('receiveEmails.label')}
+                  subLabel={contactT('receiveEmails.sublabel') || ''}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
@@ -235,7 +229,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
-            i18nKey={mtoCommonSolutionContactMisc.alert}
+            i18nKey={miscT('alert')}
             components={{
               milestoneLibrary: (
                 <Button
@@ -258,7 +252,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             disabled={!isValid}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContactMisc.addTeamMailbox.cta}
+            {miscT('addTeamMailbox.cta')}
           </Button>
           <Button
             type="button"
@@ -269,7 +263,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
               closeModal();
             }}
           >
-            {mtoCommonSolutionContactMisc.cancel}
+            {miscT('cancel')}
           </Button>
         </div>
       </Form>

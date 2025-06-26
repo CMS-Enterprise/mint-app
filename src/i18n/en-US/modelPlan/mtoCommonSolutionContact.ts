@@ -83,9 +83,8 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
       true: 'Yes',
       false: 'No'
     },
-    tooltips: {
-      true: 'The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution.'
-    }
+    questionTooltip:
+      'The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution.'
   },
   receiveEmails: {
     gqlField: 'receiveEmails',
@@ -133,7 +132,7 @@ export const mtoCommonSolutionContactMisc = {
   },
   editTeamMember: {
     title: 'Edit a team member',
-    PrimaryPocSubLabel:
+    primaryPocSubLabel:
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
     success: 'You updated point of contact information for {{-contact}}.',
     error:
@@ -148,7 +147,7 @@ export const mtoCommonSolutionContactMisc = {
   },
   editTeamMailbox: {
     title: 'Edit a team mailbox',
-    PrimaryPocSubLabel:
+    primaryPocSubLabel:
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
     success: 'You updated point of contact information for {{-contact}}.',
     error:

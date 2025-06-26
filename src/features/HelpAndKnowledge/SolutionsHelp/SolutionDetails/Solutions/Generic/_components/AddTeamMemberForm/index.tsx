@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -11,10 +11,7 @@ import {
   TextInput,
   Tooltip
 } from '@trussworks/react-uswds';
-import {
-  MtoCommonSolutionKey,
-  useCreateMtoCommonSolutionUserContactMutation
-} from 'gql/generated/graphql';
+import { useCreateMtoCommonSolutionUserContactMutation } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
@@ -22,9 +19,6 @@ import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import mtoCommonSolutionContact, {
-  mtoCommonSolutionContactMisc
-} from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
 type FormValues = {
   userName: string;
@@ -34,6 +28,8 @@ type FormValues = {
 };
 
 const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
+  const { t: contactT } = useTranslation('mtoCommonSolutionContact');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
       userName: '',
@@ -71,7 +67,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
   const onSubmit = (formData: FormValues) => {
     create({
       variables: {
-        key: selectedSolution.key.toUpperCase() as MtoCommonSolutionKey,
+        key: selectedSolution.enum,
         userName: formData.userName,
         role: formData.role,
         isPrimary: formData.isPrimary,
@@ -82,7 +78,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContactMisc.addTeamMember.success}
+              i18nKey={miscT('addTeamMember.success')}
               values={{
                 contact: formData.userName
               }}
@@ -114,7 +110,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContactMisc.addTeamMember.error}
+            {miscT('addTeamMember.error')}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>
@@ -132,10 +128,10 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.name.label}
+                  {contactT('name.label')}
                 </Label>
                 <span className="text-base-dark">
-                  {mtoCommonSolutionContact.name.sublabel}
+                  {contactT('name.sublabel')}
                 </span>
 
                 <OktaUserSelect
@@ -163,13 +159,13 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
               validate: value => value !== 'default'
             }}
             render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
+              <FormGroup className="margin-top-0">
                 <Label
                   htmlFor="team-member-role"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.role.label}
+                  {contactT('role.label')}
                 </Label>
 
                 <TextInput
@@ -196,11 +192,11 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
                   onChange={e => {
                     field.onChange(e.target.checked);
                   }}
-                  label={mtoCommonSolutionContact.isPrimary.label}
-                  subLabel={mtoCommonSolutionContact.isPrimary.sublabel || ''}
+                  label={contactT('isPrimary.label')}
+                  subLabel={contactT('isPrimary.sublabel') || ''}
                   icon={
                     <Tooltip
-                      label={mtoCommonSolutionContact.isPrimary.tooltips?.true}
+                      label={contactT('isPrimary.questionTooltip')}
                       position="top"
                       className="bg-white padding-0 text-base-dark"
                       style={{ gap: '0.25rem' }}
@@ -221,10 +217,8 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
                 <CheckboxField
                   {...field}
                   id="receiveEmails"
-                  label={mtoCommonSolutionContact.receiveEmails.label}
-                  subLabel={
-                    mtoCommonSolutionContact.receiveEmails.sublabel || ''
-                  }
+                  label={contactT('receiveEmails.label')}
+                  subLabel={contactT('receiveEmails.sublabel') || ''}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
@@ -244,7 +238,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
-            i18nKey={mtoCommonSolutionContactMisc.alert}
+            i18nKey={miscT('alert')}
             components={{
               milestoneLibrary: (
                 <Button
@@ -267,7 +261,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
             disabled={!isValid}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContactMisc.addTeamMember.cta}
+            {miscT('addTeamMember.cta')}
           </Button>
           <Button
             type="button"
@@ -278,7 +272,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
               closeModal();
             }}
           >
-            {mtoCommonSolutionContactMisc.cancel}
+            {miscT('cancel')}
           </Button>
         </div>
       </Form>

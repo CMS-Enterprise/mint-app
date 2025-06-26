@@ -97,7 +97,7 @@ exports[`Add a team member point of contact form > should matches snapshot 1`] =
         </div>
       </div>
       <div
-        class="usa-form-group margin-top-0 margin-bottom-2"
+        class="usa-form-group margin-top-0"
         data-testid="formGroup"
       >
         <label

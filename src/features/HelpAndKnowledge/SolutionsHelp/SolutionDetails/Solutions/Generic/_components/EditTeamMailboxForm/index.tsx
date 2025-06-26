@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -19,9 +19,6 @@ import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import mtoCommonSolutionContact, {
-  mtoCommonSolutionContactMisc
-} from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 import dirtyInput from 'utils/formUtil';
 
 type FormValues = {
@@ -38,6 +35,8 @@ const EditTeamMailboxForm = ({
   closeModal: () => void;
   teamMailbox: SolutionContactType;
 }) => {
+  const { t: contactT } = useTranslation('mtoCommonSolutionContact');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
       mailboxAddress: teamMailbox.mailboxAddress || '',
@@ -94,7 +93,7 @@ const EditTeamMailboxForm = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContactMisc.editTeamMailbox.success}
+              i18nKey={miscT('editTeamMailbox.success')}
               values={{
                 contact: teamMailbox.name
               }}
@@ -126,7 +125,7 @@ const EditTeamMailboxForm = ({
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContactMisc.editTeamMailbox.error}
+            {miscT('editTeamMailbox.error')}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -144,10 +143,10 @@ const EditTeamMailboxForm = ({
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.mailboxAddress.label}
+                  {contactT('mailboxAddress.label')}
                 </Label>
                 <span className="text-base-dark">
-                  {mtoCommonSolutionContact.mailboxAddress.sublabel}
+                  {contactT('mailboxAddress.sublabel')}
                 </span>
 
                 <TextInput
@@ -170,13 +169,13 @@ const EditTeamMailboxForm = ({
               validate: value => value !== 'default'
             }}
             render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
+              <FormGroup className="margin-top-0">
                 <Label
                   htmlFor="team-mailbox-title"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.mailboxTitle.label}
+                  {contactT('mailboxTitle.label')}
                 </Label>
 
                 <TextInput
@@ -199,11 +198,8 @@ const EditTeamMailboxForm = ({
                   {...field}
                   id="isPrimary"
                   testid="isPrimary"
-                  label={mtoCommonSolutionContact.isPrimary.label}
-                  subLabel={
-                    mtoCommonSolutionContactMisc.editTeamMailbox
-                      .PrimaryPocSubLabel
-                  }
+                  label={contactT('isPrimary.label')}
+                  subLabel={miscT('editTeamMailbox.primaryPocSubLabel')}
                   checked={Boolean(field.value)}
                   value="true"
                   onBlur={field.onBlur}
@@ -213,7 +209,7 @@ const EditTeamMailboxForm = ({
                   disabled={teamMailbox.isPrimary}
                   icon={
                     <Tooltip
-                      label={mtoCommonSolutionContact.isPrimary.tooltips?.true}
+                      label={contactT('isPrimary.questionTooltip')}
                       position="top"
                       className="bg-white padding-0 text-base-dark"
                       style={{ gap: '0.25rem' }}
@@ -235,10 +231,8 @@ const EditTeamMailboxForm = ({
                   {...field}
                   id="receiveEmails"
                   testid="receiveEmails"
-                  label={mtoCommonSolutionContact.receiveEmails.label}
-                  subLabel={
-                    mtoCommonSolutionContact.receiveEmails.sublabel || ''
-                  }
+                  label={contactT('receiveEmails.label')}
+                  subLabel={contactT('receiveEmails.sublabel') || ''}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
@@ -258,7 +252,7 @@ const EditTeamMailboxForm = ({
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
-            i18nKey={mtoCommonSolutionContactMisc.alert}
+            i18nKey={miscT('alert')}
             components={{
               milestoneLibrary: (
                 <Button
@@ -279,7 +273,7 @@ const EditTeamMailboxForm = ({
             disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContactMisc.saveChanges}
+            {miscT('saveChanges')}
           </Button>
           <Button
             type="button"
@@ -287,7 +281,7 @@ const EditTeamMailboxForm = ({
             unstyled
             onClick={closeModal}
           >
-            {mtoCommonSolutionContactMisc.cancel}
+            {miscT('cancel')}
           </Button>
         </div>
       </Form>
