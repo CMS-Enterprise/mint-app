@@ -1,11 +1,24 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { GetCollaborationAreaQuery, TaskStatus } from 'gql/generated/graphql';
+import configureMockStore from 'redux-mock-store';
+
+import { ASSESSMENT } from 'constants/jobCodes';
 
 import TimelineCard from './index';
 
 const mockSetStatusMessage = vi.fn();
+
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
 
 const baseTimeline: GetCollaborationAreaQuery['modelPlan']['timeline'] = {
   __typename: 'PlanTimeline',
@@ -29,11 +42,13 @@ describe('TimelineCard', () => {
   it('renders all main elements', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <TimelineCard
-          modelID="123"
-          timeline={baseTimeline}
-          setStatusMessage={mockSetStatusMessage}
-        />
+        <Provider store={store}>
+          <TimelineCard
+            modelID="123"
+            timeline={baseTimeline}
+            setStatusMessage={mockSetStatusMessage}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -48,11 +63,13 @@ describe('TimelineCard', () => {
     const timeline = { ...baseTimeline, upcomingTimelineDate: null };
     render(
       <MemoryRouter>
-        <TimelineCard
-          modelID="123"
-          timeline={timeline}
-          setStatusMessage={mockSetStatusMessage}
-        />
+        <Provider store={store}>
+          <TimelineCard
+            modelID="123"
+            timeline={timeline}
+            setStatusMessage={mockSetStatusMessage}
+          />{' '}
+        </Provider>
       </MemoryRouter>
     );
     expect(screen.queryByText(/Upcoming/)).not.toBeInTheDocument();
@@ -66,11 +83,13 @@ describe('TimelineCard', () => {
     };
     render(
       <MemoryRouter>
-        <TimelineCard
-          modelID="123"
-          timeline={timeline}
-          setStatusMessage={mockSetStatusMessage}
-        />
+        <Provider store={store}>
+          <TimelineCard
+            modelID="123"
+            timeline={timeline}
+            setStatusMessage={mockSetStatusMessage}
+          />{' '}
+        </Provider>
       </MemoryRouter>
     );
     expect(screen.queryByText('Jane Doe')).not.toBeInTheDocument();
