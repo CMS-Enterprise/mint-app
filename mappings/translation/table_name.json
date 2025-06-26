@@ -140,5 +140,8 @@
   },
   "mto_common_solution_contact": {
     "generalName": "MTO common solution contact"
+  },
+  "plan_timeline": {
+    "generalName": "Timeline"
   }
 }

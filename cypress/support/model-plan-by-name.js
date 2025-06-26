@@ -9,8 +9,12 @@ Cypress.Commands.add('enterModelPlanCollaborationArea', (planName, table) => {
   cy.get('[data-testid="page-loading"]').should('not.exist');
 });
 
-Cypress.Commands.add('enterModelPlanTaskList', (planName, table) => {
+Cypress.Commands.add('enterModelPlanTaskList', (planName, table, page) => {
   cy.visit('/');
+
+  if (page) {
+    cy.get(`.model-plan-table button[aria-label="Page ${page}"]`).click();
+  }
 
   cy.get(`[data-testid="${table || 'table'}"] a`)
     .contains(planName)
