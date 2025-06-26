@@ -154,9 +154,7 @@ const Timeline = () => {
               <Formik
                 initialValues={initialValues}
                 onSubmit={() => {
-                  history.push(
-                    `/models/${modelID}/collaboration-area/task-list/characteristics`
-                  );
+                  history.push(`/models/${modelID}/collaboration-area`);
                 }}
                 enableReinitialize
                 validateOnBlur={false}
@@ -196,7 +194,7 @@ const Timeline = () => {
                       <ConfirmLeave />
 
                       <Form
-                        className="desktop:grid-col-7 milestone-form margin-y-6"
+                        className="desktop:grid-col-8 milestone-form margin-y-6"
                         onSubmit={e => {
                           handleSubmit(e);
                           window.scrollTo(0, 0);
