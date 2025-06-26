@@ -240,7 +240,6 @@ describe('The Model Plan Form', () => {
     cy.contains('tr', 'Empty Plan').get('[data-cy="unfavorited"]');
   });
 
-  // TODO: Reimplement once the timeline section is complete - move to timeline.spec.js possibly
   // it('updates model status in modal dropdown', () => {
   //   cy.enterModelPlanCollaborationArea('Enhancing Oncology Model');
 
