@@ -64,6 +64,7 @@ import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
 import modelPlanTaskList from './modelPlan/taskList';
 import tdls from './modelPlan/tdls';
+import { timeline, timelineMisc } from './modelPlan/timeline';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -129,6 +130,8 @@ const enUS = {
   mtoSolution,
   operationalNeeds,
   solutions,
+  timeline,
+  timelineMisc,
   operationalSolutionSubtasks,
   opSolutionsMisc,
   documents,
