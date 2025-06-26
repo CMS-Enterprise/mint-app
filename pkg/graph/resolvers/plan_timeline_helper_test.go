@@ -52,27 +52,27 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field:   getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"announced": {
-					Field:   getFieldDataMap()["announced"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["announced"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldDate:       nil,
@@ -83,7 +83,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 					NewRangeEnd:   defaultExisting.PerformancePeriodEnds,
 				},
 				"wrapUpEnds": {
-					Field:   getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					OldDate: &t1,
 				},
 			},
@@ -114,13 +114,13 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field:     getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:     getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					IsChanged: true,
 					OldDate:   defaultExisting.CompleteICIP,
 					NewDate:   &t2,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldRangeStart: defaultExisting.ClearanceStarts,
@@ -129,13 +129,13 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 					NewRangeEnd:   &t2,
 				},
 				"announced": {
-					Field:     getFieldDataMap()["announced"].HumanReadableName,
+					Field:     getTimelineFieldDataMap()["announced"].HumanReadableName,
 					IsChanged: true,
 					OldDate:   defaultExisting.Announced,
 					NewDate:   &t2,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldRangeStart: defaultExisting.ApplicationsStart,
@@ -144,7 +144,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 					NewRangeEnd:   &t2,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldRangeStart: defaultExisting.PerformancePeriodStarts,
@@ -153,7 +153,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 					NewRangeEnd:   &t2,
 				},
 				"wrapUpEnds": {
-					Field:     getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:     getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					IsChanged: true,
 					OldDate:   defaultExisting.WrapUpEnds,
 					NewDate:   &t2,
@@ -179,33 +179,33 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			},
 			expected: map[string]email.DateChange{
 				"announced": {
-					Field:   getFieldDataMap()["announced"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["announced"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"completeICIP": {
-					Field:   getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"wrapUpEnds": {
-					Field:     getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:     getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					IsChanged: true,
 					NewDate:   &t1,
 				},
@@ -220,27 +220,27 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: &models.PlanTimeline{},
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field: getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 				},
 				"clearance": {
-					Field:   getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"announced": {
-					Field:     getFieldDataMap()["announced"].HumanReadableName,
+					Field:     getTimelineFieldDataMap()["announced"].HumanReadableName,
 					IsChanged: true,
 					NewDate:   &t2,
 				},
 				"applications": {
-					Field:   getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsRange: true,
 				},
 				"performancePeriod": {
-					Field:   getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"wrapUpEnds": {
-					Field: getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 				},
 			},
 		},
@@ -253,34 +253,34 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field:   getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"announced": {
-					Field:     getFieldDataMap()["announced"].HumanReadableName,
+					Field:     getTimelineFieldDataMap()["announced"].HumanReadableName,
 					IsChanged: true,
 					OldDate:   &t1,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"wrapUpEnds": {
-					Field:   getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					OldDate: &t1,
 				},
 			},
@@ -294,27 +294,27 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: &models.PlanTimeline{},
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field: getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 				},
 				"clearance": {
-					Field:   getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"announced": {
-					Field: getFieldDataMap()["announced"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["announced"].HumanReadableName,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					NewRangeStart: &t2,
 				},
 				"performancePeriod": {
-					Field:   getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"wrapUpEnds": {
-					Field: getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 				},
 			},
 		},
@@ -327,27 +327,27 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: &models.PlanTimeline{},
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field: getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 				},
 				"clearance": {
-					Field:   getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"announced": {
-					Field: getFieldDataMap()["announced"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["announced"].HumanReadableName,
 				},
 				"applications": {
-					Field:       getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:       getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:   true,
 					IsRange:     true,
 					NewRangeEnd: &t2,
 				},
 				"performancePeriod": {
-					Field:   getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"wrapUpEnds": {
-					Field: getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 				},
 			},
 		},
@@ -360,21 +360,21 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field:   getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"announced": {
-					Field:   getFieldDataMap()["announced"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["announced"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldRangeStart: &t1,
@@ -382,13 +382,13 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 					NewRangeEnd:   &t1,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"wrapUpEnds": {
-					Field:   getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					OldDate: &t1,
 				},
 			},
@@ -402,21 +402,21 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field:   getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"announced": {
-					Field:   getFieldDataMap()["announced"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["announced"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldRangeStart: &t1,
@@ -424,13 +424,13 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 					NewRangeStart: &t1,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"wrapUpEnds": {
-					Field:   getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					OldDate: &t1,
 				},
 			},
@@ -445,28 +445,28 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: &models.PlanTimeline{},
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field: getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 				},
 				"clearance": {
-					Field:   getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"announced": {
-					Field: getFieldDataMap()["announced"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["announced"].HumanReadableName,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					NewRangeStart: &t2,
 					NewRangeEnd:   &t2,
 				},
 				"performancePeriod": {
-					Field:   getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange: true,
 				},
 				"wrapUpEnds": {
-					Field: getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field: getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 				},
 			},
 		},
@@ -480,34 +480,34 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{
 				"completeICIP": {
-					Field:   getFieldDataMap()["completeICIP"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["completeICIP"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"clearance": {
-					Field:         getFieldDataMap()["clearanceStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["clearanceStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"announced": {
-					Field:   getFieldDataMap()["announced"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["announced"].HumanReadableName,
 					OldDate: &t1,
 				},
 				"applications": {
-					Field:         getFieldDataMap()["applicationsStart"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["applicationsStart"].HumanReadableName,
 					IsChanged:     true,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"performancePeriod": {
-					Field:         getFieldDataMap()["performancePeriodStarts"].HumanReadableName,
+					Field:         getTimelineFieldDataMap()["performancePeriodStarts"].HumanReadableName,
 					IsRange:       true,
 					OldRangeStart: &t1,
 					OldRangeEnd:   &t1,
 				},
 				"wrapUpEnds": {
-					Field:   getFieldDataMap()["wrapUpEnds"].HumanReadableName,
+					Field:   getTimelineFieldDataMap()["wrapUpEnds"].HumanReadableName,
 					OldDate: &t1,
 				},
 			},

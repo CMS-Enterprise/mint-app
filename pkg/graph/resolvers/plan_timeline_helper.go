@@ -540,6 +540,70 @@ func sendPlanTimelineDateChangedEmails(
 	return nil
 }
 
+// TODO: How can this be simplified using struct tags?
+func getTimelineFieldDataMap() map[string]dateFieldData {
+	fieldData := map[string]dateFieldData{
+		"completeICIP": {
+			HumanReadableName: "Complete ICIP",
+			IsRange:           false,
+			CommonKey:         "completeICIP",
+		},
+		"clearanceStarts": {
+			HumanReadableName: "Clearance",
+			IsRange:           true,
+			IsRangeStart:      true,
+			OtherRangeKey:     "clearanceEnds",
+			CommonKey:         "clearance",
+		},
+		"clearanceEnds": {
+			HumanReadableName: "Clearance",
+			IsRange:           true,
+			IsRangeStart:      false,
+			OtherRangeKey:     "clearanceStarts",
+			CommonKey:         "clearance",
+		},
+		"announced": {
+			HumanReadableName: "Announce model",
+			IsRange:           false,
+			CommonKey:         "announced",
+		},
+		"applicationsStart": {
+			HumanReadableName: "Application period",
+			IsRange:           true,
+			IsRangeStart:      true,
+			OtherRangeKey:     "applicationsEnd",
+			CommonKey:         "applications",
+		},
+		"applicationsEnd": {
+			HumanReadableName: "Application period",
+			IsRange:           true,
+			IsRangeStart:      false,
+			OtherRangeKey:     "applicationsStart",
+			CommonKey:         "applications",
+		},
+		"performancePeriodStarts": {
+			HumanReadableName: "Performance period",
+			IsRange:           true,
+			IsRangeStart:      true,
+			OtherRangeKey:     "performancePeriodEnds",
+			CommonKey:         "performancePeriod",
+		},
+		"performancePeriodEnds": {
+			HumanReadableName: "Performance period",
+			IsRange:           true,
+			IsRangeStart:      false,
+			OtherRangeKey:     "performancePeriodStarts",
+			CommonKey:         "performancePeriod",
+		},
+		"wrapUpEnds": {
+			HumanReadableName: "Model wrap-up end date",
+			IsRange:           false,
+			CommonKey:         "wrapUpEnds",
+		},
+	}
+	return fieldData
+}
+
 // getUpcomingPlanTimelineDate returns the nearest upcoming date from the PlanTimeline and its field name.
 // It returns nil if no upcoming dates are found.
 func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.UpcomingTimelineDate, error) {
