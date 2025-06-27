@@ -12,11 +12,11 @@ import {
   TaskStatus
 } from 'gql/generated/graphql';
 
-import Milestones from './index';
+import Timeline from './index';
 
-type GetMilestonesType = GetTimelineQuery['modelPlan']['timeline'];
+type GetTimelineType = GetTimelineQuery['modelPlan']['timeline'];
 
-const milestonesMockData: GetMilestonesType = {
+const timelineMockData: GetTimelineType = {
   __typename: 'PlanTimeline',
   id: '123',
   completeICIP: '2029-05-12T15:01:39.190679Z',
@@ -50,24 +50,24 @@ const mocks = [
           __typename: 'ModelPlan',
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          basics: milestonesMockData
+          timeline: timelineMockData
         }
       }
     }
   }
 ];
 
-describe('Model Basics Milestones page', () => {
+describe('Model Timeline page', () => {
   it('renders without errors and matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/milestones'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/timeline'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/milestones">
-            <Milestones />
+          <Route path="/models/:modelID/collaboration-area/timeline">
+            <Timeline />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -75,7 +75,7 @@ describe('Model Basics Milestones page', () => {
 
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
 
-    expect(await screen.findByText('Phased in note')).toBeInTheDocument();
+    expect(await screen.findByText('High level note')).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();
   });

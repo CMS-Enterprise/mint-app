@@ -130,6 +130,7 @@ export const modelBasicsMocks = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
@@ -750,11 +751,12 @@ const summaryData: GetModelSummaryTypes = {
   status: ModelStatus.PLAN_DRAFT,
   basics: {
     __typename: 'PlanBasics',
-    goal: 'This is the goal',
-    performancePeriodStarts: '2022-08-20T04:00:00Z'
+    id: '123',
+    goal: 'This is the goal'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
+    id: '123',
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
