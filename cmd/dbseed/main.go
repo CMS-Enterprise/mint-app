@@ -211,6 +211,25 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusActive,
 	})
 
+	// Seed a plan with some information already in it
+	planWithTimeline := s.createModelPlan("Plan with Timeline", "MINT", nil)
+	s.updatePlanTimeline(
+		s.Config.Context,
+		nil,
+		nil,
+		email.AddressBook{},
+		planWithTimeline,
+		map[string]interface{}{
+			"completeICIP":    "2020-05-13T20:47:50.12Z",
+			"clearanceStarts": now,
+			"highLevelNote":   "Some high level note",
+		},
+	)
+	s.updateModelPlan(planWithTimeline, map[string]interface{}{
+		"abbreviation": "timeline",
+		"status":       models.ModelStatusActive,
+	})
+
 	planWithBasicsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithBasics.ID)
 	if len(planWithBasicsOperationalNeeds) < 1 {
 		panic("operational needs must be populated in order to create an operational solution")

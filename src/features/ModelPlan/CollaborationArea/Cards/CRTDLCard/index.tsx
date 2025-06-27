@@ -6,14 +6,15 @@ import {
   CardFooter,
   CardHeader
 } from '@trussworks/react-uswds';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 
 import '../../index.scss';
 
-export type CRTDLType = GetModelPlanQuery['modelPlan']['echimpCRsAndTDLs'][0];
+export type CRTDLType =
+  GetCollaborationAreaQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 type CRTDLCardType = {
   crtdls: CRTDLType[];
