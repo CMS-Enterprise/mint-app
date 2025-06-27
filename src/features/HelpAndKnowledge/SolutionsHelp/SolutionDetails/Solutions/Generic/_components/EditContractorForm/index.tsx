@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -16,9 +16,6 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import mtoCommonSolutionContractor, {
-  mtoCommonSolutionContractorMisc
-} from 'i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 import dirtyInput from 'utils/formUtil';
 
 type FormValues = {
@@ -33,6 +30,9 @@ const EditContractorForm = ({
   closeModal: () => void;
   contractor: SolutionContractorType;
 }) => {
+  const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
+
   const methods = useForm<FormValues>({
     defaultValues: {
       contractorTitle: contractor.contractorTitle || '',
@@ -81,7 +81,7 @@ const EditContractorForm = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContractorMisc.editContractor.success}
+              i18nKey={miscT('editContractor.success')}
               values={{
                 contractor: formData.contractorName
               }}
@@ -113,7 +113,7 @@ const EditContractorForm = ({
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContractorMisc.editContractor.error}
+            {miscT('editContractor.error')}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>
@@ -130,7 +130,7 @@ const EditContractorForm = ({
                   htmlFor="contractor-title"
                   className="mint-body-normal maxw-none margin-bottom-1"
                 >
-                  {mtoCommonSolutionContractor.contractorTitle.label}
+                  {contractorT('contractorTitle.label')}
                 </Label>
 
                 <TextInput
@@ -158,7 +158,7 @@ const EditContractorForm = ({
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContractor.contractorName.label}
+                  {contractorT('contractorName.label')}
                 </Label>
 
                 <TextInput
@@ -179,7 +179,7 @@ const EditContractorForm = ({
             disabled={!isValid}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContractorMisc.saveChanges}
+            {miscT('saveChanges')}
           </Button>
           <Button
             type="button"
@@ -190,7 +190,7 @@ const EditContractorForm = ({
               closeModal();
             }}
           >
-            {mtoCommonSolutionContractorMisc.cancel}
+            {miscT('cancel')}
           </Button>
         </div>
       </Form>

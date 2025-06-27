@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -18,9 +18,6 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import mtoCommonSolutionContractor, {
-  mtoCommonSolutionContractorMisc
-} from 'i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 
 type FormValues = {
   contractorTitle: string;
@@ -28,6 +25,9 @@ type FormValues = {
 };
 
 const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
+  const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
+
   const methods = useForm<FormValues>({
     defaultValues: {
       contractorTitle: '',
@@ -70,7 +70,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContractorMisc.addContractor.success}
+              i18nKey={miscT('addContractor.success')}
               values={{
                 contractor: formData.contractorName
               }}
@@ -102,7 +102,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContractorMisc.addContractor.error}
+            {miscT('addContractor.error')}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>
@@ -119,7 +119,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
                   htmlFor="contractor-title"
                   className="mint-body-normal maxw-none margin-bottom-1"
                 >
-                  {mtoCommonSolutionContractor.contractorTitle.label}
+                  {contractorT('contractorTitle.label')}
                 </Label>
 
                 <TextInput
@@ -146,7 +146,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContractor.contractorName.label}
+                  {contractorT('contractorName.label')}
                 </Label>
 
                 <TextInput
@@ -166,7 +166,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
             disabled={!isValid}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContractorMisc.addContractor.cta}
+            {miscT('addContractor.cta')}
           </Button>
           <Button
             type="button"
@@ -177,7 +177,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
               closeModal();
             }}
           >
-            {mtoCommonSolutionContractorMisc.cancel}
+            {miscT('cancel')}
           </Button>
         </div>
       </Form>
