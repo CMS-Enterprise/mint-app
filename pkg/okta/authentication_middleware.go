@@ -291,13 +291,13 @@ type MiddlewareFactory struct {
 // NewOktaWebSocketAuthenticationMiddleware returns a transport.WebsocketInitFunc that uses the `authToken` in
 // the websocket connection payload to authenticate an Okta user.
 func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware() transport.WebsocketInitFunc {
-	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, *transport.InitPayload, error) {
 		logger := appcontext.ZLogger(ctx)
 		// Get the token from payload
 		any := initPayload["authToken"]
 		token, ok := any.(string)
 		if !ok || token == "" {
-			return nil, errors.New("authToken not found in transport payload")
+			return nil, &initPayload, errors.New("authToken not found in transport payload")
 		}
 
 		// Parse auth header into JWT object
@@ -305,19 +305,19 @@ func (f MiddlewareFactory) NewOktaWebSocketAuthenticationMiddleware() transport.
 		if err != nil {
 			// Should be safe to log, since we're logging a token that's invalid
 			logger.Info("could not parse jwt from token", zap.Error(err))
-			return nil, err
+			return nil, &initPayload, err
 		}
 		ctx = appcontext.WithEnhancedJWT(ctx, *jwt)
 
 		principal, err := f.newPrincipal(ctx)
 		if err != nil {
 			logger.Error("could not set context for okta auth", zap.Error(err))
-			return nil, err
+			return nil, &initPayload, err
 		}
 
 		oktaCtx := appcontext.WithPrincipal(ctx, principal)
 
-		return oktaCtx, nil
+		return oktaCtx, &initPayload, nil
 	}
 }
 

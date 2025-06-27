@@ -10,6 +10,7 @@ import (
 	"github.com/guregu/null/zero"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/spf13/cobra"
@@ -258,7 +259,7 @@ func (s *Seeder) SeedData() {
 
 			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits",
 
-			"isDataExchangeApproachComplete": true,
+			"isDataExchangeApproachComplete": helpers.PointerTo(true),
 		},
 	)
 

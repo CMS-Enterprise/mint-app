@@ -503,7 +503,7 @@ const EditMilestoneForm = ({
             ...(facilitatedBy && {
               facilitatedBy
             }),
-            ...(facilitatedByOther !== undefined && {
+            ...(!!facilitatedByOther && {
               facilitatedByOther
             }),
             ...(isCategoryDirty && { mtoCategoryID }),
