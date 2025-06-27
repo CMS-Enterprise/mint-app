@@ -27,16 +27,6 @@ export default gql(/* GraphQL */ `
         goal
         testInterventions
         note
-        completeICIP
-        clearanceStarts
-        clearanceEnds
-        announced
-        applicationsStart
-        applicationsEnd
-        performancePeriodStarts
-        performancePeriodEnds
-        highLevelNote
-        wrapUpEnds
         phasedIn
         phasedInNote
         readyForReviewByUserAccount {

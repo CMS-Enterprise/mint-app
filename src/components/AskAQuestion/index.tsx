@@ -6,14 +6,17 @@ import classNames from 'classnames';
 import Discussions from 'features/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
 
+export type RenderQuestionTextType =
+  | 'need'
+  | 'solution'
+  | 'status'
+  | 'dataExchangeApproach'
+  | 'modelToOperations'
+  | 'timeline';
+
 type AskAQuestionType = {
   modelID: string;
-  renderTextFor?:
-    | 'need'
-    | 'solution'
-    | 'status'
-    | 'dataExchangeApproach'
-    | 'modelToOperations';
+  renderTextFor?: RenderQuestionTextType;
   className?: string;
 };
 
@@ -28,6 +31,7 @@ const AskAQuestion = ({
     'dataExchangeApproachMisc'
   );
   const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
+  const { t: timelineMiscT } = useTranslation('timelineMisc');
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
@@ -41,6 +45,8 @@ const AskAQuestion = ({
         return dataExchangeApproachT('needHelpDiscussion');
       case 'modelToOperations':
         return modelToOperationsT('needHelpDiscussion');
+      case 'timeline':
+        return timelineMiscT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');
@@ -60,13 +66,16 @@ const AskAQuestion = ({
         className={classNames(
           'padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center',
           {
-            'padding-bottom-205': renderTextFor === 'modelToOperations'
+            'padding-bottom-205': renderTextFor === 'modelToOperations',
+            'padding-3': renderTextFor === 'timeline'
           }
         )}
         style={{ gap: '1rem' }}
       >
         {renderTextFor && (
-          <p className="text-bold margin-0">{renderText(renderTextFor)}</p>
+          <p className="text-bold margin-0 margin-bottom-05">
+            {renderText(renderTextFor)}
+          </p>
         )}
 
         <div className="display-flex" data-testid="ask-a-question">

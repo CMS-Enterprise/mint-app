@@ -23,11 +23,16 @@ export default gql(/* GraphQL */ `
         }
       }
       basics {
+        id
         goal
-        performancePeriodStarts
       }
       generalCharacteristics {
+        id
         keyCharacteristics
+      }
+      timeline {
+        id
+        performancePeriodStarts
       }
       isCollaborator
       collaborators {

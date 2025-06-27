@@ -278,6 +278,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     status,
     basics,
     generalCharacteristics,
+    timeline,
     collaborators,
     isCollaborator,
     echimpCRsAndTDLs
@@ -389,7 +390,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               loading={loading}
               modelName={modelName}
               characteristics={generalCharacteristics}
-              performancePeriodStarts={basics?.performancePeriodStarts ?? null}
+              performancePeriodStarts={
+                timeline?.performancePeriodStarts ?? null
+              }
               modelLeads={collaborators?.filter(c =>
                 c.teamRoles.includes(TeamRole.MODEL_LEAD)
               )}

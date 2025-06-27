@@ -50,7 +50,6 @@ import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formUtil';
 import planBasicsSchema from 'validations/planBasics';
 
-import Milestones from './Milestones';
 import Overview from './Overview';
 
 type ModelPlanInfoFormType = Omit<GetBasicsQuery['modelPlan'], 'nameHistory'>;
@@ -664,7 +663,7 @@ const BasicsContent = () => {
         }}
       </Formik>
 
-      <PageNumber currentPage={1} totalPages={3} className="margin-bottom-10" />
+      <PageNumber currentPage={1} totalPages={2} className="margin-bottom-10" />
     </>
   );
 };
@@ -684,11 +683,6 @@ export const Basics = () => {
               path="/models/:modelID/collaboration-area/task-list/basics/overview"
               exact
               render={() => <Overview />}
-            />
-            <Route
-              path="/models/:modelID/collaboration-area/task-list/basics/milestones"
-              exact
-              render={() => <Milestones />}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

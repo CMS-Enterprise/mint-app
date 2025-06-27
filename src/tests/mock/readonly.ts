@@ -115,16 +115,6 @@ const modelBasicsData: GetAllBasicsTypes = {
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
   note: "The machine doesn't work yet",
-  completeICIP: '2022-06-03T19:32:24.412662Z',
-  clearanceStarts: '2022-06-03T19:32:24.412662Z',
-  clearanceEnds: '2022-06-03T19:32:24.412662Z',
-  announced: '2022-06-03T19:32:24.412662Z',
-  applicationsStart: '2022-06-03T19:32:24.412662Z',
-  applicationsEnd: '2022-06-03T19:32:24.412662Z',
-  performancePeriodStarts: '2022-06-03T19:32:24.412662Z',
-  performancePeriodEnds: '2022-06-03T19:32:24.412662Z',
-  wrapUpEnds: '2022-06-03T19:32:24.412662Z',
-  highLevelNote: 'Theses are my best guess notes',
   phasedIn: false,
   phasedInNote: "This can't be phased in",
   modifiedDts: '2022-06-03T19:32:24.412662Z',
@@ -140,6 +130,7 @@ export const modelBasicsMocks = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
@@ -760,12 +751,18 @@ const summaryData: GetModelSummaryTypes = {
   status: ModelStatus.PLAN_DRAFT,
   basics: {
     __typename: 'PlanBasics',
-    goal: 'This is the goal',
-    performancePeriodStarts: '2022-08-20T04:00:00Z'
+    id: '123',
+    goal: 'This is the goal'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
+    id: '123',
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
+  },
+  timeline: {
+    __typename: 'PlanTimeline',
+    id: '123',
+    performancePeriodStarts: '2022-08-20T04:00:00Z'
   },
   isCollaborator: true,
   echimpCRsAndTDLs: [
