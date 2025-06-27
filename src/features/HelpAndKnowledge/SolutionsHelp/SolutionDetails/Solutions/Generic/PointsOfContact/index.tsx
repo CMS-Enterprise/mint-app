@@ -1,21 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Icon
-} from '@trussworks/react-uswds';
+import { Card, CardBody, CardFooter } from '@trussworks/react-uswds';
 import {
   HelpSolutionType,
   SystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import Alert from 'components/Alert';
 import Divider from 'components/Divider';
 
-import ContractorCard from '../_components/ContractorCard';
+import Contractors from '../_components/Contractors';
 import MailboxesAndTeamMembers from '../_components/MailboxesAndTeamMembers';
 
 const GenericCard = ({ contact }: { contact: SystemOwnerType }) => {
@@ -46,7 +39,6 @@ export const GenericPointsOfContact = ({
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
   const { pointsOfContact, contractors } = solution;
-  const hasContractors = contractors && contractors?.length > 0;
 
   return (
     <div>
@@ -64,20 +56,7 @@ export const GenericPointsOfContact = ({
 
       <>
         <Divider className="margin-y-6" />
-
-        <h2 className="margin-bottom-2">{t('contractors')}</h2>
-        <Button type="button" className="margin-bottom-3" unstyled>
-          <Icon.Add aria-hidden />
-          {t('addContractor')}
-        </Button>
-
-        {hasContractors ? (
-          contractors.map(contact => <ContractorCard contractor={contact} />)
-        ) : (
-          <Alert type="info" slim>
-            {t('noContractors')}
-          </Alert>
-        )}
+        <Contractors contractors={contractors || []} />
       </>
     </div>
   );

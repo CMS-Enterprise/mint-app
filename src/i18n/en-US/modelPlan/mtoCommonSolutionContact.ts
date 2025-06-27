@@ -153,7 +153,6 @@ export const mtoCommonSolutionContactMisc = {
     error:
       'There was an issue edditing this team mailbox. Please try again, and if the problem persists, try again later.'
   },
-  addContractor: 'Add contractor',
   removePointOfContact: {
     title: 'Are you sure you want to remove this point of contact?',
     text: '<bold>Point of contact to be removed:</bold> {{-contact}}',
@@ -161,14 +160,6 @@ export const mtoCommonSolutionContactMisc = {
     success: 'You removed <bold>{{-contact}}</bold> as a point of contact.',
     error:
       'There was an issue removing this point of contact. Please try again, and if the problem persists, try again later.'
-  },
-  removeContractor: {
-    title: 'Are you sure you want to remove this contractor?',
-    text: '<bold>Contractor to be removed: </bold>{{-contact}}',
-    cta: 'Remove contractor',
-    success: 'You removed <bold>{{-contact}}</bold> as a contractor.',
-    error:
-      'There was an issue removing this contractor. Please try again, and if the problem persists, try again later.'
   },
   allFieldsRequired:
     'Fields marked with an asterisk ( <s>*</s> ) are required.',

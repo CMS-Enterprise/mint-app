@@ -11,7 +11,7 @@ import AddTeamMemberForm from '../AddTeamMemberForm';
 import EditTeamMailboxForm from '../EditTeamMailboxForm';
 import EditTeamMemberForm from '../EditTeamMemberForm';
 
-// Matching keys in helpAndKnowledge
+// Matching keys in mtoCommonSolutionContactMisc
 export type ModeType =
   | 'addTeamMailbox'
   | 'addTeamMember'

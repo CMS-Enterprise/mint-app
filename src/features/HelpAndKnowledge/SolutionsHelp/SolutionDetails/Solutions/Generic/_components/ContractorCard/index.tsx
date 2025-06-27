@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Card, CardBody } from '@trussworks/react-uswds';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import ContractorModal from '../ContractorModal';
 import RemoveContactModal from '../RemoveContactModal';
 
 const ContractorCard = ({
@@ -11,11 +12,19 @@ const ContractorCard = ({
   contractor: SolutionContractorType;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const [isEditContarctorModalOpen, setIsEditContarctorModalOpen] =
+    useState(false);
   const [isRemoveContarctorModalOpen, setIsRemoveContarctorModalOpen] =
     useState(false);
 
   return (
     <div className="margin-bottom-3">
+      <ContractorModal
+        isModalOpen={isEditContarctorModalOpen}
+        mode="editContractor"
+        contractor={contractor}
+        closeModal={() => setIsEditContarctorModalOpen(false)}
+      />
       <RemoveContactModal
         isModalOpen={isRemoveContarctorModalOpen}
         closeModal={() => setIsRemoveContarctorModalOpen(false)}
@@ -42,7 +51,12 @@ const ContractorCard = ({
       </Card>
 
       <div>
-        <Button type="button" className="margin-right-2" unstyled>
+        <Button
+          type="button"
+          className="margin-right-2"
+          unstyled
+          onClick={() => setIsEditContarctorModalOpen(true)}
+        >
           {t('edit')}
         </Button>
         <Button
