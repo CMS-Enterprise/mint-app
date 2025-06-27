@@ -1,10 +1,9 @@
 import React from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import { mtoCommonSolutionContractorMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 
 import AddContractorForm from '../AddContractorForm';
 import EditContractorForm from '../EditContractorForm';
@@ -23,6 +22,8 @@ const ContractorModal = ({
   mode: ModeType;
   contractor?: SolutionContractorType;
 }) => {
+  const { t } = useTranslation('mtoCommonSolutionContractorMisc');
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -32,11 +33,11 @@ const ContractorModal = ({
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {mtoCommonSolutionContractorMisc[mode].title}
+          {t(`${mode}.title`)}
         </PageHeading>
         <p className="text-base margin-y-1">
           <Trans
-            i18nKey={mtoCommonSolutionContractorMisc.allFieldsRequired}
+            i18nKey={t('allFieldsRequired')}
             components={{
               s: <span className="text-error" />
             }}

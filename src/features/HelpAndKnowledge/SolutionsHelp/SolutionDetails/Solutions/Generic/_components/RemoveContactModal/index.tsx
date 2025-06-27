@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Button } from '@trussworks/react-uswds';
 import {
   SolutionContactType,
@@ -14,21 +14,8 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
-import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
-import { mtoCommonSolutionContractorMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 
 type ContactType = 'teamOrMember' | 'owner' | 'contractor';
-
-const getModalStrings = (contactType: ContactType) => {
-  switch (contactType) {
-    case 'teamOrMember':
-      return mtoCommonSolutionContactMisc.removePointOfContact;
-    case 'contractor':
-      return mtoCommonSolutionContractorMisc.removeContractor;
-    default:
-      throw new Error(`contact type ${contactType} is incorrect`);
-  }
-};
 
 const getUseMutation = (contactType: ContactType) => {
   switch (contactType) {
@@ -65,13 +52,28 @@ const RemoveContactModal = ({
   pointOfContact: SolutionContactType | SolutionContractorType;
   contactType: ContactType;
 }) => {
+  const { t: contactT } = useTranslation('mtoCommonSolutionContactMisc');
+  const { t: contractorT } = useTranslation('mtoCommonSolutionContractorMisc');
   const useMutation = getUseMutation(contactType);
   const [deleteContact] = useMutation();
   const { showMessage } = useMessage();
   const [hasMutationError, setHasMutationError] = useState(false);
 
-  const modalStrings = getModalStrings(contactType);
   const contactName = getContactName(pointOfContact);
+
+  // Field matching keys in removePointOfContact and removeContractor
+  const getModalStrings = (
+    field: 'title' | 'text' | 'cta' | 'success' | 'error'
+  ) => {
+    switch (contactType) {
+      case 'teamOrMember':
+        return contactT(`removePointOfContact.${field}`);
+      case 'contractor':
+        return contractorT(`removeContractor.${field}`);
+      default:
+        throw new Error(`contact type ${contactType} is incorrect`);
+    }
+  };
 
   const removePointOfContact = (id: string) => {
     deleteContact({
@@ -84,7 +86,7 @@ const RemoveContactModal = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={modalStrings.success}
+              i18nKey={getModalStrings('success')}
               values={{
                 contact: contactName
               }}
@@ -110,16 +112,16 @@ const RemoveContactModal = ({
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {modalStrings.title}
+          {getModalStrings('title')}
         </PageHeading>
         {hasMutationError && (
           <Alert type="error" slim headingLevel="h1">
-            {modalStrings.error}
+            {getModalStrings('error')}
           </Alert>
         )}
-        <p>{mtoCommonSolutionContactMisc.actionWarning}</p>
+        <p>{contactT('actionWarning')}</p>
         <Trans
-          i18nKey={modalStrings.text}
+          i18nKey={getModalStrings('text')}
           values={{
             contact: contactName
           }}
@@ -134,7 +136,7 @@ const RemoveContactModal = ({
             className="margin-right-3 margin-top-0 bg-error"
             onClick={() => removePointOfContact(pointOfContact.id)}
           >
-            {modalStrings.cta}
+            {getModalStrings('cta')}
           </Button>
 
           <Button
@@ -143,7 +145,7 @@ const RemoveContactModal = ({
             unstyled
             onClick={closeModal}
           >
-            {mtoCommonSolutionContactMisc.cancel}
+            {contactT('cancel')}
           </Button>
         </div>
       </div>
