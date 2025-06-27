@@ -191,7 +191,7 @@ const Timeline = () => {
                       <ConfirmLeave />
 
                       <Form
-                        className="desktop:grid-col-8 milestone-form margin-y-6"
+                        className="desktop:grid-col-8 timeline-form margin-y-6"
                         onSubmit={e => {
                           handleSubmit(e);
                           window.scrollTo(0, 0);
@@ -223,7 +223,7 @@ const Timeline = () => {
                                   <MINTDatePicker
                                     className="margin-top-0"
                                     fieldName="completeICIP"
-                                    id="Milestone-completeICIP"
+                                    id="timeline-completeICIP"
                                     label={timelineT('completeICIP.label')}
                                     placeHolder
                                     handleOnBlur={handleOnBlur}
@@ -249,7 +249,7 @@ const Timeline = () => {
                                 </legend>
 
                                 <label
-                                  htmlFor="Milestone-clearanceStarts"
+                                  htmlFor="timeline-clearanceStarts"
                                   className="text-base"
                                 >
                                   {timelineMiscT('clearanceInfo')}
@@ -258,7 +258,7 @@ const Timeline = () => {
                                 <div className="datepicker__wrapper text-normal">
                                   <MINTDatePicker
                                     fieldName="clearanceStarts"
-                                    id="Milestone-clearanceStarts"
+                                    id="timeline-clearanceStarts"
                                     label={timelineT('clearanceStarts.label')}
                                     boldLabel={false}
                                     placeHolder
@@ -275,7 +275,7 @@ const Timeline = () => {
 
                                   <MINTDatePicker
                                     fieldName="clearanceEnds"
-                                    id="Milestone-clearanceEnds"
+                                    id="timeline-clearanceEnds"
                                     label={timelineT('clearanceEnds.label')}
                                     boldLabel={false}
                                     placeHolder
@@ -318,7 +318,7 @@ const Timeline = () => {
                                 <MINTDatePicker
                                   className="margin-top-0"
                                   fieldName="announced"
-                                  id="Milestone-announced"
+                                  id="timeline-announced"
                                   label={timelineT('announced.label')}
                                   placeHolder
                                   handleOnBlur={handleOnBlur}
@@ -345,7 +345,7 @@ const Timeline = () => {
                               <div className="datepicker__wrapper">
                                 <MINTDatePicker
                                   fieldName="applicationsStart"
-                                  id="Milestone-applicationsStart"
+                                  id="timeline-applicationsStart"
                                   label={timelineT('applicationsStart.label')}
                                   boldLabel={false}
                                   placeHolder
@@ -361,7 +361,7 @@ const Timeline = () => {
 
                                 <MINTDatePicker
                                   fieldName="applicationsEnd"
-                                  id="Milestone-applicationsEnd"
+                                  id="timeline-applicationsEnd"
                                   label={timelineT('applicationsEnd.label')}
                                   boldLabel={false}
                                   placeHolder
@@ -402,7 +402,7 @@ const Timeline = () => {
                                 </legend>
 
                                 <label
-                                  htmlFor="Milestone-performancePeriodStarts"
+                                  htmlFor="timeline-performancePeriodStarts"
                                   className="text-base"
                                 >
                                   {timelineMiscT(
@@ -414,7 +414,7 @@ const Timeline = () => {
                               <div className="datepicker__wrapper">
                                 <MINTDatePicker
                                   fieldName="performancePeriodStarts"
-                                  id="Milestone-performancePeriodStarts"
+                                  id="timeline-performancePeriodStarts"
                                   label={timelineT(
                                     'performancePeriodStarts.label'
                                   )}
@@ -433,7 +433,7 @@ const Timeline = () => {
 
                                 <MINTDatePicker
                                   fieldName="performancePeriodEnds"
-                                  id="Milestone-performancePeriodEnds"
+                                  id="timeline-performancePeriodEnds"
                                   label={timelineT(
                                     'performancePeriodEnds.label'
                                   )}
@@ -477,7 +477,7 @@ const Timeline = () => {
                                 <MINTDatePicker
                                   fieldName="wrapUpEnds"
                                   className="margin-top-0"
-                                  id="Milestone-wrapUpEnds"
+                                  id="timeline-wrapUpEnds"
                                   label={timelineT('wrapUpEnds.label')}
                                   placeHolder
                                   handleOnBlur={handleOnBlur}
