@@ -8,7 +8,6 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Label,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -32,10 +31,8 @@ import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import useHandleMutation from 'hooks/useHandleMutation';
-import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
 
 import './index.scss';

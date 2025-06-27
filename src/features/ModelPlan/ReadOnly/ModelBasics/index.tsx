@@ -74,6 +74,8 @@ const ReadOnlyModelBasics = ({
     previousName => previousName !== modelName
   );
 
+  // TODO: Update this to use the new timeline data when available
+
   const {
     demoCode,
     amsModelID,
@@ -91,38 +93,17 @@ const ReadOnlyModelBasics = ({
     status
   } = allBasicsData;
 
+  const timelineConfig = {};
+
   // Removing unneeded configurations from basicsConfig
   // Removed configurations will be manually rendered
   const {
     demoCode: demoCodeRemoved,
     amsModelID: amsModelIDRemoved,
-    completeICIP: completeICIPRemoved,
-    clearanceStarts: clearanceStartsRemoved,
-    clearanceEnds: clearanceEndsRemoved,
-    announced: announcedRemoved,
-    applicationsStart: applicationsStartRemoved,
-    applicationsEnd: applicationsEndRemoved,
-    performancePeriodStarts: performancePeriodStartsRemoved,
-    performancePeriodEnds: performancePeriodEndsRemoved,
-    wrapUpEnds: wrapUpEndsRemoved,
-    highLevelNote: highLevelNoteRemoved,
     phasedIn: phasedInRemoved,
     phasedInNote: phasedInNoteRemoved,
     ...filteredBasicsConfig
   } = basicsConfig;
-
-  const timelineConfig = {
-    completeICIP: basicsConfig.completeICIP,
-    clearanceStarts: basicsConfig.clearanceStarts,
-    clearanceEnds: basicsConfig.clearanceEnds,
-    announced: basicsConfig.announced,
-    applicationsStart: basicsConfig.applicationsStart,
-    applicationsEnd: basicsConfig.applicationsEnd,
-    performancePeriodStarts: basicsConfig.performancePeriodStarts,
-    performancePeriodEnds: basicsConfig.performancePeriodEnds,
-    wrapUpEnds: basicsConfig.wrapUpEnds,
-    highLevelNote: basicsConfig.highLevelNote
-  };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;

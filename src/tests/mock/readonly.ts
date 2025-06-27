@@ -759,6 +759,11 @@ const summaryData: GetModelSummaryTypes = {
     id: '123',
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
+  timeline: {
+    __typename: 'PlanTimeline',
+    id: '123',
+    performancePeriodStarts: '2022-08-20T04:00:00Z'
+  },
   isCollaborator: true,
   echimpCRsAndTDLs: [
     {

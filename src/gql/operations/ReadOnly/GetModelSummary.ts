@@ -30,6 +30,10 @@ export default gql(/* GraphQL */ `
         id
         keyCharacteristics
       }
+      timeline {
+        id
+        performancePeriodStarts
+      }
       isCollaborator
       collaborators {
         userAccount {
