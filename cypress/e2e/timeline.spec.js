@@ -5,7 +5,36 @@ describe('The model timeline form', () => {
   });
 
   it('completes a the timeline form', () => {
-    cy.enterModelPlanCollaborationArea('Empty Plan');
+    cy.visit('/');
+
+    cy.contains('a', 'Start a new Model Plan').click();
+    cy.contains('h1', 'Start a new model plan');
+    cy.get('[data-testid="continue-link"]').click();
+
+    // General Model Plan Information
+
+    cy.get('#new-plan-model-name')
+      .type('My New Timeline Model Plan')
+      .should('have.value', 'My New Timeline Model Plan');
+
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/collaborators/
+      );
+    });
+
+    cy.get('[data-testid="page-loading"]').should('not.exist');
+
+    cy.get('[data-testid="continue-to-collaboration-area"]').click();
+
+    // renames a model plan
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaboration-area/);
+    });
+
+    cy.get('[data-testid="page-loading"]').should('not.exist');
 
     // Enter into DEA form
     cy.get('[data-testid="to-timeline"]').click();
@@ -55,18 +84,11 @@ describe('The model timeline form', () => {
     });
 
     cy.get('[data-testid="update-status-modal"]').should('exist');
+
+    cy.get('button').contains('Yes, update status').click();
+
+    cy.get('[data-testid="alert"]').contains(
+      'You have successfully updated the status to Cleared.'
+    );
   });
-
-  //   it('updates model status in modal dropdown', () => {
-  //     cy.enterModelPlanCollaborationArea('Enhancing Oncology Model');
-
-  //     cy.get('[data-testid="update-status-modal"]').should('exist');
-  //     cy.get('select').should('exist').select('In CMS clearance');
-
-  //     cy.contains('button', 'Yes, update status').click();
-
-  //     cy.get('[data-testid="alert"]').contains(
-  //       'You have successfully updated the status to In CMS clearance.'
-  //     );
-  //   });
 });
