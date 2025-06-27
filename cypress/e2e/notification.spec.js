@@ -299,43 +299,19 @@ describe('Notification Center', () => {
     cy.get('[aria-label="Home"]').click();
     cy.url().should('include', '/');
 
-    cy.enterModelPlanTaskList('Empty Plan');
-    cy.get('[data-testid="basics"]').click();
-    cy.url().should('include', '/basics');
+    cy.enterModelPlanCollaborationArea('Empty Plan');
 
-    cy.get(
-      '[data-testid="plan-basics-model-category-DISEASE_SPECIFIC_AND_EPISODIC"]'
-    )
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-    cy.get('#new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-    cy.contains('button', 'Next').click();
+    // Enter into timeline form
+    cy.get('[data-testid="to-timeline"]').click();
 
-    cy.url().should('include', '/overview');
-    cy.get('#ModelType-VOLUNTARY')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-    cy.contains('button', 'Next').click();
-
-    cy.url().should('include', '/milestones');
-    cy.get('#Milestone-completeICIP')
+    cy.url().should('include', '/timeline');
+    cy.get('#timeline-completeICIP')
       .type('2025-12-31')
       .should('have.value', '2025-12-31');
 
     cy.clickOutside();
 
-    cy.contains('button', 'Save and return to task list').click();
+    cy.contains('button', 'Save').click();
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
 
