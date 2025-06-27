@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   Fieldset,
@@ -20,9 +20,6 @@ import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import mtoCommonSolutionContact, {
-  mtoCommonSolutionContactMisc
-} from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 import dirtyInput from 'utils/formUtil';
 
 type FormValues = {
@@ -39,6 +36,8 @@ const EditTeamMemberForm = ({
   closeModal: () => void;
   teamMember: SolutionContactType;
 }) => {
+  const { t: contactT } = useTranslation('mtoCommonSolutionContact');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
       role: teamMember.role || '',
@@ -92,7 +91,7 @@ const EditTeamMemberForm = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={mtoCommonSolutionContactMisc.editTeamMember.success}
+              i18nKey={miscT('editTeamMember.success')}
               values={{
                 contact: teamMember.name
               }}
@@ -124,7 +123,7 @@ const EditTeamMemberForm = ({
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {mtoCommonSolutionContactMisc.editTeamMember.error}
+            {miscT('editTeamMember.error')}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -138,10 +137,10 @@ const EditTeamMemberForm = ({
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.name.label}
+                  {contactT('name.label')}
                 </Label>
                 <span className="text-base-dark">
-                  {mtoCommonSolutionContact.name.sublabel}
+                  {contactT('name.sublabel')}
                 </span>
 
                 <OktaUserSelect
@@ -170,13 +169,13 @@ const EditTeamMemberForm = ({
               validate: value => value !== 'default'
             }}
             render={({ field: { ref, ...field } }) => (
-              <FormGroup className="margin-top-0 margin-bottom-2">
+              <FormGroup className="margin-top-0">
                 <Label
                   htmlFor="team-member-role"
                   className="mint-body-normal maxw-none margin-bottom-1"
                   requiredMarker
                 >
-                  {mtoCommonSolutionContact.role.label}
+                  {contactT('role.label')}
                 </Label>
 
                 <TextInput
@@ -199,11 +198,8 @@ const EditTeamMemberForm = ({
                   {...field}
                   id="isPrimary"
                   testid="isPrimary"
-                  label={mtoCommonSolutionContact.isPrimary.label}
-                  subLabel={
-                    mtoCommonSolutionContactMisc.editTeamMember
-                      .PrimaryPocSubLabel
-                  }
+                  label={contactT('isPrimary.label')}
+                  subLabel={miscT('editTeamMember.primaryPocSubLabel')}
                   checked={Boolean(field.value)}
                   value="true"
                   onBlur={field.onBlur}
@@ -213,7 +209,7 @@ const EditTeamMemberForm = ({
                   disabled={teamMember.isPrimary}
                   icon={
                     <Tooltip
-                      label={mtoCommonSolutionContact.isPrimary.tooltips?.true}
+                      label={contactT('isPrimary.questionTooltip')}
                       position="top"
                       className="bg-white padding-0 text-base-dark"
                       style={{ gap: '0.25rem' }}
@@ -235,10 +231,8 @@ const EditTeamMemberForm = ({
                   {...field}
                   id="receiveEmails"
                   testid="receiveEmails"
-                  label={mtoCommonSolutionContact.receiveEmails.label}
-                  subLabel={
-                    mtoCommonSolutionContact.receiveEmails.sublabel || ''
-                  }
+                  label={contactT('receiveEmails.label')}
+                  subLabel={contactT('receiveEmails.sublabel') || ''}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
@@ -258,7 +252,7 @@ const EditTeamMemberForm = ({
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
-            i18nKey={mtoCommonSolutionContactMisc.alert}
+            i18nKey={miscT('alert')}
             components={{
               milestoneLibrary: (
                 <Button
@@ -279,7 +273,7 @@ const EditTeamMemberForm = ({
             disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
-            {mtoCommonSolutionContactMisc.saveChanges}
+            {miscT('saveChanges')}
           </Button>
           <Button
             type="button"
@@ -287,7 +281,7 @@ const EditTeamMemberForm = ({
             unstyled
             onClick={closeModal}
           >
-            {mtoCommonSolutionContactMisc.cancel}
+            {miscT('cancel')}
           </Button>
         </div>
       </Form>

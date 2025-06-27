@@ -65,7 +65,7 @@ const MailboxesAndTeamMembers = ({
       </div>
 
       {pointsOfContactSorted.map(contact => (
-        <MailboxAndTeamMemberCard pointOfContact={contact} key={contact.name} />
+        <MailboxAndTeamMemberCard pointOfContact={contact} key={contact.id} />
       ))}
     </div>
   );
