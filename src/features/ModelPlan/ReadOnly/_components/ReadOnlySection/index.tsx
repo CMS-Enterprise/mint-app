@@ -356,7 +356,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
     <ul className="margin-y-0 padding-left-3">
       {listValues.map((item: any, index: number) => (
         <Fragment key={`${id}--${item}`}>
-          <li className="font-sans-md line-height-sans-4">
+          <li className="mint-body-normal">
             {item}
 
             {tooltips && tooltips[index] && (
