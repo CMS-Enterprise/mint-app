@@ -40,14 +40,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
     mode: 'onChange'
   });
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { isValid },
-    watch,
-    setValue
-  } = methods;
+  const { control, handleSubmit, reset, watch, setValue } = methods;
 
   const { selectedSolution } = useModalSolutionState();
   const { showMessage } = useMessage();
@@ -119,7 +112,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
@@ -140,11 +133,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
                   ariaLabelledBy="label-team-member-name"
                   ariaDescribedBy="hint-team-member-name"
                   onChange={oktaUser =>
-                    oktaUser &&
-                    setValue(
-                      'userName',
-                      oktaUser.username ? oktaUser?.username : ''
-                    )
+                    setValue('userName', oktaUser ? oktaUser.username : '')
                   }
                 />
               </FormGroup>
@@ -242,7 +231,7 @@ const AddTeamMemberForm = ({ closeModal }: { closeModal: () => void }) => {
         <div className="margin-top-3 display-flex">
           <Button
             type="submit"
-            disabled={!isValid}
+            disabled={!watch('userName') || !watch('role')}
             className="margin-right-3 margin-top-0"
           >
             {miscT('addTeamMember.cta')}
