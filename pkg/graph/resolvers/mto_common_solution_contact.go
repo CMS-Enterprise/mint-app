@@ -369,7 +369,7 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 			)
 			if sendEmailErr != nil {
 				logger.Error(
-					"failed to send point of contact welcome email for create by user account",
+					"failed to send point of contact removal email",
 					zap.String("key", string(returnedContact.Key)),
 					zap.String("username", returnedContact.Name),
 					zap.Error(sendEmailErr),
