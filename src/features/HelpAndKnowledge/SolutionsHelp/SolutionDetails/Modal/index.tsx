@@ -140,7 +140,12 @@ const SolutionDetailsModal = ({
         <Header solution={solution} />
 
         {message && (
-          <Alert slim type="success" className="margin-x-4 margin-top-2">
+          <Alert
+            slim
+            type="success"
+            className="margin-x-4 margin-top-2"
+            closeAlert={clearMessage}
+          >
             {message}
           </Alert>
         )}
