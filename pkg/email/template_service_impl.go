@@ -112,6 +112,12 @@ var sharedFooterTemplate string
 //go:embed templates/shared_solution_poc_footer.html
 var sharedSolutionPOCFooterTemplate string
 
+//go:embed templates/shared_mto_common_solution_header.html
+var sharedMTOCommonSolutionHeaderTemplate string
+
+//go:embed templates/shared_mint_mailbox_footer.html
+var sharedMintMailboxFooterTemplate string
+
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -165,6 +171,60 @@ var dataExchangeApproachMarkedCompleteBodyTemplate string
 
 //go:embed templates/data_exchange_approach_marked_complete_subject.html
 var dataExchangeApproachMarkedCompleteSubjectTemplate string
+
+// MTOCommonSolutionOwnerAddedTemplateName is the template name for the owner added email
+const MTOCommonSolutionOwnerAddedTemplateName = "mto_common_solution_owner_added"
+
+//go:embed templates/mto_common_solution_owner_added_body.html
+var MTOCommonSolutionOwnerAddedBodyTemplate string
+
+//go:embed templates/mto_common_solution_owner_added_subject.html
+var MTOCommonSolutionOwnerAddedSubjectTemplate string
+
+// MTOCommonSolutionOwnerEditedTemplateName is the template name for the owner edited email
+const MTOCommonSolutionOwnerEditedTemplateName = "mto_common_solution_owner_edited"
+
+//go:embed templates/mto_common_solution_owner_edited_body.html
+var MTOCommonSolutionOwnerEditedBodyTemplate string
+
+//go:embed templates/mto_common_solution_owner_edited_subject.html
+var MTOCommonSolutionOwnerEditedSubjectTemplate string
+
+// MTOCommonSolutionPOCAddedTemplateName is the template name for the POC added email
+const MTOCommonSolutionPOCAddedTemplateName = "mto_common_solution_poc_added"
+
+//go:embed templates/mto_common_solution_poc_added_body.html
+var MTOCommonSolutionPOCAddedBodyTemplate string
+
+//go:embed templates/mto_common_solution_poc_added_subject.html
+var MTOCommonSolutionPOCAddedSubjectTemplate string
+
+// MTOCommonSolutionPOCEditedTemplateName is the template name for the POC edited email
+const MTOCommonSolutionPOCEditedTemplateName = "mto_common_solution_poc_edited"
+
+//go:embed templates/mto_common_solution_poc_edited_body.html
+var MTOCommonSolutionPOCEditedBodyTemplate string
+
+//go:embed templates/mto_common_solution_poc_edited_subject.html
+var MTOCommonSolutionPOCEditedSubjectTemplate string
+
+// MTOCommonSolutionPOCRemovedTemplateName is the template name for the POC removed email
+const MTOCommonSolutionPOCRemovedTemplateName = "mto_common_solution_poc_removed"
+
+//go:embed templates/mto_common_solution_poc_removed_body.html
+var MTOCommonSolutionPOCRemovedBodyTemplate string
+
+//go:embed templates/mto_common_solution_poc_removed_subject.html
+var MTOCommonSolutionPOCRemovedSubjectTemplate string
+
+// MTOCommonSolutionPOCWelcomeTemplateName is the template name for the POC welcome email
+const MTOCommonSolutionPOCWelcomeTemplateName = "mto_common_solution_poc_welcome"
+
+//go:embed templates/mto_common_solution_poc_welcome_body.html
+var MTOCommonSolutionPOCWelcomeBodyTemplate string
+
+//go:embed templates/mto_common_solution_poc_welcome_subject.html
+var MTOCommonSolutionPOCWelcomeSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -269,6 +329,30 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
+	if err := t.loadEmailTemplate(MTOCommonSolutionOwnerAddedTemplateName, MTOCommonSolutionOwnerAddedSubjectTemplate, MTOCommonSolutionOwnerAddedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionOwnerEditedTemplateName, MTOCommonSolutionOwnerEditedSubjectTemplate, MTOCommonSolutionOwnerEditedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionPOCAddedTemplateName, MTOCommonSolutionPOCAddedSubjectTemplate, MTOCommonSolutionPOCAddedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionPOCEditedTemplateName, MTOCommonSolutionPOCEditedSubjectTemplate, MTOCommonSolutionPOCEditedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionPOCRemovedTemplateName, MTOCommonSolutionPOCRemovedSubjectTemplate, MTOCommonSolutionPOCRemovedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionPOCWelcomeTemplateName, MTOCommonSolutionPOCWelcomeSubjectTemplate, MTOCommonSolutionPOCWelcomeBodyTemplate); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -287,11 +371,13 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_style.html":               sharedStyleTemplate,
-		"shared_header.html":              sharedHeaderTemplate,
-		"shared_footer.html":              sharedFooterTemplate,
-		"shared_access_banner.html":       sharedAccessBannerTemplate,
-		"shared_solution_poc_footer.html": sharedSolutionPOCFooterTemplate,
+		"shared_style.html":                      sharedStyleTemplate,
+		"shared_header.html":                     sharedHeaderTemplate,
+		"shared_footer.html":                     sharedFooterTemplate,
+		"shared_access_banner.html":              sharedAccessBannerTemplate,
+		"shared_solution_poc_footer.html":        sharedSolutionPOCFooterTemplate,
+		"shared_mto_common_solution_header.html": sharedMTOCommonSolutionHeaderTemplate,
+		"shared_mint_mailbox_footer.html":        sharedMintMailboxFooterTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
