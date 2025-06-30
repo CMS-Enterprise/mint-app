@@ -209,7 +209,16 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 				if !newTimeParsed.IsZero() {
 					newTimeVal = &newTimeParsed
 				}
+			case *time.Time:
+				if v != nil && !v.IsZero() {
+					newTimeVal = v
+				}
+			case time.Time:
+				if !v.IsZero() {
+					newTimeVal = &v
+				}
 			default:
+				fmt.Printf("Field %s: Unexpected type for new value: %T\n", field, v)
 				return false, nil, nil
 			}
 		}
