@@ -76,7 +76,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={miscT('addTeamMailbox.success')}
+              i18nKey="mtoCommonSolutionContactMisc:addTeamMailbox.success"
               values={{
                 contact: formData.mailboxTitle
               }}
@@ -184,7 +184,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
                     field.onChange(e.target.checked);
                   }}
                   label={contactT('isPrimary.label')}
-                  subLabel={contactT('isPrimary.sublabel') || ''}
+                  subLabel={contactT('isPrimary.sublabel')}
                   icon={
                     <Tooltip
                       label={contactT('isPrimary.questionTooltip')}
@@ -209,7 +209,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
                   {...field}
                   id="receiveEmails"
                   label={contactT('receiveEmails.label')}
-                  subLabel={contactT('receiveEmails.sublabel') || ''}
+                  subLabel={contactT('receiveEmails.sublabel')}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
@@ -228,23 +228,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
           className="margin-top-0 margin-bottom-2"
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
-          <Trans
-            i18nKey={miscT('alert')}
-            components={{
-              milestoneLibrary: (
-                <Button
-                  type="button"
-                  className="margin-top-0"
-                  unstyled
-                  onClick={() => {
-                    reset();
-                  }}
-                >
-                  {' '}
-                </Button>
-              )
-            }}
-          />
+          {miscT('alert')}
         </Alert>
         <div className="margin-top-3 display-flex">
           <Button

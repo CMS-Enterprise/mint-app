@@ -93,7 +93,7 @@ const EditTeamMailboxForm = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={miscT('editTeamMailbox.success')}
+              i18nKey="mtoCommonSolutionContactMisc:editTeamMailbox.success"
               values={{
                 contact: teamMailbox.name
               }}
@@ -232,7 +232,7 @@ const EditTeamMailboxForm = ({
                   id="receiveEmails"
                   testid="receiveEmails"
                   label={contactT('receiveEmails.label')}
-                  subLabel={contactT('receiveEmails.sublabel') || ''}
+                  subLabel={contactT('receiveEmails.sublabel')}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}

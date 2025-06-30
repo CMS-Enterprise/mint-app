@@ -91,7 +91,7 @@ const EditTeamMemberForm = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={miscT('editTeamMember.success')}
+              i18nKey="mtoCommonSolutionContactMisc:editTeamMember.success"
               values={{
                 contact: teamMember.name
               }}
@@ -232,7 +232,7 @@ const EditTeamMemberForm = ({
                   id="receiveEmails"
                   testid="receiveEmails"
                   label={contactT('receiveEmails.label')}
-                  subLabel={contactT('receiveEmails.sublabel') || ''}
+                  subLabel={contactT('receiveEmails.sublabel')}
                   checked={Boolean(field.value) || watch('isPrimary')}
                   value="true"
                   onBlur={field.onBlur}
