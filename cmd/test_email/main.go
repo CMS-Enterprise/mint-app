@@ -46,6 +46,10 @@ func main() {
 	// MTO Common Solution Contact emails for editable POC workflow
 	sendMTOCommonSolutionPOCWelcomeTestEmail(emailService, templateService, addressBook)
 	sendMTOCommonSolutionPOCRemovedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionPOCAddedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionPOCEditedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionOwnerAddedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionOwnerEditedTestEmail(emailService, templateService, addressBook)
 
 	// Model Plan Suggested Phase Emails
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, templateService, addressBook)
