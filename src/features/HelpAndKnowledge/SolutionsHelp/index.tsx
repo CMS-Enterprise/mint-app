@@ -55,6 +55,14 @@ export const findSolutionByRouteParam = (
   return [...solutions].find(solution => solution.route === route);
 };
 
+export const findSolutionByRouteEnumParam = (
+  enumParam: string | null | undefined,
+  solutions: HelpSolutionType[]
+): HelpSolutionType | undefined => {
+  if (!enumParam) return undefined;
+  return [...solutions].find(solution => solution.enum === enumParam);
+};
+
 // Query function to return solutions for matching name and acronym
 export const searchSolutions = (
   query: string,
@@ -77,7 +85,8 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const category = params.get('category') as OperationalSolutionCategoryRoute;
   const page = params.get('page');
-  const modal = params.get('solution');
+  const solutionEnumParam = params.get('solution-key');
+  const modal = params.get('solution') || solutionEnumParam;
 
   if (!page) {
     params.set('page', '1');
@@ -97,7 +106,9 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const [querySolutions, setQuerySolutions] =
     useState<HelpSolutionType[]>(helpSolutions);
 
-  const fromModal: boolean = prevPathname.includes('solution=');
+  const fromModal: boolean =
+    prevPathname.includes('solution=') ||
+    prevPathname.includes('solution-key=');
 
   // Resets the query on route or category change
   // Also preserves the query/scroll when the modal is open/closed
@@ -126,10 +137,9 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     : findCategoryMapByRouteParam(category, helpSolutions);
 
   // Solution to render in modal
-  const selectedSolution = findSolutionByRouteParam(
-    solution?.route || null,
-    helpSolutions
-  );
+  const selectedSolution = solutionEnumParam
+    ? findSolutionByRouteEnumParam(solution?.enum || null, helpSolutions)
+    : findSolutionByRouteParam(solution?.route || null, helpSolutions);
 
   if (loading) {
     return <PageLoading />;
