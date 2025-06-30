@@ -112,7 +112,7 @@ const ShareExportModal = ({
 
   // Submit handler for exporting PDF
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    contentRef: componentRef,
     documentTitle: exportFileName,
     onAfterPrint: () => {
       setPrintPDF(false);
