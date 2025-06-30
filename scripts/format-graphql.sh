@@ -21,8 +21,8 @@ echo "$changed" | awk '/^\[warn\] .*\.graphql$/ { sub(/^\[warn\] /, ""); print }
 changed_files_output=$(echo "$changed" | awk '/^\[warn\] .*\.graphql$/ { sub(/^\[warn\] /, ""); print }' | grep '.graphql')
 if [ -n "$changed_files_output" ]; then
   echo "$changed_files_output"
-  # output=$(eval yarn prettier --write $graphql_files --log-level silent)
-  eval yarn prettier --write $graphql_files --log-level silent
+  # format files and squash the output
+  eval yarn prettier --write $graphql_files --log-level silent > /dev/null 2>&1
 
 fi
 
