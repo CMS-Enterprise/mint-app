@@ -52,6 +52,15 @@ repos:
 
   - repo: local
     hooks:
+      - id: format-graphql
+        name: Format staged GraphQL files
+        entry: scripts/format-graphql.sh
+        language: script
+        types: [graphql]
+        pass_filenames: true
+
+  - repo: local
+    hooks:
     - id: dockerfilelint
       name: Lint Dockerfile
       entry: dockerfilelint
