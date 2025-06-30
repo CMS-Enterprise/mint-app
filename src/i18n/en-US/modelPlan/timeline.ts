@@ -226,7 +226,8 @@ export const timelineMisc: Record<string, string> = {
     'When the model will be active beginning with the go-live date',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
-  dontUpdate: 'Don’t update and return to model collaboration area'
+  dontUpdate: 'Don’t update and return to model collaboration area',
+  editDates: 'Edit dates'
 };
 
 export default timeline;

@@ -62,11 +62,11 @@ describe('Model Timeline page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/timeline'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-timeline'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/timeline">
+          <Route path="/models/:modelID/collaboration-area/model-timeline">
             <Timeline />
           </Route>
         </MockedProvider>

@@ -148,11 +148,11 @@ const AppRoutes = () => {
           <Redirect
             exact
             from="/models/:modelID/collaboration-area/task-list/basics/milestones"
-            to="/models/:modelID/collaboration-area/timeline"
+            to="/models/:modelID/collaboration-area/model-timeline"
           />
 
           <ProtectedRoute
-            path="/models/:modelID/collaboration-area/timeline"
+            path="/models/:modelID/collaboration-area/model-timeline"
             component={Timeline}
           />
 

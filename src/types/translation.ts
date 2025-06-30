@@ -333,17 +333,6 @@ export type TranslationBasicsForm = {
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
   note: TranslationFieldProperties;
-  // Milestones
-  completeICIP: TranslationFieldProperties;
-  clearanceStarts: TranslationFieldProperties;
-  clearanceEnds: TranslationFieldProperties;
-  announced: TranslationFieldProperties;
-  applicationsStart: TranslationFieldProperties;
-  applicationsEnd: TranslationFieldProperties;
-  performancePeriodStarts: TranslationFieldProperties;
-  performancePeriodEnds: TranslationFieldProperties;
-  highLevelNote: TranslationFieldProperties;
-  wrapUpEnds: TranslationFieldProperties;
   phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
   phasedInNote: TranslationFieldProperties;
   readyForReviewBy: TranslationFieldProperties;

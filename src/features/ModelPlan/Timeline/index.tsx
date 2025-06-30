@@ -523,7 +523,7 @@ const Timeline = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               history.push(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area`
                               )
                             }
                           >
