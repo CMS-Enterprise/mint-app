@@ -479,7 +479,7 @@ const EditMilestoneForm = ({
         facilitatedBy,
         facilitatedByOther,
         ...formChanges
-      } = dirtyInput(milestone, formData);
+      } = dirtyInput(formValues, formData);
 
       // Check if category has changed to determine if the category is dirty to add to payload
       let isCategoryDirty: boolean = false;
@@ -595,7 +595,8 @@ const EditMilestoneForm = ({
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
-      closeModal
+      closeModal,
+      formValues
     ]
   );
 
