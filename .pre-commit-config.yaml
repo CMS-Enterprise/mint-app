@@ -58,6 +58,8 @@ repos:
         language: script
         types: [graphql]
         pass_filenames: true
+        description: >
+          Formats .graphql files using Prettier. If files are changed, please re-stage and commit again.
 
   - repo: local
     hooks:
