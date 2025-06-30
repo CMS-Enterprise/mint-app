@@ -75,6 +75,7 @@ const SolutionDetailsModal = ({
   const solutionParam = params.get('solution');
   const readViewParam = params.get('view-solution');
   const selectSolutions = params.get('select-solutions');
+  const solutionEnumParam = params.get('solution-key');
   const section = params.get('section') || 'about';
 
   const { t } = useTranslation('helpAndKnowledge');
@@ -111,6 +112,10 @@ const SolutionDetailsModal = ({
     // Return to read view if opened from there
     if (readViewParam) {
       closeModalRoute = `${closeModalRoute}?view-solution=${readViewParam}`;
+    }
+
+    if (solutionEnumParam) {
+      closeModalRoute = setCloseRoute;
     }
 
     history.push(closeModalRoute, {
