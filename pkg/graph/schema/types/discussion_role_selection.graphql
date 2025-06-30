@@ -5,5 +5,5 @@ type DiscussionRoleSelection {
 
 extend type Query {
   mostRecentDiscussionRoleSelection: DiscussionRoleSelection
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

@@ -1,10 +1,10 @@
 enum DocumentType {
-  CONCEPT_PAPER,
-  POLICY_PAPER,
-  ICIP_DRAFT,
-  MARKET_RESEARCH,
-  DESIGN_PARAMETERS_MEMO,
-  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
+  CONCEPT_PAPER
+  POLICY_PAPER
+  ICIP_DRAFT
+  MARKET_RESEARCH
+  DESIGN_PARAMETERS_MEMO
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
   OTHER
 }
 
@@ -74,16 +74,15 @@ input PlanDocumentLinkInput {
 
 extend type Query {
   planDocument(id: UUID!): PlanDocument!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
   uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
   linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
-  deletePlanDocument(id: UUID!): Int!
-  @hasRole(role: MINT_USER)
+  deletePlanDocument(id: UUID!): Int! @hasRole(role: MINT_USER)
 }

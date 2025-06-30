@@ -51,9 +51,9 @@ enum ParticipantRiskType {
 }
 
 enum GainshareArrangementEligibility {
-  ALL_PROVIDERS,
-  SOME_PROVIDERS,
-  OTHER,
+  ALL_PROVIDERS
+  SOME_PROVIDERS
+  OTHER
   NO
 }
 
@@ -85,9 +85,9 @@ enum ProviderLeaveType {
 }
 
 enum ParticipantRequireFinancialGuaranteeType {
-  SURETY_BOND,
-  LETTER_OF_CREDIT,
-  ESCROW,
+  SURETY_BOND
+  LETTER_OF_CREDIT
+  ESCROW
   OTHER
 }
 
@@ -99,80 +99,79 @@ type PlanParticipantsAndProviders {
   modelPlanID: UUID!
 
   #Page 1
-  participants:                      [ParticipantsType!]!
-  medicareProviderType:              String
+  participants: [ParticipantsType!]!
+  medicareProviderType: String
   isNewTypeOfProvidersOrSuppliers: Boolean
-  statesEngagement:                  String
-  participantsOther:                 String
-  participantsNote:                  String
-  participantsCurrentlyInModels:     Boolean
+  statesEngagement: String
+  participantsOther: String
+  participantsNote: String
+  participantsCurrentlyInModels: Boolean
   participantsCurrentlyInModelsNote: String
-  modelApplicationLevel:             String
+  modelApplicationLevel: String
 
   #Page 2
   expectedNumberOfParticipants: Int
-  estimateConfidence:           ConfidenceType
-  confidenceNote:               String
-  recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String
-  recruitmentNote:              String
-  selectionMethod:              [ParticipantSelectionType!]!
-  selectionOther:               String
-  selectionNote:                String
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  recruitmentMethod: RecruitmentType
+  recruitmentOther: String
+  recruitmentNote: String
+  selectionMethod: [ParticipantSelectionType!]!
+  selectionOther: String
+  selectionNote: String
 
   #Page 3
-  participantAddedFrequency:                 [FrequencyType!]!
-  participantAddedFrequencyContinually:      String
-  participantAddedFrequencyOther:            String
-  participantAddedFrequencyNote:             String
-  participantRemovedFrequency:               [FrequencyType!]!
-  participantRemovedFrequencyContinually:    String
-  participantRemovedFrequencyOther:          String
-  participantRemovedFrequencyNote:           String
-  communicationMethod:   [ParticipantCommunicationType!]!
-  communicationMethodOther:   String
-  communicationNote:     String
-  riskType:              [ParticipantRiskType!]!
-  riskOther:             String
-  riskNote:              String
-  willRiskChange:        Boolean
-  willRiskChangeNote:    String
+  participantAddedFrequency: [FrequencyType!]!
+  participantAddedFrequencyContinually: String
+  participantAddedFrequencyOther: String
+  participantAddedFrequencyNote: String
+  participantRemovedFrequency: [FrequencyType!]!
+  participantRemovedFrequencyContinually: String
+  participantRemovedFrequencyOther: String
+  participantRemovedFrequencyNote: String
+  communicationMethod: [ParticipantCommunicationType!]!
+  communicationMethodOther: String
+  communicationNote: String
+  riskType: [ParticipantRiskType!]!
+  riskOther: String
+  riskNote: String
+  willRiskChange: Boolean
+  willRiskChangeNote: String
 
   #Page 4
   participantRequireFinancialGuarantee: Boolean
   participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]!
   participantRequireFinancialGuaranteeOther: String
   participantRequireFinancialGuaranteeNote: String
-  coordinateWork:          Boolean
-  coordinateWorkNote:      String
-  gainsharePayments:       Boolean
+  coordinateWork: Boolean
+  coordinateWorkNote: String
+  gainsharePayments: Boolean
   gainsharePaymentsTrack: Boolean
-  gainsharePaymentsNote:   String
+  gainsharePaymentsNote: String
   gainsharePaymentsEligibility: [GainshareArrangementEligibility!]!
   gainsharePaymentsEligibilityOther: String
-  participantsIds:         [ParticipantsIDType!]!
-  participantsIdsOther:    String
-  participantsIDSNote:     String
+  participantsIds: [ParticipantsIDType!]!
+  participantsIdsOther: String
+  participantsIDSNote: String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyType!]!
+  providerAdditionFrequency: [FrequencyType!]!
   providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
-  providerAdditionFrequencyNote:  String
-  providerAddMethod:              [ProviderAddType!]!
-  providerAddMethodOther:         String
-  providerAddMethodNote:          String
-  providerLeaveMethod:            [ProviderLeaveType!]!
-  providerLeaveMethodOther:       String
-  providerLeaveMethodNote:        String
-  providerRemovalFrequency:       [FrequencyType!]!
+  providerAdditionFrequencyNote: String
+  providerAddMethod: [ProviderAddType!]!
+  providerAddMethodOther: String
+  providerAddMethodNote: String
+  providerLeaveMethod: [ProviderLeaveType!]!
+  providerLeaveMethodOther: String
+  providerLeaveMethodNote: String
+  providerRemovalFrequency: [FrequencyType!]!
   providerRemovalFrequencyContinually: String
-  providerRemovalFrequencyOther:  String
-  providerRemovalFrequencyNote:   String
-  providerOverlap:                OverlapType
-  providerOverlapHierarchy:       String
-  providerOverlapNote:            String
-
+  providerRemovalFrequencyOther: String
+  providerRemovalFrequencyNote: String
+  providerOverlap: OverlapType
+  providerOverlapHierarchy: String
+  providerOverlapNote: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -197,86 +196,89 @@ providers and participants object when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
 https://gqlgen.com/reference/changesets/
 """
-input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
+input PlanParticipantsAndProvidersChanges
+  @goModel(model: "map[string]interface{}") {
   #Page 1
-  participants:                      [ParticipantsType!]
-  medicareProviderType:              String
+  participants: [ParticipantsType!]
+  medicareProviderType: String
   isNewTypeOfProvidersOrSuppliers: Boolean
-  statesEngagement:                  String
-  participantsOther:                 String
-  participantsNote:                  String
-  participantsCurrentlyInModels:     Boolean
+  statesEngagement: String
+  participantsOther: String
+  participantsNote: String
+  participantsCurrentlyInModels: Boolean
   participantsCurrentlyInModelsNote: String
-  modelApplicationLevel:             String
+  modelApplicationLevel: String
 
   #Page 2
   expectedNumberOfParticipants: Int
-  estimateConfidence:           ConfidenceType
-  confidenceNote:               String
-  recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String
-  recruitmentNote:              String
-  selectionMethod:              [ParticipantSelectionType!]
-  selectionOther:               String
-  selectionNote:                String
+  estimateConfidence: ConfidenceType
+  confidenceNote: String
+  recruitmentMethod: RecruitmentType
+  recruitmentOther: String
+  recruitmentNote: String
+  selectionMethod: [ParticipantSelectionType!]
+  selectionOther: String
+  selectionNote: String
 
   #Page 3
-  participantAddedFrequency:                 [FrequencyType!]
-  participantAddedFrequencyContinually:      String
-  participantAddedFrequencyOther:            String
-  participantAddedFrequencyNote:             String
-  participantRemovedFrequency:               [FrequencyType!]
-  participantRemovedFrequencyContinually:    String
-  participantRemovedFrequencyOther:          String
-  participantRemovedFrequencyNote:           String
-  communicationMethod:   [ParticipantCommunicationType!]
-  communicationMethodOther:   String
-  communicationNote:     String
-  riskType:              [ParticipantRiskType!]
-  riskOther:             String
-  riskNote:              String
-  willRiskChange:        Boolean
-  willRiskChangeNote:    String
+  participantAddedFrequency: [FrequencyType!]
+  participantAddedFrequencyContinually: String
+  participantAddedFrequencyOther: String
+  participantAddedFrequencyNote: String
+  participantRemovedFrequency: [FrequencyType!]
+  participantRemovedFrequencyContinually: String
+  participantRemovedFrequencyOther: String
+  participantRemovedFrequencyNote: String
+  communicationMethod: [ParticipantCommunicationType!]
+  communicationMethodOther: String
+  communicationNote: String
+  riskType: [ParticipantRiskType!]
+  riskOther: String
+  riskNote: String
+  willRiskChange: Boolean
+  willRiskChangeNote: String
 
   #Page 4
   participantRequireFinancialGuarantee: Boolean
   participantRequireFinancialGuaranteeType: [ParticipantRequireFinancialGuaranteeType!]
   participantRequireFinancialGuaranteeOther: String
   participantRequireFinancialGuaranteeNote: String
-  coordinateWork:          Boolean
-  coordinateWorkNote:      String
-  gainsharePayments:       Boolean
+  coordinateWork: Boolean
+  coordinateWorkNote: String
+  gainsharePayments: Boolean
   gainsharePaymentsTrack: Boolean
-  gainsharePaymentsNote:   String
+  gainsharePaymentsNote: String
   gainsharePaymentsEligibility: [GainshareArrangementEligibility!]
   gainsharePaymentsEligibilityOther: String
-  participantsIds:         [ParticipantsIDType!]
-  participantsIdsOther:    String
-  participantsIDSNote:     String
+  participantsIds: [ParticipantsIDType!]
+  participantsIdsOther: String
+  participantsIDSNote: String
 
   #Page 5
-  providerAdditionFrequency:      [FrequencyType!]
+  providerAdditionFrequency: [FrequencyType!]
   providerAdditionFrequencyContinually: String
   providerAdditionFrequencyOther: String
-  providerAdditionFrequencyNote:  String
-  providerAddMethod:              [ProviderAddType!]
-  providerAddMethodOther:         String
-  providerAddMethodNote:          String
-  providerLeaveMethod:            [ProviderLeaveType!]
-  providerLeaveMethodOther:       String
-  providerLeaveMethodNote:        String
-  providerRemovalFrequency:       [FrequencyType!]
+  providerAdditionFrequencyNote: String
+  providerAddMethod: [ProviderAddType!]
+  providerAddMethodOther: String
+  providerAddMethodNote: String
+  providerLeaveMethod: [ProviderLeaveType!]
+  providerLeaveMethodOther: String
+  providerLeaveMethodNote: String
+  providerRemovalFrequency: [FrequencyType!]
   providerRemovalFrequencyContinually: String
-  providerRemovalFrequencyOther:  String
-  providerRemovalFrequencyNote:   String
-  providerOverlap:                OverlapType
-  providerOverlapHierarchy:       String
-  providerOverlapNote:            String
+  providerRemovalFrequencyOther: String
+  providerRemovalFrequencyNote: String
+  providerOverlap: OverlapType
+  providerOverlapHierarchy: String
+  providerOverlapNote: String
 
   status: TaskStatusInput
 }
 
 extend type Mutation {
-  updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-  @hasRole(role: MINT_USER)
+  updatePlanParticipantsAndProviders(
+    id: UUID!
+    changes: PlanParticipantsAndProvidersChanges!
+  ): PlanParticipantsAndProviders! @hasRole(role: MINT_USER)
 }

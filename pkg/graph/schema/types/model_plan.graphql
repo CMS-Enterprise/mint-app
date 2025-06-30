@@ -1,9 +1,9 @@
 enum ModelPlanFilter {
-  INCLUDE_ALL,
-  COLLAB_ONLY,
-  WITH_CR_TDLS,
-  FAVORITED,
-  APPROACHING_CLEARANCE,
+  INCLUDE_ALL
+  COLLAB_ONLY
+  WITH_CR_TDLS
+  FAVORITED
+  APPROACHING_CLEARANCE
 }
 
 enum ModelStatus {
@@ -28,15 +28,15 @@ enum SortDirection {
 }
 
 enum ModelViewFilter {
-  CCW, # CHRONIC_CONDITIONS_WAREHOUSE
-  CMMI, # CMMI_COST_ESTIMATE
-  CBOSC, # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
-  DFSDM, # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
-  IPC, # INNOVATION_PAYMENT_CONTRACTOR
-  IDDOC, # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
-  MDM, # MASTER_DATA_MANAGEMENT
-  OACT, # OFFICE_OF_THE_ACTUARY
-  PBG, # PROVIDER_BILLING_GROUP
+  CCW # CHRONIC_CONDITIONS_WAREHOUSE
+  CMMI # CMMI_COST_ESTIMATE
+  CBOSC # CONSOLIDATED_BUSINESS_OPERATIONS_SUPPORT_CENTER
+  DFSDM # DIVISION_OF_FINANCIAL_SERVICES_AND_DEBT_MANAGEMENT
+  IPC # INNOVATION_PAYMENT_CONTRACTOR
+  IDDOC # INNOVATIVE_DESIGN_DEVELOPMENT_AND_OPERATIONS_CONTRACT
+  MDM # MASTER_DATA_MANAGEMENT
+  OACT # OFFICE_OF_THE_ACTUARY
+  PBG # PROVIDER_BILLING_GROUP
 }
 """
 ModelShareSection is the section of the model plan that is being shared.
@@ -45,35 +45,34 @@ enum ModelShareSection {
   # """
   # Include all sections below
   # """
-  ALL, #go to readview
+  ALL #go to readview
   """
   Just share the model plan
   """
-  MODEL_PLAN, #go to readview
+  MODEL_PLAN #go to readview
   """
   Share all MTO info
   """
-  MTO_ALL,#go to Milestones readview/milestones
+  MTO_ALL #go to Milestones readview/milestones
   """
   Only share MTO Milestones
   """
-  MTO_MILESTONES, #go to Milestones readview/milestones
+  MTO_MILESTONES #go to Milestones readview/milestones
   """
   Only share MTO Solutions
   """
-  MTO_SOLUTIONS,# readview/solutions-and-it-systems
+  MTO_SOLUTIONS # readview/solutions-and-it-systems
   # DATA_EXCHANGE_APPROACH,
   # TEAM,
-
 }
 
 enum ModelPhase {
-  ICIP_COMPLETE,
-  IN_CLEARANCE,
-  CLEARED,
-  ANNOUNCED,
-  ACTIVE,
-  ENDED,
+  ICIP_COMPLETE
+  IN_CLEARANCE
+  CLEARED
+  ANNOUNCED
+  ACTIVE
+  ENDED
 }
 
 """
@@ -121,7 +120,7 @@ type ModelPlan {
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
   """
-  Most recent edit to the model plan. 
+  Most recent edit to the model plan.
   This returns the most recent edit, that doesn't require privileges to view.
   We do this so that the view is consistent for all users, regardless of their role.
   """
@@ -146,24 +145,27 @@ input ModelPlanChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Query {
-  modelPlan(id: UUID!): ModelPlan!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  modelPlan(id: UUID!): ModelPlan! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
   modelPlanCollection(filter: ModelPlanFilter! = COLLAB_ONLY): [ModelPlan!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  createModelPlan(modelName: String!): ModelPlan!
-  @hasRole(role: MINT_USER)
+  createModelPlan(modelName: String!): ModelPlan! @hasRole(role: MINT_USER)
 
   updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
   """
   ShareModelPlan allows a user to share a model plan with other users.
   if both a view filter and a section are provided, the view filter will be ignored
   """
-  shareModelPlan(modelPlanID: UUID!, viewFilter: ModelViewFilter,modelShareSection: ModelShareSection, usernames: [String!]!, optionalMessage: String): Boolean!
-  @hasRole(role: MINT_USER)
+  shareModelPlan(
+    modelPlanID: UUID!
+    viewFilter: ModelViewFilter
+    modelShareSection: ModelShareSection
+    usernames: [String!]!
+    optionalMessage: String
+  ): Boolean! @hasRole(role: MINT_USER)
 }
