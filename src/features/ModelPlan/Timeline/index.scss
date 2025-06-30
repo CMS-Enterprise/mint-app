@@ -1,0 +1,13 @@
+@use 'viewports' as *;
+
+.timeline-form {
+  .datepicker__wrapper {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: units(3);
+
+    @media screen and (max-width: $desktop) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -126,59 +126,6 @@ describe('The Model Plan Form', () => {
       .type('The interventions')
       .should('have.value', 'The interventions');
 
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/basics\/milestones/
-      );
-    });
-
-    cy.get('[data-testid="fieldset"]').should('not.be.disabled');
-
-    cy.contains('h3', 'Anticipated high level timeline');
-
-    cy.get('#Milestone-completeICIP')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-clearanceStarts')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-clearanceEnds')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-announced')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-applicationsStart')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-applicationsEnd')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-performancePeriodStarts')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-performancePeriodEnds')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#Milestone-wrapUpEnds')
-      .type('05/23/2065')
-      .should('have.value', '05/23/2065');
-
-    cy.get('#phasedIn-true')
-      .first()
-      .check({ force: true })
-      .should('be.checked');
-
     cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
@@ -239,17 +186,4 @@ describe('The Model Plan Form', () => {
 
     cy.contains('tr', 'Empty Plan').get('[data-cy="unfavorited"]');
   });
-
-  // it('updates model status in modal dropdown', () => {
-  //   cy.enterModelPlanCollaborationArea('Enhancing Oncology Model');
-
-  //   cy.get('[data-testid="update-status-modal"]').should('exist');
-  //   cy.get('select').should('exist').select('In CMS clearance');
-
-  //   cy.contains('button', 'Yes, update status').click();
-
-  //   cy.get('[data-testid="alert"]').contains(
-  //     'You have successfully updated the status to In CMS clearance.'
-  //   );
-  // });
 });

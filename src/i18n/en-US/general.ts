@@ -60,8 +60,10 @@ const general = {
   helpText:
     "If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.",
   modelPlanStatus: 'Model Plan status',
+  modelTimelineStatus: 'Model timeline status',
   modelPlanCopy:
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
+  timelineReady: 'The model timeline is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
   validDate: 'Please use a valid date format.'
 };

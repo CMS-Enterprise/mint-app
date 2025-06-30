@@ -485,16 +485,6 @@ export const basicsMisc: Record<string, string> = {
   breadcrumb: 'Model basics',
   previousNames: 'Previous model names',
   validDate: 'Please use a valid date format',
-  highLevelTimeline: 'Anticipated high level timeline',
-  clearance: 'Clearance',
-  clearanceInfo:
-    'When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance',
-  applicationPeriod: 'Application period',
-  demonstrationPerformance: 'Performance period',
-  demonstrationPerformanceInfo:
-    'When the model will be active beginning with the go-live date',
-  milestonesInfo:
-    'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
   required1: 'All fields marked with ',
   required2: ' are required.',
   otherIdentifiers: 'Other identifiers',

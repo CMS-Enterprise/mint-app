@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetMilestones($id: UUID!) {
+  query getTimeline($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName
-      basics {
+      timeline {
         id
         completeICIP
         clearanceStarts
@@ -17,8 +17,6 @@ export default gql(/* GraphQL */ `
         performancePeriodEnds
         highLevelNote
         wrapUpEnds
-        phasedIn
-        phasedInNote
         readyForReviewByUserAccount {
           ...ReadyForReviewUserFragment
         }
