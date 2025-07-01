@@ -204,9 +204,11 @@ func sendMTOCommonSolutionPOCRemovedTestEmail(
 	addressBook email.AddressBook,
 ) {
 	contact := &models.MTOCommonSolutionContact{
-		Name:   "Jane Doe",
-		IsTeam: false,
-		Key:    "INNOVATION",
+		Name:      "Jane Doe",
+		IsTeam:    false,
+		Key:       "INNOVATION",
+		IsPrimary: false,
+		Email:     "jane.doe@example.com",
 	}
 
 	err := sendSolutionContactRemovedEmail(emailService, templateService, addressBook, contact)

@@ -116,7 +116,7 @@ var sharedSolutionPOCFooterTemplate string
 var sharedMTOCommonSolutionHeaderTemplate string
 
 //go:embed templates/shared_mint_mailbox_footer.html
-var sharedMintMailboxFooterTemplate string
+var sharedMintMailboxFooter string
 
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
@@ -377,7 +377,7 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 		"shared_access_banner.html":              sharedAccessBannerTemplate,
 		"shared_solution_poc_footer.html":        sharedSolutionPOCFooterTemplate,
 		"shared_mto_common_solution_header.html": sharedMTOCommonSolutionHeaderTemplate,
-		"shared_mint_mailbox_footer.html":        sharedMintMailboxFooterTemplate,
+		"shared_mint_mailbox_footer.html":        sharedMintMailboxFooter,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
