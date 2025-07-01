@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 
@@ -36,16 +35,6 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.Nil(basics.CMMIGroups)
 	suite.Nil(basics.TestInterventions)
 	suite.Nil(basics.Note)
-	suite.Nil(basics.CompleteICIP)
-	suite.Nil(basics.ClearanceStarts)
-	suite.Nil(basics.ClearanceEnds)
-	suite.Nil(basics.Announced)
-	suite.Nil(basics.ApplicationsStart)
-	suite.Nil(basics.ApplicationsEnd)
-	suite.Nil(basics.PerformancePeriodStarts)
-	suite.Nil(basics.PerformancePeriodEnds)
-	suite.Nil(basics.WrapUpEnds)
-	suite.Nil(basics.HighLevelNote)
 	suite.Nil(basics.PhasedIn)
 	suite.Nil(basics.PhasedInNote)
 }
@@ -93,9 +82,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 		"goal":           "Some goal",
 		"cmsCenters":     []string{"CMMI"},
 		"cmmiGroups":     []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		"completeICIP":   "2020-05-13T20:47:50.12Z",
 		"phasedIn":       true,
-		"highLevelNote":  "Some high level note",
 	}
 
 	updatedBasics, err := UpdatePlanBasics(
@@ -119,8 +106,6 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
 	suite.EqualValues(changes["cmsCenters"], updatedBasics.CMSCenters)
 	suite.EqualValues(changes["cmmiGroups"], updatedBasics.CMMIGroups)
-	suite.WithinDuration(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC), *updatedBasics.CompleteICIP, 0)
-	suite.EqualValues(changes["highLevelNote"], *updatedBasics.HighLevelNote)
 	suite.EqualValues(changes["phasedIn"], *updatedBasics.PhasedIn)
 	suite.Nil(updatedBasics.TestInterventions)
 	suite.Nil(updatedBasics.Note)

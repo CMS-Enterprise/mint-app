@@ -13,6 +13,9 @@ export default gql(/* GraphQL */ `
         basics {
           id
           modelCategory
+        }
+        timeline {
+          id
           performancePeriodStarts
           performancePeriodEnds
         }
