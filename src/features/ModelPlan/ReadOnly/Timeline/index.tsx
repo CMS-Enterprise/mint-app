@@ -92,7 +92,7 @@ const ReadOnlyModelTimeline = ({
         modifiedOrCreatedDts={
           allTimelineData.modifiedDts || allTimelineData.createdDts
         }
-        editDates
+        editDates={hasEditAccess && !filteredView}
       />
 
       {clearance && (
