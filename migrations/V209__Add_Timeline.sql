@@ -82,6 +82,22 @@ SELECT
     status
 FROM plan_basics;
 
+ALTER TABLE plan_basics DISABLE TRIGGER audit_trigger;
+
+ALTER TABLE plan_basics
+    DROP COLUMN complete_icip,
+    DROP COLUMN clearance_starts,
+    DROP COLUMN clearance_ends,
+    DROP COLUMN announced,
+    DROP COLUMN applications_starts,
+    DROP COLUMN applications_ends,
+    DROP COLUMN performance_period_starts,
+    DROP COLUMN performance_period_ends,
+    DROP COLUMN wrap_up_ends,
+    DROP COLUMN high_level_note;
+
+ALTER TABLE plan_basics ENABLE TRIGGER audit_trigger;
+
 -- Add audit configuration for the new plan_timeline table
 SELECT audit.AUDIT_TABLE(
     'public',

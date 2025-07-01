@@ -3,9 +3,6 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -23,9 +20,6 @@ func UpdatePlanBasics(
 	changes map[string]interface{},
 	principal authentication.Principal,
 	store *storage.Store,
-	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
-	addressBook email.AddressBook,
 ) (*models.PlanBasics, error) {
 	// Get existing basics
 	existing, err := store.PlanBasicsGetByID(logger, id)

@@ -98,9 +98,6 @@ func (s *Seeder) updatePlanTimeline(
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
 func (s *Seeder) updatePlanBasics(
 	ctx context.Context,
-	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
-	addressBook email.AddressBook,
 	mp *models.ModelPlan,
 	changes map[string]interface{},
 ) *models.PlanBasics {
@@ -118,9 +115,6 @@ func (s *Seeder) updatePlanBasics(
 		changes,
 		princ,
 		s.Config.Store,
-		emailService,
-		emailTemplateService,
-		addressBook,
 	)
 	if err != nil {
 		panic(err)
