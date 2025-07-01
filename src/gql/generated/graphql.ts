@@ -4294,7 +4294,7 @@ export type TranslatedAuditField = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   new?: Maybe<Scalars['Any']['output']>;
   newTranslated?: Maybe<Scalars['Any']['output']>;
-  /** Translated Label for questions that are no longer applicable  */
+  /** Translated Label for questions that are no longer applicable */
   notApplicableQuestions?: Maybe<Array<Scalars['String']['output']>>;
   old?: Maybe<Scalars['Any']['output']>;
   oldTranslated?: Maybe<Scalars['Any']['output']>;
@@ -4724,7 +4724,7 @@ export type UserNotificationPreferencesChanges = {
   taggedInDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
 };
 
-/** This is a wrapper for all information for a user  */
+/** This is a wrapper for all information for a user */
 export type UserNotifications = {
   __typename: 'UserNotifications';
   /** This includes all notifications */

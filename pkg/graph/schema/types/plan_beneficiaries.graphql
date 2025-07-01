@@ -27,14 +27,13 @@ enum SelectionMethodType {
 }
 
 enum YesNoType {
-  YES,
+  YES
   NO
 }
 
 """
 Plan Beneficiaries represents the the beneficiaries section of the task list
 """
-
 type PlanBeneficiaries {
   id: UUID!
   modelPlanID: UUID!
@@ -93,7 +92,6 @@ type PlanBeneficiaries {
 }
 
 input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
-
   #Page 1
   beneficiaries: [BeneficiariesType!]
   beneficiariesOther: String
@@ -134,6 +132,8 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Mutation {
-  updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
-  @hasRole(role: MINT_USER)
+  updatePlanBeneficiaries(
+    id: UUID!
+    changes: PlanBeneficiariesChanges!
+  ): PlanBeneficiaries! @hasRole(role: MINT_USER)
 }

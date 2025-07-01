@@ -7,7 +7,6 @@ enum MTOMilestoneStatus {
   COMPLETED
 }
 
-
 # MTOMilestone represents a Milestone that has been added to a Model Plan's MTO
 type MTOMilestone {
   # DB Fields
@@ -65,20 +64,29 @@ input MTOSolutionLinks {
 }
 
 extend type Mutation {
-  createMTOMilestoneCustom(modelPlanID: UUID!, name: String!, mtoCategoryID: UUID): MTOMilestone!
-  @hasRole(role: MINT_USER)
-  createMTOMilestoneCommon(modelPlanID: UUID!, commonMilestoneKey: MTOCommonMilestoneKey!, commonSolutions: [MTOCommonSolutionKey!]): MTOMilestone!
-  @hasRole(role: MINT_USER)
-  updateMTOMilestone(id: UUID!, changes: MTOMilestoneChanges!, solutionLinks: MTOSolutionLinks): MTOMilestone!
-  @hasRole(role: MINT_USER)
-  deleteMTOMilestone(id: UUID!): Boolean!
-  @hasRole(role: MINT_USER)
-  mtoMilestoneUpdateLinkedSolutions(id: UUID!, solutionLinks: MTOSolutionLinks!): [MTOSolution!]
-  @hasRole(role: MINT_USER)
+  createMTOMilestoneCustom(
+    modelPlanID: UUID!
+    name: String!
+    mtoCategoryID: UUID
+  ): MTOMilestone! @hasRole(role: MINT_USER)
+  createMTOMilestoneCommon(
+    modelPlanID: UUID!
+    commonMilestoneKey: MTOCommonMilestoneKey!
+    commonSolutions: [MTOCommonSolutionKey!]
+  ): MTOMilestone! @hasRole(role: MINT_USER)
+  updateMTOMilestone(
+    id: UUID!
+    changes: MTOMilestoneChanges!
+    solutionLinks: MTOSolutionLinks
+  ): MTOMilestone! @hasRole(role: MINT_USER)
+  deleteMTOMilestone(id: UUID!): Boolean! @hasRole(role: MINT_USER)
+  mtoMilestoneUpdateLinkedSolutions(
+    id: UUID!
+    solutionLinks: MTOSolutionLinks!
+  ): [MTOSolution!] @hasRole(role: MINT_USER)
 }
 
 extend type Query {
   mtoMilestone(id: UUID!): MTOMilestone!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
-

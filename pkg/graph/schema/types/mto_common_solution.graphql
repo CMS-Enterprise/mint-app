@@ -76,10 +76,9 @@ type MTOCommonSolution {
   #DB Fields
   name: String!
   key: MTOCommonSolutionKey!
-  type: MTOSolutionType! 
+  type: MTOSolutionType!
   subjects: [MTOCommonSolutionSubject!]!
   filterView: ModelViewFilter
-
 
   #Custom Resolvers
   """
@@ -87,10 +86,8 @@ type MTOCommonSolution {
   """
   isAdded: Boolean!
   contactInformation: MTOCommonSolutionContactInformation!
-
 }
 
 extend type Query {
-  mtoCommonSolutions: [MTOCommonSolution!]!
-  @hasRole(role: MINT_USER)
+  mtoCommonSolutions: [MTOCommonSolution!]! @hasRole(role: MINT_USER)
 }
