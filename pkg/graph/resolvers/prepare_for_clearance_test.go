@@ -124,9 +124,6 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		},
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		nil,
-		nil,
-		email.AddressBook{},
 	)
 	suite.NoError(err)
 	// Clearance start date is 15 days out & we've started by marking Basics as ready for clearance - should be "In Progress"

@@ -541,8 +541,8 @@ func sendPlanTimelineDateChangedEmails(
 }
 
 // TODO: How can this be simplified using struct tags?
-func getTimelineFieldDataMap() map[string]dateFieldData {
-	fieldData := map[string]dateFieldData{
+func getTimelineFieldDataMap() map[string]datePlanTimelineFieldData {
+	fieldData := map[string]datePlanTimelineFieldData{
 		"completeICIP": {
 			HumanReadableName: "Complete ICIP",
 			IsRange:           false,
