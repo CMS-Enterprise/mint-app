@@ -15,7 +15,7 @@ import (
 )
 
 // Fields is the resolver for the fields field.
-func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
+func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]any, error) {
 	return obj.Fields.ToInterface()
 }
 

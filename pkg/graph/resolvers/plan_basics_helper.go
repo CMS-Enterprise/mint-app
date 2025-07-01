@@ -209,6 +209,14 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 				if !newTimeParsed.IsZero() {
 					newTimeVal = &newTimeParsed
 				}
+			case *time.Time:
+				if v != nil && !v.IsZero() {
+					newTimeVal = v
+				}
+			case time.Time:
+				if !v.IsZero() {
+					newTimeVal = &v
+				}
 			default:
 				return false, nil, nil
 			}
