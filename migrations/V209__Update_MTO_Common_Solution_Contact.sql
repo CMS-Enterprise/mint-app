@@ -120,10 +120,10 @@ EXECUTE FUNCTION ENFORCE_SINGLE_PRIMARY_CONTACT();
 -- This needs to be part of a separate migration than the definition of contractor table to avoid issues with existing data 
 ALTER TYPE TABLE_NAME ADD VALUE 'mto_common_solution_contractor';
 
-CREATE UNIQUE INDEX uniq_user_id_per_solution_key
+CREATE UNIQUE INDEX IF NOT EXISTS uniq_user_id_per_solution_key
 ON mto_common_solution_contact (mto_common_solution_key, user_id)
 WHERE user_id IS NOT NULL;
 
-CREATE UNIQUE INDEX uniq_mailbox_address_per_solution_key
+CREATE UNIQUE INDEX IF NOT EXISTS uniq_mailbox_address_per_solution_key
 ON mto_common_solution_contact (mto_common_solution_key, mailbox_address)
 WHERE mailbox_address IS NOT NULL;
