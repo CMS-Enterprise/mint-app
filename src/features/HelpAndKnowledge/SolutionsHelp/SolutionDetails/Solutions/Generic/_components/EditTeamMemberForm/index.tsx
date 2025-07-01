@@ -166,7 +166,7 @@ const EditTeamMemberForm = ({
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0">

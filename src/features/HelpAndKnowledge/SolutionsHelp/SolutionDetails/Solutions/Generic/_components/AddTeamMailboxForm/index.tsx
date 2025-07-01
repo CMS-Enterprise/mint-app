@@ -117,7 +117,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
@@ -147,7 +147,7 @@ const AddTeamMailboxForm = ({ closeModal }: { closeModal: () => void }) => {
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0">

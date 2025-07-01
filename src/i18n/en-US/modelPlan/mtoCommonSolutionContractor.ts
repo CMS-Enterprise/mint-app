@@ -42,13 +42,14 @@ export const mtoCommonSolutionContractorMisc = {
   addContractor: {
     title: 'Add a contractor',
     cta: 'Add contractor',
-    success: 'You added {{-contractor}} as a contractor.',
+    success: 'You added <bold>{{-contractor}}</bold> as a contractor.',
     error:
       'There was an issue adding this contractor. Please try again, and if the problem persists, try again later.'
   },
   editContractor: {
     title: 'Edit contractor',
-    success: 'You updated contractor information for {{-contractor}}.',
+    success:
+      'You updated contractor information for <bold>{{-contractor}}</bold>.',
     error:
       'There was an issue editing this contractor. Please try again, and if the problem persists, try again later.'
   },

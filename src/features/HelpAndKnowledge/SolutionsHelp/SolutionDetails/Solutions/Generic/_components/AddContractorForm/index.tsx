@@ -9,15 +9,13 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import {
-  MtoCommonSolutionKey,
-  useCreateMtoCommonSolutionContractorMutation
-} from 'gql/generated/graphql';
+import { useCreateMtoCommonSolutionContractorMutation } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import dirtyInput from 'utils/formUtil';
 
 type FormValues = {
   contractorTitle: string;
@@ -59,18 +57,22 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
   }
 
   const onSubmit = (formData: FormValues) => {
+    const { contractorTitle, contractorName } = dirtyInput(
+      methods.formState.defaultValues,
+      formData
+    );
     create({
       variables: {
-        key: selectedSolution.key.toUpperCase() as MtoCommonSolutionKey,
-        contractorTitle: formData.contractorTitle,
-        contractorName: formData.contractorName
+        key: selectedSolution.enum,
+        contractorTitle,
+        contractorName
       }
     })
       .then(response => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={miscT('addContractor.success')}
+              i18nKey="mtoCommonSolutionContractorMisc:addContractor.success"
               values={{
                 contractor: formData.contractorName
               }}
@@ -91,8 +93,8 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
     <FormProvider {...methods}>
       <Form
         className="maxw-none"
-        data-testid="mailbox-form"
-        id="mailbox-form"
+        data-testid="add-contractor-form"
+        id="add-contractor-form"
         onSubmit={handleSubmit(onSubmit)}
       >
         {hasMutationError && (
@@ -110,8 +112,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
             name="contractorTitle"
             control={control}
             rules={{
-              required: false,
-              validate: value => value !== 'default'
+              required: false
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
@@ -137,7 +138,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
