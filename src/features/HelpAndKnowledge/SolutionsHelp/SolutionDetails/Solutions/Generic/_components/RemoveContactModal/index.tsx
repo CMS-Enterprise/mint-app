@@ -67,9 +67,15 @@ const RemoveContactModal = ({
   ) => {
     switch (contactType) {
       case 'teamOrMember':
-        return contactT(`removePointOfContact.${field}`);
+        return {
+          i18nKey: `mtoCommonSolutionContactMisc:removePointOfContact.${field}`,
+          text: contactT(`removePointOfContact.${field}`)
+        };
       case 'contractor':
-        return contractorT(`removeContractor.${field}`);
+        return {
+          i18nKey: `mtoCommonSolutionContractorMisc:removeContractor.${field}`,
+          text: contractorT(`removeContractor.${field}`)
+        };
       default:
         throw new Error(`contact type ${contactType} is incorrect`);
     }
@@ -86,7 +92,7 @@ const RemoveContactModal = ({
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey={getModalStrings('success')}
+              i18nKey={getModalStrings('success').i18nKey}
               values={{
                 contact: contactName
               }}
@@ -112,16 +118,16 @@ const RemoveContactModal = ({
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {getModalStrings('title')}
+          {getModalStrings('title').text}
         </PageHeading>
         {hasMutationError && (
           <Alert type="error" slim headingLevel="h1">
-            {getModalStrings('error')}
+            {getModalStrings('error').text}
           </Alert>
         )}
         <p>{contactT('actionWarning')}</p>
         <Trans
-          i18nKey={getModalStrings('text')}
+          i18nKey={getModalStrings('text').i18nKey}
           values={{
             contact: contactName
           }}
@@ -136,7 +142,7 @@ const RemoveContactModal = ({
             className="margin-right-3 margin-top-0 bg-error"
             onClick={() => removePointOfContact(pointOfContact.id)}
           >
-            {getModalStrings('cta')}
+            {getModalStrings('cta').text}
           </Button>
 
           <Button

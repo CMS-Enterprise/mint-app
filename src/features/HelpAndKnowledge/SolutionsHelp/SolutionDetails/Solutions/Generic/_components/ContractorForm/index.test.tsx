@@ -7,7 +7,7 @@ import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import EditContractorForm from './index';
+import ContractorForm from './index';
 
 const mocks = [...possibleSolutionsMock];
 
@@ -18,8 +18,8 @@ const contractor: SolutionContractorType = {
   contractorTitle: 'Zinnia Purple'
 };
 
-describe('Edit a contractor form', () => {
-  it('should render the contractor info accordingly', async () => {
+describe('Contractor form', () => {
+  it('should render edit the contractor info accordingly', async () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
@@ -29,7 +29,8 @@ describe('Edit a contractor form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditContractorForm
+              <ContractorForm
+                mode="editContractor"
                 closeModal={() => {}}
                 contractor={contractor}
               />
@@ -55,9 +56,10 @@ describe('Edit a contractor form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditContractorForm
+              <ContractorForm
+                mode="addContractor"
                 closeModal={() => {}}
-                contractor={contractor}
+                contractor={undefined}
               />
             </Route>
           </MessageProvider>

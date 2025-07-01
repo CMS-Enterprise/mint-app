@@ -48,6 +48,7 @@ export const mtoCommonSolutionContractorMisc = {
   },
   editContractor: {
     title: 'Edit contractor',
+    cta: 'Save Changes',
     success:
       'You updated contractor information for <bold>{{-contractor}}</bold>.',
     error:
@@ -65,7 +66,6 @@ export const mtoCommonSolutionContractorMisc = {
     'Fields marked with an asterisk ( <s>*</s> ) are required.',
   actionWarning: 'This action cannot be undone.',
   cancel: 'Cancel',
-  saveChanges: 'Save Changes',
   alert:
     'This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.'
 };

@@ -9,7 +9,11 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { useCreateMtoCommonSolutionContractorMutation } from 'gql/generated/graphql';
+import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  useCreateMtoCommonSolutionContractorMutation,
+  useUpdateMtoCommonSolutionContractorMutation
+} from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
@@ -17,20 +21,36 @@ import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
+import { ModeType } from '../ContractorModal';
+
 type FormValues = {
-  contractorTitle: string;
+  contractorTitle: string | null;
   contractorName: string;
 };
 
-const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
+const ContractorForm = ({
+  mode,
+  closeModal,
+  contractor = {
+    __typename: 'MTOCommonSolutionContractor',
+    id: 'not a real id',
+    contractorTitle: '',
+    contractorName: ''
+  }
+}: {
+  mode: ModeType;
+  closeModal: () => void;
+  contractor?: SolutionContractorType;
+}) => {
   const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
   const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      contractorTitle: '',
-      contractorName: ''
+      contractorTitle: contractor.contractorTitle,
+      contractorName: contractor.contractorName
     },
+
     mode: 'onChange'
   });
 
@@ -43,13 +63,8 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const { selectedSolution } = useModalSolutionState();
   const { showMessage } = useMessage();
-  const [create] = useCreateMtoCommonSolutionContractorMutation({
-    refetchQueries: [
-      {
-        query: GetMTOSolutionContacts
-      }
-    ]
-  });
+  const [create] = useCreateMtoCommonSolutionContractorMutation();
+  const [update] = useUpdateMtoCommonSolutionContractorMutation();
   const [hasMutationError, setHasMutationError] = useState(false);
 
   if (!selectedSolution) {
@@ -58,21 +73,47 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
 
   const onSubmit = (formData: FormValues) => {
     const { contractorTitle, contractorName } = dirtyInput(
-      methods.formState.defaultValues,
+      contractor,
       formData
     );
-    create({
-      variables: {
-        key: selectedSolution.enum,
-        contractorTitle,
-        contractorName
-      }
-    })
+
+    const promise =
+      mode === 'addContractor'
+        ? create({
+            variables: {
+              key: selectedSolution.enum,
+              contractorTitle,
+              contractorName
+            },
+            refetchQueries: [
+              {
+                query: GetMTOSolutionContacts
+              }
+            ]
+          })
+        : update({
+            variables: {
+              id: contractor.id,
+              changes: {
+                contractorTitle:
+                  contractorTitle === undefined
+                    ? undefined
+                    : contractorTitle || null,
+                contractorName
+              }
+            },
+            refetchQueries: [
+              {
+                query: GetMTOSolutionContacts
+              }
+            ]
+          });
+    promise
       .then(response => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey="mtoCommonSolutionContractorMisc:addContractor.success"
+              i18nKey={`mtoCommonSolutionContractorMisc:${mode}.success`}
               values={{
                 contractor: formData.contractorName
               }}
@@ -93,8 +134,8 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
     <FormProvider {...methods}>
       <Form
         className="maxw-none"
-        data-testid="add-contractor-form"
-        id="add-contractor-form"
+        data-testid="contractor-form"
+        id="contractor-form"
         onSubmit={handleSubmit(onSubmit)}
       >
         {hasMutationError && (
@@ -104,7 +145,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT('addContractor.error')}
+            {miscT(`${mode}.error`)}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>
@@ -127,6 +168,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
                   type="text"
                   {...field}
                   id="contractor-title"
+                  data-testid="contractor-title"
                   value={field.value || ''}
                 />
               </FormGroup>
@@ -154,6 +196,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
                   type="text"
                   {...field}
                   id="contractor-name"
+                  data-testid="contractor-name"
                   value={field.value || ''}
                 />
               </FormGroup>
@@ -167,7 +210,7 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
             disabled={!isValid}
             className="margin-right-3 margin-top-0"
           >
-            {miscT('addContractor.cta')}
+            {miscT(`${mode}.cta`)}
           </Button>
           <Button
             type="button"
@@ -186,4 +229,4 @@ const AddContractorForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-export default AddContractorForm;
+export default ContractorForm;

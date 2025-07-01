@@ -1,11 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Add a contractor form > should matches snapshot 1`] = `
+exports[`Contractor form > should matches snapshot 1`] = `
 <DocumentFragment>
   <form
     class="usa-form maxw-none"
-    data-testid="mailbox-form"
-    id="mailbox-form"
+    data-testid="edit-contractor-form"
+    id="edit-contractor-form"
   >
     <fieldset
       class="usa-fieldset"
@@ -24,7 +24,7 @@ exports[`Add a contractor form > should matches snapshot 1`] = `
         </label>
         <input
           class="usa-input"
-          data-testid="textInput"
+          data-testid="contractor-title"
           id="contractor-title"
           name="contractorTitle"
           type="text"
@@ -50,7 +50,7 @@ exports[`Add a contractor form > should matches snapshot 1`] = `
         </label>
         <input
           class="usa-input"
-          data-testid="textInput"
+          data-testid="contractor-name"
           id="contractor-name"
           name="contractorName"
           type="text"
@@ -67,7 +67,7 @@ exports[`Add a contractor form > should matches snapshot 1`] = `
         disabled=""
         type="submit"
       >
-        Add contractor
+        Save Changes
       </button>
       <button
         class="usa-button usa-button--unstyled margin-top-0"

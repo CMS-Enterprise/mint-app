@@ -5,8 +5,7 @@ import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import AddContractorForm from '../AddContractorForm';
-import EditContractorForm from '../EditContractorForm';
+import ContractorForm from '../ContractorForm';
 
 // Matching keys in mtoCommonSolutionContractorMisc
 export type ModeType = 'addContractor' | 'editContractor';
@@ -45,12 +44,11 @@ const ContractorModal = ({
         </p>
       </div>
 
-      {mode === 'addContractor' && (
-        <AddContractorForm closeModal={closeModal} />
-      )}
-      {mode === 'editContractor' && contractor && (
-        <EditContractorForm closeModal={closeModal} contractor={contractor} />
-      )}
+      <ContractorForm
+        mode={mode}
+        closeModal={closeModal}
+        contractor={contractor}
+      />
     </Modal>
   );
 };
