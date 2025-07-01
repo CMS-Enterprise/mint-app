@@ -35,6 +35,8 @@ const timelineMockData: GetTimelineType = {
     id: '000'
   },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  createdDts: '2022-05-12T15:01:39.190679Z',
+  modifiedDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
 };
 

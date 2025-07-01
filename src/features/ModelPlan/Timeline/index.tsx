@@ -42,7 +42,10 @@ type TimelineFormType = GetTimelineQuery['modelPlan']['timeline'];
 // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
 type InitialValueType = Omit<
   TimelineFormType,
-  'readyForReviewByUserAccount' | 'readyForReviewDts'
+  | 'readyForReviewByUserAccount'
+  | 'readyForReviewDts'
+  | 'createdDts'
+  | 'modifiedDts'
 >;
 
 const Timeline = () => {

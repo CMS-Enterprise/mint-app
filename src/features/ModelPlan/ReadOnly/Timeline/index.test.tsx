@@ -3,26 +3,24 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { ModelCategory } from 'gql/generated/graphql';
-import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
-import { modelBasicsMocks as mocks, modelID } from 'tests/mock/readonly';
+import { modelID, modelTimelineMocks as mocks } from 'tests/mock/readonly';
 
-import ReadOnlyModelBasics from './index';
+import ReadOnlyModelTimeline from './index';
 
 const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
-describe('Read Only Model Plan Summary -- Model Basics', () => {
+describe('Read Only Model Plan Summary -- Model timeline', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+        initialEntries={[`/models/${modelID}/read-only/model-timeline`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/model-basics">
-              <ReadOnlyModelBasics modelID={modelID} />
+            <Route path="/models/:modelID/read-only/model-timeline">
+              <ReadOnlyModelTimeline modelID={modelID} />
             </Route>
           </Provider>
         </MockedProvider>
@@ -30,18 +28,8 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('43532323')).toBeInTheDocument();
       expect(
-        screen.getByText(
-          i18next.t(`basics:modelCategory.options.${ModelCategory.STATE_BASED}`)
-        )
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          i18next.t(
-            `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
-          )
-        )
+        screen.getByText('Theses are my best guess notes')
       ).toBeInTheDocument();
     });
   });
@@ -49,12 +37,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+        initialEntries={[`/models/${modelID}/read-only/model-timeline`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/model-basics">
-              <ReadOnlyModelBasics modelID={modelID} />
+            <Route path="/models/:modelID/read-only/model-timeline">
+              <ReadOnlyModelTimeline modelID={modelID} />
             </Route>
           </Provider>
         </MockedProvider>
@@ -62,18 +50,8 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('43532323')).toBeInTheDocument();
       expect(
-        screen.getByText(
-          i18next.t(`basics:modelCategory.options.${ModelCategory.STATE_BASED}`)
-        )
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          i18next.t(
-            `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
-          )
-        )
+        screen.getByText('Theses are my best guess notes')
       ).toBeInTheDocument();
     });
 

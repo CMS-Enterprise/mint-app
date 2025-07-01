@@ -2130,29 +2130,19 @@ export type PlanBasics = {
 export type PlanBasicsChanges = {
   additionalModelCategories?: InputMaybe<Array<ModelCategory>>;
   amsModelID?: InputMaybe<Scalars['String']['input']>;
-  announced?: InputMaybe<Scalars['Time']['input']>;
-  applicationsEnd?: InputMaybe<Scalars['Time']['input']>;
-  applicationsStart?: InputMaybe<Scalars['Time']['input']>;
-  clearanceEnds?: InputMaybe<Scalars['Time']['input']>;
-  clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   cmmiGroups?: InputMaybe<Array<CmmiGroup>>;
   cmsCenters?: InputMaybe<Array<CmsCenter>>;
-  completeICIP?: InputMaybe<Scalars['Time']['input']>;
   demoCode?: InputMaybe<Scalars['String']['input']>;
   goal?: InputMaybe<Scalars['String']['input']>;
-  highLevelNote?: InputMaybe<Scalars['String']['input']>;
   modelCategory?: InputMaybe<ModelCategory>;
   modelType?: InputMaybe<Array<ModelType>>;
   modelTypeOther?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
-  performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
-  performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
   phasedIn?: InputMaybe<Scalars['Boolean']['input']>;
   phasedInNote?: InputMaybe<Scalars['String']['input']>;
   problem?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<TaskStatusInput>;
   testInterventions?: InputMaybe<Scalars['String']['input']>;
-  wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
 /** Represents plan basics translation data */
@@ -2160,23 +2150,14 @@ export type PlanBasicsTranslation = {
   __typename: 'PlanBasicsTranslation';
   additionalModelCategories: TranslationFieldWithOptions;
   amsModelID: TranslationField;
-  announced: TranslationField;
-  applicationsEnd: TranslationField;
-  applicationsStart: TranslationField;
-  clearanceEnds: TranslationField;
-  clearanceStarts: TranslationField;
   cmmiGroups: TranslationFieldWithOptions;
   cmsCenters: TranslationFieldWithOptions;
-  completeICIP: TranslationField;
   demoCode: TranslationField;
   goal: TranslationField;
-  highLevelNote: TranslationField;
   modelCategory: TranslationFieldWithOptions;
   modelType: TranslationFieldWithOptions;
   modelTypeOther: TranslationField;
   note: TranslationField;
-  performancePeriodEnds: TranslationField;
-  performancePeriodStarts: TranslationField;
   phasedIn: TranslationFieldWithOptions;
   phasedInNote: TranslationField;
   problem: TranslationField;
@@ -2186,7 +2167,6 @@ export type PlanBasicsTranslation = {
   readyForReviewDts: TranslationField;
   status: TranslationFieldWithOptions;
   testInterventions: TranslationField;
-  wrapUpEnds: TranslationField;
 };
 
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
