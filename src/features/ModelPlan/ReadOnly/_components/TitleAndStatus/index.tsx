@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
@@ -9,6 +10,7 @@ import {
   TaskStatus
 } from 'gql/generated/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import { formatDateLocal } from 'utils/date';
 
 type TitleAndStatusProps = {
@@ -20,6 +22,7 @@ type TitleAndStatusProps = {
   isViewingFilteredView?: boolean;
   status: ModelStatus | TaskStatus | DataExchangeApproachStatus | MtoStatus;
   modifiedOrCreatedDts?: string | null;
+  editDates?: boolean;
 };
 
 const TitleAndStatus = ({
@@ -30,10 +33,12 @@ const TitleAndStatus = ({
   subHeading,
   isViewingFilteredView,
   status,
-  modifiedOrCreatedDts
+  modifiedOrCreatedDts,
+  editDates
 }: TitleAndStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: timelineMiscT } = useTranslation('timelineMisc');
 
   return (
     <div>
@@ -62,12 +67,30 @@ const TitleAndStatus = ({
             {!!modifiedOrCreatedDts && (
               <p
                 className={classNames(
-                  'margin-y-0 text-normal margin-right-1 text-base'
+                  'margin-y-0 text-normal margin-right-1 text-base-dark'
                 )}
               >
                 {h('lastUpdate')}
                 {formatDateLocal(modifiedOrCreatedDts, 'MM/dd/yyyy')}
               </p>
+            )}
+
+            {editDates && (
+              <>
+                <div className="border-left-2px border-base-light margin-left-105 padding-left-2 height-2 margin-top-1px" />
+
+                <Icon.Edit
+                  className="margin-right-1 text-primary"
+                  data-testId="edit-icon"
+                />
+
+                <UswdsReactLink
+                  data-testId="edit-dates-link"
+                  to={`/models/${modelID}/collaboration-area/model-timeline`}
+                >
+                  {timelineMiscT('editDates')}
+                </UswdsReactLink>
+              </>
             )}
           </div>
         </div>

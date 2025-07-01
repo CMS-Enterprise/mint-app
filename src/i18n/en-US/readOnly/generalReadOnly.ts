@@ -10,8 +10,8 @@ const generalReadOnly = {
   hideSummary: 'Hide model summary',
   status: 'Status',
   updateStatus: 'Update this Model Plan',
-  lastUpdate: 'Model last updated ',
-  createdOn: 'Model created on ',
+  lastUpdate: 'Last updated ',
+  createdOn: 'Created on ',
   alert:
     'Information outlined in this Model Plan can change drastically until it’s been cleared.',
   contactInfo: {

@@ -1385,6 +1385,7 @@ export type TranslationTimeline = {
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
+  timeline: TranslationTimeline;
   generalCharacteristics: TranslationGeneralCharacteristics;
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
@@ -1403,23 +1404,23 @@ export type TranslationPlan = {
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
   mtoSolution: TranslationMTOSolutionCustom;
-  timeline: TranslationTimeline;
 };
 
 export type TranslationPlanSection =
   | TranslationPlan['basics']
+  | TranslationPlan['timeline']
   | TranslationPlan['beneficiaries']
   | TranslationPlan['generalCharacteristics']
   | TranslationPlan['participantsAndProviders']
   | TranslationPlan['beneficiaries']
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments']
-  | TranslationPlan['dataExchangeApproach']
-  | TranslationPlan['timeline'];
+  | TranslationPlan['dataExchangeApproach'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
   BASICS = 'basics',
+  TIMELINE = 'timeline',
   GENERAL_CHARACTERISTICS = 'generalCharacteristics',
   PARTICPANTS_AND_PROVIDERS = 'participantsAndProviders',
   BENEFICIARIES = 'beneficiaries',
@@ -1437,6 +1438,5 @@ export enum PlanSection {
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',
-  MTO_SOLUTION = 'mtoSolution',
-  TIMELINE = 'timeline'
+  MTO_SOLUTION = 'mtoSolution'
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { TaskStatus } from 'gql/generated/graphql';
+import i18next from 'i18next';
 
 import TitleAndStatus from './index';
 
@@ -97,5 +98,58 @@ describe('Title and Status component for Read Only Pages', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  const baseProps = {
+    modelID: '123',
+    clearance: false,
+    clearanceTitle: 'Clearance Title',
+    heading: 'Heading',
+    status: 'IN_PROGRESS',
+    modifiedOrCreatedDts: '2025-07-01T00:00:00Z'
+  };
+
+  it('renders editDates UI when editDates is true', () => {
+    render(
+      <TitleAndStatus
+        clearance={false}
+        clearanceTitle="Clearance"
+        heading="Regular Heading"
+        isViewingFilteredView={false}
+        status={TaskStatus.IN_PROGRESS}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        editDates
+      />
+    );
+    // Should render the edit icon
+    expect(screen.getByTestId('edit-icon')).toBeInTheDocument();
+    // Should render the edit dates link
+    expect(screen.getByTestId('edit-dates-link')).toBeInTheDocument();
+    // Should render the correct link href
+    expect(screen.getByTestId('edit-dates-link')).toHaveAttribute(
+      'href',
+      '/models/123/collaboration-area/model-timeline'
+    );
+    // Should render the correct link text
+    expect(screen.getByTestId('edit-dates-link')).toHaveTextContent(
+      i18next.t('timelineMisc:editDates')
+    );
+  });
+
+  it('does not render editDates UI when editDates is false', () => {
+    render(
+      <TitleAndStatus
+        clearance={false}
+        clearanceTitle="Clearance"
+        heading="Regular Heading"
+        isViewingFilteredView={false}
+        status={TaskStatus.IN_PROGRESS}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+      />
+    );
+    expect(screen.queryByTestId('edit-icon')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('edit-dates-link')).not.toBeInTheDocument();
   });
 });
