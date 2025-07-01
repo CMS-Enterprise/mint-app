@@ -7,6 +7,15 @@ export default gql(/* GraphQL */ `
   ) {
     modelPlan(id: $id) {
       id
+      timeline {
+        id
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
+        readyForClearanceDts
+        status
+      }
       basics {
         id
         readyForClearanceByUserAccount {

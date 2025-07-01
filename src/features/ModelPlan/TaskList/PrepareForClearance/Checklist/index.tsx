@@ -21,13 +21,15 @@ import {
   UpdateClearanceOpsEvalAndLearningMutationFn,
   UpdateClearanceParticipantsAndProvidersMutationFn,
   UpdateClearancePaymentsMutationFn,
+  UpdateClearanceTimelineMutationFn,
   useGetClearanceStatusesQuery,
   useUpdateClearanceBasicsMutation,
   useUpdateClearanceBeneficiariesMutation,
   useUpdateClearanceCharacteristicsMutation,
   useUpdateClearanceOpsEvalAndLearningMutation,
   useUpdateClearanceParticipantsAndProvidersMutation,
-  useUpdateClearancePaymentsMutation
+  useUpdateClearancePaymentsMutation,
+  useUpdateClearanceTimelineMutation
 } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -61,6 +63,7 @@ export const initialClearanceFormValues = {
 };
 
 export type ClearanceStatusesModelPlanFormType = {
+  timeline: ClearanceFormValues;
   basics: ClearanceFormValues;
   generalCharacteristics: ClearanceFormValues;
   participantsAndProviders: ClearanceFormValues;
@@ -71,6 +74,7 @@ export type ClearanceStatusesModelPlanFormType = {
 
 export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormType =
   {
+    timeline: { ...initialClearanceFormValues },
     basics: { ...initialClearanceFormValues },
     generalCharacteristics: { ...initialClearanceFormValues },
     participantsAndProviders: { ...initialClearanceFormValues },
@@ -80,6 +84,7 @@ export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormTyp
   };
 
 type MutationObjectType = {
+  timeline: UpdateClearanceTimelineMutationFn;
   basics: UpdateClearanceBasicsMutationFn;
   generalCharacteristics: UpdateClearanceCharacteristicsMutationFn;
   participantsAndProviders: UpdateClearanceParticipantsAndProvidersMutationFn;
@@ -136,6 +141,8 @@ const PrepareForClearanceCheckList = ({
 
   const modelPlan = modelPlanData || initialPrepareForClearanceValues;
 
+  const [updateTimeline] = useUpdateClearanceTimelineMutation();
+
   const [updateBasics] = useUpdateClearanceBasicsMutation();
 
   const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
@@ -152,6 +159,7 @@ const PrepareForClearanceCheckList = ({
 
   // Object to dynamically call each task list mutation within handleFormSubmit
   const clearanceMutations: MutationObjectType = {
+    timeline: updateTimeline,
     basics: updateBasics,
     generalCharacteristics: updateCharacteristics,
     participantsAndProviders: updateParticipantsAndProviders,

@@ -29,12 +29,14 @@ import './index.scss';
 export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
+  editDates?: boolean;
   filteredView?: FilterGroup;
 };
 
 const ReadOnlyModelTimeline = ({
   modelID,
   clearance,
+  editDates = true,
   filteredView
 }: ReadOnlyProps) => {
   const { t: timelineT } = useTranslation('timeline');
@@ -92,7 +94,7 @@ const ReadOnlyModelTimeline = ({
         modifiedOrCreatedDts={
           allTimelineData.modifiedDts || allTimelineData.createdDts
         }
-        editDates
+        editDates={editDates && hasEditAccess}
       />
 
       {clearance && (

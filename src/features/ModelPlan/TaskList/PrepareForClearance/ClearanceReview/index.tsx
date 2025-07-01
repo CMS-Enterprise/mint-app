@@ -14,6 +14,7 @@ import ReadOnlyModelBasics from 'features/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyOpsEvalAndLearning from 'features/ModelPlan/ReadOnly/OpsEvalAndLearning';
 import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
+import ReadOnlyModelTimeline from 'features/ModelPlan/ReadOnly/Timeline';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   PrepareForClearanceStatus,
@@ -25,13 +26,15 @@ import {
   UpdateClearanceOpsEvalAndLearningMutationFn,
   UpdateClearanceParticipantsAndProvidersMutationFn,
   UpdateClearancePaymentsMutationFn,
+  UpdateClearanceTimelineMutationFn,
   useGetClearanceStatusesQuery,
   useUpdateClearanceBasicsMutation,
   useUpdateClearanceBeneficiariesMutation,
   useUpdateClearanceCharacteristicsMutation,
   useUpdateClearanceOpsEvalAndLearningMutation,
   useUpdateClearanceParticipantsAndProvidersMutation,
-  useUpdateClearancePaymentsMutation
+  useUpdateClearancePaymentsMutation,
+  useUpdateClearanceTimelineMutation
 } from 'gql/generated/graphql';
 import {
   findLockedSection,
@@ -56,6 +59,7 @@ type ClearanceReviewProps = {
 };
 
 type MutationObjectType = {
+  'model-timeline': UpdateClearanceTimelineMutationFn;
   basics: UpdateClearanceBasicsMutationFn;
   characteristics: UpdateClearanceCharacteristicsMutationFn;
   'participants-and-providers': UpdateClearanceParticipantsAndProvidersMutationFn;
@@ -75,6 +79,7 @@ type RouteMapType = {
 
 // Mappping for url param to gql objects
 const routeMap: RouteMapType = {
+  'model-timeline': 'timeline',
   basics: 'basics',
   characteristics: 'generalCharacteristics',
   'participants-and-providers': 'participantsAndProviders',
@@ -89,6 +94,8 @@ const renderReviewTaskSection = (
   section: string
 ): JSX.Element => {
   switch (section) {
+    case 'model-timeline':
+      return <ReadOnlyModelTimeline modelID={modelID} clearance editDates />;
     case 'basics':
       return <ReadOnlyModelBasics modelID={modelID} clearance />;
     case 'characteristics':
@@ -146,6 +153,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       modelPlanSection as keyof ClearanceStatusesModelPlanFormType
     ].status === TaskStatus.READY_FOR_CLEARANCE;
 
+  const [updateTimeline] = useUpdateClearanceTimelineMutation();
+
   const [updateBasics] = useUpdateClearanceBasicsMutation();
 
   const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
@@ -162,6 +171,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   // Object to dynamically call each task list mutation within handleFormSubmit
   const clearanceMutations: MutationObjectType = {
+    'model-timeline': updateTimeline,
     basics: updateBasics,
     characteristics: updateCharacteristics,
     'participants-and-providers': updateParticipantsAndProviders,
