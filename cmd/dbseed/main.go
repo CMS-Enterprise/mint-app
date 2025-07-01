@@ -215,7 +215,7 @@ func (s *Seeder) SeedData() {
 		planWithTimeline,
 		map[string]interface{}{
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"clearanceStarts": now.AddDate(0, 3, 0),
+			"clearanceStarts": now.AddDate(0, 0, 10),
 			"highLevelNote":   "Some high level note",
 		},
 	)
