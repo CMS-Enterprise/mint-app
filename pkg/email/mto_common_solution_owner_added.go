@@ -5,6 +5,7 @@ import "github.com/cms-enterprise/mint-app/pkg/models"
 // SystemOwnerAddedSubjectContent defines the parameters necessary for the email subject.
 type SystemOwnerAddedSubjectContent struct {
 	SolutionAcronym string
+	SolutionName    string
 }
 
 // SystemOwnerAddedBodyContent defines the parameters necessary for the email body.
@@ -12,6 +13,7 @@ type SystemOwnerAddedBodyContent struct {
 	ClientAddress   string
 	Key             string
 	SolutionAcronym string
+	SolutionName    string
 	OwnerType       string
 }
 
@@ -19,6 +21,7 @@ type SystemOwnerAddedBodyContent struct {
 func NewSystemOwnerAddedBodyContent(
 	clientAddress string,
 	contact models.MTOCommonSolutionContact,
+	solutionName string,
 ) SystemOwnerAddedBodyContent {
 	ownerType := "User"
 	if contact.IsTeam {
@@ -29,5 +32,6 @@ func NewSystemOwnerAddedBodyContent(
 		Key:             string(contact.Key),
 		SolutionAcronym: string(contact.Key),
 		OwnerType:       ownerType,
+		SolutionName:    solutionName,
 	}
 }

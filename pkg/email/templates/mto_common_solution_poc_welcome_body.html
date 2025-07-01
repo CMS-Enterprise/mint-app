@@ -1,12 +1,11 @@
 {{template "shared_header.html"}}
-
 {{template "shared_mto_common_solution_header.html"}}
 
 <hr/>
 
 <p>
   MINT contains helpful information about a variety of operational solutions and IT systems, including points of contact.
-  You have been added as a point of contact for <strong>{{.SolutionAcronym}}</strong>.
+  You have been added as a point of contact for {{.SolutionName}}.
 </p>
 
 <br/>
@@ -18,15 +17,15 @@
 
 <br/>
 
-<p>
+<h2>
   <a href="{{.ClientAddress}}/help-and-knowledge/operational-solutions?solution-key={{.Key}}" style="font-weight: bold;">View operational solution in MINT</a>
-</p>
+</h2>
 
 <br/>
 
 <p>
   If you believe this to be an error, please email the MINT Team at 
-  <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.<br/>
+  <a href="mailto:MINTTeam@cms.hhs.gov" style="font-weight: normal;">MINTTeam@cms.hhs.gov</a>.<br/>
   You may also edit point of contact information or remove yourself as a point of contact via MINT.
 </p>
 
