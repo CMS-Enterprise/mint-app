@@ -343,6 +343,7 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 	suite.NoError(err)
 
 	timeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
 	dateStr := "2020-05-13T20:47:50.12Z"
 	dateVal, err := time.Parse(time.RFC3339Nano, dateStr)
 	suite.NoError(err)

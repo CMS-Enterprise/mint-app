@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cms-enterprise/mint-app/pkg/email"
-
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
@@ -92,9 +90,6 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		nil,
-		nil,
-		email.AddressBook{},
 	)
 
 	suite.NoError(err)
