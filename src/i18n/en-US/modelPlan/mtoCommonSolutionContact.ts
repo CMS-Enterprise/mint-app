@@ -126,30 +126,34 @@ export const mtoCommonSolutionContactMisc = {
   addTeamMember: {
     title: 'Add a team member',
     cta: 'Add team member',
-    success: 'You added {{-contact}} as a point of contact.',
+    success: 'You added <bold>{{-contact}}</bold> as a point of contact.',
     error:
       'There was an issue adding this point of contact. Please try again, and if the problem persists, try again later.'
   },
   editTeamMember: {
     title: 'Edit a team member',
+    cta: 'Save Changes',
     primaryPocSubLabel:
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
-    success: 'You updated point of contact information for {{-contact}}.',
+    success:
+      'You updated point of contact information for <bold>{{-contact}}</bold>.',
     error:
       'There was an issue editing this point of contact. Please try again, and if the problem persists, try again later.'
   },
   addTeamMailbox: {
     title: 'Add a team mailbox',
     cta: 'Add team mailbox',
-    success: 'You added {{-contact}} as a point of contact.',
+    success: 'You added <bold>{{-contact}}</bold> as a point of contact.',
     error:
       'There was an issue adding this team mailbox. Please try again, and if the problem persists, try again later.'
   },
   editTeamMailbox: {
     title: 'Edit a team mailbox',
+    cta: 'Save Changes',
     primaryPocSubLabel:
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
-    success: 'You updated point of contact information for {{-contact}}.',
+    success:
+      'You updated point of contact information for <bold>{{-contact}}</bold>.',
     error:
       'There was an issue edditing this team mailbox. Please try again, and if the problem persists, try again later.'
   },
@@ -165,7 +169,6 @@ export const mtoCommonSolutionContactMisc = {
     'Fields marked with an asterisk ( <s>*</s> ) are required.',
   actionWarning: 'This action cannot be undone.',
   cancel: 'Cancel',
-  saveChanges: 'Save Changes',
   alert:
     'This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.'
 };

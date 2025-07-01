@@ -7,7 +7,7 @@ import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import EditTeamMemberForm from './index';
+import TeamMemberForm from './index';
 
 const mocks = [...possibleSolutionsMock];
 
@@ -24,7 +24,7 @@ const team: SolutionContactType = {
   receiveEmails: false
 };
 
-describe('Edit a team member point of contact form', () => {
+describe('Team member point of contact form', () => {
   it('should render team member info accordingly', async () => {
     const { getByTestId, getByText } = render(
       <MemoryRouter
@@ -35,7 +35,11 @@ describe('Edit a team member point of contact form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditTeamMemberForm closeModal={() => {}} teamMember={team} />
+              <TeamMemberForm
+                mode="editTeamMember"
+                closeModal={() => {}}
+                teamMember={team}
+              />
             </Route>
           </MessageProvider>
         </MockedProvider>
@@ -62,7 +66,8 @@ describe('Edit a team member point of contact form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditTeamMemberForm
+              <TeamMemberForm
+                mode="editTeamMember"
                 closeModal={() => {}}
                 teamMember={{ ...team, isPrimary: true, receiveEmails: true }}
               />
@@ -88,7 +93,11 @@ describe('Edit a team member point of contact form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditTeamMemberForm closeModal={() => {}} teamMember={team} />
+              <TeamMemberForm
+                mode="addTeamMember"
+                closeModal={() => {}}
+                teamMember={team}
+              />
             </Route>
           </MessageProvider>
         </MockedProvider>

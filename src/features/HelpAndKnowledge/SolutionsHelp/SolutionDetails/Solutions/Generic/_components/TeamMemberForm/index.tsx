@@ -11,8 +11,12 @@ import {
   TextInput,
   Tooltip
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { useUpdateMtoCommonSolutionContactMutation } from 'gql/generated/graphql';
+import {
+  useCreateMtoCommonSolutionUserContactMutation,
+  useUpdateMtoCommonSolutionContactMutation
+} from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
@@ -22,6 +26,8 @@ import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
+import { TeamMemberModeType } from '../MailboxAndTeamMemberModal';
+
 type FormValues = {
   userName: string;
   role: string;
@@ -29,12 +35,23 @@ type FormValues = {
   receiveEmails: boolean;
 };
 
-const EditTeamMemberForm = ({
+const TeamMemberForm = ({
+  mode,
   closeModal,
-  teamMember
+  teamMember = {
+    __typename: 'MTOCommonSolutionContact',
+    id: 'not a real id',
+    name: '',
+    email: '',
+    isTeam: false,
+    isPrimary: false,
+    role: '',
+    receiveEmails: false
+  }
 }: {
+  mode: TeamMemberModeType;
   closeModal: () => void;
-  teamMember: SolutionContactType;
+  teamMember?: SolutionContactType;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
@@ -50,12 +67,20 @@ const EditTeamMemberForm = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty, dirtyFields, isValid },
-    watch
+    formState: { isSubmitting, isDirty, dirtyFields },
+    watch,
+    setValue
   } = methods;
 
   const { selectedSolution } = useModalSolutionState();
   const { showMessage } = useMessage();
+  const [create] = useCreateMtoCommonSolutionUserContactMutation({
+    refetchQueries: [
+      {
+        query: GetMTOSolutionContacts
+      }
+    ]
+  });
   const [update] = useUpdateMtoCommonSolutionContactMutation({
     refetchQueries: [
       {
@@ -66,10 +91,7 @@ const EditTeamMemberForm = ({
 
   const [hasMutationError, setHasMutationError] = useState(false);
   const disabledSubmitBtn =
-    isSubmitting ||
-    !isDirty ||
-    Object.keys(dirtyFields).length === 0 ||
-    !isValid;
+    isSubmitting || !isDirty || Object.keys(dirtyFields).length === 0;
 
   if (!selectedSolution) {
     return null;
@@ -77,23 +99,36 @@ const EditTeamMemberForm = ({
 
   const onSubmit = (formData: FormValues) => {
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
-    update({
-      variables: {
-        id: teamMember.id,
-        input: {
-          role,
-          isPrimary,
-          receiveEmails
-        }
-      }
-    })
+
+    const promise =
+      mode === 'addTeamMember'
+        ? create({
+            variables: {
+              key: selectedSolution.enum,
+              userName: formData.userName,
+              role: formData.role,
+              isPrimary: formData.isPrimary,
+              receiveEmails: formData.receiveEmails
+            }
+          })
+        : update({
+            variables: {
+              id: teamMember.id,
+              input: {
+                role,
+                isPrimary,
+                receiveEmails
+              }
+            }
+          });
+    promise
       .then(response => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey="mtoCommonSolutionContactMisc:editTeamMember.success"
+              i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
-                contact: teamMember.name
+                contact: formData.userName || teamMember.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -123,7 +158,7 @@ const EditTeamMemberForm = ({
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT('editTeamMember.error')}
+            {miscT(`${mode}.error`)}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -153,9 +188,13 @@ const EditTeamMemberForm = ({
                     displayName: teamMember.name,
                     email: teamMember.email
                   }}
-                  onChange={() => {}}
-                  className="disabled-input"
-                  disabled
+                  onChange={oktaUser =>
+                    setValue('userName', oktaUser ? oktaUser.username : '')
+                  }
+                  className={classNames({
+                    'disabled-input': mode === 'editTeamMember'
+                  })}
+                  disabled={mode === 'editTeamMember'}
                 />
               </FormGroup>
             )}
@@ -199,7 +238,11 @@ const EditTeamMemberForm = ({
                   id="isPrimary"
                   testid="isPrimary"
                   label={contactT('isPrimary.label')}
-                  subLabel={miscT('editTeamMember.primaryPocSubLabel')}
+                  subLabel={
+                    mode === 'addTeamMember'
+                      ? contactT('isPrimary.sublabel')
+                      : miscT('editTeamMember.primaryPocSubLabel')
+                  }
                   checked={Boolean(field.value)}
                   value="true"
                   onBlur={field.onBlur}
@@ -252,7 +295,7 @@ const EditTeamMemberForm = ({
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
           <Trans
-            i18nKey={miscT('alert')}
+            i18nKey="mtoCommonSolutionContactMisc:alert"
             components={{
               milestoneLibrary: (
                 <Button
@@ -270,10 +313,10 @@ const EditTeamMemberForm = ({
         <div className="margin-top-3 display-flex">
           <Button
             type="submit"
-            disabled={disabledSubmitBtn}
+            disabled={!watch('userName') || !watch('role') || disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
-            {miscT('saveChanges')}
+            {miscT(`${mode}.cta`)}
           </Button>
           <Button
             type="button"
@@ -289,4 +332,4 @@ const EditTeamMemberForm = ({
   );
 };
 
-export default EditTeamMemberForm;
+export default TeamMemberForm;

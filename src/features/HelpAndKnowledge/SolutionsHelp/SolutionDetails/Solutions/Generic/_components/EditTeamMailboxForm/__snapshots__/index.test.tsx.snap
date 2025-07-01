@@ -191,7 +191,7 @@ exports[`Edit a team mailbox point of contact form > should matches snapshot 1`]
         disabled=""
         type="submit"
       >
-        Save Changes
+        saveChanges
       </button>
       <button
         class="usa-button usa-button--unstyled margin-top-0"

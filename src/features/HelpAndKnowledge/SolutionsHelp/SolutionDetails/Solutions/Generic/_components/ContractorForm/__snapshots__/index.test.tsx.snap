@@ -4,8 +4,8 @@ exports[`Contractor form > should matches snapshot 1`] = `
 <DocumentFragment>
   <form
     class="usa-form maxw-none"
-    data-testid="edit-contractor-form"
-    id="edit-contractor-form"
+    data-testid="contractor-form"
+    id="contractor-form"
   >
     <fieldset
       class="usa-fieldset"
@@ -67,7 +67,7 @@ exports[`Contractor form > should matches snapshot 1`] = `
         disabled=""
         type="submit"
       >
-        Save Changes
+        Add contractor
       </button>
       <button
         class="usa-button usa-button--unstyled margin-top-0"
