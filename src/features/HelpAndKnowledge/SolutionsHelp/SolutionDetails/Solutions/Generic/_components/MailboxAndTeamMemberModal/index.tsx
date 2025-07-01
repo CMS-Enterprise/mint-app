@@ -6,8 +6,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
-import AddTeamMailboxForm from '../AddTeamMailboxForm';
-import EditTeamMailboxForm from '../EditTeamMailboxForm';
+import TeamMailboxForm from '../TeamMailboxForm';
 import TeamMemberForm from '../TeamMemberForm';
 
 export type ModeType = TeamMemberModeType | TeamMailboxModeType;
@@ -47,11 +46,12 @@ const MailboxAndTeamMemberModal = ({
         </p>
       </div>
 
-      {mode === 'addTeamMailbox' && (
-        <AddTeamMailboxForm closeModal={closeModal} />
-      )}
-      {mode === 'editTeamMailbox' && contact && (
-        <EditTeamMailboxForm closeModal={closeModal} teamMailbox={contact} />
+      {(mode === 'addTeamMailbox' || mode === 'editTeamMailbox') && (
+        <TeamMailboxForm
+          mode={mode}
+          closeModal={closeModal}
+          teamMailbox={contact}
+        />
       )}
 
       {(mode === 'addTeamMember' || mode === 'editTeamMember') && (

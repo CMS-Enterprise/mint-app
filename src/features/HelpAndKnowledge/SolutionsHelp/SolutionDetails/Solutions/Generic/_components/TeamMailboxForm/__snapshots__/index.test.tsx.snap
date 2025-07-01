@@ -204,3 +204,207 @@ exports[`Edit a team mailbox point of contact form > should matches snapshot 1`]
   </form>
 </DocumentFragment>
 `;
+
+exports[`Team mailbox point of contact form > should matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none"
+    data-testid="team-mailbox-form"
+    id="team-mailbox-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+      style="min-width: 100%;"
+    >
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="team-mailbox-address"
+        >
+          Mailbox address 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <span
+          class="text-base-dark"
+        >
+          Add cms.hhs.gov team mailboxes.
+        </span>
+        <input
+          class="usa-input"
+          data-testid="team-mailbox-address"
+          id="team-mailbox-address"
+          name="mailboxAddress"
+          type="text"
+          value="mint-team@email.com"
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-0"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="team-mailbox-title"
+        >
+          Mailbox title 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <input
+          class="usa-input"
+          data-testid="team-mailbox-title"
+          id="team-mailbox-title"
+          name="mailboxTitle"
+          type="text"
+          value="Mint Team"
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            data-testid="isPrimary"
+            id="isPrimary"
+            name="isPrimary"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="isPrimary"
+          >
+            Primary point of contact
+          </label>
+          <span
+            class="usa-tooltip"
+            data-testid="tooltipWrapper"
+          >
+            <button
+              aria-describedby="tooltip-«r2»"
+              class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
+              data-testid="triggerElement"
+              style="gap: 0.25rem;"
+              tabindex="0"
+              title=""
+              type="button"
+            >
+              <svg
+                class="usa-icon minw-4 text-base-light margin-left-neg-05 margin-bottom-neg-2px"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+            </button>
+            <span
+              aria-hidden="true"
+              class="usa-tooltip__body"
+              data-testid="tooltipBody"
+              id="tooltip-«r2»"
+              role="tooltip"
+              title="The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
+            >
+              The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution.
+            </span>
+          </span>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          >
+            If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list.
+          </p>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            data-testid="receiveEmails"
+            id="receiveEmails"
+            name="receiveEmails"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="receiveEmails"
+          >
+            Receive emails?
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          >
+            If you check this box, this user or mailbox will receive update notifications from MINT when models select this operational solution. Primary points of contact will always receive notifications.
+          </p>
+        </div>
+      </div>
+    </fieldset>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex margin-top-0 margin-bottom-2"
+      data-testid="alert"
+      hidden=""
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.
+          </span>
+        </p>
+      </div>
+    </div>
+    <div
+      class="margin-top-3 display-flex"
+    >
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Add team mailbox
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;
