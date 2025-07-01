@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -11,6 +11,7 @@ import {
 } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { formatDateLocal } from 'utils/date';
 
 type TitleAndStatusProps = {
@@ -38,7 +39,10 @@ const TitleAndStatus = ({
 }: TitleAndStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
+
+  const { modelName } = useContext(ModelInfoContext);
 
   return (
     <div>
@@ -53,6 +57,14 @@ const TitleAndStatus = ({
           </p>
         )}
       </div>
+
+      {clearance && (
+        <p className="font-body-lg margin-top-neg-1 margin-bottom-1">
+          {prepareForClearanceT('forModelPlan', {
+            modelName
+          })}
+        </p>
+      )}
 
       {!isViewingFilteredView && status && (
         <div className="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4">

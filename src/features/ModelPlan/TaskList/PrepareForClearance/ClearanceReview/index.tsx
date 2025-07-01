@@ -95,7 +95,9 @@ const renderReviewTaskSection = (
 ): JSX.Element => {
   switch (section) {
     case 'model-timeline':
-      return <ReadOnlyModelTimeline modelID={modelID} clearance editDates />;
+      return (
+        <ReadOnlyModelTimeline modelID={modelID} clearance editDates={false} />
+      );
     case 'basics':
       return <ReadOnlyModelBasics modelID={modelID} clearance />;
     case 'characteristics':
@@ -270,7 +272,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
           {renderModal(taskListLocked)}
 
-          {renderReviewTaskSection(modelID, section)}
+          <div className="margin-top-3">
+            {renderReviewTaskSection(modelID, section)}
+          </div>
 
           <div className="margin-top-6 margin-bottom-3">
             <Button

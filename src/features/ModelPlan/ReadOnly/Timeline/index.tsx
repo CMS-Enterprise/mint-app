@@ -41,11 +41,8 @@ const ReadOnlyModelTimeline = ({
 }: ReadOnlyProps) => {
   const { t: timelineT } = useTranslation('timeline');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
-  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const modelTimelineConfig = usePlanTranslation('timeline');
-
-  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetTimelineQuery({
     variables: {
@@ -96,14 +93,6 @@ const ReadOnlyModelTimeline = ({
         }
         editDates={editDates && hasEditAccess && !filteredView}
       />
-
-      {clearance && (
-        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {prepareForClearanceT('forModelPlan', {
-            modelName
-          })}
-        </p>
-      )}
 
       {loading && !data ? (
         <div className="height-viewport">
