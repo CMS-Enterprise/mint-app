@@ -10,7 +10,8 @@ SELECT
             )
         FROM plan_collaborator AS collab
         LEFT JOIN user_account AS account ON account.id = collab.user_id --noqa
-        WHERE collab.model_plan_id = sol.model_plan_id
+        WHERE
+            collab.model_plan_id = sol.model_plan_id
           AND collab.team_roles @> '{"MODEL_LEAD"}' --noqa
     ) AS model_lead_names,
     (
