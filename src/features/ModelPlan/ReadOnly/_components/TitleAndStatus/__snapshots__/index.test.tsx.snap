@@ -32,9 +32,9 @@ exports[`Title and Status component for Read Only Pages > matches snapshot 1`] =
         class="display-flex flex-align-center flex-wrap margin-right-1"
       >
         <p
-          class="margin-y-0 text-normal margin-right-1 text-base"
+          class="margin-y-0 text-normal margin-right-1 text-base-dark"
         >
-          Model last updated 09/01/2021
+          Last updated 09/01/2021
         </p>
       </div>
     </div>

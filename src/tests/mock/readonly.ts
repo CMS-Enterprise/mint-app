@@ -187,7 +187,7 @@ export const modelTimelineMocks: MockedResponse<
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          modelName: 'Test Model',
+          modelName: 'Testing Model Summary',
           timeline: modelTimelineData
         }
       }
@@ -917,7 +917,8 @@ const allMocks = [
   ...opsEvalAndLearningMocks,
   ...participantsAndProvidersMocks,
   ...paymentsMocks,
-  ...collaboratorsMocks
+  ...collaboratorsMocks,
+  ...modelTimelineMocks
 ];
 
 export default allMocks;

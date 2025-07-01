@@ -81,11 +81,11 @@ const TitleAndStatus = ({
 
                 <Icon.Edit
                   className="margin-right-1 text-primary"
-                  data-testId="edit-icon"
+                  data-testid="edit-icon"
                 />
 
                 <UswdsReactLink
-                  data-testId="edit-dates-link"
+                  data-testid="edit-dates-link"
                   to={`/models/${modelID}/collaboration-area/model-timeline`}
                 >
                   {timelineMiscT('editDates')}

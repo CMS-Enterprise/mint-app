@@ -116,9 +116,9 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 class="display-flex flex-align-center flex-wrap margin-right-1"
               >
                 <p
-                  class="margin-y-0 text-normal margin-right-1 text-base"
+                  class="margin-y-0 text-normal margin-right-1 text-base-dark"
                 >
-                  Model last updated 06/03/2022
+                  Last updated 06/03/2022
                 </p>
               </div>
             </div>

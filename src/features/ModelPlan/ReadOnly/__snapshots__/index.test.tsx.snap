@@ -223,7 +223,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     <p
                       class="margin-y-0 text-normal margin-right-1"
                     >
-                      Model last updated 08/23/2022
+                      Last updated 08/23/2022
                     </p>
                   </div>
                 </div>
@@ -335,7 +335,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 data-testid="tooltipWrapper"
               >
                 <div
-                  aria-describedby="tooltip-«r6»"
+                  aria-describedby="tooltip-«r5»"
                   class="usa-tooltip__trigger mint-no-print"
                   data-testid="triggerElement"
                   tabindex="0"
@@ -360,7 +360,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   aria-hidden="true"
                   class="usa-tooltip__body"
                   data-testid="tooltipBody"
-                  id="tooltip-«r6»"
+                  id="tooltip-«r5»"
                   role="tooltip"
                   title="Filter to view the content specific groups at CMS care about."
                 >
@@ -488,6 +488,15 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics"
                     >
                       Model basics
+                    </a>
+                  </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-timeline"
+                    >
+                      Model timeline
                     </a>
                   </li>
                   <li
@@ -697,9 +706,9 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             class="display-flex flex-align-center flex-wrap margin-right-1"
                           >
                             <p
-                              class="margin-y-0 text-normal margin-right-1 text-base"
+                              class="margin-y-0 text-normal margin-right-1 text-base-dark"
                             >
-                              Model last updated 06/03/2022
+                              Last updated 06/03/2022
                             </p>
                           </div>
                         </div>
@@ -837,7 +846,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                       data-testid="tooltipWrapper"
                                     >
                                       <div
-                                        aria-describedby="tooltip-«r7»"
+                                        aria-describedby="tooltip-«r6»"
                                         class="usa-tooltip__trigger mint-no-print margin-left-05"
                                         data-testid="triggerElement"
                                         tabindex="0"
@@ -862,7 +871,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                         aria-hidden="true"
                                         class="usa-tooltip__body"
                                         data-testid="tooltipBody"
-                                        id="tooltip-«r7»"
+                                        id="tooltip-«r6»"
                                         role="tooltip"
                                         title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                                       >
@@ -909,7 +918,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                         data-testid="tooltipWrapper"
                                       >
                                         <div
-                                          aria-describedby="tooltip-«r8»"
+                                          aria-describedby="tooltip-«r7»"
                                           class="usa-tooltip__trigger mint-no-print margin-left-05"
                                           data-testid="triggerElement"
                                           tabindex="0"
@@ -934,7 +943,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                           aria-hidden="true"
                                           class="usa-tooltip__body"
                                           data-testid="tooltipBody"
-                                          id="tooltip-«r8»"
+                                          id="tooltip-«r7»"
                                           role="tooltip"
                                           title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
                                         >
@@ -1130,7 +1139,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                     data-testid="tooltipWrapper"
                                   >
                                     <div
-                                      aria-describedby="tooltip-«r9»"
+                                      aria-describedby="tooltip-«r8»"
                                       class="usa-tooltip__trigger mint-no-print"
                                       data-testid="triggerElement"
                                       tabindex="0"
@@ -1155,7 +1164,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                       aria-hidden="true"
                                       class="usa-tooltip__body"
                                       data-testid="tooltipBody"
-                                      id="tooltip-«r9»"
+                                      id="tooltip-«r8»"
                                       role="tooltip"
                                       title="The high level goal of the program and a description of the project."
                                     >
@@ -1228,372 +1237,6 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class=""
-                      >
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--complete-icip margin-bottom-3"
-                          >
-                            <div
-                              class="read-only-section--question"
-                            >
-                              <span
-                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                              >
-                                Complete ICIP
-                              </span>
-                            </div>
-                            <div
-                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                            >
-                              <em
-                                class="text-base mint-text-medium"
-                              >
-                                No answer entered
-                              </em>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      >
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--clearance-start-date margin-bottom-3"
-                          >
-                            <div
-                              class="read-only-section--question"
-                            >
-                              <span
-                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                              >
-                                Clearance start date
-                              </span>
-                            </div>
-                            <div
-                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                            >
-                              <em
-                                class="text-base mint-text-medium"
-                              >
-                                No answer entered
-                              </em>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      >
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--clearance-end-date margin-bottom-3"
-                          >
-                            <div
-                              class="read-only-section--question"
-                            >
-                              <span
-                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                              >
-                                Clearance end date
-                              </span>
-                            </div>
-                            <div
-                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                            >
-                              <em
-                                class="text-base mint-text-medium"
-                              >
-                                No answer entered
-                              </em>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      >
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--announce-model margin-bottom-3"
-                          >
-                            <div
-                              class="read-only-section--question"
-                            >
-                              <span
-                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                              >
-                                Announce model
-                              </span>
-                            </div>
-                            <div
-                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                            >
-                              <em
-                                class="text-base mint-text-medium"
-                              >
-                                No answer entered
-                              </em>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      >
-                        <div
-                          class="grid-row grid-gap"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="desktop:grid-col-6"
-                            data-testid="grid"
-                          >
-                            <div
-                              class="desktop:grid-col-12"
-                              data-testid="grid"
-                            >
-                              <div
-                                class="read-only-section read-only-section--application-start-date margin-bottom-3"
-                              >
-                                <div
-                                  class="read-only-section--question"
-                                >
-                                  <span
-                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                                  >
-                                    Application start date
-                                  </span>
-                                </div>
-                                <div
-                                  class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                                >
-                                  <em
-                                    class="text-base mint-text-medium"
-                                  >
-                                    No answer entered
-                                  </em>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="desktop:grid-col-6"
-                            data-testid="grid"
-                          >
-                            <div
-                              class="desktop:grid-col-12"
-                              data-testid="grid"
-                            >
-                              <div
-                                class="read-only-section read-only-section--application-end-date margin-bottom-3"
-                              >
-                                <div
-                                  class="read-only-section--question"
-                                >
-                                  <span
-                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                                  >
-                                    Application end date
-                                  </span>
-                                </div>
-                                <div
-                                  class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                                >
-                                  <em
-                                    class="text-base mint-text-medium"
-                                  >
-                                    No answer entered
-                                  </em>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      />
-                      <div
-                        class=""
-                      >
-                        <div
-                          class="text-bold font-body-sm line-height-sans-4 margin-bottom-2"
-                        >
-                          Performance period
-                          <span
-                            class="top-2px position-relative text-normal"
-                          >
-                            <span
-                              class="usa-tooltip"
-                              data-testid="tooltipWrapper"
-                            >
-                              <div
-                                aria-describedby="tooltip-«ra»"
-                                class="usa-tooltip__trigger mint-no-print margin-left-05"
-                                data-testid="triggerElement"
-                                tabindex="0"
-                                title=""
-                              >
-                                <svg
-                                  aria-label="info"
-                                  class="usa-icon text-base-light"
-                                  focusable="false"
-                                  height="1em"
-                                  role="img"
-                                  viewBox="0 0 24 24"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                                  />
-                                </svg>
-                              </div>
-                              <span
-                                aria-hidden="true"
-                                class="usa-tooltip__body"
-                                data-testid="tooltipBody"
-                                id="tooltip-«ra»"
-                                role="tooltip"
-                                title="When the model will be active beginning with the go-live date"
-                              >
-                                When the model will be active beginning with the go-live date
-                              </span>
-                            </span>
-                          </span>
-                        </div>
-                        <div
-                          class="grid-row grid-gap"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="desktop:grid-col-6"
-                            data-testid="grid"
-                          >
-                            <div
-                              class="desktop:grid-col-12"
-                              data-testid="grid"
-                            >
-                              <div
-                                class="read-only-section read-only-section--performance-start-date margin-bottom-3"
-                              >
-                                <div
-                                  class="read-only-section--question"
-                                >
-                                  <span
-                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                                  >
-                                    Performance start date
-                                  </span>
-                                </div>
-                                <div
-                                  class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                                >
-                                  <em
-                                    class="text-base mint-text-medium"
-                                  >
-                                    No answer entered
-                                  </em>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="desktop:grid-col-6"
-                            data-testid="grid"
-                          >
-                            <div
-                              class="desktop:grid-col-12"
-                              data-testid="grid"
-                            >
-                              <div
-                                class="read-only-section read-only-section--performance-end-date margin-bottom-3"
-                              >
-                                <div
-                                  class="read-only-section--question"
-                                >
-                                  <span
-                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                                  >
-                                    Performance end date
-                                  </span>
-                                </div>
-                                <div
-                                  class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                                >
-                                  <em
-                                    class="text-base mint-text-medium"
-                                  >
-                                    No answer entered
-                                  </em>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class=""
-                      />
-                      <div
-                        class=""
-                      />
-                      <div
-                        class=""
-                      >
-                        <div
-                          class="desktop:grid-col-12"
-                          data-testid="grid"
-                        >
-                          <div
-                            class="read-only-section read-only-section--model-wrap-up-end-date margin-bottom-3"
-                          >
-                            <div
-                              class="read-only-section--question"
-                            >
-                              <span
-                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                              >
-                                Model wrap-up end date
-                              </span>
-                            </div>
-                            <div
-                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-                            >
-                              <em
-                                class="text-base mint-text-medium"
-                              >
-                                No answer entered
-                              </em>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mint-section read-only-model-plan__timeline--wrapper border-base-light padding-top-4  border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6"
-                        data-testid="section-wrapper"
-                      >
-                        <h3
-                          class="margin-y-0"
-                        >
-                          highLevelTimeline
-                        </h3>
-                      </div>
-                      <div
                         class="desktop:grid-col-12"
                         data-testid="grid"
                       >
@@ -1615,7 +1258,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   data-testid="tooltipWrapper"
                                 >
                                   <div
-                                    aria-describedby="tooltip-«rb»"
+                                    aria-describedby="tooltip-«r9»"
                                     class="usa-tooltip__trigger mint-no-print"
                                     data-testid="triggerElement"
                                     tabindex="0"
@@ -1640,7 +1283,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                     aria-hidden="true"
                                     class="usa-tooltip__body"
                                     data-testid="tooltipBody"
-                                    id="tooltip-«rb»"
+                                    id="tooltip-«r9»"
                                     role="tooltip"
                                     title="That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter."
                                   >
