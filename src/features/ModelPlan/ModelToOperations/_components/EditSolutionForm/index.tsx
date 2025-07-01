@@ -343,7 +343,7 @@ const EditSolutionForm = ({
             ...(facilitatedBy && {
               facilitatedBy
             }),
-            ...(!!facilitatedByOther && {
+            ...(facilitatedByOther !== undefined && {
               facilitatedByOther
             }),
             ...(neededBy !== undefined && {

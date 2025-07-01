@@ -218,7 +218,6 @@ func (dp *DateProcessor) checkDateFieldChanged(field string) (
 					newTimeVal = &v
 				}
 			default:
-				fmt.Printf("Field %s: Unexpected type for new value: %T\n", field, v)
 				return false, nil, nil
 			}
 		}
