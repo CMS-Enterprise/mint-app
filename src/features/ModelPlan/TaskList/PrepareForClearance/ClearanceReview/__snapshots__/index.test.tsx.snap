@@ -99,6 +99,11 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   Review beneficiciaries
                 </h2>
               </div>
+              <p
+                class="font-body-lg margin-top-neg-1 margin-bottom-1"
+              >
+                for 
+              </p>
               <div
                 class="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4"
               >
@@ -126,11 +131,6 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                 </div>
               </div>
             </div>
-            <p
-              class="font-body-lg margin-top-neg-2 margin-bottom-6"
-            >
-              for 
-            </p>
             <div
               class=""
             >
