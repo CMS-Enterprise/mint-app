@@ -52,8 +52,6 @@ const TeamMailboxForm = ({
   closeModal: () => void;
   teamMailbox?: SolutionContactType;
 }) => {
-  const isAddMode = mode === 'addTeamMailbox';
-  const isEditMode = mode === 'editTeamMailbox';
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
@@ -90,6 +88,8 @@ const TeamMailboxForm = ({
     ]
   });
   const [hasMutationError, setHasMutationError] = useState(false);
+  const isAddMode = mode === 'addTeamMailbox';
+  const isEditMode = mode === 'editTeamMailbox';
   const disabledSubmitBtn =
     isSubmitting ||
     !isDirty ||

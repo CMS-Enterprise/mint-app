@@ -90,6 +90,8 @@ const TeamMemberForm = ({
   });
 
   const [hasMutationError, setHasMutationError] = useState(false);
+  const isAddMode = mode === 'addTeamMember';
+  const isEditMode = mode === 'editTeamMember';
   const disabledSubmitBtn =
     isSubmitting || !isDirty || Object.keys(dirtyFields).length === 0;
 
@@ -100,27 +102,26 @@ const TeamMemberForm = ({
   const onSubmit = (formData: FormValues) => {
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
 
-    const promise =
-      mode === 'addTeamMember'
-        ? create({
-            variables: {
-              key: selectedSolution.enum,
-              userName: formData.userName,
-              role: formData.role,
-              isPrimary: formData.isPrimary,
-              receiveEmails: formData.receiveEmails
+    const promise = isAddMode
+      ? create({
+          variables: {
+            key: selectedSolution.enum,
+            userName: formData.userName,
+            role: formData.role,
+            isPrimary: formData.isPrimary,
+            receiveEmails: formData.receiveEmails
+          }
+        })
+      : update({
+          variables: {
+            id: teamMember.id,
+            input: {
+              role,
+              isPrimary,
+              receiveEmails
             }
-          })
-        : update({
-            variables: {
-              id: teamMember.id,
-              input: {
-                role,
-                isPrimary,
-                receiveEmails
-              }
-            }
-          });
+          }
+        });
     promise
       .then(response => {
         if (!response?.errors) {
@@ -192,9 +193,9 @@ const TeamMemberForm = ({
                     setValue('userName', oktaUser ? oktaUser.username : '')
                   }
                   className={classNames({
-                    'disabled-input': mode === 'editTeamMember'
+                    'disabled-input': isEditMode
                   })}
-                  disabled={mode === 'editTeamMember'}
+                  disabled={isEditMode}
                 />
               </FormGroup>
             )}
@@ -239,7 +240,7 @@ const TeamMemberForm = ({
                   testid="isPrimary"
                   label={contactT('isPrimary.label')}
                   subLabel={
-                    mode === 'addTeamMember'
+                    isAddMode
                       ? contactT('isPrimary.sublabel')
                       : miscT('editTeamMember.primaryPocSubLabel')
                   }
