@@ -1,0 +1,276 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Add a team member point of contact form > should matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none"
+    data-testid="team-member-form"
+    id="team-member-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="team-member-name"
+        >
+          Name 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <span
+          class="text-base-dark"
+        >
+          This field searches CMS’ EUA database.
+        </span>
+        <div
+          class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
+          id="team-member-name"
+        >
+          <span
+            class="css-1f43avz-a11yText-A11yText"
+            id="react-select-team-member-name-live-region"
+          />
+          <span
+            aria-atomic="false"
+            aria-live="polite"
+            aria-relevant="additions text"
+            class="css-1f43avz-a11yText-A11yText"
+            role="log"
+          />
+          <div
+            class="cedar-contact-select__control css-79rxjr-control"
+          >
+            <div
+              class="cedar-contact-select__value-container css-1fdsijx-ValueContainer"
+            >
+              <div
+                class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
+                id="react-select-team-member-name-placeholder"
+              />
+              <div
+                class="cedar-contact-select__input-container css-qbdosj-Input"
+                data-value=""
+              >
+                <input
+                  aria-activedescendant=""
+                  aria-autocomplete="list"
+                  aria-describedby="react-select-team-member-name-placeholder"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-labelledby="label-team-member-name"
+                  autocapitalize="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  class="cedar-contact-select__input"
+                  data-testid="cedar-contact-select"
+                  id="react-select-team-member-name-input"
+                  role="combobox"
+                  spellcheck="false"
+                  style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                  tabindex="0"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
+            >
+              <span
+                class="cedar-contact-select__indicator-separator css-1u9des2-indicatorSeparator"
+              />
+              <div
+                aria-hidden="true"
+                class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1h8bgg-indicatorContainer"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="css-tj5bde-Svg"
+                  focusable="false"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  width="20"
+                >
+                  <path
+                    d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <input
+            name="team-member-name"
+            type="hidden"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-0"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="team-member-role"
+        >
+          Role 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <input
+          class="usa-input"
+          data-testid="textInput"
+          id="team-member-role"
+          name="role"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="isPrimary"
+            name="isPrimary"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="isPrimary"
+          >
+            Primary point of contact
+          </label>
+          <span
+            class="usa-tooltip"
+            data-testid="tooltipWrapper"
+          >
+            <button
+              aria-describedby="tooltip-«r0»"
+              class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
+              data-testid="triggerElement"
+              style="gap: 0.25rem;"
+              tabindex="0"
+              title=""
+              type="button"
+            >
+              <svg
+                class="usa-icon minw-4 text-base-light margin-left-neg-05 margin-bottom-neg-2px"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+            </button>
+            <span
+              aria-hidden="true"
+              class="usa-tooltip__body"
+              data-testid="tooltipBody"
+              id="tooltip-«r0»"
+              role="tooltip"
+              title="The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
+            >
+              The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution.
+            </span>
+          </span>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          >
+            If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list.
+          </p>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="receiveEmails"
+            name="receiveEmails"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="receiveEmails"
+          >
+            Receive emails?
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          >
+            If you check this box, this user or mailbox will receive update notifications from MINT when models select this operational solution. Primary points of contact will always receive notifications.
+          </p>
+        </div>
+      </div>
+    </fieldset>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex margin-top-0 margin-bottom-2"
+      data-testid="alert"
+      hidden=""
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.
+          </span>
+        </p>
+      </div>
+    </div>
+    <div
+      class="margin-top-3 display-flex"
+    >
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Add team member
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

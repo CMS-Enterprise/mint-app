@@ -21,7 +21,7 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
     gqlField: 'mailboxTitle',
     goField: 'MailboxTitle',
     dbField: 'mailbox_title',
-    label: 'Mailbox Title',
+    label: 'Mailbox title',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.6
@@ -30,7 +30,8 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
     gqlField: 'mailboxAddress',
     goField: 'MailboxAddress',
     dbField: 'mailbox_address',
-    label: 'Mailbox Address',
+    label: 'Mailbox address',
+    sublabel: 'Add cms.hhs.gov team mailboxes.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.7
@@ -72,23 +73,26 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
     gqlField: 'isPrimary',
     goField: 'IsPrimary',
     dbField: 'is_primary',
-    label: 'Is this the primary contact?',
-    sublabel: "Select 'Yes' if this is the main contact for this solution.",
+    label: 'Primary point of contact',
+    sublabel:
+      'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.1,
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    questionTooltip:
+      'The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution.'
   },
   receiveEmails: {
     gqlField: 'receiveEmails',
     goField: 'ReceiveEmails',
     dbField: 'receive_emails',
-    label: 'Should this contact receive emails?',
+    label: 'Receive emails?',
     sublabel:
-      "Select 'Yes' if this contact should receive notifications or emails.",
+      'If you check this box, this user or mailbox will receive update notifications from MINT when models select this operational solution. Primary points of contact will always receive notifications.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.9,
@@ -102,6 +106,7 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
     goField: 'Name',
     dbField: 'name',
     label: 'Name',
+    sublabel: 'This field searches CMS’ EUA database.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.3
@@ -118,8 +123,36 @@ const mtoCommonSolutionContact: TranslationMTOCommonSolutionContactCustom = {
 };
 
 export const mtoCommonSolutionContactMisc = {
-  addTeamMember: 'Add team member',
-  addTeamMailbox: 'Add team mailbox',
+  addTeamMember: {
+    title: 'Add a team member',
+    cta: 'Add team member',
+    success: 'You added {{-contact}} as a point of contact.',
+    error:
+      'There was an issue adding this point of contact. Please try again, and if the problem persists, try again later.'
+  },
+  editTeamMember: {
+    title: 'Edit a team member',
+    primaryPocSubLabel:
+      'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
+    success: 'You updated point of contact information for {{-contact}}.',
+    error:
+      'There was an issue editing this point of contact. Please try again, and if the problem persists, try again later.'
+  },
+  addTeamMailbox: {
+    title: 'Add a team mailbox',
+    cta: 'Add team mailbox',
+    success: 'You added {{-contact}} as a point of contact.',
+    error:
+      'There was an issue adding this team mailbox. Please try again, and if the problem persists, try again later.'
+  },
+  editTeamMailbox: {
+    title: 'Edit a team mailbox',
+    primaryPocSubLabel:
+      'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
+    success: 'You updated point of contact information for {{-contact}}.',
+    error:
+      'There was an issue edditing this team mailbox. Please try again, and if the problem persists, try again later.'
+  },
   addContractor: 'Add contractor',
   removePointOfContact: {
     title: 'Are you sure you want to remove this point of contact?',
@@ -137,6 +170,8 @@ export const mtoCommonSolutionContactMisc = {
     error:
       'There was an issue removing this contractor. Please try again, and if the problem persists, try again later.'
   },
+  allFieldsRequired:
+    'Fields marked with an asterisk ( <s>*</s> ) are required.',
   actionWarning: 'This action cannot be undone.',
   cancel: 'Cancel',
   saveChanges: 'Save Changes',

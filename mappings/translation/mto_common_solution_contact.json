@@ -13,7 +13,7 @@
     "gqlField": "mailboxTitle",
     "goField": "MailboxTitle",
     "dbField": "mailbox_title",
-    "label": "Mailbox Title",
+    "label": "Mailbox title",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.6
@@ -22,7 +22,8 @@
     "gqlField": "mailboxAddress",
     "goField": "MailboxAddress",
     "dbField": "mailbox_address",
-    "label": "Mailbox Address",
+    "label": "Mailbox address",
+    "sublabel": "Add cms.hhs.gov team mailboxes.",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.7
@@ -63,22 +64,23 @@
     "gqlField": "isPrimary",
     "goField": "IsPrimary",
     "dbField": "is_primary",
-    "label": "Is this the primary contact?",
-    "sublabel": "Select 'Yes' if this is the main contact for this solution.",
+    "label": "Primary point of contact",
+    "sublabel": "If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 1.1,
     "options": {
       "true": "Yes",
       "false": "No"
-    }
+    },
+    "questionTooltip": "The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
   },
   "receiveEmails": {
     "gqlField": "receiveEmails",
     "goField": "ReceiveEmails",
     "dbField": "receive_emails",
-    "label": "Should this contact receive emails?",
-    "sublabel": "Select 'Yes' if this contact should receive notifications or emails.",
+    "label": "Receive emails?",
+    "sublabel": "If you check this box, this user or mailbox will receive update notifications from MINT when models select this operational solution. Primary points of contact will always receive notifications.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 1.9,
@@ -92,6 +94,7 @@
     "goField": "Name",
     "dbField": "name",
     "label": "Name",
+    "sublabel": "This field searches CMS’ EUA database.",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.3
