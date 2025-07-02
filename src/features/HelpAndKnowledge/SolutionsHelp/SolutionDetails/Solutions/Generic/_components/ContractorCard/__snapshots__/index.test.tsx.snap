@@ -10,19 +10,19 @@ exports[`ContractorCard Component > should matches snapshot 1`] = `
       data-testid="Card"
     >
       <div
-        class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
       >
         <div
-          class="usa-card__body padding-0 margin-bottom-1"
+          class="usa-card__body padding-0 margin-bottom-0"
           data-testid="CardBody"
         >
           <h3
-            class="margin-bottom-1 line-height-sans-2"
+            class="margin-bottom-0 line-height-sans-2"
           >
             Contractor: Aliza Kim
           </h3>
           <p
-            class="margin-top-0 line-height-sans-5"
+            class="margin-top-1 line-height-sans-5"
           >
             Contract title: MIT
           </p>

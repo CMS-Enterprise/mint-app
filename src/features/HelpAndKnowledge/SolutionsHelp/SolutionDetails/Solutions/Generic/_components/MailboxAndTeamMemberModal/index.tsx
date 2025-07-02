@@ -6,17 +6,13 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
-import AddTeamMailboxForm from '../AddTeamMailboxForm';
-import AddTeamMemberForm from '../AddTeamMemberForm';
-import EditTeamMailboxForm from '../EditTeamMailboxForm';
-import EditTeamMemberForm from '../EditTeamMemberForm';
+import TeamMailboxForm from '../TeamMailboxForm';
+import TeamMemberForm from '../TeamMemberForm';
 
-// Matching keys in helpAndKnowledge
-export type ModeType =
-  | 'addTeamMailbox'
-  | 'addTeamMember'
-  | 'editTeamMailbox'
-  | 'editTeamMember';
+export type ModeType = TeamMemberModeType | TeamMailboxModeType;
+// Matching keys in mtoCommonSolutionContactMisc
+export type TeamMemberModeType = 'addTeamMember' | 'editTeamMember';
+export type TeamMailboxModeType = 'addTeamMailbox' | 'editTeamMailbox';
 
 const MailboxAndTeamMemberModal = ({
   isOpen,
@@ -50,17 +46,20 @@ const MailboxAndTeamMemberModal = ({
         </p>
       </div>
 
-      {mode === 'addTeamMailbox' && (
-        <AddTeamMailboxForm closeModal={closeModal} />
+      {(mode === 'addTeamMailbox' || mode === 'editTeamMailbox') && (
+        <TeamMailboxForm
+          mode={mode}
+          closeModal={closeModal}
+          teamMailbox={contact}
+        />
       )}
-      {mode === 'addTeamMember' && (
-        <AddTeamMemberForm closeModal={closeModal} />
-      )}
-      {mode === 'editTeamMailbox' && contact && (
-        <EditTeamMailboxForm closeModal={closeModal} teamMailbox={contact} />
-      )}
-      {mode === 'editTeamMember' && contact && (
-        <EditTeamMemberForm closeModal={closeModal} teamMember={contact} />
+
+      {(mode === 'addTeamMember' || mode === 'editTeamMember') && (
+        <TeamMemberForm
+          mode={mode}
+          closeModal={closeModal}
+          teamMember={contact}
+        />
       )}
     </Modal>
   );

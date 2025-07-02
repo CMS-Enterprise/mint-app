@@ -7,7 +7,7 @@ import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import EditTeamMailboxForm from './index';
+import TeamMailboxForm from './index';
 
 const mocks = [...possibleSolutionsMock];
 
@@ -24,7 +24,7 @@ const team: SolutionContactType = {
   receiveEmails: false
 };
 
-describe('Add a team mailbox point of contact form', () => {
+describe('Team mailbox point of contact form', () => {
   it('should render team mailbox info accordingly', async () => {
     const { getByTestId } = render(
       <MemoryRouter
@@ -35,7 +35,11 @@ describe('Add a team mailbox point of contact form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditTeamMailboxForm closeModal={() => {}} teamMailbox={team} />
+              <TeamMailboxForm
+                mode="editTeamMailbox"
+                closeModal={() => {}}
+                teamMailbox={team}
+              />
             </Route>
           </MessageProvider>
         </MockedProvider>
@@ -62,7 +66,8 @@ describe('Add a team mailbox point of contact form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditTeamMailboxForm
+              <TeamMailboxForm
+                mode="editTeamMailbox"
                 closeModal={() => {}}
                 teamMailbox={{ ...team, isPrimary: true, receiveEmails: true }}
               />
@@ -88,7 +93,11 @@ describe('Add a team mailbox point of contact form', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <EditTeamMailboxForm closeModal={() => {}} teamMailbox={team} />
+              <TeamMailboxForm
+                mode="addTeamMailbox"
+                closeModal={() => {}}
+                teamMailbox={team}
+              />
             </Route>
           </MessageProvider>
         </MockedProvider>
