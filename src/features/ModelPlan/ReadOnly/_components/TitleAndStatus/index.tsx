@@ -88,21 +88,22 @@ const TitleAndStatus = ({
             )}
 
             {editDates && (
-              <div className="mint-no-print">
-                <div className="border-left-2px border-base-light margin-left-105 padding-left-2 height-2 margin-top-1px" />
+              <>
+                <div className="border-left-2px border-base-light margin-left-105 padding-left-2 height-2 margin-top-1px mint-no-print" />
 
                 <Icon.Edit
-                  className="margin-right-1 text-primary"
+                  className="margin-right-1 text-primary mint-no-print"
                   data-testid="edit-icon"
                 />
 
                 <UswdsReactLink
                   data-testid="edit-dates-link"
                   to={`/models/${modelID}/collaboration-area/model-timeline`}
+                  className="mint-no-print"
                 >
                   {timelineMiscT('editDates')}
                 </UswdsReactLink>
-              </div>
+              </>
             )}
           </div>
         </div>
