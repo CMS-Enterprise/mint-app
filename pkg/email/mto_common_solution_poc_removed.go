@@ -25,9 +25,7 @@ func NewPointOfContactRemovedBodyContent(
 	solutionName string,
 ) PointOfContactRemovedBodyContent {
 	RemovedContactType := "Point of Contact"
-	if contact.IsPrimary {
-		RemovedContactType = "System Owner"
-	} else if contact.IsTeam {
+	if contact.IsTeam {
 		RemovedContactType = "Team Mailbox"
 	}
 

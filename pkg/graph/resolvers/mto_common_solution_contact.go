@@ -12,7 +12,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -483,48 +482,25 @@ func sendSolutionContactMintMailboxPOCAdded(
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	var emailTemplate *emailtemplates.EmailTemplate
-	var err error
-	if contact.IsPrimary {
-		emailTemplate, err = emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionOwnerAddedTemplateName)
-	} else {
-		emailTemplate, err = emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCAddedTemplateName)
-	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCAddedTemplateName)
 	if err != nil {
 		return err
 	}
 
-	var emailSubject string
-	if contact.IsPrimary {
-		emailSubject, err = emailTemplate.GetExecutedSubject(email.SystemOwnerAddedSubjectContent{
-			SolutionAcronym: string(contact.Key),
-			SolutionName:    solutionName,
-		})
-	} else {
-		emailSubject, err = emailTemplate.GetExecutedSubject(email.PointOfContactAddedSubjectContent{
-			SolutionAcronym: string(contact.Key),
-			SolutionName:    solutionName,
-		})
-	}
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PointOfContactAddedSubjectContent{
+		SolutionAcronym: string(contact.Key),
+		SolutionName:    solutionName,
+	})
 	if err != nil {
 		return err
 	}
 
-	var emailBody string
-	if contact.IsPrimary {
-		emailBody, err = emailTemplate.GetExecutedBody(email.NewSystemOwnerAddedBodyContent(
-			emailService.GetConfig().GetClientAddress(),
-			*contact,
-			solutionName,
-		))
-	} else {
-		emailBody, err = emailTemplate.GetExecutedBody(email.NewPointOfContactAddedBodyContent(
-			emailService.GetConfig().GetClientAddress(),
-			*contact,
-			solutionName,
-		))
-	}
-
+	emailBody, err := emailTemplate.GetExecutedBody(email.NewPointOfContactAddedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*contact,
+		solutionName,
+	))
 	if err != nil {
 		return err
 	}
@@ -550,48 +526,26 @@ func sendSolutionContactMintMailboxPOCEdited(
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	var emailTemplate *emailtemplates.EmailTemplate
-	var err error
-	if contact.IsPrimary {
-		emailTemplate, err = emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionOwnerEditedTemplateName)
-	} else {
-		emailTemplate, err = emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCEditedTemplateName)
-	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCEditedTemplateName)
 	if err != nil {
 		return err
 	}
 
-	var emailSubject string
-	if contact.IsPrimary {
-		emailSubject, err = emailTemplate.GetExecutedSubject(email.SystemOwnerUpdatedSubjectContent{
-			SolutionAcronym: string(contact.Key),
-			SolutionName:    solutionName,
-		})
-	} else {
-		emailSubject, err = emailTemplate.GetExecutedSubject(email.PointOfContactUpdatedSubjectContent{
-			SolutionAcronym: string(contact.Key),
-			SolutionName:    solutionName,
-		})
-	}
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.PointOfContactUpdatedSubjectContent{
+		SolutionAcronym: string(contact.Key),
+		SolutionName:    solutionName,
+	})
+
 	if err != nil {
 		return err
 	}
 
-	var emailBody string
-	if contact.IsPrimary {
-		emailBody, err = emailTemplate.GetExecutedBody(email.NewSystemOwnerUpdatedBodyContent(
-			emailService.GetConfig().GetClientAddress(),
-			*contact,
-			solutionName,
-		))
-	} else {
-		emailBody, err = emailTemplate.GetExecutedBody(email.NewPointOfContactUpdatedBodyContent(
-			emailService.GetConfig().GetClientAddress(),
-			*contact,
-			solutionName,
-		))
-	}
-
+	emailBody, err := emailTemplate.GetExecutedBody(email.NewPointOfContactUpdatedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*contact,
+		solutionName,
+	))
 	if err != nil {
 		return err
 	}

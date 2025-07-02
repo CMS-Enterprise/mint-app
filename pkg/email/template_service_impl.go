@@ -172,24 +172,6 @@ var dataExchangeApproachMarkedCompleteBodyTemplate string
 //go:embed templates/data_exchange_approach_marked_complete_subject.html
 var dataExchangeApproachMarkedCompleteSubjectTemplate string
 
-// MTOCommonSolutionOwnerAddedTemplateName is the template name for the owner added email
-const MTOCommonSolutionOwnerAddedTemplateName = "mto_common_solution_owner_added"
-
-//go:embed templates/mto_common_solution_owner_added_body.html
-var MTOCommonSolutionOwnerAddedBodyTemplate string
-
-//go:embed templates/mto_common_solution_owner_added_subject.html
-var MTOCommonSolutionOwnerAddedSubjectTemplate string
-
-// MTOCommonSolutionOwnerEditedTemplateName is the template name for the owner edited email
-const MTOCommonSolutionOwnerEditedTemplateName = "mto_common_solution_owner_edited"
-
-//go:embed templates/mto_common_solution_owner_edited_body.html
-var MTOCommonSolutionOwnerEditedBodyTemplate string
-
-//go:embed templates/mto_common_solution_owner_edited_subject.html
-var MTOCommonSolutionOwnerEditedSubjectTemplate string
-
 // MTOCommonSolutionPOCAddedTemplateName is the template name for the POC added email
 const MTOCommonSolutionPOCAddedTemplateName = "mto_common_solution_poc_added"
 
@@ -353,14 +335,6 @@ func (t *TemplateServiceImpl) Load() error {
 
 	err = t.loadEmailTemplate(DataExchangeApproachMarkedCompleteTemplateName, dataExchangeApproachMarkedCompleteSubjectTemplate, dataExchangeApproachMarkedCompleteBodyTemplate)
 	if err != nil {
-		return err
-	}
-
-	if err := t.loadEmailTemplate(MTOCommonSolutionOwnerAddedTemplateName, MTOCommonSolutionOwnerAddedSubjectTemplate, MTOCommonSolutionOwnerAddedBodyTemplate); err != nil {
-		return err
-	}
-
-	if err := t.loadEmailTemplate(MTOCommonSolutionOwnerEditedTemplateName, MTOCommonSolutionOwnerEditedSubjectTemplate, MTOCommonSolutionOwnerEditedBodyTemplate); err != nil {
 		return err
 	}
 

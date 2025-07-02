@@ -48,8 +48,6 @@ func main() {
 	sendMTOCommonSolutionPOCRemovedTestEmail(emailService, templateService, addressBook)
 	sendMTOCommonSolutionPOCAddedTestEmail(emailService, templateService, addressBook)
 	sendMTOCommonSolutionPOCEditedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionOwnerAddedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionOwnerEditedTestEmail(emailService, templateService, addressBook)
 
 	// MTO Common Solution Contractor emails for editable POC workflow
 	sendMTOCommonSolutionContractorRemovedTestEmail(emailService, templateService, addressBook)
