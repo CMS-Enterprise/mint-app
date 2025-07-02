@@ -409,6 +409,25 @@ export default gql(/* GraphQL */ `
         readyForReviewDts
         status
       }
+      timeline {
+        id
+        completeICIP
+        clearanceStarts
+        clearanceEnds
+        announced
+        applicationsStart
+        applicationsEnd
+        performancePeriodStarts
+        performancePeriodEnds
+        highLevelNote
+        wrapUpEnds
+        readyForReviewByUserAccount {
+          id
+          commonName
+        }
+        readyForReviewDts
+        status
+      }
       dataExchangeApproach {
         id
         dataToCollectFromParticipants
