@@ -121,7 +121,6 @@ const Timeline = () => {
           items={[
             BreadcrumbItemOptions.HOME,
             BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST,
             BreadcrumbItemOptions.TIMELINE
           ]}
         />
