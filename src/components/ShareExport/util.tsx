@@ -64,6 +64,7 @@ export const modelPlanSectionMappings: Record<
     'operations-evaluation-and-learning',
     'payment'
   ],
+  [ModelShareSection.TIMELINE]: ['model-timeline'],
   [ModelShareSection.MTO_ALL]: ['milestones', 'solutions-and-it-systems'],
   [ModelShareSection.MTO_MILESTONES]: ['milestones'],
   [ModelShareSection.MTO_SOLUTIONS]: ['solutions-and-it-systems']

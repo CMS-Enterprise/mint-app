@@ -1291,7 +1291,9 @@ export enum ModelShareSection {
   /** Only share MTO Milestones */
   MTO_MILESTONES = 'MTO_MILESTONES',
   /** Only share MTO Solutions */
-  MTO_SOLUTIONS = 'MTO_SOLUTIONS'
+  MTO_SOLUTIONS = 'MTO_SOLUTIONS',
+  /** Only share Model timeline */
+  TIMELINE = 'TIMELINE'
 }
 
 export enum ModelStatus {
