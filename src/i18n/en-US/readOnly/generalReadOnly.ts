@@ -71,6 +71,7 @@ const generalReadOnly = {
       [ModelShareSection.ALL]:
         'All model information (includes all of the sections below)',
       [ModelShareSection.MODEL_PLAN]: 'Model Plan',
+      [ModelShareSection.TIMELINE]: 'Model timeline',
       [ModelShareSection.MTO_ALL]: 'Model-to-operations matrix (all)',
       [ModelShareSection.MTO_MILESTONES]:
         'Model-to-operations matrix (milestones view only)',

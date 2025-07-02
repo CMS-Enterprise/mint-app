@@ -51,6 +51,10 @@ enum ModelShareSection {
   """
   MODEL_PLAN #go to readview
   """
+  Only share Model timeline
+  """
+  TIMELINE # readview/model-timeline
+  """
   Share all MTO info
   """
   MTO_ALL #go to Milestones readview/milestones
