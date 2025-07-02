@@ -35,17 +35,14 @@ input PlanCRChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Query {
-  planCR(id: UUID!): PlanCR!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  planCR(id: UUID!): PlanCR! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  createPlanCR(input: PlanCRCreateInput!): PlanCR!
-  @hasRole(role: MINT_USER)
+  createPlanCR(input: PlanCRCreateInput!): PlanCR! @hasRole(role: MINT_USER)
 
   updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
-  deletePlanCR(id: UUID!): PlanCR!
-  @hasRole(role: MINT_USER)
+  deletePlanCR(id: UUID!): PlanCR! @hasRole(role: MINT_USER)
 }

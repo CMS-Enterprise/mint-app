@@ -724,13 +724,13 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             class="margin-y-0 padding-left-3"
                           >
                             <li
-                              class="font-sans-md line-height-sans-4"
+                              class="mint-body-normal"
                             >
                               First Name
                             </li>
                             <ul />
                             <li
-                              class="font-sans-md line-height-sans-4"
+                              class="mint-body-normal"
                             >
                               Second Name
                             </li>
@@ -898,7 +898,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   class="margin-y-0 padding-left-3"
                                 >
                                   <li
-                                    class="font-sans-md line-height-sans-4"
+                                    class="mint-body-normal"
                                   >
                                     Accountable Care
                                     <span
@@ -984,13 +984,13 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   class="margin-y-0 padding-left-3"
                                 >
                                   <li
-                                    class="font-sans-md line-height-sans-4"
+                                    class="mint-body-normal"
                                   >
                                     Center for Medicaid and CHIP Services (CMCS)
                                   </li>
                                   <ul />
                                   <li
-                                    class="font-sans-md line-height-sans-4"
+                                    class="mint-body-normal"
                                   >
                                     Center for Medicare (CM)
                                   </li>
@@ -1023,13 +1023,13 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   class="margin-y-0 padding-left-3"
                                 >
                                   <li
-                                    class="font-sans-md line-height-sans-4"
+                                    class="mint-body-normal"
                                   >
                                     Policy and Programs Group (PPG)
                                   </li>
                                   <ul />
                                   <li
-                                    class="font-sans-md line-height-sans-4"
+                                    class="mint-body-normal"
                                   >
                                     State and Population Health Group (SPHG)
                                   </li>
@@ -1066,7 +1066,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               class="margin-y-0 padding-left-3"
                             >
                               <li
-                                class="font-sans-md line-height-sans-4"
+                                class="mint-body-normal"
                               >
                                 Mandatory national
                               </li>

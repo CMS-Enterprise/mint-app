@@ -25,7 +25,16 @@ enum DateChangeFieldType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta | DatesChangedActivityMeta | PlanDataExchangeApproachMarkedCompleteActivityMeta
+union ActivityMetaData =
+  | TaggedInPlanDiscussionActivityMeta
+  | TaggedInDiscussionReplyActivityMeta
+  | DailyDigestCompleteActivityMeta
+  | NewDiscussionRepliedActivityMeta
+  | AddedAsCollaboratorMeta
+  | ModelPlanSharedActivityMeta
+  | NewModelPlanActivityMeta
+  | DatesChangedActivityMeta
+  | PlanDataExchangeApproachMarkedCompleteActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -84,7 +93,7 @@ type DailyDigestCompleteActivityMeta {
   modelPlanIDs: [UUID!]!
   analyzedAudits: [AnalyzedAudit!]!
   userID: UUID!
-  date:  Time!
+  date: Time!
 }
 
 type NewModelPlanActivityMeta {
@@ -129,10 +138,10 @@ Activity represents an event that happened in the application that could result 
 """
 type Activity {
   id: UUID!
-	actorID: UUID!
+  actorID: UUID!
   actorUserAccount: UserAccount!
-	entityID: UUID!
-	activityType: ActivityType!
+  entityID: UUID!
+  activityType: ActivityType!
   metaData: ActivityMetaData!
 
   createdBy: UUID!

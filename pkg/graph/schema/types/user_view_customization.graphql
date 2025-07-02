@@ -28,10 +28,11 @@ input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
 
 extend type Query {
   userViewCustomization: UserViewCustomization!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  updateUserViewCustomization(
+    changes: UserViewCustomizationChanges!
+  ): UserViewCustomization! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

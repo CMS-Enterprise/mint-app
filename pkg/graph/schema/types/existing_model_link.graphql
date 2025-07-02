@@ -6,7 +6,7 @@ enum ExisitingModelLinkFieldType {
 """
 LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database
 """
-union LinkedExistingModel =  ExistingModel | ModelPlan
+union LinkedExistingModel = ExistingModel | ModelPlan
 
 type ExistingModelLinks {
   links: [ExistingModelLink!]!
@@ -33,7 +33,7 @@ type ExistingModelLink {
 
 extend type Query {
   existingModelLink(id: UUID!): ExistingModelLink!
-  @hasAnyRole(roles:[MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
@@ -41,6 +41,10 @@ extend type Mutation {
   This will update linked existing models, and relatede model plans for given model plan and fieldName.
   The fieldName allows it so you can create links for multiple sections of the model plan
   """
-  updateExistingModelLinks(modelPlanID: UUID!,fieldName: ExisitingModelLinkFieldType!,  existingModelIDs: [Int!],currentModelPlanIDs: [UUID!]): ExistingModelLinks!
-  @hasRole(role: MINT_USER)
+  updateExistingModelLinks(
+    modelPlanID: UUID!
+    fieldName: ExisitingModelLinkFieldType!
+    existingModelIDs: [Int!]
+    currentModelPlanIDs: [UUID!]
+  ): ExistingModelLinks! @hasRole(role: MINT_USER)
 }

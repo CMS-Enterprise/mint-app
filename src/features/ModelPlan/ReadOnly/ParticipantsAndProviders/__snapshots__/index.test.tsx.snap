@@ -66,13 +66,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Medicaid providers
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               States
             </li>
@@ -84,13 +84,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
               </li>
             </ul>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               State Medicaid agencies
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -525,13 +525,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Use an application review and scoring tool
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Another CMS component or process will provide support
             </li>
@@ -593,7 +593,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Continually
             </li>
@@ -664,7 +664,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -735,13 +735,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Manage ongoing communications with participants using an IT tool
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Send mass emails to new participants
             </li>
@@ -803,7 +803,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Capitation
             </li>
@@ -964,13 +964,13 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
               class="margin-y-0 padding-left-3"
             >
               <li
-                class="font-sans-md line-height-sans-4"
+                class="mint-body-normal"
               >
                 Escrow
               </li>
               <ul />
               <li
-                class="font-sans-md line-height-sans-4"
+                class="mint-body-normal"
               >
                 Other
               </li>
@@ -1164,7 +1164,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1232,7 +1232,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               CCNs
             </li>
@@ -1294,7 +1294,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1365,7 +1365,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Add retrospectively (once an interaction happens this year)
             </li>
@@ -1427,7 +1427,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Not applicable
             </li>
@@ -1489,7 +1489,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Continually
             </li>

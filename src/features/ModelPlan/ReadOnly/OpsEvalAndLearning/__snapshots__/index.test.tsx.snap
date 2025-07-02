@@ -66,19 +66,19 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Beneficiaries
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Participants
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Providers
             </li>
@@ -202,13 +202,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 class="margin-y-0 padding-left-3"
               >
                 <li
-                  class="font-sans-md line-height-sans-4"
+                  class="mint-body-normal"
                 >
                   May have separate contractors for different implementation functions
                 </li>
                 <ul />
                 <li
-                  class="font-sans-md line-height-sans-4"
+                  class="mint-body-normal"
                 >
                   Other
                 </li>
@@ -703,13 +703,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Part A
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Part B
             </li>
@@ -1462,13 +1462,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Interrupted time series
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1536,13 +1536,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Yes, for evaluation
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1610,19 +1610,19 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Medicare claims
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Clinical data
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1690,19 +1690,19 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Baseline/historical data
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Beneficiary-level data
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -2201,7 +2201,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Monthly
             </li>
@@ -2296,7 +2296,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Annually
             </li>
@@ -2418,7 +2418,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -2462,13 +2462,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               We plan to use an IT platform (Connect)
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -2480,7 +2480,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </li>
             </ul>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               No, we will not have a learning strategy
             </li>
