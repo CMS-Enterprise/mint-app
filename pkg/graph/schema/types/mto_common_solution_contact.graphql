@@ -42,6 +42,7 @@ Only role, isPrimary, and receiveEmails can be changed.
 """
 input MTOCommonSolutionContactUpdateChanges @goModel(model: "map[string]interface{}") {
   role: String
+  mailboxTitle:String
   isPrimary: Boolean
   receiveEmails: Boolean
 }

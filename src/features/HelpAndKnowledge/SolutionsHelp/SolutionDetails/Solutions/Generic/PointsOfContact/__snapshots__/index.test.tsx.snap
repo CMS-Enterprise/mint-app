@@ -31,7 +31,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > 4innovati
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -93,46 +93,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > 4innovati
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -170,7 +172,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Accountab
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -232,46 +234,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Accountab
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -309,7 +313,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Actuarial
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -340,46 +344,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Actuarial
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -417,7 +423,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Automated
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -479,46 +485,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Automated
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -556,7 +564,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Beneficia
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -618,46 +626,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Beneficia
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -695,7 +705,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMMI Anal
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -726,46 +736,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMMI Anal
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -803,7 +815,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMMI Data
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -834,46 +846,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMMI Data
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -911,7 +925,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMS Box 1
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -942,46 +956,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMS Box 1
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1019,7 +1035,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMS Qualt
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1050,46 +1066,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMS Qualt
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1127,7 +1145,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > CPI Vetti
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1158,46 +1176,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > CPI Vetti
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1235,7 +1255,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Centraliz
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1297,46 +1317,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Centraliz
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1374,7 +1396,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Chronic C
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1436,46 +1458,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Chronic C
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1513,7 +1537,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Consolida
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1575,46 +1599,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Consolida
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1652,7 +1678,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Division 
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1683,46 +1709,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Division 
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1760,7 +1788,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Drug Data
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1791,46 +1819,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Drug Data
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1868,7 +1898,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Electroni
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -1899,46 +1929,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Electroni
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -1976,7 +2008,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Enterpris
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2007,46 +2039,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Enterpris
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2084,7 +2118,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Expanded 
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2146,46 +2180,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Expanded 
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2223,7 +2259,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Federal F
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2254,46 +2290,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Federal F
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2331,7 +2369,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > GovDelive
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2362,46 +2400,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > GovDelive
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2439,7 +2479,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > GrantSolu
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2470,46 +2510,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > GrantSolu
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2547,7 +2589,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Health Da
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2609,46 +2651,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Health Da
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2686,7 +2730,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Health Pl
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2748,46 +2792,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Health Pl
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2825,7 +2871,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Healthcar
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2887,46 +2933,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Healthcar
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -2964,7 +3012,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -2995,46 +3043,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3072,7 +3122,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3134,46 +3184,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3211,7 +3263,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3242,46 +3294,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3319,7 +3373,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Integrate
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3381,46 +3435,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Integrate
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3458,7 +3514,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Learning 
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3489,46 +3545,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Learning 
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3566,7 +3624,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Legal Ver
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3597,46 +3655,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Legal Ver
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3674,7 +3734,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Master Da
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3736,46 +3796,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Master Da
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3813,7 +3875,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Master Da
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3875,46 +3937,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Master Da
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -3952,7 +4016,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Measure a
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -3983,46 +4047,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Measure a
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4060,7 +4126,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Medicare 
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4122,46 +4188,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Medicare 
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4199,7 +4267,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Model Spa
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4261,46 +4329,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Model Spa
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4338,7 +4408,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Office of
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4369,46 +4439,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Office of
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4446,7 +4518,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Outlook M
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4477,46 +4549,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Outlook M
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4554,7 +4628,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Patient A
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4585,46 +4659,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Patient A
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4662,7 +4738,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Quality P
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4693,46 +4769,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Quality P
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4770,7 +4848,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Quality V
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4801,46 +4879,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Quality V
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4878,7 +4958,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Research 
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -4909,46 +4989,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Research 
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -4986,7 +5068,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Research,
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5017,46 +5099,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Research,
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5094,7 +5178,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Risk Adju
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5125,46 +5209,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Risk Adju
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5202,7 +5288,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5264,46 +5350,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5341,7 +5429,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5403,46 +5491,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5480,7 +5570,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5542,46 +5632,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5619,7 +5711,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5681,46 +5773,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5758,7 +5852,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5820,46 +5914,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -5897,7 +5993,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Shared Sy
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -5959,46 +6055,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Shared Sy
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -6036,7 +6134,7 @@ exports[`Generic Points of Contact Components > matches the snapshot > Transform
               d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
             />
           </svg>
-          Add team mailbox
+          Add a team mailbox
         </button>
         <div
           class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-left-2 margin-right-1"
@@ -6067,46 +6165,48 @@ exports[`Generic Points of Contact Components > matches the snapshot > Transform
     <div
       class="mint-divider margin-y-6"
     />
-    <h2
-      class="margin-bottom-2"
-    >
-      Contractors
-    </h2>
-    <button
-      class="usa-button usa-button--unstyled margin-bottom-3"
-      data-testid="button"
-      type="button"
-    >
-      <svg
-        aria-hidden="true"
-        class="usa-icon"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+    <div>
+      <h2
+        class="margin-bottom-2"
       >
-        <path
-          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-        />
-      </svg>
-      Add a contractor
-    </button>
-    <div
-      class="usa-alert usa-alert--info usa-alert--slim flex"
-      data-testid="alert"
-    >
-      <div
-        class="usa-alert__body"
+        Contractors
+      </h2>
+      <button
+        class="usa-button usa-button--unstyled margin-bottom-3"
+        data-testid="button"
+        type="button"
       >
-        <p
-          class="usa-alert__text"
+        <svg
+          aria-hidden="true"
+          class="usa-icon"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span>
-            No contractor is listed for this solution.
-          </span>
-        </p>
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add a contractor
+      </button>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              No contractor is listed for this solution.
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>

@@ -11,6 +11,7 @@ import {
 } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import MailboxAndTeamMemberModal from '../MailboxAndTeamMemberModal';
 import RemoveContactModal from '../RemoveContactModal';
 
 const NotificationStatus = ({
@@ -29,7 +30,11 @@ const NotificationStatus = ({
       className="bg-white padding-0 text-base-dark"
       style={{ gap: '0.25rem' }}
     >
-      {receiveEmails ? <Icon.Notifications /> : <Icon.NotificationsOff />}
+      {receiveEmails ? (
+        <Icon.Notifications aria-label="notification on" />
+      ) : (
+        <Icon.NotificationsOff aria-label="notification off" />
+      )}
       <p className="margin-0 text-normal">{label}</p>
     </Tooltip>
   );
@@ -42,6 +47,7 @@ const MailboxAndTeamMemberCard = ({
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
   const [isRemovePocModalOpen, setIsRemovePocModalOpen] = useState(false);
+  const [isEditPocModalOpen, setIsEditPocModalOpen] = useState(false);
 
   return (
     <div className="margin-bottom-3">
@@ -50,6 +56,12 @@ const MailboxAndTeamMemberCard = ({
         closeModal={() => setIsRemovePocModalOpen(false)}
         pointOfContact={pointOfContact}
         contactType="teamOrMember"
+      />
+      <MailboxAndTeamMemberModal
+        isOpen={isEditPocModalOpen}
+        mode={pointOfContact.isTeam ? 'editTeamMailbox' : 'editTeamMember'}
+        closeModal={() => setIsEditPocModalOpen(false)}
+        contact={pointOfContact}
       />
       <Card
         className="margin-bottom-0"
@@ -100,7 +112,12 @@ const MailboxAndTeamMemberCard = ({
         )}
       </Card>
       <div>
-        <Button type="button" className="margin-right-2" unstyled>
+        <Button
+          type="button"
+          className="margin-right-2"
+          unstyled
+          onClick={() => setIsEditPocModalOpen(true)}
+        >
           {t('edit')}
         </Button>
         <Button

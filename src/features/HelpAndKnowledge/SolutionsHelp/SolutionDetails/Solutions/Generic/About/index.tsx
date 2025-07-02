@@ -10,6 +10,8 @@ import ExternalLink from 'components/ExternalLink';
 
 import GatheringInfoAlert from '../../../_components/GatheringInfoAlert';
 
+import '../../index.scss';
+
 type ListItemType = {
   header: string;
   items: string[];
