@@ -1,16 +1,14 @@
-
 """
 UserNotification represents a notification about a specific Activity
 """
 type UserNotification {
   id: UUID!
-	activityID: UUID!
-	userID: UUID!
+  activityID: UUID!
+  userID: UUID!
   isRead: Boolean!
   inAppSent: Boolean!
   emailSent: Boolean!
   activity: Activity!
-
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -18,37 +16,33 @@ type UserNotification {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-
 }
 
 """
-This is a wrapper for all information for a user 
+This is a wrapper for all information for a user
 """
 type UserNotifications {
-"""
-This returns the number of unread notifications
-"""
-numUnreadNotifications: Int!
-"""
-This includes all notifications
-"""
-notifications: [UserNotification!]!
-"""
-This renders only the unread notifications
-"""
-unreadNotifications: [UserNotification!]!
+  """
+  This returns the number of unread notifications
+  """
+  numUnreadNotifications: Int!
+  """
+  This includes all notifications
+  """
+  notifications: [UserNotification!]!
+  """
+  This renders only the unread notifications
+  """
+  unreadNotifications: [UserNotification!]!
 }
 
-
 extend type Mutation {
-"""
-Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
-"""
-markNotificationAsRead(notificationID: UUID!): UserNotification!
-"""
-Marks all notifications for the current user as read, and returns the updated notifications
-"""
-markAllNotificationsAsRead: [UserNotification!]!
-
-  
+  """
+  Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail
+  """
+  markNotificationAsRead(notificationID: UUID!): UserNotification!
+  """
+  Marks all notifications for the current user as read, and returns the updated notifications
+  """
+  markAllNotificationsAsRead: [UserNotification!]!
 }

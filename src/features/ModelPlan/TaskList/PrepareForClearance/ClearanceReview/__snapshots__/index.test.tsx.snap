@@ -154,7 +154,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="mint-body-normal"
                     >
                       Disease-specific
                     </li>
@@ -166,7 +166,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                       </li>
                     </ul>
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="mint-body-normal"
                     >
                       Dually-eligible beneficiaries
                     </li>
@@ -445,7 +445,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="mint-body-normal"
                     >
                       Historical claims
                     </li>
@@ -507,7 +507,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="mint-body-normal"
                     >
                       Other
                     </li>
@@ -578,7 +578,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="mint-body-normal"
                     >
                       Continually
                     </li>
@@ -744,7 +744,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                     class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="font-sans-md line-height-sans-4"
+                      class="mint-body-normal"
                     >
                       Yes
                     </li>

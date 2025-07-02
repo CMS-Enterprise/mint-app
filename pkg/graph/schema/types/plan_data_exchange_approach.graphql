@@ -93,7 +93,8 @@ type PlanDataExchangeApproach {
   status: DataExchangeApproachStatus!
 }
 
-input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") {
+input PlanDataExchangeApproachChanges
+  @goModel(model: "map[string]interface{}") {
   dataToCollectFromParticipants: [DataToCollectFromParticipants!]
   dataToCollectFromParticipantsReportsDetails: String
   dataToCollectFromParticipantsOther: String
@@ -122,6 +123,8 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
 }
 
 extend type Mutation {
-  updatePlanDataExchangeApproach(id: UUID!, changes: PlanDataExchangeApproachChanges!): PlanDataExchangeApproach!
-  @hasRole(role: MINT_USER)
+  updatePlanDataExchangeApproach(
+    id: UUID!
+    changes: PlanDataExchangeApproachChanges!
+  ): PlanDataExchangeApproach! @hasRole(role: MINT_USER)
 }

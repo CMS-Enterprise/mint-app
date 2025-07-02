@@ -13,5 +13,5 @@ type UserAccount {
 
 extend type Query {
   userAccount(username: String!): UserAccount!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

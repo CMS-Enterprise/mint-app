@@ -1,7 +1,7 @@
 """
 PlanDiscussion represents plan discussion
 """
-type PlanDiscussion  {
+type PlanDiscussion {
   id: UUID!
   modelPlanID: UUID!
   content: TaggedContent
@@ -9,7 +9,6 @@ type PlanDiscussion  {
   userRoleDescription: String
   replies: [DiscussionReply!]!
   isAssessment: Boolean!
-
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -31,5 +30,5 @@ input PlanDiscussionCreateInput {
 
 extend type Mutation {
   createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

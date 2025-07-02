@@ -174,13 +174,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               name
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -312,13 +312,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               name
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -475,13 +475,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Yes, we will partner with states
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -590,13 +590,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               MIPS APM
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Regular APM
             </li>
@@ -655,25 +655,25 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Payment Model
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Population-based Model
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Service Delivery Model
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1171,7 +1171,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               States and territories
             </li>
@@ -1183,7 +1183,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               </li>
             </ul>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Region
             </li>
@@ -1195,7 +1195,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               </li>
             </ul>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1242,13 +1242,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Beneficiaries
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1370,7 +1370,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1546,13 +1546,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               3021 Affordable Care Act (ACA)
             </li>
             <ul />
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -1624,7 +1624,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               class="margin-y-0 padding-left-3"
             >
               <li
-                class="font-sans-md line-height-sans-4"
+                class="mint-body-normal"
               >
                 Fraud and Abuse
                 <span
@@ -1671,7 +1671,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
               </li>
               <ul />
               <li
-                class="font-sans-md line-height-sans-4"
+                class="mint-body-normal"
               >
                 Medicaid
                 <span
