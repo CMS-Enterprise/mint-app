@@ -19,17 +19,6 @@ type PlanBasics {
   testInterventions: String
   note: String
 
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
   phasedIn: Boolean
   phasedInNote: String
 
@@ -70,17 +59,6 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   testInterventions: String
   note: String
 
-  # Milestones
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-  announced: Time
-  applicationsStart: Time
-  applicationsEnd: Time
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
   phasedIn: Boolean
   phasedInNote: String
   status: TaskStatusInput

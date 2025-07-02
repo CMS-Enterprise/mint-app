@@ -61,6 +61,7 @@ import ReadOnlyMTOSolutions from './MTOSolutions';
 import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
+import ReadOnlyModelTimeline from './Timeline';
 
 import './index.scss';
 
@@ -96,6 +97,12 @@ export const ReadOnlyComponents = (
       helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
       group: 'model-plan',
       component: <ReadOnlyModelBasics modelID={modelID} />
+    },
+    'model-timeline': {
+      route: `/models/${modelID}/read-only/model-timeline`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/model-timeline',
+      group: 'model-plan',
+      component: <ReadOnlyModelTimeline modelID={modelID} />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
@@ -523,6 +530,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                                 ? 12
                                 : 8
                           }}
+                          className={classnames({
+                            'padding-x-05':
+                              subinfo !== 'documents' &&
+                              subinfo !== 'crs-and-tdl' &&
+                              subinfo !== 'milestones' &&
+                              subinfo !== 'solutions-and-it-systems'
+                          })}
                         >
                           {subComponent.component}
                         </Grid>

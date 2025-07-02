@@ -1,3 +1,4 @@
+import { MockedResponse } from '@apollo/client/testing';
 import {
   AgencyOrStateHelpType,
   AgreementType,
@@ -45,6 +46,9 @@ import {
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
   GetModelSummaryQuery,
+  GetTimelineDocument,
+  GetTimelineQuery,
+  GetTimelineQueryVariables,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -79,6 +83,7 @@ import {
 export const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 type GetAllBasicsTypes = GetAllBasicsQuery['modelPlan']['basics'];
+type GetAllTimelineTypes = GetTimelineQuery['modelPlan']['timeline'];
 type GetAllGeneralCharacteristicsTypes =
   GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 type GetAllParticipantsTypes =
@@ -137,6 +142,53 @@ export const modelBasicsMocks = [
           nameHistory: ['First Name', 'Second Name'],
           isCollaborator: true,
           basics: modelBasicsData
+        }
+      }
+    }
+  }
+];
+
+const modelTimelineData: GetAllTimelineTypes = {
+  __typename: 'PlanTimeline',
+  id: '123',
+  completeICIP: '2022-06-03T19:32:24.412662Z',
+  clearanceStarts: '2022-06-03T19:32:24.412662Z',
+  clearanceEnds: '2022-06-03T19:32:24.412662Z',
+  announced: '2022-06-03T19:32:24.412662Z',
+  applicationsStart: '2022-06-03T19:32:24.412662Z',
+  applicationsEnd: '2022-06-03T19:32:24.412662Z',
+  performancePeriodStarts: '2022-06-03T19:32:24.412662Z',
+  performancePeriodEnds: '2022-06-03T19:32:24.412662Z',
+  wrapUpEnds: '2022-06-03T19:32:24.412662Z',
+  highLevelNote: 'Theses are my best guess notes',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
+  readyForReviewByUserAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    commonName: 'Test User'
+  },
+  readyForReviewDts: '2022-06-03T19:32:24.412662Z',
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const modelTimelineMocks: MockedResponse<
+  GetTimelineQuery,
+  GetTimelineQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetTimelineDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'Testing Model Summary',
+          timeline: modelTimelineData
         }
       }
     }
@@ -865,7 +917,8 @@ const allMocks = [
   ...opsEvalAndLearningMocks,
   ...participantsAndProvidersMocks,
   ...paymentsMocks,
-  ...collaboratorsMocks
+  ...collaboratorsMocks,
+  ...modelTimelineMocks
 ];
 
 export default allMocks;

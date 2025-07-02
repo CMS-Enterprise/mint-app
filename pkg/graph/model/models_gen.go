@@ -194,16 +194,6 @@ type PlanBasicsTranslation struct {
 	Goal                      models.TranslationField            `json:"goal" db:"goal"`
 	TestInterventions         models.TranslationField            `json:"testInterventions" db:"test_interventions"`
 	Note                      models.TranslationField            `json:"note" db:"note"`
-	CompleteIcip              models.TranslationField            `json:"completeICIP" db:"complete_icip"`
-	ClearanceStarts           models.TranslationField            `json:"clearanceStarts" db:"clearance_starts"`
-	ClearanceEnds             models.TranslationField            `json:"clearanceEnds" db:"clearance_ends"`
-	Announced                 models.TranslationField            `json:"announced" db:"announced"`
-	ApplicationsStart         models.TranslationField            `json:"applicationsStart" db:"applications_starts"`
-	ApplicationsEnd           models.TranslationField            `json:"applicationsEnd" db:"applications_ends"`
-	PerformancePeriodStarts   models.TranslationField            `json:"performancePeriodStarts" db:"performance_period_starts"`
-	PerformancePeriodEnds     models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
-	WrapUpEnds                models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
-	HighLevelNote             models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
 	PhasedIn                  models.TranslationFieldWithOptions `json:"phasedIn" db:"phased_in"`
 	PhasedInNote              models.TranslationField            `json:"phasedInNote" db:"phased_in_note"`
 	ReadyForReviewBy          models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`

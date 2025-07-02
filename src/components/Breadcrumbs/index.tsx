@@ -132,7 +132,7 @@ export const commonBreadCrumbs = (
   },
   TIMELINE: {
     text: 'timelineMisc:heading',
-    url: `/models/${modelID}/collaboration-area/timeline`
+    url: `/models/${modelID}/collaboration-area/model-timeline`
   }
 });
 

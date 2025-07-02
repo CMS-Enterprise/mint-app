@@ -21,6 +21,8 @@ export default gql(/* GraphQL */ `
           ...ReadyForReviewUserFragment
         }
         readyForReviewDts
+        createdDts
+        modifiedDts
         status
       }
     }

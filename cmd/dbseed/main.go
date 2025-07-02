@@ -190,19 +190,13 @@ func (s *Seeder) SeedData() {
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT", nil)
 	s.updatePlanBasics(
 		s.Config.Context,
-		nil,
-		nil,
-		email.AddressBook{},
 		planWithBasics,
 		map[string]interface{}{
-			"modelType":       []models.ModelType{models.MTVoluntary},
-			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI"},
-			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"phasedIn":        true,
-			"clearanceStarts": now,
-			"highLevelNote":   "Some high level note",
+			"modelType":  []models.ModelType{models.MTVoluntary},
+			"goal":       "Some goal",
+			"cmsCenters": []string{"CMMI"},
+			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+			"phasedIn":   true,
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
@@ -221,7 +215,7 @@ func (s *Seeder) SeedData() {
 		planWithTimeline,
 		map[string]interface{}{
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"clearanceStarts": now,
+			"clearanceStarts": now.AddDate(0, 0, 10),
 			"highLevelNote":   "Some high level note",
 		},
 	)
@@ -416,21 +410,15 @@ func (s *Seeder) SeedData() {
 		})
 	s.updatePlanBasics(
 		s.Config.Context,
-		s.Config.EmailService,
-		s.Config.EmailTemplateService,
-		s.Config.AddressBook,
 		sampleModelPlan,
 		map[string]interface{}{
-			"amsModelID":      "123",
-			"demoCode":        "1",
-			"modelType":       []models.ModelType{models.MTVoluntary},
-			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI"},
-			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"phasedIn":        true,
-			"clearanceStarts": now,
-			"highLevelNote":   "Some high level note",
+			"amsModelID": "123",
+			"demoCode":   "1",
+			"modelType":  []models.ModelType{models.MTVoluntary},
+			"goal":       "Some goal",
+			"cmsCenters": []string{"CMMI"},
+			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+			"phasedIn":   true,
 		},
 	)
 
@@ -467,19 +455,14 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusPaused,
 	})
 
-	s.updatePlanBasics(
+	s.updatePlanTimeline(
 		s.Config.Context,
 		nil,
 		nil,
 		email.AddressBook{},
 		planApproachingClearance,
 		map[string]interface{}{
-			"modelType":       []models.ModelType{models.MTVoluntary},
-			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI"},
-			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"phasedIn":        true,
 			"clearanceStarts": now.AddDate(0, 3, 0),
 			"highLevelNote":   "Some high level note",
 		},

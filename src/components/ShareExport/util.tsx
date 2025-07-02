@@ -19,6 +19,7 @@ const exportSectionOptions: ExportSectionOption[] = getKeys(
 
 export const modelSectionRouteKey: string[] = [
   'model-basics',
+  'model-timeline',
   'general-characteristics',
   'participants-and-providers',
   'beneficiaries',
@@ -41,6 +42,7 @@ export const modelPlanSectionMappings: Record<
 > = {
   [ModelShareSection.ALL]: [
     'model-basics',
+    'model-timeline',
     'general-characteristics',
     'participants-and-providers',
     'beneficiaries',

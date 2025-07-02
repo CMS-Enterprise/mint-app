@@ -27,6 +27,12 @@ const overviewMockData: GetOverviewType = {
   goal: 'A goal',
   testInterventions: 'Intervention',
   note: 'Test note',
+  readyForReviewByUserAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    commonName: 'Test User'
+  },
+  readyForReviewDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 

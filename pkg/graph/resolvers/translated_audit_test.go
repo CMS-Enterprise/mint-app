@@ -8,7 +8,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -44,9 +43,6 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		nil,
-		nil,
-		email.AddressBook{},
 	)
 	suite.NoError(err)
 	//create a solution on plan4 so we can test the MTOSolution table is returned

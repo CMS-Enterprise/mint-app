@@ -46,11 +46,15 @@ const modelPlanData: GetModelPlansType = [
       demoCode: '',
       amsModelID: '',
       modelCategory: ModelCategory.ACCOUNTABLE_CARE,
+      additionalModelCategories: [],
+      __typename: 'PlanBasics'
+    },
+    timeline: {
+      id: '789',
       clearanceStarts: '',
       performancePeriodStarts: '',
-      additionalModelCategories: [],
       applicationsStart: '',
-      __typename: 'PlanBasics'
+      __typename: 'PlanTimeline'
     },
     generalCharacteristics: {
       id: '456',
@@ -297,9 +301,12 @@ const favoritesModelPlanData: GetFavoritesType = [
     basics: {
       id: '123',
       goal: '',
-      performancePeriodStarts: '',
-
       __typename: 'PlanBasics'
+    },
+    timeline: {
+      __typename: 'PlanTimeline',
+      id: '789',
+      performancePeriodStarts: ''
     },
     collaborators: [],
     echimpCRsAndTDLs: [

@@ -30,9 +30,13 @@ const mockModel: FavoritesType = {
   ],
   basics: {
     id: '123',
-    performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
     goal: 'The goal',
     __typename: 'PlanBasics'
+  },
+  timeline: {
+    __typename: 'PlanTimeline',
+    id: '789',
+    performancePeriodStarts: '2022-06-03T17:41:40.962971Z'
   },
   collaborators: [
     {

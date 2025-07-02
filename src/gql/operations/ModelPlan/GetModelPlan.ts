@@ -25,13 +25,16 @@ export default gql(/* GraphQL */ `
       }
       basics {
         id
-        clearanceStarts
         modifiedDts
         modifiedByUserAccount {
           commonName
         }
         readyForClearanceDts
         status
+      }
+      timeline {
+        id
+        clearanceStarts
       }
       collaborators {
         id

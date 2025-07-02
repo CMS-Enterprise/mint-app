@@ -304,7 +304,7 @@ describe('Notification Center', () => {
     // Enter into timeline form
     cy.get('[data-testid="to-timeline"]').click();
 
-    cy.url().should('include', '/timeline');
+    cy.url().should('include', '/model-timeline');
     cy.get('#timeline-completeICIP')
       .type('2025-12-31')
       .should('have.value', '2025-12-31');
