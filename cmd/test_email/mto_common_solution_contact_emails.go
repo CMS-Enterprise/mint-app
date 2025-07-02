@@ -395,3 +395,200 @@ func sendSystemOwnerEditedEmail(
 	}
 	return nil
 }
+
+func sendMTOCommonSolutionContractorAddedTestEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	contractorTitle := "Lead Leader"
+	contractor := models.MTOCommonSolutionContractor{
+		ContractorName:  "Acme Health Solutions",
+		ContractorTitle: &contractorTitle,
+		Key:             "INNOVATION",
+	}
+	solutionName := "4innovation (4i)"
+
+	err := sendContractorAddedEmail(emailService, templateService, addressBook, &contractor, solutionName)
+	noErr(err)
+}
+
+func sendContractorAddedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	contractor *models.MTOCommonSolutionContractor,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorAddedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.ContractorAddedSubjectContent{
+		SolutionName: solutionName,
+	}
+	bodyContent := email.NewContractorAddedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*contractor,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{"test@mint.cms.gov"},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func sendMTOCommonSolutionContractorEditedTestEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	contractor := models.MTOCommonSolutionContractor{
+		ContractorName: "Acme Health Solutions",
+		// Purposefully not setting ContractorTitle to test the default value
+		Key: "INNOVATION",
+	}
+	solutionName := "4innovation (4i)"
+
+	err := sendContractorEditedEmail(emailService, templateService, addressBook, &contractor, solutionName)
+	noErr(err)
+}
+
+func sendContractorEditedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	contractor *models.MTOCommonSolutionContractor,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorEditedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.ContractorEditedSubjectContent{
+		SolutionName: solutionName,
+	}
+	bodyContent := email.NewContractorEditedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*contractor,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{"test@mint.cms.gov"},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func sendMTOCommonSolutionContractorRemovedTestEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	contractorTitle := "Secondary Lead Leader"
+	contractor := models.MTOCommonSolutionContractor{
+		ContractorName:  "Acme Health Solutions",
+		ContractorTitle: &contractorTitle,
+		Key:             "INNOVATION",
+	}
+	solutionName := "4innovation (4i)"
+
+	err := sendContractorRemovedEmail(emailService, templateService, addressBook, &contractor, solutionName)
+	noErr(err)
+}
+
+func sendContractorRemovedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	contractor *models.MTOCommonSolutionContractor,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorRemovedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.ContractorRemovedSubjectContent{
+		SolutionName: solutionName,
+	}
+	bodyContent := email.NewContractorRemovedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*contractor,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{"test@mint.cms.gov"},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -226,6 +226,33 @@ var MTOCommonSolutionPOCWelcomeBodyTemplate string
 //go:embed templates/mto_common_solution_poc_welcome_subject.html
 var MTOCommonSolutionPOCWelcomeSubjectTemplate string
 
+// MTOCommonSolutionContractorAddedTemplateName is the template name for the contractor added email
+const MTOCommonSolutionContractorAddedTemplateName = "mto_common_solution_contractor_added"
+
+//go:embed templates/mto_common_solution_contractor_added_body.html
+var MTOCommonSolutionContractorAddedBodyTemplate string
+
+//go:embed templates/mto_common_solution_contractor_added_subject.html
+var MTOCommonSolutionContractorAddedSubjectTemplate string
+
+// MTOCommonSolutionContractorEditedTemplateName is the template name for the contractor edited email
+const MTOCommonSolutionContractorEditedTemplateName = "mto_common_solution_contractor_edited"
+
+//go:embed templates/mto_common_solution_contractor_edited_body.html
+var MTOCommonSolutionContractorEditedBodyTemplate string
+
+//go:embed templates/mto_common_solution_contractor_edited_subject.html
+var MTOCommonSolutionContractorEditedSubjectTemplate string
+
+// MTOCommonSolutionContractorEditedTemplateName is the template name for the contractor edited email
+const MTOCommonSolutionContractorRemovedTemplateName = "mto_common_solution_contractor_removed"
+
+//go:embed templates/mto_common_solution_contractor_removed_body.html
+var MTOCommonSolutionContractorRemovedBodyTemplate string
+
+//go:embed templates/mto_common_solution_contractor_removed_subject.html
+var MTOCommonSolutionContractorRemovedSubjectTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -350,6 +377,18 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	if err := t.loadEmailTemplate(MTOCommonSolutionPOCWelcomeTemplateName, MTOCommonSolutionPOCWelcomeSubjectTemplate, MTOCommonSolutionPOCWelcomeBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionContractorAddedTemplateName, MTOCommonSolutionContractorAddedSubjectTemplate, MTOCommonSolutionContractorAddedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionContractorEditedTemplateName, MTOCommonSolutionContractorEditedSubjectTemplate, MTOCommonSolutionContractorEditedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOCommonSolutionContractorRemovedTemplateName, MTOCommonSolutionContractorRemovedSubjectTemplate, MTOCommonSolutionContractorRemovedBodyTemplate); err != nil {
 		return err
 	}
 
