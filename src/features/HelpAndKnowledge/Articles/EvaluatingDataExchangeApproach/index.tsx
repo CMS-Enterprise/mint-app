@@ -32,7 +32,7 @@ export const EvaluatingDataExchangeApproach = () => {
 
   // Submit handler for exporting PDF
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    contentRef: componentRef,
     documentTitle: t('heading'),
     onAfterPrint: () => {
       setPrintPDF(false);

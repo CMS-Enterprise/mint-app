@@ -100,5 +100,5 @@ enum ModelType {
 
 extend type Mutation {
   updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 }

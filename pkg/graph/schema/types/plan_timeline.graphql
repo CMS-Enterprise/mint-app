@@ -62,5 +62,5 @@ input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
 
 extend type Mutation {
   updatePlanTimeline(id: UUID!, changes: PlanTimelineChanges!): PlanTimeline!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 }

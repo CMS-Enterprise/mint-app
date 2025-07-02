@@ -9,5 +9,5 @@ type CurrentUser {
 }
 
 extend type Query {
-      currentUser: CurrentUser!
+  currentUser: CurrentUser!
 }
