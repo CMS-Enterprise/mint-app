@@ -62,16 +62,13 @@ const ReadOnlyModelBasics = ({
     previousName => previousName !== modelName
   );
 
-  const { demoCode, amsModelID, phasedIn, phasedInNote, status } =
-    allBasicsData;
+  const { demoCode, amsModelID, status } = allBasicsData;
 
   // Removing unneeded configurations from basicsConfig
   // Removed configurations will be manually rendered
   const {
     demoCode: demoCodeRemoved,
     amsModelID: amsModelIDRemoved,
-    phasedIn: phasedInRemoved,
-    phasedInNote: phasedInNoteRemoved,
     ...filteredBasicsConfig
   } = basicsConfig;
 
@@ -182,20 +179,6 @@ const ReadOnlyModelBasics = ({
           <ReadOnlyBody
             data={allBasicsData}
             config={filteredBasicsConfig}
-            filteredView={filteredView}
-          />
-
-          <ReadOnlySection
-            field="phasedIn"
-            translations={basicsConfig}
-            values={{ phasedIn }}
-            filteredView={filteredView}
-          />
-
-          <ReadOnlySection
-            field="phasedInNote"
-            translations={basicsConfig}
-            values={{ phasedInNote }}
             filteredView={filteredView}
           />
         </>

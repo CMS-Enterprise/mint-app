@@ -101,8 +101,8 @@ DROP COLUMN high_level_note;
 
 -- Added phased_in and phased_in_note to plan_general_characteristics
 ALTER TABLE plan_general_characteristics
-    ADD COLUMN phased_in BOOLEAN,
-    ADD COLUMN phased_in_note TEXT;
+ADD COLUMN phased_in BOOLEAN,
+ADD COLUMN phased_in_note TEXT;
 
 -- Update plan_general_characteristics with phased_in and phased_in_note from plan_basics
 UPDATE plan_general_characteristics gc
@@ -114,8 +114,8 @@ WHERE gc.model_plan_id = pb.model_plan_id;
 
 -- Remove phased_in and phased_in_note from plan_basics
 ALTER TABLE plan_basics
-    DROP COLUMN phased_in,
-    DROP COLUMN phased_in_note;
+DROP COLUMN phased_in,
+DROP COLUMN phased_in_note;
 
 -- Re-enable audit table triggers after modifications
 ALTER TABLE plan_basics ENABLE TRIGGER audit_trigger;

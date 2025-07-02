@@ -13,8 +13,6 @@ SELECT
     plan_basics.goal,
     plan_basics.test_interventions,
     plan_basics.note,
-    plan_basics.phased_in,
-    plan_basics.phased_in_note,
     plan_basics.created_by,
     plan_basics.created_dts,
     plan_basics.modified_by,

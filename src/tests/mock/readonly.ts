@@ -120,8 +120,6 @@ const modelBasicsData: GetAllBasicsTypes = {
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
   note: "The machine doesn't work yet",
-  phasedIn: false,
-  phasedInNote: "This can't be phased in",
   modifiedDts: '2022-06-03T19:32:24.412662Z',
   createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
@@ -224,6 +222,8 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  phasedIn: false,
+  phasedInNote: "This can't be phased in",
   agencyOrStateHelp: [
     AgencyOrStateHelpType.YES_STATE,
     AgencyOrStateHelpType.OTHER

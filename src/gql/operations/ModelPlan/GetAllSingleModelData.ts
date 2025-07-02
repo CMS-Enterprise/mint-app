@@ -27,8 +27,6 @@ export default gql(/* GraphQL */ `
         goal
         testInterventions
         note
-        phasedIn
-        phasedInNote
         readyForReviewByUserAccount {
           commonName
         }
@@ -77,6 +75,8 @@ export default gql(/* GraphQL */ `
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
+        phasedIn
+        phasedInNote
         agencyOrStateHelp
         agencyOrStateHelpOther
         agencyOrStateHelpNote

@@ -17,8 +17,6 @@ export default gql(/* GraphQL */ `
         goal
         testInterventions
         note
-        phasedIn
-        phasedInNote
         createdBy
         createdDts
         modifiedBy

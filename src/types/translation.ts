@@ -333,8 +333,6 @@ export type TranslationBasicsForm = {
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
   note: TranslationFieldProperties;
-  phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
-  phasedInNote: TranslationFieldProperties;
   readyForReviewBy: TranslationFieldProperties;
   readyForReviewDts: TranslationFieldProperties;
   readyForClearanceBy: TranslationFieldProperties;
@@ -386,6 +384,8 @@ export type TranslationGeneralCharacteristicsForm = {
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
+  phasedInNote: TranslationFieldProperties;
   agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
   agencyOrStateHelpOther: TranslationFieldProperties;
   agencyOrStateHelpNote: TranslationFieldProperties;

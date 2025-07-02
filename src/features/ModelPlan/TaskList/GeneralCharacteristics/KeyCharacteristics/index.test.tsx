@@ -16,6 +16,8 @@ type GetKeyCharacteristicsType =
 const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
+  phasedIn: false,
+  phasedInNote: "This can't be phased in",
   agencyOrStateHelp: [],
   agencyOrStateHelpOther: '',
   agencyOrStateHelpNote: '',

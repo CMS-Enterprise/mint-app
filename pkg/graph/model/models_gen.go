@@ -194,8 +194,6 @@ type PlanBasicsTranslation struct {
 	Goal                      models.TranslationField            `json:"goal" db:"goal"`
 	TestInterventions         models.TranslationField            `json:"testInterventions" db:"test_interventions"`
 	Note                      models.TranslationField            `json:"note" db:"note"`
-	PhasedIn                  models.TranslationFieldWithOptions `json:"phasedIn" db:"phased_in"`
-	PhasedInNote              models.TranslationField            `json:"phasedInNote" db:"phased_in_note"`
 	ReadyForReviewBy          models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts         models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	ReadyForClearanceBy       models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
@@ -378,6 +376,8 @@ type PlanGeneralCharacteristicsTranslation struct {
 	HasComponentsOrTracks                        models.TranslationFieldWithOptions            `json:"hasComponentsOrTracks" db:"has_components_or_tracks"`
 	HasComponentsOrTracksDiffer                  models.TranslationField                       `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
 	HasComponentsOrTracksNote                    models.TranslationField                       `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
+	PhasedIn                                     models.TranslationFieldWithOptions            `json:"phasedIn" db:"phased_in"`
+	PhasedInNote                                 models.TranslationField                       `json:"phasedInNote" db:"phased_in_note"`
 	AgencyOrStateHelp                            models.TranslationFieldWithOptions            `json:"agencyOrStateHelp" db:"agency_or_state_help"`
 	AgencyOrStateHelpOther                       models.TranslationField                       `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
 	AgencyOrStateHelpNote                        models.TranslationField                       `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`

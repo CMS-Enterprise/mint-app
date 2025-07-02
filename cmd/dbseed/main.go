@@ -196,7 +196,6 @@ func (s *Seeder) SeedData() {
 			"goal":       "Some goal",
 			"cmsCenters": []string{"CMMI"},
 			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-			"phasedIn":   true,
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
@@ -418,7 +417,6 @@ func (s *Seeder) SeedData() {
 			"goal":       "Some goal",
 			"cmsCenters": []string{"CMMI"},
 			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-			"phasedIn":   true,
 		},
 	)
 
