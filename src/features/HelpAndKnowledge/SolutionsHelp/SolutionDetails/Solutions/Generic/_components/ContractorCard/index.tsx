@@ -35,15 +35,15 @@ const ContractorCard = ({
         key={contractor.contractorName}
         className="margin-bottom-0"
         containerProps={{
-          className: 'radius-md padding-2 margin-bottom-2 margin-x-0'
+          className: 'radius-md padding-2 margin-bottom-1 margin-x-0'
         }}
       >
-        <CardBody className="padding-0 margin-bottom-1">
-          <h3 className="margin-bottom-1 line-height-sans-2">
+        <CardBody className="padding-0 margin-bottom-0">
+          <h3 className="margin-bottom-0 line-height-sans-2">
             {t('contractor')}: {contractor.contractorName}
           </h3>
           {contractor?.contractorTitle && (
-            <p className="margin-top-0 line-height-sans-5">
+            <p className="margin-top-1 line-height-sans-5">
               {t('contractTitle')}: {contractor.contractorTitle}
             </p>
           )}
