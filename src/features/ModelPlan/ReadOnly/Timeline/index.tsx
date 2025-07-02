@@ -116,7 +116,7 @@ const ReadOnlyModelTimeline = ({
               filteredView={filteredView}
             />
           ) : (
-            <ProcessList className="read-only-model-plan__timeline">
+            <ProcessList className="read-only-model-plan__timeline margin-left-neg-1">
               <ProcessListItem className="read-only-model-plan__timeline__list-item">
                 <TimelineTimelineItem
                   label={timelineT('completeICIP.label')}

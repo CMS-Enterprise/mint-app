@@ -18,8 +18,6 @@ import { FilterGroup } from '../_components/FilterView/BodyContent/_filterGroupM
 import ReadOnlySection from '../_components/ReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 
-import './index.scss';
-
 export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
